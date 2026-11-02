@@ -3,23 +3,29 @@
 //   node tools/build-dashboard-data.js            (writes dashboard/data/citation-data.json)
 //   node tools/build-dashboard-data.js --check     (print totals, write nothing)
 //
-// Every figure comes from the two artefacts the project already treats as
-// authoritative, and nothing is recomputed here with a private rule:
+// Two artefacts feed this file and neither has a private counting rule:
 //
-//   - Exhibits/Supporting/citation-ledger-<snapshot>.json  (build-ledger.js)
-//       global totals and the per-article rows. Project instructions say to
-//       quote this file, so the dashboard's headline numbers are copied from it.
 //   - Database/citation-catalog.sqlite                     (build-catalog.js)
-//       the detail the ledger does not carry: the citing patents, the year of
-//       each citing work, corroboration source, and the marked rows themselves.
+//       the PRIMARY store. Every per-row detail comes from it: the citing works,
+//       the patents, the year, corroboration, and the review queue. Reads go
+//       through the active set (filed = 1 AND superseded_at = ''), which is the
+//       set the ledger sums.
+//   - Exhibits/Supporting/citation-ledger-<snapshot>.json  (build-ledger.js)
+//       a DERIVED report of those same rows. Its global block supplies the
+//       headline figures so the dashboard quotes the same numbers as the packet.
 //
-// The catalog builder re-derives its own totals through tally.js on every run
-// and prints ok/DIFF, so a disagreement would already have surfaced there. This
-// script additionally refuses to write if the two sources disagree on the
-// headline independent/records figures - a dashboard that quietly drifts from
-// the ledger is worse than no dashboard.
+// Both build-ledger.js and build-catalog.js recompute the totals independently,
+// so a disagreement would already have surfaced there. This script additionally
+// refuses to write if the store and the ledger disagree on the headline
+// figures: a dashboard that quietly drifts from the packet is worse than no
+// dashboard, and per the project rules no figure may be quoted while the two
+// disagree at all.
 //
-// Read-only against both sources. Writes one JSON file.
+// row_uid is carried on every citing work and patent so a row visible in the
+// dashboard can be quoted back and still mean the same row next month. The
+// integer id is never used.
+//
+// Read-only against both sources. Writes one JSON file and its .js twin.
 
 const fs = require("fs");
 const path = require("path");
@@ -70,6 +76,18 @@ const meta = Object.fromEntries(
 );
 log(`Catalog: schema v${meta.schema_version}, snapshot ${meta.snapshot_date}`);
 
+// The rows that make up the current record. A row retired by a re-capture is
+// history and must not appear on the dashboard, or a count there would exceed
+// the packet it is meant to mirror.
+const ACTIVE = "c.filed = 1 AND c.superseded_at = ''";
+
+if (meta.schema_version && Number(meta.schema_version) < 4) {
+  throw new Error(
+    `The catalog is at schema v${meta.schema_version}; the dashboard needs v4, which ` +
+      `is where row_uid and superseded_at live. Run: node tools/build-catalog.js --write`
+  );
+}
+
 if (meta.snapshot_date !== g.snapshot_date) {
   throw new Error(
     `The ledger describes ${g.snapshot_date} but the catalog describes ` +
@@ -77,13 +95,13 @@ if (meta.snapshot_date !== g.snapshot_date) {
   );
 }
 
-// ---- guard: the two sources must agree on the headline figures ----
+// ---- guard: the store and the derived ledger must agree on the headline figures ----
 const dbTotals = q(`SELECT
-    SUM(CASE WHEN filed=1 THEN 1 ELSE 0 END) AS records,
-    SUM(CASE WHEN filed=1 AND is_countable_independent=1 THEN 1 ELSE 0 END) AS independent,
-    SUM(CASE WHEN filed=1 AND is_primary_copy=1 THEN 1 ELSE 0 END) AS unique_records,
-    SUM(CASE WHEN filed=1 AND is_primary_copy=1 AND is_countable_independent=1 THEN 1 ELSE 0 END) AS unique_independent
-  FROM citations`)[0];
+    SUM(CASE WHEN ${ACTIVE} THEN 1 ELSE 0 END) AS records,
+    SUM(CASE WHEN ${ACTIVE} AND is_countable_independent=1 THEN 1 ELSE 0 END) AS independent,
+    SUM(CASE WHEN ${ACTIVE} AND is_primary_copy=1 THEN 1 ELSE 0 END) AS unique_records,
+    SUM(CASE WHEN ${ACTIVE} AND is_primary_copy=1 AND is_countable_independent=1 THEN 1 ELSE 0 END) AS unique_independent
+  FROM citations c`)[0];
 const guards = [
   ["citation records", dbTotals.records, g.citation_records_reviewed],
   ["independent", dbTotals.independent, g.independent_countable],
@@ -93,8 +111,9 @@ const guards = [
 for (const [name, dbv, ledv] of guards) {
   if (Number(dbv) !== Number(ledv)) {
     throw new Error(
-      `Refusing to write: ${name} is ${dbv} in the catalog and ${ledv} in the ` +
-        `ledger. Reconcile before publishing a dashboard.`
+      `Refusing to write: ${name} is ${dbv} in the store and ${ledv} in the derived ` +
+        `ledger. That is a defect, not a choice of source: reconcile it before ` +
+        `publishing a dashboard, and quote no figure until it is resolved.`
     );
   }
   log(`ok  ${name.padEnd(20)} ${ledv}`);
@@ -104,9 +123,9 @@ for (const [name, dbv, ledv] of guards) {
 const pubDetail = q(`SELECT
     p.cites_id, p.authors AS cited_authors, p.paper_url, p.cites_url,
     p.exhibit_base,
-    (SELECT COUNT(*) FROM citations c WHERE c.cites_id=p.cites_id AND c.filed=1
+    (SELECT COUNT(*) FROM citations c WHERE c.cites_id=p.cites_id AND ${ACTIVE}
        AND c.work_type IN ('patent','patent-application')) AS patent_rows,
-    (SELECT COUNT(*) FROM citations c WHERE c.cites_id=p.cites_id AND c.filed=1
+    (SELECT COUNT(*) FROM citations c WHERE c.cites_id=p.cites_id AND ${ACTIVE}
        AND c.is_countable_independent=1
        AND c.work_type IN ('patent','patent-application')) AS patent_independent
   FROM publications p`);
@@ -154,14 +173,15 @@ const articles = ledger.rows.map((r) => {
 
 // ---- citing patents: the dedicated section the user asked for ----
 const patents = q(`SELECT
-    c.patent_number, c.patent_kind, c.work_type, c.title, c.authors,
+    c.row_uid, c.patent_number, c.patent_kind, c.work_type, c.title, c.authors,
     c.status, c.confirm_state, c.is_countable_independent, c.link,
     c.cid, c.cites_id, p.title AS cited_title, p.year AS cited_year,
     c.base, c.page
   FROM citations c
   LEFT JOIN publications p ON p.cites_id = c.cites_id
-  WHERE c.filed = 1 AND c.work_type IN ('patent','patent-application')
+  WHERE ${ACTIVE} AND c.work_type IN ('patent','patent-application')
   ORDER BY c.is_countable_independent DESC, c.patent_number, c.title`).map((r) => ({
+  row_uid: r.row_uid,
   patent_number: r.patent_number,
   kind: r.patent_kind,
   work_type: r.work_type,
@@ -186,7 +206,7 @@ log(`Citing patents/applications: ${patents.length} (${patents.filter((p) => p.c
 // is parsed here rather than trusted from a separate field. Only rows on filed
 // pages contribute.
 const yearRows = q(`SELECT c.authors, c.is_countable_independent AS ind, c.is_primary_copy AS prim
-  FROM citations c WHERE c.filed = 1`);
+  FROM citations c WHERE ${ACTIVE}`);
 const byYear = new Map();
 for (const r of yearRows) {
   // Take the last 4-digit year in the byline: "X Author - Journal, 2014 - site".
@@ -210,7 +230,7 @@ const undated = byYear.get(null) || { year: null, records: 0, independent: 0 };
 const corroboration = q(`SELECT
     c.confirm_state, c.author_source, COUNT(*) AS n
   FROM citations c
-  WHERE c.filed = 1 AND c.is_countable_independent = 1
+  WHERE ${ACTIVE} AND c.is_countable_independent = 1
   GROUP BY c.confirm_state, c.author_source`).map((r) => ({
   confirm_state: r.confirm_state,
   author_source: r.author_source,
@@ -219,7 +239,7 @@ const corroboration = q(`SELECT
 const corroborationDistinct = q(`SELECT
     c.confirm_state, COUNT(*) AS n
   FROM citations c
-  WHERE c.filed = 1 AND c.is_countable_independent = 1 AND c.is_primary_copy = 1
+  WHERE ${ACTIVE} AND c.is_countable_independent = 1 AND c.is_primary_copy = 1
   GROUP BY c.confirm_state`).map((r) => ({
   confirm_state: r.confirm_state,
   count: r.n,
@@ -229,17 +249,19 @@ const corroborationDistinct = q(`SELECT
 // No LIMIT and no status filter: the user asked for the entire dataset to be
 // visualisable, and a list of only the highlighted rows would make the
 // dependent and unresolved side invisible. `marked` carries the exhibit's own
-// decision so the dashboard can never disagree with the PDF.
+// decision so the dashboard can never disagree with the PDF. row_uid is the
+// handle for a row: quote it, not the integer id, which is a frozen legacy alias.
 const allWorks = q(`SELECT
-    c.title, c.authors, c.status, c.confirm_state, c.external_source,
+    c.row_uid, c.title, c.authors, c.status, c.confirm_state, c.external_source,
     c.external_url, c.link, c.work_type, c.cites_id, p.title AS cited_title,
     p.year AS cited_year, c.base, c.page, c.cid,
     c.is_countable_independent AS marked, c.language_flag, c.attention_reason,
     p.cited_by_at_snapshot AS cited_by
   FROM citations c
   LEFT JOIN publications p ON p.cites_id = c.cites_id
-  WHERE c.filed = 1 AND c.is_primary_copy = 1
+  WHERE ${ACTIVE} AND c.is_primary_copy = 1
   ORDER BY p.cited_by_at_snapshot DESC, c.title`).map((r) => ({
+  row_uid: r.row_uid,
   title: r.title,
   byline: r.authors,
   status: r.status,
@@ -260,10 +282,73 @@ const allWorks = q(`SELECT
   cid: r.cid,
 }));
 
+// ---- the review queue: citations whose independence is still unresolved ----
+// Read from v_review, the same view tools/query-catalog.js prints, so the
+// dashboard, the query tool and a decision sheet all name the same rows in the
+// same three buckets. The user works through these by row_uid; a decision on one
+// changes the totals, so nothing here infers an answer.
+const reviewQueue = q(`SELECT
+    row_uid, bucket, cites_id, cited_work, cited_venue, cited_year, cid, title,
+    scholar_byline, truncated, confirm_state, why, external_source, external_url,
+    external_authors, external_matched, matched_authors, language_flag, link,
+    base, page, row_index
+  FROM v_review`).map((r) => ({
+  row_uid: r.row_uid,
+  bucket: r.bucket,
+  cites_id: r.cites_id,
+  cited_work: r.cited_work,
+  cited_venue: r.cited_venue,
+  cited_year: r.cited_year,
+  cid: r.cid,
+  title: r.title,
+  scholar_byline: r.scholar_byline,
+  // Scholar ended the byline with an ellipsis, which is the whole reason the row
+  // is unresolved: the list it shows cannot prove a shared author absent.
+  byline_truncated: r.truncated === 1,
+  confirm_state: r.confirm_state,
+  why: r.why,
+  external_source: r.external_source,
+  external_url: r.external_url,
+  external_authors: r.external_authors,
+  // The names an external record matched against the PI's. Two columns hold
+  // that idea and only the corroboration one is populated on a contradicted
+  // row, so take whichever has names -- an empty overlap beside
+  // confirm_state "contradicted" would contradict itself.
+  external_overlap: [r.external_matched, r.matched_authors]
+    .map((v) => { try { const p = JSON.parse(v); return Array.isArray(p) ? p : []; } catch { return []; } })
+    .find((a) => a.length) || [],
+  language_flag: r.language_flag,
+  link: r.link,
+  exhibit_base: r.base,
+  exhibit_page: r.page,
+  exhibit_row: r.row_index,
+  // Left empty on purpose: this is where a human decision lands later, and it
+  // must never be pre-filled by an inference.
+  decision: "",
+}));
+const reviewBuckets = reviewQueue.reduce((acc, r) => {
+  acc[r.bucket] = (acc[r.bucket] || 0) + 1;
+  return acc;
+}, {});
+log(
+  `Review queue: ${reviewQueue.length} unresolved citation(s) -- ` +
+    Object.entries(reviewBuckets)
+      .sort()
+      .map(([k, v]) => `${v} ${k.replace(/^\d+ /, "")}`)
+      .join(", ")
+);
+if (Number(g.awaiting_review) !== reviewQueue.length) {
+  throw new Error(
+    `The ledger says ${g.awaiting_review} citations await review and the store's ` +
+      `v_review says ${reviewQueue.length}. Rebuild both; do not publish a ` +
+      `dashboard over a disagreement.`
+  );
+}
+
 // ---- unresolved items, so the dashboard does not overstate certainty ----
 const openItems = q(`SELECT
     c.status, c.attention_reason, COUNT(*) AS n
-  FROM citations c WHERE c.filed = 1 AND c.needs_attention = 1
+  FROM citations c WHERE ${ACTIVE} AND c.needs_attention = 1
   GROUP BY c.status, c.attention_reason
   ORDER BY n DESC`).map((r) => ({
   status: r.status,
@@ -300,9 +385,12 @@ const out = {
     catalog: "Database/citation-catalog.sqlite",
     catalog_built_at: meta.built_at || "",
     note:
-      "Headline figures are copied from the dated ledger written by tools/build-ledger.js, " +
-      "which the project instructions make authoritative. The catalog supplies the detail it " +
-      "does not carry. This file is generated; regenerate it rather than editing it.",
+      "Database/citation-catalog.sqlite is the primary store; the dated ledger written by " +
+      "tools/build-ledger.js is a derived report of the same rows, and the headline " +
+      "figures here are that report's global block. The two were checked against each " +
+      "other when this file was written and agreed. Rows are the active set (filed and " +
+      "not superseded). Quote row_uid to refer to a row -- it never changes. This file is " +
+      "generated; regenerate it rather than editing it.",
   },
   global: {
     snapshot_date: g.snapshot_date,
@@ -347,13 +435,16 @@ const out = {
   corroboration,
   corroboration_distinct: corroborationDistinct,
   works: allWorks,
+  review_queue: reviewQueue,
+  review_buckets: reviewBuckets,
   open_items: openItems,
 };
 
 if (CHECK) {
   log(`--check: ${articles.length} articles, ${patents.length} patents, ` +
     `${years.length} years, ${allWorks.length} distinct citing works ` +
-    `(${allWorks.filter((w) => w.marked).length} marked). Nothing written.`);
+    `(${allWorks.filter((w) => w.marked).length} marked), ` +
+    `${reviewQueue.length} in the review queue. Nothing written.`);
   db.close();
   return;
 }

@@ -8,6 +8,19 @@
 // total. This writes them to disk as a dated record tied to one Google Scholar
 // snapshot, so a figure quoted later can be traced to the run that produced it.
 //
+// THIS FILE IS A DERIVED REPORT. Since the database became the primary store on
+// 2026-11-02, the citation rows here come from Database/citation-catalog.sqlite
+// (schema v4) -- the active ones, which are the filed exhibits that have not
+// been retired. The per-article figures are still computed by tally.js, over the
+// rows read out of the store, so "independent" means exactly what it has always
+// meant here and no rule is reimplemented.
+//
+// The report JSON is read too, and compared, figure by figure. A disagreement is
+// NOT resolved in either side's favour: it is a defect to investigate, this tool
+// exits non-zero, and no figure from either source may be quoted for the packet
+// until it is explained. That is the inversion of the earlier rule, under which
+// the CSV was authoritative and the database disposable.
+//
 // Reading rules, so the columns mean what they claim:
 //   - A publication is counted only when its exhibit PDF is currently in
 //     Exhibits/PDFs (Archive and SUPERSEDED- files do not count).
@@ -19,7 +32,9 @@
 
 const fs = require("fs");
 const path = require("path");
+const { DatabaseSync } = require("node:sqlite");
 const tally = require("./tally");
+const { DB_PATH } = require("./build-catalog");
 
 const ROOT = path.resolve(__dirname, "..");
 const EXHIBITS = path.join(ROOT, "Independent Citation Record", "Exhibits");
@@ -64,9 +79,65 @@ function pdfsFor(base) {
   return out.sort();
 }
 
+// Active citation rows from the primary store, grouped by the publication they
+// cite, and shaped like a report entry so tally.js needs no new code path. The
+// store already carries the resolved language-edition decision in duplicate_of,
+// so the rows go straight to tallyEntries -- groupReports' own page walk must not
+// be replayed here, or the edition rule would be applied twice.
+function storeEntries() {
+  if (!fs.existsSync(DB_PATH)) {
+    throw new Error(
+      `No catalog at ${DB_PATH}. The ledger reads the citation rows from it, so ` +
+        `run: node tools/build-catalog.js --write`
+    );
+  }
+  const db = new DatabaseSync(DB_PATH, { readOnly: true });
+  const meta = db.prepare("SELECT value FROM meta WHERE key = 'schema_version'").get();
+  if (!meta || meta.value !== "4") {
+    db.close();
+    throw new Error(
+      `The catalog is at schema v${meta ? meta.value : "?"}; the ledger needs v4, ` +
+        `which is where superseded_at lives. Run: node tools/build-catalog.js --write`
+    );
+  }
+  const rows = db
+    .prepare(
+      `SELECT cites_id, base, page, row_index, cid, title, raw_title, authors,
+              authors_used, author_source, status, confirm_state, language_flag,
+              duplicate_of, edition_key
+         FROM citations
+        WHERE filed = 1 AND superseded_at = ''
+        ORDER BY cites_id, page, row_index`
+    )
+    .all();
+  db.close();
+
+  const byId = new Map();
+  const byBase = new Map();
+  for (const r of rows) {
+    const e = {
+      ...r,
+      // tally.paperKey falls back to page + cid, and copyReliability reads
+      // author_source; both arrive under the name the reports use.
+      index: r.row_index,
+      rawTitle: r.raw_title,
+    };
+    if (!byId.has(r.cites_id)) byId.set(r.cites_id, []);
+    byId.get(r.cites_id).push(e);
+    const pubBase = r.base.replace(/-p\d+$/, "");
+    if (!byBase.has(pubBase)) byBase.set(pubBase, []);
+    byBase.get(pubBase).push(e);
+  }
+  return { byId, byBase, count: rows.length };
+}
+
 function build() {
   const { file: listFile, data: listData } = readList();
+  // The reports are still read -- as the independent recomputation this ledger is
+  // checked against, and for the exhibit file inventory, which is a fact about
+  // Exhibits/PDFs rather than about a citation.
   const groups = tally.groupReports(SUPPORT_DIR, PDF_DIR);
+  const store = storeEntries();
 
   // Two exhibit sets for one citing list mean a publication was captured again
   // while the earlier PDFs were still filed. Only one set can be counted, so
@@ -81,6 +152,21 @@ function build() {
   const duplicates = [...byId.entries()].filter(([, bases]) => bases.length > 1);
 
   const rows = [];
+  // Every figure below is computed twice: once from the store and once from the
+  // reports that produced it. Any disagreement lands here and fails the run, per
+  // the rule that a mismatch is a defect rather than a choice of source.
+  const diffs = [];
+  const FIGURES = [
+    "records",
+    "independent",
+    "dependent",
+    "self_pi",
+    "self_former_pi",
+    "review",
+    "withheld_language",
+    "unique_records",
+    "unique_independent",
+  ];
 
   for (const pub of listData.publications || []) {
     const id = tally.citesId(pub.citesUrl);
@@ -88,13 +174,52 @@ function build() {
     // Match on the cites id only when there is one: an empty id would match
     // every other publication whose citing list could not be resolved.
     const group = id ? [...groups.values()].find((g) => g.cites_id === id) : undefined;
-    const captured = Boolean(group);
 
-    const t = captured ? tally.tallyEntries(group.entries) : tally.emptyTally();
+    // Tally the rows from the store. The report group still supplies the page
+    // count and the exhibit file list; when a publication has store rows they
+    // drive every figure.
+    const entries = (id && store.byId.get(id)) || [];
+    const t = tally.tallyEntries(entries);
+    // A publication with no store rows at all -- unfiled, or a citing list never
+    // captured -- falls back to the reports, which is the only source left.
+    const fromStore = entries.length > 0;
+    const captured = fromStore || Boolean(group);
+    if (group) {
+      const tr = tally.tallyEntries(group.entries);
+      if (!fromStore) {
+        // Filed exhibit pages whose rows are not in the store: the store would
+        // report zero for a publication that plainly has citations on file. Do
+        // not quietly fall back to the reports -- say which publication is
+        // missing rows so the store gets rebuilt.
+        if (tr.records > 0) {
+          diffs.push({
+            cites_id: id,
+            publication: pub.title,
+            figure: "records (captured pages, no rows in the store)",
+            store: 0,
+            reports: tr.records,
+          });
+        }
+      } else {
+        for (const k of FIGURES) {
+          if (tr[k] !== t[k]) {
+            diffs.push({
+              cites_id: id,
+              publication: pub.title,
+              figure: k,
+              store: t[k],
+              reports: tr[k],
+            });
+          }
+        }
+      }
+    }
     // A publication showing no count on the profile needs no exhibit, so it
     // must not add a page to the expected total.
     const expected = citedBy ? tally.expectedPages(citedBy) : 0;
-    const pages = captured ? group.pages.length : 0;
+    const pages = group
+      ? group.pages.length
+      : new Set(entries.map((e) => e.page)).size;
 
     rows.push({
       cites_id: id,
@@ -254,6 +379,13 @@ function build() {
   const global = {
     snapshot_date: listData.snapshot_date,
     snapshot_source: listData.source || "publications list snapshot",
+    // Stated in the file itself, so a quoted figure can be traced to where it
+    // was computed rather than assumed.
+    figures_source:
+      "Database/citation-catalog.sqlite (rows with filed = 1 and superseded_at = ''), " +
+      "recomputed independently from the report JSON in Exhibits/Supporting and " +
+      "Exhibits/PDFs; the two agreed figure by figure when this file was written",
+    store_rows_counted: store.count,
     publication_list_file: `Exhibits/Supporting/${listFile}`,
     publications_total: (listData.publications || []).length,
     publications_captured: capturedRows.length,
@@ -320,7 +452,15 @@ function build() {
       "because Google Scholar publishes no English-only total for a profile.",
   };
 
-  return { global, rows, duplicates };
+  // Rows in the store under a citing id the snapshot list does not mention -- a
+  // publication captured after the list was taken, or one removed from the
+  // profile. Either way its rows would be left out of every total below.
+  const listedIds = new Set(
+    (listData.publications || []).map((p) => tally.citesId(p.citesUrl)).filter(Boolean)
+  );
+  const orphanCitesIds = [...store.byId.keys()].filter((id) => id && !listedIds.has(id));
+
+  return { global, rows, duplicates, diffs, orphanCitesIds };
 }
 
 const CSV_COLUMNS = [
@@ -516,8 +656,47 @@ function printSummary(ledger) {
   );
 }
 
+// Every reason this ledger must not be written, as human-readable lines. Empty
+// means the store and the reports agree figure by figure. Pulled out of main()
+// so tools/test-catalog-merge.js can feed it a fabricated disagreement -- the
+// case the gate exists for cannot be produced from real data without corrupting
+// the store first.
+function findDefects(ledger) {
+  const out = [];
+  for (const d of ledger.diffs || []) {
+    out.push(
+      `cites=${d.cites_id} ${d.figure}: store ${d.store} vs reports ${d.reports}` +
+        `  ::  ${String(d.publication).slice(0, 70)}`
+    );
+  }
+  const listed = new Set((ledger.rows || []).map((r) => r.cites_id).filter(Boolean));
+  for (const id of [...new Set(ledger.orphanCitesIds || [])]) {
+    if (listed.has(id)) continue;
+    out.push(
+      `the store has citation rows for cites=${id}, which is not in the publication ` +
+        `list snapshot. Re-run tools/list-all-publications.js.`
+    );
+  }
+  return out;
+}
+
 function main() {
   const ledger = build();
+
+  // The disagreement gate. Nothing is written when it trips: a derived report
+  // that disagrees with the store is worse than no report, because the packet
+  // would quote one of two numbers with no record of which was checked.
+  const defects = findDefects(ledger);
+  if (defects.length) {
+    console.error(
+      `[ledger] DEFECT: the store and the reports do not agree. No ledger file was ` +
+        `written and no figure from either may be quoted for the packet until this ` +
+        `is resolved. This is not a choice of source -- investigate which side is wrong.`
+    );
+    for (const line of defects) console.error(`           ${line}`);
+    process.exitCode = 4;
+    return;
+  }
   if (asJson) {
     console.log(JSON.stringify(ledger, null, 2));
     return;
@@ -535,11 +714,13 @@ function main() {
   console.log(`[ledger] Full ledger:      ${jsonPath}`);
   console.log(`[ledger] Run history:      ${historyPath}`);
   console.log(
-    "\nRe-run after every batch. The dated file is the record; the CSV opens in a\n" +
-      "spreadsheet for per-article statistics, and the global block is the same\n" +
-      "figures for the packet. Counts are tied to the snapshot date shown above.\n" +
-      "The history file keeps one line per run, so growth across sessions is\n" +
-      "visible instead of being overwritten by the next rebuild."
+    "\nRe-run after every batch. This file is a DERIVED REPORT: the citation rows come\n" +
+      "from Database/citation-catalog.sqlite, which is the primary store, and every\n" +
+      "figure above was recomputed from the report JSON as a cross-check. Quote from\n" +
+      "this file so per-article and global statistics cannot drift apart, and rebuild\n" +
+      "it with: node tools/build-ledger.js\n" +
+      "Counts are tied to the snapshot date shown above. The history file keeps one\n" +
+      "line per run, so growth across sessions is visible rather than overwritten."
   );
 }
 
@@ -552,4 +733,4 @@ if (require.main === module) {
   }
 }
 
-module.exports = { build, toCsv, CSV_COLUMNS };
+module.exports = { build, toCsv, CSV_COLUMNS, storeEntries, findDefects };

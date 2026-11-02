@@ -2,26 +2,49 @@
 
 **File:** `Database/citation-catalog.sqlite`
 **Engine:** SQLite 3.54.0 via Node `node:sqlite` (`DatabaseSync`)
-**Schema version:** 3
+**Schema version:** 4
 **Built by:** `tools/build-catalog.js` · **Read by:** `tools/query-catalog.js`
-**Contents described here:** the build of 2026-11-01T21:58Z, Scholar snapshot 2026-10-31
+**Contents described here:** the merge of 2026-11-02T14:45Z, Scholar snapshot 2026-11-02
 
-> ## This database is a lookup aid, not the ledger
+> ## This database is the primary store
 >
-> Per the project instructions, **any figure quoted in the packet comes from
-> `Exhibits/Supporting/citation-ledger-<snapshot>.csv`** written by
-> `tools/build-ledger.js`. If a number here ever disagrees with that CSV, the CSV
-> is right and this database has a bug: report it, do not quote the database.
+> It is the durable copy of the independent-citation record. **Do not delete it.**
+> `row_uid` values minted here are quoted in review sheets and to a reviewer, and
+> a quoted identifier is only worth anything if it still means the same row next
+> month — which it cannot if the file is rebuilt from scratch.
 >
-> To keep that honest, `build-catalog.js` imports every counting rule from
-> `tools/tally.js` rather than reimplementing one, and re-derives its own totals
-> through `tally.js` at the end of every build, printing `ok`/`DIFF` per figure.
+> `Exhibits/Supporting/citation-ledger-<snapshot>.csv`, written by
+> `tools/build-ledger.js`, is a **derived report** of these rows and is what the
+> packet quotes from, so that per-article and global statistics come from one
+> place. It now reads its citation rows from here and recomputes them
+> independently from the report JSON as a cross-check.
 >
-> **Deleting this file is always safe.** It is rebuilt from the report JSON in
-> `Exhibits/Supporting/`, which remains the source of truth. That is also why it
-> lives in `Database/` and not in `Exhibits/` — the Exhibits folder is the
-> evidence packet that gets reviewed and filed, and a generated binary rewritten
-> on every run does not belong in it.
+> **If the store and the report-derived figures disagree, neither is right by
+> rule.** That disagreement is a defect to investigate, and no figure may be
+> quoted for the packet until it is resolved. Both tools exit non-zero rather
+> than pick a winner.
+>
+> To keep the two comparable, `build-catalog.js` imports every counting rule from
+> `tools/tally.js` rather than reimplementing one, and re-derives the totals
+> straight from the reports at the end of every build, printing `ok`/`DIFF` per
+> figure.
+>
+> **Backups.** A verified `VACUUM INTO` snapshot is taken into
+> `Database/Backups/` before any structural change or any merge that writes, and
+> the snapshot is reopened and counted before the run is called a success. The
+> snapshots are the recovery path if a merge ever goes wrong, so they are kept
+> outside `Exhibits/` and never deleted by a build. They are **not** committed to
+> git: each is several megabytes, they are written on nearly every run, and
+> committing them would add tens of megabytes of near-identical binaries to
+> history for files that are a safety net rather than a deliverable. The tracked
+> copy of the data is `Database/citation-catalog.sqlite` itself. If a snapshot
+> needs to survive long-term — before a rule change, say — copy it somewhere
+> tracked or outside the repository deliberately, rather than committing the
+> folder.
+>
+> It still lives in `Database/` and not in `Exhibits/` — the Exhibits folder is
+> the evidence packet that gets reviewed and filed, and a database is not
+> evidence.
 
 ---
 
@@ -29,15 +52,21 @@
 
 | Type | Name | Rows | Purpose |
 |---|---|---:|---|
-| table | `meta` | 9 | Snapshot identity, build time, and the role warning |
+| table | `meta` | 11 | Snapshot identity, build time, and the role and identity rules |
 | table | `publications` | 48 | The **cited** side — the PI's own papers |
-| table | `citations` | 1557 | The **citing** side — one row per Scholar result (1497 filed) |
+| table | `citations` | 1558 | The **citing** side — one row per Scholar result (1498 active, 60 retired) |
 | virtual | `citations_fts` | — | FTS5 index over title, authors, snippet |
+| view | `v_active` | 1498 | The rows that are the current record: filed and not superseded |
+| view | `v_review` | 94 | The unresolved citations, bucketed for a decision sheet |
 | view | `v_patents` | 15 | Citing patents and applications, kept separate from articles |
-| view | `v_independent_counted` | 1033 | The rows the ledger counts as independent |
-| view | `v_non_english` | 58 | Entries the language screen holds back, with the reason (52 filed, 44 of them withheld from the count) |
+| view | `v_independent_counted` | 1030 | The rows the ledger counts as independent |
+| view | `v_non_english` | 58 | Entries the language screen holds back, with the reason (52 active, 44 of them withheld from the count) |
 | view | `v_language_editions` | 6 | One article shown in two languages within a citing list |
 | view | `v_pub_stats` | 48 | Per-publication rollup |
+| index | `idx_citations_natural_key` | — | **UNIQUE** `(base, page, row_index)` — the key the merge upserts on |
+| index | `idx_citations_row_uid` | — | lookup by the identifier a reviewer quotes |
+| index | `idx_citations_work_key` | — | group copies of one citing work within a citing list |
+| index | `idx_citations_superseded` | — | separate retired history from the active record |
 | index | `idx_citations_cites_id` | — | join to `publications` |
 | index | `idx_citations_status` | — | filter by decision |
 | index | `idx_citations_work_type` | — | filter article vs patent |
@@ -48,8 +77,9 @@
 | index | `idx_citations_non_english` | — | separate non-English rows for statistics |
 | trigger | `citations_ai` / `_ad` / `_au` | — | keep `citations_fts` in step |
 
-Row counts above are the 2026-10-31 build. They change with every capture; the
-authoritative figures are always in the ledger CSV.
+Row counts above are the 2026-11-02 merge. They change with every capture; the
+figures quoted in the packet are always in the dated ledger CSV, which is built
+from these rows.
 
 ---
 
@@ -65,7 +95,7 @@ erDiagram
         TEXT    authors "full author list from the profile"
         TEXT    venue
         TEXT    year
-        INTEGER cited_by_at_snapshot "count Scholar showed on 2026-10-29"
+        INTEGER cited_by_at_snapshot "count Scholar showed on 2026-11-02"
         TEXT    paper_url "profile view_citation url"
         TEXT    cites_url "the citing-articles url"
         TEXT    exhibit_base "report and PDF base name"
@@ -79,7 +109,8 @@ erDiagram
     }
 
     citations {
-        INTEGER id PK "rowid"
+        TEXT    row_uid UK "cit-000123 — the identifier to quote, minted once"
+        INTEGER id PK "frozen legacy alias of row_uid"
         TEXT    cites_id FK "which PI paper is cited"
         TEXT    base "capture base name"
         INTEGER page "citing-list page number"
@@ -122,9 +153,11 @@ erDiagram
         TEXT    full_authors "JSON array"
         TEXT    pubmed_near_miss "JSON object or NULL"
         TEXT    openalex_near_miss "JSON object or NULL"
+        TEXT    external_matched "JSON array — names the external record agreed on"
         INTEGER is_highlighted "derived — tally.isHighlighted"
         TEXT    paper_key "derived — tally.paperKey, dedupe identity"
         INTEGER is_primary_copy "derived — the copy a distinct-paper count uses"
+        TEXT    work_key "derived — tally.paperKey, groups copies of one work"
         TEXT    work_type "derived — article | patent | patent-application | unknown"
         TEXT    patent_number "derived"
         TEXT    patent_kind "derived — A1 A2 B1 B2"
@@ -133,6 +166,11 @@ erDiagram
         INTEGER archived "row came from Exhibits/Archive"
         TEXT    snapshot "capture timestamp of its page"
         TEXT    report_file "the .report.json it came from"
+        TEXT    origin_dir "folder the report was read from — provenance"
+        TEXT    stands_for_row_uid "the ROW that stands for this work, when this is a copy"
+        TEXT    superseded_at "date retired, empty while active"
+        TEXT    replaced_by_row_uid "the ROW that took its place"
+        TEXT    supersede_reason "plain-language why it was retired"
     }
 
     meta {
@@ -142,10 +180,14 @@ erDiagram
 ```
 
 **No `FOREIGN KEY` clause is declared.** The `publications` → `citations` link is
-logical, on `cites_id`. This is deliberate: a full rebuild deletes and rewrites
-both tables from the same source in one transaction, so an enforced constraint
-would add nothing, and it would break the single-publication upsert path, which
-can legitimately receive citation rows before its parent row exists.
+logical, on `cites_id`. This is deliberate: the merge writes both from the same
+source in one transaction, so an enforced constraint would add nothing, and it
+would break the single-publication upsert path, which can legitimately receive
+citation rows before its parent row exists.
+
+`row_uid` → `row_uid` links are also logical, not enforced: `stands_for_row_uid`
+and `replaced_by_row_uid` can point at a row in a capture that has not been
+merged yet, and a constraint would refuse a legitimate incremental run.
 
 ---
 
@@ -164,19 +206,20 @@ CREATE TABLE meta (
 );
 ```
 
-Keys written on a full build:
+Keys written on a merge:
 
 | Key | Example value | Meaning |
 |---|---|---|
-| `schema_version` | `3` | Builder refuses an upsert into a mismatched DB |
-| `built_at` | `2026-11-01T21:58:38.212Z` | Full rebuild time |
-| `snapshot_date` | `2026-10-31` | The Scholar snapshot every count ties to |
+| `schema_version` | `4` | Builder migrates a mismatched DB in place rather than refusing |
+| `built_at` | `2026-11-02T14:45:20.705Z` | Last write |
+| `snapshot_date` | `2026-11-02` | The Scholar snapshot every count ties to |
 | `snapshot_source` | `https://scholar.google.com/citations?hl=en&user=dNLaKGAAAAAJ` | Profile the list came from |
-| `publication_list_file` | `Exhibits/Supporting/publications-list-2026-10-31.json` | The dated snapshot file |
+| `publication_list_file` | `Exhibits/Supporting/publications-list-2026-11-02.json` | The dated snapshot file |
 | `report_file_count` | `175` | Report JSON files read, filed or not |
 | `publications_total` | `48` | Publications in the snapshot |
 | `filed_rule` | `citations.filed = 1 means the exhibit PDF is currently in Exhibits/PDFs (Archive excluded).` | Definition of "filed" |
-| `role` | `LOOKUP AID ONLY. Authoritative figures come from citation-ledger-<snapshot>.csv ...` | Travels with the file, so anyone opening it directly is told |
+| `role` | `PRIMARY DURABLE STORE ... If the two disagree, that is a defect to investigate and NO figure may be quoted for the packet until it is resolved.` | Travels with the file, so anyone opening it directly is told what it is |
+| `identity_rule` | `row_uid is the identifier to quote. id is its frozen legacy alias. The natural key is (base, page, row_index) ... duplicate_of holds Scholar's cid and is NOT a row key ... stands_for_row_uid is the pointer that resolves to one row.` | The identity contract, stored next to the data it governs |
 
 `--pub=<base>` additionally writes `last_upsert_base` and `last_upsert_at`.
 
@@ -224,8 +267,17 @@ ledger reports it as needing no exhibit rather than as missing.
 -- One row per Google Scholar row observed on a citing-articles page. A paper
 -- Scholar lists twice appears twice here, which is what the exhibit shows;
 -- is_primary_copy marks the copy a distinct-paper count should use.
+--
+-- Identity, schema v4. The id column is the legacy integer alias, frozen on
+-- 2026-11-02 so numbers already quoted still resolve; it is never renumbered
+-- again. row_uid is the identifier to quote from now on, minted once on insert
+-- from the id the row had at migration time and never reused.
+-- (base, page, row_index) is the natural key the merge upserts on -- unique
+-- across the whole table, verified 2026-11-02. cites_id is NOT a row key: four
+-- publications carry two dated base names under one cites_id.
 CREATE TABLE citations (
   id                  INTEGER PRIMARY KEY,
+  row_uid             TEXT UNIQUE NOT NULL,
   cites_id            TEXT NOT NULL,
   base                TEXT NOT NULL,
   page                INTEGER NOT NULL DEFAULT 1,
@@ -268,9 +320,11 @@ CREATE TABLE citations (
   full_authors        TEXT NOT NULL DEFAULT '[]',
   pubmed_near_miss    TEXT,
   openalex_near_miss  TEXT,
+  external_matched    TEXT NOT NULL DEFAULT '[]',
   is_highlighted      INTEGER NOT NULL DEFAULT 0,
   paper_key           TEXT NOT NULL DEFAULT '',
   is_primary_copy     INTEGER NOT NULL DEFAULT 1,
+  work_key            TEXT NOT NULL DEFAULT '',
   work_type           TEXT NOT NULL DEFAULT 'article',
   patent_number       TEXT NOT NULL DEFAULT '',
   patent_kind         TEXT NOT NULL DEFAULT '',
@@ -278,9 +332,22 @@ CREATE TABLE citations (
   filed               INTEGER NOT NULL DEFAULT 0,
   archived            INTEGER NOT NULL DEFAULT 0,
   snapshot            TEXT NOT NULL DEFAULT '',
-  report_file         TEXT NOT NULL DEFAULT ''
+  report_file         TEXT NOT NULL DEFAULT '',
+  origin_dir          TEXT NOT NULL DEFAULT '',
+  stands_for_row_uid  TEXT NOT NULL DEFAULT '',
+  superseded_at       TEXT NOT NULL DEFAULT '',
+  replaced_by_row_uid TEXT NOT NULL DEFAULT '',
+  supersede_reason    TEXT NOT NULL DEFAULT ''
 );
 
+-- The natural key. UNIQUE is the point: it is what a merge upserts on and what
+-- stops two report entries claiming one page position. row_index uses -1 rather
+-- than NULL when Scholar gives no position, because a UNIQUE index treats every
+-- NULL as distinct and would let two such rows coexist.
+CREATE UNIQUE INDEX idx_citations_natural_key ON citations(base, page, row_index);
+CREATE INDEX idx_citations_row_uid ON citations(row_uid);
+CREATE INDEX idx_citations_work_key ON citations(cites_id, work_key);
+CREATE INDEX idx_citations_superseded ON citations(superseded_at);
 CREATE INDEX idx_citations_cites_id ON citations(cites_id);
 CREATE INDEX idx_citations_status ON citations(status);
 CREATE INDEX idx_citations_work_type ON citations(work_type);
@@ -291,6 +358,27 @@ CREATE INDEX idx_citations_edition ON citations(edition_key);
 ```
 
 #### Column groups
+
+**Identity — what a row is called.** `row_uid` is the identifier to quote, in a
+`cit-000123` shape that reads as an identifier when written into a review sheet or
+a letter. It is minted once, on insert, from the `id` the row happened to have
+when schema v4 was applied on 2026-11-02, and it is **never reused or reassigned**.
+`id` remains as a frozen legacy alias so a number quoted before that date still
+resolves; nothing new should quote it.
+
+| Column | Contract |
+|---|---|
+| `row_uid` | `UNIQUE NOT NULL`, minted on insert only. Survives a re-capture, an archive move, and every rebuild |
+| `id` | Legacy integer alias, frozen 2026-11-02. Never renumbered again, never the basis of a new reference |
+| `(base, page, row_index)` | The **natural key**, UNIQUE across the table. What the merge upserts on, and what a `row_uid` permanently points at |
+| `cites_id` | Not a row key. Four publications carry two dated base names under one `cites_id` |
+| `cid` | Not a row key either. Scholar's result id repeats across citing lists — one `cid` matched three rows on 2026-11-02 — so `duplicate_of`, which stores a `cid`, is provenance only |
+| `stands_for_row_uid` | A pointer that *does* resolve: the ROW standing for this work, when this row is a copy |
+| `replaced_by_row_uid` | The ROW that took this retired row's place, where a re-capture replaced it one for one |
+
+A merge may refresh any column except these five: `id`, `row_uid`, `base`, `page`,
+`row_index`. Those are fixed at insert, which is the whole mechanism that makes a
+quoted number mean the same row next month.
 
 **Position — where this row was seen.** `(cites_id, base, page, row_index)`
 reproduces the exhibit exactly. `cid` is Scholar's own result id.
@@ -315,25 +403,40 @@ judged from; `author_source` says where it came from.
 arrays — store as text, query with `json_each()`. They name *which* authors
 caused a match, so a decision can be re-checked without re-browsing.
 
+`external_matched` is a separate JSON array and it is the one to read on a row an
+external record contradicted: `tools/capture-citations.js` fills it with
+`matched_authors + matched_pi + matched_former_pi` from the external verdict, so
+a name can appear twice (once from each side of the match) and a display should
+collapse repeats. On the 2026-11-02 store the six contradicted rows all carry
+their overlap here and none of them carries it in `matched_authors`, which the
+Scholar-side step leaves empty. Reading the wrong column is not a cosmetic
+mistake — it shows "no overlap" beside a row whose `attention_reason` names a
+specific person, which is why `v_review`, `tools/build-review-sheet.js`,
+`tools/query-catalog.js review` and the dashboard's review section all prefer
+`external_matched` and fall back to `matched_authors`.
+
 **The decision.** `status` is the classification; `is_highlighted` is whether it
 is counted. These are not the same thing, and that gap is the point.
 
-| `status` | rows (filed) | Meaning |
+Counts below are the **active** rows — `v_active`, filed and not superseded —
+which is the set every default query and the ledger use.
+
+| `status` | rows (active) | Meaning |
 |---|---:|---|
-| `INDEPENDENT` | 1080 | Shares no author with the cited paper |
+| `INDEPENDENT` | 1077 | Shares no author with the cited paper |
 | `DEPENDENT` | 322 | Shares an author |
-| `REVIEW` | 90 | Unresolved — never counted either way |
+| `REVIEW` | 94 | Unresolved — never counted either way |
 | `SELF (PI)` | 0 | Lists RD Cummings |
 | `SELF (FORMER PI)` | 5 | Lists UR Desai |
 
 **Corroboration.** Google Scholar is primary; an external record never *promotes*
 a row, it only confirms or casts doubt.
 
-| `confirm_state` | rows (filed) | Meaning |
+| `confirm_state` | rows (active) | Meaning |
 |---|---:|---|
-| `confirmed` | 676 | PubMed or OpenAlex published a complete list with no overlap |
-| `unverified-coverage` | 414 | Not indexed externally, Scholar's own list complete — counted, and flagged for a spot-check. Typical of patents, theses, preprints |
-| `unresolved` | 74 | Not indexed and Scholar's list truncated — not counted |
+| `confirmed` | 677 | PubMed or OpenAlex published a complete list with no overlap |
+| `unverified-coverage` | 413 | Not indexed externally, Scholar's own list complete — counted, and flagged for a spot-check. Typical of patents, theses, preprints |
+| `unresolved` | 75 | Not indexed and Scholar's list truncated — not counted |
 | `contradicted` | 6 | External list shows an overlap — pulled back to REVIEW |
 | *(empty)* | 327 | Not cross-checked, because only independent candidates are |
 
@@ -391,7 +494,8 @@ both are known — that is provenance, not a duplicate claim.
 |---|---|
 | `doi` | Extracted from the result link, else from the external record. Empty when neither publishes one |
 | `edition_key` | `doi:<prefix>:<article id>:<author signature>`; empty when it cannot be proven |
-| `duplicate_of` | The `cid` of the copy this row stands for; empty for the copy that stands |
+| `duplicate_of` | The `cid` of the copy this row stands for; empty for the copy that stands. **Provenance only** — a `cid` repeats across citing lists, so it cannot resolve to a row |
+| `stands_for_row_uid` | The `row_uid` of the copy that stands. This is the pointer that resolves, and it is scoped to the same `cites_id` and `cid` so it cannot land on a copy in an unrelated citing list |
 | `is_language_edition` | `1` for a held-back edition, `0` for the copy that stands for the work |
 | `is_edition_primary` | `1` for the copy that stands — the mirror of the above |
 | `edition_note` | Plain-language explanation, naming the copy and page it duplicates |
@@ -424,14 +528,35 @@ that is intended: the Chinese row publishes no DOI, so nothing can be proven. It
 is excluded from the counted totals by its language flag, which is the correct
 answer for it.
 
+**Duplicate versions of one citing paper.** Scholar lists a preprint and its
+final article, or a publisher copy and a repository or thesis copy, as separate
+rows. Both are stored, because both appear on the printed exhibit, and both are
+highlighted when both are independent — the exhibit must match the page.
+
+| Column | Meaning |
+|---|---|
+| `paper_key` | `tally.paperKey` — the dedupe identity used within one citing list |
+| `work_key` | The same key, kept as its own column so copies group across capture sets, not only inside one publication. Indexed with `cites_id` |
+| `is_primary_copy` | `1` on the copy a distinct-paper count uses; `0` on the extra copies |
+
+On the 2026-11-02 snapshot, 1498 active rows carry a `work_key` covering **1480
+distinct works** — Scholar shows 18 extra copies. 18 rows are non-primary. The
+row-based figure describes the exhibit pages; the distinct figure is what to
+quote when saying how many papers cite the work.
+
+A language edition is a *different* relationship and is handled a step earlier:
+it is not marked and not counted at all, whether or not it is the primary copy,
+because it is the same citing paper as the row it duplicates. See
+`stands_for_row_uid` above.
+
 **Work type — article or patent.** Derived by `tools/work-type.js`, never stored
 raw. Only positive evidence counts: a patent-server link, or a venue string
 naming a patent document. Titles and snippets are **not** scanned, so a journal
 article *about* patents is not misfiled.
 
-| `work_type` | rows (filed) | Counted | Evidence recorded |
+| `work_type` | rows (active) | Counted | Evidence recorded |
 |---|---:|---:|---|
-| `article` | 1475 | 1020 | *(none)* |
+| `article` | 1476 | 1017 | *(none)* |
 | `patent` | 10 | 6 | `link host patents.google.com; Scholar venue text names a patent document` |
 | `patent-application` | 5 | 2 | same |
 | `unknown` | 7 | 5 | `venue text mentions "patents" but shows no patent document` |
@@ -440,8 +565,8 @@ article *about* patents is not misfiled.
 in a journal whose *name* contains "patents" — several sit on the citing list of
 *An update on recent patents on thrombin inhibitors* — so the venue mentions
 patents without being one. They are counted as citations either way; the flag only
-stops them being filed as patents, and surfaces them under `review`. Guessing would
-either inflate industry uptake or bury the doubt.
+stops them being filed as patents, and surfaces them under `attention`. Guessing
+would either inflate industry uptake or bury the doubt.
 
 Patents are never folded into the article total. They are a separate view over
 the same rows.
@@ -449,11 +574,23 @@ the same rows.
 **Provenance.** `filed` is denormalised from `publications` so a query filters
 without a join. `archived` marks a row read from `Exhibits/Archive`. `snapshot`
 is the capture timestamp of that page; `report_file` names the exact JSON.
+`origin_dir` names the *folder* it was read from, relative to the project root,
+so a row states whether it came from `Supporting`, `Archive`, or one of the dated
+`Pre-*` backup folders a re-capture or a rule re-apply leaves behind — without a
+join and without re-reading the JSON.
+
+**Retirement.** A row is never deleted. When its exhibit PDF leaves
+`Exhibits/PDFs`, or its report file stops being scanned, the builder sets
+`filed = 0`, stamps `superseded_at` with the date, writes `supersede_reason` in
+plain language, and — where the same `cites_id` has filed rows under a different
+base — records `replaced_by_row_uid`. `v_active` excludes those rows, so every
+default count reads the current Scholar record while the history stays queryable
+with `--all`.
 
 ```mermaid
 flowchart LR
     A["Report entry<br/>from a .report.json"] --> B["tally.isHighlighted()<br/>→ is_highlighted"]
-    A --> C["tally.paperKey()<br/>→ paper_key"]
+    A --> C["tally.paperKey()<br/>→ paper_key, work_key"]
     A --> D["tally.uniquePapers()<br/>→ is_primary_copy"]
     A --> G["tally.editionKey()<br/>markLanguageEditions()<br/>→ edition_key, duplicate_of,<br/>is_language_edition, edition_note"]
     A --> E["work-type.classifyWork()<br/>→ work_type, patent_number,<br/>patent_kind, work_type_evidence"]
@@ -512,10 +649,62 @@ author names are found without the accents.
 ### 3.5 Views
 
 ```sql
+-- The rows that make up the current record: filed exhibits that have not been
+-- retired. Every default count and every listing reads through this, which is
+-- what keeps a quoted figure equal to the exhibit packet rather than to the sum
+-- of every capture ever made. Widen with --all to see superseded history.
+CREATE VIEW v_active AS
+SELECT c.* FROM citations c WHERE c.filed = 1 AND c.superseded_at = '';
+
+-- The unresolved citations, bucketed the way a person reads them. This is the
+-- queue behind the review subcommand of tools/query-catalog.js and the
+-- dashboard's review section, so both name the same rows in the same buckets.
+--   1 contradicted        an external record publishes a complete author list
+--                         that overlaps the PI's, so Scholar's list is wrong
+--   2 external-no-overlap an external record has a complete list with no
+--                         overlap, but Scholar's own list is truncated, so the
+--                         row is not promoted to independent on it alone
+--   3 unresolvable        neither PubMed nor OpenAlex indexes the paper and
+--                         Scholar's list is incomplete -- nothing to compare
+-- Bucketing reads attention_reason, written by the corroboration step at the
+-- time, rather than external_source alone: a row can name a source and still be
+-- unresolvable when that source returned nothing for it.
+CREATE VIEW v_review AS
+SELECT
+  c.row_uid,
+  CASE
+    WHEN c.attention_reason LIKE 'contradicted%' THEN '1 contradicted'
+    WHEN c.attention_reason LIKE 'external list shows no overlap%' THEN '2 external-no-overlap'
+    ELSE '3 unresolvable'
+  END AS bucket,
+  c.cites_id, p.title AS cited_work, p.venue AS cited_venue, p.year AS cited_year,
+  c.cid, c.title,
+  COALESCE(NULLIF(c.authors_used, ''), c.authors) AS scholar_byline,
+  c.truncated, c.status, c.confirm_state,
+  c.attention_reason AS why,
+  c.external_source, c.external_url, c.external_authors,
+  -- Both overlap columns: external_matched is the corroboration one and the one
+  -- that is actually populated on a contradicted row; matched_authors is the
+  -- older Scholar-side field. Read external_matched first and fall back.
+  c.external_matched, c.matched_authors,
+  c.language_flag, c.link, c.base, c.page, c.row_index, c.id
+FROM citations c
+LEFT JOIN publications p ON p.cites_id = c.cites_id
+WHERE c.status = 'REVIEW' AND c.filed = 1 AND c.superseded_at = ''
+ORDER BY bucket, c.base, c.page, c.row_index;
+```
+
+On the 2026-11-02 snapshot `v_review` holds **94 rows: 6 contradicted, 13 with an
+external list showing no overlap, 75 unresolvable**. Each bucket lines up exactly
+with a `confirm_state` — `contradicted`, `confirmed`, `unresolved` — which is a
+useful cross-check: bucket 2 rows are confirmed by an external record but Scholar
+still cannot corroborate them, so they are not counted.
+
+```sql
 -- Citing patents, separable from the article citations by design. Both the
 -- granted form and an application publication count as the patent family; a
 -- work_type of 'unknown' (a venue that merely mentions patents) is excluded
--- here and surfaces under the review query instead.
+-- here and surfaces under the attention query instead.
 CREATE VIEW v_patents AS
 SELECT
   c.patent_number,
@@ -531,12 +720,14 @@ SELECT
   c.confirm_state,
   c.is_highlighted,
   c.filed,
+  c.superseded_at,
   c.work_type_evidence AS evidence,
   p.title AS cited_title,
   p.cites_id,
   c.base,
   c.page,
   c.row_index,
+  c.row_uid,
   c.id
 FROM citations c
 LEFT JOIN publications p ON p.cites_id = c.cites_id
@@ -544,13 +735,13 @@ WHERE c.work_type IN ('patent', 'patent-application');
 ```
 
 ```sql
--- The rows the ledger counts as independent: filed exhibits only, and
+-- The rows the ledger counts as independent: active exhibits only, and
 -- is_highlighted comes from tally.isHighlighted, so it already excludes a
 -- non-English entry or one whose author list no source has settled.
 CREATE VIEW v_independent_counted AS
 SELECT c.*
 FROM citations c
-WHERE c.is_highlighted = 1 AND c.filed = 1;
+WHERE c.is_highlighted = 1 AND c.filed = 1 AND c.superseded_at = '';
 ```
 
 ```sql
@@ -577,6 +768,8 @@ SELECT
   c.page,
   c.row_index,
   c.filed,
+  c.superseded_at,
+  c.row_uid,
   c.id
 FROM citations c
 LEFT JOIN publications p ON p.cites_id = c.cites_id
@@ -613,13 +806,20 @@ SELECT
   c.row_index,
   c.doi,
   c.duplicate_of,
+  -- duplicate_of is Scholar's cid, which repeats across citing lists and so does
+  -- not identify a row. stands_for_row_uid is the pointer that does: it names the
+  -- single row that stands for the work.
+  c.stands_for_row_uid,
   c.title,
   c.language_flag,
   c.status,
   c.is_highlighted,
   c.edition_note,
   c.base,
-  c.filed
+  c.filed,
+  c.superseded_at,
+  c.row_uid,
+  c.id
 FROM citations c
 LEFT JOIN publications p ON p.cites_id = c.cites_id
 WHERE EXISTS (
@@ -633,8 +833,8 @@ ORDER BY c.cites_id, c.edition_key, c.is_language_edition DESC, c.page;
 ```
 
 ```sql
--- Per-publication rollup. Totals are filed-only; join on filed = 1 rows so an
--- archived capture cannot add to a count.
+-- Per-publication rollup. Totals are active-only -- filed and not superseded --
+-- so neither an archived capture nor a retired re-capture can add to a count.
 CREATE VIEW v_pub_stats AS
 SELECT
   p.cites_id,
@@ -648,20 +848,20 @@ SELECT
   p.pages_expected,
   p.pages_captured,
   p.pages_complete,
-  SUM(CASE WHEN c.filed = 1 THEN 1 ELSE 0 END) AS records,
-  SUM(CASE WHEN c.filed = 1 AND c.is_highlighted = 1 THEN 1 ELSE 0 END) AS independent,
-  SUM(CASE WHEN c.filed = 1 AND c.is_highlighted = 1 AND c.confirm_state = 'confirmed' THEN 1 ELSE 0 END) AS independent_confirmed,
-  SUM(CASE WHEN c.filed = 1 AND c.is_highlighted = 1 AND c.confirm_state = 'unverified-coverage' THEN 1 ELSE 0 END) AS independent_coverage,
-  SUM(CASE WHEN c.filed = 1 AND c.status = 'DEPENDENT' THEN 1 ELSE 0 END) AS dependent,
-  SUM(CASE WHEN c.filed = 1 AND c.status = 'SELF (PI)' THEN 1 ELSE 0 END) AS self_pi,
-  SUM(CASE WHEN c.filed = 1 AND c.status = 'SELF (FORMER PI)' THEN 1 ELSE 0 END) AS self_former_pi,
-  SUM(CASE WHEN c.filed = 1 AND c.status = 'REVIEW' THEN 1 ELSE 0 END) AS review,
-  SUM(CASE WHEN c.filed = 1 AND c.language_flag <> '' THEN 1 ELSE 0 END) AS non_english,
-  SUM(CASE WHEN c.filed = 1 AND c.withheld_for_language = 1 THEN 1 ELSE 0 END) AS non_english_withheld,
-  SUM(CASE WHEN c.filed = 1 AND c.is_non_english = 0 THEN 1 ELSE 0 END) AS english_records,
-  SUM(CASE WHEN c.filed = 1 AND c.is_non_english = 0 AND c.is_highlighted = 1 THEN 1 ELSE 0 END) AS english_independent,
-  SUM(CASE WHEN c.filed = 1 AND c.work_type IN ('patent','patent-application') THEN 1 ELSE 0 END) AS patents,
-  SUM(CASE WHEN c.filed = 1 AND (c.needs_attention = 1 OR c.status = 'REVIEW') THEN 1 ELSE 0 END) AS needs_attention
+  SUM(CASE WHEN c.filed = 1 AND c.superseded_at = '' THEN 1 ELSE 0 END) AS records,
+  SUM(CASE WHEN c.filed = 1 AND c.superseded_at = '' AND c.is_highlighted = 1 THEN 1 ELSE 0 END) AS independent,
+  SUM(CASE WHEN c.filed = 1 AND c.superseded_at = '' AND c.is_highlighted = 1 AND c.confirm_state = 'confirmed' THEN 1 ELSE 0 END) AS independent_confirmed,
+  SUM(CASE WHEN c.filed = 1 AND c.superseded_at = '' AND c.is_highlighted = 1 AND c.confirm_state = 'unverified-coverage' THEN 1 ELSE 0 END) AS independent_coverage,
+  SUM(CASE WHEN c.filed = 1 AND c.superseded_at = '' AND c.status = 'DEPENDENT' THEN 1 ELSE 0 END) AS dependent,
+  SUM(CASE WHEN c.filed = 1 AND c.superseded_at = '' AND c.status = 'SELF (PI)' THEN 1 ELSE 0 END) AS self_pi,
+  SUM(CASE WHEN c.filed = 1 AND c.superseded_at = '' AND c.status = 'SELF (FORMER PI)' THEN 1 ELSE 0 END) AS self_former_pi,
+  SUM(CASE WHEN c.filed = 1 AND c.superseded_at = '' AND c.status = 'REVIEW' THEN 1 ELSE 0 END) AS review,
+  SUM(CASE WHEN c.filed = 1 AND c.superseded_at = '' AND c.language_flag <> '' THEN 1 ELSE 0 END) AS non_english,
+  SUM(CASE WHEN c.filed = 1 AND c.superseded_at = '' AND c.withheld_for_language = 1 THEN 1 ELSE 0 END) AS non_english_withheld,
+  SUM(CASE WHEN c.filed = 1 AND c.superseded_at = '' AND c.is_non_english = 0 THEN 1 ELSE 0 END) AS english_records,
+  SUM(CASE WHEN c.filed = 1 AND c.superseded_at = '' AND c.is_non_english = 0 AND c.is_highlighted = 1 THEN 1 ELSE 0 END) AS english_independent,
+  SUM(CASE WHEN c.filed = 1 AND c.superseded_at = '' AND c.work_type IN ('patent','patent-application') THEN 1 ELSE 0 END) AS patents,
+  SUM(CASE WHEN c.filed = 1 AND c.superseded_at = '' AND (c.needs_attention = 1 OR c.status = 'REVIEW') THEN 1 ELSE 0 END) AS needs_attention
 FROM publications p
 LEFT JOIN citations c ON c.cites_id = p.cites_id
 GROUP BY p.cites_id;
@@ -672,34 +872,36 @@ GROUP BY p.cites_id;
 ## 4. What is stored versus what is counted
 
 The most common mistake when reading this database is treating a row count as a
-filing figure. Four separate filters sit between them.
+filing figure. Five separate filters sit between them.
 
 ```mermaid
 flowchart TD
-    T["1557 rows stored"] --> A{"filed = 1 ?"}
-    A -- "no: 60 from superseded bases<br/>and Exhibits/Archive" --> X["excluded from every total<br/>kept for history, seeable with --all"]
-    A -- yes --> F["1497 filed rows"]
+    T["1558 rows stored"] --> RS{"superseded_at empty ?"}
+    RS -- "no: 60 retired by an archive move<br/>or a re-capture" --> X["excluded from every total<br/>kept for history, seeable with --all"]
+    RS -- yes --> A{"filed = 1 ?"}
+    A -- "no: 0 rows here<br/>retirement sets filed = 0 too" --> X
+    A -- yes --> F["1498 active rows = v_active"]
 
     F --> S{"status"}
-    S -- "DEPENDENT 322 / SELF 5 / REVIEW 90" --> Y["not independent"]
-    S -- "INDEPENDENT 1080" --> L{"is_non_english = 0 ?"}
+    S -- "DEPENDENT 322 / SELF 5 / REVIEW 94" --> Y["not independent"]
+    S -- "INDEPENDENT 1077" --> L{"is_non_english = 0 ?"}
     L -- "no: 47 rows" --> Z["excluded — needs a certified<br/>human translation"]
     L -- yes --> ED{"duplicate_of empty ?"}
     ED -- "no: 0 rows here" --> Z3["excluded — a language edition<br/>of a row already marked"]
     ED -- yes --> CS{"confirm_state settled ?"}
     CS -- "unresolved / contradicted: 0 rows here" --> Z2["excluded — author list unsettled<br/>those carry status REVIEW"]
-    CS -- "confirmed 655 / unverified-coverage 378" --> H["1033 counted independent<br/>= v_independent_counted"]
+    CS -- "confirmed 653 / unverified-coverage 377" --> H["1030 counted independent<br/>= v_independent_counted"]
 
     H --> D{"is_primary_copy = 1 ?"}
-    D -- "13 duplicate copies collapse" --> U["1020 distinct independent papers"]
+    D -- "13 duplicate copies collapse" --> U["1017 distinct independent papers"]
 ```
 
-The funnel is exact: 1080 - 47 - 0 - 0 = 1033, and 1033 - 13 = 1020. The last two
-branches are empty by construction — every row whose author list is unsettled is
-classified `REVIEW` rather than `INDEPENDENT`, and all three language editions in
-the corpus are also non-English, so they are already excluded one step earlier.
-`withheld_for_language` marks 44 of the 47: those are the rows a certified
-translation would bring back.
+The funnel is exact: 1558 − 60 = 1498 active, and 1077 − 47 − 0 − 0 = 1030, and
+1030 − 13 = 1017. The middle branches are empty by construction — every row whose
+author list is unsettled is classified `REVIEW` rather than `INDEPENDENT`, and all
+three language editions in the corpus are also non-English, so they are already
+excluded one step earlier. `withheld_for_language` marks 44 of the 47: those are
+the rows a certified translation would bring back.
 
     style H fill:#d9ead3
     style U fill:#d9ead3
@@ -716,10 +918,11 @@ Two row counts are reported on purpose:
   figure to quote when saying *how many papers cite this work*
 
 `is_primary_copy` marks the surviving copy, chosen by `tally.uniquePapers()` —
-the complete author list wins, an external confirmation breaks a tie. Currently 6
-filed rows are non-primary. A language edition is a separate exclusion, one step
-earlier: it is not marked and not counted at all, whether or not it is the
-primary copy, because it is the same citing paper as the row it duplicates.
+the complete author list wins, an external confirmation breaks a tie. 18 active
+rows are non-primary, 13 of them among the counted independent ones. A language
+edition is a separate exclusion, one step earlier: it is not marked and not
+counted at all, whether or not it is the primary copy, because it is the same
+citing paper as the row it duplicates.
 
 ---
 
@@ -728,27 +931,51 @@ primary copy, because it is the same citing paper as the row it duplicates.
 ```mermaid
 flowchart LR
     S[("Scholar<br/>citing pages")] -->|capture-citations.js| R[("*.report.json<br/>Exhibits/Supporting")]
-    R -->|"build-catalog.js<br/>full rebuild"| DB[("citation-catalog.sqlite<br/>Database/")]
-    R -->|"build-ledger.js"| L[("citation-ledger-&lt;snapshot&gt;.csv<br/>AUTHORITATIVE")]
+    R -->|"build-catalog.js<br/>MERGE, never replace"| DB[("citation-catalog.sqlite<br/>PRIMARY STORE")]
+    DB -->|"build-ledger.js<br/>+ recomputed from R"| L[("citation-ledger-&lt;snapshot&gt;.csv<br/>derived report")]
     S2["capture-citations.js<br/>via run-batch.js"] -->|after writeRunLog| U["build-catalog.js --pub=&lt;base&gt;"]
     U --> DB
     DB --> Q["query-catalog.js<br/>read-only"]
+    DB --> DASH["build-dashboard-data.js"]
+    DB -.->|"VACUUM INTO before any write"| B[("Database/Backups")]
 
-    style L fill:#fff2cc
     style DB fill:#cfe2f3
+    style L fill:#fff2cc
+    style B fill:#ead1dc
 ```
 
-- **Full rebuild** deletes and rewrites everything in one transaction, and removes
-  the `-wal` / `-shm` sidecars first so a stale log cannot be replayed into the
-  new file. It is idempotent in data: running it twice over the same reports
-  produces the same rows, and only `built_at` differs.
-- **`--pub=<base>`** replaces one publication's rows only. If no report file
-  exists for that base — which is exactly what a run blocked at a verification
-  wall produces — it writes nothing at all, so a failed capture cannot empty a
-  good publication. This was verified on 2026-10-31: a blocked attempt left the
-  database at its previous totals.
-- **Schema guard.** An upsert into a database whose `schema_version` differs from
-  the builder's is refused with exit code 3 rather than partially written.
+- **No argument means plan only.** The builder prints the merge plan — inserts,
+  updates, unchanged, retained — and writes nothing. `--write` is what saves.
+- **Merge, never replace.** Rows are upserted on `(base, page, row_index)`; new
+  rows are inserted, changed rows are updated, and `row_uid` is minted only on
+  insert. A row whose report file has gone away is **kept**, not deleted. The
+  builder no longer removes the file or its `-wal` / `-shm` sidecars, and
+  `createFresh` refuses to run if a database already exists.
+- **The pre-write guard decides whether anything is saved.** Before writing, the
+  plan is checked: a minted `row_uid` that is already in use, a natural-key
+  collision inside the run, an update that would move a row, a row with no
+  `row_uid`, or a projected count below the current one — any of these refuses
+  the write and exits 4 with nothing changed.
+- **After every write**, the store is re-read and compared with the identifiers
+  captured beforehand. If a row vanished or a `row_uid` now points elsewhere, the
+  run exits non-zero and prints the snapshot to restore.
+- **Retirement, not deletion.** Each run stamps `superseded_at` on rows whose
+  exhibit PDF or report file is no longer where it was. A re-capture under a new
+  dated `base` inserts new rows and retires the old ones, which are linked
+  forward with `replaced_by_row_uid`. `retireCount()` lets the builder tell
+  "nothing to do" from "about to change the store", so a no-op run takes no
+  snapshot.
+- **`--pub=<base>`** merges one publication's rows only, inside the same guard.
+  Ids are allocated from the **global** `MAX(id)`, not the subset's, so a
+  single-publication run cannot mint an identifier that already means another
+  row. If no report file exists for that base — which is exactly what a run
+  blocked at a verification wall produces — it writes nothing at all.
+- **Migration is in place and structural.** `needsMigration()` compares the
+  version string **and** the columns **and** every view's stored SQL against DDL,
+  so a migration that died part way is detected and finished, and a view edited
+  later is recreated rather than silently serving an old definition. Nothing in
+  it deletes a row, and it verifies the row count, the `id` → natural-key
+  mapping, and `row_uid` uniqueness after committing.
 - **`query-catalog.js` opens read-only.** The engine itself rejects a write; the
   `sql` subcommand additionally refuses anything that is not a single `SELECT` or
   `WITH`, including stacked statements and any write or schema keyword.
@@ -758,26 +985,46 @@ flowchart LR
 ## 6. Using it
 
 ```
-node tools/build-catalog.js                 full rebuild, prints reconciliation
-node tools/build-catalog.js --pub=<base>    upsert one publication
-node tools/build-catalog.js --check         report what it would write, touch nothing
+node tools/build-catalog.js                 merge plan only, writes nothing
+node tools/build-catalog.js --write         snapshot, migrate if needed, then merge
+node tools/build-catalog.js --pub=<base>    merge one publication (batch hook)
 
-node tools/query-catalog.js patents         citing patents
+node tools/query-catalog.js review          unresolved citations, by bucket
+node tools/query-catalog.js attention       anything still open, incl. flags
 node tools/query-catalog.js stats           totals, overall and per publication
+node tools/query-catalog.js patents         citing patents
 node tools/query-catalog.js search <terms>  full-text over title, authors, snippet
 node tools/query-catalog.js pub <text|id>   everything citing one publication
-node tools/query-catalog.js review          rows needing attention
 node tools/query-catalog.js editions        one article listed in two languages
 node tools/query-catalog.js nonenglish      entries held back for language
 node tools/query-catalog.js sql "SELECT…"   ad-hoc SELECT only
 node tools/query-catalog.js tables          object inventory
 ```
 
-Global switches: `--csv` for spreadsheet output, `--all` to widen to unfiled and
+Global switches: `--csv` for spreadsheet output, `--all` to widen to retired and
 archived captures, `--limit=N` to raise the default cap of 40.
 
-Default totals are filed-only, which is what makes `stats` reproduce the ledger.
-`--all` is a history view and its numbers are not filing figures.
+Default totals are the active set (`filed = 1 AND superseded_at = ''`), which is
+what makes `stats` reproduce the ledger. `--all` is a history view and its numbers
+are not filing figures.
+
+**Quote `row_uid`, never `id`.** Every listing prints it first. It survives a
+re-capture, an archive move, and every rebuild, so it is safe to write into a
+review sheet or a letter.
+
+The offline tests, all read-only apart from the two builder runs the merge test
+performs:
+
+```
+node tools/test-catalog-merge.js   non-destructive, idempotent, guard, fresh DDL
+node tools/test-tally.js           the counting rules
+node tools/test-name-match.js      author matching, including common surnames
+node tools/test-work-type.js       article vs patent classification
+node tools/test-pdf-fit.js         Letter at 75% still fits a citing page
+node tools/test-pdf-header.js      the printed URL, snapshot date, page numbers
+node tools/test-capture-helpers.js pacing and next-link handling
+node tools/test-next-link.js       Scholar's real step size
+```
 
 ---
 
@@ -785,12 +1032,21 @@ Default totals are filed-only, which is what makes `stats` reproduce the ledger.
 
 | Choice | Reason |
 |---|---|
-| Lives in `Database/`, not `Exhibits/` | Exhibits is the evidence packet; a regenerated binary does not belong in it |
-| Not the ledger | One authoritative source for a quoted figure; the CSV is it |
+| **The store, not a cache** | A reviewer quotes a row identifier; that only works if the file is durable and identifiers are never reused |
+| Lives in `Database/`, not `Exhibits/` | Exhibits is the evidence packet that gets zipped and filed; a database is not evidence |
+| The ledger CSV is a **derived report** | Per-article and global statistics must come from one place, and that place must be rebuildable. The store holds the rows; the CSV states the figures the packet quotes |
+| A disagreement is a **defect**, not a tie-break | The old rule said the CSV wins. That is wrong once the store is primary: one of the two is simply wrong and nobody yet knows which, so both tools exit non-zero and no figure is quoted until it is resolved |
+| `row_uid` is opaque, not a bare integer | `cit-000421` reads as an identifier when quoted in prose; a bare `421` reads as a page number |
+| `id` kept but frozen | Numbers quoted before 2026-11-02 must still resolve. Dropping it would break them; using it for new rows would invite two names for one row |
+| Natural key `(base, page, row_index)` | It reproduces the exhibit exactly, is stable across rebuilds, and is unique across the whole table — verified, not assumed |
+| `row_index` sentinel of `-1`, not NULL | A UNIQUE index treats every NULL as distinct, so NULLs would let two rows claim one page position |
+| Merge + guard instead of rebuild-and-hope | A rebuild that silently drops rows is the failure this whole change exists to prevent. The guard makes losing a row an explicit refusal |
+| Retired rows kept, stamped `superseded_at` | History is worth querying — which capture was replaced, and by what — while `v_active` keeps every default count equal to the packet |
+| `stands_for_row_uid` rather than reusing `duplicate_of` | `duplicate_of` holds Scholar's `cid`, and one `cid` matched three rows on 2026-11-02. A pointer to a row must name a row |
+| Views recreated from DDL text | A view cannot be `ALTER`ed, so a definition edited after the fact would otherwise never reach a migrated file. Comparing stored SQL makes the drift visible and self-healing |
 | Counts imported from `tally.js` | Prevents the drift that previously made three reports disagree about the same PDF |
-| Superseded rows kept, flagged `filed = 0` | History is worth querying; the flag is what keeps it out of totals |
-| `role` stored in `meta` | Someone opening the file directly, without this document, is still told |
-| No enforced foreign keys | Rebuild rewrites both tables together; a constraint would break the upsert path |
+| `role` and `identity_rule` stored in `meta` | Someone opening the file directly, without this document, is still told what it is and what may not be quoted |
+| No enforced foreign keys | The merge writes parent and child in one transaction; a constraint would break the upsert path, which can legitimately receive rows before its publication row exists |
 | `unknown` work type | A venue that merely mentions patents is neither guessed a patent nor silently filed as an article |
 | Editions keyed on the DOI article id, not the title | Two language editions have different titles and different DOIs, so a title comparison cannot see them; the article id is the one part of the DOI both share |
 | Editions documented, never re-counted | The held-back copy was already excluded by `language_flag`, so recording it changes no filed figure while explaining a row that would otherwise look invented |

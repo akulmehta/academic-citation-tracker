@@ -1,11 +1,32 @@
 # Drafts — read before using these files
 
-Generated 2026-10-31 from `Database/citation-catalog.sqlite` for the user's
-own review. **These are not the ledger and are not filing figures.** Any number
-quoted in the packet comes from
+Generated from `Database/citation-catalog.sqlite` for the user's own review.
+**These are not the ledger and are not filing figures.** Any number quoted in the
+packet comes from
 `../Independent Citation Record/Exhibits/Supporting/citation-ledger-<snapshot>.csv`
-written by `tools/build-ledger.js`. If a draft ever disagrees with that CSV, the
-CSV is right.
+written by `tools/build-ledger.js`. Since 2026-11-02 that CSV is a *derived
+report* of the rows in the database rather than a separate source: the builder
+reads the active rows out of the store, recomputes the same figures independently
+from the report JSON, and refuses to write when the two disagree. So a draft
+should never disagree with either — if one does, that is a defect to investigate,
+and no figure should be quoted until it is resolved.
+
+## Currently open
+
+| File | Rows | What it lists |
+|---|---:|---|
+| `review-queue-2026-11-02.csv` | 94 | **The citations whose independence is still unresolved**, one row each, leading with the permanent `row_uid`. This is the file to record decisions in. `your_decision` and `your_notes` are empty on purpose. |
+| `review-queue-2026-11-02.md` | 94 | The same 94 rows as a readable table, grouped 6 contradicted / 13 external-shows-no-overlap / 75 unresolvable. Read this one; answer in the CSV. |
+
+Rebuild either with `node tools/build-review-sheet.js --md`; reproduce the list
+with `node tools/query-catalog.js review`. None of the 94 is counted as
+independent or as dependent, so a decision changes the totals.
+
+## Older drafts (2026-10-31 snapshot)
+
+The three files below were generated at the 2026-10-31 snapshot and are kept for
+reference. Their figures are that snapshot's, not the current one — the 2026-11-02
+ledger reports 1030 countable independent over 1017 distinct papers.
 
 Both files were checked against the ledger's `global` block on 2026-10-31 and
 match it: 301 countable independent, 296 distinct papers, 237 externally

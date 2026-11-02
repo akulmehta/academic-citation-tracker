@@ -13,6 +13,16 @@ node_modules/
 *.sqlite-wal
 *.sqlite-journal
 
+# --- Recovery snapshots -------------------------------------------------------
+# tools/build-catalog.js writes a verified VACUUM INTO snapshot here before any
+# write, and never deletes one. They stay on disk as the local recovery path but
+# are not committed: each is several MB and a new one appears on nearly every
+# run, which would put tens of MB of near-identical binaries permanently into
+# history. The tracked Database/citation-catalog.sqlite is the durable copy, and
+# its own git history is the fallback (git log -- Database/citation-catalog.sqlite).
+# Copy a snapshot somewhere tracked deliberately if one must survive long-term.
+Database/Backups/
+
 # --- Scratch runs and generated output ---------------------------------------
 *.log
 *.out.txt

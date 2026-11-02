@@ -2,6 +2,8 @@
   "global": {
     "snapshot_date": "2026-11-02",
     "snapshot_source": "https://scholar.google.com/citations?hl=en&user=dNLaKGAAAAAJ",
+    "figures_source": "Database/citation-catalog.sqlite (rows with filed = 1 and superseded_at = ''), recomputed independently from the report JSON in Exhibits/Supporting and Exhibits/PDFs; the two agreed figure by figure when this file was written",
+    "store_rows_counted": 1498,
     "publication_list_file": "Exhibits/Supporting/publications-list-2026-11-02.json",
     "publications_total": 48,
     "publications_captured": 41,
@@ -2121,5 +2123,7 @@
       "open_items": 0
     }
   ],
-  "duplicates": []
+  "duplicates": [],
+  "diffs": [],
+  "orphanCitesIds": []
 }

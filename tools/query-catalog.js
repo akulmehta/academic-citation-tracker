@@ -1,24 +1,35 @@
 // Read-only queries over the citation catalog built by tools/build-catalog.js.
 //
-//   node tools/query-catalog.js patents             citing patents
+//   node tools/query-catalog.js review              unresolved citations, by bucket
+//   node tools/query-catalog.js attention           anything still open, incl. flags
 //   node tools/query-catalog.js stats               totals, overall and per pub
+//   node tools/query-catalog.js patents             citing patents
+//   node tools/query-catalog.js editions            language editions of one another
+//   node tools/query-catalog.js nonenglish          entries withheld for language
 //   node tools/query-catalog.js search <terms>      full-text over title/authors/snippet
 //   node tools/query-catalog.js pub <text|cites_id> everything citing one publication
-//   node tools/query-catalog.js review              rows needing attention
 //   node tools/query-catalog.js sql "SELECT ..."    ad-hoc SELECT only
 //
-// Add --csv to any subcommand for spreadsheet output, --all to include rows
-// whose exhibit PDF is no longer filed, and --limit=N to widen a truncated list.
+// Add --csv to any subcommand for spreadsheet output, --all to include retired
+// and unfiled rows, and --limit=N to widen a truncated list.
 //
-// THIS IS A LOOKUP AID, NOT THE LEDGER. Per the project instructions, any
-// figure quoted in the packet comes from citation-ledger-<snapshot>.csv written
-// by tools/build-ledger.js. The numbers printed here are read back from the
-// database, which build-catalog.js reconciles against tools/tally.js on every
-// build; if they ever disagree with the CSV, the CSV is authoritative and this
-// tool has a bug.
+// QUOTE row_uid, NEVER id. row_uid is permanent: it survives a re-capture, an
+// archive move, and a rebuild, so a uid quoted today means the same row next
+// month. The integer id is its frozen legacy alias and is not allocated on new
+// inserts in any stable order -- do not put it in a note or a decision list.
+//
+// WHAT IS COUNTED. By default every listing and total here reads the active
+// rows -- a filed exhibit that has not been superseded -- which is the same set
+// tools/build-ledger.js sums. That tool writes citation-ledger-<snapshot>.csv,
+// the derived report the packet quotes from; the figures below are the same
+// numbers read straight from the store, so they should agree exactly. If they
+// ever do not, that is a defect in one of the two and no figure may be quoted
+// for the packet until it is resolved -- not a choice of which tool to believe.
 //
 // Nothing here writes. The database is opened read-only and every statement is
-// a SELECT; the `sql` subcommand rejects anything else outright.
+// a SELECT; the `sql` subcommand rejects anything else outright. Recording a
+// manual decision is deliberately not offered yet: decisions need their own
+// column and audit trail rather than a hand edit to the store.
 
 const path = require("path");
 const fs = require("fs");
@@ -39,8 +50,11 @@ const AS_CSV = flags.has("--csv");
 const ALL = flags.has("--all");
 const LIMIT = Math.max(1, parseInt(opt("limit", "0"), 10) || (AS_CSV ? 100000 : 40));
 
-// Filed-only unless --all is given, so the default view matches the ledger.
-const FILED = ALL ? "" : "AND c.filed = 1";
+// Active rows only unless --all is given: filed exhibits that have not been
+// retired by a re-capture. This is the set the ledger sums, so a count printed
+// here matches a count quoted from the packet.
+const ACTIVE = "c.filed = 1 AND c.superseded_at = ''";
+const FILED = ALL ? "" : `AND ${ACTIVE}`;
 
 function open() {
   if (!fs.existsSync(DB_PATH)) {
@@ -113,11 +127,12 @@ function footer(db) {
   note(
     `\nSource: citation-catalog.sqlite (built ${meta(db, "built_at", "?")}, ` +
       `Scholar snapshot ${meta(db, "snapshot_date", "?")})` +
-      (ALL ? "  [--all: includes unfiled and archived captures]" : "")
+      (ALL ? "  [--all: includes retired, unfiled and archived captures]" : "")
   );
   note(
-    "This is a lookup aid. Quote figures from citation-ledger-<snapshot>.csv " +
-      "(tools/build-ledger.js), which stays authoritative."
+    "Quote row_uid when referring to a row -- it never changes. For the packet, " +
+      "quote figures from citation-ledger-<snapshot>.csv (tools/build-ledger.js), " +
+      "which is the derived report built from these same rows and must agree."
   );
 }
 
@@ -128,11 +143,13 @@ function footer(db) {
 function patents(db) {
   // v_patents covers both granted patents and published applications and
   // excludes a venue that merely mentions patents (work_type 'unknown'), which
-  // is reported by `review` instead. Patents are never folded into the article
-  // count: they are a separate view over the same rows.
+  // is reported by `attention` instead. Patents are never folded into the
+  // article count: they are a separate view over the same rows.
+  const scope = ALL ? "" : "AND filed = 1 AND superseded_at = ''";
   const rows = db
     .prepare(
       `SELECT
+         row_uid,
          patent_number,
          kind,
          title,
@@ -143,7 +160,7 @@ function patents(db) {
          confirm_state,
          link
        FROM v_patents
-       WHERE 1=1 ${ALL ? "" : "AND filed = 1"}
+       WHERE 1=1 ${scope}
        ORDER BY cited_title, patent_number
        LIMIT ?`
     )
@@ -154,11 +171,12 @@ function patents(db) {
       `SELECT COUNT(*) AS n,
               SUM(CASE WHEN is_highlighted = 1 THEN 1 ELSE 0 END) AS hl,
               COUNT(DISTINCT cited_title) AS pubs
-       FROM v_patents WHERE 1=1 ${ALL ? "" : "AND filed = 1"}`
+       FROM v_patents WHERE 1=1 ${scope}`
     )
     .get();
 
   printRows(rows, [
+    "row_uid",
     "patent_number",
     "kind",
     "title",
@@ -247,7 +265,7 @@ function stats(db) {
         `(${g.patents_granted} granted, ${g.patent_apps} application) -- reported separately, not added to the article total`
     );
     if (g.work_type_unknown) {
-      console.log(`Work type undecided:           ${g.work_type_unknown} (venue mentions patents, no patent document -- see: review)`);
+      console.log(`Work type undecided:           ${g.work_type_unknown} (venue mentions patents, no patent document -- see: attention)`);
     }
     if (g.needs_attention) {
       console.log(`Rows flagged for attention:    ${g.needs_attention}`);
@@ -325,6 +343,7 @@ function search(db) {
   const rows = db
     .prepare(
       `SELECT
+         c.row_uid,
          substr(c.title, 1, 70) AS title,
          substr(c.authors_used, 1, 40) AS authors,
          c.status,
@@ -343,7 +362,18 @@ function search(db) {
     )
     .all(match, LIMIT);
 
-  printRows(rows);
+  printRows(rows, [
+    "row_uid",
+    "title",
+    "authors",
+    "status",
+    "counted",
+    "work_type",
+    "patent_number",
+    "cited",
+    "base",
+    "page",
+  ]);
   note(`\n${rows.length} row(s) matching: ${raw}`);
   note("Full-text covers the title, the author list used, and the snippet.");
   footer(db);
@@ -391,20 +421,22 @@ function pub(db) {
       `pages ${found.pages_captured}/${found.pages_expected}   ${found.filed ? "FILED" : "not filed"}`
   );
 
-  // A publication with no filed exhibit has no rows to show under the default
-  // filed-only filter. Showing nothing there would look like the work was never
-  // captured, so widen to its archived/unfiled rows and say so on the line
-  // above -- the exhibit still is not fileable, which the header already states.
-  const scope = found.filed && !ALL ? "AND c.filed = 1" : "";
+  // A publication with no active rows -- nothing filed, or a capture retired by a
+  // re-capture -- has nothing to show under the default filter. Showing nothing
+  // there would look like the work was never cited, so widen to its archived and
+  // retired rows and say so on the line above -- those rows still are not
+  // fileable, which the header already states.
+  const scope = found.filed && !ALL ? `AND ${ACTIVE}` : "";
   if (!found.filed && !ALL) {
     console.log(
-      "\nShowing its archived / unfiled capture rows, since nothing is filed for it."
+      "\nShowing its archived / unfiled / retired capture rows, since nothing is active for it."
     );
   }
 
   const rows = db
     .prepare(
       `SELECT
+         c.row_uid,
          c.page, c.row_index, substr(c.title, 1, 66) AS title,
          substr(c.authors_used, 1, 38) AS authors, c.status,
          CASE c.is_highlighted WHEN 1 THEN 'counted' ELSE '' END AS counted,
@@ -417,7 +449,20 @@ function pub(db) {
     .all(found.cites_id);
 
   console.log("");
-  printRows(rows);
+  printRows(rows, [
+    "row_uid",
+    "page",
+    "row_index",
+    "title",
+    "authors",
+    "status",
+    "counted",
+    "confirm_state",
+    "work_type",
+    "patent_number",
+    "attn",
+    "lang",
+  ]);
 
   const t = db
     .prepare(
@@ -427,7 +472,7 @@ function pub(db) {
               COALESCE(SUM(CASE WHEN status LIKE 'SELF%' THEN 1 ELSE 0 END), 0) AS self_cites,
               COALESCE(SUM(CASE WHEN status = 'REVIEW' THEN 1 ELSE 0 END), 0) AS review,
               COALESCE(SUM(CASE WHEN work_type IN ('patent','patent-application') THEN 1 ELSE 0 END), 0) AS patents
-       FROM citations WHERE cites_id = ? ${scope}`
+       FROM citations c WHERE cites_id = ? ${scope}`
     )
     .get(found.cites_id);
   note(
@@ -440,16 +485,117 @@ function pub(db) {
 // ---------------------------------------------------------------------------
 // review
 // ---------------------------------------------------------------------------
+// review / attention
+// ---------------------------------------------------------------------------
+
+// The three ways a REVIEW row can be unresolved, in the order a person should
+// read them -- the ones where an external record disagrees with Scholar come
+// first, because those are the rows where a decision changes the count.
+//
+//   contradicted            an external record publishes a complete author list
+//                           that overlaps the PI's, so Scholar's list is wrong
+//   external-no-overlap     an external record has a complete list with no
+//                           overlap, but Scholar's own list is truncated, so the
+//                           row is not promoted to independent on it alone
+//   unresolvable            neither PubMed nor OpenAlex indexes the paper and
+//                           Scholar's list is incomplete -- nothing to compare
+//
+// The test is on attention_reason, which is the string the corroboration step
+// wrote at the time, rather than on external_source alone: a row can carry an
+// external_source and still be unresolvable if that source returned nothing.
+const BUCKET_SQL = `CASE
+  WHEN c.attention_reason LIKE 'contradicted%' THEN '1 contradicted'
+  WHEN c.attention_reason LIKE 'external list shows no overlap%' THEN '2 external-no-overlap'
+  ELSE '3 unresolvable' END`;
 
 function review(db) {
-  // Anything a person still has to settle: an open status, a flag, or a work
-  // type the classifier could not decide.
+  // The unresolved citations: active rows still classified REVIEW. This is the
+  // queue the user works through, and row_uid is what to quote back.
+  const where = `c.status = 'REVIEW' ${FILED}`;
+  const rows = db
+    .prepare(
+      `SELECT
+         ${BUCKET_SQL} AS bucket,
+         c.row_uid,
+         substr(c.title, 1, 60) AS citing_title,
+         substr(COALESCE(NULLIF(c.authors_used,''), c.authors), 1, 46) AS scholar_byline,
+         substr(p.title, 1, 30) AS cites_work,
+         c.page,
+         c.row_index,
+         substr(c.attention_reason, 1, 58) AS why,
+         COALESCE(NULLIF(c.external_source,''), '-') AS external,
+         -- The names an external record matched against the PI's. Read the
+         -- corroboration column first: on a contradicted row that is where the
+         -- overlap is actually stored, and matched_authors is the older
+         -- Scholar-side field that is empty on these rows.
+         substr(COALESCE(NULLIF(c.external_matched,'[]'),
+                         NULLIF(c.matched_authors,'[]'),''), 1, 200) AS overlap,
+         c.language_flag AS lang,
+         c.link
+       FROM citations c
+       LEFT JOIN publications p ON p.cites_id = c.cites_id
+       WHERE ${where}
+       ORDER BY bucket, c.base, c.page, c.row_index
+       LIMIT ?`
+    )
+    .all(LIMIT);
+
+  // Render the overlap as names, not raw JSON, and collapse the repeat: the
+  // capture stores matched_authors + matched_pi + matched_former_pi together, so
+  // one person appears once from each side of the match.
+  for (const r of rows) {
+    try {
+      const a = JSON.parse(r.overlap || "[]");
+      r.overlap = [...new Set(Array.isArray(a) ? a : [String(a)])].join(", ");
+    } catch {
+      /* leave as stored rather than blank a real value */
+    }
+  }
+
+  printRows(rows, [
+    "bucket",
+    "row_uid",
+    "citing_title",
+    "scholar_byline",
+    "cites_work",
+    "page",
+    "row_index",
+    "why",
+    "external",
+    "overlap",
+    "lang",
+    "link",
+  ]);
+
+  const buckets = db
+    .prepare(
+      `SELECT ${BUCKET_SQL} AS bucket, COUNT(*) AS rows_
+       FROM citations c WHERE ${where} GROUP BY bucket ORDER BY bucket`
+    )
+    .all();
+  const n = buckets.reduce((a, b) => a + b.rows_, 0);
+  console.log(
+    `\n${n} unresolved citation(s): ` +
+      buckets.map((b) => `${b.rows_} ${b.bucket.replace(/^\d+ /, "")}`).join(", ")
+  );
+  note(
+    "Quote the row_uid. Nothing here is counted as independent yet; a decision on\n" +
+      "a row changes the totals, so it is recorded deliberately rather than inferred."
+  );
+  if (n > LIMIT) note(`Showing ${LIMIT} of ${n}. Use --limit=${n} or --csv for all of them.`);
+  footer(db);
+}
+
+function attention(db) {
+  // Anything a person still has to settle, which is wider than `review`: an
+  // open status, a flag, or a work type the classifier could not decide.
   const rows = db
     .prepare(
       `SELECT
          CASE WHEN c.status = 'REVIEW' THEN 'status'
               WHEN c.work_type = 'unknown' THEN 'work-type'
               ELSE 'flag' END AS why,
+         c.row_uid,
          c.status,
          c.confirm_state,
          substr(COALESCE(NULLIF(c.attention_reason,''), NULLIF(c.resolution,''),
@@ -461,22 +607,34 @@ function review(db) {
        FROM citations c
        LEFT JOIN publications p ON p.cites_id = c.cites_id
        WHERE (c.needs_attention = 1 OR c.status = 'REVIEW' OR c.work_type = 'unknown')
-         ${ALL ? "" : "AND c.filed = 1"}
+         ${FILED}
        ORDER BY why, c.base, c.page, c.row_index
        LIMIT ?`
     )
     .all(LIMIT);
 
-  printRows(rows);
+  printRows(rows, [
+    "why",
+    "row_uid",
+    "status",
+    "confirm_state",
+    "reason",
+    "title",
+    "cited",
+    "base",
+    "page",
+    "row_index",
+  ]);
 
   const n = db
     .prepare(
-      `SELECT COUNT(*) AS n FROM citations
+      `SELECT COUNT(*) AS n FROM citations c
        WHERE (needs_attention = 1 OR status = 'REVIEW' OR work_type = 'unknown')
-         ${ALL ? "" : "AND filed = 1"}`
+         ${FILED}`
     )
     .get().n;
-  note(`\n${n} row(s) awaiting attention. Widen with --limit=N, or include unfiled captures with --all.`);
+  note(`\n${n} row(s) awaiting attention. Widen with --limit=N, or include retired captures with --all.`);
+  note("`review` alone shows just the citations whose independence is unsettled.");
   footer(db);
 }
 
@@ -489,6 +647,7 @@ function nonEnglish(db) {
   const rows = db
     .prepare(
       `SELECT
+         row_uid,
          would_count,
          language_edition,
          reason,
@@ -499,7 +658,7 @@ function nonEnglish(db) {
          cid,
          base
        FROM v_non_english
-       ${ALL ? "" : "WHERE filed = 1"}
+       ${ALL ? "" : "WHERE filed = 1 AND superseded_at = ''"}
        ORDER BY would_count DESC, cites_id, page, row_index
        LIMIT ?`
     )
@@ -536,11 +695,13 @@ function editions(db) {
   const rows = db
     .prepare(
       `SELECT
+         c.row_uid,
          substr(c.title, 1, 58) AS title,
          c.doi,
          c.is_language_edition,
          c.cid,
          c.duplicate_of,
+         c.stands_for_row_uid,
          c.page,
          c.status,
          c.is_highlighted,
@@ -549,7 +710,7 @@ function editions(db) {
          substr(c.edition_note, 1, 48) AS note,
          c.base
        FROM v_language_editions c
-       ${ALL ? "" : "WHERE c.filed = 1"}
+       ${ALL ? "" : "WHERE c.filed = 1 AND c.superseded_at = ''"}
        ORDER BY c.cites_id, c.edition_key, c.is_language_edition DESC, c.page
        LIMIT ?`
     )
@@ -631,6 +792,8 @@ function main() {
         return pub(db);
       case "review":
         return review(db);
+      case "attention":
+        return attention(db);
       case "nonenglish":
         return nonEnglish(db);
       case "sql":
@@ -646,7 +809,8 @@ function main() {
         return;
       default:
         throw new Error(
-          `Unknown subcommand "${cmd}". Use: patents | editions | nonenglish | stats | search | pub | review | sql | tables`
+          `Unknown subcommand "${cmd}". Use: review | attention | stats | patents | ` +
+            `editions | nonenglish | search | pub | sql | tables`
         );
     }
   } finally {
