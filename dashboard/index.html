@@ -140,39 +140,40 @@
     <div class="table-wrap" id="open-table"></div>
   </section>
 
-  <!-- ============ 8. per-article table ============ -->
-  <section id="table" class="chapter">
-    <p class="chapter-num">8</p>
-    <h2>Per-article statistics</h2>
-    <p class="prose" id="table-lede"></p>
-    <div class="table-tools no-print">
-      <label class="switch"><input type="checkbox" id="toggle-unfiled"> <span>Include the publications with no citation count</span></label>
-      <span class="hint">Click a column heading to sort.</span>
-    </div>
-    <div class="table-wrap" id="articles-table"></div>
-    <p class="method-note">
-      On paper the venue and status columns are dropped so the remaining
-      seventeen fit the sheet width; both appear on screen and in
-      <code>dashboard/data/citation-data.json</code>.
+  <!-- ============ 8 and 9. the two long tables, on their own pages ============ -->
+  <section id="appendices" class="chapter">
+    <p class="chapter-num">8&ndash;9</p>
+    <h2>The detailed tables</h2>
+    <p class="prose">
+      The two long tables live on pages of their own so they can be read, sorted
+      and searched at full width, and printed on their own sheet count. Both are
+      generated from the same data file as this page, so no figure differs
+      between them.
     </p>
-  </section>
-
-  <!-- ============ 9. every citing work ============ -->
-  <section id="allworks" class="chapter">
-    <p class="chapter-num">9</p>
-    <h2>Every citing work on the exhibit pages</h2>
-    <p class="prose" id="works-lede"></p>
-    <div class="table-tools no-print">
-      <input type="search" id="works-search" placeholder="Search titles, bylines, cited paper&hellip;">
-      <label class="switch"><input type="checkbox" id="works-marked-only" checked> <span>Highlighted only</span></label>
-      <span class="hint" id="works-count"></span>
+    <div class="page-links">
+      <a class="page-link" href="articles.html">
+        <span class="page-link-n">A</span>
+        <span class="page-link-body">
+          <b>Per-article statistics</b>
+          <span class="hint"
+            >One row per publication on the profile, with the records, the
+            independent count, corroboration, patents and exhibit pages. Sortable
+            by any column.</span
+          >
+        </span>
+      </a>
+      <a class="page-link" href="works.html">
+        <span class="page-link-n">B</span>
+        <span class="page-link-body">
+          <b>Every citing work</b>
+          <span class="hint"
+            >One row per distinct citing paper on the exhibit pages, with its
+            decision, corroboration and the exhibit page that carries it. Search
+            by title, byline or cited paper.</span
+          >
+        </span>
+      </a>
     </div>
-    <div class="table-wrap tall" id="works-table"></div>
-    <p class="method-note">
-      This list is long and is trimmed when printing; the complete set is
-      <span id="works-csv-name">the ledger CSV</span> and
-      <code>dashboard/data/citation-data.json</code>.
-    </p>
   </section>
 
   <!-- ============ 10. method ============ -->

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Every citing work — Akul Mehta independent citation record</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<!--
+  Generated data. Two paths are supported on purpose:
+    dashboard/data/citation-data.js  works over file:// (a script tag)
+    dashboard/data/citation-data.json works over http (a fetch)
+  Regenerate both with:  node tools/build-dashboard-data.js
+  Headline figures come from Exhibits/Supporting/citation-ledger-<snapshot>.json.
+-->
+<script src="data/citation-data.js"></script>
+<script src="vendor/d3.min.js"></script>
+
+<header class="masthead">
+  <div class="masthead-inner">
+    <p class="kicker">Independent citation record &middot; appendix B</p>
+    <h1>Every citing work on the exhibit pages</h1>
+    <p class="standfirst" id="standfirst"></p>
+    <p class="sourcing" id="masthead-sourcing"></p>
+  </div>
+</header>
+
+<nav class="toc" id="toc" aria-label="Sections">
+  <div class="toc-inner"></div>
+</nav>
+
+<main>
+
+  <section id="works" class="chapter">
+    <p class="chapter-num">9</p>
+    <h2>One row per distinct citing paper</h2>
+    <p class="prose" id="works-lede"></p>
+    <div class="table-tools no-print">
+      <input type="search" id="works-search" placeholder="Search titles, bylines, cited paper&hellip;">
+      <label class="switch"><input type="checkbox" id="works-marked-only" checked> <span>Highlighted only</span></label>
+      <span class="hint" id="works-count"></span>
+      <span class="hint">Click a column heading to sort.</span>
+    </div>
+    <div class="table-wrap tall" id="works-table"></div>
+    <p class="method-note">
+      Uncheck <b>Highlighted only</b> to see the records that were considered and
+      not counted &mdash; dependent, awaiting review, self-citations, unsettled and
+      withheld for language. This list is long and is trimmed when printing; the
+      complete set is <span id="works-csv-name">the ledger CSV</span> and
+      <code>dashboard/data/citation-data.json</code>.
+    </p>
+    <p class="method-note page-back">
+      <a href="articles.html">&larr; Per-article statistics</a> &middot;
+      <a href="index.html">Back to the record</a>
+    </p>
+  </section>
+
+</main>
+
+<footer class="colophon">
+  <p id="colophon-line"></p>
+  <p class="tiny">
+    This page is a workpaper generated from the project's own records. It is not
+    legal advice and makes no prediction about any filing outcome.
+  </p>
+</footer>
+
+<script src="dashboard.js"></script>
+</body>
+</html>

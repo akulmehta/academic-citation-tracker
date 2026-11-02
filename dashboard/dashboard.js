@@ -77,6 +77,70 @@
   // ---------- small helpers ----------
   const el = (id) => document.getElementById(id);
 
+  // The record is told across three files. This list is the single source for
+  // the contents bar, so a chapter can never be missing from one page's nav,
+  // and the chapter numbers stay the same wherever the reader is.
+  const PAGES = [
+    { id: "record", file: "index.html", label: "The record" },
+    { id: "breakdown", file: "index.html", label: "How it breaks down" },
+    { id: "per-work", file: "index.html", label: "Per publication" },
+    { id: "time", file: "index.html", label: "Over time" },
+    { id: "patents", file: "index.html", label: "Patents citing the work" },
+    { id: "verification", file: "index.html", label: "Verification" },
+    { id: "open", file: "index.html", label: "Not counted" },
+    { id: "articles", file: "articles.html", label: "Per-article table" },
+    { id: "works", file: "works.html", label: "Every citing work" },
+    { id: "method", file: "index.html", label: "Sources and method" },
+  ];
+
+  function currentFile() {
+    const name = location.pathname.split("/").pop();
+    return name && name.endsWith(".html") ? name : "index.html";
+  }
+
+  // A link to the page you are already on stays a bare fragment so the browser
+  // scrolls instead of reloading, and is marked so it reads as "you are here".
+  function renderToc() {
+    const node = el("toc");
+    if (!node) return;
+    const inner = node.querySelector(".toc-inner");
+    if (!inner) return;
+    inner.innerHTML = "";
+    const here = currentFile();
+    PAGES.forEach((p, i) => {
+      const a = document.createElement("a");
+      a.href = p.file === here ? `#${p.id}` : `${p.file}#${p.id}`;
+      if (p.file === here) a.className = "here";
+      a.innerHTML = `<span class="toc-n">${i + 1}</span>${esc(p.label)}`;
+      inner.appendChild(a);
+    });
+  }
+
+  function renderMasthead(D, standfirst) {
+    const g = D.global;
+    const sf = el("standfirst");
+    if (sf) sf.textContent = standfirst;
+    const ms = el("masthead-sourcing");
+    if (ms) {
+      ms.innerHTML =
+        `Source: <a href="${esc(g.profile_url)}">${esc(
+          g.profile_url
+        )}</a> · snapshot ${esc(g.snapshot_date)} · generated ${esc(
+          new Date(D.generated_at).toISOString().slice(0, 16).replace("T", " ")
+        )} UTC · figures quoted from <code>${esc(D.sources.ledger)}</code>`;
+    }
+  }
+
+  function renderColophon(D) {
+    const c = el("colophon-line");
+    if (!c) return;
+    const g = D.global;
+    c.textContent =
+      `Generated ${new Date(D.generated_at).toISOString().slice(0, 10)} from ` +
+      `${D.sources.ledger} (Scholar snapshot ${g.snapshot_date}) and ` +
+      `${D.sources.catalog}, built ${D.sources.catalog_built_at || "in this session"}.`;
+  }
+
   function statBand(target, items) {
     // The container already carries .figure-band, which is the grid. Plain
     // spans rather than dt/dd, because each cell is a sibling div, not a dl.
@@ -199,54 +263,27 @@
   }
 
   // =====================================================================
-  function render(D) {
+  // Story page: index.html
+  // =====================================================================
+  function renderStory(D) {
     const g = D.global;
     const arts = D.articles;
     const captured = arts.filter((a) => a.status === "captured");
 
     // ---------- masthead ----------
-    el(
-      "standfirst"
-    ).textContent =
+    renderMasthead(
+      D,
       `Google Scholar credits ${fmt(g.publications_captured)} of the ` +
-      `${g.publications_total} publications on the profile with ${fmt(
-        g.citation_records_reviewed
-      )} citing records. After checking every author list, ${fmt(
-        g.independent_countable
-      )} of those records — ${fmt(
-        g.independent_unique_papers
-      )} distinct papers — share no author with the paper they cite. ` +
-      `Each one is highlighted in yellow on an exhibit page, and every figure here ` +
-      `traces to the ${g.snapshot_date} snapshot.`;
-    el(
-      "masthead-sourcing"
-    ).innerHTML =
-      `Source: <a href="${esc(g.profile_url)}">${esc(
-        g.profile_url
-      )}</a> · snapshot ${esc(g.snapshot_date)} · generated ${esc(
-        new Date(D.generated_at).toISOString().slice(0, 16).replace("T", " ")
-      )} UTC · figures quoted from <code>${esc(D.sources.ledger)}</code>`;
-
-    // ---------- contents ----------
-    const tocOrder = [
-      ["record", "The record"],
-      ["breakdown", "How it breaks down"],
-      ["per-work", "Per publication"],
-      ["time", "Over time"],
-      ["patents", "Patents citing the work"],
-      ["verification", "Verification"],
-      ["open", "Not counted"],
-      ["table", "Per-article table"],
-      ["allworks", "Every citing work"],
-      ["method", "Sources and method"],
-    ];
-    const tocInner = el("toc").querySelector(".toc-inner");
-    tocOrder.forEach(([id, label], i) => {
-      const a = document.createElement("a");
-      a.href = `#${id}`;
-      a.innerHTML = `<span class="toc-n">${i + 1}</span>${esc(label)}`;
-      tocInner.appendChild(a);
-    });
+        `${g.publications_total} publications on the profile with ${fmt(
+          g.citation_records_reviewed
+        )} citing records. After checking every author list, ${fmt(
+          g.independent_countable
+        )} of those records — ${fmt(
+          g.independent_unique_papers
+        )} distinct papers — share no author with the paper they cite. ` +
+        `Each one is highlighted in yellow on an exhibit page, and every figure here ` +
+        `traces to the ${g.snapshot_date} snapshot.`
+    );
 
     // =================================================================
     // 1. headline
@@ -486,9 +523,15 @@
       { caption: "Attention flags recorded at capture time, grouped." }
     );
 
-    // =================================================================
-    // 8. per-article table
-    // =================================================================
+  }
+
+  // =====================================================================
+  // Per-article statistics page: articles.html
+  // =====================================================================
+  function renderArticles(D) {
+    const g = D.global;
+    const arts = D.articles;
+
     el(
       "table-lede"
     ).innerHTML =
@@ -538,9 +581,12 @@
     enableSort("articles-table", artCols, arts, () => renderArticles(artRows()));
     el("toggle-unfiled").addEventListener("change", () => renderArticles(artRows()));
 
-    // =================================================================
-    // 9. every citing work
-    // =================================================================
+  }
+
+  // =====================================================================
+  // Every citing work page: works.html
+  // =====================================================================
+  function renderWorks(D) {
     const works = D.works;
     el(
       "works-lede"
@@ -557,7 +603,15 @@
       { key: "cited_title", label: "Cites", render: (r) => esc(shorten(r.cited_title, 58)) },
       { key: "status", label: "Decision", render: (r) => decisionTag(r) },
       { key: "confirm_state", label: "Corroboration", render: (r) => corrobTag(r) },
-      { key: "exhibit_page", label: "Exhibit", render: (r) => exhibitRef(r) },
+      {
+        key: "exhibit_page",
+        label: "Exhibit",
+        render: (r) => exhibitRef(r),
+        // The cell shows "<base>-pN", so group by the base and then the page
+        // rather than by the bare page number, which would interleave every
+        // publication's page 1 together.
+        sortValue: (r) => `${r.exhibit_base || ""} ${String(r.exhibit_page ?? 0).padStart(4, "0")}`,
+      },
     ];
 
     const workRows = () => {
@@ -578,28 +632,29 @@
     const renderWorks = (rows) => {
       // Printing the whole list would run to dozens of sheets, so rows past the
       // first 250 are hidden on paper only and the CSV is named instead.
+      const printed = Math.min(rows.length, 250);
       table("works-table", workCols, rows.map((r, i) => ({ ...r, _trim: i >= 250 })), {
-        caption: `${fmt(rows.length)} citing works shown; the first 250 print.`,
+        caption:
+          `${fmt(rows.length)} citing ${rows.length === 1 ? "work" : "works"} shown` +
+          (rows.length > 250 ? `; the first ${fmt(printed)} print.` : "."),
+        sortable: true,
       });
       el("works-count").textContent =
         `${fmt(rows.length)} of ${fmt(works.length)} works` +
-        (rows.length > 250 ? ` (first 250 print)` : "");
+        (rows.length > 250 ? ` (first ${fmt(printed)} print)` : "");
     };
     renderWorks(workRows());
+    enableSort("works-table", workCols, works, () => renderWorks(workRows()));
     el("works-search").addEventListener("input", () => renderWorks(workRows()));
     el("works-marked-only").addEventListener("change", () => renderWorks(workRows()));
 
-    // =================================================================
-    // 10. method
-    // =================================================================
-    el("method-body").innerHTML = methodHtml(D);
+  }
 
-    el(
-      "colophon-line"
-    ).textContent =
-      `Generated ${new Date(D.generated_at).toISOString().slice(0, 10)} from ` +
-      `${D.sources.ledger} (Scholar snapshot ${g.snapshot_date}) and ` +
-      `${D.sources.catalog}, built ${D.sources.catalog_built_at || "in this session"}.`;
+  // =====================================================================
+  // Method section, printed at the foot of the story page
+  // =====================================================================
+  function renderMethod(D) {
+    el("method-body").innerHTML = methodHtml(D);
   }
 
   // ---------- cell renderers ----------
@@ -1375,10 +1430,48 @@
   }
 
   // =====================================================================
+  // =====================================================================
+  // Boot. One script serves all three pages so a figure, a colour or a rule
+  // can never read differently on the story page than it does on a table page.
+  // =====================================================================
+  const PAGE_RENDERERS = {
+    "index.html": (D) => {
+      renderStory(D);
+      renderMethod(D);
+    },
+    "articles.html": (D) => {
+      const g = D.global;
+      renderMasthead(
+        D,
+        `One row per publication on the Google Scholar profile, with the figures ` +
+          `the packet quotes. This is the table view of the story: the charts, the ` +
+          `patents citing the work, and the sources and method are on the main page. ` +
+          `${fmt(g.publications_captured)} of the ${g.publications_total} ` +
+          `publications have a filed exhibit; the rest show no citation count.`
+      );
+      renderArticles(D);
+    },
+    "works.html": (D) => {
+      const works = D.works;
+      renderMasthead(
+        D,
+        `Every distinct citing paper that appears on a filed exhibit page — ` +
+          `${fmt(works.length)} in all, of which ${fmt(
+            works.filter((w) => w.marked).length
+          )} are highlighted as independent. Search, or sort by any column, to ` +
+          `find a work and see which exhibit page carries it.`
+      );
+      renderWorks(D);
+    },
+  };
+
   initTip();
   loadData()
     .then((D) => {
-      render(D);
+      renderToc();
+      const fn = PAGE_RENDERERS[currentFile()] || PAGE_RENDERERS["index.html"];
+      fn(D);
+      renderColophon(D);
     })
     .catch((err) => {
       document.body.insertAdjacentHTML(

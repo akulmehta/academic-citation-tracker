@@ -799,6 +799,23 @@
       "exit_code": 0,
       "ok": true,
       "blocked": false
+    },
+    {
+      "date": "2026-11-02T11:13:19.824Z",
+      "title": "Recognition of highly branched N-glycans of the porcine whipworm by the immune system",
+      "cited_by_at_snapshot": 16,
+      "cites_id": "4082711194076959494",
+      "cites_url": "https://scholar.google.com/scholar?oi=bibs&hl=en&cites=4082711194076959494",
+      "paper_url": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=dNLaKGAAAAAJ&cstart=20&pagesize=80&citation_for_view=dNLaKGAAAAAJ:hC7cP41nSMkC",
+      "base_name": "recognition-of-highly-branched-n-glycans-of-the-porcine-whip-citing-2026-11-02",
+      "pages_captured": 2,
+      "pages_expected": 2,
+      "records_captured": 16,
+      "independent_captured": 6,
+      "complete": true,
+      "exit_code": 0,
+      "ok": true,
+      "blocked": false
     }
   ]
 }

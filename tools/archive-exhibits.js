@@ -3,6 +3,7 @@
 //
 //   node tools/archive-exhibits.js --cites=<cites id>            (dry run)
 //   node tools/archive-exhibits.js --cites=<cites id> --write
+//   node tools/archive-exhibits.js --cites=<cites id> --keep=<base> --write
 //   node tools/archive-exhibits.js --title="<substring>" --write
 //
 // Why this is needed: an exhibit page is named "<slug>-citing-<date>[-pN]", so
@@ -20,8 +21,14 @@
 //     ledger, catalog and audit - which is what keeps the swap clean.
 //   - Nothing is deleted. Every file keeps its name inside the archive.
 //
-// It refuses to touch a cites id it cannot resolve to exactly one filed base,
-// and it prints each move.
+// It prints every move and archives nothing in a dry run.
+//
+// --keep=<substring> (comma-separated) spares matching bases. This matters
+// because a cites id resolves to EVERY dated set that shares it, so running
+// this tool after a re-capture would otherwise archive the capture just made
+// along with the one it replaces, leaving the publication with no filed exhibit
+// at all. Pass the new base -- the batch log prints it -- or archive before
+// capturing.
 
 const fs = require("fs");
 const path = require("path");
@@ -166,11 +173,28 @@ function main() {
 
   // A base only counts as filed if a PDF still exists for it.
   const filed = lib.filedBases(PDF_DIR);
-  const live = bases.filter((b) => filed.has(b));
+  let live = bases.filter((b) => filed.has(b));
   const alreadyGone = bases.filter((b) => !filed.has(b));
   if (alreadyGone.length) {
     log(`Already unfiled (no PDF): ${alreadyGone.join(", ") || "none"}`);
   }
+
+  // Spare the freshly captured set. Matched bases are reported so a typo in
+  // --keep cannot silently spare the set that was meant to go.
+  const keep = arg("keep")
+    .split(",")
+    .map((s) => s.trim())
+    .filter(Boolean);
+  if (keep.length) {
+    const spared = live.filter((b) => keep.some((k) => b.includes(k)));
+    const missing = keep.filter((k) => !spared.some((b) => b.includes(k)));
+    live = live.filter((b) => !spared.includes(b));
+    log(
+      `Kept in place by --keep: ${spared.join(", ") || "nothing matched"}` +
+        (missing.length ? `  (no filed base matched: ${missing.join(", ")})` : "")
+    );
+  }
+
   if (!live.length) {
     log("Nothing filed to archive.");
     return;

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Per-article statistics — Akul Mehta independent citation record</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<!--
+  Generated data. Two paths are supported on purpose:
+    dashboard/data/citation-data.js  works over file:// (a script tag)
+    dashboard/data/citation-data.json works over http (a fetch)
+  Regenerate both with:  node tools/build-dashboard-data.js
+  Headline figures come from Exhibits/Supporting/citation-ledger-<snapshot>.json.
+-->
+<script src="data/citation-data.js"></script>
+<script src="vendor/d3.min.js"></script>
+
+<header class="masthead">
+  <div class="masthead-inner">
+    <p class="kicker">Independent citation record &middot; appendix A</p>
+    <h1>Per-article statistics</h1>
+    <p class="standfirst" id="standfirst"></p>
+    <p class="sourcing" id="masthead-sourcing"></p>
+  </div>
+</header>
+
+<nav class="toc" id="toc" aria-label="Sections">
+  <div class="toc-inner"></div>
+</nav>
+
+<main>
+
+  <section id="articles" class="chapter">
+    <p class="chapter-num">8</p>
+    <h2>One row per publication</h2>
+    <p class="prose" id="table-lede"></p>
+    <div class="table-tools no-print">
+      <label class="switch"><input type="checkbox" id="toggle-unfiled"> <span>Include the publications with no citation count</span></label>
+      <span class="hint">Click a column heading to sort.</span>
+    </div>
+    <div class="table-wrap" id="articles-table"></div>
+    <p class="method-note">
+      <b>Indep.</b> is the countable independent figure: a citing work that
+      shares no author with the paper it cites, is settled by corroboration or a
+      complete Google Scholar author list, and is not withheld for language. It
+      is what the exhibit PDFs mark in yellow. <b>Distinct</b> collapses the
+      duplicate versions Scholar shows of the same paper. <b>Unsettled</b>
+      includes the rows withheld for language, so adding the two would count them
+      twice. On paper the venue and status columns are dropped so the remaining
+      seventeen fit the sheet width; both appear here on screen and in
+      <code>dashboard/data/citation-data.json</code>.
+    </p>
+    <p class="method-note page-back">
+      <a href="index.html">&larr; Back to the record</a> &middot;
+      <a href="works.html">Every citing work &rarr;</a>
+    </p>
+  </section>
+
+</main>
+
+<footer class="colophon">
+  <p id="colophon-line"></p>
+  <p class="tiny">
+    This page is a workpaper generated from the project's own records. It is not
+    legal advice and makes no prediction about any filing outcome.
+  </p>
+</footer>
+
+<script src="dashboard.js"></script>
+</body>
+</html>
