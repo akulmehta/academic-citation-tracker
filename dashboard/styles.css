@@ -323,6 +323,7 @@ a { color: var(--accent); }
 .callout-lang { border-left-color: var(--language); background: #fbfafd; }
 .callout-lang .callout-title { color: var(--language); }
 .lang-masthead { border-bottom-color: var(--language); }
+.lang-masthead .kicker { color: var(--language); }
 .lang-chapter .chapter-num { color: var(--language); }
 
 .bucket-head {

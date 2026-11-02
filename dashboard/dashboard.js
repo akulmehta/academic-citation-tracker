@@ -1204,7 +1204,7 @@
       )}
       ${row(
         "Language",
-        `${fmt(g.flagged_non_english)} records are flagged non-English and are never highlighted. The guide's test is whether an entry is <i>listed</i> in English — its title, author list and venue, not its body — so the screen keys on the title, while a non-Latin script anywhere still flags it. Greek letters are treated as scientific notation. No certified translations are being obtained, so the packet reports the adjusted English-only total: ${fmt(
+        `${fmt(g.flagged_non_english)} records are flagged non-English and are never highlighted. The guide's test is whether an entry is <i>listed</i> in English — its title, author list and venue, not its body — so the screen keys on the title, while a non-Latin script anywhere still flags it. A Greek letter is read as scientific notation while it stays a clear minority of the title's letters; a title written in Greek is flagged. One row (<code>cit-000062</code>) sits on the wrong side of that cap and is recorded as an open item rather than quietly re-counted. No certified translations are being obtained, so the packet reports the adjusted English-only total: ${fmt(
           g.english_independent_records
         )} independent of ${fmt(
           g.english_citation_records

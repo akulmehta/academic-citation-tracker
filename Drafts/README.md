@@ -22,6 +22,12 @@ Rebuild either with `node tools/build-review-sheet.js --md`; reproduce the list
 with `node tools/query-catalog.js review`. None of the 94 is counted as
 independent or as dependent, so a decision changes the totals.
 
+The same 94 rows are also readable at
+`file:///C:/Projects/EB1A/dashboard/review.html`, which groups them the same way
+and links each row to the exhibit PDF page it came from. Regenerate that page
+with `node tools/build-dashboard-data.js` after rebuilding this sheet, so the two
+name the same rows.
+
 ## Older drafts (2026-10-31 snapshot)
 
 The three files below were generated at the 2026-10-31 snapshot and are kept for

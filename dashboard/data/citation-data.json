@@ -1,9 +1,9 @@
 {
- "generated_at": "2026-11-02T17:04:23.986Z",
+ "generated_at": "2026-11-02T17:22:36.782Z",
  "sources": {
   "ledger": "Exhibits/Supporting/citation-ledger-2026-11-02.json",
   "catalog": "Database/citation-catalog.sqlite",
-  "catalog_built_at": "2026-11-02T15:34:32.888Z",
+  "catalog_built_at": "2026-11-02T17:04:34.574Z",
   "review_sheet": "Drafts/review-queue-2026-11-02.csv",
   "note": "Database/citation-catalog.sqlite is the primary store; the dated ledger written by tools/build-ledger.js is a derived report of the same rows, and the headline figures here are that report's global block. The two were checked against each other when this file was written and agreed. Rows are the active set (filed and not superseded). Quote row_uid to refer to a row -- it never changes. This file is generated; regenerate it rather than editing it."
  },
