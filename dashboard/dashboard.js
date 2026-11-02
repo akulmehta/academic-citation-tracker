@@ -143,6 +143,7 @@
       const th = hr.appendChild(document.createElement("th"));
       th.textContent = c.label;
       if (c.num) th.className = "num";
+      if (c.printHide) th.classList.add("hide-print");
       if (opts.sortable) {
         th.classList.add("sortable");
         th.dataset.key = c.key;
@@ -156,6 +157,7 @@
       for (const c of columns) {
         const td = tr.appendChild(document.createElement("td"));
         if (c.num) td.className = "num";
+        if (c.printHide) td.classList.add("hide-print");
         td.innerHTML = c.render ? c.render(row) : esc(row[c.key]);
       }
     }
@@ -499,7 +501,7 @@
     const artCols = [
       { key: "title", label: "Publication", render: (r) => esc(r.title) },
       { key: "year", label: "Year", num: true },
-      { key: "venue", label: "Venue", render: (r) => `<span class="hint">${esc(r.venue)}</span>` },
+      { key: "venue", label: "Venue", printHide: true, render: (r) => `<span class="hint">${esc(r.venue)}</span>` },
       { key: "cited_by_at_snapshot", label: "Scholar cited-by", num: true, render: (r) => fmt(r.cited_by_at_snapshot) },
       { key: "records", label: "Records", num: true, render: (r) => fmt(r.records) },
       { key: "unique_records", label: "Distinct", num: true, render: (r) => fmt(r.unique_records) },
@@ -513,7 +515,7 @@
       { key: "patent_independent", label: "Patents", num: true, render: (r) => (r.patent_rows ? `${fmt(r.patent_independent)}/${fmt(r.patent_rows)}` : "—") },
       { key: "pages_captured", label: "Pages", num: true, render: (r) => (r.pages_expected ? `${fmt(r.pages_captured)}/${fmt(r.pages_expected)}` : "—") },
       { key: "independent_share_pct", label: "Indep. %", num: true, render: (r) => pct1(r.independent_share_pct) },
-      { key: "status", label: "Status" },
+      { key: "status", label: "Status", printHide: true },
     ];
 
     const renderArticles = (rows) => {
@@ -521,6 +523,11 @@
         caption: `${rows.length} publications. Sorted by Scholar cited-by, descending.`,
         sortable: true,
       });
+      // Seventeen columns cannot share a Letter sheet at their natural widths:
+      // the text columns would push the table past the page edge and Chrome
+      // clips what hangs off. Fixed layout divides the sheet evenly, which
+      // costs nothing because every column but title and venue holds a number.
+      el("articles-table").querySelector("table").classList.add("fixed-print");
     };
     const artRows = () =>
       arts
