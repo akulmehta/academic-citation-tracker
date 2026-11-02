@@ -68,7 +68,8 @@
       "edition_key": "",
       "duplicate_of": "",
       "needs_attention": false,
-      "attention_reason": ""
+      "attention_reason": "",
+      "language_flag_captured": ""
     },
     {
       "index": 1,
@@ -112,7 +113,8 @@
       "edition_key": "",
       "duplicate_of": "",
       "needs_attention": false,
-      "attention_reason": ""
+      "attention_reason": "",
+      "language_flag_captured": ""
     },
     {
       "index": 2,
@@ -136,7 +138,8 @@
       "edition_key": "",
       "duplicate_of": "",
       "needs_attention": false,
-      "attention_reason": ""
+      "attention_reason": "",
+      "language_flag_captured": ""
     },
     {
       "index": 3,
@@ -161,7 +164,8 @@
       "edition_key": "",
       "duplicate_of": "",
       "attention_reason": "highlighted on Scholar's list alone - not indexed in PubMed or OpenAlex, worth a spot-check",
-      "needs_attention": true
+      "needs_attention": true,
+      "language_flag_captured": ""
     },
     {
       "index": 4,
@@ -206,7 +210,8 @@
       "edition_key": "",
       "duplicate_of": "",
       "attention_reason": "not indexed in PubMed or OpenAlex and the Scholar list is incomplete",
-      "needs_attention": true
+      "needs_attention": true,
+      "language_flag_captured": ""
     },
     {
       "index": 5,
@@ -233,7 +238,8 @@
       "edition_key": "",
       "duplicate_of": "",
       "attention_reason": "not indexed in PubMed or OpenAlex and the Scholar list is incomplete",
-      "needs_attention": true
+      "needs_attention": true,
+      "language_flag_captured": ""
     }
   ]
 }

@@ -40,6 +40,21 @@
       (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c])
     );
 
+  // Every link that LEAVES this page view goes in a new tab: a third-party site
+  // (Scholar, a publisher, PubMed, OpenAlex) or an exhibit PDF. These pages are
+  // worked through rather than skimmed, and a navigation away loses the reader's
+  // search text, sort order and scroll position -- which is exactly the state you
+  // are in when you click an exhibit to spot-check a row. Every outbound link
+  // goes through this one helper instead of each call site remembering target and
+  // rel, which is how a link would end up missed. rel=noopener because the
+  // destination may be another origin. `label` is pre-escaped HTML, matching how
+  // the rest of this file composes markup. Links between the dashboard's own
+  // chapters stay plain so the browser scrolls and the contents bar works.
+  const ext = (href, label, title) =>
+    `<a href="${esc(href)}" target="_blank" rel="noopener noreferrer"${
+      title ? ` title="${esc(title)}"` : ""
+    }>${label}</a>`;
+
   // ---------- data ----------
   function loadData() {
     if (window.CITATION_DATA) return Promise.resolve(window.CITATION_DATA);
@@ -125,9 +140,9 @@
     const ms = el("masthead-sourcing");
     if (ms) {
       ms.innerHTML =
-        `Source: <a href="${esc(g.profile_url)}">${esc(
-          g.profile_url
-        )}</a> · snapshot ${esc(g.snapshot_date)} · generated ${esc(
+        `Source: ${ext(g.profile_url, esc(g.profile_url))} · snapshot ${esc(
+          g.snapshot_date
+        )} · generated ${esc(
           new Date(D.generated_at).toISOString().slice(0, 16).replace("T", " ")
         )} UTC · figures quoted from <code>${esc(D.sources.ledger)}</code>`;
     }
@@ -422,7 +437,7 @@
           label: "Publication no.",
           render: (r) =>
             r.link
-              ? `<a href="${esc(r.link)}">${esc(r.patent_number)}</a>`
+              ? ext(r.link, esc(r.patent_number), "Open the patent record")
               : esc(r.patent_number),
         },
         {
@@ -727,7 +742,7 @@
       label: "Citing paper",
       render: (r) =>
         r.link
-          ? `<a href="${esc(r.link)}">${esc(shorten(r.title, 90))}</a>`
+          ? ext(r.link, esc(shorten(r.title, 90)))
           : esc(shorten(r.title, 90)),
     },
     {
@@ -760,7 +775,7 @@
       label: "External",
       render: (r) =>
         r.external_url
-          ? `<a href="${esc(r.external_url)}">${esc(r.external_source)}</a>`
+          ? ext(r.external_url, esc(r.external_source))
           : `<span class="hint">none indexed</span>`,
     },
     {
@@ -773,7 +788,7 @@
       render: (r) => {
         const where = `p${r.exhibit_page} · row ${r.exhibit_row}`;
         return r.exhibit_pdf
-          ? `<a href="${esc(r.exhibit_pdf)}" title="${esc(r.exhibit_base)}">${where}</a>`
+          ? ext(r.exhibit_pdf, where, r.exhibit_base)
           : `<span class="hint">${where}</span>`;
       },
     },
@@ -926,7 +941,7 @@
       label: "Citing paper",
       render: (r) =>
         r.link
-          ? `<a href="${esc(r.link)}">${esc(shorten(r.title, 90))}</a>`
+          ? ext(r.link, esc(shorten(r.title, 90)))
           : esc(shorten(r.title, 90)),
     },
     {
@@ -958,7 +973,7 @@
       render: (r) => {
         const where = `p${r.exhibit_page} · row ${r.exhibit_row}`;
         return r.exhibit_pdf
-          ? `<a href="${esc(r.exhibit_pdf)}" title="${esc(r.exhibit_base)}">${where}</a>`
+          ? ext(r.exhibit_pdf, where, r.exhibit_base)
           : `<span class="hint">${where}</span>`;
       },
     },
@@ -986,7 +1001,7 @@
       label: "Citing paper",
       render: (r) =>
         r.link
-          ? `<a href="${esc(r.link)}">${esc(shorten(r.title, 88))}</a>`
+          ? ext(r.link, esc(shorten(r.title, 88)))
           : esc(shorten(r.title, 88)),
     },
     {
@@ -1029,7 +1044,7 @@
       render: (r) => {
         const where = `p${r.exhibit_page} · row ${r.exhibit_row}`;
         return r.exhibit_pdf
-          ? `<a href="${esc(r.exhibit_pdf)}" title="${esc(r.exhibit_base)}">${where}</a>`
+          ? ext(r.exhibit_pdf, where, r.exhibit_base)
           : `<span class="hint">${where}</span>`;
       },
     },
@@ -1158,7 +1173,7 @@
   }
   function workTitle(r) {
     const base = r.link
-      ? `<a href="${esc(r.link)}">${esc(r.title)}</a>`
+      ? ext(r.link, esc(r.title), "Open on Google Scholar")
       : esc(r.title);
     const extra = [];
     if (r.work_type === "patent" || r.work_type === "patent-application")
@@ -1180,9 +1195,10 @@
     return `<dl>
       ${row(
         "Primary source",
-        `Google Scholar profile <a href="${esc(
-          g.profile_url
-        )}">${esc(g.profile_url)}</a>, snapshot ${esc(
+        `Google Scholar profile ${ext(
+          g.profile_url,
+          esc(g.profile_url)
+        )}, snapshot ${esc(
           g.snapshot_date
         )}. Per the project guide Scholar is the primary basis for every citation figure; third-party databases are never used to decide independence.`
       )}
@@ -1204,7 +1220,7 @@
       )}
       ${row(
         "Language",
-        `${fmt(g.flagged_non_english)} records are flagged non-English and are never highlighted. The guide's test is whether an entry is <i>listed</i> in English — its title, author list and venue, not its body — so the screen keys on the title, while a non-Latin script anywhere still flags it. A Greek letter is read as scientific notation while it stays a clear minority of the title's letters; a title written in Greek is flagged. One row (<code>cit-000062</code>) sits on the wrong side of that cap and is recorded as an open item rather than quietly re-counted. No certified translations are being obtained, so the packet reports the adjusted English-only total: ${fmt(
+        `${fmt(g.flagged_non_english)} records are flagged non-English and are never highlighted. The guide's test is whether an entry is <i>listed</i> in English — its title, author list and venue, not its body — so the screen keys on the title, while a non-Latin script elsewhere flags it only where that script is the bulk of the text. A Greek letter is read as scientific notation while it stays a clear minority of the title's letters; a title written in Greek is flagged. Two English rows were recovered on 2026-11-02 when these became share tests rather than absolute counts. No certified translations are being obtained, so the packet reports the adjusted English-only total: ${fmt(
           g.english_independent_records
         )} independent of ${fmt(
           g.english_citation_records

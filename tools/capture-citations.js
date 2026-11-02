@@ -642,7 +642,17 @@ const NON_LATIN =
 // suppress a genuine independent citation. A title actually written in Greek
 // has Greek letters as the bulk of its text, so only a minority occurrence
 // alongside substantial Latin text is treated as notation.
+//
+// The test is a SHARE, not a count. It used to be `greek <= 4`, which is
+// arbitrary and wrong in the direction that costs a citation: "Molecular
+// mapping of \u03b1-thrombin (\u03b1T)/\u03b22-glycoprotein I (\u03b22GpI) interaction
+// reveals how \u03b22GpI affects \u03b1T functions" carries six Greek letters among 84
+// Latin ones and was suppressed as non-English. Measured over all 48 filed
+// titles containing Greek, the notation cases top out at 6.7% of the title's
+// letters and the one Greek-language title is 89.2%, so a 25% threshold sits
+// in a very wide gap and does not depend on where the line is drawn.
 const GREEK = /[\u0370-\u03ff]/;
+const GREEK_NOTATION_MAX = 0.25;
 function isScientificNotation(text) {
   const letters = text.match(/\p{L}/gu) || [];
   if (!letters.length) return false;
@@ -650,7 +660,7 @@ function isScientificNotation(text) {
   if (!greek) return false;
   const latin = letters.filter((c) => /[a-zA-Z]/.test(c)).length;
   // Notation stays a small share of the letters; a Greek-language title does not.
-  return greek <= 4 && latin > greek * 3;
+  return greek / letters.length <= GREEK_NOTATION_MAX && latin > greek * 3;
 }
 
 // Function words that do not appear in English. Words shared with English
@@ -722,9 +732,28 @@ function accentedLetters(text) {
 // so this costs no false positives. Greek is deliberately NOT in NON_LATIN:
 // see isScientificNotation above.
 //
+// The snippet test is a SHARE too, because a snippet is typesetting as much as
+// language. "1H-1,2,4-Triazolo-5-diazonium Salts in the Synthesis of New
+// 6H-Benzopyrano[4,3-e][1,2,4]triazolo[5,1-c][1,2,4]triazin-6-ones..." is an
+// English title whose abstract renders one ring-bond descriptor as a Cyrillic
+// small epsilon: 1 foreign letter in 93, and it was enough to suppress the
+// citation. A genuinely foreign abstract is a different thing -- the Chinese
+// "Effect of Hb conformational changes on oxygen transport physiology" is 39%
+// foreign letters in its snippet. Measured over the filed set the two sit at
+// 1.1% and 39%, so 25% separates them with room on both sides.
 // The Greek-notation exemption is scoped to the title as well. It previously
 // vetoed the whole script test, so a Chinese title containing the alpha in
 // GPIba skipped it entirely and was highlighted as an independent citation.
+const NON_LATIN_G = new RegExp(NON_LATIN.source, "g");
+const SNIPPET_FOREIGN_MIN = 0.25;
+function snippetIsForeign(snippet) {
+  if (!NON_LATIN.test(snippet)) return false;
+  const letters = snippet.match(/\p{L}/gu) || [];
+  if (!letters.length) return false;
+  const foreign = letters.filter((c) => NON_LATIN_G.test(c)).length;
+  return foreign / letters.length >= SNIPPET_FOREIGN_MIN;
+}
+
 function languageFlag(entry) {
   const title = String(entry.title || "");
   const snippet = String(entry.snippet || "");
@@ -732,7 +761,7 @@ function languageFlag(entry) {
   if (!text) return "";
 
   if (NON_LATIN.test(title)) return "non-latin script (title)";
-  if (NON_LATIN.test(snippet)) return "non-latin script (snippet)";
+  if (snippetIsForeign(snippet)) return "non-latin script (snippet)";
   // A title written in Greek has Greek letters as the bulk of its text, so it
   // is a language rather than notation. Only a title that is mostly Greek is
   // flagged here; a handful of letters alongside real words stays notation.

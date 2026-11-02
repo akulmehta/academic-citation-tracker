@@ -1,6 +1,6 @@
 # Unresolved citations — review queue
 
-Scholar snapshot **2026-11-02**, store built 2026-11-02T15:28:51.481Z. **94** of 1498 active citation rows are still classified REVIEW, so none of them is counted as independent and none is counted as dependent either.
+Scholar snapshot **2026-11-02**, store built 2026-11-02T18:11:22.938Z. **94** of 1498 active citation rows are still classified REVIEW, so none of them is counted as independent and none is counted as dependent either.
 
 Quote the **row_uid** when answering — it is permanent, so it still means the same row after a re-capture or a rebuild. The integer id is a frozen legacy alias and should not be used.
 

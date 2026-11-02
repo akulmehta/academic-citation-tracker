@@ -80,6 +80,55 @@ check(
   "non-latin script (title)"
 );
 
+// The notation test used to be a COUNT (greek <= 4), so an English title that
+// spells alpha and beta several times was suppressed as non-English. This is
+// the real row cit-000062: six Greek letters among 84 Latin ones.
+check(
+  "lang: many greek symbols in a long English title is not flagged",
+  languageFlag({
+    title:
+      "Molecular mapping of \u03b1-thrombin (\u03b1T)/\u03b22-glycoprotein I (\u03b22GpI) interaction reveals how \u03b22GpI affects \u03b1T functions",
+    snippet: "",
+  }),
+  ""
+);
+// The share test must still flag a Greek title. Same threshold, opposite case:
+// this is 89% Greek letters.
+check(
+  "lang: mostly-greek title is flagged however few distinct symbols",
+  languageFlag({
+    title: "\u0395\u03c1\u03b3\u03b1\u03c3\u03c4\u03b7\u03c1\u03b9\u03b1\u03ba\u03ae \u03b4\u03b9\u03b5\u03c1\u03b5\u03cd\u03bd\u03b7\u03c3\u03b7 \u03b1\u03bd\u03c4\u03b9\u03b8\u03c1\u03bf\u03bc\u03b2\u03c9\u03c4\u03b9\u03ba\u03ae\u03c2",
+    snippet: "",
+  }),
+  "non-latin script (title)"
+);
+
+// A snippet is typesetting as much as language. This English title (cit-000075)
+// was suppressed because its abstract renders one ring-bond descriptor as a
+// Cyrillic small epsilon -- 1 foreign letter in 93. The title itself is pure
+// ASCII, which is why the title test never caught it.
+check(
+  "lang: one stray non-latin letter in an English snippet is not flagged",
+  languageFlag({
+    title:
+      "1H-1,2,4-Triazolo-5-diazonium Salts in the Synthesis of New 6H-Benzopyrano[4,3-e][1,2,4]triazolo[5,1-c][1,2,4]triazin-6-ones",
+    snippet:
+      "A convenient approach to the synthesis of new 2-R-6 H-benzopyrano [4, 3-\u0435][1, 2, 4] triazolo [5, 1-c][1, 2, 4] triazin-6-ones and 2-R-[1, 2, 4] triazolo [5', 1': 3, 4][1, 2, 4] triazino",
+  }),
+  ""
+);
+// The opposite case is a foreign abstract under an English title, which the
+// guide treats by what the entry actually is. This is cit-000308: 39% CJK.
+check(
+  "lang: a foreign-language abstract still flags",
+  languageFlag({
+    title: "Effect of Hb conformational changes on oxygen transport physiology",
+    snippet:
+      "\u8840\u7ea2\u86cb\u767d\u662f\u4eba\u4f53\u5185\u8f93\u8fd0\u6c27\u6700\u4e3b\u8981\u7684\u5355\u767d\u8d28\uff0c\u5176\u529f\u80fd\u4e3b\u8981\u662f\u7531\u8840\u7ea2\u86cb\u767d hemoglobin Hb \u7684\u6784\u8c61\u53d8\u5316\u5b9e\u73b0\u7684",
+  }),
+  "non-latin script (snippet)"
+);
+
 // The notation exemption used to veto the whole script test, so this Chinese
 // title escaped it purely because it names GPIba. Per the user's decision on
 // 2026-11-01 the entry is not listed in English and must not be highlighted.

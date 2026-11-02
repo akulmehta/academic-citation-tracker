@@ -48,7 +48,8 @@
       "edition_key": "",
       "duplicate_of": "",
       "needs_attention": false,
-      "attention_reason": ""
+      "attention_reason": "",
+      "language_flag_captured": ""
     },
     {
       "index": 1,
@@ -90,7 +91,8 @@
       "edition_key": "doi:10.1016:148751:yzhanglwuxliuxchenjli",
       "duplicate_of": "",
       "attention_reason": "external list shows no overlap (openalex); not promoted because Scholar's own list is incomplete",
-      "needs_attention": true
+      "needs_attention": true,
+      "language_flag_captured": ""
     },
     {
       "index": 2,
@@ -114,7 +116,8 @@
       "edition_key": "",
       "duplicate_of": "",
       "needs_attention": false,
-      "attention_reason": ""
+      "attention_reason": "",
+      "language_flag_captured": ""
     },
     {
       "index": 3,
@@ -160,7 +163,8 @@
       "edition_key": "doi:10.1021:5c04338:yinxuefeizhangxiaoyingzhongkanwanghailonghuzhifeiliuchangchengcaohongzhi",
       "duplicate_of": "",
       "needs_attention": false,
-      "attention_reason": ""
+      "attention_reason": "",
+      "language_flag_captured": ""
     },
     {
       "index": 4,
@@ -186,7 +190,8 @@
       "edition_key": "",
       "duplicate_of": "",
       "attention_reason": "not indexed in PubMed or OpenAlex and the Scholar list is incomplete",
-      "needs_attention": true
+      "needs_attention": true,
+      "language_flag_captured": ""
     },
     {
       "index": 5,
@@ -225,7 +230,8 @@
       "edition_key": "",
       "duplicate_of": "",
       "attention_reason": "external list shows no overlap (pubmed); not promoted because Scholar's own list is incomplete",
-      "needs_attention": true
+      "needs_attention": true,
+      "language_flag_captured": ""
     },
     {
       "index": 6,
@@ -272,7 +278,8 @@
       "edition_key": "",
       "duplicate_of": "",
       "attention_reason": "external list shows no overlap (pubmed); not promoted because Scholar's own list is incomplete",
-      "needs_attention": true
+      "needs_attention": true,
+      "language_flag_captured": ""
     },
     {
       "index": 7,
@@ -298,7 +305,8 @@
       "edition_key": "doi:10.2478:biocosmos-2024-0001:rdcummings",
       "duplicate_of": "",
       "needs_attention": false,
-      "attention_reason": ""
+      "attention_reason": "",
+      "language_flag_captured": ""
     },
     {
       "index": 8,
@@ -330,7 +338,8 @@
       "edition_key": "",
       "duplicate_of": "",
       "needs_attention": false,
-      "attention_reason": ""
+      "attention_reason": "",
+      "language_flag_captured": ""
     },
     {
       "index": 9,
@@ -371,7 +380,8 @@
       "edition_key": "doi:10.1002:70133:xhuwxiangsqinxzhangztian",
       "duplicate_of": "",
       "needs_attention": false,
-      "attention_reason": ""
+      "attention_reason": "",
+      "language_flag_captured": ""
     }
   ]
 }
