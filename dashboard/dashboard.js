@@ -666,9 +666,21 @@
     return String(s || "").split(",")[0].trim().toLowerCase();
   }
   function decisionTag(r) {
-    if (r.marked) return `<span class="mark">IND</span>`;
+    // `marked` (the citing-work rows) and `counted` (the patent rows) are the
+    // same column read by two different queries -- is_countable_independent --
+    // so accept either. Reading only `marked` made every counted patent fall
+    // through to the label below, which printed "independent, uncounted" on a
+    // row the very next column said was in the exhibit.
+    if (r.marked || r.counted) return `<span class="mark">IND</span>`;
+    // A row classified independent but not counted is held back for one of two
+    // reasons and they are not interchangeable: the language screen is holding
+    // it (deliberate, closed decision, nothing to resolve), or its author list
+    // is genuinely unsettled (an open question). Saying "uncounted" for both
+    // invites a review of rows the user has already decided to leave alone.
+    if (r.status === "INDEPENDENT" && r.language_flag)
+      return `<span class="tag lang">independent · held for language</span>`;
     const map = {
-      INDEPENDENT: `<span class="tag">independent, uncounted</span>`,
+      INDEPENDENT: `<span class="tag review">independent · unsettled</span>`,
       DEPENDENT: `<span class="tag">dependent</span>`,
       REVIEW: `<span class="tag review">review</span>`,
       "SELF (PI)": `<span class="tag">self · PI</span>`,
