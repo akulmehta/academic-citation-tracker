@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Review queue — Akul Mehta independent citation record</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<!--
+  Generated data. Two paths are supported on purpose:
+    dashboard/data/citation-data.js  works over file:// (a script tag)
+    dashboard/data/citation-data.json works over http (a fetch)
+  Regenerate both with:  node tools/build-dashboard-data.js
+
+  This page exists to be worked through by hand. It changes nothing: the rows
+  here are read from the store's v_review view and the ledger's counts, and a
+  decision on one of them is recorded in Drafts/review-queue-<snapshot>.csv, not
+  in the browser. The non-English rows are on their own chapter at the bottom,
+  deliberately apart, because the decision of 2026-11-01 was that no
+  translations will be obtained and there is nothing here to resolve about them.
+-->
+<script src="data/citation-data.js"></script>
+<script src="vendor/d3.min.js"></script>
+
+<header class="masthead">
+  <div class="masthead-inner">
+    <p class="kicker">Independent citation record &middot; workpaper</p>
+    <h1>Review queue</h1>
+    <p class="standfirst" id="standfirst"></p>
+    <p class="sourcing" id="masthead-sourcing"></p>
+  </div>
+</header>
+
+<nav class="toc" id="toc" aria-label="Sections">
+  <div class="toc-inner"></div>
+</nav>
+
+<main>
+
+  <!-- ============ 8. the queue to work through ============ -->
+  <section id="review" class="chapter">
+    <p class="chapter-num">8</p>
+    <h2>Awaiting review</h2>
+    <p class="prose" id="review-lede"></p>
+    <div class="figure-band" id="review-band"></div>
+
+    <div class="callout">
+      <p class="callout-title">How to use this page</p>
+      <p>
+        Quote the <b>row_uid</b> when you tell me about a row &mdash; it is
+        permanent, so <code>cit-000106</code> still means the same row after a
+        re-capture or a rebuild. The integer id is a frozen legacy alias and is
+        not used anywhere.
+      </p>
+      <p>
+        Write the decision into
+        <code id="review-sheet">the dated review sheet</code> in the
+        <code>your_decision</code> column, or tell me the row_uid and the answer.
+        Nothing on this page is editable and nothing here changes a count: none of
+        these rows is currently counted as independent <i>or</i> as dependent, so
+        a decision moves the totals either way.
+      </p>
+    </div>
+
+    <div class="table-tools no-print">
+      <input type="search" id="review-search" placeholder="Search titles, bylines, cited paper&hellip;">
+      <label class="switch"><input type="checkbox" id="review-hide-lang"> <span id="review-hide-lang-label">Hide rows that are also non-English</span></label>
+      <span class="hint" id="review-count"></span>
+      <span class="hint">Click a column heading to sort.</span>
+    </div>
+
+    <h3 class="bucket-head" id="bucket-1-head">1 &middot; Contradicted</h3>
+    <p class="bucket-why" id="bucket-1-why"></p>
+    <div class="table-wrap tall" id="table-contradicted"></div>
+
+    <h3 class="bucket-head" id="bucket-2-head">2 &middot; External record shows no overlap</h3>
+    <p class="bucket-why" id="bucket-2-why"></p>
+    <div class="table-wrap tall" id="table-external"></div>
+
+    <h3 class="bucket-head" id="bucket-3-head">3 &middot; Unresolvable</h3>
+    <p class="bucket-why" id="bucket-3-why"></p>
+    <div class="table-wrap tall" id="table-unresolvable"></div>
+
+    <h3 class="bucket-head" id="unsettled-head">Independent but unsettled</h3>
+    <p class="bucket-why" id="unsettled-why"></p>
+    <div class="table-wrap" id="table-unsettled"></div>
+
+    <p class="method-note page-back">
+      <a href="index.html">&larr; Back to the record</a> &middot;
+      <a href="language.html">The non-English rows, kept apart &rarr;</a>
+    </p>
+  </section>
+
+</main>
+
+<footer class="colophon">
+  <p id="colophon-line"></p>
+  <p class="tiny">
+    This page is a workpaper generated from the project's own records. It is not
+    legal advice and makes no prediction about any filing outcome.
+  </p>
+</footer>
+
+<script src="dashboard.js"></script>
+</body>
+</html>

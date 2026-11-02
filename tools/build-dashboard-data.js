@@ -39,12 +39,39 @@ const SUPPORT = path.join(
   "Supporting"
 );
 const DB_PATH = path.join(ROOT, "Database", "citation-catalog.sqlite");
+const PDF_DIR = path.join(ROOT, "Independent Citation Record", "Exhibits", "PDFs");
 const OUT_DIR = path.join(ROOT, "dashboard", "data");
 const OUT_FILE = path.join(OUT_DIR, "citation-data.json");
 const CHECK = process.argv.includes("--check");
 
 function log(m) {
   console.log(`[dash] ${m}`);
+}
+
+// A row's exhibit PDF, as a path relative to dashboard/ so a file:// page can
+// open it. Filed sets live in PDFs/ or PDFs/Production/, and page 1 carries no
+// -pN suffix, so all four combinations are tried. Returns "" when nothing is on
+// disk: a link that 404s is worse than no link, because it looks like the
+// evidence is missing rather than merely unlinked here.
+const pdfCache = new Map();
+function exhibitPdf(base, page) {
+  if (!base) return "";
+  const cacheKey = `${base}|${page}`;
+  if (pdfCache.has(cacheKey)) return pdfCache.get(cacheKey);
+  const suffix = page && page > 1 ? `-p${page}` : "";
+  let found = "";
+  for (const dir of [PDF_DIR, path.join(PDF_DIR, "Production")]) {
+    const f = path.join(dir, `${base}${suffix}.pdf`);
+    if (fs.existsSync(f)) {
+      // path.relative gives "x.pdf" for a root set and "Production/x.pdf" for a
+      // batch one, so the separator belongs here rather than on either branch.
+      const rel = path.relative(PDF_DIR, f).split(path.sep).join("/");
+      found = `../Independent Citation Record/Exhibits/PDFs/${rel}`;
+      break;
+    }
+  }
+  pdfCache.set(cacheKey, found);
+  return found;
 }
 
 function latestLedger() {
@@ -56,6 +83,25 @@ function latestLedger() {
     throw new Error("No citation-ledger-<date>.json found. Run build-ledger.js.");
   }
   return path.join(SUPPORT, files[files.length - 1]);
+}
+
+// The sheet a reviewer writes decisions into. It is dated, so it is discovered
+// rather than assumed: naming a file that was never written sends the reader
+// looking for a sheet that does not exist. The current snapshot's sheet wins;
+// otherwise the newest one, since an undated decision list is worse than none.
+function reviewSheet() {
+  const dir = path.join(ROOT, "Drafts");
+  const files = fs.existsSync(dir)
+    ? fs
+        .readdirSync(dir)
+        .filter((f) => /^review-queue-\d{4}-\d{2}-\d{2}\.csv$/.test(f))
+        .sort()
+    : [];
+  if (!files.length) {
+    return "Drafts/review-queue-<snapshot>.csv -- not written yet, run node tools/build-review-sheet.js";
+  }
+  const wanted = files.find((f) => f === `review-queue-${g.snapshot_date}.csv`);
+  return `Drafts/${wanted || files[files.length - 1]}`;
 }
 
 const ledgerPath = latestLedger();
@@ -322,6 +368,7 @@ const reviewQueue = q(`SELECT
   exhibit_base: r.base,
   exhibit_page: r.page,
   exhibit_row: r.row_index,
+  exhibit_pdf: exhibitPdf(r.base, r.page),
   // Left empty on purpose: this is where a human decision lands later, and it
   // must never be pre-filled by an inference.
   decision: "",
@@ -330,12 +377,22 @@ const reviewBuckets = reviewQueue.reduce((acc, r) => {
   acc[r.bucket] = (acc[r.bucket] || 0) + 1;
   return acc;
 }, {});
+// Five of the 94 also carry a language flag. They stay in the queue -- the
+// ledger counts them as awaiting review and the exhibit leaves them unmarked --
+// but a decision on one cannot change any figure, because no translations are
+// being obtained and a non-English entry is excluded either way. Counted here so
+// the page can say "these 89 are worth your time, these 5 are not" without the
+// reader having to re-derive the rule per row.
+const reviewActionable = reviewQueue.filter((r) => !r.language_flag);
+const reviewLanguage = reviewQueue.filter((r) => r.language_flag);
 log(
   `Review queue: ${reviewQueue.length} unresolved citation(s) -- ` +
     Object.entries(reviewBuckets)
       .sort()
       .map(([k, v]) => `${v} ${k.replace(/^\d+ /, "")}`)
-      .join(", ")
+      .join(", ") +
+    `; ${reviewActionable.length} actionable, ${reviewLanguage.length} also ` +
+    `flagged non-English and uncountable either way`
 );
 if (Number(g.awaiting_review) !== reviewQueue.length) {
   throw new Error(
@@ -344,6 +401,113 @@ if (Number(g.awaiting_review) !== reviewQueue.length) {
       `dashboard over a disagreement.`
   );
 }
+
+// ---- independent-but-unsettled, with the language rows held apart ----
+// tally.isIndependentPending is "classified INDEPENDENT and not highlighted",
+// which mixes two things the user treats completely differently: a row the
+// language screen is holding back (a closed decision of 2026-11-01 -- no
+// translations will be obtained, so there is nothing to resolve) and a row whose
+// author list is genuinely open. They are emitted as two arrays rather than one
+// list with a flag, because a reviewer scrolling a combined list would have to
+// re-derive the rule on every row to know whether to bother.
+const pendingRows = q(`SELECT
+    c.row_uid, c.title, COALESCE(NULLIF(c.authors_used,''), c.authors) AS byline,
+    c.status, c.confirm_state, c.language_flag, c.withheld_for_language,
+    c.duplicate_of, c.edition_key,
+    c.attention_reason, c.external_source, c.external_url, c.link,
+    p.title AS cited_title, p.year AS cited_year, c.cites_id,
+    c.patent_number, c.work_type, c.base, c.page, c.row_index, c.cid
+  FROM citations c
+  LEFT JOIN publications p ON p.cites_id = c.cites_id
+  WHERE ${ACTIVE} AND c.status = 'INDEPENDENT' AND c.is_highlighted = 0
+  ORDER BY c.withheld_for_language, p.title, c.page, c.row_index`);
+
+const mapPending = (r) => ({
+  row_uid: r.row_uid,
+  title: r.title,
+  byline: r.byline,
+  status: r.status,
+  confirm_state: r.confirm_state,
+  language_flag: r.language_flag || "",
+  reason: r.attention_reason || "",
+  external_source: r.external_source || "",
+  external_url: r.external_url || "",
+  link: r.link || "",
+  cited_title: r.cited_title,
+  cited_year: r.cited_year,
+  cites_id: r.cites_id,
+  patent_number: r.patent_number || "",
+  work_type: r.work_type,
+  exhibit_base: r.base,
+  exhibit_page: r.page,
+  exhibit_row: r.row_index,
+  exhibit_pdf: exhibitPdf(r.base, r.page),
+  cid: r.cid,
+});
+
+// The open half: independent by classification, not highlighted, and held back
+// by NEITHER the language screen NOR the language-edition rule. On the
+// 2026-11-02 store this is empty, and that is a real result rather than a broken
+// query -- every one of the 47 pending rows is language-related (44 withheld by
+// the screen, 3 second-language copies of an article already on the same list).
+// The guard below fails loudly if a future capture produces a row that is
+// genuinely open, so the review page cannot silently omit one.
+const isLanguageReason = (r) => Boolean(r.language_flag) || Boolean(r.duplicate_of);
+const unsettledRows = pendingRows.filter((r) => !isLanguageReason(r)).map(mapPending);
+const pendingByLanguage = pendingRows.length - unsettledRows.length;
+
+// The closed half, from v_non_english so the reason and the "would count"
+// judgement come from the same place the audit reads. Deliberately NOT part of
+// the review queue: these are listed so the packet can state honestly what was
+// given up, not so someone re-opens them.
+const languageHeld = q(`SELECT
+    row_uid, cites_id, cited_work, cid, title, authors AS byline, link, reason,
+    status, confirm_state, would_count, language_edition, work_type,
+    base, page, row_index
+  FROM v_non_english
+  WHERE filed = 1 AND superseded_at = ''
+  ORDER BY would_count DESC, cited_work, page, row_index`).map((r) => ({
+  row_uid: r.row_uid,
+  cites_id: r.cites_id,
+  cited_title: r.cited_work,
+  cid: r.cid,
+  title: r.title,
+  byline: r.byline,
+  link: r.link || "",
+  reason: r.reason || "",
+  status: r.status,
+  confirm_state: r.confirm_state,
+  would_count: r.would_count === 1,
+  language_edition: r.language_edition === 1,
+  work_type: r.work_type,
+  exhibit_base: r.base,
+  exhibit_page: r.page,
+  exhibit_row: r.row_index,
+  exhibit_pdf: exhibitPdf(r.base, r.page),
+}));
+
+// The two halves must account for the ledger's figure exactly, or the review
+// page would be quietly showing a different set than the packet counts. Note
+// this compares against the STORE's own pending count, then checks that against
+// the ledger, so a row that is open for a non-language reason cannot be dropped.
+if (unsettledRows.length + pendingByLanguage !== pendingRows.length) {
+  throw new Error(
+    `Split of the pending rows does not add up: ${unsettledRows.length} unsettled + ` +
+      `${pendingByLanguage} language-related != ${pendingRows.length} pending rows.`
+  );
+}
+if (pendingRows.length !== Number(g.independent_pending)) {
+  throw new Error(
+    `The store holds ${pendingRows.length} independent-but-unhighlighted rows and ` +
+      `the ledger reports independent_pending = ${g.independent_pending}. Rebuild ` +
+      `both; publish neither figure until they agree.`
+  );
+}
+log(
+  `Independent but not counted: ${pendingRows.length} total -- ` +
+    `${unsettledRows.length} unsettled (reviewable), ${pendingByLanguage} ` +
+    `held back for language (closed, listed separately)`
+);
 
 // ---- unresolved items, so the dashboard does not overstate certainty ----
 const openItems = q(`SELECT
@@ -384,6 +548,10 @@ const out = {
     ledger: `Exhibits/Supporting/${path.basename(ledgerPath)}`,
     catalog: "Database/citation-catalog.sqlite",
     catalog_built_at: meta.built_at || "",
+    // The dated sheet the reviewer writes decisions into. Named here so the
+    // review page points at the file that actually exists instead of a
+    // placeholder the reader has to guess at.
+    review_sheet: reviewSheet(),
     note:
       "Database/citation-catalog.sqlite is the primary store; the dated ledger written by " +
       "tools/build-ledger.js is a derived report of the same rows, and the headline " +
@@ -437,6 +605,10 @@ const out = {
   works: allWorks,
   review_queue: reviewQueue,
   review_buckets: reviewBuckets,
+  review_actionable: reviewActionable.length,
+  review_also_non_english: reviewLanguage.length,
+  unsettled_rows: unsettledRows,
+  language_held: languageHeld,
   open_items: openItems,
 };
 
@@ -444,7 +616,8 @@ if (CHECK) {
   log(`--check: ${articles.length} articles, ${patents.length} patents, ` +
     `${years.length} years, ${allWorks.length} distinct citing works ` +
     `(${allWorks.filter((w) => w.marked).length} marked), ` +
-    `${reviewQueue.length} in the review queue. Nothing written.`);
+    `${reviewQueue.length} in the review queue, ${unsettledRows.length} unsettled, ` +
+    `${languageHeld.length} held for language. Nothing written.`);
   db.close();
   return;
 }

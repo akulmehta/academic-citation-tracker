@@ -1,9 +1,10 @@
 {
- "generated_at": "2026-11-02T15:35:35.801Z",
+ "generated_at": "2026-11-02T17:04:23.986Z",
  "sources": {
   "ledger": "Exhibits/Supporting/citation-ledger-2026-11-02.json",
   "catalog": "Database/citation-catalog.sqlite",
   "catalog_built_at": "2026-11-02T15:34:32.888Z",
+  "review_sheet": "Drafts/review-queue-2026-11-02.csv",
   "note": "Database/citation-catalog.sqlite is the primary store; the dated ledger written by tools/build-ledger.js is a derived report of the same rows, and the headline figures here are that report's global block. The two were checked against each other when this file was written and agreed. Rows are the active set (filed and not superseded). Quote row_uid to refer to a row -- it never changes. This file is generated; regenerate it rather than editing it."
  },
  "global": {
@@ -33270,6 +33271,7 @@
    "exhibit_base": "allosterism-based-simultaneous-dual-anticoagulant-and-antipl-citing-2026-11-01",
    "exhibit_page": 2,
    "exhibit_row": 7,
+   "exhibit_pdf": "../Independent Citation Record/Exhibits/PDFs/Production/allosterism-based-simultaneous-dual-anticoagulant-and-antipl-citing-2026-11-01-p2.pdf",
    "decision": ""
   },
   {
@@ -33297,6 +33299,7 @@
    "exhibit_base": "allosterism-based-simultaneous-dual-anticoagulant-and-antipl-citing-2026-11-01",
    "exhibit_page": 3,
    "exhibit_row": 4,
+   "exhibit_pdf": "../Independent Citation Record/Exhibits/PDFs/Production/allosterism-based-simultaneous-dual-anticoagulant-and-antipl-citing-2026-11-01-p3.pdf",
    "decision": ""
   },
   {
@@ -33327,6 +33330,7 @@
    "exhibit_base": "design-synthesis-and-investigation-of-novel-nitric-oxide-no--citing-2026-10-30",
    "exhibit_page": 2,
    "exhibit_row": 3,
+   "exhibit_pdf": "../Independent Citation Record/Exhibits/PDFs/Production/design-synthesis-and-investigation-of-novel-nitric-oxide-no--citing-2026-10-30-p2.pdf",
    "decision": ""
   },
   {
@@ -33356,6 +33360,7 @@
    "exhibit_base": "galectin-3-decreases-4-1bbl-bioactivity-by-crosslinking-solu-citing-2026-10-30",
    "exhibit_page": 1,
    "exhibit_row": 7,
+   "exhibit_pdf": "../Independent Citation Record/Exhibits/PDFs/Production/galectin-3-decreases-4-1bbl-bioactivity-by-crosslinking-solu-citing-2026-10-30.pdf",
    "decision": ""
   },
   {
@@ -33382,6 +33387,7 @@
    "exhibit_base": "galectin-3-decreases-4-1bbl-bioactivity-by-crosslinking-solu-citing-2026-10-30",
    "exhibit_page": 2,
    "exhibit_row": 4,
+   "exhibit_pdf": "../Independent Citation Record/Exhibits/PDFs/Production/galectin-3-decreases-4-1bbl-bioactivity-by-crosslinking-solu-citing-2026-10-30-p2.pdf",
    "decision": ""
   },
   {
@@ -33409,6 +33415,7 @@
    "exhibit_base": "glad-glycan-array-dashboard-a-visual-analytics-tool-for-glyc-citing-2026-11-01",
    "exhibit_page": 1,
    "exhibit_row": 2,
+   "exhibit_pdf": "../Independent Citation Record/Exhibits/PDFs/Production/glad-glycan-array-dashboard-a-visual-analytics-tool-for-glyc-citing-2026-11-01.pdf",
    "decision": ""
   },
   {
@@ -33433,6 +33440,7 @@
    "exhibit_base": "allosteric-partial-inhibition-of-monomeric-proteases-sulfate-citing-2026-10-31",
    "exhibit_page": 5,
    "exhibit_row": 0,
+   "exhibit_pdf": "../Independent Citation Record/Exhibits/PDFs/Production/allosteric-partial-inhibition-of-monomeric-proteases-sulfate-citing-2026-10-31-p5.pdf",
    "decision": ""
   },
   {
@@ -33457,6 +33465,7 @@
    "exhibit_base": "an-update-on-recent-patents-on-thrombin-inhibitors-2010-2013-citing-2026-10-31",
    "exhibit_page": 3,
    "exhibit_row": 6,
+   "exhibit_pdf": "../Independent Citation Record/Exhibits/PDFs/Production/an-update-on-recent-patents-on-thrombin-inhibitors-2010-2013-citing-2026-10-31-p3.pdf",
    "decision": ""
   },
   {
@@ -33481,6 +33490,7 @@
    "exhibit_base": "an-update-on-recent-patents-on-thrombin-inhibitors-2010-2013-citing-2026-10-31",
    "exhibit_page": 4,
    "exhibit_row": 4,
+   "exhibit_pdf": "../Independent Citation Record/Exhibits/PDFs/Production/an-update-on-recent-patents-on-thrombin-inhibitors-2010-2013-citing-2026-10-31-p4.pdf",
    "decision": ""
   },
   {
@@ -33505,6 +33515,7 @@
    "exhibit_base": "glygen-computational-and-informatics-resources-for-glycoscie-citing-2026-11-01",
    "exhibit_page": 15,
    "exhibit_row": 0,
+   "exhibit_pdf": "../Independent Citation Record/Exhibits/PDFs/Production/glygen-computational-and-informatics-resources-for-glycoscie-citing-2026-11-01-p15.pdf",
    "decision": ""
   },
   {
@@ -33529,6 +33540,7 @@
    "exhibit_base": "glygen-computational-and-informatics-resources-for-glycoscie-citing-2026-11-01",
    "exhibit_page": 15,
    "exhibit_row": 1,
+   "exhibit_pdf": "../Independent Citation Record/Exhibits/PDFs/Production/glygen-computational-and-informatics-resources-for-glycoscie-citing-2026-11-01-p15.pdf",
    "decision": ""
   },
   {
@@ -33553,6 +33565,7 @@
    "exhibit_base": "glygen-computational-and-informatics-resources-for-glycoscie-citing-2026-11-01",
    "exhibit_page": 15,
    "exhibit_row": 3,
+   "exhibit_pdf": "../Independent Citation Record/Exhibits/PDFs/Production/glygen-computational-and-informatics-resources-for-glycoscie-citing-2026-11-01-p15.pdf",
    "decision": ""
   },
   {
@@ -33577,6 +33590,7 @@
    "exhibit_base": "glygen-computational-and-informatics-resources-for-glycoscie-citing-2026-11-01",
    "exhibit_page": 15,
    "exhibit_row": 5,
+   "exhibit_pdf": "../Independent Citation Record/Exhibits/PDFs/Production/glygen-computational-and-informatics-resources-for-glycoscie-citing-2026-11-01-p15.pdf",
    "decision": ""
   },
   {
@@ -33601,6 +33615,7 @@
    "exhibit_base": "glygen-computational-and-informatics-resources-for-glycoscie-citing-2026-11-01",
    "exhibit_page": 15,
    "exhibit_row": 8,
+   "exhibit_pdf": "../Independent Citation Record/Exhibits/PDFs/Production/glygen-computational-and-informatics-resources-for-glycoscie-citing-2026-11-01-p15.pdf",
    "decision": ""
   },
   {
@@ -33625,6 +33640,7 @@
    "exhibit_base": "glygen-computational-and-informatics-resources-for-glycoscie-citing-2026-11-01",
    "exhibit_page": 15,
    "exhibit_row": 9,
+   "exhibit_pdf": "../Independent Citation Record/Exhibits/PDFs/Production/glygen-computational-and-informatics-resources-for-glycoscie-citing-2026-11-01-p15.pdf",
    "decision": ""
   },
   {
@@ -33649,6 +33665,7 @@
    "exhibit_base": "n-glycosylation-of-mannose-receptor-cd206-regulates-glycan-b-citing-2026-10-31",
    "exhibit_page": 4,
    "exhibit_row": 3,
+   "exhibit_pdf": "../Independent Citation Record/Exhibits/PDFs/Production/n-glycosylation-of-mannose-receptor-cd206-regulates-glycan-b-citing-2026-10-31-p4.pdf",
    "decision": ""
   },
   {
@@ -33673,6 +33690,7 @@
    "exhibit_base": "recognition-of-highly-branched-n-glycans-of-the-porcine-whip-citing-2026-11-02",
    "exhibit_page": 1,
    "exhibit_row": 1,
+   "exhibit_pdf": "../Independent Citation Record/Exhibits/PDFs/Production/recognition-of-highly-branched-n-glycans-of-the-porcine-whip-citing-2026-11-02.pdf",
    "decision": ""
   },
   {
@@ -33697,6 +33715,7 @@
    "exhibit_base": "recognition-of-highly-branched-n-glycans-of-the-porcine-whip-citing-2026-11-02",
    "exhibit_page": 1,
    "exhibit_row": 5,
+   "exhibit_pdf": "../Independent Citation Record/Exhibits/PDFs/Production/recognition-of-highly-branched-n-glycans-of-the-porcine-whip-citing-2026-11-02.pdf",
    "decision": ""
   },
   {
@@ -33721,6 +33740,7 @@
    "exhibit_base": "recognition-of-highly-branched-n-glycans-of-the-porcine-whip-citing-2026-11-02",
    "exhibit_page": 1,
    "exhibit_row": 6,
+   "exhibit_pdf": "../Independent Citation Record/Exhibits/PDFs/Production/recognition-of-highly-branched-n-glycans-of-the-porcine-whip-citing-2026-11-02.pdf",
    "decision": ""
   },
   {
@@ -33745,6 +33765,7 @@
    "exhibit_base": "allosteric-inhibition-of-human-factor-xia-discovery-of-monos-citing-2026-10-31",
    "exhibit_page": 2,
    "exhibit_row": 8,
+   "exhibit_pdf": "../Independent Citation Record/Exhibits/PDFs/Production/allosteric-inhibition-of-human-factor-xia-discovery-of-monos-citing-2026-10-31-p2.pdf",
    "decision": ""
   },
   {
@@ -33769,6 +33790,7 @@
    "exhibit_base": "allosteric-inhibition-of-human-factor-xia-discovery-of-monos-citing-2026-10-31",
    "exhibit_page": 4,
    "exhibit_row": 9,
+   "exhibit_pdf": "../Independent Citation Record/Exhibits/PDFs/Production/allosteric-inhibition-of-human-factor-xia-discovery-of-monos-citing-2026-10-31-p4.pdf",
    "decision": ""
   },
   {
@@ -33793,6 +33815,7 @@
    "exhibit_base": "allosteric-inhibition-of-human-factor-xia-discovery-of-monos-citing-2026-10-31",
    "exhibit_page": 5,
    "exhibit_row": 0,
+   "exhibit_pdf": "../Independent Citation Record/Exhibits/PDFs/Production/allosteric-inhibition-of-human-factor-xia-discovery-of-monos-citing-2026-10-31-p5.pdf",
    "decision": ""
   },
   {
@@ -33817,6 +33840,7 @@
    "exhibit_base": "allosteric-partial-inhibition-of-monomeric-proteases-sulfate-citing-2026-10-31",
    "exhibit_page": 2,
    "exhibit_row": 5,
+   "exhibit_pdf": "../Independent Citation Record/Exhibits/PDFs/Production/allosteric-partial-inhibition-of-monomeric-proteases-sulfate-citing-2026-10-31-p2.pdf",
    "decision": ""
   },
   {
@@ -33841,6 +33865,7 @@
    "exhibit_base": "allosteric-partial-inhibition-of-monomeric-proteases-sulfate-citing-2026-10-31",
    "exhibit_page": 4,
    "exhibit_row": 5,
+   "exhibit_pdf": "../Independent Citation Record/Exhibits/PDFs/Production/allosteric-partial-inhibition-of-monomeric-proteases-sulfate-citing-2026-10-31-p4.pdf",
    "decision": ""
   },
   {
@@ -33865,6 +33890,7 @@
    "exhibit_base": "allosteric-partial-inhibition-of-monomeric-proteases-sulfate-citing-2026-10-31",
    "exhibit_page": 5,
    "exhibit_row": 5,
+   "exhibit_pdf": "../Independent Citation Record/Exhibits/PDFs/Production/allosteric-partial-inhibition-of-monomeric-proteases-sulfate-citing-2026-10-31-p5.pdf",
    "decision": ""
   },
   {
@@ -33889,6 +33915,7 @@
    "exhibit_base": "allosterism-based-simultaneous-dual-anticoagulant-and-antipl-citing-2026-11-01",
    "exhibit_page": 5,
    "exhibit_row": 3,
+   "exhibit_pdf": "../Independent Citation Record/Exhibits/PDFs/Production/allosterism-based-simultaneous-dual-anticoagulant-and-antipl-citing-2026-11-01-p5.pdf",
    "decision": ""
   },
   {
@@ -33913,6 +33940,7 @@
    "exhibit_base": "allosterism-based-simultaneous-dual-anticoagulant-and-antipl-citing-2026-11-01",
    "exhibit_page": 6,
    "exhibit_row": 5,
+   "exhibit_pdf": "../Independent Citation Record/Exhibits/PDFs/Production/allosterism-based-simultaneous-dual-anticoagulant-and-antipl-citing-2026-11-01-p6.pdf",
    "decision": ""
   },
   {
@@ -33937,6 +33965,7 @@
    "exhibit_base": "antigenic-pressure-on-h3n2-influenza-virus-drift-strains-imp-citing-2026-11-01",
    "exhibit_page": 1,
    "exhibit_row": 3,
+   "exhibit_pdf": "../Independent Citation Record/Exhibits/PDFs/Production/antigenic-pressure-on-h3n2-influenza-virus-drift-strains-imp-citing-2026-11-01.pdf",
    "decision": ""
   },
   {
@@ -33961,6 +33990,7 @@
    "exhibit_base": "antigenic-pressure-on-h3n2-influenza-virus-drift-strains-imp-citing-2026-11-01",
    "exhibit_page": 4,
    "exhibit_row": 1,
+   "exhibit_pdf": "../Independent Citation Record/Exhibits/PDFs/Production/antigenic-pressure-on-h3n2-influenza-virus-drift-strains-imp-citing-2026-11-01-p4.pdf",
    "decision": ""
   },
   {
@@ -33985,6 +34015,7 @@
    "exhibit_base": "antigenic-pressure-on-h3n2-influenza-virus-drift-strains-imp-citing-2026-11-01",
    "exhibit_page": 4,
    "exhibit_row": 2,
+   "exhibit_pdf": "../Independent Citation Record/Exhibits/PDFs/Production/antigenic-pressure-on-h3n2-influenza-virus-drift-strains-imp-citing-2026-11-01-p4.pdf",
    "decision": ""
   },
   {
@@ -34009,6 +34040,7 @@
    "exhibit_base": "antigenic-pressure-on-h3n2-influenza-virus-drift-strains-imp-citing-2026-11-01",
    "exhibit_page": 4,
    "exhibit_row": 6,
+   "exhibit_pdf": "../Independent Citation Record/Exhibits/PDFs/Production/antigenic-pressure-on-h3n2-influenza-virus-drift-strains-imp-citing-2026-11-01-p4.pdf",
    "decision": ""
   },
   {
@@ -34033,6 +34065,7 @@
    "exhibit_base": "antigenic-pressure-on-h3n2-influenza-virus-drift-strains-imp-citing-2026-11-01",
    "exhibit_page": 5,
    "exhibit_row": 0,
+   "exhibit_pdf": "../Independent Citation Record/Exhibits/PDFs/Production/antigenic-pressure-on-h3n2-influenza-virus-drift-strains-imp-citing-2026-11-01-p5.pdf",
    "decision": ""
   },
   {
@@ -34057,6 +34090,7 @@
    "exhibit_base": "antigenic-pressure-on-h3n2-influenza-virus-drift-strains-imp-citing-2026-11-01",
    "exhibit_page": 5,
    "exhibit_row": 1,
+   "exhibit_pdf": "../Independent Citation Record/Exhibits/PDFs/Production/antigenic-pressure-on-h3n2-influenza-virus-drift-strains-imp-citing-2026-11-01-p5.pdf",
    "decision": ""
   },
   {
@@ -34081,6 +34115,7 @@
    "exhibit_base": "antigenic-pressure-on-h3n2-influenza-virus-drift-strains-imp-citing-2026-11-01",
    "exhibit_page": 5,
    "exhibit_row": 2,
+   "exhibit_pdf": "../Independent Citation Record/Exhibits/PDFs/Production/antigenic-pressure-on-h3n2-influenza-virus-drift-strains-imp-citing-2026-11-01-p5.pdf",
    "decision": ""
   },
   {
@@ -34105,6 +34140,7 @@
    "exhibit_base": "designing-allosteric-regulators-of-thrombin-exosite-2-featur-citing-2026-11-01",
    "exhibit_page": 1,
    "exhibit_row": 0,
+   "exhibit_pdf": "../Independent Citation Record/Exhibits/PDFs/Production/designing-allosteric-regulators-of-thrombin-exosite-2-featur-citing-2026-11-01.pdf",
    "decision": ""
   },
   {
@@ -34129,6 +34165,7 @@
    "exhibit_base": "designing-allosteric-regulators-of-thrombin-exosite-2-featur-citing-2026-11-01",
    "exhibit_page": 1,
    "exhibit_row": 2,
+   "exhibit_pdf": "../Independent Citation Record/Exhibits/PDFs/Production/designing-allosteric-regulators-of-thrombin-exosite-2-featur-citing-2026-11-01.pdf",
    "decision": ""
   },
   {
@@ -34153,6 +34190,7 @@
    "exhibit_base": "designing-allosteric-regulators-of-thrombin-exosite-2-featur-citing-2026-11-01",
    "exhibit_page": 2,
    "exhibit_row": 0,
+   "exhibit_pdf": "../Independent Citation Record/Exhibits/PDFs/Production/designing-allosteric-regulators-of-thrombin-exosite-2-featur-citing-2026-11-01-p2.pdf",
    "decision": ""
   },
   {
@@ -34177,6 +34215,7 @@
    "exhibit_base": "designing-allosteric-regulators-of-thrombin-exosite-2-featur-citing-2026-11-01",
    "exhibit_page": 2,
    "exhibit_row": 7,
+   "exhibit_pdf": "../Independent Citation Record/Exhibits/PDFs/Production/designing-allosteric-regulators-of-thrombin-exosite-2-featur-citing-2026-11-01-p2.pdf",
    "decision": ""
   },
   {
@@ -34201,6 +34240,7 @@
    "exhibit_base": "designing-allosteric-regulators-of-thrombin-exosite-2-featur-citing-2026-11-01",
    "exhibit_page": 7,
    "exhibit_row": 2,
+   "exhibit_pdf": "../Independent Citation Record/Exhibits/PDFs/Production/designing-allosteric-regulators-of-thrombin-exosite-2-featur-citing-2026-11-01-p7.pdf",
    "decision": ""
   },
   {
@@ -34225,6 +34265,7 @@
    "exhibit_base": "differential-recognition-of-oligomannose-isomers-by-glycan-b-citing-2026-10-29",
    "exhibit_page": 1,
    "exhibit_row": 3,
+   "exhibit_pdf": "../Independent Citation Record/Exhibits/PDFs/Production/differential-recognition-of-oligomannose-isomers-by-glycan-b-citing-2026-10-29.pdf",
    "decision": ""
   },
   {
@@ -34249,6 +34290,7 @@
    "exhibit_base": "emerging-patterns-of-tyrosine-sulfation-and-o-glycosylation--citing-2026-10-31",
    "exhibit_page": 2,
    "exhibit_row": 6,
+   "exhibit_pdf": "../Independent Citation Record/Exhibits/PDFs/Production/emerging-patterns-of-tyrosine-sulfation-and-o-glycosylation--citing-2026-10-31-p2.pdf",
    "decision": ""
   },
   {
@@ -34273,6 +34315,7 @@
    "exhibit_base": "emerging-patterns-of-tyrosine-sulfation-and-o-glycosylation--citing-2026-10-31",
    "exhibit_page": 4,
    "exhibit_row": 6,
+   "exhibit_pdf": "../Independent Citation Record/Exhibits/PDFs/Production/emerging-patterns-of-tyrosine-sulfation-and-o-glycosylation--citing-2026-10-31-p4.pdf",
    "decision": ""
   },
   {
@@ -34297,6 +34340,7 @@
    "exhibit_base": "emerging-patterns-of-tyrosine-sulfation-and-o-glycosylation--citing-2026-10-31",
    "exhibit_page": 5,
    "exhibit_row": 2,
+   "exhibit_pdf": "../Independent Citation Record/Exhibits/PDFs/Production/emerging-patterns-of-tyrosine-sulfation-and-o-glycosylation--citing-2026-10-31-p5.pdf",
    "decision": ""
   },
   {
@@ -34321,6 +34365,7 @@
    "exhibit_base": "emerging-patterns-of-tyrosine-sulfation-and-o-glycosylation--citing-2026-10-31",
    "exhibit_page": 5,
    "exhibit_row": 4,
+   "exhibit_pdf": "../Independent Citation Record/Exhibits/PDFs/Production/emerging-patterns-of-tyrosine-sulfation-and-o-glycosylation--citing-2026-10-31-p5.pdf",
    "decision": ""
   },
   {
@@ -34345,6 +34390,7 @@
    "exhibit_base": "glad-glycan-array-dashboard-a-visual-analytics-tool-for-glyc-citing-2026-11-01",
    "exhibit_page": 5,
    "exhibit_row": 8,
+   "exhibit_pdf": "../Independent Citation Record/Exhibits/PDFs/Production/glad-glycan-array-dashboard-a-visual-analytics-tool-for-glyc-citing-2026-11-01-p5.pdf",
    "decision": ""
   },
   {
@@ -34369,6 +34415,7 @@
    "exhibit_base": "glad-glycan-array-dashboard-a-visual-analytics-tool-for-glyc-citing-2026-11-01",
    "exhibit_page": 6,
    "exhibit_row": 1,
+   "exhibit_pdf": "../Independent Citation Record/Exhibits/PDFs/Production/glad-glycan-array-dashboard-a-visual-analytics-tool-for-glyc-citing-2026-11-01-p6.pdf",
    "decision": ""
   },
   {
@@ -34393,6 +34440,7 @@
    "exhibit_base": "glad-glycan-array-dashboard-a-visual-analytics-tool-for-glyc-citing-2026-11-01",
    "exhibit_page": 7,
    "exhibit_row": 3,
+   "exhibit_pdf": "../Independent Citation Record/Exhibits/PDFs/Production/glad-glycan-array-dashboard-a-visual-analytics-tool-for-glyc-citing-2026-11-01-p7.pdf",
    "decision": ""
   },
   {
@@ -34417,6 +34465,7 @@
    "exhibit_base": "glycoglyph-a-glycan-visualizing-drawing-and-naming-applicati-citing-2026-11-01",
    "exhibit_page": 1,
    "exhibit_row": 3,
+   "exhibit_pdf": "../Independent Citation Record/Exhibits/PDFs/Production/glycoglyph-a-glycan-visualizing-drawing-and-naming-applicati-citing-2026-11-01.pdf",
    "decision": ""
   },
   {
@@ -34441,6 +34490,7 @@
    "exhibit_base": "glycoglyph-a-glycan-visualizing-drawing-and-naming-applicati-citing-2026-11-01",
    "exhibit_page": 5,
    "exhibit_row": 8,
+   "exhibit_pdf": "../Independent Citation Record/Exhibits/PDFs/Production/glycoglyph-a-glycan-visualizing-drawing-and-naming-applicati-citing-2026-11-01-p5.pdf",
    "decision": ""
   },
   {
@@ -34465,6 +34515,7 @@
    "exhibit_base": "glycoglyph-a-glycan-visualizing-drawing-and-naming-applicati-citing-2026-11-01",
    "exhibit_page": 6,
    "exhibit_row": 2,
+   "exhibit_pdf": "../Independent Citation Record/Exhibits/PDFs/Production/glycoglyph-a-glycan-visualizing-drawing-and-naming-applicati-citing-2026-11-01-p6.pdf",
    "decision": ""
   },
   {
@@ -34489,6 +34540,7 @@
    "exhibit_base": "glygen-computational-and-informatics-resources-for-glycoscie-citing-2026-11-01",
    "exhibit_page": 1,
    "exhibit_row": 1,
+   "exhibit_pdf": "../Independent Citation Record/Exhibits/PDFs/Production/glygen-computational-and-informatics-resources-for-glycoscie-citing-2026-11-01.pdf",
    "decision": ""
   },
   {
@@ -34513,6 +34565,7 @@
    "exhibit_base": "glygen-computational-and-informatics-resources-for-glycoscie-citing-2026-11-01",
    "exhibit_page": 1,
    "exhibit_row": 2,
+   "exhibit_pdf": "../Independent Citation Record/Exhibits/PDFs/Production/glygen-computational-and-informatics-resources-for-glycoscie-citing-2026-11-01.pdf",
    "decision": ""
   },
   {
@@ -34537,6 +34590,7 @@
    "exhibit_base": "glygen-computational-and-informatics-resources-for-glycoscie-citing-2026-11-01",
    "exhibit_page": 1,
    "exhibit_row": 7,
+   "exhibit_pdf": "../Independent Citation Record/Exhibits/PDFs/Production/glygen-computational-and-informatics-resources-for-glycoscie-citing-2026-11-01.pdf",
    "decision": ""
   },
   {
@@ -34561,6 +34615,7 @@
    "exhibit_base": "glygen-computational-and-informatics-resources-for-glycoscie-citing-2026-11-01",
    "exhibit_page": 2,
    "exhibit_row": 2,
+   "exhibit_pdf": "../Independent Citation Record/Exhibits/PDFs/Production/glygen-computational-and-informatics-resources-for-glycoscie-citing-2026-11-01-p2.pdf",
    "decision": ""
   },
   {
@@ -34585,6 +34640,7 @@
    "exhibit_base": "glygen-computational-and-informatics-resources-for-glycoscie-citing-2026-11-01",
    "exhibit_page": 2,
    "exhibit_row": 8,
+   "exhibit_pdf": "../Independent Citation Record/Exhibits/PDFs/Production/glygen-computational-and-informatics-resources-for-glycoscie-citing-2026-11-01-p2.pdf",
    "decision": ""
   },
   {
@@ -34609,6 +34665,7 @@
    "exhibit_base": "glygen-computational-and-informatics-resources-for-glycoscie-citing-2026-11-01",
    "exhibit_page": 2,
    "exhibit_row": 9,
+   "exhibit_pdf": "../Independent Citation Record/Exhibits/PDFs/Production/glygen-computational-and-informatics-resources-for-glycoscie-citing-2026-11-01-p2.pdf",
    "decision": ""
   },
   {
@@ -34633,6 +34690,7 @@
    "exhibit_base": "glygen-computational-and-informatics-resources-for-glycoscie-citing-2026-11-01",
    "exhibit_page": 3,
    "exhibit_row": 0,
+   "exhibit_pdf": "../Independent Citation Record/Exhibits/PDFs/Production/glygen-computational-and-informatics-resources-for-glycoscie-citing-2026-11-01-p3.pdf",
    "decision": ""
   },
   {
@@ -34657,6 +34715,7 @@
    "exhibit_base": "glygen-computational-and-informatics-resources-for-glycoscie-citing-2026-11-01",
    "exhibit_page": 6,
    "exhibit_row": 3,
+   "exhibit_pdf": "../Independent Citation Record/Exhibits/PDFs/Production/glygen-computational-and-informatics-resources-for-glycoscie-citing-2026-11-01-p6.pdf",
    "decision": ""
   },
   {
@@ -34681,6 +34740,7 @@
    "exhibit_base": "glygen-computational-and-informatics-resources-for-glycoscie-citing-2026-11-01",
    "exhibit_page": 6,
    "exhibit_row": 6,
+   "exhibit_pdf": "../Independent Citation Record/Exhibits/PDFs/Production/glygen-computational-and-informatics-resources-for-glycoscie-citing-2026-11-01-p6.pdf",
    "decision": ""
   },
   {
@@ -34705,6 +34765,7 @@
    "exhibit_base": "glygen-computational-and-informatics-resources-for-glycoscie-citing-2026-11-01",
    "exhibit_page": 12,
    "exhibit_row": 3,
+   "exhibit_pdf": "../Independent Citation Record/Exhibits/PDFs/Production/glygen-computational-and-informatics-resources-for-glycoscie-citing-2026-11-01-p12.pdf",
    "decision": ""
   },
   {
@@ -34729,6 +34790,7 @@
    "exhibit_base": "glygen-computational-and-informatics-resources-for-glycoscie-citing-2026-11-01",
    "exhibit_page": 13,
    "exhibit_row": 0,
+   "exhibit_pdf": "../Independent Citation Record/Exhibits/PDFs/Production/glygen-computational-and-informatics-resources-for-glycoscie-citing-2026-11-01-p13.pdf",
    "decision": ""
   },
   {
@@ -34753,6 +34815,7 @@
    "exhibit_base": "glygen-computational-and-informatics-resources-for-glycoscie-citing-2026-11-01",
    "exhibit_page": 15,
    "exhibit_row": 4,
+   "exhibit_pdf": "../Independent Citation Record/Exhibits/PDFs/Production/glygen-computational-and-informatics-resources-for-glycoscie-citing-2026-11-01-p15.pdf",
    "decision": ""
   },
   {
@@ -34777,6 +34840,7 @@
    "exhibit_base": "glygen-computational-and-informatics-resources-for-glycoscie-citing-2026-11-01",
    "exhibit_page": 15,
    "exhibit_row": 7,
+   "exhibit_pdf": "../Independent Citation Record/Exhibits/PDFs/Production/glygen-computational-and-informatics-resources-for-glycoscie-citing-2026-11-01-p15.pdf",
    "decision": ""
   },
   {
@@ -34801,6 +34865,7 @@
    "exhibit_base": "glygen-computational-and-informatics-resources-for-glycoscie-citing-2026-11-01",
    "exhibit_page": 19,
    "exhibit_row": 2,
+   "exhibit_pdf": "../Independent Citation Record/Exhibits/PDFs/Production/glygen-computational-and-informatics-resources-for-glycoscie-citing-2026-11-01-p19.pdf",
    "decision": ""
   },
   {
@@ -34825,6 +34890,7 @@
    "exhibit_base": "glygen-computational-and-informatics-resources-for-glycoscie-citing-2026-11-01",
    "exhibit_page": 22,
    "exhibit_row": 7,
+   "exhibit_pdf": "../Independent Citation Record/Exhibits/PDFs/Production/glygen-computational-and-informatics-resources-for-glycoscie-citing-2026-11-01-p22.pdf",
    "decision": ""
   },
   {
@@ -34849,6 +34915,7 @@
    "exhibit_base": "glygen-computational-and-informatics-resources-for-glycoscie-citing-2026-11-01",
    "exhibit_page": 22,
    "exhibit_row": 8,
+   "exhibit_pdf": "../Independent Citation Record/Exhibits/PDFs/Production/glygen-computational-and-informatics-resources-for-glycoscie-citing-2026-11-01-p22.pdf",
    "decision": ""
   },
   {
@@ -34873,6 +34940,7 @@
    "exhibit_base": "glygen-computational-and-informatics-resources-for-glycoscie-citing-2026-11-01",
    "exhibit_page": 25,
    "exhibit_row": 6,
+   "exhibit_pdf": "../Independent Citation Record/Exhibits/PDFs/Production/glygen-computational-and-informatics-resources-for-glycoscie-citing-2026-11-01-p25.pdf",
    "decision": ""
   },
   {
@@ -34897,6 +34965,7 @@
    "exhibit_base": "glygen-computational-and-informatics-resources-for-glycoscie-citing-2026-11-01",
    "exhibit_page": 25,
    "exhibit_row": 7,
+   "exhibit_pdf": "../Independent Citation Record/Exhibits/PDFs/Production/glygen-computational-and-informatics-resources-for-glycoscie-citing-2026-11-01-p25.pdf",
    "decision": ""
   },
   {
@@ -34921,6 +34990,7 @@
    "exhibit_base": "glymdb-glycan-microarray-database-and-analysis-toolset-citing-2026-10-30",
    "exhibit_page": 3,
    "exhibit_row": 3,
+   "exhibit_pdf": "../Independent Citation Record/Exhibits/PDFs/Production/glymdb-glycan-microarray-database-and-analysis-toolset-citing-2026-10-30-p3.pdf",
    "decision": ""
   },
   {
@@ -34945,6 +35015,7 @@
    "exhibit_base": "n-glycosylation-of-mannose-receptor-cd206-regulates-glycan-b-citing-2026-10-31",
    "exhibit_page": 4,
    "exhibit_row": 0,
+   "exhibit_pdf": "../Independent Citation Record/Exhibits/PDFs/Production/n-glycosylation-of-mannose-receptor-cd206-regulates-glycan-b-citing-2026-10-31-p4.pdf",
    "decision": ""
   },
   {
@@ -34969,6 +35040,7 @@
    "exhibit_base": "potent-direct-inhibitors-of-factor-xa-based-on-the-tetrahydr-citing-2026-10-31",
    "exhibit_page": 3,
    "exhibit_row": 9,
+   "exhibit_pdf": "../Independent Citation Record/Exhibits/PDFs/Production/potent-direct-inhibitors-of-factor-xa-based-on-the-tetrahydr-citing-2026-10-31-p3.pdf",
    "decision": ""
   },
   {
@@ -34993,6 +35065,7 @@
    "exhibit_base": "rational-design-of-potent-small-synthetic-allosteric-inhibit-citing-2026-11-01",
    "exhibit_page": 1,
    "exhibit_row": 5,
+   "exhibit_pdf": "../Independent Citation Record/Exhibits/PDFs/Production/rational-design-of-potent-small-synthetic-allosteric-inhibit-citing-2026-11-01.pdf",
    "decision": ""
   },
   {
@@ -35017,6 +35090,7 @@
    "exhibit_base": "rational-design-of-potent-small-synthetic-allosteric-inhibit-citing-2026-11-01",
    "exhibit_page": 2,
    "exhibit_row": 3,
+   "exhibit_pdf": "../Independent Citation Record/Exhibits/PDFs/Production/rational-design-of-potent-small-synthetic-allosteric-inhibit-citing-2026-11-01-p2.pdf",
    "decision": ""
   },
   {
@@ -35041,6 +35115,7 @@
    "exhibit_base": "rational-design-of-potent-small-synthetic-allosteric-inhibit-citing-2026-11-01",
    "exhibit_page": 6,
    "exhibit_row": 1,
+   "exhibit_pdf": "../Independent Citation Record/Exhibits/PDFs/Production/rational-design-of-potent-small-synthetic-allosteric-inhibit-citing-2026-11-01-p6.pdf",
    "decision": ""
   },
   {
@@ -35065,6 +35140,7 @@
    "exhibit_base": "rational-design-of-potent-small-synthetic-allosteric-inhibit-citing-2026-11-01",
    "exhibit_page": 8,
    "exhibit_row": 0,
+   "exhibit_pdf": "../Independent Citation Record/Exhibits/PDFs/Production/rational-design-of-potent-small-synthetic-allosteric-inhibit-citing-2026-11-01-p8.pdf",
    "decision": ""
   },
   {
@@ -35089,6 +35165,7 @@
    "exhibit_base": "rational-design-of-potent-small-synthetic-allosteric-inhibit-citing-2026-11-01",
    "exhibit_page": 8,
    "exhibit_row": 1,
+   "exhibit_pdf": "../Independent Citation Record/Exhibits/PDFs/Production/rational-design-of-potent-small-synthetic-allosteric-inhibit-citing-2026-11-01-p8.pdf",
    "decision": ""
   },
   {
@@ -35113,6 +35190,7 @@
    "exhibit_base": "recognition-of-highly-branched-n-glycans-of-the-porcine-whip-citing-2026-11-02",
    "exhibit_page": 1,
    "exhibit_row": 4,
+   "exhibit_pdf": "../Independent Citation Record/Exhibits/PDFs/Production/recognition-of-highly-branched-n-glycans-of-the-porcine-whip-citing-2026-11-02.pdf",
    "decision": ""
   },
   {
@@ -35137,6 +35215,7 @@
    "exhibit_base": "recognition-of-highly-branched-n-glycans-of-the-porcine-whip-citing-2026-11-02",
    "exhibit_page": 2,
    "exhibit_row": 4,
+   "exhibit_pdf": "../Independent Citation Record/Exhibits/PDFs/Production/recognition-of-highly-branched-n-glycans-of-the-porcine-whip-citing-2026-11-02-p2.pdf",
    "decision": ""
   },
   {
@@ -35161,6 +35240,7 @@
    "exhibit_base": "recognition-of-highly-branched-n-glycans-of-the-porcine-whip-citing-2026-11-02",
    "exhibit_page": 2,
    "exhibit_row": 5,
+   "exhibit_pdf": "../Independent Citation Record/Exhibits/PDFs/Production/recognition-of-highly-branched-n-glycans-of-the-porcine-whip-citing-2026-11-02-p2.pdf",
    "decision": ""
   },
   {
@@ -35185,6 +35265,7 @@
    "exhibit_base": "sulfated-pentagalloylglucoside-is-a-potent-allosteric-and-se-citing-2026-11-01",
    "exhibit_page": 1,
    "exhibit_row": 0,
+   "exhibit_pdf": "../Independent Citation Record/Exhibits/PDFs/Production/sulfated-pentagalloylglucoside-is-a-potent-allosteric-and-se-citing-2026-11-01.pdf",
    "decision": ""
   },
   {
@@ -35209,6 +35290,7 @@
    "exhibit_base": "sulfated-pentagalloylglucoside-is-a-potent-allosteric-and-se-citing-2026-11-01",
    "exhibit_page": 1,
    "exhibit_row": 1,
+   "exhibit_pdf": "../Independent Citation Record/Exhibits/PDFs/Production/sulfated-pentagalloylglucoside-is-a-potent-allosteric-and-se-citing-2026-11-01.pdf",
    "decision": ""
   },
   {
@@ -35233,6 +35315,7 @@
    "exhibit_base": "sulfated-pentagalloylglucoside-is-a-potent-allosteric-and-se-citing-2026-11-01",
    "exhibit_page": 1,
    "exhibit_row": 8,
+   "exhibit_pdf": "../Independent Citation Record/Exhibits/PDFs/Production/sulfated-pentagalloylglucoside-is-a-potent-allosteric-and-se-citing-2026-11-01.pdf",
    "decision": ""
   },
   {
@@ -35257,6 +35340,7 @@
    "exhibit_base": "sulfated-pentagalloylglucoside-is-a-potent-allosteric-and-se-citing-2026-11-01",
    "exhibit_page": 3,
    "exhibit_row": 1,
+   "exhibit_pdf": "../Independent Citation Record/Exhibits/PDFs/Production/sulfated-pentagalloylglucoside-is-a-potent-allosteric-and-se-citing-2026-11-01-p3.pdf",
    "decision": ""
   },
   {
@@ -35281,6 +35365,7 @@
    "exhibit_base": "sulfated-pentagalloylglucoside-is-a-potent-allosteric-and-se-citing-2026-11-01",
    "exhibit_page": 5,
    "exhibit_row": 9,
+   "exhibit_pdf": "../Independent Citation Record/Exhibits/PDFs/Production/sulfated-pentagalloylglucoside-is-a-potent-allosteric-and-se-citing-2026-11-01-p5.pdf",
    "decision": ""
   },
   {
@@ -35305,6 +35390,7 @@
    "exhibit_base": "sulfated-pentagalloylglucoside-is-a-potent-allosteric-and-se-citing-2026-11-01",
    "exhibit_page": 6,
    "exhibit_row": 6,
+   "exhibit_pdf": "../Independent Citation Record/Exhibits/PDFs/Production/sulfated-pentagalloylglucoside-is-a-potent-allosteric-and-se-citing-2026-11-01-p6.pdf",
    "decision": ""
   },
   {
@@ -35329,6 +35415,7 @@
    "exhibit_base": "sulfated-pentagalloylglucoside-is-a-potent-allosteric-and-se-citing-2026-11-01",
    "exhibit_page": 7,
    "exhibit_row": 0,
+   "exhibit_pdf": "../Independent Citation Record/Exhibits/PDFs/Production/sulfated-pentagalloylglucoside-is-a-potent-allosteric-and-se-citing-2026-11-01-p7.pdf",
    "decision": ""
   },
   {
@@ -35353,6 +35440,7 @@
    "exhibit_base": "sulfated-pentagalloylglucoside-is-a-potent-allosteric-and-se-citing-2026-11-01",
    "exhibit_page": 8,
    "exhibit_row": 1,
+   "exhibit_pdf": "../Independent Citation Record/Exhibits/PDFs/Production/sulfated-pentagalloylglucoside-is-a-potent-allosteric-and-se-citing-2026-11-01-p8.pdf",
    "decision": ""
   },
   {
@@ -35377,6 +35465,7 @@
    "exhibit_base": "targeting-the-gpib-binding-site-of-thrombin-to-simultaneousl-citing-2026-10-31",
    "exhibit_page": 4,
    "exhibit_row": 0,
+   "exhibit_pdf": "../Independent Citation Record/Exhibits/PDFs/Production/targeting-the-gpib-binding-site-of-thrombin-to-simultaneousl-citing-2026-10-31-p4.pdf",
    "decision": ""
   },
   {
@@ -35401,6 +35490,7 @@
    "exhibit_base": "tools-for-generating-and-analyzing-glycan-microarray-data-citing-2026-10-29",
    "exhibit_page": 2,
    "exhibit_row": 6,
+   "exhibit_pdf": "../Independent Citation Record/Exhibits/PDFs/Production/tools-for-generating-and-analyzing-glycan-microarray-data-citing-2026-10-29-p2.pdf",
    "decision": ""
   },
   {
@@ -35425,6 +35515,7 @@
    "exhibit_base": "tumor-cells-express-pauci-and-oligomannosidic-n-glycans-in-g-citing-2026-10-30",
    "exhibit_page": 1,
    "exhibit_row": 6,
+   "exhibit_pdf": "../Independent Citation Record/Exhibits/PDFs/Production/tumor-cells-express-pauci-and-oligomannosidic-n-glycans-in-g-citing-2026-10-30.pdf",
    "decision": ""
   },
   {
@@ -35449,6 +35540,7 @@
    "exhibit_base": "tumor-cells-express-pauci-and-oligomannosidic-n-glycans-in-g-citing-2026-10-30",
    "exhibit_page": 1,
    "exhibit_row": 8,
+   "exhibit_pdf": "../Independent Citation Record/Exhibits/PDFs/Production/tumor-cells-express-pauci-and-oligomannosidic-n-glycans-in-g-citing-2026-10-30.pdf",
    "decision": ""
   },
   {
@@ -35473,6 +35565,7 @@
    "exhibit_base": "tumor-cells-express-pauci-and-oligomannosidic-n-glycans-in-g-citing-2026-10-30",
    "exhibit_page": 2,
    "exhibit_row": 6,
+   "exhibit_pdf": "../Independent Citation Record/Exhibits/PDFs/Production/tumor-cells-express-pauci-and-oligomannosidic-n-glycans-in-g-citing-2026-10-30-p2.pdf",
    "decision": ""
   },
   {
@@ -35497,6 +35590,7 @@
    "exhibit_base": "tumor-cells-express-pauci-and-oligomannosidic-n-glycans-in-g-citing-2026-10-30",
    "exhibit_page": 3,
    "exhibit_row": 9,
+   "exhibit_pdf": "../Independent Citation Record/Exhibits/PDFs/Production/tumor-cells-express-pauci-and-oligomannosidic-n-glycans-in-g-citing-2026-10-30-p3.pdf",
    "decision": ""
   },
   {
@@ -35521,6 +35615,7 @@
    "exhibit_base": "unique-repertoire-of-anti-carbohydrate-antibodies-in-individ-citing-2026-10-31",
    "exhibit_page": 5,
    "exhibit_row": 2,
+   "exhibit_pdf": "../Independent Citation Record/Exhibits/PDFs/Production/unique-repertoire-of-anti-carbohydrate-antibodies-in-individ-citing-2026-10-31-p5.pdf",
    "decision": ""
   }
  ],
@@ -35529,6 +35624,999 @@
   "2 external-no-overlap": 13,
   "3 unresolvable": 75
  },
+ "review_actionable": 89,
+ "review_also_non_english": 5,
+ "unsettled_rows": [],
+ "language_held": [
+  {
+   "row_uid": "cit-000037",
+   "cites_id": "17765626390546429538",
+   "cited_title": "Allosteric inhibition of human factor XIa: discovery of monosulfated benzofurans as a class of promising inhibitors",
+   "cid": "ii6swKdPCe0J",
+   "title": "凝血因子 Ⅺa 小分子抑制剂研究进展",
+   "byline": "王璐， 杨慧， 赵力挥， 王国成 - 药学进展, 2018 - pps.cpu.edu.cn",
+   "link": "https://pps.cpu.edu.cn/article/app/id/fcbc5b16-77d2-4017-907c-d52e919bd03b",
+   "reason": "non-latin script (title)",
+   "status": "INDEPENDENT",
+   "confirm_state": "unverified-coverage",
+   "would_count": true,
+   "language_edition": false,
+   "work_type": "article",
+   "exhibit_base": "allosteric-inhibition-of-human-factor-xia-discovery-of-monos-citing-2026-10-31",
+   "exhibit_page": 4,
+   "exhibit_row": 6,
+   "exhibit_pdf": "../Independent Citation Record/Exhibits/PDFs/Production/allosteric-inhibition-of-human-factor-xia-discovery-of-monos-citing-2026-10-31-p4.pdf"
+  },
+  {
+   "row_uid": "cit-000038",
+   "cites_id": "17765626390546429538",
+   "cited_title": "Allosteric inhibition of human factor XIa: discovery of monosulfated benzofurans as a class of promising inhibitors",
+   "cid": "7dnLZSTKiBAJ",
+   "title": "凝血因子 XI 抑制剂研究进展",
+   "byline": "任燊红， 毛自敏， 孔毅 - 药学学报, 2019 - html.rhhz.net",
+   "link": "https://html.rhhz.net/YXXB/html/20190605.htm",
+   "reason": "non-latin script (title)",
+   "status": "INDEPENDENT",
+   "confirm_state": "confirmed",
+   "would_count": true,
+   "language_edition": false,
+   "work_type": "article",
+   "exhibit_base": "allosteric-inhibition-of-human-factor-xia-discovery-of-monos-citing-2026-10-31",
+   "exhibit_page": 4,
+   "exhibit_row": 7,
+   "exhibit_pdf": "../Independent Citation Record/Exhibits/PDFs/Production/allosteric-inhibition-of-human-factor-xia-discovery-of-monos-citing-2026-10-31-p4.pdf"
+  },
+  {
+   "row_uid": "cit-000062",
+   "cites_id": "11728333386143173456",
+   "cited_title": "Allosteric partial inhibition of monomeric proteases. Sulfated coumarins induce regulation, not just inhibition, of thrombin",
+   "cid": "anY1vboa2AIJ",
+   "title": "Molecular mapping of α-thrombin (αT)/β2-glycoprotein I (β2GpI) interaction reveals how β2GpI affects αT functions",
+   "byline": "Acquasaliente, Laura, Peterle, Daniele, Tescari, Simone, Pozzi, Nicola, Pengo, Vittorio, De Filippis, Vincenzo",
+   "link": "https://portlandpress.com/biochemj/article-abstract/473/24/4629/49339",
+   "reason": "non-latin script (title)",
+   "status": "INDEPENDENT",
+   "confirm_state": "unverified-coverage",
+   "would_count": true,
+   "language_edition": false,
+   "work_type": "article",
+   "exhibit_base": "allosteric-partial-inhibition-of-monomeric-proteases-sulfate-citing-2026-10-31",
+   "exhibit_page": 3,
+   "exhibit_row": 0,
+   "exhibit_pdf": "../Independent Citation Record/Exhibits/PDFs/Production/allosteric-partial-inhibition-of-monomeric-proteases-sulfate-citing-2026-10-31-p3.pdf"
+  },
+  {
+   "row_uid": "cit-000075",
+   "cites_id": "11728333386143173456",
+   "cited_title": "Allosteric partial inhibition of monomeric proteases. Sulfated coumarins induce regulation, not just inhibition, of thrombin",
+   "cid": "ScXdVbkWVIEJ",
+   "title": "1H-1,2,4-Triazolo-5-diazonium Salts in the Synthesis of New 6H-Benzopyrano[4,3-e][1,2,4]triazolo[5,1-c][1,2,4]triazin-6-ones and [1,2,4]Triazolo[5',1':3,4][1,2,4]triazino[6,5-c] …",
+   "byline": "Mawlood, MN, Potapov, A Yu, Shikhaliev, Kh S",
+   "link": "https://link.springer.com/article/10.1134/S1070428024020088",
+   "reason": "non-latin script (snippet)",
+   "status": "INDEPENDENT",
+   "confirm_state": "unverified-coverage",
+   "would_count": true,
+   "language_edition": false,
+   "work_type": "article",
+   "exhibit_base": "allosteric-partial-inhibition-of-monomeric-proteases-sulfate-citing-2026-10-31",
+   "exhibit_page": 4,
+   "exhibit_row": 3,
+   "exhibit_pdf": "../Independent Citation Record/Exhibits/PDFs/Production/allosteric-partial-inhibition-of-monomeric-proteases-sulfate-citing-2026-10-31-p4.pdf"
+  },
+  {
+   "row_uid": "cit-000078",
+   "cites_id": "11728333386143173456",
+   "cited_title": "Allosteric partial inhibition of monomeric proteases. Sulfated coumarins induce regulation, not just inhibition, of thrombin",
+   "cid": "up40uCRe3vgJ",
+   "title": "Descoberta de inibidores como candidatos a fármacos antivirais para covid-19: Estudos bioquímicos e estruturais das enzimas protease principal (nsp5), protease\\\" …",
+   "byline": "MO Godoy",
+   "link": "https://bdtd.ibict.br/vufind/Record/USP_a4ff9d97624146c70133e210662ec401",
+   "reason": "possible non-English (accented letters: á í)",
+   "status": "INDEPENDENT",
+   "confirm_state": "unverified-coverage",
+   "would_count": true,
+   "language_edition": false,
+   "work_type": "article",
+   "exhibit_base": "allosteric-partial-inhibition-of-monomeric-proteases-sulfate-citing-2026-10-31",
+   "exhibit_page": 4,
+   "exhibit_row": 6,
+   "exhibit_pdf": "../Independent Citation Record/Exhibits/PDFs/Production/allosteric-partial-inhibition-of-monomeric-proteases-sulfate-citing-2026-10-31-p4.pdf"
+  },
+  {
+   "row_uid": "cit-000134",
+   "cites_id": "4631471255166879252",
+   "cited_title": "Allosterism‐based simultaneous, dual anticoagulant and antiplatelet action: allosteric inhibitor targeting the glycoprotein Ibα‐binding and heparin‐binding site of thrombin",
+   "cid": "VGqCvfLcYvkJ",
+   "title": "Структура и биомедицинские свойства лигнинов (обзор)",
+   "byline": "АП Карманов, АВ Ермакова, ОВ Раскоша… - Химия …, 2023 - cyberleninka.ru",
+   "link": "https://cyberleninka.ru/article/n/struktura-i-biomeditsinskie-svoystva-ligninov-obzor",
+   "reason": "non-latin script (title)",
+   "status": "INDEPENDENT",
+   "confirm_state": "unverified-coverage",
+   "would_count": true,
+   "language_edition": false,
+   "work_type": "article",
+   "exhibit_base": "allosterism-based-simultaneous-dual-anticoagulant-and-antipl-citing-2026-11-01",
+   "exhibit_page": 5,
+   "exhibit_row": 5,
+   "exhibit_pdf": "../Independent Citation Record/Exhibits/PDFs/Production/allosterism-based-simultaneous-dual-anticoagulant-and-antipl-citing-2026-11-01-p5.pdf"
+  },
+  {
+   "row_uid": "cit-000142",
+   "cites_id": "4631471255166879252",
+   "cited_title": "Allosterism‐based simultaneous, dual anticoagulant and antiplatelet action: allosteric inhibitor targeting the glycoprotein Ibα‐binding and heparin‐binding site of thrombin",
+   "cid": "nL2ZJWr8HtMJ",
+   "title": "果蔬中木质素提取及其生物活性应用研究进展.",
+   "byline": "纪秀凤， 吕长鑫， 王新明， 巴俊文… - Food Research & …, 2019 - openurl.ebsco.com",
+   "link": "https://openurl.ebsco.com/contentitem/gcd:135460458?sid=ebsco:plink:crawler-gcd&id=ebsco:gcd:135460458&crl=c&jrnl=10056521",
+   "reason": "non-latin script (title)",
+   "status": "INDEPENDENT",
+   "confirm_state": "unverified-coverage",
+   "would_count": true,
+   "language_edition": false,
+   "work_type": "article",
+   "exhibit_base": "allosterism-based-simultaneous-dual-anticoagulant-and-antipl-citing-2026-11-01",
+   "exhibit_page": 6,
+   "exhibit_row": 3,
+   "exhibit_pdf": "../Independent Citation Record/Exhibits/PDFs/Production/allosterism-based-simultaneous-dual-anticoagulant-and-antipl-citing-2026-11-01-p6.pdf"
+  },
+  {
+   "row_uid": "cit-000143",
+   "cites_id": "4631471255166879252",
+   "cited_title": "Allosterism‐based simultaneous, dual anticoagulant and antiplatelet action: allosteric inhibitor targeting the glycoprotein Ibα‐binding and heparin‐binding site of thrombin",
+   "cid": "GjVW_28hPGMJ",
+   "title": "바이오 산업 소재로서의 리그닌: 화장품용 소재로서의 가능성을 중심으로: 화장품용 소재로서의 가능성을 중심으로",
+   "byline": "양승화， 신현재 - KSBB Journal, 2018 - dbpia.co.kr",
+   "link": "https://www.dbpia.co.kr/pdf/pdfView.do?nodeId=NODE07601518",
+   "reason": "non-latin script (title)",
+   "status": "INDEPENDENT",
+   "confirm_state": "unverified-coverage",
+   "would_count": true,
+   "language_edition": false,
+   "work_type": "article",
+   "exhibit_base": "allosterism-based-simultaneous-dual-anticoagulant-and-antipl-citing-2026-11-01",
+   "exhibit_page": 6,
+   "exhibit_row": 4,
+   "exhibit_pdf": "../Independent Citation Record/Exhibits/PDFs/Production/allosterism-based-simultaneous-dual-anticoagulant-and-antipl-citing-2026-11-01-p6.pdf"
+  },
+  {
+   "row_uid": "cit-000164",
+   "cites_id": "7585410930116882242",
+   "cited_title": "An update on recent patents on thrombin inhibitors (2010-2013)",
+   "cid": "cacu6e7sNPQJ",
+   "title": "Actividad antitrombótica de proteínas de amaranto",
+   "byline": "AC Sabbione",
+   "link": "https://sedici.unlp.edu.ar/handle/10915/44944",
+   "reason": "possible non-English (accented letters: ó í)",
+   "status": "INDEPENDENT",
+   "confirm_state": "unverified-coverage",
+   "would_count": true,
+   "language_edition": false,
+   "work_type": "article",
+   "exhibit_base": "an-update-on-recent-patents-on-thrombin-inhibitors-2010-2013-citing-2026-10-31",
+   "exhibit_page": 2,
+   "exhibit_row": 9,
+   "exhibit_pdf": "../Independent Citation Record/Exhibits/PDFs/Production/an-update-on-recent-patents-on-thrombin-inhibitors-2010-2013-citing-2026-10-31-p2.pdf"
+  },
+  {
+   "row_uid": "cit-000172",
+   "cites_id": "7585410930116882242",
+   "cited_title": "An update on recent patents on thrombin inhibitors (2010-2013)",
+   "cid": "Z5IGEHblcj0J",
+   "title": "[CITATION] Εργαστηριακή διερεύνηση αντιθρομβωτικής αγωγής και κλινική εφαρμογή αυτής",
+   "byline": "ΒΓ Καλαϊτζίδου - 2023",
+   "link": "",
+   "reason": "non-latin script (title)",
+   "status": "INDEPENDENT",
+   "confirm_state": "confirmed",
+   "would_count": true,
+   "language_edition": false,
+   "work_type": "article",
+   "exhibit_base": "an-update-on-recent-patents-on-thrombin-inhibitors-2010-2013-citing-2026-10-31",
+   "exhibit_page": 3,
+   "exhibit_row": 7,
+   "exhibit_pdf": "../Independent Citation Record/Exhibits/PDFs/Production/an-update-on-recent-patents-on-thrombin-inhibitors-2010-2013-citing-2026-10-31-p3.pdf"
+  },
+  {
+   "row_uid": "cit-000175",
+   "cites_id": "7585410930116882242",
+   "cited_title": "An update on recent patents on thrombin inhibitors (2010-2013)",
+   "cid": "ON2XrFQY4_EJ",
+   "title": "Rekombinantní exprese a funkční charakterizace rostlinných Kunitzových inhibitorů",
+   "byline": "R Rybáriková",
+   "link": "https://dspace.cuni.cz/handle/20.500.11956/128285",
+   "reason": "possible non-English (accented letters: í č ý ů)",
+   "status": "INDEPENDENT",
+   "confirm_state": "unverified-coverage",
+   "would_count": true,
+   "language_edition": false,
+   "work_type": "article",
+   "exhibit_base": "an-update-on-recent-patents-on-thrombin-inhibitors-2010-2013-citing-2026-10-31",
+   "exhibit_page": 4,
+   "exhibit_row": 0,
+   "exhibit_pdf": "../Independent Citation Record/Exhibits/PDFs/Production/an-update-on-recent-patents-on-thrombin-inhibitors-2010-2013-citing-2026-10-31-p4.pdf"
+  },
+  {
+   "row_uid": "cit-000176",
+   "cites_id": "7585410930116882242",
+   "cited_title": "An update on recent patents on thrombin inhibitors (2010-2013)",
+   "cid": "gs_GmeXZZ3YJ",
+   "title": "[CITATION] 凝血酶在蛛网膜下腔出血中的作用",
+   "byline": "林婷婷， 李钢 - 国际脑血管病杂志, 2014",
+   "link": "",
+   "reason": "non-latin script (title)",
+   "status": "INDEPENDENT",
+   "confirm_state": "confirmed",
+   "would_count": true,
+   "language_edition": false,
+   "work_type": "article",
+   "exhibit_base": "an-update-on-recent-patents-on-thrombin-inhibitors-2010-2013-citing-2026-10-31",
+   "exhibit_page": 4,
+   "exhibit_row": 1,
+   "exhibit_pdf": "../Independent Citation Record/Exhibits/PDFs/Production/an-update-on-recent-patents-on-thrombin-inhibitors-2010-2013-citing-2026-10-31-p4.pdf"
+  },
+  {
+   "row_uid": "cit-000178",
+   "cites_id": "7585410930116882242",
+   "cited_title": "An update on recent patents on thrombin inhibitors (2010-2013)",
+   "cid": "XPrJ4JqGYcoJ",
+   "title": "[CITATION] СИНТЕЗ И ИССЛЕДОВАНИЕ ФАРМАКОЛОГИЧЕСКОЙ АКТИВНОСТИ НОВЫХ ИНГИБИТОРОВ ФАКТОРА Ха",
+   "byline": "НА Церковникова",
+   "link": "",
+   "reason": "non-latin script (title)",
+   "status": "INDEPENDENT",
+   "confirm_state": "confirmed",
+   "would_count": true,
+   "language_edition": false,
+   "work_type": "article",
+   "exhibit_base": "an-update-on-recent-patents-on-thrombin-inhibitors-2010-2013-citing-2026-10-31",
+   "exhibit_page": 4,
+   "exhibit_row": 3,
+   "exhibit_pdf": "../Independent Citation Record/Exhibits/PDFs/Production/an-update-on-recent-patents-on-thrombin-inhibitors-2010-2013-citing-2026-10-31-p4.pdf"
+  },
+  {
+   "row_uid": "cit-000215",
+   "cites_id": "16936816916736738985",
+   "cited_title": "Antigenic pressure on H3N2 influenza virus drift strains imposes constraints on binding to sialylated receptors but not phosphorylated glycans",
+   "cid": "Kmn1jvlSRowJ",
+   "title": "Полиморфизм промотора гена IL-4 (C589T) и его влияние на показатель лимфоцитарно-тромбоцитарной адгезии и содержание интерлейкина 4 в крови …",
+   "byline": "АС Емельянов, ГА Чупрова… - Забайкальский …, 2024 - zabmedvestnik.ru",
+   "link": "https://www.zabmedvestnik.ru/jour/article/view/99",
+   "reason": "non-latin script (title)",
+   "status": "INDEPENDENT",
+   "confirm_state": "confirmed",
+   "would_count": true,
+   "language_edition": false,
+   "work_type": "article",
+   "exhibit_base": "antigenic-pressure-on-h3n2-influenza-virus-drift-strains-imp-citing-2026-11-01",
+   "exhibit_page": 4,
+   "exhibit_row": 5,
+   "exhibit_pdf": "../Independent Citation Record/Exhibits/PDFs/Production/antigenic-pressure-on-h3n2-influenza-virus-drift-strains-imp-citing-2026-11-01-p4.pdf"
+  },
+  {
+   "row_uid": "cit-000272",
+   "cites_id": "7766194793257344353",
+   "cited_title": "Chemokine binding to PSGL-1 is controlled by O-glycosylation and tyrosine sulfation",
+   "cid": "IM1uemYroVEJ",
+   "title": "糖基化修饰对蛋白质和肽性质的影响及修饰方法",
+   "byline": "郑小菊， 刘长松， 王凤山 - 生命的化学 - sciengine.com",
+   "link": "https://www.sciengine.com/doi/10.13488/j.smhx.20240466",
+   "reason": "non-latin script (title)",
+   "status": "INDEPENDENT",
+   "confirm_state": "unverified-coverage",
+   "would_count": true,
+   "language_edition": false,
+   "work_type": "article",
+   "exhibit_base": "chemokine-binding-to-psgl-1-is-controlled-by-o-glycosylation-citing-2026-10-30",
+   "exhibit_page": 3,
+   "exhibit_row": 7,
+   "exhibit_pdf": "../Independent Citation Record/Exhibits/PDFs/Production/chemokine-binding-to-psgl-1-is-controlled-by-o-glycosylation-citing-2026-10-30-p3.pdf"
+  },
+  {
+   "row_uid": "cit-000300",
+   "cites_id": "13271249835639697821",
+   "cited_title": "Comparative analysis of INLIGHT™-labeled enzymatically depolymerized heparin by reverse-phase chromatography and high-performance mass spectrometry",
+   "cid": "DZtboLqo7H4J",
+   "title": "Efecto de la liberación controlada de moléculas cargadas sobre la diferenciación de células madre mesenquimales humanas (hMSCs) a osteoblastos",
+   "byline": "KS Ramírez Sánchez",
+   "link": "https://kerwa.ucr.ac.cr/items/b1fb922a-b410-4d96-8f25-56171c78f5b6",
+   "reason": "possible non-English (accented letters: ó é)",
+   "status": "INDEPENDENT",
+   "confirm_state": "unverified-coverage",
+   "would_count": true,
+   "language_edition": false,
+   "work_type": "article",
+   "exhibit_base": "comparative-analysis-of-inlight-labeled-enzymatically-depoly-citing-2026-10-30",
+   "exhibit_page": 1,
+   "exhibit_row": 7,
+   "exhibit_pdf": "../Independent Citation Record/Exhibits/PDFs/Production/comparative-analysis-of-inlight-labeled-enzymatically-depoly-citing-2026-10-30.pdf"
+  },
+  {
+   "row_uid": "cit-000301",
+   "cites_id": "13271249835639697821",
+   "cited_title": "Comparative analysis of INLIGHT™-labeled enzymatically depolymerized heparin by reverse-phase chromatography and high-performance mass spectrometry",
+   "cid": "iSkDbthtunEJ",
+   "title": "Caractérisation structurale et production enzymatique de biomarqueurs des mucopolysaccharidoses de type III",
+   "byline": "C Rambaud",
+   "link": "https://theses.hal.science/tel-05167241/",
+   "reason": "possible non-English (et, des)",
+   "status": "INDEPENDENT",
+   "confirm_state": "unverified-coverage",
+   "would_count": true,
+   "language_edition": false,
+   "work_type": "article",
+   "exhibit_base": "comparative-analysis-of-inlight-labeled-enzymatically-depoly-citing-2026-10-30",
+   "exhibit_page": 1,
+   "exhibit_row": 8,
+   "exhibit_pdf": "../Independent Citation Record/Exhibits/PDFs/Production/comparative-analysis-of-inlight-labeled-enzymatically-depoly-citing-2026-10-30.pdf"
+  },
+  {
+   "row_uid": "cit-000308",
+   "cites_id": "11511020813745171966",
+   "cited_title": "Design, Synthesis, and Investigation of Novel Nitric Oxide (NO)-Releasing Prodrugs as Drug Candidates for the Treatment of Ischemic Disorders: Insights into NO-Releasing …",
+   "cid": "gLKSnMa9tz8J",
+   "title": "Effect of Hb conformational changes on oxygen transport physiology",
+   "byline": "Ziyue, YIN, Doudou, LI, Qianwen, GUO, Rong, WANG, Wenbin, LI",
+   "link": "https://pmc.ncbi.nlm.nih.gov/articles/PMC11208409/",
+   "reason": "non-latin script (snippet)",
+   "status": "INDEPENDENT",
+   "confirm_state": "confirmed",
+   "would_count": true,
+   "language_edition": false,
+   "work_type": "article",
+   "exhibit_base": "design-synthesis-and-investigation-of-novel-nitric-oxide-no--citing-2026-10-30",
+   "exhibit_page": 1,
+   "exhibit_row": 4,
+   "exhibit_pdf": "../Independent Citation Record/Exhibits/PDFs/Production/design-synthesis-and-investigation-of-novel-nitric-oxide-no--citing-2026-10-30.pdf"
+  },
+  {
+   "row_uid": "cit-000318",
+   "cites_id": "11511020813745171966",
+   "cited_title": "Design, Synthesis, and Investigation of Novel Nitric Oxide (NO)-Releasing Prodrugs as Drug Candidates for the Treatment of Ischemic Disorders: Insights into NO-Releasing …",
+   "cid": "OCZ6JrY3SqkJ",
+   "title": "Hb 构象变化对氧转运生理功能的影响",
+   "byline": "尹紫悦， 李豆豆， 郭茜文， 王荣， 李文斌 - pdfs.semanticscholar.org",
+   "link": "https://pdfs.semanticscholar.org/0f18/c78b1bd78bf5e6cae23b0616c88b420d6151.pdf",
+   "reason": "non-latin script (title)",
+   "status": "INDEPENDENT",
+   "confirm_state": "confirmed",
+   "would_count": true,
+   "language_edition": false,
+   "work_type": "article",
+   "exhibit_base": "design-synthesis-and-investigation-of-novel-nitric-oxide-no--citing-2026-10-30",
+   "exhibit_page": 2,
+   "exhibit_row": 4,
+   "exhibit_pdf": "../Independent Citation Record/Exhibits/PDFs/Production/design-synthesis-and-investigation-of-novel-nitric-oxide-no--citing-2026-10-30-p2.pdf"
+  },
+  {
+   "row_uid": "cit-000472",
+   "cites_id": "14910939819377951228",
+   "cited_title": "Emerging patterns of tyrosine sulfation and O-glycosylation cross-talk and co-localization",
+   "cid": "ismNuE_qPl4J",
+   "title": "基因编辑技术及其在糖生物学研究中的应用.",
+   "byline": "章恩华， 邱宏 - Chinese Journal of Biochemistry & Molecular …, 2024 - openurl.ebsco.com",
+   "link": "https://openurl.ebsco.com/contentitem/gcd:176815106?sid=ebsco:plink:crawler-gcd&id=ebsco:gcd:176815106&crl=c&jrnl=10077626",
+   "reason": "non-latin script (title)",
+   "status": "INDEPENDENT",
+   "confirm_state": "unverified-coverage",
+   "would_count": true,
+   "language_edition": false,
+   "work_type": "article",
+   "exhibit_base": "emerging-patterns-of-tyrosine-sulfation-and-o-glycosylation--citing-2026-10-31",
+   "exhibit_page": 5,
+   "exhibit_row": 1,
+   "exhibit_pdf": "../Independent Citation Record/Exhibits/PDFs/Production/emerging-patterns-of-tyrosine-sulfation-and-o-glycosylation--citing-2026-10-31-p5.pdf"
+  },
+  {
+   "row_uid": "cit-000474",
+   "cites_id": "14910939819377951228",
+   "cited_title": "Emerging patterns of tyrosine sulfation and O-glycosylation cross-talk and co-localization",
+   "cid": "MlrFSF031KQJ",
+   "title": "Physiopathologie de l'export de surface des récepteurs et transporteurs",
+   "byline": "V DELMAS",
+   "link": "https://theses.fr/api/v1/document/2023UNIP5257",
+   "reason": "possible non-English (des, et)",
+   "status": "INDEPENDENT",
+   "confirm_state": "unverified-coverage",
+   "would_count": true,
+   "language_edition": false,
+   "work_type": "article",
+   "exhibit_base": "emerging-patterns-of-tyrosine-sulfation-and-o-glycosylation--citing-2026-10-31",
+   "exhibit_page": 5,
+   "exhibit_row": 3,
+   "exhibit_pdf": "../Independent Citation Record/Exhibits/PDFs/Production/emerging-patterns-of-tyrosine-sulfation-and-o-glycosylation--citing-2026-10-31-p5.pdf"
+  },
+  {
+   "row_uid": "cit-000503",
+   "cites_id": "10448952677968226961",
+   "cited_title": "Galectin-3 Decreases 4-1BBL Bioactivity by Crosslinking Soluble and Membrane Expressed 4-1BB",
+   "cid": "2cEhMauZjFMJ",
+   "title": "Impacto da inibição da galectina-3 na reversão da esteato-hepatite não alcoólica em modelo experimental",
+   "byline": "ARM Santos, JPG Camporez",
+   "link": "https://repositorio.usp.br/item/003319553",
+   "reason": "possible non-English (accented letters: ç ã ó)",
+   "status": "INDEPENDENT",
+   "confirm_state": "unverified-coverage",
+   "would_count": true,
+   "language_edition": false,
+   "work_type": "article",
+   "exhibit_base": "galectin-3-decreases-4-1bbl-bioactivity-by-crosslinking-solu-citing-2026-10-30",
+   "exhibit_page": 2,
+   "exhibit_row": 6,
+   "exhibit_pdf": "../Independent Citation Record/Exhibits/PDFs/Production/galectin-3-decreases-4-1bbl-bioactivity-by-crosslinking-solu-citing-2026-10-30-p2.pdf"
+  },
+  {
+   "row_uid": "cit-000860",
+   "cites_id": "11657216136002863473",
+   "cited_title": "GlyGen: computational and informatics resources for glycoscience",
+   "cid": "qy_VabjHFAMJ",
+   "title": "Recherche de nouvelles CAZymes grâce aux supra-opérons bactériens et exploration de l'espace des séquences pour l'annotation fonctionnelle",
+   "byline": "N Terrapon",
+   "link": "https://hal.science/tel-05668672/document",
+   "reason": "possible non-English (aux, et, des, pour)",
+   "status": "INDEPENDENT",
+   "confirm_state": "unverified-coverage",
+   "would_count": true,
+   "language_edition": false,
+   "work_type": "article",
+   "exhibit_base": "glygen-computational-and-informatics-resources-for-glycoscie-citing-2026-11-01",
+   "exhibit_page": 21,
+   "exhibit_row": 1,
+   "exhibit_pdf": "../Independent Citation Record/Exhibits/PDFs/Production/glygen-computational-and-informatics-resources-for-glycoscie-citing-2026-11-01-p21.pdf"
+  },
+  {
+   "row_uid": "cit-000880",
+   "cites_id": "11657216136002863473",
+   "cited_title": "GlyGen: computational and informatics resources for glycoscience",
+   "cid": "t-q5PttoEgEJ",
+   "title": "Análise bioinformática de variações genéticas no gene MMP20 ea sua associação com amelogénese imperfeita",
+   "byline": "E Humblot",
+   "link": "https://search.proquest.com/openview/348c906236e0e5c920c86ad944b90ca7/1?pq-origsite=gscholar&cbl=2026366&diss=y",
+   "reason": "possible non-English (accented letters: á ç õ é ã)",
+   "status": "INDEPENDENT",
+   "confirm_state": "unverified-coverage",
+   "would_count": true,
+   "language_edition": false,
+   "work_type": "article",
+   "exhibit_base": "glygen-computational-and-informatics-resources-for-glycoscie-citing-2026-11-01",
+   "exhibit_page": 23,
+   "exhibit_row": 1,
+   "exhibit_pdf": "../Independent Citation Record/Exhibits/PDFs/Production/glygen-computational-and-informatics-resources-for-glycoscie-citing-2026-11-01-p23.pdf"
+  },
+  {
+   "row_uid": "cit-000885",
+   "cites_id": "11657216136002863473",
+   "cited_title": "GlyGen: computational and informatics resources for glycoscience",
+   "cid": "gJCamJibohAJ",
+   "title": "糖鎖関連インフォマティクスへの入り口",
+   "byline": "細田正恵， 木下聖子 - JSBi Bioinformatics Review, 2021 - jstage.jst.go.jp",
+   "link": "https://www.jstage.jst.go.jp/article/jsbibr/2/1/2_jsbibr.2021.10/_article/-char/ja/",
+   "reason": "non-latin script (title)",
+   "status": "INDEPENDENT",
+   "confirm_state": "unverified-coverage",
+   "would_count": true,
+   "language_edition": false,
+   "work_type": "article",
+   "exhibit_base": "glygen-computational-and-informatics-resources-for-glycoscie-citing-2026-11-01",
+   "exhibit_page": 23,
+   "exhibit_row": 6,
+   "exhibit_pdf": "../Independent Citation Record/Exhibits/PDFs/Production/glygen-computational-and-informatics-resources-for-glycoscie-citing-2026-11-01-p23.pdf"
+  },
+  {
+   "row_uid": "cit-000890",
+   "cites_id": "11657216136002863473",
+   "cited_title": "GlyGen: computational and informatics resources for glycoscience",
+   "cid": "TwlLWbyDhXEJ",
+   "title": "事前学習言語モデルを用いた糖鎖エンコーディングに基づく糖タンパク質と薬剤のインタラクション予測",
+   "byline": "新川栄二， 永塚光一， 村田祐樹， 小野多美子… - … 学会全国大会論文集 第 …, 2022 - jstage.jst.go.jp",
+   "link": "https://www.jstage.jst.go.jp/article/pjsai/JSAI2022/0/JSAI2022_4C3GS1002/_article/-char/ja/",
+   "reason": "non-latin script (title)",
+   "status": "INDEPENDENT",
+   "confirm_state": "unverified-coverage",
+   "would_count": true,
+   "language_edition": false,
+   "work_type": "article",
+   "exhibit_base": "glygen-computational-and-informatics-resources-for-glycoscie-citing-2026-11-01",
+   "exhibit_page": 24,
+   "exhibit_row": 1,
+   "exhibit_pdf": "../Independent Citation Record/Exhibits/PDFs/Production/glygen-computational-and-informatics-resources-for-glycoscie-citing-2026-11-01-p24.pdf"
+  },
+  {
+   "row_uid": "cit-000891",
+   "cites_id": "11657216136002863473",
+   "cited_title": "GlyGen: computational and informatics resources for glycoscience",
+   "cid": "g8Q7uouWGgYJ",
+   "title": "相互アテンションニューラルネットワークによる糖タンパク質と薬剤のインタラクション解析",
+   "byline": "新川栄二， 永塚光一， 村田祐樹， 小野多美子… - … 学会全国大会論文集 第 …, 2021 - jstage.jst.go.jp",
+   "link": "https://www.jstage.jst.go.jp/article/pjsai/JSAI2021/0/JSAI2021_2Xin507/_article/-char/ja/",
+   "reason": "non-latin script (title)",
+   "status": "INDEPENDENT",
+   "confirm_state": "unverified-coverage",
+   "would_count": true,
+   "language_edition": false,
+   "work_type": "article",
+   "exhibit_base": "glygen-computational-and-informatics-resources-for-glycoscie-citing-2026-11-01",
+   "exhibit_page": 24,
+   "exhibit_row": 2,
+   "exhibit_pdf": "../Independent Citation Record/Exhibits/PDFs/Production/glygen-computational-and-informatics-resources-for-glycoscie-citing-2026-11-01-p24.pdf"
+  },
+  {
+   "row_uid": "cit-000892",
+   "cites_id": "11657216136002863473",
+   "cited_title": "GlyGen: computational and informatics resources for glycoscience",
+   "cid": "iexarXa2ExgJ",
+   "title": "SWATH-MS を用いた ANCA 関連血管炎におけるミエロペルオキシダーゼの翻訳後修飾の網羅的解析",
+   "byline": "佐藤政秋， 永井宏平， 黒川真奈絵 - 日本プロテオーム学会誌, 2026 - jstage.jst.go.jp",
+   "link": "https://www.jstage.jst.go.jp/article/jpros/11/1/11_15/_article/-char/ja/",
+   "reason": "non-latin script (title)",
+   "status": "INDEPENDENT",
+   "confirm_state": "unverified-coverage",
+   "would_count": true,
+   "language_edition": false,
+   "work_type": "article",
+   "exhibit_base": "glygen-computational-and-informatics-resources-for-glycoscie-citing-2026-11-01",
+   "exhibit_page": 24,
+   "exhibit_row": 3,
+   "exhibit_pdf": "../Independent Citation Record/Exhibits/PDFs/Production/glygen-computational-and-informatics-resources-for-glycoscie-citing-2026-11-01-p24.pdf"
+  },
+  {
+   "row_uid": "cit-000898",
+   "cites_id": "11657216136002863473",
+   "cited_title": "GlyGen: computational and informatics resources for glycoscience",
+   "cid": "WnI5fFiyIR0J",
+   "title": "糖鎖インフォマティクス",
+   "byline": "木下聖子 - ファルマシア, 2024 - jstage.jst.go.jp",
+   "link": "https://www.jstage.jst.go.jp/article/faruawpsj/60/9/60_866/_article/-char/ja/",
+   "reason": "non-latin script (title)",
+   "status": "INDEPENDENT",
+   "confirm_state": "unverified-coverage",
+   "would_count": true,
+   "language_edition": false,
+   "work_type": "article",
+   "exhibit_base": "glygen-computational-and-informatics-resources-for-glycoscie-citing-2026-11-01",
+   "exhibit_page": 24,
+   "exhibit_row": 9,
+   "exhibit_pdf": "../Independent Citation Record/Exhibits/PDFs/Production/glygen-computational-and-informatics-resources-for-glycoscie-citing-2026-11-01-p24.pdf"
+  },
+  {
+   "row_uid": "cit-000899",
+   "cites_id": "11657216136002863473",
+   "cited_title": "GlyGen: computational and informatics resources for glycoscience",
+   "cid": "wFc_-MRr6wkJ",
+   "title": "[CITATION] CARBOHYDRATE STRUCTURE DATABASE И ДРУГИЕ УГЛЕВОДНЫЕ БАЗЫ ДАННЫХ КАК ВАЖНЕЙШИЙ ЭЛЕМЕНТ ГЛИКОИНФОРМАТИКИ",
+   "byline": "ФВ ТОУКАЧ, АИ ШИРКОВСКАЯ - БИООРГАНИЧЕСКАЯ ХИМИЯ, 2022",
+   "link": "",
+   "reason": "non-latin script (title)",
+   "status": "INDEPENDENT",
+   "confirm_state": "unverified-coverage",
+   "would_count": true,
+   "language_edition": false,
+   "work_type": "article",
+   "exhibit_base": "glygen-computational-and-informatics-resources-for-glycoscie-citing-2026-11-01",
+   "exhibit_page": 25,
+   "exhibit_row": 0,
+   "exhibit_pdf": "../Independent Citation Record/Exhibits/PDFs/Production/glygen-computational-and-informatics-resources-for-glycoscie-citing-2026-11-01-p25.pdf"
+  },
+  {
+   "row_uid": "cit-000900",
+   "cites_id": "11657216136002863473",
+   "cited_title": "GlyGen: computational and informatics resources for glycoscience",
+   "cid": "sWT39uF2sUcJ",
+   "title": "相互アテンションニューラルネットワークによる薬剤と糖タンパク質の相互作用解析",
+   "byline": "渥美雅保， 新川栄二 - 創価大学糖鎖生命システム融合研究所 …, 2023 - soka.repo.nii.ac.jp",
+   "link": "https://soka.repo.nii.ac.jp/record/2000034/files/galsic0_2_04.pdf",
+   "reason": "non-latin script (title)",
+   "status": "INDEPENDENT",
+   "confirm_state": "unverified-coverage",
+   "would_count": true,
+   "language_edition": false,
+   "work_type": "article",
+   "exhibit_base": "glygen-computational-and-informatics-resources-for-glycoscie-citing-2026-11-01",
+   "exhibit_page": 25,
+   "exhibit_row": 1,
+   "exhibit_pdf": "../Independent Citation Record/Exhibits/PDFs/Production/glygen-computational-and-informatics-resources-for-glycoscie-citing-2026-11-01-p25.pdf"
+  },
+  {
+   "row_uid": "cit-000901",
+   "cites_id": "11657216136002863473",
+   "cited_title": "GlyGen: computational and informatics resources for glycoscience",
+   "cid": "_ua4fyJqLX8J",
+   "title": "GlyCosmos 糖鎖科学ポータルの仕上げ開発",
+   "byline": "木下聖子 - 創価大学糖鎖生命システム融合研究所 (GaLSIC) 所報, 2022 - soka.repo.nii.ac.jp",
+   "link": "https://soka.repo.nii.ac.jp/record/40889/files/galsic0_1_03.pdf",
+   "reason": "non-latin script (title)",
+   "status": "INDEPENDENT",
+   "confirm_state": "confirmed",
+   "would_count": true,
+   "language_edition": false,
+   "work_type": "article",
+   "exhibit_base": "glygen-computational-and-informatics-resources-for-glycoscie-citing-2026-11-01",
+   "exhibit_page": 25,
+   "exhibit_row": 2,
+   "exhibit_pdf": "../Independent Citation Record/Exhibits/PDFs/Production/glygen-computational-and-informatics-resources-for-glycoscie-citing-2026-11-01-p25.pdf"
+  },
+  {
+   "row_uid": "cit-000902",
+   "cites_id": "11657216136002863473",
+   "cited_title": "GlyGen: computational and informatics resources for glycoscience",
+   "cid": "fCRfgSBicEQJ",
+   "title": "糖鎖インフォマティクスの世界統合",
+   "byline": "木下聖子 - Journal of Japanese Biochemical Society, 2020 - seikagaku.jbsoc.or.jp",
+   "link": "https://seikagaku.jbsoc.or.jp/10.14952/SEIKAGAKU.2020.920398/data/",
+   "reason": "non-latin script (title)",
+   "status": "INDEPENDENT",
+   "confirm_state": "unverified-coverage",
+   "would_count": true,
+   "language_edition": false,
+   "work_type": "article",
+   "exhibit_base": "glygen-computational-and-informatics-resources-for-glycoscie-citing-2026-11-01",
+   "exhibit_page": 25,
+   "exhibit_row": 3,
+   "exhibit_pdf": "../Independent Citation Record/Exhibits/PDFs/Production/glygen-computational-and-informatics-resources-for-glycoscie-citing-2026-11-01-p25.pdf"
+  },
+  {
+   "row_uid": "cit-000651",
+   "cites_id": "11088885855065116690",
+   "cited_title": "GlycoGlyph: a glycan visualizing, drawing and naming application",
+   "cid": "Pg6VC4oLnGoJ",
+   "title": "Actividad antioxidante de novedosa arabinogalactana extraída de flores de sauco medicinales (Sambucus peruviana) y su caracterización química y estructural",
+   "byline": "JL Kaled Cáceres",
+   "link": "https://repositorio.uniandes.edu.co/entities/publication/522f314f-8acc-41ce-9959-e34bac5ce742",
+   "reason": "possible non-English (accented letters: í ó)",
+   "status": "INDEPENDENT",
+   "confirm_state": "unverified-coverage",
+   "would_count": true,
+   "language_edition": false,
+   "work_type": "article",
+   "exhibit_base": "glycoglyph-a-glycan-visualizing-drawing-and-naming-applicati-citing-2026-11-01",
+   "exhibit_page": 8,
+   "exhibit_row": 0,
+   "exhibit_pdf": "../Independent Citation Record/Exhibits/PDFs/Production/glycoglyph-a-glycan-visualizing-drawing-and-naming-applicati-citing-2026-11-01-p8.pdf"
+  },
+  {
+   "row_uid": "cit-000655",
+   "cites_id": "11088885855065116690",
+   "cited_title": "GlycoGlyph: a glycan visualizing, drawing and naming application",
+   "cid": "ehAuUtRWNQ4J",
+   "title": "Úloha glykanů v biologickém rozpoznávání-teoretická",
+   "byline": "P ŠMAK",
+   "link": "https://is.muni.cz/th/ofxfk/DP_PavelSmak_Archive.pdf",
+   "reason": "possible non-English (accented letters: Ú ů é á í)",
+   "status": "INDEPENDENT",
+   "confirm_state": "unverified-coverage",
+   "would_count": true,
+   "language_edition": false,
+   "work_type": "article",
+   "exhibit_base": "glycoglyph-a-glycan-visualizing-drawing-and-naming-applicati-citing-2026-11-01",
+   "exhibit_page": 8,
+   "exhibit_row": 4,
+   "exhibit_pdf": "../Independent Citation Record/Exhibits/PDFs/Production/glycoglyph-a-glycan-visualizing-drawing-and-naming-applicati-citing-2026-11-01-p8.pdf"
+  },
+  {
+   "row_uid": "cit-000658",
+   "cites_id": "11088885855065116690",
+   "cited_title": "GlycoGlyph: a glycan visualizing, drawing and naming application",
+   "cid": "TskVXAmYjbAJ",
+   "title": "Úloha glykanů v biologickém rozpoznávání–teoretická studie",
+   "byline": "P Šmak",
+   "link": "https://is.muni.cz/th/ofxfk/DP_PavelSmak.pdf",
+   "reason": "possible non-English (accented letters: Ú ů é á í)",
+   "status": "INDEPENDENT",
+   "confirm_state": "unverified-coverage",
+   "would_count": true,
+   "language_edition": false,
+   "work_type": "article",
+   "exhibit_base": "glycoglyph-a-glycan-visualizing-drawing-and-naming-applicati-citing-2026-11-01",
+   "exhibit_page": 8,
+   "exhibit_row": 7,
+   "exhibit_pdf": "../Independent Citation Record/Exhibits/PDFs/Production/glycoglyph-a-glycan-visualizing-drawing-and-naming-applicati-citing-2026-11-01-p8.pdf"
+  },
+  {
+   "row_uid": "cit-001103",
+   "cites_id": "12821833616671474197",
+   "cited_title": "Novel reversible fluorescent glycan linker for functional glycomics",
+   "cid": "dFSExaNwatMJ",
+   "title": "糖芯片技术在肿瘤研究中的应用",
+   "byline": "许倍宁， 刘银坤， 谢裕安 - 生物工程学报, 2020 - cjb.ijournals.cn",
+   "link": "https://cjb.ijournals.cn/html/cjbcn/2020/11/gc20112313.htm",
+   "reason": "non-latin script (title)",
+   "status": "INDEPENDENT",
+   "confirm_state": "unverified-coverage",
+   "would_count": true,
+   "language_edition": false,
+   "work_type": "article",
+   "exhibit_base": "novel-reversible-fluorescent-glycan-linker-for-functional-gl-citing-2026-10-30",
+   "exhibit_page": 3,
+   "exhibit_row": 2,
+   "exhibit_pdf": "../Independent Citation Record/Exhibits/PDFs/Production/novel-reversible-fluorescent-glycan-linker-for-functional-gl-citing-2026-10-30-p3.pdf"
+  },
+  {
+   "row_uid": "cit-001123",
+   "cites_id": "5067819667796015751",
+   "cited_title": "Parallel Glyco-SPOT Synthesis of Glycopeptide Libraries",
+   "cid": "ismNuE_qPl4J",
+   "title": "基因编辑技术及其在糖生物学研究中的应用.",
+   "byline": "章恩华， 邱宏 - Chinese Journal of Biochemistry & Molecular …, 2024 - openurl.ebsco.com",
+   "link": "https://openurl.ebsco.com/contentitem/gcd:176815106?sid=ebsco:plink:crawler-gcd&id=ebsco:gcd:176815106&crl=c&jrnl=10077626",
+   "reason": "non-latin script (title)",
+   "status": "INDEPENDENT",
+   "confirm_state": "unverified-coverage",
+   "would_count": true,
+   "language_edition": false,
+   "work_type": "article",
+   "exhibit_base": "parallel-glyco-spot-synthesis-of-glycopeptide-libraries-citing-2026-10-31",
+   "exhibit_page": 2,
+   "exhibit_row": 8,
+   "exhibit_pdf": "../Independent Citation Record/Exhibits/PDFs/Production/parallel-glyco-spot-synthesis-of-glycopeptide-libraries-citing-2026-10-31-p2.pdf"
+  },
+  {
+   "row_uid": "cit-001158",
+   "cites_id": "5710710517199553350",
+   "cited_title": "Potent direct inhibitors of factor Xa based on the tetrahydroisoquinoline scaffold",
+   "cid": "PWqLNQRBqP0J",
+   "title": "[CITATION] 4-(4-氨基苯基)-3-吗啉酮的合成",
+   "byline": "贾云灿， 李雁武， 刘凯， 袁建勇 - 光谱实验室, 2013",
+   "link": "",
+   "reason": "non-latin script (title)",
+   "status": "INDEPENDENT",
+   "confirm_state": "confirmed",
+   "would_count": true,
+   "language_edition": false,
+   "work_type": "article",
+   "exhibit_base": "potent-direct-inhibitors-of-factor-xa-based-on-the-tetrahydr-citing-2026-10-31",
+   "exhibit_page": 4,
+   "exhibit_row": 1,
+   "exhibit_pdf": "../Independent Citation Record/Exhibits/PDFs/Production/potent-direct-inhibitors-of-factor-xa-based-on-the-tetrahydr-citing-2026-10-31-p4.pdf"
+  },
+  {
+   "row_uid": "cit-001387",
+   "cites_id": "14331029933979420569",
+   "cited_title": "Sulfated pentagalloylglucoside is a potent, allosteric, and selective inhibitor of factor XIa",
+   "cid": "ii6swKdPCe0J",
+   "title": "凝血因子 Ⅺa 小分子抑制剂研究进展",
+   "byline": "王璐， 杨慧， 赵力挥， 王国成 - 药学进展, 2018 - pps.cpu.edu.cn",
+   "link": "https://pps.cpu.edu.cn/article/app/id/fcbc5b16-77d2-4017-907c-d52e919bd03b",
+   "reason": "non-latin script (title)",
+   "status": "INDEPENDENT",
+   "confirm_state": "unverified-coverage",
+   "would_count": true,
+   "language_edition": false,
+   "work_type": "article",
+   "exhibit_base": "sulfated-pentagalloylglucoside-is-a-potent-allosteric-and-se-citing-2026-11-01",
+   "exhibit_page": 11,
+   "exhibit_row": 5,
+   "exhibit_pdf": "../Independent Citation Record/Exhibits/PDFs/Production/sulfated-pentagalloylglucoside-is-a-potent-allosteric-and-se-citing-2026-11-01-p11.pdf"
+  },
+  {
+   "row_uid": "cit-001388",
+   "cites_id": "14331029933979420569",
+   "cited_title": "Sulfated pentagalloylglucoside is a potent, allosteric, and selective inhibitor of factor XIa",
+   "cid": "A2crVjMNOOkJ",
+   "title": "Nowe perspektywy leczenia przeciwzakrzepowego—środki hamujące czynnik krzepnięcia XI",
+   "byline": "J Treliński",
+   "link": "https://publicum.umed.lodz.pl/docstore/download/AML778dff099ddc4a13aec9c792b23e59af/0000053234.pdf",
+   "reason": "possible non-English (accented letters: ś ą ę)",
+   "status": "INDEPENDENT",
+   "confirm_state": "unverified-coverage",
+   "would_count": true,
+   "language_edition": false,
+   "work_type": "article",
+   "exhibit_base": "sulfated-pentagalloylglucoside-is-a-potent-allosteric-and-se-citing-2026-11-01",
+   "exhibit_page": 11,
+   "exhibit_row": 6,
+   "exhibit_pdf": "../Independent Citation Record/Exhibits/PDFs/Production/sulfated-pentagalloylglucoside-is-a-potent-allosteric-and-se-citing-2026-11-01-p11.pdf"
+  },
+  {
+   "row_uid": "cit-001390",
+   "cites_id": "14331029933979420569",
+   "cited_title": "Sulfated pentagalloylglucoside is a potent, allosteric, and selective inhibitor of factor XIa",
+   "cid": "7dnLZSTKiBAJ",
+   "title": "凝血因子 XI 抑制剂研究进展",
+   "byline": "任燊红， 毛自敏， 孔毅 - 药学学报, 2019 - html.rhhz.net",
+   "link": "https://html.rhhz.net/YXXB/html/20190605.htm",
+   "reason": "non-latin script (title)",
+   "status": "INDEPENDENT",
+   "confirm_state": "confirmed",
+   "would_count": true,
+   "language_edition": false,
+   "work_type": "article",
+   "exhibit_base": "sulfated-pentagalloylglucoside-is-a-potent-allosteric-and-se-citing-2026-11-01",
+   "exhibit_page": 11,
+   "exhibit_row": 8,
+   "exhibit_pdf": "../Independent Citation Record/Exhibits/PDFs/Production/sulfated-pentagalloylglucoside-is-a-potent-allosteric-and-se-citing-2026-11-01-p11.pdf"
+  },
+  {
+   "row_uid": "cit-001456",
+   "cites_id": "13760283595664836508",
+   "cited_title": "Targeting the GPIbα Binding Site of Thrombin To Simultaneously Induce Dual Anticoagulant and Antiplatelet Effects",
+   "cid": "jSbVxJMuiTsJ",
+   "title": "基于血小板糖蛋白受体 GPIbα 琢的血栓形成研究进展.",
+   "byline": "陈相， 陈秋芳， 蒋艾豆， 沈惠亮… - Progress in Modern …, 2024 - openurl.ebsco.com",
+   "link": "https://openurl.ebsco.com/contentitem/gcd:120427829?sid=ebsco:plink:crawler-gcd&id=ebsco:gcd:120427829&crl=c&jrnl=16736273",
+   "reason": "non-latin script (title)",
+   "status": "INDEPENDENT",
+   "confirm_state": "confirmed",
+   "would_count": true,
+   "language_edition": false,
+   "work_type": "article",
+   "exhibit_base": "targeting-the-gpib-binding-site-of-thrombin-to-simultaneousl-citing-2026-10-31",
+   "exhibit_page": 3,
+   "exhibit_row": 9,
+   "exhibit_pdf": "../Independent Citation Record/Exhibits/PDFs/Production/targeting-the-gpib-binding-site-of-thrombin-to-simultaneousl-citing-2026-10-31-p3.pdf"
+  },
+  {
+   "row_uid": "cit-001510",
+   "cites_id": "13747992322397191586",
+   "cited_title": "Tumor cells express pauci-and oligomannosidic N-glycans in glycoproteins recognized by the mannose receptor (CD206)",
+   "cid": "jo95PId9qhYJ",
+   "title": "低容量糖代謝ストレスを介したがん幹細胞性制御機構の解明",
+   "byline": "岩本駿吾， イワモトシュンゴ - ksu.repo.nii.ac.jp",
+   "link": "https://ksu.repo.nii.ac.jp/record/2000263/files/DN_A_54_11_1.pdf",
+   "reason": "non-latin script (title)",
+   "status": "INDEPENDENT",
+   "confirm_state": "unverified-coverage",
+   "would_count": true,
+   "language_edition": false,
+   "work_type": "article",
+   "exhibit_base": "tumor-cells-express-pauci-and-oligomannosidic-n-glycans-in-g-citing-2026-10-30",
+   "exhibit_page": 4,
+   "exhibit_row": 4,
+   "exhibit_pdf": "../Independent Citation Record/Exhibits/PDFs/Production/tumor-cells-express-pauci-and-oligomannosidic-n-glycans-in-g-citing-2026-10-30-p4.pdf"
+  },
+  {
+   "row_uid": "cit-000077",
+   "cites_id": "11728333386143173456",
+   "cited_title": "Allosteric partial inhibition of monomeric proteases. Sulfated coumarins induce regulation, not just inhibition, of thrombin",
+   "cid": "nmcGn-wI2ZkJ",
+   "title": "[CITATION] Синтез и исследование новых ингибиторов факторов свертывания крови Xa и XIa ряда 2H-пиранохинолин-2-онов",
+   "byline": "АЮ Потапов, БВ Папонов… - Известия …, 2021 - … Издательство журнала Известия …",
+   "link": "",
+   "reason": "non-latin script (title)",
+   "status": "REVIEW",
+   "confirm_state": "unresolved",
+   "would_count": false,
+   "language_edition": false,
+   "work_type": "article",
+   "exhibit_base": "allosteric-partial-inhibition-of-monomeric-proteases-sulfate-citing-2026-10-31",
+   "exhibit_page": 4,
+   "exhibit_row": 5,
+   "exhibit_pdf": "../Independent Citation Record/Exhibits/PDFs/Production/allosteric-partial-inhibition-of-monomeric-proteases-sulfate-citing-2026-10-31-p4.pdf"
+  },
+  {
+   "row_uid": "cit-000082",
+   "cites_id": "11728333386143173456",
+   "cited_title": "Allosteric partial inhibition of monomeric proteases. Sulfated coumarins induce regulation, not just inhibition, of thrombin",
+   "cid": "Qy1zIh4Gtr0J",
+   "title": "[CITATION] Учредители: Институт органической химии им. НД Зелинского РАН, Российская академия наук",
+   "byline": "МН МАВЛУД, АЮ ПОТАПОВ, ХС ШИХАЛИЕВ - ЖУРНАЛ ОРГАНИЧЕСКОЙ …, 2025",
+   "link": "",
+   "reason": "non-latin script (title)",
+   "status": "REVIEW",
+   "confirm_state": "confirmed",
+   "would_count": false,
+   "language_edition": false,
+   "work_type": "article",
+   "exhibit_base": "allosteric-partial-inhibition-of-monomeric-proteases-sulfate-citing-2026-10-31",
+   "exhibit_page": 5,
+   "exhibit_row": 0,
+   "exhibit_pdf": "../Independent Citation Record/Exhibits/PDFs/Production/allosteric-partial-inhibition-of-monomeric-proteases-sulfate-citing-2026-10-31-p5.pdf"
+  },
+  {
+   "row_uid": "cit-000179",
+   "cites_id": "7585410930116882242",
+   "cited_title": "An update on recent patents on thrombin inhibitors (2010-2013)",
+   "cid": "efiX4C1GkBYJ",
+   "title": "[CITATION] СИНТЕЗ И ИССЛЕДОВАНИЕ ФАРМАКОЛОГИЧЕСКОЙ АКТИВНОСТИ НОВЫХ ИНГИБИТОРОВ ФАКТОРА Ха",
+   "byline": "НА Црковникова - 2021 - … физиологически активных веществ …",
+   "link": "",
+   "reason": "non-latin script (title)",
+   "status": "REVIEW",
+   "confirm_state": "confirmed",
+   "would_count": false,
+   "language_edition": false,
+   "work_type": "article",
+   "exhibit_base": "an-update-on-recent-patents-on-thrombin-inhibitors-2010-2013-citing-2026-10-31",
+   "exhibit_page": 4,
+   "exhibit_row": 4,
+   "exhibit_pdf": "../Independent Citation Record/Exhibits/PDFs/Production/an-update-on-recent-patents-on-thrombin-inhibitors-2010-2013-citing-2026-10-31-p4.pdf"
+  },
+  {
+   "row_uid": "cit-000991",
+   "cites_id": "1097725010100349237",
+   "cited_title": "Insights into glycobiology and the protein-glycan interactome using glycan microarray technologies",
+   "cid": "GZHuXnSToewJ",
+   "title": "Untersuchung von Anti‐Glykan‐Antikörpern und Erforschung ihres medizinischen Potenzials mithilfe synthetischer Glykane",
+   "byline": "Weber, Fabienne, Valenti, Aina, Ledvinka, Ji{\\v{r}}{\\'\\i}, Moscovitz, Oren, Seeberger, Peter H",
+   "link": "https://onlinelibrary.wiley.com/doi/abs/10.1002/ange.7795967",
+   "reason": "possible non-English (von, und)",
+   "status": "INDEPENDENT",
+   "confirm_state": "unverified-coverage",
+   "would_count": false,
+   "language_edition": true,
+   "work_type": "article",
+   "exhibit_base": "insights-into-glycobiology-and-the-protein-glycan-interactom-citing-2026-10-31",
+   "exhibit_page": 3,
+   "exhibit_row": 4,
+   "exhibit_pdf": "../Independent Citation Record/Exhibits/PDFs/Production/insights-into-glycobiology-and-the-protein-glycan-interactom-citing-2026-10-31-p3.pdf"
+  },
+  {
+   "row_uid": "cit-001156",
+   "cites_id": "5710710517199553350",
+   "cited_title": "Potent direct inhibitors of factor Xa based on the tetrahydroisoquinoline scaffold",
+   "cid": "GjACwNLUQLcJ",
+   "title": "[CITATION] 哌嗪嘧啶类 CCR4 拮抗剂的设计, 合成及生物活性",
+   "byline": "巩宏伟， 綦辉， 孙薇， 姜丹， 肖军海， 杨晓虹， 王应… - 高等学校化学学报, 2013",
+   "link": "",
+   "reason": "non-latin script (title)",
+   "status": "REVIEW",
+   "confirm_state": "unresolved",
+   "would_count": false,
+   "language_edition": false,
+   "work_type": "article",
+   "exhibit_base": "potent-direct-inhibitors-of-factor-xa-based-on-the-tetrahydr-citing-2026-10-31",
+   "exhibit_page": 3,
+   "exhibit_row": 9,
+   "exhibit_pdf": "../Independent Citation Record/Exhibits/PDFs/Production/potent-direct-inhibitors-of-factor-xa-based-on-the-tetrahydr-citing-2026-10-31-p3.pdf"
+  },
+  {
+   "row_uid": "cit-001210",
+   "cites_id": "6309677444540434342",
+   "cited_title": "Rational design of potent, small, synthetic allosteric inhibitors of thrombin",
+   "cid": "YKunH0lGoCkJ",
+   "title": "[CITATION] 抗肿瘤氟喹诺酮 C3 等排衍生物 (Ⅰ)——双噁二唑甲硫醚衍生物的合成和抗肿瘤活性",
+   "byline": "王国强， 段楠楠， 曹铁耀， 温晓漪， 银俊， 王伟， 谢松强… - 应用化学, 2012",
+   "link": "",
+   "reason": "non-latin script (title)",
+   "status": "REVIEW",
+   "confirm_state": "unresolved",
+   "would_count": false,
+   "language_edition": false,
+   "work_type": "article",
+   "exhibit_base": "rational-design-of-potent-small-synthetic-allosteric-inhibit-citing-2026-11-01",
+   "exhibit_page": 6,
+   "exhibit_row": 1,
+   "exhibit_pdf": "../Independent Citation Record/Exhibits/PDFs/Production/rational-design-of-potent-small-synthetic-allosteric-inhibit-citing-2026-11-01-p6.pdf"
+  },
+  {
+   "row_uid": "cit-001260",
+   "cites_id": "6832916466426077559",
+   "cited_title": "Reusable glycan microarrays using a microwave assisted wet-erase (MAWE) process",
+   "cid": "GZHuXnSToewJ",
+   "title": "Untersuchung von Anti‐Glykan‐Antikörpern und Erforschung ihres medizinischen Potenzials mithilfe synthetischer Glykane",
+   "byline": "Weber, Fabienne, Valenti, Aina, Ledvinka, Ji{\\v{r}}{\\'\\i}, Moscovitz, Oren, Seeberger, Peter H",
+   "link": "https://onlinelibrary.wiley.com/doi/abs/10.1002/ange.7795967",
+   "reason": "possible non-English (von, und)",
+   "status": "INDEPENDENT",
+   "confirm_state": "unverified-coverage",
+   "would_count": false,
+   "language_edition": true,
+   "work_type": "article",
+   "exhibit_base": "reusable-glycan-microarrays-using-a-microwave-assisted-wet-e-citing-2026-10-30",
+   "exhibit_page": 2,
+   "exhibit_row": 1,
+   "exhibit_pdf": "../Independent Citation Record/Exhibits/PDFs/Production/reusable-glycan-microarrays-using-a-microwave-assisted-wet-e-citing-2026-10-30-p2.pdf"
+  },
+  {
+   "row_uid": "cit-001539",
+   "cites_id": "6229834546150686384",
+   "cited_title": "Unique repertoire of anti-carbohydrate antibodies in individual human serum",
+   "cid": "GZHuXnSToewJ",
+   "title": "Untersuchung von Anti‐Glykan‐Antikörpern und Erforschung ihres medizinischen Potenzials mithilfe synthetischer Glykane",
+   "byline": "Weber, Fabienne, Valenti, Aina, Ledvinka, Ji{\\v{r}}{\\'\\i}, Moscovitz, Oren, Seeberger, Peter H",
+   "link": "https://onlinelibrary.wiley.com/doi/abs/10.1002/ange.7795967",
+   "reason": "possible non-English (von, und)",
+   "status": "INDEPENDENT",
+   "confirm_state": "unverified-coverage",
+   "would_count": false,
+   "language_edition": true,
+   "work_type": "article",
+   "exhibit_base": "unique-repertoire-of-anti-carbohydrate-antibodies-in-individ-citing-2026-10-31",
+   "exhibit_page": 3,
+   "exhibit_row": 4,
+   "exhibit_pdf": "../Independent Citation Record/Exhibits/PDFs/Production/unique-repertoire-of-anti-carbohydrate-antibodies-in-individ-citing-2026-10-31-p3.pdf"
+  }
+ ],
  "open_items": [
   {
    "status": "INDEPENDENT",

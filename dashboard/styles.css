@@ -168,6 +168,10 @@ figcaption {
 
 /* ---------- stat bands ---------- */
 .figure-band {
+  /* grid-template-columns alone does nothing: the display declaration was
+     missing from the first version of this rule, so every stat band stacked
+     as a single narrow column instead of forming a band. */
+  display: grid;
   grid-template-columns: repeat(auto-fit, minmax(9.5rem, 1fr));
   gap: 1px;
   background: var(--rule);
@@ -289,6 +293,69 @@ a { color: var(--accent); }
 .switch { display: inline-flex; align-items: center; gap: .35rem; }
 .hint { color: var(--ink-faint); }
 
+/* ---------- review queue ---------- */
+/* A callout is a thing the reader must not skim past, so it carries a rule and
+   a tint rather than sitting in the prose. Deliberately no dark fill: this page
+   gets printed. */
+.callout {
+  border: 1px solid var(--rule);
+  border-left: 4px solid var(--accent);
+  border-radius: 3px;
+  background: #fbfcfe;
+  padding: .9rem 1.1rem .3rem;
+  margin: 0 0 1.4rem;
+  max-width: 46rem;
+  break-inside: avoid;
+}
+.callout-title {
+  margin: 0 0 .5rem;
+  font-family: ui-sans-serif, system-ui, "Segoe UI", sans-serif;
+  font-size: .76rem;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: var(--accent);
+}
+.callout p { margin: 0 0 .8rem; font-size: .93rem; }
+/* The language chapter is a different kind of thing from the queue -- it is
+   disclosure, not work -- so it wears its own colour throughout rather than
+   borrowing the review orange. */
+.callout-lang { border-left-color: var(--language); background: #fbfafd; }
+.callout-lang .callout-title { color: var(--language); }
+.lang-masthead { border-bottom-color: var(--language); }
+.lang-chapter .chapter-num { color: var(--language); }
+
+.bucket-head {
+  margin: 2rem 0 .2rem;
+  padding-top: .4rem;
+  border-top: 1px solid var(--rule);
+  font-size: 1.05rem;
+}
+.bucket-why {
+  max-width: 46rem;
+  margin: 0 0 .8rem;
+  font-size: .9rem;
+  color: var(--ink-soft);
+}
+/* The identifier a decision is quoted by has to be selectable and unambiguous,
+   so it is set in mono and never wrapped mid-token. */
+.uid {
+  font-family: ui-monospace, "Cascadia Mono", Consolas, monospace;
+  font-size: .76rem;
+  white-space: nowrap;
+  color: var(--ink-soft);
+}
+.overlap { color: #96591a; font-weight: 600; }
+/* Rows the language screen is also holding back: still in the queue, but a
+   decision on one cannot change a figure, so they read as quieter. */
+tbody tr.held td { color: var(--ink-faint); }
+tbody tr.held .uid { color: var(--language); }
+.decided {
+  display: inline-block;
+  min-width: 5.5rem;
+  border-bottom: 1px solid var(--rule);
+}
+
 .method-note, .tiny {
   font-family: ui-sans-serif, system-ui, "Segoe UI", sans-serif;
   font-size: .74rem; color: var(--ink-faint); line-height: 1.55;
@@ -364,6 +431,17 @@ code {
      and point at the CSV for the rest */
   #works .table-wrap.tall { max-height: none; }
   #works tr.print-trim { display: none; }
+  /* The review tables are the widest thing here (a uid, two titles, a byline and
+     an external record), so on paper they get the same smaller treatment as the
+     other appendices and the byline column is dropped -- the byline is on the
+     exhibit page the row links to. */
+  #table-contradicted, #table-external, #table-unresolvable,
+  #table-unsettled, #lang-table { font-size: 7.5pt; line-height: 1.3; }
+  #table-contradicted td, #table-external td, #table-unresolvable td,
+  #table-unsettled td, #lang-table td { padding: .12rem .25rem; }
+  /* A blank rule to write a decision on is only useful on paper. */
+  .decided { border-bottom-color: #9aa4af; }
+  .callout { background: none; }
   /* links between the three pages are navigation, not evidence */
   .page-back, .page-links { display: none !important; }
   .table-wrap { max-height: none !important; overflow: visible; border-radius: 0; }

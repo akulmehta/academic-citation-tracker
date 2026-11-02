@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Non-English rows — Akul Mehta independent citation record</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<!--
+  Generated data. Two paths are supported on purpose:
+    dashboard/data/citation-data.js  works over file:// (a script tag)
+    dashboard/data/citation-data.json works over http (a fetch)
+  Regenerate both with:  node tools/build-dashboard-data.js
+
+  This page is deliberately NOT part of the review queue. These rows are
+  withheld by the language screen, and the decision of 2026-11-01 was that no
+  certified translations will be obtained, so a decision on any of them changes
+  no figure. They are listed so the packet can state honestly what was given up
+  and so the entries a translator would have to cover are enumerable -- not so
+  anyone re-opens them. The visual treatment is different from the review page
+  for that reason: no decision column, no bucket framing, muted.
+-->
+<script src="data/citation-data.js"></script>
+<script src="vendor/d3.min.js"></script>
+
+<header class="masthead lang-masthead">
+  <div class="masthead-inner">
+    <p class="kicker">Independent citation record &middot; not in the queue</p>
+    <h1>The non-English rows</h1>
+    <p class="standfirst" id="standfirst"></p>
+    <p class="sourcing" id="masthead-sourcing"></p>
+  </div>
+</header>
+
+<nav class="toc" id="toc" aria-label="Sections">
+  <div class="toc-inner"></div>
+</nav>
+
+<main>
+
+  <section id="language" class="chapter lang-chapter">
+    <p class="chapter-num">9</p>
+    <h2>Listed for the record, not for review</h2>
+
+    <div class="callout callout-lang">
+      <p class="callout-title">Nothing here needs a decision</p>
+      <p>
+        Per the project guide, a citation not listed in English cannot be
+        highlighted and cannot count toward the adjusted total without a human
+        translator fluent in both languages and an accompanying certification or
+        affidavit. Machine translation is explicitly not certified. On
+        <b>2026-11-01</b> the decision was taken not to obtain translations, so
+        these entries stay unhighlighted and the packet reports an adjusted
+        independent total based solely on English citations &mdash; the guide's
+        second path.
+      </p>
+      <p>
+        Resolving one of these rows would not change any figure while that
+        decision stands. That is why they are on a page of their own rather than
+        mixed into the review queue, and why this table has no decision column.
+      </p>
+    </div>
+
+    <p class="prose" id="lang-lede"></p>
+    <div class="figure-band" id="lang-band"></div>
+
+    <div class="table-tools no-print">
+      <input type="search" id="lang-search" placeholder="Search titles, bylines, cited paper&hellip;">
+      <label class="switch"><input type="checkbox" id="lang-would-only"> <span>Only the ones that would count</span></label>
+      <span class="hint" id="lang-count"></span>
+      <span class="hint">Click a column heading to sort.</span>
+    </div>
+
+    <div class="table-wrap tall" id="lang-table"></div>
+
+    <h3>Why each row was held back</h3>
+    <div class="table-wrap" id="lang-reasons"></div>
+
+    <p class="method-note">
+      The screen keys on the <b>title</b>, because the guide defines an entry as
+      the title of the article, the list of authors and the venue &mdash; not the
+      body. A foreign-language abstract under an English title is therefore not
+      evidence of a non-English entry, and Greek letters in a title are read as
+      scientific notation (an alpha-1,2-mannosidase or beta-catenin title is
+      English). A non-Latin script anywhere in the entry still flags it. The flag
+      is a conservative screen, not a ruling.
+    </p>
+    <p class="method-note">
+      If translations were ever obtained, the figures these rows would recover are
+      the <i>Would count</i> rows below, and the adjusted English-only total would
+      be replaced rather than reported alongside. Until then this page is
+      disclosure, not work.
+    </p>
+    <p class="method-note page-back">
+      <a href="review.html">&larr; Back to the review queue</a> &middot;
+      <a href="index.html">Back to the record</a>
+    </p>
+  </section>
+
+</main>
+
+<footer class="colophon">
+  <p id="colophon-line"></p>
+  <p class="tiny">
+    This page is a workpaper generated from the project's own records. It is not
+    legal advice and makes no prediction about any filing outcome.
+  </p>
+</footer>
+
+<script src="dashboard.js"></script>
+</body>
+</html>

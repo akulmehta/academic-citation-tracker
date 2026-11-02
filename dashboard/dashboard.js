@@ -88,6 +88,8 @@
     { id: "patents", file: "index.html", label: "Patents citing the work" },
     { id: "verification", file: "index.html", label: "Verification" },
     { id: "open", file: "index.html", label: "Not counted" },
+    { id: "review", file: "review.html", label: "Review queue" },
+    { id: "language", file: "language.html", label: "Non-English (not queued)" },
     { id: "articles", file: "articles.html", label: "Per-article table" },
     { id: "works", file: "works.html", label: "Every citing work" },
     { id: "method", file: "index.html", label: "Sources and method" },
@@ -492,11 +494,24 @@
       `unsettled figure, not additional to it. Per the guide a ` +
       `non-English citation needs a certified human translation and affidavit, which the ` +
       `project has decided not to obtain, so those entries stay unhighlighted and the ` +
-      `packet reports the adjusted English-only total instead.`;
+      `packet reports the adjusted English-only total instead. The rows a person can ` +
+      `still decide are on <a href="review.html">the review queue</a>; the language rows ` +
+      `are <a href="language.html">kept apart</a> and are not offered for decision.`;
 
+    // "Unsettled" and "held for language" overlap, and the overlap is all of it
+    // on this snapshot. Saying the residual out loud stops the 47 reading as 47
+    // decisions still outstanding. A bare "0 apart from language" reads as a
+    // glitch, so the wording states the conclusion when the residual is zero.
+    const unsettledApart = (D.unsettled_rows || []).length;
     statBand(el("open-band"), [
-      { label: "Awaiting review", value: fmt(g.awaiting_review) },
-      { label: "Independent, unsettled", value: fmt(g.independent_pending), sub: `includes ${fmt(g.non_english_withheld)} for language` },
+      { label: "Awaiting review", value: fmt(g.awaiting_review), sub: "on the review queue" },
+      {
+        label: "Independent, unsettled",
+        value: fmt(g.independent_pending),
+        sub: unsettledApart
+          ? `${fmt(unsettledApart)} not language-related`
+          : "all of it language",
+      },
       { label: "Flagged non-English", value: fmt(g.flagged_non_english) },
       {
         label: "Withheld for language",
@@ -648,6 +663,449 @@
     el("works-search").addEventListener("input", () => renderWorks(workRows()));
     el("works-marked-only").addEventListener("change", () => renderWorks(workRows()));
 
+  }
+
+  // =====================================================================
+  // Review queue page: review.html
+  //
+  // This is the one page in the dashboard meant to be worked through rather
+  // read. It is deliberately editable nowhere: a decision changes the packet's
+  // totals, so it is recorded in the CSV against the row_uid, and no figure on
+  // any page moves until that decision is rebuilt through the tools. The
+  // non-English rows are NOT here -- they are on language.html, because the
+  // 2026-11-01 decision means a decision on one of them cannot change a number.
+  // =====================================================================
+  const BUCKET_META = {
+    "1 contradicted": {
+      anchor: "table-contradicted",
+      head: "bucket-1-head",
+      why: "bucket-1-why",
+      label: "An external record contradicts the Scholar byline",
+      text:
+        `An external record publishes a complete author list that OVERLAPS the ` +
+        `PI's, so the Scholar byline this row was judged from is incomplete or ` +
+        `wrong. The names it matched are printed. These are the most likely to be ` +
+        `DEPENDENT or a self-citation, and the least likely to resolve as ` +
+        `independent.`,
+    },
+    "2 external-no-overlap": {
+      anchor: "table-external",
+      head: "bucket-2-head",
+      why: "bucket-2-why",
+      label: "An external record clears it, Scholar truncates",
+      text:
+        `An external record has a complete author list with NO overlap, but ` +
+        `Scholar's own byline is truncated, so the row is not promoted to ` +
+        `independent on an external record alone. These are the likeliest to ` +
+        `resolve as independent, and the cheapest to settle: open the citing ` +
+        `paper, read its author list, and compare.`,
+    },
+    "3 unresolvable": {
+      anchor: "table-unresolvable",
+      head: "bucket-3-head",
+      why: "bucket-3-why",
+      label: "Nothing indexes it",
+      text:
+        `Neither PubMed nor OpenAlex indexes the paper and Scholar's byline is ` +
+        `truncated, so there is nothing to compare it against. Resolving one ` +
+        `needs a human look at the published article. Typical of theses, ` +
+        `preprints, conference abstracts and non-indexed journals.`,
+    },
+  };
+
+  // One row of the queue. The uid leads because it is what gets quoted back; the
+  // exhibit link goes straight to the PDF page so a spot-check does not need a
+  // folder hunt.
+  const queueCols = [
+    {
+      key: "row_uid",
+      label: "row_uid",
+      render: (r) => `<span class="uid">${esc(r.row_uid)}</span>`,
+    },
+    {
+      key: "title",
+      label: "Citing paper",
+      render: (r) =>
+        r.link
+          ? `<a href="${esc(r.link)}">${esc(shorten(r.title, 90))}</a>`
+          : esc(shorten(r.title, 90)),
+    },
+    {
+      key: "scholar_byline",
+      label: "Scholar byline",
+      printHide: true,
+      render: (r) =>
+        `<span class="hint">${esc(shorten(r.scholar_byline, 80))}</span>` +
+        (r.byline_truncated ? ` <span class="tag review">truncated</span>` : ""),
+    },
+    {
+      key: "cited_work",
+      label: "Cites (this profile's paper)",
+      render: (r) => esc(shorten(r.cited_work, 52)),
+    },
+    {
+      key: "why",
+      label: "Why unresolved",
+      render: (r) => {
+        const overlap = (r.external_overlap || []).length
+          ? ` <span class="overlap">overlap: ${esc(
+              [...new Set(r.external_overlap)].join(", ")
+            )}</span>`
+          : "";
+        return `<span class="hint">${esc(r.why)}</span>${overlap}`;
+      },
+    },
+    {
+      key: "external_source",
+      label: "External",
+      render: (r) =>
+        r.external_url
+          ? `<a href="${esc(r.external_url)}">${esc(r.external_source)}</a>`
+          : `<span class="hint">none indexed</span>`,
+    },
+    {
+      key: "exhibit_page",
+      label: "Exhibit",
+      sortValue: (r) =>
+        `${r.exhibit_base || ""} ${String(r.exhibit_page ?? 0).padStart(4, "0")} ${String(
+          r.exhibit_row ?? 0
+        ).padStart(3, "0")}`,
+      render: (r) => {
+        const where = `p${r.exhibit_page} · row ${r.exhibit_row}`;
+        return r.exhibit_pdf
+          ? `<a href="${esc(r.exhibit_pdf)}" title="${esc(r.exhibit_base)}">${where}</a>`
+          : `<span class="hint">${where}</span>`;
+      },
+    },
+    {
+      key: "language_flag",
+      label: "Also",
+      render: (r) =>
+        r.language_flag
+          ? `<span class="tag lang">non-English</span>`
+          : `<span class="hint">—</span>`,
+    },
+    {
+      key: "decision",
+      label: "Your decision",
+      render: () => `<span class="decided" title="Record this in the CSV"></span>`,
+    },
+  ];
+
+  function renderReview(D) {
+    const g = D.global;
+    const queue = D.review_queue || [];
+    const buckets = D.review_buckets || {};
+    const actionable = D.review_actionable ?? queue.length;
+
+    // Both of these live in the page's markup as generic text and are filled in
+    // here, so a count or a dated filename can never go stale in the HTML.
+    const label = el("review-hide-lang-label");
+    if (label) {
+      const alsoLang = queue.length - actionable;
+      label.textContent =
+        `Hide the ${fmt(alsoLang)} that ${alsoLang === 1 ? "is" : "are"} also ` +
+        `non-English`;
+    }
+    const sheet = el("review-sheet");
+    if (sheet) sheet.textContent = D.sources.review_sheet || "";
+
+    el("review-lede").innerHTML =
+      `${fmt(queue.length)} of the ${fmt(g.citation_records_reviewed)} citation rows ` +
+      `on the exhibit pages cannot be settled by the rules, so they are counted ` +
+      `neither as independent nor as dependent. ${fmt(actionable)} of them can ` +
+      `change a figure if you decide them; the other ${fmt(
+        queue.length - actionable
+      )} are also flagged non-English, and with no translations being obtained a ` +
+      `decision on one changes nothing. Every row links to the exhibit PDF page ` +
+      `it came from.`;
+
+    statBand(el("review-band"), [
+      { label: "Awaiting review", value: fmt(queue.length), sub: "counted neither way" },
+      { label: "Contradicted", value: fmt(buckets["1 contradicted"] || 0), sub: "external list overlaps" },
+      { label: "External, no overlap", value: fmt(buckets["2 external-no-overlap"] || 0), sub: "likeliest to be independent" },
+      { label: "Unresolvable", value: fmt(buckets["3 unresolvable"] || 0), sub: "needs the published article" },
+      { label: "Independent, unsettled", value: fmt((D.unsettled_rows || []).length), sub: "excluding language" },
+    ]);
+
+    const filter = (rows) => {
+      const query = el("review-search").value.trim().toLowerCase();
+      const hideLang = el("review-hide-lang").checked;
+      return rows.filter((r) => {
+        if (hideLang && r.language_flag) return false;
+        if (!query) return true;
+        return (
+          String(r.title).toLowerCase().includes(query) ||
+          String(r.scholar_byline).toLowerCase().includes(query) ||
+          String(r.cited_work).toLowerCase().includes(query) ||
+          String(r.row_uid).toLowerCase().includes(query)
+        );
+      });
+    };
+
+    const drawBucket = (name) => {
+      const meta = BUCKET_META[name];
+      const rows = filter(queue.filter((r) => r.bucket === name));
+      el(meta.head).textContent =
+        `${name.charAt(0)} · ${meta.label} — ${fmt(rows.length)} row${rows.length === 1 ? "" : "s"}`;
+      el(meta.why).innerHTML = meta.text;
+      table(meta.anchor, queueCols, rows.map((r) => ({ ...r, _cls: r.language_flag ? "held" : "" })), {
+        caption:
+          `${fmt(rows.length)} row${rows.length === 1 ? "" : "s"} in this bucket.` +
+          (rows.some((r) => r.language_flag)
+            ? ` Rows marked non-English are shown muted: a decision on one cannot change a count.`
+            : ``),
+        sortable: true,
+      });
+      return rows.length;
+    };
+
+    const redraw = () => {
+      const shown = Object.keys(BUCKET_META).reduce((n, name) => n + drawBucket(name), 0);
+      drawUnsettled(D);
+      el("review-count").textContent =
+        `${fmt(shown)} of ${fmt(queue.length)} queued rows shown`;
+    };
+    redraw();
+    for (const meta of Object.values(BUCKET_META)) {
+      enableSort(meta.anchor, queueCols, queue, redraw);
+    }
+    el("review-search").addEventListener("input", redraw);
+    el("review-hide-lang").addEventListener("change", redraw);
+  }
+
+  // The second list the user asked for: classified independent, not highlighted,
+  // and NOT held back by the language screen. On the 2026-11-02 store this is
+  // empty, and the empty state says so explicitly rather than showing a blank
+  // box that looks like a broken page.
+  function drawUnsettled(D) {
+    const rows = D.unsettled_rows || [];
+    const head = el("unsettled-head");
+    const why = el("unsettled-why");
+    if (!head || !why) return;
+    head.textContent = `Independent but unsettled — ${fmt(rows.length)} row${rows.length === 1 ? "" : "s"}`;
+    if (!rows.length) {
+      why.innerHTML =
+        `None. Every row classified independent and not highlighted is held back ` +
+        `by the language screen or is a second-language copy of an article ` +
+        `already on the same citing list, so there is nothing author-related left ` +
+        `to settle here. The ` +
+        `${fmt(D.global.flagged_non_english)} flagged rows are on ` +
+        `<a href="language.html">their own page</a>, and are not offered for ` +
+        `review. If a future capture produces a row that is genuinely open, it ` +
+        `appears in this table &mdash; <code>tools/build-dashboard-data.js</code> ` +
+        `fails the build rather than let one go unlisted.`;
+      table("table-unsettled", queueCols.map((c) => ({ ...c })), [], {
+        caption: "No rows.",
+      });
+      return;
+    }
+    why.innerHTML =
+      `Classified independent by the author comparison, but not highlighted, and ` +
+      `not for a language reason. These need settling.`;
+    table("table-unsettled", unsettledCols, rows, {
+      caption: `${fmt(rows.length)} independent-but-unhighlighted row(s).`,
+      sortable: true,
+    });
+    enableSort("table-unsettled", unsettledCols, rows, () => {});
+  }
+
+  // The unsettled rows come from a different query and carry different field
+  // names than the queue (byline rather than scholar_byline, cited_title rather
+  // than cited_work, reason rather than why), so they get their own column set.
+  // Sharing queueCols would render blank cells the day a row appears -- which is
+  // exactly the day someone needs the table to work.
+  const unsettledCols = [
+    {
+      key: "row_uid",
+      label: "row_uid",
+      render: (r) => `<span class="uid">${esc(r.row_uid)}</span>`,
+    },
+    {
+      key: "title",
+      label: "Citing paper",
+      render: (r) =>
+        r.link
+          ? `<a href="${esc(r.link)}">${esc(shorten(r.title, 90))}</a>`
+          : esc(shorten(r.title, 90)),
+    },
+    {
+      key: "byline",
+      label: "Scholar byline",
+      printHide: true,
+      render: (r) => `<span class="hint">${esc(shorten(r.byline, 80))}</span>`,
+    },
+    {
+      key: "cited_title",
+      label: "Cites (this profile's paper)",
+      render: (r) => esc(shorten(r.cited_title, 52)),
+    },
+    {
+      key: "reason",
+      label: "Why not highlighted",
+      render: (r) => `<span class="hint">${esc(r.reason)}</span>`,
+    },
+    {
+      key: "confirm_state",
+      label: "Corroboration",
+      render: (r) => corrobTag(r),
+    },
+    {
+      key: "exhibit_page",
+      label: "Exhibit",
+      sortValue: (r) =>
+        `${r.exhibit_base || ""} ${String(r.exhibit_page ?? 0).padStart(4, "0")}`,
+      render: (r) => {
+        const where = `p${r.exhibit_page} · row ${r.exhibit_row}`;
+        return r.exhibit_pdf
+          ? `<a href="${esc(r.exhibit_pdf)}" title="${esc(r.exhibit_base)}">${where}</a>`
+          : `<span class="hint">${where}</span>`;
+      },
+    },
+    {
+      key: "decision",
+      label: "Your decision",
+      render: () => `<span class="decided" title="Record this in the CSV"></span>`,
+    },
+  ];
+
+  // =====================================================================
+  // Non-English page: language.html
+  //
+  // Disclosure, not a to-do list. Kept on its own page, with its own colour and
+  // no decision column, so it cannot be mistaken for work left undone.
+  // =====================================================================
+  const langCols = [
+    {
+      key: "row_uid",
+      label: "row_uid",
+      render: (r) => `<span class="uid">${esc(r.row_uid)}</span>`,
+    },
+    {
+      key: "title",
+      label: "Citing paper",
+      render: (r) =>
+        r.link
+          ? `<a href="${esc(r.link)}">${esc(shorten(r.title, 88))}</a>`
+          : esc(shorten(r.title, 88)),
+    },
+    {
+      key: "byline",
+      label: "Scholar byline",
+      printHide: true,
+      render: (r) => `<span class="hint">${esc(shorten(r.byline, 70))}</span>`,
+    },
+    {
+      key: "cited_title",
+      label: "Cites (this profile's paper)",
+      render: (r) => esc(shorten(r.cited_title, 48)),
+    },
+    {
+      key: "reason",
+      label: "Why flagged",
+      render: (r) => `<span class="hint">${esc(r.reason)}</span>`,
+    },
+    {
+      key: "would_count",
+      label: "Would count",
+      render: (r) =>
+        r.would_count
+          ? `<span class="tag lang">yes</span>`
+          : `<span class="hint">no</span>`,
+    },
+    {
+      key: "language_edition",
+      label: "Edition",
+      render: (r) =>
+        r.language_edition
+          ? `<span class="tag lang">2nd language</span>`
+          : `<span class="hint">—</span>`,
+    },
+    {
+      key: "exhibit_page",
+      label: "Exhibit",
+      sortValue: (r) =>
+        `${r.exhibit_base || ""} ${String(r.exhibit_page ?? 0).padStart(4, "0")}`,
+      render: (r) => {
+        const where = `p${r.exhibit_page} · row ${r.exhibit_row}`;
+        return r.exhibit_pdf
+          ? `<a href="${esc(r.exhibit_pdf)}" title="${esc(r.exhibit_base)}">${where}</a>`
+          : `<span class="hint">${where}</span>`;
+      },
+    },
+  ];
+
+  function renderLanguage(D) {
+    const g = D.global;
+    const rows = D.language_held || [];
+    const would = rows.filter((r) => r.would_count).length;
+
+    el("lang-lede").innerHTML =
+      `${fmt(rows.length)} citation rows are flagged as possibly not listed in ` +
+      `English, of which ${fmt(would)} look independent and corroborated and are ` +
+      `withheld from the count by the language screen alone. They are excluded ` +
+      `from the highlighted exhibits, and the packet reports the adjusted ` +
+      `English-only figure instead: ${fmt(g.unique_english_independent)} ` +
+      `independent of ${fmt(g.unique_english_papers)} distinct English citing ` +
+      `papers, ${g.unique_english_independent_share_pct}%.`;
+
+    statBand(el("lang-band"), [
+      { label: "Flagged non-English", value: fmt(rows.length), sub: "a screen, not a ruling" },
+      { label: "Withheld from the count", value: fmt(g.non_english_withheld), sub: "look independent otherwise" },
+      { label: "Translations obtained", value: "none", sub: "decided 2026-11-01" },
+      { label: "Adjusted English-only", value: pct1(g.unique_english_independent_share_pct), sub: "independent share" },
+    ]);
+
+    const draw = () => {
+      const query = el("lang-search").value.trim().toLowerCase();
+      const wouldOnly = el("lang-would-only").checked;
+      const out = rows.filter((r) => {
+        if (wouldOnly && !r.would_count) return false;
+        if (!query) return true;
+        return (
+          String(r.title).toLowerCase().includes(query) ||
+          String(r.byline).toLowerCase().includes(query) ||
+          String(r.cited_title).toLowerCase().includes(query) ||
+          String(r.row_uid).toLowerCase().includes(query)
+        );
+      });
+      table("lang-table", langCols, out, {
+        caption:
+          `${fmt(out.length)} of ${fmt(rows.length)} flagged rows. ` +
+          `No decision column: these are not queued.`,
+        sortable: true,
+      });
+      el("lang-count").textContent = `${fmt(out.length)} of ${fmt(rows.length)} rows`;
+    };
+    draw();
+    enableSort("lang-table", langCols, rows, draw);
+    el("lang-search").addEventListener("input", draw);
+    el("lang-would-only").addEventListener("change", draw);
+
+    // Grouped reasons, so the shape of what was given up is visible without
+    // reading 52 rows: a translator would need to cover exactly these.
+    const byReason = d3.groups(rows, (r) => r.reason || "unspecified").sort(
+      (a, b) => b[1].length - a[1].length
+    );
+    table(
+      "lang-reasons",
+      [
+        { key: "reason", label: "Reason recorded at capture" },
+        { key: "n", label: "Rows", num: true, render: (r) => fmt(r.n) },
+        {
+          key: "would",
+          label: "Would count",
+          num: true,
+          render: (r) => fmt(r.would),
+        },
+      ],
+      byReason.map(([reason, list]) => ({
+        reason,
+        n: list.length,
+        would: list.filter((r) => r.would_count).length,
+      })),
+      { caption: `${byReason.length} distinct reasons across ${fmt(rows.length)} rows.` }
+    );
   }
 
   // =====================================================================
@@ -1474,6 +1932,34 @@
           `find a work and see which exhibit page carries it.`
       );
       renderWorks(D);
+    },
+    "review.html": (D) => {
+      const q = D.review_queue || [];
+      const buckets = D.review_buckets || {};
+      renderMasthead(
+        D,
+        `The ${fmt(q.length)} citations the rules cannot settle, grouped by what ` +
+          `would settle them: ${fmt(buckets["1 contradicted"] || 0)} an external ` +
+          `record contradicts, ${fmt(
+            buckets["2 external-no-overlap"] || 0
+          )} an external record clears but Scholar truncates, and ${fmt(
+            buckets["3 unresolvable"] || 0)
+          } nothing indexes. Quote the row_uid. The ` +
+          `${fmt(D.global.flagged_non_english)} non-English rows are on their own ` +
+          `page and are not offered for review.`
+      );
+      renderReview(D);
+    },
+    "language.html": (D) => {
+      const rows = D.language_held || [];
+      renderMasthead(
+        D,
+        `${fmt(rows.length)} citations are flagged as possibly not listed in ` +
+          `English. They are excluded from the exhibits and from the counted ` +
+          `total, and no translations are being obtained, so this page records ` +
+          `what was given up rather than work left to do.`
+      );
+      renderLanguage(D);
     },
   };
 
