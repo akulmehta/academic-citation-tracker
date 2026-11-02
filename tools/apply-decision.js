@@ -634,11 +634,16 @@ function main() {
     steps.push(["reprint-exhibits.js", ["--changed", "--write"]]);
   }
   if (doRebuild) {
-    // Order matters: the ledger reads its rows out of the store, so a stale
-    // store makes it raise a defect and write nothing.
+    // The audit reads only the reports and the saved HTML, never the store, so
+    // it goes first: if an exhibit disagrees with the rule, the chain stops here
+    // and the store, ledger, review sheet and dashboard are all left showing the
+    // last state that was known to be consistent. Auditing after the store write
+    // would leave a packet whose figures had moved while its exhibits had not.
+    steps.push(["audit-highlights.js", []]);
+    // Then the store, and only then the ledger, which reads its rows out of the
+    // store and would otherwise raise a defect against a stale one.
     steps.push(["build-catalog.js", ["--write"]]);
     steps.push(["build-ledger.js", []]);
-    steps.push(["audit-highlights.js", []]);
     steps.push(["build-review-sheet.js", ["--md"]]);
     steps.push(["build-dashboard-data.js", []]);
   }
