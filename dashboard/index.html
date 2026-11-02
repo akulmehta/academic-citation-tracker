@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Akul Mehta — Independent Citation Record</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<!--
+  Generated data. Two paths are supported on purpose:
+    dashboard/data/citation-data.js  works over file:// (a script tag)
+    dashboard/data/citation-data.json works over http (a fetch)
+  Regenerate both with:  node tools/build-dashboard-data.js
+  Headline figures come from Exhibits/Supporting/citation-ledger-<snapshot>.json.
+-->
+<script src="data/citation-data.js"></script>
+<script src="vendor/d3.min.js"></script>
+
+<header class="masthead">
+  <div class="masthead-inner">
+    <p class="kicker">Independent citation record &middot; evidence workpaper</p>
+    <h1>Who cites this work, and how each citation was decided</h1>
+    <p class="standfirst" id="standfirst"></p>
+    <p class="sourcing" id="masthead-sourcing"></p>
+  </div>
+</header>
+
+<nav class="toc" id="toc" aria-label="Sections">
+  <div class="toc-inner"></div>
+</nav>
+
+<main>
+
+  <!-- ============ 1. the headline ============ -->
+  <section id="record" class="chapter">
+    <p class="chapter-num">1</p>
+    <h2>The record on the snapshot date</h2>
+    <div class="figure-band" id="headline-band"></div>
+    <p class="prose" id="record-note"></p>
+    <figure class="figure" id="fig-history">
+      <h3>Cited-by total across dated snapshots</h3>
+      <div class="chart" id="chart-history"></div>
+      <figcaption id="cap-history"></figcaption>
+    </figure>
+  </section>
+
+  <!-- ============ 2. how the citations break down ============ -->
+  <section id="breakdown" class="chapter">
+    <p class="chapter-num">2</p>
+    <h2>Every citing record, and what was decided about it</h2>
+    <p class="prose" id="breakdown-lede"></p>
+    <figure class="figure" id="fig-waffle">
+      <h3>One square per citing record on the exhibit pages</h3>
+      <div class="chart" id="chart-waffle"></div>
+      <div class="legend" id="legend-waffle"></div>
+      <figcaption>
+        Squares are rows printed on the exhibit pages, so a paper Google Scholar
+        lists twice appears twice. Counting distinct papers instead gives
+        <span id="waffle-distinct"></span>. Yellow is the only mark an exhibit
+        PDF carries.
+      </figcaption>
+    </figure>
+    <figure class="figure" id="fig-split">
+      <h3>Independent share, on each basis the ledger publishes</h3>
+      <div class="chart" id="chart-split"></div>
+      <figcaption id="cap-split"></figcaption>
+    </figure>
+  </section>
+
+  <!-- ============ 3. per-publication ============ -->
+  <section id="per-work" class="chapter">
+    <p class="chapter-num">3</p>
+    <h2>Which of the 48 publications carries the citations</h2>
+    <p class="prose" id="perwork-lede"></p>
+    <figure class="figure" id="fig-lollipop">
+      <h3>Citations per publication, split by decision</h3>
+      <div class="chart" id="chart-lollipop"></div>
+      <div class="legend" id="legend-lollipop"></div>
+      <figcaption id="cap-lollipop"></figcaption>
+    </figure>
+    <figure class="figure" id="fig-concentration">
+      <h3>How concentrated the independent citations are</h3>
+      <div class="chart" id="chart-concentration"></div>
+      <figcaption id="cap-concentration"></figcaption>
+    </figure>
+  </section>
+
+  <!-- ============ 4. time ============ -->
+  <section id="time" class="chapter">
+    <p class="chapter-num">4</p>
+    <h2>When the citing work appeared</h2>
+    <p class="prose" id="time-lede"></p>
+    <figure class="figure" id="fig-years">
+      <h3>Citing records by year of the citing work</h3>
+      <div class="chart" id="chart-years"></div>
+      <figcaption>
+        The year is read from Scholar's own byline for each citing record
+        (&ldquo;X Author &mdash; Journal, 2014 &mdash; site&rdquo;). Records whose
+        byline carries no readable year
+        (<span id="years-undated"></span>) are excluded from this chart.
+      </figcaption>
+    </figure>
+  </section>
+
+  <!-- ============ 5. patents ============ -->
+  <section id="patents" class="chapter">
+    <p class="chapter-num">5</p>
+    <h2>Patents citing this work</h2>
+    <p class="prose" id="patents-lede"></p>
+    <div class="figure-band" id="patent-band"></div>
+    <figure class="figure" id="fig-patent-pubs">
+      <h3>Which publications the patents cite</h3>
+      <div class="chart" id="chart-patent-pubs"></div>
+      <figcaption id="cap-patent-pubs"></figcaption>
+    </figure>
+    <div class="table-wrap" id="patents-table"></div>
+    <p class="method-note" id="patents-method"></p>
+  </section>
+
+  <!-- ============ 6. verification ============ -->
+  <section id="verification" class="chapter">
+    <p class="chapter-num">6</p>
+    <h2>How each highlighted citation was verified</h2>
+    <p class="prose" id="verify-lede"></p>
+    <figure class="figure" id="fig-corroboration">
+      <h3>Source of the author list behind a highlight</h3>
+      <div class="chart" id="chart-corroboration"></div>
+      <figcaption id="cap-corroboration"></figcaption>
+    </figure>
+  </section>
+
+  <!-- ============ 7. what is not counted ============ -->
+  <section id="open" class="chapter">
+    <p class="chapter-num">7</p>
+    <h2>What is deliberately not counted</h2>
+    <p class="prose" id="open-lede"></p>
+    <div class="figure-band" id="open-band"></div>
+    <div class="table-wrap" id="open-table"></div>
+  </section>
+
+  <!-- ============ 8. per-article table ============ -->
+  <section id="table" class="chapter">
+    <p class="chapter-num">8</p>
+    <h2>Per-article statistics</h2>
+    <p class="prose" id="table-lede"></p>
+    <div class="table-tools no-print">
+      <label class="switch"><input type="checkbox" id="toggle-unfiled"> <span>Include the publications with no citation count</span></label>
+      <span class="hint">Click a column heading to sort.</span>
+    </div>
+    <div class="table-wrap" id="articles-table"></div>
+  </section>
+
+  <!-- ============ 9. every citing work ============ -->
+  <section id="allworks" class="chapter">
+    <p class="chapter-num">9</p>
+    <h2>Every citing work on the exhibit pages</h2>
+    <p class="prose" id="works-lede"></p>
+    <div class="table-tools no-print">
+      <input type="search" id="works-search" placeholder="Search titles, bylines, cited paper&hellip;">
+      <label class="switch"><input type="checkbox" id="works-marked-only" checked> <span>Highlighted only</span></label>
+      <span class="hint" id="works-count"></span>
+    </div>
+    <div class="table-wrap tall" id="works-table"></div>
+    <p class="method-note">
+      This list is long and is trimmed when printing; the complete set is
+      <span id="works-csv-name">the ledger CSV</span> and
+      <code>dashboard/data/citation-data.json</code>.
+    </p>
+  </section>
+
+  <!-- ============ 10. method ============ -->
+  <section id="method" class="chapter">
+    <p class="chapter-num">10</p>
+    <h2>Sources and method</h2>
+    <div id="method-body"></div>
+  </section>
+
+</main>
+
+<footer class="colophon">
+  <p id="colophon-line"></p>
+  <p class="tiny">
+    This page is a workpaper generated from the project's own records. It is not
+    legal advice and makes no prediction about any filing outcome.
+  </p>
+</footer>
+
+<script src="dashboard.js"></script>
+</body>
+</html>

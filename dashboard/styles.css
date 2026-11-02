@@ -1,0 +1,312 @@
+/* Akul Mehta — independent citation record dashboard.
+   Light mode, and built to survive a print to PDF: no dark fills, no reliance
+   on hover, and page breaks that keep each figure with its caption. */
+
+:root {
+  --paper: #ffffff;
+  --ink: #14181d;
+  --ink-soft: #4a5560;
+  --ink-faint: #7c8894;
+  --rule: #d8dee4;
+  --rule-soft: #eceff2;
+  --accent: #0b5cad;
+  --highlight: #fff200;      /* the exhibit's own yellow */
+  --highlight-edge: #b3a800;
+  --dependent: #8a94a0;
+  --self: #4d5661;
+  --review: #d98b2b;
+  --language: #7f5ea8;
+  --patent: #14776b;
+  --max: 60rem;
+}
+
+* { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+  font-size: 17px;
+  line-height: 1.55;
+}
+
+main { max-width: var(--max); margin: 0 auto; padding: 0 1.4rem 3rem; }
+
+/* ---------- masthead ---------- */
+.masthead {
+  border-bottom: 3px solid var(--ink);
+  padding: 2.6rem 1.4rem 1.6rem;
+}
+.masthead-inner { max-width: var(--max); margin: 0 auto; }
+.kicker {
+  margin: 0 0 .5rem;
+  font-family: ui-sans-serif, system-ui, "Segoe UI", sans-serif;
+  font-size: .72rem;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--accent);
+  font-weight: 600;
+}
+h1 {
+  margin: 0 0 .7rem;
+  font-size: clamp(1.9rem, 4.6vw, 2.9rem);
+  line-height: 1.1;
+  letter-spacing: -.015em;
+  font-weight: 600;
+}
+.standfirst {
+  margin: 0 0 .8rem;
+  font-size: 1.12rem;
+  color: var(--ink-soft);
+  max-width: 46rem;
+}
+.sourcing {
+  margin: 0;
+  font-family: ui-sans-serif, system-ui, "Segoe UI", sans-serif;
+  font-size: .76rem;
+  color: var(--ink-faint);
+}
+.sourcing a { color: var(--ink-faint); }
+
+/* ---------- contents ---------- */
+.toc { border-bottom: 1px solid var(--rule); background: #fbfcfd; }
+.toc-inner {
+  max-width: var(--max);
+  margin: 0 auto;
+  padding: .6rem 1.4rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: .15rem 1.1rem;
+  font-family: ui-sans-serif, system-ui, "Segoe UI", sans-serif;
+  font-size: .78rem;
+}
+.toc a { color: var(--ink-soft); text-decoration: none; }
+.toc a:hover { color: var(--accent); text-decoration: underline; }
+.toc .toc-n { color: var(--ink-faint); margin-right: .3em; }
+
+/* ---------- chapters ---------- */
+.chapter { padding-top: 2.6rem; }
+.chapter-num {
+  margin: 0 0 -.4rem;
+  font-family: ui-sans-serif, system-ui, "Segoe UI", sans-serif;
+  font-size: .72rem;
+  font-weight: 700;
+  letter-spacing: .16em;
+  color: var(--accent);
+}
+h2 {
+  margin: 0 0 .9rem;
+  font-size: clamp(1.35rem, 3vw, 1.8rem);
+  line-height: 1.2;
+  font-weight: 600;
+  letter-spacing: -.01em;
+  border-bottom: 1px solid var(--rule);
+  padding-bottom: .5rem;
+}
+h3 {
+  margin: 0 0 .7rem;
+  font-size: 1rem;
+  font-weight: 600;
+  font-family: ui-sans-serif, system-ui, "Segoe UI", sans-serif;
+}
+.prose { max-width: 42rem; margin: 0 0 1.2rem; }
+.prose b, .prose strong { font-weight: 600; }
+
+/* ---------- figures ---------- */
+.figure {
+  margin: 1.6rem 0 2rem;
+  padding: 1.1rem 1.2rem 1rem;
+  border: 1px solid var(--rule);
+  border-radius: 4px;
+  background: #fff;
+  break-inside: avoid;
+}
+.chart { width: 100%; overflow-x: auto; }
+.chart svg { display: block; max-width: 100%; height: auto; }
+figcaption {
+  margin-top: .7rem;
+  font-family: ui-sans-serif, system-ui, "Segoe UI", sans-serif;
+  font-size: .76rem;
+  line-height: 1.5;
+  color: var(--ink-faint);
+  border-top: 1px solid var(--rule-soft);
+  padding-top: .55rem;
+}
+.legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .3rem .9rem;
+  margin-top: .8rem;
+  font-family: ui-sans-serif, system-ui, "Segoe UI", sans-serif;
+  font-size: .74rem;
+  color: var(--ink-soft);
+}
+.legend .key { display: inline-flex; align-items: center; gap: .35rem; }
+.legend .swatch {
+  width: .72rem; height: .72rem; border-radius: 2px;
+  border: 1px solid rgba(0,0,0,.22); display: inline-block;
+}
+
+/* axis + grid styling shared by every chart */
+.axis text { font-family: ui-sans-serif, system-ui, "Segoe UI", sans-serif; font-size: 10.5px; fill: var(--ink-soft); }
+.axis .domain { stroke: var(--rule); }
+.axis .tick line { stroke: var(--rule); }
+.grid line { stroke: var(--rule-soft); }
+.grid .domain { display: none; }
+.bar-label { font-family: ui-sans-serif, system-ui, "Segoe UI", sans-serif; font-size: 10.5px; fill: var(--ink-soft); }
+.bar-value { font-family: ui-sans-serif, system-ui, "Segoe UI", sans-serif; font-size: 10.5px; fill: var(--ink); font-weight: 600; }
+.row-label { font-family: ui-sans-serif, system-ui, "Segoe UI", sans-serif; font-size: 10.5px; fill: var(--ink); }
+.row-label.dim { fill: var(--ink-faint); }
+.annot { font-family: ui-sans-serif, system-ui, "Segoe UI", sans-serif; font-size: 10px; fill: var(--ink-faint); }
+
+/* ---------- stat bands ---------- */
+.figure-band {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(9.5rem, 1fr));
+  gap: 1px;
+  background: var(--rule);
+  border: 1px solid var(--rule);
+  margin: 0 0 1.4rem;
+}
+.stat { background: #fff; padding: .8rem .9rem; }
+.stat-label {
+  display: block;
+  font-family: ui-sans-serif, system-ui, "Segoe UI", sans-serif;
+  font-size: .68rem; letter-spacing: .07em; text-transform: uppercase;
+  color: var(--ink-faint); margin: 0 0 .25rem; font-weight: 600;
+}
+.stat-value {
+  display: block; font-size: 1.5rem; line-height: 1.1;
+  font-weight: 600; letter-spacing: -.02em;
+}
+.stat .sub {
+  display: block; margin-top: .2rem;
+  font-family: ui-sans-serif, system-ui, "Segoe UI", sans-serif;
+  font-size: .7rem; color: var(--ink-faint); font-weight: 400;
+}
+
+/* ---------- tables ---------- */
+.table-wrap {
+  border: 1px solid var(--rule);
+  border-radius: 4px;
+  overflow: auto;
+  margin: 0 0 1rem;
+}
+.table-wrap.tall { max-height: 44rem; }
+table { border-collapse: collapse; width: 100%; font-size: .82rem; }
+caption {
+  caption-side: top; text-align: left;
+  font-family: ui-sans-serif, system-ui, "Segoe UI", sans-serif;
+  font-size: .74rem; color: var(--ink-faint); padding: .5rem .6rem;
+}
+th, td { padding: .42rem .6rem; border-bottom: 1px solid var(--rule-soft); text-align: left; vertical-align: top; }
+thead th {
+  position: sticky; top: 0; z-index: 1;
+  background: #f4f6f8;
+  font-family: ui-sans-serif, system-ui, "Segoe UI", sans-serif;
+  font-size: .7rem; letter-spacing: .04em; text-transform: uppercase;
+  color: var(--ink-soft); font-weight: 700; white-space: nowrap;
+  border-bottom: 1px solid var(--rule);
+}
+thead th.sortable { cursor: pointer; }
+thead th.sortable:hover { color: var(--accent); }
+thead th .dir { color: var(--accent); font-size: .62rem; }
+td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+tbody tr:hover { background: #fafbfc; }
+tbody tr.unfiled td { color: var(--ink-faint); }
+.mark-cell { white-space: nowrap; }
+.mark {
+  display: inline-block; min-width: 1.9em; text-align: center;
+  background: var(--highlight); border: 1px solid var(--highlight-edge);
+  border-radius: 2px; font-size: .74rem; font-weight: 700; padding: 0 .25em;
+  color: #3a3500;
+}
+.tag {
+  display: inline-block;
+  font-family: ui-sans-serif, system-ui, "Segoe UI", sans-serif;
+  font-size: .66rem; letter-spacing: .04em; text-transform: uppercase;
+  border: 1px solid var(--rule); border-radius: 2px;
+  padding: .05rem .3rem; color: var(--ink-soft); white-space: nowrap;
+}
+.tag.patent { border-color: var(--patent); color: var(--patent); }
+.tag.review { border-color: var(--review); color: #96591a; }
+.tag.lang { border-color: var(--language); color: var(--language); }
+.tag.confirmed { border-color: #2f7d4f; color: #24623e; }
+.tag.coverage { border-color: var(--ink-faint); color: var(--ink-soft); }
+a { color: var(--accent); }
+
+.table-tools {
+  display: flex; flex-wrap: wrap; align-items: center; gap: .8rem 1.2rem;
+  margin: 0 0 .7rem;
+  font-family: ui-sans-serif, system-ui, "Segoe UI", sans-serif;
+  font-size: .78rem; color: var(--ink-soft);
+}
+.table-tools input[type="search"] {
+  font: inherit; padding: .35rem .5rem; width: 18rem; max-width: 100%;
+  border: 1px solid var(--rule); border-radius: 3px; background: #fff; color: var(--ink);
+}
+.switch { display: inline-flex; align-items: center; gap: .35rem; }
+.hint { color: var(--ink-faint); }
+
+.method-note, .tiny {
+  font-family: ui-sans-serif, system-ui, "Segoe UI", sans-serif;
+  font-size: .74rem; color: var(--ink-faint); line-height: 1.55;
+}
+code {
+  font-family: ui-monospace, "Cascadia Mono", Consolas, monospace;
+  font-size: .85em; background: #f4f6f8; padding: .05em .3em; border-radius: 2px;
+}
+#method-body dl { margin: 0; }
+#method-body dt {
+  font-family: ui-sans-serif, system-ui, "Segoe UI", sans-serif;
+  font-size: .74rem; letter-spacing: .06em; text-transform: uppercase;
+  color: var(--accent); font-weight: 700; margin-top: 1.1rem;
+}
+#method-body dd { margin: .2rem 0 0; font-size: .92rem; max-width: 44rem; }
+
+.colophon {
+  border-top: 1px solid var(--rule);
+  margin-top: 2.5rem; padding: 1.4rem;
+  max-width: var(--max); margin-left: auto; margin-right: auto;
+}
+#colophon-line { font-family: ui-sans-serif, system-ui, "Segoe UI", sans-serif; font-size: .78rem; color: var(--ink-soft); }
+.colophon .tiny { margin-top: .4rem; }
+
+/* the tooltip is a screen affordance only */
+#tooltip {
+  position: fixed; pointer-events: none; z-index: 50; display: none;
+  max-width: 24rem; background: #fff; border: 1px solid var(--ink);
+  border-radius: 3px; padding: .45rem .6rem;
+  font-family: ui-sans-serif, system-ui, "Segoe UI", sans-serif;
+  font-size: .74rem; line-height: 1.45; color: var(--ink);
+  box-shadow: 0 2px 8px rgba(20,24,29,.14);
+}
+#tooltip b { font-weight: 700; }
+
+/* ---------- print ---------- */
+@page { size: Letter; margin: 14mm 12mm; }
+
+@media print {
+  body { font-size: 10.5pt; }
+  .no-print, #tooltip, .table-tools { display: none !important; }
+  .masthead { padding: 0 0 .8rem; border-bottom-width: 2px; }
+  h1 { font-size: 21pt; }
+  h2 { font-size: 14pt; }
+  main { padding: 0; max-width: none; }
+  .chapter { padding-top: 1.1rem; }
+  .figure { break-inside: avoid; page-break-inside: avoid; border-width: .5pt; }
+  .figure-band { break-inside: avoid; }
+  .stat-value { font-size: 15pt; }
+  /* the two long tables would run to dozens of sheets; print a bounded,
+     sorted view and point at the CSV for the rest */
+  #allworks .table-wrap.tall { max-height: none; }
+  #allworks tr.print-trim { display: none; }
+  .table-wrap { max-height: none !important; overflow: visible; }
+  thead th { position: static; }
+  tbody tr:hover { background: none; }
+  a { color: var(--ink); text-decoration: none; }
+  .toc { background: none; }
+}
