@@ -80,7 +80,9 @@
       "duplicate_of": "",
       "needs_attention": false,
       "attention_reason": "",
-      "language_flag_captured": ""
+      "language_flag_captured": "",
+      "status_captured": "INDEPENDENT",
+      "confirm_state_captured": "confirmed"
     },
     {
       "index": 2,
@@ -154,7 +156,7 @@
       "external_url": "https://pubmed.ncbi.nlm.nih.gov/24968014/",
       "external_title": "Synthetic, non-saccharide, glycosaminoglycan mimetics selectively target colon cancer stem cells.",
       "external_authors": "Patel NJ, Karuturi R, Al-Horani RA, Baranwal S, Patel J, Desai UR, Patel BB",
-      "external_similarity": 0.83,
+      "external_similarity": 0.8,
       "full_authors": [
         "Patel NJ",
         "Karuturi R",
@@ -170,7 +172,9 @@
       "duplicate_of": "",
       "needs_attention": false,
       "attention_reason": "",
-      "language_flag_captured": ""
+      "language_flag_captured": "",
+      "status_captured": "INDEPENDENT",
+      "confirm_state_captured": "confirmed"
     },
     {
       "index": 5,

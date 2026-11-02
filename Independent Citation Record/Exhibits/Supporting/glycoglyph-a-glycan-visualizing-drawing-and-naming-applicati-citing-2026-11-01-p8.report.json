@@ -108,7 +108,9 @@
       "duplicate_of": "",
       "needs_attention": false,
       "attention_reason": "",
-      "language_flag_captured": ""
+      "language_flag_captured": "",
+      "status_captured": "INDEPENDENT",
+      "confirm_state_captured": "confirmed"
     },
     {
       "index": 3,
@@ -131,7 +133,7 @@
       "external_url": "https://pubmed.ncbi.nlm.nih.gov/35513489/",
       "external_title": "Novel fold of rotavirus glycan-binding domain predicted by AlphaFold2 and determined by X-ray crystallography.",
       "external_authors": "Hu L, Salmen W, Sankaran B, Lasanajak Y, Smith DF, Crawford SE, Estes MK, Prasad BVV",
-      "external_similarity": 1,
+      "external_similarity": 0.8,
       "full_authors": [
         "Hu L",
         "Salmen W",
@@ -148,7 +150,9 @@
       "duplicate_of": "",
       "needs_attention": false,
       "attention_reason": "",
-      "language_flag_captured": ""
+      "language_flag_captured": "",
+      "status_captured": "INDEPENDENT",
+      "confirm_state_captured": "confirmed"
     },
     {
       "index": 4,

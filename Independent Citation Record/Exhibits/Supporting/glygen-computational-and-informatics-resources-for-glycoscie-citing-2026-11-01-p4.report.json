@@ -97,7 +97,9 @@
       "duplicate_of": "",
       "needs_attention": false,
       "attention_reason": "",
-      "language_flag_captured": ""
+      "language_flag_captured": "",
+      "status_captured": "INDEPENDENT",
+      "confirm_state_captured": "confirmed"
     },
     {
       "index": 1,
@@ -163,7 +165,9 @@
       "duplicate_of": "",
       "needs_attention": false,
       "attention_reason": "",
-      "language_flag_captured": ""
+      "language_flag_captured": "",
+      "status_captured": "INDEPENDENT",
+      "confirm_state_captured": "confirmed"
     },
     {
       "index": 3,
@@ -237,14 +241,16 @@
       "external_url": "https://pubmed.ncbi.nlm.nih.gov/39238612/",
       "external_title": "Expanding the repertoire of GalNAc analogues for cell-specific bioorthogonal tagging of glycoproteins.",
       "external_authors": "Zafar A, Sridhar S, Bineva-Todd G, Cioce A, Abdulla N, Chang V, Malaker SA, Hewings DS, Schumann B",
-      "external_similarity": 1,
+      "external_similarity": 0.8,
       "confirm_state": "confirmed",
       "corroboration": "confirmed by pubmed",
       "edition_key": "",
       "duplicate_of": "",
       "needs_attention": false,
       "attention_reason": "",
-      "language_flag_captured": ""
+      "language_flag_captured": "",
+      "status_captured": "INDEPENDENT",
+      "confirm_state_captured": "confirmed"
     },
     {
       "index": 5,
@@ -323,7 +329,9 @@
       "duplicate_of": "",
       "needs_attention": false,
       "attention_reason": "",
-      "language_flag_captured": ""
+      "language_flag_captured": "",
+      "status_captured": "INDEPENDENT",
+      "confirm_state_captured": "confirmed"
     },
     {
       "index": 7,
@@ -368,7 +376,9 @@
       "duplicate_of": "",
       "needs_attention": false,
       "attention_reason": "",
-      "language_flag_captured": ""
+      "language_flag_captured": "",
+      "status_captured": "INDEPENDENT",
+      "confirm_state_captured": "confirmed"
     },
     {
       "index": 8,

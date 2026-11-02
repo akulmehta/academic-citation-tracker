@@ -62,14 +62,16 @@
       "external_url": "https://pubmed.ncbi.nlm.nih.gov/39203058/",
       "external_title": "Broad-Spectrum Legionaminic Acid-Specific Antibodies in Pooled Human IgGs Revealed by Glycan Microarrays with Chemoenzymatically Synthesized Nonulosonosides.",
       "external_authors": "Kooner AS, Yu H, Leviatan Ben-Arye S, Padler-Karavani V, Chen X",
-      "external_similarity": 1,
+      "external_similarity": 0.93,
       "confirm_state": "confirmed",
       "corroboration": "confirmed by pubmed",
       "edition_key": "",
       "duplicate_of": "",
       "needs_attention": false,
       "attention_reason": "",
-      "language_flag_captured": ""
+      "language_flag_captured": "",
+      "status_captured": "INDEPENDENT",
+      "confirm_state_captured": "confirmed"
     },
     {
       "index": 1,
@@ -145,7 +147,9 @@
       "duplicate_of": "",
       "needs_attention": false,
       "attention_reason": "",
-      "language_flag_captured": ""
+      "language_flag_captured": "",
+      "status_captured": "INDEPENDENT",
+      "confirm_state_captured": "confirmed"
     },
     {
       "index": 3,
@@ -190,7 +194,9 @@
       "duplicate_of": "",
       "needs_attention": false,
       "attention_reason": "",
-      "language_flag_captured": ""
+      "language_flag_captured": "",
+      "status_captured": "INDEPENDENT",
+      "confirm_state_captured": "confirmed"
     },
     {
       "index": 4,
@@ -276,7 +282,9 @@
       "duplicate_of": "",
       "needs_attention": false,
       "attention_reason": "",
-      "language_flag_captured": ""
+      "language_flag_captured": "",
+      "status_captured": "INDEPENDENT",
+      "confirm_state_captured": "confirmed"
     },
     {
       "index": 6,
@@ -314,7 +322,9 @@
       "duplicate_of": "",
       "needs_attention": false,
       "attention_reason": "",
-      "language_flag_captured": ""
+      "language_flag_captured": "",
+      "status_captured": "INDEPENDENT",
+      "confirm_state_captured": "confirmed"
     },
     {
       "index": 7,

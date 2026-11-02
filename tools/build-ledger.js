@@ -10,10 +10,10 @@
 //
 // THIS FILE IS A DERIVED REPORT. Since the database became the primary store on
 // 2026-11-02, the citation rows here come from Database/citation-catalog.sqlite
-// (schema v4) -- the active ones, which are the filed exhibits that have not
-// been retired. The per-article figures are still computed by tally.js, over the
-// rows read out of the store, so "independent" means exactly what it has always
-// meant here and no rule is reimplemented.
+// (schema v4 or later) -- the active ones, which are the filed exhibits that
+// have not been retired. The per-article figures are still computed by tally.js,
+// over the rows read out of the store, so "independent" means exactly what it
+// has always meant here and no rule is reimplemented.
 //
 // The report JSON is read too, and compared, figure by figure. A disagreement is
 // NOT resolved in either side's favour: it is a defect to investigate, this tool
@@ -42,6 +42,13 @@ const PDF_DIR = path.join(EXHIBITS, "PDFs");
 const SUPPORT_DIR = path.join(EXHIBITS, "Supporting");
 
 const asJson = process.argv.includes("--json");
+
+// The lowest schema this tool can read. v4 is where superseded_at appeared, and
+// the query below only needs columns that exist from v4 on. An exact comparison
+// here used to break the ledger on every schema bump -- adding one column in v5
+// made a clean rebuild refuse to produce a ledger -- so the test is a floor.
+// Raise it only when this tool starts depending on a column a later version adds.
+const MIN_SCHEMA = 4;
 
 function readList() {
   // The dated publication list is the authoritative snapshot: it carries the
@@ -93,11 +100,13 @@ function storeEntries() {
   }
   const db = new DatabaseSync(DB_PATH, { readOnly: true });
   const meta = db.prepare("SELECT value FROM meta WHERE key = 'schema_version'").get();
-  if (!meta || meta.value !== "4") {
+  const version = meta ? Number(meta.value) : NaN;
+  if (!Number.isFinite(version) || version < MIN_SCHEMA) {
     db.close();
     throw new Error(
-      `The catalog is at schema v${meta ? meta.value : "?"}; the ledger needs v4, ` +
-        `which is where superseded_at lives. Run: node tools/build-catalog.js --write`
+      `The catalog is at schema v${meta ? meta.value : "?"}; the ledger needs at ` +
+        `least v${MIN_SCHEMA}, which is where superseded_at lives. Run: ` +
+        `node tools/build-catalog.js --write`
     );
   }
   const rows = db

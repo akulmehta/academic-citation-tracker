@@ -122,12 +122,14 @@
       "external_url": "https://pubmed.ncbi.nlm.nih.gov/33249284/",
       "external_title": "Electrochemical evidence of nitrate release from the nitrooxy compound 4-((nitrooxy) methyl)-3-nitrobenzoic acid and its antinociceptive and anti-inflammatory activities in mice.",
       "external_authors": "Braga AV, da Silva RRL, Rodrigues IB, Marques GVL, Xavier AFA, Boane A, Paiva MRB, Franco PHC, Rodrigues FF, Melo ISF, Silva Cunha Júnior AD, César IDC, Goulart MOF, Oliveira RB, Coelho MM, Machado RR",
-      "external_similarity": 1,
+      "external_similarity": 0.88,
       "confirm_state": "confirmed",
       "corroboration": "confirmed by pubmed",
       "needs_attention": false,
       "attention_reason": "",
-      "language_flag_captured": ""
+      "language_flag_captured": "",
+      "status_captured": "INDEPENDENT",
+      "confirm_state_captured": "confirmed"
     },
     {
       "index": 3,
@@ -138,8 +140,14 @@
       "snippet": "(PDF) Design, Synthesis, and Antisickling Investigation of a Nitric Oxide-Releasing Prodrug of\n5HMF for the Treatment of Sickle Cell Disease Academia.edu Academia.edu Log In Sign Up Log …",
       "truncated": false,
       "link": "https://www.academia.edu/download/91976249/pdf.pdf",
-      "status": "REVIEW",
-      "matched_authors": [],
+      "status": "DEPENDENT",
+      "matched_authors": [
+        "Tanvi M. Deshpande",
+        "Mohini S. Ghatge",
+        "Osheiza Abdulmalik",
+        "Yan Zhang",
+        "Martin K. Safo"
+      ],
       "matched_pi": [],
       "matched_former_pi": [],
       "authors_used": "AK Donkor",
@@ -156,7 +164,7 @@
       "external_title": "Design, Synthesis, and Antisickling Investigation of a Nitric Oxide-Releasing Prodrug of 5HMF for the Treatment of Sickle Cell Disease",
       "external_authors": "Rana T. Alhashimi, Mohini S. Ghatge, Akua K. Donkor, Tanvi M. Deshpande, Nancy Anabaraonye, Dina Alramadhani, Richmond Danso-Danquah, Boshi Huang, Yan Zhang, Faik N. Musayev, Osheiza Abdulmalik, Martin K. Safo",
       "external_similarity": 1,
-      "corroboration": "contradicted by openalex (DEPENDENT)",
+      "corroboration": "resolved against openalex (DEPENDENT)",
       "external_matched": [
         "Tanvi M. Deshpande",
         "Mohini S. Ghatge",
@@ -164,10 +172,12 @@
         "Yan Zhang",
         "Martin K. Safo"
       ],
-      "confirm_state": "contradicted",
-      "attention_reason": "contradicted by openalex (DEPENDENT)",
-      "needs_attention": true,
-      "language_flag_captured": ""
+      "confirm_state": "external-resolved",
+      "attention_reason": "",
+      "needs_attention": false,
+      "language_flag_captured": "",
+      "status_captured": "REVIEW",
+      "confirm_state_captured": "contradicted"
     },
     {
       "index": 4,
@@ -183,24 +193,24 @@
       "matched_pi": [],
       "matched_former_pi": [],
       "authors_used": "尹紫悦， 李豆豆， 郭茜文， 王荣， 李文斌 - pdfs.semanticscholar.org",
-      "author_source": "scholar+pubmed",
+      "author_source": "scholar-list",
       "language_flag": "non-latin script (title)",
       "page": 2,
       "external_source": "pubmed",
       "external_url": "https://pubmed.ncbi.nlm.nih.gov/42938973/",
       "external_title": "Machine Learning-Based Multiclass Classification of Hb E Carrier Status and Thalassemia-Related Hematological Profiles Using Routine Complete Blood Count Parameters.",
       "external_authors": "Basancelebi M, Yapici IS, Uzun Arslan R",
-      "external_similarity": 1,
-      "full_authors": [
-        "Basancelebi M",
-        "Yapici IS",
-        "Uzun Arslan R"
-      ],
-      "confirm_state": "confirmed",
-      "corroboration": "confirmed by pubmed",
-      "attention_reason": "non-latin script - not highlighted; a certified human translation is required before it can count",
+      "external_similarity": 0.06,
+      "full_authors": [],
+      "confirm_state": "unverified-coverage",
+      "corroboration": "not indexed in PubMed or OpenAlex; Scholar list is complete",
+      "attention_reason": "highlighted on Scholar's list alone - not indexed in PubMed or OpenAlex, worth a spot-check",
       "needs_attention": true,
-      "language_flag_captured": "non-latin script"
+      "language_flag_captured": "non-latin script",
+      "status_captured": "INDEPENDENT",
+      "confirm_state_captured": "confirmed",
+      "external_match_credible": 0,
+      "corroboration_note": "stored pubmed match rejected 2026-11-02: the title overlap is too thin to be the same work (was similarity 1)"
     },
     {
       "index": 5,

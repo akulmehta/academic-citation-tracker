@@ -143,7 +143,9 @@
       "duplicate_of": "",
       "needs_attention": false,
       "attention_reason": "",
-      "language_flag_captured": ""
+      "language_flag_captured": "",
+      "status_captured": "INDEPENDENT",
+      "confirm_state_captured": "confirmed"
     },
     {
       "index": 2,
@@ -250,7 +252,7 @@
       "external_url": "https://pubmed.ncbi.nlm.nih.gov/41553297/",
       "external_title": "A Chemoenzymatic Method To Systematically Quantify Core Fucosylation Stoichiometry of Glycoproteins and Reveal Its Roles in EMT and Embryonic Development.",
       "external_authors": "Xu S, Xu X, Yin K, Wu R",
-      "external_similarity": 1,
+      "external_similarity": 0.93,
       "full_authors": [
         "Xu S",
         "Xu X",
@@ -263,7 +265,9 @@
       "duplicate_of": "",
       "needs_attention": false,
       "attention_reason": "",
-      "language_flag_captured": ""
+      "language_flag_captured": "",
+      "status_captured": "INDEPENDENT",
+      "confirm_state_captured": "confirmed"
     },
     {
       "index": 5,
@@ -369,7 +373,9 @@
       "duplicate_of": "",
       "needs_attention": false,
       "attention_reason": "",
-      "language_flag_captured": ""
+      "language_flag_captured": "",
+      "status_captured": "INDEPENDENT",
+      "confirm_state_captured": "confirmed"
     },
     {
       "index": 8,
@@ -414,7 +420,9 @@
       "duplicate_of": "",
       "needs_attention": false,
       "attention_reason": "",
-      "language_flag_captured": ""
+      "language_flag_captured": "",
+      "status_captured": "INDEPENDENT",
+      "confirm_state_captured": "confirmed"
     },
     {
       "index": 9,
@@ -457,7 +465,9 @@
       "duplicate_of": "",
       "needs_attention": false,
       "attention_reason": "",
-      "language_flag_captured": ""
+      "language_flag_captured": "",
+      "status_captured": "INDEPENDENT",
+      "confirm_state_captured": "confirmed"
     }
   ]
 }

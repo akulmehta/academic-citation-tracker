@@ -56,7 +56,9 @@
       "duplicate_of": "",
       "needs_attention": false,
       "attention_reason": "",
-      "language_flag_captured": ""
+      "language_flag_captured": "",
+      "status_captured": "INDEPENDENT",
+      "confirm_state_captured": "confirmed"
     },
     {
       "index": 1,
@@ -101,7 +103,9 @@
       "duplicate_of": "",
       "needs_attention": false,
       "attention_reason": "",
-      "language_flag_captured": ""
+      "language_flag_captured": "",
+      "status_captured": "INDEPENDENT",
+      "confirm_state_captured": "confirmed"
     },
     {
       "index": 2,
@@ -166,7 +170,9 @@
       "duplicate_of": "",
       "needs_attention": false,
       "attention_reason": "",
-      "language_flag_captured": ""
+      "language_flag_captured": "",
+      "status_captured": "INDEPENDENT",
+      "confirm_state_captured": "confirmed"
     },
     {
       "index": 4,
@@ -204,14 +210,16 @@
       "external_url": "https://pubmed.ncbi.nlm.nih.gov/34586443/",
       "external_title": "The C-terminal peptide of CCL21 drastically augments CCL21 activity through the dendritic cell lymph node homing receptor CCR7 by interaction with the receptor N-terminus.",
       "external_authors": "Jørgensen AS, Brandum EP, Mikkelsen JM, Orfin KA, Boilesen DR, Egerod KL, Moussouras NA, Vilhardt F, Kalinski P, Basse P, Chen YH, Yang Z, Dwinell MB, Volkman BF, Veldkamp CT, Holst PJ, Lahl K, Goth CK, Rosenkilde MM, Hjortø GM",
-      "external_similarity": 1,
+      "external_similarity": 0.94,
       "confirm_state": "confirmed",
       "corroboration": "confirmed by pubmed",
       "edition_key": "doi:10.1007:s00018-021-03930-7:jorgensenastridsisselbrandumemmaprobstmikkelsenjeppemaltheorfinklaudiaaboilesenditterahbaekegerodkristofferlihmemoussourasnatashaavilhardtfrederikkalinskipawelbasseper",
       "duplicate_of": "",
       "needs_attention": false,
       "attention_reason": "",
-      "language_flag_captured": ""
+      "language_flag_captured": "",
+      "status_captured": "INDEPENDENT",
+      "confirm_state_captured": "confirmed"
     },
     {
       "index": 5,
@@ -256,7 +264,9 @@
       "duplicate_of": "",
       "needs_attention": false,
       "attention_reason": "",
-      "language_flag_captured": ""
+      "language_flag_captured": "",
+      "status_captured": "INDEPENDENT",
+      "confirm_state_captured": "confirmed"
     },
     {
       "index": 6,
@@ -347,7 +357,9 @@
       "duplicate_of": "",
       "needs_attention": false,
       "attention_reason": "",
-      "language_flag_captured": ""
+      "language_flag_captured": "",
+      "status_captured": "INDEPENDENT",
+      "confirm_state_captured": "confirmed"
     },
     {
       "index": 8,
@@ -392,7 +404,9 @@
       "duplicate_of": "",
       "needs_attention": false,
       "attention_reason": "",
-      "language_flag_captured": ""
+      "language_flag_captured": "",
+      "status_captured": "INDEPENDENT",
+      "confirm_state_captured": "confirmed"
     },
     {
       "index": 9,

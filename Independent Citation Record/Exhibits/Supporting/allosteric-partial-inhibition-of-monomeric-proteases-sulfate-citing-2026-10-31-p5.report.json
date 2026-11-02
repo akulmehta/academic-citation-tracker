@@ -37,7 +37,7 @@
       "matched_pi": [],
       "matched_former_pi": [],
       "authors_used": "МН МАВЛУД, АЮ ПОТАПОВ, ХС ШИХАЛИЕВ - ЖУРНАЛ ОРГАНИЧЕСКОЙ …, 2025",
-      "author_source": "scholar+pubmed",
+      "author_source": "scholar-list (truncated)",
       "resolution": "no cite control found for this entry",
       "language_flag": "non-latin script (title)",
       "page": 5,
@@ -45,20 +45,19 @@
       "external_url": "https://pubmed.ncbi.nlm.nih.gov/42958950/",
       "external_title": "Gerodontology Journal: A Scientometric Analysis of Research Trends, Citation and Evolution (2007-2025).",
       "external_authors": "Rissi J, Tissiani LS, Dondoni PD, Rodrigues-Junior SA",
-      "external_similarity": 1,
-      "full_authors": [
-        "Rissi J",
-        "Tissiani LS",
-        "Dondoni PD",
-        "Rodrigues-Junior SA"
-      ],
-      "confirm_state": "confirmed",
-      "corroboration": "external list shows no overlap (pubmed); not promoted because Scholar's own list is incomplete",
+      "external_similarity": 0.1,
+      "full_authors": [],
+      "confirm_state": "unresolved",
+      "corroboration": "not indexed in PubMed or OpenAlex and the Scholar list is incomplete",
       "edition_key": "",
       "duplicate_of": "",
-      "attention_reason": "external list shows no overlap (pubmed); not promoted because Scholar's own list is incomplete",
+      "attention_reason": "not indexed in PubMed or OpenAlex and the Scholar list is incomplete",
       "needs_attention": true,
-      "language_flag_captured": "non-latin script"
+      "language_flag_captured": "non-latin script",
+      "status_captured": "REVIEW",
+      "confirm_state_captured": "confirmed",
+      "external_match_credible": 0,
+      "corroboration_note": "stored pubmed match rejected 2026-11-02: the title overlap is too thin to be the same work (was similarity 1)"
     },
     {
       "index": 1,
@@ -92,7 +91,9 @@
       "duplicate_of": "",
       "needs_attention": false,
       "attention_reason": "",
-      "language_flag_captured": ""
+      "language_flag_captured": "",
+      "status_captured": "INDEPENDENT",
+      "confirm_state_captured": "confirmed"
     },
     {
       "index": 2,
@@ -125,7 +126,9 @@
       "duplicate_of": "",
       "needs_attention": false,
       "attention_reason": "",
-      "language_flag_captured": ""
+      "language_flag_captured": "",
+      "status_captured": "INDEPENDENT",
+      "confirm_state_captured": "confirmed"
     },
     {
       "index": 3,
@@ -163,7 +166,9 @@
       "duplicate_of": "",
       "needs_attention": false,
       "attention_reason": "",
-      "language_flag_captured": ""
+      "language_flag_captured": "",
+      "status_captured": "INDEPENDENT",
+      "confirm_state_captured": "confirmed"
     },
     {
       "index": 4,

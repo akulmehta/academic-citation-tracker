@@ -63,7 +63,7 @@
       "snippet": "Traumatic brain injury (TBI) elicits robust neuroinflammation and oxidative stress, coupled\nwith an acute inhibition of macro-autophagy (autophagy) in neurons and microglia. Rubicon …",
       "truncated": true,
       "link": "https://pmc.ncbi.nlm.nih.gov/articles/PMC13001424/",
-      "status": "REVIEW",
+      "status": "INDEPENDENT",
       "matched_authors": [],
       "matched_pi": [],
       "matched_former_pi": [],
@@ -89,12 +89,14 @@
         "Lipinski MM"
       ],
       "confirm_state": "confirmed",
-      "corroboration": "external list shows no overlap (pubmed); not promoted because Scholar's own list is incomplete",
+      "corroboration": "resolved against pubmed",
       "edition_key": "",
       "duplicate_of": "",
-      "attention_reason": "external list shows no overlap (pubmed); not promoted because Scholar's own list is incomplete",
-      "needs_attention": true,
-      "language_flag_captured": ""
+      "attention_reason": "",
+      "needs_attention": false,
+      "language_flag_captured": "",
+      "status_captured": "REVIEW",
+      "confirm_state_captured": "confirmed"
     },
     {
       "index": 1,
@@ -105,7 +107,7 @@
       "snippet": "The use of tumor markers aids in the early detection of cancer recurrence and prognosis.\nThere is a hope that they might also be useful in screening tests for the early detection of …",
       "truncated": true,
       "link": "https://www.mdpi.com/1422-0067/23/19/11113",
-      "status": "REVIEW",
+      "status": "INDEPENDENT",
       "matched_authors": [],
       "matched_pi": [],
       "matched_former_pi": [],
@@ -128,12 +130,14 @@
         "Zgoda V"
       ],
       "confirm_state": "confirmed",
-      "corroboration": "external list shows no overlap (pubmed); not promoted because Scholar's own list is incomplete",
+      "corroboration": "resolved against pubmed",
       "edition_key": "",
       "duplicate_of": "",
-      "attention_reason": "external list shows no overlap (pubmed); not promoted because Scholar's own list is incomplete",
-      "needs_attention": true,
-      "language_flag_captured": ""
+      "attention_reason": "",
+      "needs_attention": false,
+      "language_flag_captured": "",
+      "status_captured": "REVIEW",
+      "confirm_state_captured": "confirmed"
     },
     {
       "index": 2,
@@ -175,7 +179,7 @@
       "snippet": "Cardiac fibrosis with excessive extracellular matrix (ECM) accumulation is a hallmark of\nhypertensive heart failure. Characterizing glycan alterations within fibrotic ECM requires …",
       "truncated": true,
       "link": "https://link.springer.com/article/10.1007/s00216-026-06501-6",
-      "status": "REVIEW",
+      "status": "INDEPENDENT",
       "matched_authors": [],
       "matched_pi": [],
       "matched_former_pi": [],
@@ -188,7 +192,7 @@
       "external_url": "https://pubmed.ncbi.nlm.nih.gov/42043508/",
       "external_title": "A hierarchical lectin-based multimodal workflow for spatial mapping of extracellular matrix glycans in fibrotic hearts.",
       "external_authors": "Boottanun P, Nagai-Okatani C, Kawanishi K, Baba M, Nakatsukasa T, Ishizu T, Angata K, Kuno A",
-      "external_similarity": 1,
+      "external_similarity": 0.8,
       "full_authors": [
         "Boottanun P",
         "Nagai-Okatani C",
@@ -200,12 +204,14 @@
         "Kuno A"
       ],
       "confirm_state": "confirmed",
-      "corroboration": "external list shows no overlap (pubmed); not promoted because Scholar's own list is incomplete",
+      "corroboration": "resolved against pubmed",
       "edition_key": "doi:10.1007:s00216-026-06501-6:pboottanuncnagaiokatanikkawanishi",
       "duplicate_of": "",
-      "attention_reason": "external list shows no overlap (pubmed); not promoted because Scholar's own list is incomplete",
-      "needs_attention": true,
-      "language_flag_captured": ""
+      "attention_reason": "",
+      "needs_attention": false,
+      "language_flag_captured": "",
+      "status_captured": "REVIEW",
+      "confirm_state_captured": "confirmed"
     },
     {
       "index": 4,
@@ -243,7 +249,7 @@
       "snippet": "Glycosylation is a critical post-translational modification that influences protein folding,\nstability and function. While extensively studied in extracellular and intracellular regions …",
       "truncated": true,
       "link": "https://www.mdpi.com/1422-0067/26/1/327",
-      "status": "REVIEW",
+      "status": "INDEPENDENT",
       "matched_authors": [],
       "matched_pi": [],
       "matched_former_pi": [],
@@ -263,12 +269,14 @@
         "Mihăilescu DF"
       ],
       "confirm_state": "confirmed",
-      "corroboration": "external list shows no overlap (pubmed); not promoted because Scholar's own list is incomplete",
+      "corroboration": "resolved against pubmed",
       "edition_key": "",
       "duplicate_of": "",
-      "attention_reason": "external list shows no overlap (pubmed); not promoted because Scholar's own list is incomplete",
-      "needs_attention": true,
-      "language_flag_captured": ""
+      "attention_reason": "",
+      "needs_attention": false,
+      "language_flag_captured": "",
+      "status_captured": "REVIEW",
+      "confirm_state_captured": "confirmed"
     },
     {
       "index": 6,
@@ -336,7 +344,7 @@
       "snippet": "Most cells in multicellular organisms are somehow asymmetric, polarized: maintaining\nseparate membrane domains. Typical examples are the epithelial cells (apical-basal …",
       "truncated": true,
       "link": "https://www.sciencedirect.com/science/article/pii/S0022283620306239",
-      "status": "REVIEW",
+      "status": "INDEPENDENT",
       "matched_authors": [],
       "matched_pi": [],
       "matched_former_pi": [],
@@ -358,12 +366,14 @@
         "Tusnády GE"
       ],
       "confirm_state": "confirmed",
-      "corroboration": "external list shows no overlap (pubmed); not promoted because Scholar's own list is incomplete",
+      "corroboration": "resolved against pubmed",
       "edition_key": "",
       "duplicate_of": "",
-      "attention_reason": "external list shows no overlap (pubmed); not promoted because Scholar's own list is incomplete",
-      "needs_attention": true,
-      "language_flag_captured": ""
+      "attention_reason": "",
+      "needs_attention": false,
+      "language_flag_captured": "",
+      "status_captured": "REVIEW",
+      "confirm_state_captured": "confirmed"
     },
     {
       "index": 9,
@@ -374,7 +384,7 @@
       "snippet": "Developments in high-throughput sequencing (HTS) result in an exponential increase in the\namount of data generated by sequencing experiments, an increase in the complexity of …",
       "truncated": true,
       "link": "https://academic.oup.com/database/article-abstract/doi/10.1093/database/baab008/6204168",
-      "status": "REVIEW",
+      "status": "INDEPENDENT",
       "matched_authors": [],
       "matched_pi": [],
       "matched_former_pi": [],
@@ -406,12 +416,14 @@
         "Keeney J"
       ],
       "confirm_state": "confirmed",
-      "corroboration": "external list shows no overlap (pubmed); not promoted because Scholar's own list is incomplete",
+      "corroboration": "resolved against pubmed",
       "edition_key": "doi:10.1093:6204168:japateldadeanchkingnxiaoskoc",
       "duplicate_of": "",
-      "attention_reason": "external list shows no overlap (pubmed); not promoted because Scholar's own list is incomplete",
-      "needs_attention": true,
-      "language_flag_captured": ""
+      "attention_reason": "",
+      "needs_attention": false,
+      "language_flag_captured": "",
+      "status_captured": "REVIEW",
+      "confirm_state_captured": "confirmed"
     }
   ]
 }

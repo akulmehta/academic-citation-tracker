@@ -92,9 +92,13 @@
       "snippet": "Among the risk factors for severe acute respiratory syndrome coronavirus 2 (SARS-CoV-2),\nABO (H) blood group antigens are among the most recognized predictors of infection …",
       "truncated": true,
       "link": "https://ashpublications.org/blood/article/142/8/742/496471",
-      "status": "REVIEW",
-      "matched_authors": [],
-      "matched_pi": [],
+      "status": "DEPENDENT",
+      "matched_authors": [
+        "Richard D. Cummings"
+      ],
+      "matched_pi": [
+        "Richard D. Cummings"
+      ],
       "matched_former_pi": [],
       "authors_used": "Wu, Shang-Chuen, Arthur, Connie M, Jan, Hau-Ming, Garcia-Beltran, Wilfredo F, Patel, Kashyap R, Rathgeber, Matthew F, Verkerke, Hans P, Cheedarla, Narayanaiah, Jajosky, Ryan Philip, Paul, Anu",
       "author_source": "scholar-cite-bibtex",
@@ -120,17 +124,19 @@
       "external_title": "Blood group A enhances SARS-CoV-2 infection",
       "external_authors": "Shang-Chuen Wu, Connie M. Arthur, Hau-Ming Jan, Wilfredo F. Garcia-Beltran, Kashyap R. Patel, Matthew F. Rathgeber, Hans P. Verkerke, Narayanaiah Cheedarla, Ryan Philip Jajosky, Anu Paul, Andrew S. Neish, John D. Roback, Cassandra D. Josephson, Duane R. Wesemann, Daniel Kalman, Seth Rakoff-Nahoum, Richard D. Cummings, Sean R. Stowell",
       "external_similarity": 1,
-      "corroboration": "contradicted by openalex (DEPENDENT)",
+      "corroboration": "resolved against openalex (DEPENDENT)",
       "external_matched": [
         "Richard D. Cummings",
         "Richard D. Cummings"
       ],
-      "confirm_state": "contradicted",
+      "confirm_state": "external-resolved",
       "edition_key": "doi:10.1182:2022018903:wushangchuenarthurconniemjanhauminggarciabeltranwilfredofpatelkashyaprrathgebermatthewfverkerkehanspcheedarlanarayanaiahjajoskyryanphilippaulanu",
       "duplicate_of": "",
-      "attention_reason": "contradicted by openalex (DEPENDENT)",
-      "needs_attention": true,
-      "language_flag_captured": ""
+      "attention_reason": "",
+      "needs_attention": false,
+      "language_flag_captured": "",
+      "status_captured": "REVIEW",
+      "confirm_state_captured": "contradicted"
     },
     {
       "index": 3,
@@ -171,7 +177,9 @@
       "duplicate_of": "",
       "needs_attention": false,
       "attention_reason": "",
-      "language_flag_captured": ""
+      "language_flag_captured": "",
+      "status_captured": "INDEPENDENT",
+      "confirm_state_captured": "confirmed"
     },
     {
       "index": 4,
@@ -205,7 +213,9 @@
       "duplicate_of": "",
       "needs_attention": false,
       "attention_reason": "",
-      "language_flag_captured": ""
+      "language_flag_captured": "",
+      "status_captured": "INDEPENDENT",
+      "confirm_state_captured": "confirmed"
     },
     {
       "index": 5,
@@ -314,7 +324,9 @@
       "duplicate_of": "",
       "needs_attention": false,
       "attention_reason": "",
-      "language_flag_captured": ""
+      "language_flag_captured": "",
+      "status_captured": "INDEPENDENT",
+      "confirm_state_captured": "confirmed"
     },
     {
       "index": 8,
@@ -353,7 +365,9 @@
       "duplicate_of": "",
       "needs_attention": false,
       "attention_reason": "",
-      "language_flag_captured": ""
+      "language_flag_captured": "",
+      "status_captured": "INDEPENDENT",
+      "confirm_state_captured": "confirmed"
     },
     {
       "index": 9,
@@ -393,7 +407,9 @@
       "duplicate_of": "",
       "needs_attention": false,
       "attention_reason": "",
-      "language_flag_captured": ""
+      "language_flag_captured": "",
+      "status_captured": "INDEPENDENT",
+      "confirm_state_captured": "confirmed"
     }
   ]
 }

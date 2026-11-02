@@ -59,12 +59,14 @@
       "external_url": "https://pubmed.ncbi.nlm.nih.gov/29802897/",
       "external_title": "Evaluating prodrug characteristics of a novel anticoagulant fusion protein neorudin, a prodrug targeting release of hirudin variant 2-Lys47 at the thrombosis site, by means of in vitro pharmacokinetics.",
       "external_authors": "Dong X, Gu R, Zhu X, Gan H, Liu J, Jin J, Meng Z, Dou G",
-      "external_similarity": 1,
+      "external_similarity": 0.83,
       "confirm_state": "confirmed",
       "corroboration": "confirmed by pubmed",
       "needs_attention": false,
       "attention_reason": "",
-      "language_flag_captured": ""
+      "language_flag_captured": "",
+      "status_captured": "INDEPENDENT",
+      "confirm_state_captured": "confirmed"
     },
     {
       "index": 1,
@@ -102,7 +104,9 @@
       "corroboration": "confirmed by openalex",
       "needs_attention": false,
       "attention_reason": "",
-      "language_flag_captured": ""
+      "language_flag_captured": "",
+      "status_captured": "INDEPENDENT",
+      "confirm_state_captured": "confirmed"
     },
     {
       "index": 2,
@@ -176,7 +180,9 @@
       "corroboration": "confirmed by pubmed",
       "needs_attention": false,
       "attention_reason": "",
-      "language_flag_captured": ""
+      "language_flag_captured": "",
+      "status_captured": "INDEPENDENT",
+      "confirm_state_captured": "confirmed"
     },
     {
       "index": 4,
@@ -214,12 +220,14 @@
       "external_url": "https://pubmed.ncbi.nlm.nih.gov/36863508/",
       "external_title": "Merging cultures and disciplines to create a drug discovery ecosystem at Virginia commonwealth university: Medicinal chemistry, structural biology, molecular and behavioral pharmacology and computational chemistry.",
       "external_authors": "Kellogg GE, Cen Y, Dukat M, Ellis KC, Guo Y, Li J, May AE, Safo MK, Zhang S, Zhang Y, Desai UR",
-      "external_similarity": 1,
+      "external_similarity": 0.83,
       "confirm_state": "confirmed",
       "corroboration": "confirmed by pubmed",
       "needs_attention": false,
       "attention_reason": "",
-      "language_flag_captured": ""
+      "language_flag_captured": "",
+      "status_captured": "INDEPENDENT",
+      "confirm_state_captured": "confirmed"
     },
     {
       "index": 5,
@@ -261,7 +269,9 @@
       "corroboration": "confirmed by openalex",
       "needs_attention": false,
       "attention_reason": "",
-      "language_flag_captured": ""
+      "language_flag_captured": "",
+      "status_captured": "INDEPENDENT",
+      "confirm_state_captured": "confirmed"
     },
     {
       "index": 6,
@@ -294,7 +304,9 @@
       "corroboration": "confirmed by pubmed",
       "needs_attention": false,
       "attention_reason": "",
-      "language_flag_captured": ""
+      "language_flag_captured": "",
+      "status_captured": "INDEPENDENT",
+      "confirm_state_captured": "confirmed"
     },
     {
       "index": 7,
@@ -331,7 +343,9 @@
       "corroboration": "confirmed by openalex",
       "needs_attention": false,
       "attention_reason": "",
-      "language_flag_captured": ""
+      "language_flag_captured": "",
+      "status_captured": "INDEPENDENT",
+      "confirm_state_captured": "confirmed"
     },
     {
       "index": 8,
@@ -365,7 +379,9 @@
       "corroboration": "confirmed by pubmed",
       "needs_attention": false,
       "attention_reason": "",
-      "language_flag_captured": ""
+      "language_flag_captured": "",
+      "status_captured": "INDEPENDENT",
+      "confirm_state_captured": "confirmed"
     },
     {
       "index": 9,

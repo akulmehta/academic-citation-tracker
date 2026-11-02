@@ -1,0 +1,65 @@
+{
+  "cited_title": "Cholesterol-dependent enzyme activity of human TSPO1",
+  "cited_authors": "Weihua Qiu, Thi Kim Hoang Trinh, Claudio Catalano, Akul Mehta, Umesh R Desai, Glen E Kellogg, Wayne A Hendrickson, Youzhong Guo",
+  "cited_venue": "Proceedings of the National Academy of Sciences",
+  "paper_url": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=dNLaKGAAAAAJ&cstart=20&pagesize=80&citation_for_view=dNLaKGAAAAAJ:TQgYirikUcIC",
+  "cites_url": "https://scholar.google.com/scholar?start=10&hl=en&as_sdt=40000005&sciodt=0,22&cites=1616266261715634004&scipsc=",
+  "author_keys": [
+    "Weihua Qiu",
+    "Thi Kim Hoang Trinh",
+    "Claudio Catalano",
+    "Akul Mehta",
+    "Umesh R Desai",
+    "Glen E Kellogg",
+    "Wayne A Hendrickson",
+    "Youzhong Guo"
+  ],
+  "pi_keys": [
+    "RD Cummings"
+  ],
+  "former_keys": [
+    "UR Desai"
+  ],
+  "crosscheck": "PubMed then OpenAlex, no identifying email supplied, no API key",
+  "snapshot": "2026-10-30 15:53:47",
+  "page_header": "",
+  "end_reason": "last-page-of-results (1 row(s) on page)",
+  "page": 2,
+  "entries": [
+    {
+      "index": 0,
+      "cid": "JSLcjyEZHFQJ",
+      "title": "Structural Biology",
+      "rawTitle": "[PDF] Structural Biology",
+      "authors": "S Zhuang, P Chakraborty… - Current Opinion in …, 2024 - peng-lab.org",
+      "snippet": "Developing new drugs remains prohibitively expensive, timeconsuming, and often involves\nsafety issues. Accurate prediction of drug-target interactions (DTIs) can guide the drug …",
+      "truncated": false,
+      "link": "http://www.peng-lab.org/lab-chinese/Graph%20neural%20network%20approaches%20for%20drug-target%20interactions.pdf",
+      "status": "INDEPENDENT",
+      "matched_authors": [],
+      "matched_pi": [],
+      "matched_former_pi": [],
+      "authors_used": "Zhuang, Shannon, Chakraborty, Pijush, Zweckstetter, Markus",
+      "author_source": "scholar-cite-bibtex",
+      "popup_sample": "@article{zhuang2024structural,\n  title={Structural Biology},\n  author={Zhuang, Shannon and Chakraborty, Pijush and Zweckstetter, Markus},\n  journal={Current Opinion in Structural Biology},\n  volume={84},\n  number={102739},\n  pages={102739},\n  year={2024}\n}\n",
+      "full_authors": [
+        "Zhuang, Shannon",
+        "Chakraborty, Pijush",
+        "Zweckstetter, Markus"
+      ],
+      "resolution": "resolved",
+      "language_flag": "",
+      "page": 2,
+      "external_source": "pubmed",
+      "external_url": "https://pubmed.ncbi.nlm.nih.gov/42915525/",
+      "external_title": "Simultaneous Site- and Residue-Specific Incorporation of Fluorinated Amino Acids for In-Cell Structural Biology by 19F Magic Angle Spinning NMR Spectroscopy.",
+      "external_authors": "Tekwani Movellan K, Gronenborn AM, Polenova T",
+      "external_similarity": 1,
+      "confirm_state": "confirmed",
+      "corroboration": "confirmed by pubmed",
+      "needs_attention": false,
+      "attention_reason": "",
+      "language_flag_captured": ""
+    }
+  ]
+}

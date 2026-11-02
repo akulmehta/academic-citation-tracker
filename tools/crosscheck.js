@@ -47,18 +47,84 @@ function tokens(s) {
     .filter((w) => w && !STOP.has(w));
 }
 
-// Token overlap between two titles, 0..1. Deliberately tolerant of publisher
-// titles differing from Scholar's copy by a subtitle or a few words.
-function titleSimilarity(a, b) {
-  const A = new Set(tokens(a));
-  const B = new Set(tokens(b));
-  if (!A.size || !B.size) return 0;
-  let shared = 0;
-  for (const w of A) if (B.has(w)) shared++;
-  return shared / Math.min(A.size, B.size);
+// A similarity score at or above this is taken to mean "the same work".
+const TITLE_MATCH_THRESHOLD = 0.8;
+
+// Fewest words on the shorter side for a pure-containment match to be believed.
+const CONTAINED_MIN_TOKENS = 4;
+
+// Fewest words for a leading-prefix match. One word is not enough: "Bakker" is
+// a single surname and prefixing a letter titled "Bakker et al. concomitant
+// ligament injuries..." would then look like an exact match while being a
+// different paper by different authors.
+const PREFIX_MIN_TOKENS = 2;
+
+// True when the shorter title's words run off the FRONT of the longer one.
+// Scholar truncates a long title with an ellipsis, so a short Scholar byline
+// that is a verbatim leading fragment of the external title is the same work:
+// "Carbohydrate Microarray Technology" for "Carbohydrate Microarray Technology
+// Applied to High-Throughput Mapping of ...". Coincidental word matches are not
+// usually in the leading position, which is what separates these from the
+// rejects above.
+function isLeadingPrefix(shortTokens, longTokens) {
+  if (
+    shortTokens.length < PREFIX_MIN_TOKENS ||
+    longTokens.length <= shortTokens.length
+  ) {
+    return false;
+  }
+  return shortTokens.every((w, i) => longTokens[i] === w);
 }
 
-const TITLE_MATCH_THRESHOLD = 0.8;
+// Token overlap between two titles, 0..1.
+//
+// Rewritten on 2026-11-02. The original divided the shared words by the SHORTER
+// title, "deliberately tolerant of publisher titles differing by a subtitle".
+// That tolerance has a failure mode: when the Scholar side yields almost no
+// Latin words, min() collapses to 1 or 2 and ANY external record containing
+// that word scores a perfect 1.00. Measured over the filed set this produced 29
+// "matches" at similarity 1.00 that were not the same paper at all - a Cyrillic
+// title matched to a Gerodontology scientometric analysis (twice, against the
+// same PMID), a row titled "Bakker" matched to a letter to the editor about
+// ligament injuries, "Anticoagulants", "Structural Biology", "Future Medicinal
+// Chemistry" (journal names Scholar took for titles) and others. Because a
+// match sets confirm_state, that inflated "externally confirmed" and, where
+// Scholar's own byline was truncated, made the row countable on thin air.
+//
+// The fix keeps the tolerance where it is safe and removes it where it is not:
+// either the two titles are substantially the same text (80% of the LONGER
+// title's words), or the shorter one is at least four words and is wholly
+// contained in the longer, or the shorter one runs off the front of the longer
+// (Scholar's truncation, see isLeadingPrefix). Four words is the containment
+// line; it rejects a one- or two-word fragment, which cannot identify a paper.
+function titleSimilarity(a, b) {
+  const A = tokens(a);
+  const B = tokens(b);
+  if (!A.length || !B.length) return 0;
+  const As = new Set(A);
+  const Bs = new Set(B);
+  if (!As.size || !Bs.size) return 0;
+  let shared = 0;
+  for (const w of As) if (Bs.has(w)) shared++;
+  const containment = shared / Math.max(As.size, Bs.size);
+  const shorter = Math.min(As.size, Bs.size);
+  const contained = shorter >= CONTAINED_MIN_TOKENS && shared / shorter >= 0.8;
+  const prefix =
+    As.size <= Bs.size ? isLeadingPrefix(A, B) : isLeadingPrefix(B, A);
+  // A credible containment or prefix is reported at the threshold itself: it
+  // clears the bar, and no more, so a caller can never read either as an exact
+  // match.
+  const ok = contained || prefix;
+  return Math.max(containment, ok ? TITLE_MATCH_THRESHOLD : 0);
+}
+
+// Whether a similarity score is enough to say "this external record describes
+// the same work as the Scholar entry". Kept separate from the threshold so the
+// offline re-check in tools/reapply-corroboration.js applies the same test as a
+// live capture, and a stored match can be re-judged without a network request.
+function titleMatchIsCredible(similarity) {
+  return similarity >= TITLE_MATCH_THRESHOLD;
+}
 
 async function getJson(url, timeoutMs = 25000) {
   const controller = new AbortController();
@@ -238,8 +304,10 @@ module.exports = {
   configure,
   corroborate,
   titleSimilarity,
+  titleMatchIsCredible,
   normalizeTitle,
   pubmedLookup,
   openAlexLookup,
   TITLE_MATCH_THRESHOLD,
+  CONTAINED_MIN_TOKENS,
 };

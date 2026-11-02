@@ -91,7 +91,9 @@
       "duplicate_of": "",
       "needs_attention": false,
       "attention_reason": "",
-      "language_flag_captured": ""
+      "language_flag_captured": "",
+      "status_captured": "INDEPENDENT",
+      "confirm_state_captured": "confirmed"
     },
     {
       "index": 1,
@@ -125,7 +127,9 @@
       "duplicate_of": "",
       "needs_attention": false,
       "attention_reason": "",
-      "language_flag_captured": ""
+      "language_flag_captured": "",
+      "status_captured": "INDEPENDENT",
+      "confirm_state_captured": "confirmed"
     },
     {
       "index": 2,
@@ -160,14 +164,16 @@
       "external_url": "https://pubmed.ncbi.nlm.nih.gov/33302373/",
       "external_title": "Insights into Bioinformatic Applications for Glycosylation: Instigating an Awakening towards Applying Glycoinformatic Resources for Cancer Diagnosis and Therapy.",
       "external_authors": "Muthu M, Chun S, Gopal J, Anthonydhason V, Haga SW, Jacintha Prameela Devadoss A, Oh JW",
-      "external_similarity": 1,
+      "external_similarity": 0.92,
       "confirm_state": "confirmed",
       "corroboration": "confirmed by pubmed",
       "edition_key": "",
       "duplicate_of": "",
       "needs_attention": false,
       "attention_reason": "",
-      "language_flag_captured": ""
+      "language_flag_captured": "",
+      "status_captured": "INDEPENDENT",
+      "confirm_state_captured": "confirmed"
     },
     {
       "index": 3,
@@ -256,7 +262,9 @@
       "duplicate_of": "",
       "needs_attention": false,
       "attention_reason": "",
-      "language_flag_captured": ""
+      "language_flag_captured": "",
+      "status_captured": "INDEPENDENT",
+      "confirm_state_captured": "confirmed"
     },
     {
       "index": 5,
@@ -299,7 +307,9 @@
       "duplicate_of": "",
       "needs_attention": false,
       "attention_reason": "",
-      "language_flag_captured": ""
+      "language_flag_captured": "",
+      "status_captured": "INDEPENDENT",
+      "confirm_state_captured": "confirmed"
     },
     {
       "index": 6,
@@ -373,14 +383,16 @@
       "external_url": "https://pubmed.ncbi.nlm.nih.gov/40179105/",
       "external_title": "Playbook workflow builder: Interactive construction of bioinformatics workflows.",
       "external_authors": "Clarke DJB, Evangelista JE, Xie Z, Marino GB, Byrd AI, Maurya MR, Srinivasan S, Yu K, Petrosyan V, Roth ME, Milinkov M, King CH, Vora JK, Keeney J, Nemarich C, Khan W, Lachmann A, Ahmed N, Agris A, Pan J, Ramachandran S, Fahy E, Esquivel E, Mihajlovic A, Jevtic B, Milinovic V, Kim S, McNeely P, Wang T, Wenger E, Brown MA, Sickler A, Zhu Y, Jenkins SL, Blood PD, Taylor DM, Resnick AC, Mazumder R, Milosavljevic A, Subramaniam S, Ma'ayan A",
-      "external_similarity": 1,
+      "external_similarity": 0.8,
       "confirm_state": "confirmed",
       "corroboration": "confirmed by pubmed",
       "edition_key": "",
       "duplicate_of": "",
       "needs_attention": false,
       "attention_reason": "",
-      "language_flag_captured": ""
+      "language_flag_captured": "",
+      "status_captured": "INDEPENDENT",
+      "confirm_state_captured": "confirmed"
     },
     {
       "index": 8,
@@ -440,7 +452,9 @@
       "duplicate_of": "",
       "needs_attention": false,
       "attention_reason": "",
-      "language_flag_captured": ""
+      "language_flag_captured": "",
+      "status_captured": "INDEPENDENT",
+      "confirm_state_captured": "confirmed"
     }
   ]
 }

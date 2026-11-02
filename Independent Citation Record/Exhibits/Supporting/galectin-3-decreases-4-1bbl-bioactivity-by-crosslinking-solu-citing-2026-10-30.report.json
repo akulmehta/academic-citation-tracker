@@ -65,7 +65,9 @@
       "corroboration": "confirmed by pubmed",
       "needs_attention": false,
       "attention_reason": "",
-      "language_flag_captured": ""
+      "language_flag_captured": "",
+      "status_captured": "INDEPENDENT",
+      "confirm_state_captured": "confirmed"
     },
     {
       "index": 1,
@@ -107,7 +109,9 @@
       "corroboration": "confirmed by openalex",
       "needs_attention": false,
       "attention_reason": "",
-      "language_flag_captured": ""
+      "language_flag_captured": "",
+      "status_captured": "INDEPENDENT",
+      "confirm_state_captured": "confirmed"
     },
     {
       "index": 2,
@@ -190,7 +194,9 @@
       "corroboration": "confirmed by openalex",
       "needs_attention": false,
       "attention_reason": "",
-      "language_flag_captured": ""
+      "language_flag_captured": "",
+      "status_captured": "INDEPENDENT",
+      "confirm_state_captured": "confirmed"
     },
     {
       "index": 5,
@@ -232,7 +238,9 @@
       "corroboration": "confirmed by openalex",
       "needs_attention": false,
       "attention_reason": "",
-      "language_flag_captured": ""
+      "language_flag_captured": "",
+      "status_captured": "INDEPENDENT",
+      "confirm_state_captured": "confirmed"
     },
     {
       "index": 6,
@@ -268,7 +276,9 @@
       "corroboration": "confirmed by openalex",
       "needs_attention": false,
       "attention_reason": "",
-      "language_flag_captured": ""
+      "language_flag_captured": "",
+      "status_captured": "INDEPENDENT",
+      "confirm_state_captured": "confirmed"
     },
     {
       "index": 7,
@@ -279,8 +289,13 @@
       "snippet": "Background Lymphocyte activation gene-3 (LAG-3) inhibits T cell activation and interferes\nwith the immune response by binding to MHC-II. As antigen presentation is central in …",
       "truncated": false,
       "link": "https://link.springer.com/article/10.1186/s13075-023-03073-z",
-      "status": "REVIEW",
-      "matched_authors": [],
+      "status": "DEPENDENT",
+      "matched_authors": [
+        "Kristian Juul-Madsen",
+        "Stinne Greisen",
+        "Malene Hvid",
+        "Bent Deleuran"
+      ],
       "matched_pi": [],
       "matched_former_pi": [],
       "authors_used": "Pedersen, Janni Maria, Hansen, Aida Solh{\\o}j, Skej{\\o",
@@ -299,17 +314,19 @@
       "external_title": "Lymphocyte activation gene 3 is increased and affects cytokine production in rheumatoid arthritis",
       "external_authors": "Janni Maria Pedersen, Aida Solhøj Hansen, Cæcilie Skejø, Kristian Juul-Madsen, Peter Junker, Kim Hørslev-Petersen, Merete Lund Hetland, Kristian Stengaard-Pedersen, Mikkel Østergaard, Bjarne Kuno Møller, Lene Dreyer, Ellen-Margrethe Hauge, Malene Hvid, Stinne Greisen, Bent Deleuran",
       "external_similarity": 1,
-      "corroboration": "contradicted by openalex (DEPENDENT)",
+      "corroboration": "resolved against openalex (DEPENDENT)",
       "external_matched": [
         "Kristian Juul-Madsen",
         "Stinne Greisen",
         "Malene Hvid",
         "Bent Deleuran"
       ],
-      "confirm_state": "contradicted",
-      "attention_reason": "contradicted by openalex (DEPENDENT)",
-      "needs_attention": true,
-      "language_flag_captured": ""
+      "confirm_state": "external-resolved",
+      "attention_reason": "",
+      "needs_attention": false,
+      "language_flag_captured": "",
+      "status_captured": "REVIEW",
+      "confirm_state_captured": "contradicted"
     },
     {
       "index": 8,
@@ -366,12 +383,14 @@
       "external_url": "https://doi.org/10.1016/j.intimp.2025.115825",
       "external_title": "Genetic variation at rs11574891 and rs3125003 in NOTCH1 is associated with therapeutic efficacy of Janus kinase inhibitors in Taiwanese patients with rheumatoid arthritis",
       "external_authors": "Shan-Wen Lui, Feng-Cheng Liu, Jun-Fu Lin, Chia-Jung Hsu, Ting-Yu Hsieh, Yu-Tien Chang",
-      "external_similarity": 1,
+      "external_similarity": 0.94,
       "confirm_state": "confirmed",
       "corroboration": "confirmed by openalex",
       "needs_attention": false,
       "attention_reason": "",
-      "language_flag_captured": ""
+      "language_flag_captured": "",
+      "status_captured": "INDEPENDENT",
+      "confirm_state_captured": "confirmed"
     }
   ]
 }

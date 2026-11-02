@@ -58,7 +58,9 @@
       "duplicate_of": "",
       "needs_attention": false,
       "attention_reason": "",
-      "language_flag_captured": ""
+      "language_flag_captured": "",
+      "status_captured": "INDEPENDENT",
+      "confirm_state_captured": "confirmed"
     },
     {
       "index": 1,
@@ -101,7 +103,9 @@
       "duplicate_of": "",
       "needs_attention": false,
       "attention_reason": "",
-      "language_flag_captured": ""
+      "language_flag_captured": "",
+      "status_captured": "INDEPENDENT",
+      "confirm_state_captured": "confirmed"
     },
     {
       "index": 2,
@@ -177,14 +181,16 @@
       "external_url": "https://doi.org/10.1007/s10989-025-10765-4",
       "external_title": "Peptide-Tetrahydroisoquinoline (THIQ) Conjugated Derivatives as Dual-Targeting Therapeutics: Superior VEGFR-2 Inhibition and Antioxidant Activity against Renal Cell Carcinoma",
       "external_authors": "Vidya Sagar Jerra, Shaik Mohammed Sharif, Rajamanikandan Sundararaj, Srinivasadesikan Venkatesan",
-      "external_similarity": 1,
+      "external_similarity": 0.89,
       "confirm_state": "confirmed",
       "corroboration": "confirmed by openalex",
       "edition_key": "doi:10.1007:s10989-025-10765-4:jerravidyasagarsharifshaikmohammedsundararajrajamanikandanvenkatesansrinivasadesikan",
       "duplicate_of": "",
       "needs_attention": false,
       "attention_reason": "",
-      "language_flag_captured": ""
+      "language_flag_captured": "",
+      "status_captured": "INDEPENDENT",
+      "confirm_state_captured": "confirmed"
     },
     {
       "index": 4,
@@ -312,7 +318,9 @@
       "duplicate_of": "",
       "needs_attention": false,
       "attention_reason": "",
-      "language_flag_captured": ""
+      "language_flag_captured": "",
+      "status_captured": "INDEPENDENT",
+      "confirm_state_captured": "confirmed"
     },
     {
       "index": 8,
@@ -349,7 +357,9 @@
       "duplicate_of": "",
       "needs_attention": false,
       "attention_reason": "",
-      "language_flag_captured": ""
+      "language_flag_captured": "",
+      "status_captured": "INDEPENDENT",
+      "confirm_state_captured": "confirmed"
     },
     {
       "index": 9,

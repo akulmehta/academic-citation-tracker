@@ -55,14 +55,16 @@
       "external_url": "https://pubmed.ncbi.nlm.nih.gov/41190328/",
       "external_title": "In vitro cell model to dilucidate the underlying molecular mechanism associated with ophthalmic manifestation of congenital disorders of glycosylation: studying an ALG2-CDG patient.",
       "external_authors": "Cubilla MA, Sclausero AC, Bisbal M, Asteggiano CG",
-      "external_similarity": 1,
+      "external_similarity": 0.82,
       "confirm_state": "confirmed",
       "corroboration": "confirmed by pubmed",
       "edition_key": "",
       "duplicate_of": "",
       "needs_attention": false,
       "attention_reason": "",
-      "language_flag_captured": ""
+      "language_flag_captured": "",
+      "status_captured": "INDEPENDENT",
+      "confirm_state_captured": "confirmed"
     },
     {
       "index": 1,
@@ -187,7 +189,9 @@
       "duplicate_of": "",
       "needs_attention": false,
       "attention_reason": "",
-      "language_flag_captured": ""
+      "language_flag_captured": "",
+      "status_captured": "INDEPENDENT",
+      "confirm_state_captured": "confirmed"
     },
     {
       "index": 4,
@@ -269,7 +273,9 @@
       "duplicate_of": "",
       "needs_attention": false,
       "attention_reason": "",
-      "language_flag_captured": ""
+      "language_flag_captured": "",
+      "status_captured": "INDEPENDENT",
+      "confirm_state_captured": "confirmed"
     },
     {
       "index": 6,
@@ -307,7 +313,9 @@
       "duplicate_of": "",
       "needs_attention": false,
       "attention_reason": "",
-      "language_flag_captured": ""
+      "language_flag_captured": "",
+      "status_captured": "INDEPENDENT",
+      "confirm_state_captured": "confirmed"
     },
     {
       "index": 7,
@@ -362,14 +370,18 @@
       "external_url": "https://pubmed.ncbi.nlm.nih.gov/38823031/",
       "external_title": "Re: Bakker et al. Concomitant ligament injuries can be left untreated during surgery of distal radial fractures. J Hand Surg Eur. 2023, 48: 1068-73.",
       "external_authors": "Åhlén M, Wallmon A, Andersson JK, Derksen BM, Schep NWL",
-      "external_similarity": 1,
-      "confirm_state": "confirmed",
-      "corroboration": "confirmed by pubmed",
+      "external_similarity": 0.04,
+      "confirm_state": "unverified-coverage",
+      "corroboration": "not indexed in PubMed or OpenAlex; Scholar list is complete",
       "edition_key": "",
       "duplicate_of": "",
-      "needs_attention": false,
-      "attention_reason": "",
-      "language_flag_captured": ""
+      "needs_attention": true,
+      "attention_reason": "highlighted on Scholar's list alone - not indexed in PubMed or OpenAlex, worth a spot-check",
+      "language_flag_captured": "",
+      "status_captured": "INDEPENDENT",
+      "confirm_state_captured": "confirmed",
+      "external_match_credible": 0,
+      "corroboration_note": "stored pubmed match rejected 2026-11-02: the title overlap is too thin to be the same work (was similarity 1)"
     },
     {
       "index": 9,

@@ -132,7 +132,9 @@
       "duplicate_of": "",
       "needs_attention": false,
       "attention_reason": "",
-      "language_flag_captured": ""
+      "language_flag_captured": "",
+      "status_captured": "INDEPENDENT",
+      "confirm_state_captured": "confirmed"
     },
     {
       "index": 3,
@@ -167,14 +169,16 @@
       "external_url": "https://doi.org/10.1021/acs.oprd.0c00299",
       "external_title": "Facile Preparation of 4-(4-Nitrophenyl)morpholin-3-one via the Acid-Catalyzed Selective Oxidation of 4-(4-Nitrophenyl)morpholine by Sodium Chlorite as the Sole Oxidant",
       "external_authors": "Chaoyang Liu, Tao Yu, Tiannuo Yang, Haozhou Sun, Cheng Qin, Qiang Jia, Changhu Chu",
-      "external_similarity": 1,
+      "external_similarity": 0.94,
       "confirm_state": "confirmed",
       "corroboration": "confirmed by openalex",
       "edition_key": "doi:10.1021:0c00299:liuchaoyangyutaoyangtiannuosunhaozhouqinchengjiaqiangchuchanghu",
       "duplicate_of": "",
       "needs_attention": false,
       "attention_reason": "",
-      "language_flag_captured": ""
+      "language_flag_captured": "",
+      "status_captured": "INDEPENDENT",
+      "confirm_state_captured": "confirmed"
     },
     {
       "index": 4,
@@ -242,7 +246,9 @@
       "duplicate_of": "",
       "needs_attention": false,
       "attention_reason": "",
-      "language_flag_captured": ""
+      "language_flag_captured": "",
+      "status_captured": "INDEPENDENT",
+      "confirm_state_captured": "confirmed"
     },
     {
       "index": 6,
@@ -287,7 +293,9 @@
       "duplicate_of": "",
       "needs_attention": false,
       "attention_reason": "",
-      "language_flag_captured": ""
+      "language_flag_captured": "",
+      "status_captured": "INDEPENDENT",
+      "confirm_state_captured": "confirmed"
     },
     {
       "index": 7,
@@ -386,7 +394,9 @@
       "duplicate_of": "",
       "needs_attention": false,
       "attention_reason": "",
-      "language_flag_captured": ""
+      "language_flag_captured": "",
+      "status_captured": "INDEPENDENT",
+      "confirm_state_captured": "confirmed"
     }
   ]
 }

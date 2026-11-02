@@ -179,14 +179,16 @@
       "external_url": "https://pubmed.ncbi.nlm.nih.gov/39022896/",
       "external_title": "Phylogenetic variations in a novel family of hyperstable apple snail egg proteins: insights into structural stability and functional trends.",
       "external_authors": "Pasquevich MY, Dreon MS, Diupotex-Chong ME, Heras H",
-      "external_similarity": 0.89,
+      "external_similarity": 0.8,
       "confirm_state": "confirmed",
       "corroboration": "confirmed by pubmed",
       "edition_key": "doi:10.1101:538759v1?med=mas:pasquevichmydreonmsdiupotexchongmeherash",
       "duplicate_of": "",
       "needs_attention": false,
       "attention_reason": "",
-      "language_flag_captured": ""
+      "language_flag_captured": "",
+      "status_captured": "INDEPENDENT",
+      "confirm_state_captured": "confirmed"
     },
     {
       "index": 5,
@@ -278,7 +280,7 @@
       "external_url": "https://pubmed.ncbi.nlm.nih.gov/27743365/",
       "external_title": "Carbohydrate Microarray Technology Applied to High-Throughput Mapping of Plant Cell Wall Glycans Using Comprehensive Microarray Polymer Profiling (CoMPP).",
       "external_authors": "Kračun SK, Fangel JU, Rydahl MG, Pedersen HL, Vidal-Melgosa S, Willats WG",
-      "external_similarity": 1,
+      "external_similarity": 0.8,
       "full_authors": [
         "Kračun SK",
         "Fangel JU",
@@ -293,7 +295,9 @@
       "duplicate_of": "",
       "needs_attention": false,
       "attention_reason": "",
-      "language_flag_captured": ""
+      "language_flag_captured": "",
+      "status_captured": "INDEPENDENT",
+      "confirm_state_captured": "confirmed"
     },
     {
       "index": 8,
@@ -328,14 +332,18 @@
       "external_url": "https://pubmed.ncbi.nlm.nih.gov/35352122/",
       "external_title": "CarbArrayART: a new software tool for carbohydrate microarray data storage, processing, presentation, and reporting.",
       "external_authors": "Akune Y, Arpinar S, Silva LM, Palma AS, Tajadura-Ortega V, Aoki-Kinoshita KF, Ranzinger R, Liu Y, Feizi T",
-      "external_similarity": 1,
-      "confirm_state": "confirmed",
-      "corroboration": "confirmed by pubmed",
+      "external_similarity": 0.1,
+      "confirm_state": "unverified-coverage",
+      "corroboration": "not indexed in PubMed or OpenAlex; Scholar list is complete",
       "edition_key": "",
       "duplicate_of": "",
-      "needs_attention": false,
-      "attention_reason": "",
-      "language_flag_captured": ""
+      "needs_attention": true,
+      "attention_reason": "highlighted on Scholar's list alone - not indexed in PubMed or OpenAlex, worth a spot-check",
+      "language_flag_captured": "",
+      "status_captured": "INDEPENDENT",
+      "confirm_state_captured": "confirmed",
+      "external_match_credible": 0,
+      "corroboration_note": "stored pubmed match rejected 2026-11-02: the title overlap is too thin to be the same work (was similarity 1)"
     },
     {
       "index": 9,
@@ -358,7 +366,7 @@
       "external_url": "https://pubmed.ncbi.nlm.nih.gov/33720490/",
       "external_title": "Involvement of N-glycans in binding of Photorhabdus luminescens Tc toxin.",
       "external_authors": "Ng'ang'a PN, Siukstaite L, Lang AE, Bakker H, Römer W, Aktories K, Schmidt G",
-      "external_similarity": 1,
+      "external_similarity": 0.8,
       "full_authors": [
         "Ng'ang'a PN",
         "Siukstaite L",
@@ -374,7 +382,9 @@
       "duplicate_of": "",
       "needs_attention": false,
       "attention_reason": "",
-      "language_flag_captured": ""
+      "language_flag_captured": "",
+      "status_captured": "INDEPENDENT",
+      "confirm_state_captured": "confirmed"
     }
   ]
 }

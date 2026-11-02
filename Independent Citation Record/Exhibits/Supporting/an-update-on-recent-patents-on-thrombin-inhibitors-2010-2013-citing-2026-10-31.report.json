@@ -56,7 +56,9 @@
       "corroboration": "confirmed by openalex",
       "needs_attention": false,
       "attention_reason": "",
-      "language_flag_captured": ""
+      "language_flag_captured": "",
+      "status_captured": "INDEPENDENT",
+      "confirm_state_captured": "confirmed"
     },
     {
       "index": 1,
@@ -90,12 +92,14 @@
       "external_url": "https://pubmed.ncbi.nlm.nih.gov/42616444/",
       "external_title": "From In Silico De Novo Generation to In Vitro Functional Validation: Discovery of Multifunctional Antithrombotic Peptides from Food-Derived Proteins via a Hybrid LSTM-GCN and Molecular Simulation Pipeline.",
       "external_authors": "Xing H, Dong H, Guo C, Zou Y, Wang Z, He R",
-      "external_similarity": 1,
+      "external_similarity": 0.8,
       "confirm_state": "confirmed",
       "corroboration": "confirmed by pubmed",
       "needs_attention": false,
       "attention_reason": "",
-      "language_flag_captured": ""
+      "language_flag_captured": "",
+      "status_captured": "INDEPENDENT",
+      "confirm_state_captured": "confirmed"
     },
     {
       "index": 2,
@@ -137,7 +141,9 @@
       "corroboration": "confirmed by openalex",
       "needs_attention": false,
       "attention_reason": "",
-      "language_flag_captured": ""
+      "language_flag_captured": "",
+      "status_captured": "INDEPENDENT",
+      "confirm_state_captured": "confirmed"
     },
     {
       "index": 3,
@@ -177,12 +183,14 @@
       "external_url": "https://doi.org/10.1016/j.biochi.2014.07.006",
       "external_title": "A new peptide (Ruviprase) purified from the venom of Daboia russelii russelii shows potent anticoagulant activity via non-enzymatic inhibition of thrombin and factor Xa",
       "external_authors": "Rupamoni Thakur, Ashok Kumar, Biplab Bose, Dulal Panda, Debashree Saikia, Pronobesh Chattopadhyay, Ashis K. Mukherjee",
-      "external_similarity": 1,
+      "external_similarity": 0.94,
       "confirm_state": "confirmed",
       "corroboration": "confirmed by openalex",
       "needs_attention": false,
       "attention_reason": "",
-      "language_flag_captured": ""
+      "language_flag_captured": "",
+      "status_captured": "INDEPENDENT",
+      "confirm_state_captured": "confirmed"
     },
     {
       "index": 4,
@@ -260,7 +268,9 @@
       "corroboration": "confirmed by pubmed",
       "needs_attention": false,
       "attention_reason": "",
-      "language_flag_captured": ""
+      "language_flag_captured": "",
+      "status_captured": "INDEPENDENT",
+      "confirm_state_captured": "confirmed"
     },
     {
       "index": 6,
@@ -304,7 +314,9 @@
       "corroboration": "confirmed by openalex",
       "needs_attention": false,
       "attention_reason": "",
-      "language_flag_captured": ""
+      "language_flag_captured": "",
+      "status_captured": "INDEPENDENT",
+      "confirm_state_captured": "confirmed"
     },
     {
       "index": 7,
@@ -342,7 +354,9 @@
       "corroboration": "confirmed by openalex",
       "needs_attention": false,
       "attention_reason": "",
-      "language_flag_captured": ""
+      "language_flag_captured": "",
+      "status_captured": "INDEPENDENT",
+      "confirm_state_captured": "confirmed"
     },
     {
       "index": 8,
@@ -420,7 +434,9 @@
       "corroboration": "confirmed by openalex",
       "needs_attention": false,
       "attention_reason": "",
-      "language_flag_captured": ""
+      "language_flag_captured": "",
+      "status_captured": "INDEPENDENT",
+      "confirm_state_captured": "confirmed"
     }
   ]
 }

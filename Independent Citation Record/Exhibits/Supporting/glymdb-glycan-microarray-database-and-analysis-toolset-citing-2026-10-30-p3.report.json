@@ -59,7 +59,9 @@
       "corroboration": "confirmed by openalex",
       "needs_attention": false,
       "attention_reason": "",
-      "language_flag_captured": ""
+      "language_flag_captured": "",
+      "status_captured": "INDEPENDENT",
+      "confirm_state_captured": "confirmed"
     },
     {
       "index": 1,
@@ -111,7 +113,7 @@
       "external_url": "https://pubmed.ncbi.nlm.nih.gov/27743365/",
       "external_title": "Carbohydrate Microarray Technology Applied to High-Throughput Mapping of Plant Cell Wall Glycans Using Comprehensive Microarray Polymer Profiling (CoMPP).",
       "external_authors": "Kračun SK, Fangel JU, Rydahl MG, Pedersen HL, Vidal-Melgosa S, Willats WG",
-      "external_similarity": 1,
+      "external_similarity": 0.8,
       "full_authors": [
         "Kračun SK",
         "Fangel JU",
@@ -124,7 +126,9 @@
       "corroboration": "confirmed by pubmed",
       "needs_attention": false,
       "attention_reason": "",
-      "language_flag_captured": ""
+      "language_flag_captured": "",
+      "status_captured": "INDEPENDENT",
+      "confirm_state_captured": "confirmed"
     },
     {
       "index": 3,

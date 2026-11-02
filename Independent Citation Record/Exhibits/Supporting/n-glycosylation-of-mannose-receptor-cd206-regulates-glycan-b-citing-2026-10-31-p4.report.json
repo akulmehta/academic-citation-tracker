@@ -114,7 +114,7 @@
       "snippet": "Sebastes schlegelii. Seven ladderlectin genes (SscLLs) are identified, with SscLL3604 and\nSscLL3605 exhibiting high testis-specificity expression. Both genes contain a C-type lectin …",
       "truncated": true,
       "link": "https://www.researchgate.net/profile/Yan-He-32/publication/390893517_The_role_of_ladderlectin_in_spermatogenesis_and_ovarian_sperm_storage_in_the_black_rockfish_Sebastes_schlegelii/links/6802efd2d1054b0207d524c1/The-role-of-ladderlectin-in-spermatogenesis-and-ovarian-sperm-storage-in-the-black-rockfish-Sebastes-schlegelii.pdf",
-      "status": "REVIEW",
+      "status": "INDEPENDENT",
       "matched_authors": [],
       "matched_pi": [],
       "matched_former_pi": [],
@@ -128,7 +128,7 @@
       "external_url": "https://pubmed.ncbi.nlm.nih.gov/40247087/",
       "external_title": "The role of ladderlectin in spermatogenesis and ovarian sperm storage in the black rockfish (Sebastes schlegelii).",
       "external_authors": "Yang R, Wang N, Song W, Zhang F, Gao X, Sun H, Nie T, Liu G, Du M, Liu F, Zhang H, Qi J, He Y",
-      "external_similarity": 1,
+      "external_similarity": 0.8,
       "full_authors": [
         "Yang R",
         "Wang N",
@@ -145,12 +145,14 @@
         "He Y"
       ],
       "confirm_state": "confirmed",
-      "corroboration": "external list shows no overlap (pubmed); not promoted because Scholar's own list is incomplete",
+      "corroboration": "resolved against pubmed",
       "edition_key": "",
       "duplicate_of": "",
-      "attention_reason": "external list shows no overlap (pubmed); not promoted because Scholar's own list is incomplete",
-      "needs_attention": true,
-      "language_flag_captured": ""
+      "attention_reason": "",
+      "needs_attention": false,
+      "language_flag_captured": "",
+      "status_captured": "REVIEW",
+      "confirm_state_captured": "confirmed"
     },
     {
       "index": 4,

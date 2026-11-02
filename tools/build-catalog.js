@@ -73,7 +73,7 @@ const DB_DIR = path.join(ROOT, "Database");
 const DB_PATH = path.join(DB_DIR, "citation-catalog.sqlite");
 const BACKUP_DIR = path.join(DB_DIR, "Backups");
 
-const SCHEMA_VERSION = 4;
+const SCHEMA_VERSION = 5;
 
 // A short opaque token, not a bare integer, so it reads as an identifier when
 // quoted in a sentence: "row cit-000123 is contradicted". Minted from the id
@@ -309,6 +309,13 @@ const COLUMNS = [
   "external_title",
   "external_authors",
   "external_similarity",
+  // 1 when the stored external record really describes the same work, 0 when the
+  // title overlap was too thin to believe and the record has been disregarded.
+  // Queryable on purpose: "which rows rest on a match we would not accept today"
+  // is a question a packet reviewer asks, and the answer should not require
+  // re-running the matcher over 168 reports. Written by the corroboration step
+  // and re-derived by tools/reapply-corroboration.js.
+  "external_match_credible",
   "matched_authors",
   "matched_pi",
   "matched_former_pi",
@@ -480,6 +487,12 @@ CREATE TABLE citations (
   external_title      TEXT NOT NULL DEFAULT '',
   external_authors    TEXT NOT NULL DEFAULT '',
   external_similarity REAL,
+  -- 1 when the stored external record really describes the same work, 0 when the
+  -- title overlap was too thin to believe and the record has been disregarded.
+  -- Queryable on purpose: "which rows rest on a match we would not accept today"
+  -- is a question a packet reviewer asks, and the answer should not require
+  -- re-running the matcher over 168 reports.
+  external_match_credible INTEGER NOT NULL DEFAULT 1,
   matched_authors     TEXT NOT NULL DEFAULT '[]',
   matched_pi          TEXT NOT NULL DEFAULT '[]',
   matched_former_pi   TEXT NOT NULL DEFAULT '[]',
@@ -570,16 +583,25 @@ SELECT c.* FROM citations c WHERE c.filed = 1 AND c.superseded_at = '';
 -- dashboard's review section, so both quote the same rows and the same buckets.
 --
 --   1 contradicted        an external record publishes a complete author list
---                         that overlaps the PI's, so Scholar's list is wrong
+--                         that overlaps the cited paper's, so Scholar's list is
+--                         wrong. Since 2026-11-02 a credible overlap DECIDES the
+--                         row as DEPENDENT or a self-citation instead of leaving
+--                         it here, so a re-applied corpus has no rows in this
+--                         bucket; it is kept because a capture predating that
+--                         date still carries the state.
 --   2 external-no-overlap an external record has a complete list with no
---                         overlap, but Scholar's own list is truncated, so the
---                         row is not promoted to independent on it alone
---   3 unresolvable        neither PubMed nor OpenAlex indexes the paper and
---                         Scholar's list is incomplete -- nothing to compare
+--                         overlap, but the row was not promoted. After the
+--                         2026-11-02 decision the only rows left here are the
+--                         ones that CANNOT be promoted because the entry is
+--                         non-English and no translations are being obtained.
+--   3 unresolvable        nothing credible to compare against -- neither PubMed
+--                         nor OpenAlex indexes the paper (or the look-up's title
+--                         overlap was too thin to be the same work) and
+--                         Scholar's own list is incomplete.
 --
 -- Bucketing reads attention_reason, the string the corroboration step wrote at
 -- the time, rather than external_source alone: a row can name a source and
--- still be unresolvable when that source returned nothing for it.
+-- still be unresolvable when that source returned nothing usable for it.
 CREATE VIEW v_review AS
 SELECT
   c.row_uid,
@@ -870,6 +892,9 @@ function citationRow(entry, ctx) {
     external_title: text(entry.external_title),
     external_authors: text(entry.external_authors),
     external_similarity: sim === null || sim === undefined || sim === "" ? null : Number(sim),
+    external_match_credible: bool(
+      entry.external_match_credible === undefined ? true : entry.external_match_credible,
+    ),
     matched_authors: json(asArray(entry.matched_authors)),
     matched_pi: json(asArray(entry.matched_pi)),
     matched_former_pi: json(asArray(entry.matched_former_pi)),
@@ -1244,6 +1269,7 @@ function needsMigration(db) {
     "replaced_by_row_uid",
     "supersede_reason",
     "external_matched",
+    "external_match_credible",
   ].filter((c) => !cols.has(c));
   // Every view DDL defines must exist, and must say what DDL says. A view
   // cannot be ALTERed, so a definition edited after the fact only lands on a
@@ -1308,6 +1334,10 @@ function migrateV3toV4(db, { write }) {
     ["replaced_by_row_uid", "TEXT NOT NULL DEFAULT ''"],
     ["supersede_reason", "TEXT NOT NULL DEFAULT ''"],
     ["external_matched", "TEXT NOT NULL DEFAULT '[]'"],
+    // Default 1: a row captured before this column existed carries a match that
+    // was accepted under the old matcher, and reapply-corroboration.js is what
+    // sets it to 0 where the overlap turns out to be too thin.
+    ["external_match_credible", "INTEGER NOT NULL DEFAULT 1"],
   ];
   console.log(
     `[catalog] Bringing the store to schema v${SCHEMA_VERSION} in place (${before} citation rows).`

@@ -55,7 +55,9 @@
       "duplicate_of": "",
       "needs_attention": false,
       "attention_reason": "",
-      "language_flag_captured": ""
+      "language_flag_captured": "",
+      "status_captured": "INDEPENDENT",
+      "confirm_state_captured": "confirmed"
     },
     {
       "index": 1,
@@ -99,7 +101,9 @@
       "duplicate_of": "",
       "needs_attention": false,
       "attention_reason": "",
-      "language_flag_captured": ""
+      "language_flag_captured": "",
+      "status_captured": "INDEPENDENT",
+      "confirm_state_captured": "confirmed"
     },
     {
       "index": 2,
@@ -198,14 +202,16 @@
       "external_url": "https://doi.org/10.1273/cbij.17.1",
       "external_title": "A Novel Fragment Recommendation Workflow using Direct and Indirect Transfer of SAR According to Integrated Similarities of Scaffold Motifs and SAR Trends: Application to Identifying Factor Xa Inhibitors",
       "external_authors": "Tsukasa Ishihara, Kenichi Mori, Ryosuke Munakata, Ayako Moritomo",
-      "external_similarity": 1,
+      "external_similarity": 0.8,
       "confirm_state": "confirmed",
       "corroboration": "confirmed by openalex",
       "edition_key": "",
       "duplicate_of": "",
       "needs_attention": false,
       "attention_reason": "",
-      "language_flag_captured": ""
+      "language_flag_captured": "",
+      "status_captured": "INDEPENDENT",
+      "confirm_state_captured": "confirmed"
     },
     {
       "index": 5,
@@ -274,7 +280,9 @@
       "duplicate_of": "",
       "needs_attention": false,
       "attention_reason": "",
-      "language_flag_captured": ""
+      "language_flag_captured": "",
+      "status_captured": "INDEPENDENT",
+      "confirm_state_captured": "confirmed"
     },
     {
       "index": 7,
@@ -312,7 +320,9 @@
       "duplicate_of": "",
       "needs_attention": false,
       "attention_reason": "",
-      "language_flag_captured": ""
+      "language_flag_captured": "",
+      "status_captured": "INDEPENDENT",
+      "confirm_state_captured": "confirmed"
     },
     {
       "index": 8,
@@ -340,7 +350,7 @@
       "external_url": "https://doi.org/10.25772/nv7h-cs15",
       "external_title": "Reverse-phase Ion-Pairing Ultra Performance Liquid Chromatography-Mass Spectrometry In Characterization And Fingerprinting Of Diverse Sulfated Glycosaminoglycan Mimetics",
       "external_authors": "Ponnusamy, Pooja",
-      "external_similarity": 1,
+      "external_similarity": 0.88,
       "full_authors": [
         "Ponnusamy, Pooja"
       ],
@@ -350,7 +360,9 @@
       "duplicate_of": "",
       "needs_attention": false,
       "attention_reason": "",
-      "language_flag_captured": ""
+      "language_flag_captured": "",
+      "status_captured": "INDEPENDENT",
+      "confirm_state_captured": "confirmed"
     },
     {
       "index": 9,

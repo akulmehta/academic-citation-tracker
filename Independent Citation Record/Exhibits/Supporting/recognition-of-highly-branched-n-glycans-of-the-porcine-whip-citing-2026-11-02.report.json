@@ -60,7 +60,7 @@
       "snippet": "Abstract LacdiNAc (GalNAcβ1→ 4GlcNAc), a disaccharide structure on N-and O-glycans of\nglycoproteins, represents an important form of glycosylation modification. Several reviews …",
       "truncated": true,
       "link": "https://www.sciencedirect.com/science/article/pii/S0141813025093080",
-      "status": "REVIEW",
+      "status": "INDEPENDENT",
       "matched_authors": [],
       "matched_pi": [],
       "matched_former_pi": [],
@@ -87,12 +87,14 @@
         "Jun Li"
       ],
       "confirm_state": "confirmed",
-      "corroboration": "external list shows no overlap (openalex); not promoted because Scholar's own list is incomplete",
+      "corroboration": "resolved against openalex",
       "edition_key": "doi:10.1016:148751:yzhanglwuxliuxchenjli",
       "duplicate_of": "",
-      "attention_reason": "external list shows no overlap (openalex); not promoted because Scholar's own list is incomplete",
-      "needs_attention": true,
-      "language_flag_captured": ""
+      "attention_reason": "",
+      "needs_attention": false,
+      "language_flag_captured": "",
+      "status_captured": "REVIEW",
+      "confirm_state_captured": "confirmed"
     },
     {
       "index": 2,
@@ -164,7 +166,9 @@
       "duplicate_of": "",
       "needs_attention": false,
       "attention_reason": "",
-      "language_flag_captured": ""
+      "language_flag_captured": "",
+      "status_captured": "INDEPENDENT",
+      "confirm_state_captured": "confirmed"
     },
     {
       "index": 4,
@@ -202,7 +206,7 @@
       "snippet": "Background Anisakis infections have become a significant public health concern primarily\ncaused by consuming raw or undercooked seafood. This in is due to a shift in global eating …",
       "truncated": true,
       "link": "https://www.frontiersin.org/journals/immunology/articles/10.3389/fimmu.2025.1595093/full",
-      "status": "REVIEW",
+      "status": "INDEPENDENT",
       "matched_authors": [],
       "matched_pi": [],
       "matched_former_pi": [],
@@ -215,7 +219,7 @@
       "external_url": "https://pubmed.ncbi.nlm.nih.gov/40852717/",
       "external_title": "Correction: Dual roles of Anisakis pegreffii proteins in macrophage immune dynamics.",
       "external_authors": "Zeng MH, Alsobaie S, Wang XX, Li S, Aldakheel FM, Aboul-Soud MAM, Liu WB",
-      "external_similarity": 1,
+      "external_similarity": 0.89,
       "full_authors": [
         "Zeng MH",
         "Alsobaie S",
@@ -226,12 +230,14 @@
         "Liu WB"
       ],
       "confirm_state": "confirmed",
-      "corroboration": "external list shows no overlap (pubmed); not promoted because Scholar's own list is incomplete",
+      "corroboration": "resolved against pubmed",
       "edition_key": "",
       "duplicate_of": "",
-      "attention_reason": "external list shows no overlap (pubmed); not promoted because Scholar's own list is incomplete",
-      "needs_attention": true,
-      "language_flag_captured": ""
+      "attention_reason": "",
+      "needs_attention": false,
+      "language_flag_captured": "",
+      "status_captured": "REVIEW",
+      "confirm_state_captured": "confirmed"
     },
     {
       "index": 6,
@@ -242,7 +248,7 @@
       "snippet": "N-glycans with complex core chitobiose modifications are observed in various free-living\nand parasitic nematodes but are absent in mammals. Using Caenorhabditis elegans as a …",
       "truncated": true,
       "link": "https://www.jbc.org/article/S0021-9258(24)02446-3/fulltext",
-      "status": "REVIEW",
+      "status": "INDEPENDENT",
       "matched_authors": [],
       "matched_pi": [],
       "matched_former_pi": [],
@@ -274,12 +280,14 @@
         "Yan S"
       ],
       "confirm_state": "confirmed",
-      "corroboration": "external list shows no overlap (pubmed); not promoted because Scholar's own list is incomplete",
+      "corroboration": "resolved against pubmed",
       "edition_key": "",
       "duplicate_of": "",
-      "attention_reason": "external list shows no overlap (pubmed); not promoted because Scholar's own list is incomplete",
-      "needs_attention": true,
-      "language_flag_captured": ""
+      "attention_reason": "",
+      "needs_attention": false,
+      "language_flag_captured": "",
+      "status_captured": "REVIEW",
+      "confirm_state_captured": "confirmed"
     },
     {
       "index": 7,
@@ -339,7 +347,9 @@
       "duplicate_of": "",
       "needs_attention": false,
       "attention_reason": "",
-      "language_flag_captured": ""
+      "language_flag_captured": "",
+      "status_captured": "INDEPENDENT",
+      "confirm_state_captured": "confirmed"
     },
     {
       "index": 9,
@@ -381,7 +391,9 @@
       "duplicate_of": "",
       "needs_attention": false,
       "attention_reason": "",
-      "language_flag_captured": ""
+      "language_flag_captured": "",
+      "status_captured": "INDEPENDENT",
+      "confirm_state_captured": "confirmed"
     }
   ]
 }

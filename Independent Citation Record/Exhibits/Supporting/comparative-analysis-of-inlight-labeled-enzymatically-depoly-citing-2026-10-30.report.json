@@ -62,7 +62,9 @@
       "corroboration": "confirmed by openalex",
       "needs_attention": false,
       "attention_reason": "",
-      "language_flag_captured": ""
+      "language_flag_captured": "",
+      "status_captured": "INDEPENDENT",
+      "confirm_state_captured": "confirmed"
     },
     {
       "index": 1,
@@ -102,7 +104,9 @@
       "corroboration": "confirmed by openalex",
       "needs_attention": false,
       "attention_reason": "",
-      "language_flag_captured": ""
+      "language_flag_captured": "",
+      "status_captured": "INDEPENDENT",
+      "confirm_state_captured": "confirmed"
     },
     {
       "index": 2,
@@ -149,7 +153,7 @@
       "external_url": "https://pubmed.ncbi.nlm.nih.gov/29279989/",
       "external_title": "Demonstration of hydrazide tagging for O-glycans and a central composite design of experiments optimization using the INLIGHT™ reagent.",
       "external_authors": "King SR, Hecht ES, Muddiman DC",
-      "external_similarity": 1,
+      "external_similarity": 0.8,
       "full_authors": [
         "King SR",
         "Hecht ES",
@@ -159,7 +163,9 @@
       "corroboration": "confirmed by pubmed",
       "needs_attention": false,
       "attention_reason": "",
-      "language_flag_captured": ""
+      "language_flag_captured": "",
+      "status_captured": "INDEPENDENT",
+      "confirm_state_captured": "confirmed"
     },
     {
       "index": 4,
@@ -195,7 +201,9 @@
       "corroboration": "confirmed by openalex",
       "needs_attention": false,
       "attention_reason": "",
-      "language_flag_captured": ""
+      "language_flag_captured": "",
+      "status_captured": "INDEPENDENT",
+      "confirm_state_captured": "confirmed"
     },
     {
       "index": 5,
@@ -228,7 +236,9 @@
       "corroboration": "confirmed by pubmed",
       "needs_attention": false,
       "attention_reason": "",
-      "language_flag_captured": ""
+      "language_flag_captured": "",
+      "status_captured": "INDEPENDENT",
+      "confirm_state_captured": "confirmed"
     },
     {
       "index": 6,

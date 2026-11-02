@@ -63,7 +63,9 @@
       "duplicate_of": "",
       "needs_attention": false,
       "attention_reason": "",
-      "language_flag_captured": ""
+      "language_flag_captured": "",
+      "status_captured": "INDEPENDENT",
+      "confirm_state_captured": "confirmed"
     },
     {
       "index": 1,
@@ -196,7 +198,9 @@
       "duplicate_of": "",
       "needs_attention": false,
       "attention_reason": "",
-      "language_flag_captured": ""
+      "language_flag_captured": "",
+      "status_captured": "INDEPENDENT",
+      "confirm_state_captured": "confirmed"
     },
     {
       "index": 4,
@@ -241,7 +245,9 @@
       "duplicate_of": "",
       "needs_attention": false,
       "attention_reason": "",
-      "language_flag_captured": ""
+      "language_flag_captured": "",
+      "status_captured": "INDEPENDENT",
+      "confirm_state_captured": "confirmed"
     },
     {
       "index": 5,
@@ -278,14 +284,18 @@
       "external_url": "https://openalex.org/W2349649807",
       "external_title": "[The relationship between the C589T polymorphism of IL-4 gene and cholelithiasis].",
       "external_authors": "Xiao-ming Zhuang, Hong Xiao, Yuan Zhang",
-      "external_similarity": 1,
-      "confirm_state": "confirmed",
-      "corroboration": "confirmed by openalex",
+      "external_similarity": 0.38,
+      "confirm_state": "unverified-coverage",
+      "corroboration": "not indexed in PubMed or OpenAlex; Scholar list is complete",
       "edition_key": "",
       "duplicate_of": "",
-      "attention_reason": "non-latin script - not highlighted; a certified human translation is required before it can count",
+      "attention_reason": "highlighted on Scholar's list alone - not indexed in PubMed or OpenAlex, worth a spot-check",
       "needs_attention": true,
-      "language_flag_captured": "non-latin script"
+      "language_flag_captured": "non-latin script",
+      "status_captured": "INDEPENDENT",
+      "confirm_state_captured": "confirmed",
+      "external_match_credible": 0,
+      "corroboration_note": "stored openalex match rejected 2026-11-02: the title overlap is too thin to be the same work (was similarity 1)"
     },
     {
       "index": 6,
@@ -381,7 +391,9 @@
       "duplicate_of": "",
       "needs_attention": false,
       "attention_reason": "",
-      "language_flag_captured": ""
+      "language_flag_captured": "",
+      "status_captured": "INDEPENDENT",
+      "confirm_state_captured": "confirmed"
     },
     {
       "index": 8,

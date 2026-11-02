@@ -108,12 +108,14 @@
       "external_url": "https://pubmed.ncbi.nlm.nih.gov/25866798/",
       "external_title": "Polysulfated trehalose as a novel anticoagulant agent with dual mode of action.",
       "external_authors": "Rashid Q, Abid M, Gupta N, Tyagi T, Ashraf MZ, Jairajpuri MA",
-      "external_similarity": 1,
+      "external_similarity": 0.8,
       "confirm_state": "confirmed",
       "corroboration": "confirmed by pubmed",
       "needs_attention": false,
       "attention_reason": "",
-      "language_flag_captured": ""
+      "language_flag_captured": "",
+      "status_captured": "INDEPENDENT",
+      "confirm_state_captured": "confirmed"
     },
     {
       "index": 3,

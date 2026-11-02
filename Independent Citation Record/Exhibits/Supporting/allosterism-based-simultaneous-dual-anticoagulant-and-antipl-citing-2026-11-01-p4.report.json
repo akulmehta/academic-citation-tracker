@@ -60,14 +60,16 @@
       "external_url": "https://pubmed.ncbi.nlm.nih.gov/36863508/",
       "external_title": "Merging cultures and disciplines to create a drug discovery ecosystem at Virginia commonwealth university: Medicinal chemistry, structural biology, molecular and behavioral pharmacology and computational chemistry.",
       "external_authors": "Kellogg GE, Cen Y, Dukat M, Ellis KC, Guo Y, Li J, May AE, Safo MK, Zhang S, Zhang Y, Desai UR",
-      "external_similarity": 1,
+      "external_similarity": 0.83,
       "confirm_state": "confirmed",
       "corroboration": "confirmed by pubmed",
       "edition_key": "",
       "duplicate_of": "",
       "needs_attention": false,
       "attention_reason": "",
-      "language_flag_captured": ""
+      "language_flag_captured": "",
+      "status_captured": "INDEPENDENT",
+      "confirm_state_captured": "confirmed"
     },
     {
       "index": 1,
@@ -111,7 +113,9 @@
       "duplicate_of": "",
       "needs_attention": false,
       "attention_reason": "",
-      "language_flag_captured": ""
+      "language_flag_captured": "",
+      "status_captured": "INDEPENDENT",
+      "confirm_state_captured": "confirmed"
     },
     {
       "index": 2,
@@ -183,7 +187,9 @@
       "duplicate_of": "",
       "needs_attention": false,
       "attention_reason": "",
-      "language_flag_captured": ""
+      "language_flag_captured": "",
+      "status_captured": "INDEPENDENT",
+      "confirm_state_captured": "confirmed"
     },
     {
       "index": 4,
@@ -262,7 +268,9 @@
       "duplicate_of": "",
       "needs_attention": false,
       "attention_reason": "",
-      "language_flag_captured": ""
+      "language_flag_captured": "",
+      "status_captured": "INDEPENDENT",
+      "confirm_state_captured": "confirmed"
     },
     {
       "index": 6,
@@ -334,14 +342,16 @@
       "external_url": "https://pubmed.ncbi.nlm.nih.gov/29406112/",
       "external_title": "Inhibition of thrombin by functionalized C(60) nanoparticles revealed via in vitro assays and in silico studies.",
       "external_authors": "Liu Y, Fu J, Pan W, Xue Q, Liu X, Zhang A",
-      "external_similarity": 0.9,
+      "external_similarity": 0.82,
       "confirm_state": "confirmed",
       "corroboration": "confirmed by pubmed",
       "edition_key": "",
       "duplicate_of": "",
       "needs_attention": false,
       "attention_reason": "",
-      "language_flag_captured": ""
+      "language_flag_captured": "",
+      "status_captured": "INDEPENDENT",
+      "confirm_state_captured": "confirmed"
     },
     {
       "index": 8,
@@ -402,7 +412,9 @@
       "duplicate_of": "",
       "needs_attention": false,
       "attention_reason": "",
-      "language_flag_captured": ""
+      "language_flag_captured": "",
+      "status_captured": "INDEPENDENT",
+      "confirm_state_captured": "confirmed"
     }
   ]
 }

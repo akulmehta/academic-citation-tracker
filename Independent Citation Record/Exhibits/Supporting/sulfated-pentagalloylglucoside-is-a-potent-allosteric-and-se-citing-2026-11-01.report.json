@@ -143,14 +143,18 @@
       "external_url": "https://pubmed.ncbi.nlm.nih.gov/42851559/",
       "external_title": "Real-Time Coagulation Monitoring via Thromboelastography and Platelet Mapping in Total Hip Arthroplasty for a Patient with Factor XI Deficiency: A Case Report.",
       "external_authors": "Londoño L, Llinás A, Raffán-Sanabria F",
-      "external_similarity": 1,
-      "confirm_state": "confirmed",
-      "corroboration": "confirmed by pubmed",
+      "external_similarity": 0.19,
+      "confirm_state": "unverified-coverage",
+      "corroboration": "not indexed in PubMed or OpenAlex; Scholar list is complete",
       "edition_key": "",
       "duplicate_of": "",
-      "needs_attention": false,
-      "attention_reason": "",
-      "language_flag_captured": ""
+      "needs_attention": true,
+      "attention_reason": "highlighted on Scholar's list alone - not indexed in PubMed or OpenAlex, worth a spot-check",
+      "language_flag_captured": "",
+      "status_captured": "INDEPENDENT",
+      "confirm_state_captured": "confirmed",
+      "external_match_credible": 0,
+      "corroboration_note": "stored pubmed match rejected 2026-11-02: the title overlap is too thin to be the same work (was similarity 1)"
     },
     {
       "index": 3,
@@ -222,7 +226,9 @@
       "duplicate_of": "",
       "needs_attention": false,
       "attention_reason": "",
-      "language_flag_captured": ""
+      "language_flag_captured": "",
+      "status_captured": "INDEPENDENT",
+      "confirm_state_captured": "confirmed"
     },
     {
       "index": 5,
@@ -287,7 +293,9 @@
       "duplicate_of": "",
       "needs_attention": false,
       "attention_reason": "",
-      "language_flag_captured": ""
+      "language_flag_captured": "",
+      "status_captured": "INDEPENDENT",
+      "confirm_state_captured": "confirmed"
     },
     {
       "index": 7,

@@ -212,6 +212,11 @@ const {
 // External corroboration of author lists (PubMed, then OpenAlex).
 const crosscheck = require("./crosscheck");
 
+// What an external record does to a citation's state. Shared with
+// tools/reapply-corroboration.js, which re-derives the same states over reports
+// already filed, so a fresh capture and an offline re-apply cannot drift apart.
+const { applyExternalVerdict } = require("./corroboration.js");
+
 // The profile "view article" page exposes the complete author list in the
 // citation detail table (#gsc_oci_table). Author strings on list pages are
 // truncated with "...", so this page is the authoritative source.
@@ -801,14 +806,24 @@ function classify(entries, keys, profileTitle) {
 //
 // Google Scholar remains the primary source, so the external look-up is
 // best-effort corroboration and each candidate gets a confirm_state:
-//   confirmed            - an external record agrees there is no overlap
-//   unverified-coverage  - not indexed externally (preprint, patent, book) and
+//   confirmed            - a credible external record agrees there is no overlap.
+//                          Where Scholar's own byline was truncated, this settles
+//                          the row and it becomes independent (user decision
+//                          2026-11-02); see corroboration.js rule R2.
+//   unverified-coverage  - no credible external record (preprint, patent, book,
+//                          or a look-up whose title overlap was too thin) and
 //                          Scholar's own list was complete, so it is still
 //                          marked, and recorded for a manual spot-check
-//   unresolved           - not indexed externally and Scholar's list was
+//   unresolved           - no credible external record and Scholar's list was
 //                          truncated, so neither source settles it
-//   contradicted         - the external list shows a shared or PI author, so the
-//                          entry is pulled back to REVIEW and never marked
+//   external-resolved    - a credible external list shows a shared author or a
+//                          PI, which DECIDES the row as DEPENDENT or a
+//                          self-citation rather than leaving it open
+//   contradicted         - retained for rows captured before 2026-11-02. The
+//                          old rule pulled such a row back to REVIEW on the
+//                          ground that Scholar and the external record disagreed;
+//                          a credible match now settles it instead, so a fresh
+//                          capture no longer produces this state.
 async function corroborateIndependence(results, keys, skip) {
   const need = results.filter(
     (r) => r.status === "INDEPENDENT" || r.status === "REVIEW"
@@ -848,42 +863,18 @@ async function corroborateIndependence(results, keys, skip) {
     r.external_authors = ext.authors.join(", ");
     r.external_similarity = ext.similarity;
 
-    const verdict = evaluateEntry(
-      {
-        authors: ext.authors.join(", "),
-        full_authors: ext.authors,
-        truncated: false,
-      },
-      keys
-    );
-
-    if (verdict.status === "INDEPENDENT") {
-      // Prefer the external full list when Scholar's was truncated.
-      if (!r.full_authors || !r.full_authors.length) {
-        r.full_authors = ext.authors;
-        r.author_source = `scholar+${ext.source}`;
-      }
-      r.confirm_state = "confirmed";
-      r.corroboration =
-        r.status === "REVIEW"
-          ? `external list shows no overlap (${ext.source}); not promoted because Scholar's own list is incomplete`
-          : `confirmed by ${ext.source}`;
-      log(`  confirmed via ${ext.source}: ${r.title}`);
-    } else {
-      // Scholar and the external record disagree. Do not quietly trust either.
-      r.corroboration = `contradicted by ${ext.source} (${verdict.status})`;
-      r.external_matched = [
-        ...verdict.matched_authors,
-        ...verdict.matched_pi,
-        ...verdict.matched_former_pi,
-      ];
-      if (r.status === "INDEPENDENT") r.status = "REVIEW";
-      r.confirm_state = "contradicted";
+    // The state transition itself lives in corroboration.js so the offline
+    // re-apply over already-filed reports cannot drift from a fresh capture.
+    const res = applyExternalVerdict(r, keys);
+    if (r.confirm_state === "external-resolved" && r.status !== "INDEPENDENT") {
       log(
-        `  CONTRADICTION via ${ext.source}: ${verdict.status} on ` +
+        `  RESOLVED via ${ext.source}: ${r.status} on ` +
           `${(r.external_matched || []).join(", ")} -> ${r.title}`
       );
+    } else {
+      log(`  ${r.confirm_state}: ${r.title}`);
     }
+    for (const n of res.notes) log(`      - ${n}`);
     await pace.pause("next cross-check", 1200, 2600);
   }
 }
@@ -1023,7 +1014,9 @@ function computeCounts(results) {
       (r) => r.confirm_state === "unverified-coverage"
     ).length,
     CONTRADICTED: results.filter(
-      (r) => r.confirm_state === "contradicted"
+      (r) =>
+        r.confirm_state === "contradicted" ||
+        r.confirm_state === "external-resolved"
     ).length,
     REVIEW: results.filter((r) => r.status === "REVIEW").length,
     DEPENDENT: results.filter((r) => r.status === "DEPENDENT").length,
@@ -1155,7 +1148,7 @@ function buildReviewMarkdown(base, results, meta, counts) {
     `- Former PI (user instruction - always a self-citation): ${(meta.former_keys || []).join("; ") || "(none)"}`,
     `- External corroboration: ${meta.crosscheck || "not run"}`,
     ``,
-    `Counts: ${counts.HIGHLIGHTED} independent and highlighted (${counts.CONFIRMED} externally confirmed, ${counts.COVERAGE} not indexed externally so marked on Scholar's complete list), ${counts.REVIEW} awaiting your review, ${counts.DEPENDENT} share an author with the cited paper, ${counts.SELF_PI} by the PI, ${counts.SELF_FORMER} by the former PI. ${counts.CONTRADICTED} entry(s) were contradicted by an external record.${nonEnglish.length ? ` ${nonEnglish.length} entry(ies) look non-English and are excluded from the highlighted total pending a certified human translation.` : ""}`,
+    `Counts: ${counts.HIGHLIGHTED} independent and highlighted (${counts.CONFIRMED} externally confirmed, ${counts.COVERAGE} not indexed externally so marked on Scholar's complete list), ${counts.REVIEW} awaiting your review, ${counts.DEPENDENT} share an author with the cited paper, ${counts.SELF_PI} by the PI, ${counts.SELF_FORMER} by the former PI. ${counts.CONTRADICTED} entry(s) had their classification settled by a complete external author list.${nonEnglish.length ? ` ${nonEnglish.length} entry(ies) look non-English and are excluded from the highlighted total pending a certified human translation.` : ""}`,
     ``,
     `## Needs your review (${reviewItems.length})`,
     ``,

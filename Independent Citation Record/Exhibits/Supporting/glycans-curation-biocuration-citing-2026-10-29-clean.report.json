@@ -125,7 +125,9 @@
       "confirm_state": "confirmed",
       "corroboration": "confirmed by openalex",
       "needs_attention": false,
-      "language_flag_captured": ""
+      "language_flag_captured": "",
+      "status_captured": "INDEPENDENT",
+      "confirm_state_captured": "confirmed"
     },
     {
       "index": 3,
@@ -166,7 +168,7 @@
       "external_url": "https://pubmed.ncbi.nlm.nih.gov/41663794/",
       "external_title": "Updates to the Minimum Information Required for A Glycomics Experiment (MIRAGE) guidelines.",
       "external_authors": "Kettner C, Zaia J",
-      "external_similarity": 1,
+      "external_similarity": 0.8,
       "full_authors": [
         "Kettner C",
         "Zaia J"
@@ -174,7 +176,10 @@
       "confirm_state": "confirmed",
       "corroboration": "confirmed by pubmed",
       "needs_attention": false,
-      "language_flag_captured": ""
+      "language_flag_captured": "",
+      "status_captured": "INDEPENDENT",
+      "confirm_state_captured": "confirmed",
+      "attention_reason": ""
     },
     {
       "index": 5,

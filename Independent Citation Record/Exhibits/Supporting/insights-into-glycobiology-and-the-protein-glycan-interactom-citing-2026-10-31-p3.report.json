@@ -63,7 +63,9 @@
       "corroboration": "confirmed by pubmed",
       "needs_attention": false,
       "attention_reason": "",
-      "language_flag_captured": ""
+      "language_flag_captured": "",
+      "status_captured": "INDEPENDENT",
+      "confirm_state_captured": "confirmed"
     },
     {
       "index": 1,
@@ -104,7 +106,9 @@
       "corroboration": "confirmed by pubmed",
       "needs_attention": false,
       "attention_reason": "",
-      "language_flag_captured": ""
+      "language_flag_captured": "",
+      "status_captured": "INDEPENDENT",
+      "confirm_state_captured": "confirmed"
     },
     {
       "index": 2,
@@ -132,7 +136,7 @@
       "external_url": "https://doi.org/10.1128/msphere.00948-24",
       "external_title": "Targets for the diagnosis of Acanthamoeba eye infections include four cyst wall proteins and the mannose-binding domain of the trophozoite mannose-binding protein",
       "external_authors": "Bharath Kanakapura Sundararaj, Manish Goyal, John Samuelson",
-      "external_similarity": 1,
+      "external_similarity": 0.93,
       "full_authors": [
         "Bharath Kanakapura Sundararaj",
         "Manish Goyal",
@@ -142,7 +146,9 @@
       "corroboration": "confirmed by openalex",
       "needs_attention": false,
       "attention_reason": "",
-      "language_flag_captured": ""
+      "language_flag_captured": "",
+      "status_captured": "INDEPENDENT",
+      "confirm_state_captured": "confirmed"
     },
     {
       "index": 3,
@@ -180,12 +186,14 @@
       "external_url": "https://doi.org/10.1080/19420862.2025.2561823",
       "external_title": "ManNAc attenuates Man5 glycoform abundance through GNE-mediated metabolic channeling of UDP-GlcNAc to N-glycosylation modifications via CMP-Neu5Ac biosynthesis",
       "external_authors": "Ruiqiang Sun, Miaomiao Chai, Jiahao Man, Guiju Yang, Hai Shu, Qiancheng Wang, Cong Tian, Linlin Wang, Shanhui Liao, Yifeng Zhang, Yanyan Cao, Lisha Xia, Haili Yang, Ting Zhang, Luoyan Ma, Shenwang Cao, Qiao Gao, Yichen Le, Mingli Shi, Quanxue Li, Yinmao Fan, Hang Zhou",
-      "external_similarity": 1,
+      "external_similarity": 0.94,
       "confirm_state": "confirmed",
       "corroboration": "confirmed by openalex",
       "needs_attention": false,
       "attention_reason": "",
-      "language_flag_captured": ""
+      "language_flag_captured": "",
+      "status_captured": "INDEPENDENT",
+      "confirm_state_captured": "confirmed"
     },
     {
       "index": 4,
@@ -251,7 +259,9 @@
       "corroboration": "confirmed by pubmed",
       "needs_attention": false,
       "attention_reason": "",
-      "language_flag_captured": ""
+      "language_flag_captured": "",
+      "status_captured": "INDEPENDENT",
+      "confirm_state_captured": "confirmed"
     },
     {
       "index": 6,
@@ -294,7 +304,9 @@
       "corroboration": "confirmed by pubmed",
       "needs_attention": false,
       "attention_reason": "",
-      "language_flag_captured": ""
+      "language_flag_captured": "",
+      "status_captured": "INDEPENDENT",
+      "confirm_state_captured": "confirmed"
     },
     {
       "index": 7,
@@ -369,7 +381,9 @@
       "corroboration": "confirmed by openalex",
       "needs_attention": false,
       "attention_reason": "",
-      "language_flag_captured": ""
+      "language_flag_captured": "",
+      "status_captured": "INDEPENDENT",
+      "confirm_state_captured": "confirmed"
     },
     {
       "index": 9,
@@ -417,7 +431,9 @@
       "corroboration": "confirmed by openalex",
       "needs_attention": false,
       "attention_reason": "",
-      "language_flag_captured": ""
+      "language_flag_captured": "",
+      "status_captured": "INDEPENDENT",
+      "confirm_state_captured": "confirmed"
     }
   ]
 }

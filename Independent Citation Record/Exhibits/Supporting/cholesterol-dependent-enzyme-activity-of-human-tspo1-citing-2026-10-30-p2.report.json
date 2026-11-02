@@ -54,12 +54,16 @@
       "external_url": "https://pubmed.ncbi.nlm.nih.gov/42915525/",
       "external_title": "Simultaneous Site- and Residue-Specific Incorporation of Fluorinated Amino Acids for In-Cell Structural Biology by 19F Magic Angle Spinning NMR Spectroscopy.",
       "external_authors": "Tekwani Movellan K, Gronenborn AM, Polenova T",
-      "external_similarity": 1,
-      "confirm_state": "confirmed",
-      "corroboration": "confirmed by pubmed",
-      "needs_attention": false,
-      "attention_reason": "",
-      "language_flag_captured": ""
+      "external_similarity": 0.12,
+      "confirm_state": "unverified-coverage",
+      "corroboration": "not indexed in PubMed or OpenAlex; Scholar list is complete",
+      "needs_attention": true,
+      "attention_reason": "highlighted on Scholar's list alone - not indexed in PubMed or OpenAlex, worth a spot-check",
+      "language_flag_captured": "",
+      "status_captured": "INDEPENDENT",
+      "confirm_state_captured": "confirmed",
+      "external_match_credible": 0,
+      "corroboration_note": "stored pubmed match rejected 2026-11-02: the title overlap is too thin to be the same work (was similarity 1)"
     }
   ]
 }

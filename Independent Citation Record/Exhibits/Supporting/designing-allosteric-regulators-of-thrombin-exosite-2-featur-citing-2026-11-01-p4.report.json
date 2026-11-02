@@ -178,7 +178,9 @@
       "duplicate_of": "",
       "needs_attention": false,
       "attention_reason": "",
-      "language_flag_captured": ""
+      "language_flag_captured": "",
+      "status_captured": "INDEPENDENT",
+      "confirm_state_captured": "confirmed"
     },
     {
       "index": 5,
@@ -312,14 +314,16 @@
       "external_url": "https://pubmed.ncbi.nlm.nih.gov/36863508/",
       "external_title": "Merging cultures and disciplines to create a drug discovery ecosystem at Virginia commonwealth university: Medicinal chemistry, structural biology, molecular and behavioral pharmacology and computational chemistry.",
       "external_authors": "Kellogg GE, Cen Y, Dukat M, Ellis KC, Guo Y, Li J, May AE, Safo MK, Zhang S, Zhang Y, Desai UR",
-      "external_similarity": 1,
+      "external_similarity": 0.83,
       "confirm_state": "confirmed",
       "corroboration": "confirmed by pubmed",
       "edition_key": "",
       "duplicate_of": "",
       "needs_attention": false,
       "attention_reason": "",
-      "language_flag_captured": ""
+      "language_flag_captured": "",
+      "status_captured": "INDEPENDENT",
+      "confirm_state_captured": "confirmed"
     },
     {
       "index": 9,

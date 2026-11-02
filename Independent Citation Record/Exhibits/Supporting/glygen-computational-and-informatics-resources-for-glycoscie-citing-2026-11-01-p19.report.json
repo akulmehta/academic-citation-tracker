@@ -294,14 +294,16 @@
       "external_url": "https://pubmed.ncbi.nlm.nih.gov/36512633/",
       "external_title": "A Genetically Encoded Magnetic Resonance Imaging Reporter Enables Sensitive Detection and Tracking of Spontaneous Metastases in Deep Tissues.",
       "external_authors": "Nyström NN, McRae SW, Martinez FM, Kelly JJ, Scholl TJ, Ronald JA",
-      "external_similarity": 0.85,
+      "external_similarity": 0.8,
       "confirm_state": "confirmed",
       "corroboration": "confirmed by pubmed",
       "edition_key": "",
       "duplicate_of": "",
       "needs_attention": false,
       "attention_reason": "",
-      "language_flag_captured": ""
+      "language_flag_captured": "",
+      "status_captured": "INDEPENDENT",
+      "confirm_state_captured": "confirmed"
     },
     {
       "index": 7,

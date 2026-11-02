@@ -35,7 +35,7 @@
       "snippet": "Protein glycosylation involves the co-translational or post-translational addition of glycans to\nproteins and is a crucial protein modification in health and disease. The aim of …",
       "truncated": true,
       "link": "https://www.nature.com/articles/s43586-022-00128-4",
-      "status": "INDEPENDENT",
+      "status": "REVIEW",
       "matched_authors": [],
       "matched_pi": [],
       "matched_former_pi": [],
@@ -61,12 +61,16 @@
       "external_url": "https://pubmed.ncbi.nlm.nih.gov/42951614/",
       "external_title": "Spatial transcriptomics and N-glycoproteomics reveal breed-dependent immune and structural responses in Mycoplasma hyopneumoniae-infected pig lungs.",
       "external_authors": "Zhao ZJ, Chen JM, Chen D, Cui SD, Yu SX, Shen Q, Tecku PKM, Huang RJ, Zhou YX, Wu PX, Tang GQ",
-      "external_similarity": 1,
-      "confirm_state": "confirmed",
-      "corroboration": "confirmed by pubmed",
-      "needs_attention": false,
-      "attention_reason": "",
-      "language_flag_captured": ""
+      "external_similarity": 0.07,
+      "confirm_state": "unresolved",
+      "corroboration": "not indexed in PubMed or OpenAlex and the Scholar list is incomplete",
+      "needs_attention": true,
+      "attention_reason": "not indexed in PubMed or OpenAlex and the Scholar list is incomplete",
+      "language_flag_captured": "",
+      "status_captured": "INDEPENDENT",
+      "confirm_state_captured": "confirmed",
+      "external_match_credible": 0,
+      "corroboration_note": "stored pubmed match rejected 2026-11-02: the title overlap is too thin to be the same work (was similarity 1)"
     },
     {
       "index": 1,
@@ -199,7 +203,9 @@
       "corroboration": "confirmed by pubmed",
       "needs_attention": false,
       "attention_reason": "",
-      "language_flag_captured": ""
+      "language_flag_captured": "",
+      "status_captured": "INDEPENDENT",
+      "confirm_state_captured": "confirmed"
     },
     {
       "index": 5,
@@ -304,7 +310,9 @@
       "corroboration": "confirmed by pubmed",
       "needs_attention": false,
       "attention_reason": "",
-      "language_flag_captured": ""
+      "language_flag_captured": "",
+      "status_captured": "INDEPENDENT",
+      "confirm_state_captured": "confirmed"
     },
     {
       "index": 8,
@@ -386,7 +394,9 @@
       "corroboration": "confirmed by pubmed",
       "needs_attention": false,
       "attention_reason": "",
-      "language_flag_captured": ""
+      "language_flag_captured": "",
+      "status_captured": "INDEPENDENT",
+      "confirm_state_captured": "confirmed"
     }
   ]
 }

@@ -1166,6 +1166,10 @@
       return `<span class="tag confirmed">confirmed</span>`;
     if (r.confirm_state === "unverified-coverage")
       return `<span class="tag coverage">not indexed</span>`;
+    // A credible external list that shows a shared author settles the row
+    // rather than leaving it open, so it is not shown as a contradiction.
+    if (r.confirm_state === "external-resolved")
+      return `<span class="tag">resolved externally</span>`;
     if (r.confirm_state === "contradicted")
       return `<span class="tag review">contradicted</span>`;
     if (!r.confirm_state) return `<span class="hint">—</span>`;
@@ -1851,13 +1855,15 @@
       confirmed: "External author list agrees (PubMed or OpenAlex)",
       "unverified-coverage": "No external record covers it — Scholar's own list only",
       unresolved: "Not indexed and Scholar truncated the list",
-      contradicted: "External list showed an overlap — pulled back to review",
+      "external-resolved": "External list settles it — shared author or PI",
+      contradicted: "External list disagreed — pulled back to review",
       skipped: "Corroboration skipped for this capture",
     };
     const colorFor = {
       confirmed: "#2f7d4f",
       "unverified-coverage": COLORS.independent,
       unresolved: COLORS.review,
+      "external-resolved": "#b3452f",
       contradicted: "#b3452f",
       skipped: COLORS.dependent,
     };

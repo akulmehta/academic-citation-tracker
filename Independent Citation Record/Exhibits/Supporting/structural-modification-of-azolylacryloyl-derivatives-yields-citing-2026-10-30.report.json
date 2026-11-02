@@ -68,7 +68,9 @@
       "corroboration": "confirmed by openalex",
       "needs_attention": false,
       "attention_reason": "",
-      "language_flag_captured": ""
+      "language_flag_captured": "",
+      "status_captured": "INDEPENDENT",
+      "confirm_state_captured": "confirmed"
     },
     {
       "index": 1,
@@ -132,7 +134,9 @@
       "corroboration": "confirmed by pubmed",
       "needs_attention": false,
       "attention_reason": "",
-      "language_flag_captured": ""
+      "language_flag_captured": "",
+      "status_captured": "INDEPENDENT",
+      "confirm_state_captured": "confirmed"
     },
     {
       "index": 3,
@@ -266,7 +270,9 @@
       "corroboration": "confirmed by openalex",
       "needs_attention": false,
       "attention_reason": "",
-      "language_flag_captured": ""
+      "language_flag_captured": "",
+      "status_captured": "INDEPENDENT",
+      "confirm_state_captured": "confirmed"
     },
     {
       "index": 8,
@@ -289,7 +295,7 @@
       "external_url": "https://pubmed.ncbi.nlm.nih.gov/35456270/",
       "external_title": "Isolation and Characterisation of Quercitrin as a Potent Anti-Sickle Cell Anaemia Agent from Alchornea cordifolia.",
       "external_authors": "Adeniyi O, Baptista R, Bhowmick S, Cookson A, Nash RJ, Winters A, Shen J, Mur LAJ",
-      "external_similarity": 0.91,
+      "external_similarity": 0.8,
       "full_authors": [
         "Adeniyi O",
         "Baptista R",
@@ -304,7 +310,9 @@
       "corroboration": "confirmed by pubmed",
       "needs_attention": false,
       "attention_reason": "",
-      "language_flag_captured": ""
+      "language_flag_captured": "",
+      "status_captured": "INDEPENDENT",
+      "confirm_state_captured": "confirmed"
     }
   ]
 }

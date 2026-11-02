@@ -64,7 +64,9 @@
       "duplicate_of": "",
       "needs_attention": false,
       "attention_reason": "",
-      "language_flag_captured": ""
+      "language_flag_captured": "",
+      "status_captured": "INDEPENDENT",
+      "confirm_state_captured": "confirmed"
     },
     {
       "index": 1,
@@ -79,33 +81,27 @@
       "matched_authors": [],
       "matched_pi": [],
       "matched_former_pi": [],
-      "authors_used": "A Gonzalez-Gil, RL Schnaar",
-      "author_source": "scholar+pubmed",
+      "authors_used": "A Gonzalez-Gil, RL Schnaar - Cells, 2021 - mdpi.com",
+      "author_source": "scholar-list",
       "language_flag": "",
       "page": 1,
       "external_source": "pubmed",
       "external_url": "https://pubmed.ncbi.nlm.nih.gov/41769870/",
       "external_title": "One-Step Glycoengineering of NK Cells With High-Affinity Siglec Ligands for Cancer Immunotherapy.",
       "external_authors": "Hu S, Huang B, Wang L, Guo Q, Jiang C, Qi R, Wang S, Da LT, Peng W",
-      "external_similarity": 1,
-      "full_authors": [
-        "Hu S",
-        "Huang B",
-        "Wang L",
-        "Guo Q",
-        "Jiang C",
-        "Qi R",
-        "Wang S",
-        "Da LT",
-        "Peng W"
-      ],
-      "confirm_state": "confirmed",
-      "corroboration": "confirmed by pubmed",
+      "external_similarity": 0.18,
+      "full_authors": [],
+      "confirm_state": "unverified-coverage",
+      "corroboration": "not indexed in PubMed or OpenAlex; Scholar list is complete",
       "edition_key": "",
       "duplicate_of": "",
-      "needs_attention": false,
-      "attention_reason": "",
-      "language_flag_captured": ""
+      "needs_attention": true,
+      "attention_reason": "highlighted on Scholar's list alone - not indexed in PubMed or OpenAlex, worth a spot-check",
+      "language_flag_captured": "",
+      "status_captured": "INDEPENDENT",
+      "confirm_state_captured": "confirmed",
+      "external_match_credible": 0,
+      "corroboration_note": "stored pubmed match rejected 2026-11-02: the title overlap is too thin to be the same work (was similarity 1)"
     },
     {
       "index": 2,
@@ -147,7 +143,9 @@
       "duplicate_of": "",
       "needs_attention": false,
       "attention_reason": "",
-      "language_flag_captured": ""
+      "language_flag_captured": "",
+      "status_captured": "INDEPENDENT",
+      "confirm_state_captured": "confirmed"
     },
     {
       "index": 3,
@@ -342,7 +340,9 @@
       "duplicate_of": "",
       "needs_attention": false,
       "attention_reason": "",
-      "language_flag_captured": ""
+      "language_flag_captured": "",
+      "status_captured": "INDEPENDENT",
+      "confirm_state_captured": "confirmed"
     },
     {
       "index": 8,
@@ -409,7 +409,9 @@
       "duplicate_of": "",
       "needs_attention": false,
       "attention_reason": "",
-      "language_flag_captured": ""
+      "language_flag_captured": "",
+      "status_captured": "INDEPENDENT",
+      "confirm_state_captured": "confirmed"
     }
   ]
 }

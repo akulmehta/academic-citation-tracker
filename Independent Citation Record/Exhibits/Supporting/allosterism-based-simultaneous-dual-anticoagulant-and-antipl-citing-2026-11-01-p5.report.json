@@ -60,7 +60,9 @@
       "duplicate_of": "",
       "needs_attention": false,
       "attention_reason": "",
-      "language_flag_captured": ""
+      "language_flag_captured": "",
+      "status_captured": "INDEPENDENT",
+      "confirm_state_captured": "confirmed"
     },
     {
       "index": 1,
@@ -93,7 +95,9 @@
       "duplicate_of": "",
       "needs_attention": false,
       "attention_reason": "",
-      "language_flag_captured": ""
+      "language_flag_captured": "",
+      "status_captured": "INDEPENDENT",
+      "confirm_state_captured": "confirmed"
     },
     {
       "index": 2,
@@ -136,7 +140,9 @@
       "duplicate_of": "",
       "needs_attention": false,
       "attention_reason": "",
-      "language_flag_captured": ""
+      "language_flag_captured": "",
+      "status_captured": "INDEPENDENT",
+      "confirm_state_captured": "confirmed"
     },
     {
       "index": 3,
@@ -222,14 +228,16 @@
       "external_url": "https://doi.org/10.1080/00268976.2021.1943028",
       "external_title": "Structural basis of different surface-modified fullerene derivatives as novel thrombin inhibitors: insight into the inhibitory mechanism through molecular modelling studies",
       "external_authors": "Zhijie Yang, Yongfeng Wan, Jingwen E, Zhijian Luo, Shanshan Guan, Song Wang, Hao Zhang",
-      "external_similarity": 1,
+      "external_similarity": 0.94,
       "confirm_state": "confirmed",
       "corroboration": "confirmed by openalex",
       "edition_key": "doi:10.1080:1943028:yangzhijiewanyongfengejingwenluozhijianguanshanshanwangsongzhanghao",
       "duplicate_of": "",
       "needs_attention": false,
       "attention_reason": "",
-      "language_flag_captured": ""
+      "language_flag_captured": "",
+      "status_captured": "INDEPENDENT",
+      "confirm_state_captured": "confirmed"
     },
     {
       "index": 5,
@@ -331,7 +339,9 @@
       "duplicate_of": "",
       "needs_attention": false,
       "attention_reason": "",
-      "language_flag_captured": ""
+      "language_flag_captured": "",
+      "status_captured": "INDEPENDENT",
+      "confirm_state_captured": "confirmed"
     },
     {
       "index": 8,
@@ -359,7 +369,7 @@
       "external_url": "https://doi.org/10.1007/978-981-15-8127-4_40",
       "external_title": "Natural Excipients in Pharmaceutical Formulations",
       "external_authors": "Pradeep Singh, Garima Mishra, Subas Chandra Dinda",
-      "external_similarity": 1,
+      "external_similarity": 0.8,
       "full_authors": [
         "Pradeep Singh",
         "Garima Mishra",
@@ -371,7 +381,9 @@
       "duplicate_of": "",
       "needs_attention": false,
       "attention_reason": "",
-      "language_flag_captured": ""
+      "language_flag_captured": "",
+      "status_captured": "INDEPENDENT",
+      "confirm_state_captured": "confirmed"
     },
     {
       "index": 9,
@@ -386,25 +398,27 @@
       "matched_authors": [],
       "matched_pi": [],
       "matched_former_pi": [],
-      "authors_used": "AR Neves, M Correia-da-Silva, E Sousa, M Pinto",
-      "author_source": "scholar+pubmed",
+      "authors_used": "AR Neves, M Correia-da-Silva, E Sousa, M Pinto - researchgate.net",
+      "author_source": "scholar-list",
       "language_flag": "",
       "page": 5,
       "external_source": "pubmed",
       "external_url": "https://pubmed.ncbi.nlm.nih.gov/36789749/",
       "external_title": "Our New Year's (re)solution: welcome to the 15th volume of Future Medicinal Chemistry.",
       "external_authors": "Bell M",
-      "external_similarity": 1,
-      "full_authors": [
-        "Bell M"
-      ],
-      "confirm_state": "confirmed",
-      "corroboration": "confirmed by pubmed",
+      "external_similarity": 0.27,
+      "full_authors": [],
+      "confirm_state": "unverified-coverage",
+      "corroboration": "not indexed in PubMed or OpenAlex; Scholar list is complete",
       "edition_key": "",
       "duplicate_of": "",
-      "needs_attention": false,
-      "attention_reason": "",
-      "language_flag_captured": ""
+      "needs_attention": true,
+      "attention_reason": "highlighted on Scholar's list alone - not indexed in PubMed or OpenAlex, worth a spot-check",
+      "language_flag_captured": "",
+      "status_captured": "INDEPENDENT",
+      "confirm_state_captured": "confirmed",
+      "external_match_credible": 0,
+      "corroboration_note": "stored pubmed match rejected 2026-11-02: the title overlap is too thin to be the same work (was similarity 1)"
     }
   ]
 }

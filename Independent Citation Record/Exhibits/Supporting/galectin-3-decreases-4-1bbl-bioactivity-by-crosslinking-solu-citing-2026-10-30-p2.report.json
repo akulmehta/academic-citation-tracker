@@ -70,7 +70,9 @@
       "corroboration": "confirmed by openalex",
       "needs_attention": false,
       "attention_reason": "",
-      "language_flag_captured": ""
+      "language_flag_captured": "",
+      "status_captured": "INDEPENDENT",
+      "confirm_state_captured": "confirmed"
     },
     {
       "index": 1,
@@ -107,7 +109,9 @@
       "corroboration": "confirmed by openalex",
       "needs_attention": false,
       "attention_reason": "",
-      "language_flag_captured": ""
+      "language_flag_captured": "",
+      "status_captured": "INDEPENDENT",
+      "confirm_state_captured": "confirmed"
     },
     {
       "index": 2,
@@ -183,7 +187,9 @@
       "corroboration": "confirmed by openalex",
       "needs_attention": false,
       "attention_reason": "",
-      "language_flag_captured": ""
+      "language_flag_captured": "",
+      "status_captured": "INDEPENDENT",
+      "confirm_state_captured": "confirmed"
     },
     {
       "index": 4,
@@ -194,8 +200,10 @@
       "snippet": "Objectives JIA is the most common rheumatic disease of childhood; the pathogenesis is\nassociated with T-cell activation. T-cell activation can be counterbalanced by signals …",
       "truncated": true,
       "link": "https://academic.oup.com/rheumatology/article-abstract/64/3/1424/7680554",
-      "status": "REVIEW",
-      "matched_authors": [],
+      "status": "DEPENDENT",
+      "matched_authors": [
+        "Bent Deleuran"
+      ],
       "matched_pi": [],
       "matched_former_pi": [],
       "authors_used": "Sag, Erdal, Balik, Zeynep, Demir, Selcan, Akca Kaya, Ummusen, Sener, Seher, Kasap Cuceoglu, Muserref, Atalay, Erdal, Bocutcu, Sena, Vural, Tayfun, Tasdemir, Nur Kubra",
@@ -221,14 +229,16 @@
       "external_title": "Polyarticular juvenile idiopathic arthritis has a distinct co-inhibitor receptor profile",
       "external_authors": "Erdal Sag, Zeynep Balik, Selcan Demir, Ummusen Akca Kaya, Seher Sener, Muserref Kasap Cuceoglu, Erdal Atalay, Sena Bocutcu, Tayfun Vural, Nur Kubra Tasdemir, Busra Aydin, Yelda Bilginer, Bent Deleuran, Seza Ozen",
       "external_similarity": 1,
-      "corroboration": "contradicted by openalex (DEPENDENT)",
+      "corroboration": "resolved against openalex (DEPENDENT)",
       "external_matched": [
         "Bent Deleuran"
       ],
-      "confirm_state": "contradicted",
-      "attention_reason": "contradicted by openalex (DEPENDENT)",
-      "needs_attention": true,
-      "language_flag_captured": ""
+      "confirm_state": "external-resolved",
+      "attention_reason": "",
+      "needs_attention": false,
+      "language_flag_captured": "",
+      "status_captured": "REVIEW",
+      "confirm_state_captured": "contradicted"
     },
     {
       "index": 5,
@@ -270,7 +280,9 @@
       "corroboration": "confirmed by openalex",
       "needs_attention": false,
       "attention_reason": "",
-      "language_flag_captured": ""
+      "language_flag_captured": "",
+      "status_captured": "INDEPENDENT",
+      "confirm_state_captured": "confirmed"
     },
     {
       "index": 6,
