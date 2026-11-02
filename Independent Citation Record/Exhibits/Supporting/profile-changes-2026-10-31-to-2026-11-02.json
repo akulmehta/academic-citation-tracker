@@ -1,0 +1,29 @@
+{
+  "from": "2026-10-31",
+  "to": "2026-11-02",
+  "source": "https://scholar.google.com/citations?hl=en&user=dNLaKGAAAAAJ",
+  "changed": [
+    {
+      "cites_id": "1097725010100349237",
+      "title": "Insights into glycobiology and the protein-glycan interactome using glycan microarray technologies",
+      "venue": "Molecular & Cellular Proteomics 23 (11), 100844 , 2024",
+      "year": "2024",
+      "before": 32,
+      "after": 33,
+      "citesUrl": "https://scholar.google.com/scholar?oi=bibs&hl=en&cites=1097725010100349237",
+      "paperUrl": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=dNLaKGAAAAAJ&citation_for_view=dNLaKGAAAAAJ:hFOr9nPyWt4C"
+    },
+    {
+      "cites_id": "4082711194076959494",
+      "title": "Recognition of highly branched N-glycans of the porcine whipworm by the immune system",
+      "venue": "Molecular & Cellular Proteomics 23 (2) , 2024",
+      "year": "2024",
+      "before": 15,
+      "after": 16,
+      "citesUrl": "https://scholar.google.com/scholar?oi=bibs&hl=en&cites=4082711194076959494",
+      "paperUrl": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=dNLaKGAAAAAJ&cstart=20&pagesize=80&citation_for_view=dNLaKGAAAAAJ:hC7cP41nSMkC"
+    }
+  ],
+  "added": [],
+  "removed": []
+}
