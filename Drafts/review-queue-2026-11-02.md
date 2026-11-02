@@ -1,17 +1,17 @@
 # Unresolved citations — review queue
 
-Scholar snapshot **2026-11-02**, store built 2026-11-02T20:55:21.281Z. **78** of 1498 active citation rows are still classified REVIEW, so none of them is counted as independent and none is counted as dependent either.
+Scholar snapshot **2026-11-02**, store built 2026-11-02T22:17:45.038Z. **78** of 1498 active citation rows are still classified REVIEW, so none of them is counted as independent and none is counted as dependent either.
 
 Quote the **row_uid** when answering — it is permanent, so it still means the same row after a re-capture or a rebuild. The integer id is a frozen legacy alias and should not be used.
 
 | Bucket | Rows | What it means |
 |---|---:|---|
-| 3 unresolvable | 78 | Neither PubMed nor OpenAlex indexes the paper and Scholar's byline is truncated, so there is nothing to compare. Resolving one needs a human look at the published article. |
+| 3 unresolvable | 78 | Neither PubMed nor OpenAlex indexes the paper and Scholar's byline is truncated, so there is nothing to compare. Resolving one needs a human look at the published article — put the answer in your_decision, or run tools/apply-decision.js. |
 
 
 ## 3 unresolvable — 78 row(s)
 
-Neither PubMed nor OpenAlex indexes the paper and Scholar's byline is truncated, so there is nothing to compare. Resolving one needs a human look at the published article.
+Neither PubMed nor OpenAlex indexes the paper and Scholar's byline is truncated, so there is nothing to compare. Resolving one needs a human look at the published article — put the answer in your_decision, or run tools/apply-decision.js.
 
 | row_uid | Citing title | Scholar byline | Cites (PI work) | Pg | Row | Why unresolved | External record | Your decision |
 |---|---|---|---|---:|---:|---|---|---|
@@ -96,4 +96,12 @@ Neither PubMed nor OpenAlex indexes the paper and Scholar's byline is truncated,
 
 ---
 
-The working file is `Drafts/review-queue-2026-11-02.csv`, which carries the same rows plus `external_authors`, `citing_paper_link`, `scholar_cid`, `language_flag` and a `your_notes` column. Nothing in either file is a decision, and no figure in the packet changes until one is recorded.
+The working file is `Drafts/review-queue-2026-11-02.csv`, which carries the same rows plus `external_authors`, `citing_paper_link`, `scholar_cid`, `language_flag` and a `your_notes` column. Nothing in either file is a decision yet, and no figure in the packet changes until one is recorded.
+
+**To resolve a row:** write `INDEPENDENT`, `DEPENDENT`, `SELF (PI)`, `SELF (FORMER PI)` or `REVIEW` into the `your_decision` column of the CSV (optionally a reason in `your_notes`), then run
+
+```
+node tools/apply-decision.js --from-csv --write --reprint --rebuild
+```
+
+Drop `--write` first to see the plan. A single row can be decided without the CSV: `node tools/apply-decision.js --row=`cit-000019` --verdict=dependent --write --reprint --rebuild`. A decided row is reported separately as "settled by you" and can be taken back with `--revert`.

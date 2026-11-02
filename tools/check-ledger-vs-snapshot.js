@@ -173,6 +173,11 @@ const checks = [
     "independent_coverage",
     sum("independent_coverage"),
   ],
+  [
+    "independent_user_decided",
+    "independent_user_decided",
+    sum("independent_user_decided"),
+  ],
   ["independent_pending", "independent_pending", sum("independent_pending")],
   ["dependent", "dependent", sum("dependent")],
   ["self_pi", "self_pi", sum("self_pi")],

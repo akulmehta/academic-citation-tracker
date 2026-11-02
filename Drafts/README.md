@@ -15,14 +15,42 @@ and no figure should be quoted until it is resolved.
 
 | File | Rows | What it lists |
 |---|---:|---|
-| `review-queue-2026-11-02.csv` | 94 | **The citations whose independence is still unresolved**, one row each, leading with the permanent `row_uid`. This is the file to record decisions in. `your_decision` and `your_notes` are empty on purpose. |
-| `review-queue-2026-11-02.md` | 94 | The same 94 rows as a readable table, grouped 6 contradicted / 13 external-shows-no-overlap / 75 unresolvable. Read this one; answer in the CSV. |
+| `review-queue-2026-11-02.csv` | 78 | **The citations whose independence is still unresolved**, one row each, leading with the permanent `row_uid`. This is the file to record decisions in. `your_decision` and `your_notes` are empty on purpose. |
+| `review-queue-2026-11-02.md` | 78 | The same rows as a readable table. All 78 sit in bucket 3 (nothing indexes them and Scholar truncated the byline). Read this one; answer in the CSV. |
 
 Rebuild either with `node tools/build-review-sheet.js --md`; reproduce the list
-with `node tools/query-catalog.js review`. None of the 94 is counted as
+with `node tools/query-catalog.js review`. None of the 78 is counted as
 independent or as dependent, so a decision changes the totals.
 
-The same 94 rows are also readable at
+### Recording a decision
+
+Write `INDEPENDENT`, `DEPENDENT`, `SELF (PI)`, `SELF (FORMER PI)` or `REVIEW`
+into the `your_decision` column of the CSV (a reason can go in `your_notes`), then:
+
+```
+node tools/apply-decision.js --from-csv --write --reprint --rebuild
+```
+
+Drop `--write` first to see the plan. A single row can be decided without the
+CSV, with `--row=cit-000019 --verdict=dependent`. The tool resolves the
+`row_uid` against the store, finds the citation in its report file and **refuses
+the batch unless the title at that position matches**, so it cannot edit a
+citation nobody asked about. It backs up every report it touches to
+`Exhibits/Supporting/Pre-decision-<date>/` and writes atomically.
+
+A decision is written into the report JSON and the store is **rebuilt** from it.
+Never `UPDATE` the database to record one: the next `tools/build-catalog.js`
+would silently revert it, and the store disagreeing with the reports is the one
+state the ledger exits non-zero on.
+
+A decided row carries `confirm_state = "user-decided"`, so it is reported
+separately as *"settled by you"* rather than folded into "externally confirmed",
+and `--revert` takes it back. Two things a decision cannot do: it does not defeat
+the language screen (per 2026-11-01 no certified translation exists, so a
+non-English row stays uncounted), and it does not double-count a paper that
+appears twice on one citing list. The tool says so up front when either applies.
+
+The same rows are also readable at
 `file:///C:/Projects/EB1A/dashboard/review.html`, which groups them the same way
 and links each row to the exhibit PDF page it came from. Regenerate that page
 with `node tools/build-dashboard-data.js` after rebuilding this sheet, so the two
@@ -32,7 +60,7 @@ name the same rows.
 
 The three files below were generated at the 2026-10-31 snapshot and are kept for
 reference. Their figures are that snapshot's, not the current one — the 2026-11-02
-ledger reports 1030 countable independent over 1017 distinct papers.
+ledger reports 1042 countable independent over 1029 distinct papers.
 
 Both files were checked against the ledger's `global` block on 2026-10-31 and
 match it: 301 countable independent, 296 distinct papers, 237 externally

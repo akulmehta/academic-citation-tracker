@@ -209,6 +209,7 @@ function stats(db) {
          SUM(is_highlighted) AS independent,
          SUM(CASE WHEN is_highlighted = 1 AND confirm_state = 'confirmed' THEN 1 ELSE 0 END) AS confirmed,
          SUM(CASE WHEN is_highlighted = 1 AND confirm_state = 'unverified-coverage' THEN 1 ELSE 0 END) AS coverage,
+         SUM(CASE WHEN is_highlighted = 1 AND confirm_state = 'user-decided' THEN 1 ELSE 0 END) AS decided,
          SUM(CASE WHEN status = 'DEPENDENT' THEN 1 ELSE 0 END) AS dependent,
          SUM(CASE WHEN status = 'SELF (PI)' THEN 1 ELSE 0 END) AS self_pi,
          SUM(CASE WHEN status = 'SELF (FORMER PI)' THEN 1 ELSE 0 END) AS self_former_pi,
@@ -247,7 +248,9 @@ function stats(db) {
     console.log(`Citation records reviewed:     ${g.records}`);
     console.log(
       `Independent and highlighted:   ${g.independent}  ` +
-        `(${g.confirmed} externally confirmed, ${g.coverage} on Scholar's complete list)`
+        `(${g.confirmed} externally confirmed, ${g.coverage} on Scholar's complete list` +
+        (g.decided ? `, ${g.decided} settled by you` : "") +
+        `)`
     );
     console.log(`Dependent (shares an author):  ${g.dependent}`);
     console.log(`Self-citations (PI / former):  ${g.self_pi} / ${g.self_former_pi}`);

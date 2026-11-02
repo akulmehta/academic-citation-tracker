@@ -73,7 +73,7 @@ const DB_DIR = path.join(ROOT, "Database");
 const DB_PATH = path.join(DB_DIR, "citation-catalog.sqlite");
 const BACKUP_DIR = path.join(DB_DIR, "Backups");
 
-const SCHEMA_VERSION = 5;
+const SCHEMA_VERSION = 6;
 
 // A short opaque token, not a bare integer, so it reads as an identifier when
 // quoted in a sentence: "row cit-000123 is contradicted". Minted from the id
@@ -347,6 +347,14 @@ const COLUMNS = [
   "replaced_by_row_uid",
   "supersede_reason",
   "external_matched",
+  // Human decision provenance (schema v6). A review-queue row the user settled.
+  // decided_by is who, decided_on is the date, decided_note is why. Kept beside
+  // status rather than inside it so a verdict can be reversed without losing the
+  // evidence trail, and so a packet figure can state that a row rests on a
+  // person's reading of the published article.
+  "decided_by",
+  "decided_on",
+  "decided_note",
 ];
 
 // Columns a merge may refresh on an existing row. row_uid, id, base, page and
@@ -554,7 +562,13 @@ CREATE TABLE citations (
   superseded_at       TEXT NOT NULL DEFAULT '',
   replaced_by_row_uid TEXT NOT NULL DEFAULT '',
   supersede_reason    TEXT NOT NULL DEFAULT '',
-  external_matched    TEXT NOT NULL DEFAULT '[]'
+  external_matched    TEXT NOT NULL DEFAULT '[]',
+  -- Set only on a row a person settled from the review queue. confirm_state is
+  -- 'user-decided' on such a row; these three say who, when and why. Empty on
+  -- every row a rule decided.
+  decided_by          TEXT NOT NULL DEFAULT '',
+  decided_on          TEXT NOT NULL DEFAULT '',
+  decided_note        TEXT NOT NULL DEFAULT ''
 );
 
 CREATE UNIQUE INDEX idx_citations_natural_key ON citations(base, page, row_index);
@@ -821,6 +835,9 @@ SELECT
   SUM(CASE WHEN c.filed = 1 AND c.superseded_at = '' AND c.is_highlighted = 1 THEN 1 ELSE 0 END) AS independent,
   SUM(CASE WHEN c.filed = 1 AND c.superseded_at = '' AND c.is_highlighted = 1 AND c.confirm_state = 'confirmed' THEN 1 ELSE 0 END) AS independent_confirmed,
   SUM(CASE WHEN c.filed = 1 AND c.superseded_at = '' AND c.is_highlighted = 1 AND c.confirm_state = 'unverified-coverage' THEN 1 ELSE 0 END) AS independent_coverage,
+  -- Counted because a person settled the row, not because a rule did. Kept as
+  -- its own figure so confirmed + coverage + decided always sums to independent.
+  SUM(CASE WHEN c.filed = 1 AND c.superseded_at = '' AND c.is_highlighted = 1 AND c.confirm_state = 'user-decided' THEN 1 ELSE 0 END) AS independent_user_decided,
   SUM(CASE WHEN c.filed = 1 AND c.superseded_at = '' AND c.status = 'DEPENDENT' THEN 1 ELSE 0 END) AS dependent,
   SUM(CASE WHEN c.filed = 1 AND c.superseded_at = '' AND c.status = 'SELF (PI)' THEN 1 ELSE 0 END) AS self_pi,
   SUM(CASE WHEN c.filed = 1 AND c.superseded_at = '' AND c.status = 'SELF (FORMER PI)' THEN 1 ELSE 0 END) AS self_former_pi,
@@ -929,6 +946,11 @@ function citationRow(entry, ctx) {
     // row states its own provenance. Supporting/, Archive/, or a Pre-* subfolder.
     origin_dir: ctx.origin_dir || "",
     external_matched: json(asArray(entry.external_matched)),
+    // A decision is written into the report JSON by tools/apply-decision.js, so
+    // the store simply mirrors it. Nothing here infers a verdict.
+    decided_by: text(entry.decided_by),
+    decided_on: text(entry.decided_on),
+    decided_note: text(entry.decided_note),
     // Retirement is a property of the store, not of a report, so a fresh row
     // starts unretired. The merge preserves whatever a previous run stamped.
     superseded_at: "",
@@ -1270,6 +1292,9 @@ function needsMigration(db) {
     "supersede_reason",
     "external_matched",
     "external_match_credible",
+    "decided_by",
+    "decided_on",
+    "decided_note",
   ].filter((c) => !cols.has(c));
   // Every view DDL defines must exist, and must say what DDL says. A view
   // cannot be ALTERed, so a definition edited after the fact only lands on a
@@ -1338,6 +1363,11 @@ function migrateV3toV4(db, { write }) {
     // was accepted under the old matcher, and reapply-corroboration.js is what
     // sets it to 0 where the overlap turns out to be too thin.
     ["external_match_credible", "INTEGER NOT NULL DEFAULT 1"],
+    // Human decision provenance (v6). Default empty: no row was ever decided by
+    // a person until tools/apply-decision.js writes one.
+    ["decided_by", "TEXT NOT NULL DEFAULT ''"],
+    ["decided_on", "TEXT NOT NULL DEFAULT ''"],
+    ["decided_note", "TEXT NOT NULL DEFAULT ''"],
   ];
   console.log(
     `[catalog] Bringing the store to schema v${SCHEMA_VERSION} in place (${before} citation rows).`
@@ -1888,6 +1918,7 @@ function reconcile(db) {
          SUM(is_highlighted) AS independent,
          SUM(CASE WHEN is_highlighted = 1 AND confirm_state = 'confirmed' THEN 1 ELSE 0 END) AS independent_confirmed,
          SUM(CASE WHEN is_highlighted = 1 AND confirm_state = 'unverified-coverage' THEN 1 ELSE 0 END) AS independent_coverage,
+         SUM(CASE WHEN is_highlighted = 1 AND confirm_state = 'user-decided' THEN 1 ELSE 0 END) AS independent_user_decided,
          SUM(CASE WHEN status = 'DEPENDENT' THEN 1 ELSE 0 END) AS dependent,
          SUM(CASE WHEN status = 'SELF (PI)' THEN 1 ELSE 0 END) AS self_pi,
          SUM(CASE WHEN status = 'SELF (FORMER PI)' THEN 1 ELSE 0 END) AS self_former_pi,
@@ -1912,6 +1943,7 @@ function reconcile(db) {
     ["independent (countable)", Number(row.independent), expected.independent],
     ["  externally confirmed", Number(row.independent_confirmed), expected.independent_confirmed],
     ["  Scholar list only", Number(row.independent_coverage), expected.independent_coverage],
+    ["  settled by a person", Number(row.independent_user_decided), expected.independent_user_decided],
     ["dependent", Number(row.dependent), expected.dependent],
     ["self (PI)", Number(row.self_pi), expected.self_pi],
     ["self (former PI)", Number(row.self_former_pi), expected.self_former_pi],

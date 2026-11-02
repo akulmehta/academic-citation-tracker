@@ -3,16 +3,24 @@
 //   node tools/build-review-sheet.js          (writes Drafts/review-queue-<date>.csv)
 //   node tools/build-review-sheet.js --md     (also writes a readable .md table)
 //
-// Why a file and not just a query: the user is working through these 94 rows by
-// hand, and needs to quote a row back and record a decision against it. The
+// Why a file and not just a query: the user works through these rows by hand,
+// and needs to quote a row back and record a decision against it. The
 // identifier has to be the durable one, so every row leads with row_uid -- it
 // still means the same row after a re-capture or a rebuild.
 //
 // Read from v_review, the same view tools/query-catalog.js prints, so the sheet,
 // the query tool and the dashboard's review section name the same rows in the
-// same three buckets. Nothing is inferred here: the "your decision" column is
+// same three buckets. Nothing is inferred here: the "your_decision" column is
 // empty on purpose, because a decision on one of these rows changes the totals
 // and must come from the user, not from a rule.
+//
+// Filling your_decision is machine-readable. Writing INDEPENDENT, DEPENDENT,
+// SELF (PI), SELF (FORMER PI) or REVIEW in it (any case) and running
+//   node tools/apply-decision.js --from-csv --write --reprint --rebuild
+// applies every filled row through the pipeline. The tool is dry-run by default,
+// backs up what it touches, and refuses the batch if any row cannot be matched
+// to its citation by title. Do not edit the store or the report JSON by hand to
+// record a decision -- the next build would silently revert it.
 //
 // Read-only against the store. Writes into Drafts/, which is review workspace,
 // not the evidence packet.
@@ -26,13 +34,18 @@ const ROOT = path.resolve(__dirname, "..");
 const OUT_DIR = path.join(ROOT, "Drafts");
 const AS_MD = process.argv.includes("--md");
 
+// The three buckets as v_review defines them. Buckets 1 and 2 have been empty
+// since the 2026-11-02 corroboration rule, which lets a credible external list
+// settle a row rather than leaving it open; they are kept so a sheet built from
+// an older store still reads correctly, and so the reason those rows left is
+// recorded rather than lost.
 const BUCKET_LABELS = {
   "1 contradicted":
-    "An external record publishes a complete author list that OVERLAPS the PI's, so the Scholar byline this row was judged from is incomplete or wrong.",
+    "An external record publishes a complete author list that OVERLAPS the PI's. Since 2026-11-02 such a row is classified from that list and leaves the queue, so this bucket should be empty; a row here means the external match needs a person.",
   "2 external-no-overlap":
-    "An external record has a complete author list with NO overlap, but Scholar's own byline is truncated, so the row is not promoted to independent on an external record alone. These are the likeliest to resolve as independent.",
+    "An external record has a complete author list with NO overlap while Scholar's own byline is truncated. Since 2026-11-02 the external list settles these as independent, so this bucket should be empty; a row here needs a person.",
   "3 unresolvable":
-    "Neither PubMed nor OpenAlex indexes the paper and Scholar's byline is truncated, so there is nothing to compare. Resolving one needs a human look at the published article.",
+    "Neither PubMed nor OpenAlex indexes the paper and Scholar's byline is truncated, so there is nothing to compare. Resolving one needs a human look at the published article — put the answer in your_decision, or run tools/apply-decision.js.",
 };
 
 function log(m) {
@@ -213,8 +226,24 @@ if (AS_MD) {
   md.push(
     `The working file is \`Drafts/review-queue-${stamp}.csv\`, which carries the same ` +
       `rows plus \`external_authors\`, \`citing_paper_link\`, \`scholar_cid\`, \`language_flag\` ` +
-      `and a \`your_notes\` column. Nothing in either file is a decision, and no figure in ` +
-      `the packet changes until one is recorded.`
+      `and a \`your_notes\` column. Nothing in either file is a decision yet, and no figure ` +
+      `in the packet changes until one is recorded.`
+  );
+  md.push(``);
+  md.push(
+    `**To resolve a row:** write \`INDEPENDENT\`, \`DEPENDENT\`, \`SELF (PI)\`, ` +
+      `\`SELF (FORMER PI)\` or \`REVIEW\` into the \`your_decision\` column of the CSV ` +
+      `(optionally a reason in \`your_notes\`), then run`
+  );
+  md.push(``);
+  md.push("```");
+  md.push("node tools/apply-decision.js --from-csv --write --reprint --rebuild");
+  md.push("```");
+  md.push(``);
+  md.push(
+    `Drop \`--write\` first to see the plan. A single row can be decided without the CSV: ` +
+      `\`node tools/apply-decision.js --row=${"`"}cit-000019${"`"} --verdict=dependent --write --reprint --rebuild\`. ` +
+      `A decided row is reported separately as "settled by you" and can be taken back with \`--revert\`.`
   );
   const mdPath = path.join(OUT_DIR, `review-queue-${stamp}.md`);
   fs.writeFileSync(mdPath, md.join("\n") + "\n", "utf8");

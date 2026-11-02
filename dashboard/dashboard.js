@@ -1162,6 +1162,11 @@
     return map[r.status] || `<span class="tag">${esc(r.status)}</span>`;
   }
   function corrobTag(r) {
+    // A person read the published byline. That is a stronger basis than a
+    // machine match, and it is shown separately rather than folded into
+    // "confirmed" so a packet figure can say how much rests on a decision.
+    if (r.confirm_state === "user-decided")
+      return `<span class="tag decided">your decision</span>`;
     if (r.confirm_state === "confirmed")
       return `<span class="tag confirmed">confirmed</span>`;
     if (r.confirm_state === "unverified-coverage")
@@ -1856,6 +1861,7 @@
       "unverified-coverage": "No external record covers it — Scholar's own list only",
       unresolved: "Not indexed and Scholar truncated the list",
       "external-resolved": "External list settles it — shared author or PI",
+      "user-decided": "Settled by you — read from the published article",
       contradicted: "External list disagreed — pulled back to review",
       skipped: "Corroboration skipped for this capture",
     };
@@ -1864,6 +1870,7 @@
       "unverified-coverage": COLORS.independent,
       unresolved: COLORS.review,
       "external-resolved": "#b3452f",
+      "user-decided": "#6b4fa0",
       contradicted: "#b3452f",
       skipped: COLORS.dependent,
     };

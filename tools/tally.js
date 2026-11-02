@@ -10,6 +10,30 @@
 const fs = require("fs");
 const path = require("path");
 
+// The confirm_state a row carries when a person settled it rather than a rule.
+// The whole point of the review queue is that some rows cannot be settled by
+// Scholar plus PubMed plus OpenAlex, and the user's answer IS the evidence - so
+// it needs a basis of its own, distinct from "confirmed" (an external record
+// agrees) and "unverified-coverage" (nothing indexes it). Naming it separately
+// keeps a human verdict traceable in every figure and lets it be reversed.
+const USER_DECIDED = "user-decided";
+
+// Whether this row's classification came from a person. The verdict itself lives
+// in `status`; this says where the settle came from.
+function isUserDecided(e) {
+  return e.confirm_state === USER_DECIDED;
+}
+
+// A row is settled for counting when an external record agrees, when Scholar's
+// own list is complete and nothing contradicts it, or when a person decided it.
+function isSettled(e) {
+  return (
+    e.confirm_state === "confirmed" ||
+    e.confirm_state === "unverified-coverage" ||
+    e.confirm_state === USER_DECIDED
+  );
+}
+
 // An entry counts toward the independent total only when it is classified
 // independent, corroborated or covered by a complete Scholar list, not held
 // back as possibly non-English, and not a language edition of another row on
@@ -19,10 +43,16 @@ const path = require("path");
 // (10.1002/anie.7795967 vs 10.1002/ange.7795967), so markLanguageEditions sets
 // duplicate_of on the copy that does not stand for the work and that alone is
 // enough to withhold the mark.
+//
+// A human decision is accepted as a basis but does NOT override the language
+// screen: the 2026-11-01 decision is that no certified translations are being
+// obtained, so a non-English row cannot count however it was classified. The
+// guide's requirement is a translation, not an opinion about independence, and
+// tools/apply-decision.js says so out loud rather than silently dropping it.
 function isHighlighted(e) {
   return (
     e.status === "INDEPENDENT" &&
-    (e.confirm_state === "confirmed" || e.confirm_state === "unverified-coverage") &&
+    isSettled(e) &&
     !e.language_flag &&
     !e.duplicate_of
   );
@@ -33,7 +63,7 @@ function isHighlighted(e) {
 function isHighlightCandidate(e) {
   return (
     e.status === "INDEPENDENT" &&
-    (e.confirm_state === "confirmed" || e.confirm_state === "unverified-coverage") &&
+    isSettled(e) &&
     !e.language_flag
   );
 }
@@ -48,7 +78,7 @@ function isWithheldForLanguage(e) {
   return (
     Boolean(e.language_flag) &&
     e.status === "INDEPENDENT" &&
-    (e.confirm_state === "confirmed" || e.confirm_state === "unverified-coverage") &&
+    isSettled(e) &&
     !e.duplicate_of
   );
 }
@@ -91,6 +121,10 @@ function paperKey(e) {
 // the one that should decide.
 function copyReliability(e) {
   let score = 0;
+  // A person who read the published article outranks any machine reading, so a
+  // decided copy stands for the paper even when its Scholar byline is truncated
+  // - which is exactly the case the queue exists for.
+  if (isUserDecided(e)) score += 16;
   if (!/truncated/.test(String(e.author_source || ""))) score += 8;
   if (e.confirm_state === "confirmed") score += 4;
   else if (e.confirm_state === "unverified-coverage") score += 2;
@@ -286,6 +320,12 @@ function tallyEntries(entries) {
     independent_coverage: highlighted.filter(
       (e) => e.confirm_state === "unverified-coverage"
     ).length,
+    // Counted on a person's reading of the published article rather than on
+    // Scholar or an external index. Reported so the three bases always sum to
+    // `independent`: a packet figure that reads "652 confirmed + 390 Scholar
+    // list" while the total is higher would be untraceable, and a human-settled
+    // row should be visible rather than hidden inside one of the other two.
+    independent_user_decided: highlighted.filter(isUserDecided).length,
     independent_pending: entries.filter(isIndependentPending).length,
     dependent: entries.filter((e) => e.status === "DEPENDENT").length,
     self_pi: entries.filter((e) => e.status === "SELF (PI)").length,
@@ -430,6 +470,9 @@ function pct(part, whole, digits = 1) {
 
 module.exports = {
   CITATIONS_PER_PAGE,
+  USER_DECIDED,
+  isUserDecided,
+  isSettled,
   isHighlighted,
   isHighlightCandidate,
   isWithheldForLanguage,

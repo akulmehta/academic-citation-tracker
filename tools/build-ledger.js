@@ -245,6 +245,7 @@ function build() {
       independent: t.independent,
       independent_confirmed: t.independent_confirmed,
       independent_coverage: t.independent_coverage,
+      independent_user_decided: t.independent_user_decided,
       independent_pending: t.independent_pending,
       dependent: t.dependent,
       self_pi: t.self_pi,
@@ -303,6 +304,7 @@ function build() {
       independent: t.independent,
       independent_confirmed: t.independent_confirmed,
       independent_coverage: t.independent_coverage,
+      independent_user_decided: t.independent_user_decided,
       independent_pending: t.independent_pending,
       dependent: t.dependent,
       self_pi: t.self_pi,
@@ -341,6 +343,7 @@ function build() {
       "independent",
       "independent_confirmed",
       "independent_coverage",
+      "independent_user_decided",
       "independent_pending",
       "dependent",
       "self_pi",
@@ -415,6 +418,7 @@ function build() {
     ),
     independent_externally_confirmed: total.independent_confirmed,
     independent_scholar_list_only: total.independent_coverage,
+    independent_user_decided: total.independent_user_decided,
     independent_pending: total.independent_pending,
     dependent: total.dependent,
     self_pi: total.self_pi,
@@ -487,6 +491,7 @@ const CSV_COLUMNS = [
   "independent",
   "independent_confirmed",
   "independent_coverage",
+  "independent_user_decided",
   "independent_pending",
   "dependent",
   "self_pi",
@@ -627,7 +632,14 @@ function printSummary(ledger) {
   console.log(
     `[ledger] Independent (countable):   ${g.independent_countable}  ` +
       `(${g.independent_externally_confirmed} externally confirmed, ` +
-      `${g.independent_scholar_list_only} Scholar's own complete list)`
+      `${g.independent_scholar_list_only} Scholar's own complete list` +
+      // Named only when non-zero, so the three bases always add up to the number
+      // on the left. A row settled by hand is not "externally confirmed" and
+      // must not be folded into that figure.
+      (g.independent_user_decided
+        ? `, ${g.independent_user_decided} settled by you`
+        : "") +
+      ")"
   );
   if (g.duplicate_records) {
     console.log(

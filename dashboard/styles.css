@@ -278,6 +278,7 @@ tbody tr.unfiled td { color: var(--ink-faint); }
 .tag.lang { border-color: var(--language); color: var(--language); }
 .tag.confirmed { border-color: #2f7d4f; color: #24623e; }
 .tag.coverage { border-color: var(--ink-faint); color: var(--ink-soft); }
+.tag.decided { border-color: #6b4fa0; color: #5a3f8c; }
 a { color: var(--accent); }
 
 .table-tools {

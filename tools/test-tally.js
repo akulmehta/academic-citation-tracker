@@ -9,6 +9,10 @@ const {
   isHighlighted,
   isHighlightCandidate,
   isIndependentPending,
+  isWithheldForLanguage,
+  isSettled,
+  isUserDecided,
+  USER_DECIDED,
   paperKey,
   doiArticleId,
   editionKey,
@@ -67,6 +71,38 @@ check(
   false
 );
 
+// A decision a person made by reading the published article is itself evidence,
+// so it settles a row the way an external author list does. It has its own
+// confirm_state rather than reusing "confirmed" so a filing figure can state how
+// much of a total rests on a human reading. tools/apply-decision.js writes it.
+const decided = { status: "INDEPENDENT", confirm_state: USER_DECIDED };
+check("decided: a human decision settles the row", isHighlighted(decided), true);
+check("decided: predicate recognises it", isUserDecided(decided), true);
+check("decided: isSettled covers all three states", isSettled(decided), true);
+check(
+  "decided: a DEPENDENT decision is settled but not counted",
+  isHighlighted({ status: "DEPENDENT", confirm_state: USER_DECIDED }),
+  false,
+);
+// The language screen is not overridable by a decision. Per the 2026-11-01
+// decision no certified translation exists, so classifying a non-English row as
+// independent must not make it count.
+check(
+  "decided: a decision does NOT defeat the language screen",
+  isHighlighted({ ...decided, language_flag: "non-latin script" }),
+  false,
+);
+check(
+  "decided: a withheld-for-language row can be a decided one",
+  isWithheldForLanguage({ ...decided, language_flag: "cyrillic" }),
+  true,
+);
+check(
+  "decided: a decision on a truncated byline still counts",
+  isHighlighted({ ...decided, author_source: "bibtex (truncated)" }),
+  true,
+);
+
 // An independent-looking entry that is not yet countable has to stay visible as
 // open, otherwise a pending item silently disappears from the totals.
 check("pending: unresolved corroboration is pending", isIndependentPending({ status: "INDEPENDENT", confirm_state: "unresolved" }), true);
@@ -97,6 +133,30 @@ check("tally: self PI", t.self_pi, 1);
 check("tally: self former PI", t.self_former_pi, 1);
 check("tally: review", t.review, 1);
 check("tally: non-English", t.non_english, 1);
+
+// The three bases must account for every counted row, or a figure in the packet
+// has an unexplained origin. A decided row is reported separately rather than
+// folded into "externally confirmed".
+const decidedSet = tallyEntries([
+  decided,
+  { ...decided, status: "DEPENDENT" },
+  confirmed,
+  coverage,
+]);
+check("tally: decided rows counted", decidedSet.independent, 3);
+check("tally: decided split", decidedSet.independent_user_decided, 1);
+check(
+  "tally: the three bases sum to the counted total",
+  decidedSet.independent_confirmed +
+    decidedSet.independent_coverage +
+    decidedSet.independent_user_decided,
+  decidedSet.independent,
+);
+check(
+  "tally: no basis invented for an unsettled set",
+  tallyEntries([unresolved]).independent_user_decided,
+  0,
+);
 
 // Every record must land in exactly one bucket, or the ledger hides evidence.
 check(
@@ -213,6 +273,31 @@ check(
   "duplicate: a truncated copy never promotes a citation",
   tallyEntries([truncatedIndependent, completeDependent]).unique_independent,
   0
+);
+
+// But a decision made by a person who read the published article outranks a
+// machine reading, even a complete one. That is the whole point of the review
+// queue: the rows there are the ones no author list could settle, so the human
+// answer must be the one that stands for the paper. If this ever inverts, a
+// decision applied through tools/apply-decision.js would silently do nothing
+// whenever the same paper appears twice on a citing list.
+const truncatedButDecided = {
+  ...truncatedIndependent,
+  cid: "e5",
+  status: "INDEPENDENT",
+  confirm_state: USER_DECIDED,
+  author_source: "scholar-list (truncated)",
+};
+const decidedPick = uniquePapers([completeDependent, truncatedButDecided]);
+check(
+  "duplicate: a human decision stands for the paper",
+  decidedPick.kept[0].confirm_state,
+  USER_DECIDED
+);
+check(
+  "duplicate: a decision does not count a paper the complete list rejects",
+  tallyEntries(decidedPick.kept).unique_independent,
+  1
 );
 
 // A paper with no duplicate must report zero duplicates, so a reader can tell
