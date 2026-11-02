@@ -1,0 +1,148 @@
+{
+  "cited_title": "Novel reversible fluorescent glycan linker for functional glycomics",
+  "cited_authors": "Mohui Wei, Tanya R McKitrick, Akul Y Mehta, Chao Gao, Nan Jia, Alyssa M McQuillan, Jamie Heimburg-Molinaro, Lijun Sun, Richard D Cummings",
+  "cited_venue": "Bioconjugate chemistry",
+  "paper_url": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=dNLaKGAAAAAJ&cstart=20&pagesize=80&citation_for_view=dNLaKGAAAAAJ:4TOpqqG69KYC",
+  "cites_url": "https://scholar.google.com/scholar?start=20&hl=en&as_sdt=40000005&sciodt=0,22&cites=12821833616671474197&scipsc=",
+  "author_keys": [
+    "Mohui Wei",
+    "Tanya R McKitrick",
+    "Akul Y Mehta",
+    "Chao Gao",
+    "Nan Jia",
+    "Alyssa M McQuillan",
+    "Jamie Heimburg-Molinaro",
+    "Lijun Sun",
+    "Richard D Cummings"
+  ],
+  "pi_keys": [
+    "RD Cummings"
+  ],
+  "former_keys": [
+    "UR Desai"
+  ],
+  "crosscheck": "PubMed then OpenAlex, no identifying email supplied, no API key",
+  "snapshot": "2026-10-30 16:34:41",
+  "page_header": "",
+  "end_reason": "last-page-of-results (4 row(s) on page)",
+  "page": 3,
+  "entries": [
+    {
+      "index": 0,
+      "cid": "8pGzidBS0NEJ",
+      "title": "Chemical biology tools for the study of health and disease",
+      "rawTitle": "Chemical biology tools for the study of health and disease",
+      "authors": "P Ross - 2022 - search.proquest.com",
+      "snippet": "Understanding fundamental molecular interactions between biomolecules provides\nimportant knowledge to not only understand basic biological functions, but also to provide …",
+      "truncated": false,
+      "link": "https://search.proquest.com/openview/b39437642deecacbc426f5b8cd8fb798/1?pq-origsite=gscholar&cbl=18750&diss=y",
+      "status": "INDEPENDENT",
+      "matched_authors": [],
+      "matched_pi": [],
+      "matched_former_pi": [],
+      "authors_used": "P Ross",
+      "author_source": "scholar+openalex",
+      "language_flag": "",
+      "page": 3,
+      "pubmed_near_miss": {
+        "pmid": "42957759",
+        "title": "Microbiology Galaxy Lab: a community-driven gateway for reproducible and FAIR analysis of microbiological data.",
+        "similarity": 0
+      },
+      "external_source": "openalex",
+      "external_url": "https://openalex.org/W7154541317",
+      "external_title": "Chemical biology tools for the study of health and disease",
+      "external_authors": "Ross, Patrick",
+      "external_similarity": 1,
+      "full_authors": [
+        "Ross, Patrick"
+      ],
+      "confirm_state": "confirmed",
+      "corroboration": "confirmed by openalex",
+      "needs_attention": false,
+      "attention_reason": ""
+    },
+    {
+      "index": 1,
+      "cid": "JVtunVaQ3ZkJ",
+      "title": "Synthesis of Peptidoglycan Fragments to Probe the Chemical Biology of the Innate Immune System",
+      "rawTitle": "Synthesis of Peptidoglycan Fragments to Probe the Chemical Biology of the Innate Immune System",
+      "authors": "J Ramsey - 2021 - udspace.udel.edu",
+      "snippet": "The bacterial cell wall, comprised of peptidoglycan (PG), is a key tool for the identification of\nbacteria by the innate immune system. For the body to function properly, this system needs …",
+      "truncated": false,
+      "link": "https://udspace.udel.edu/items/6ef06fe1-64e9-4f0f-8425-f4d0f2aa9d0f",
+      "status": "INDEPENDENT",
+      "matched_authors": [],
+      "matched_pi": [],
+      "matched_former_pi": [],
+      "authors_used": "J Ramsey",
+      "author_source": "scholar+openalex",
+      "language_flag": "",
+      "page": 3,
+      "pubmed_near_miss": {
+        "pmid": "41879737",
+        "title": "Fluorescence-Quenched Mycoloyl-Arabinofuranoside Analogs: Fluorogenic Probes for Mycobacterial Outer Membrane-Degrading Enzymes.",
+        "similarity": 0
+      },
+      "external_source": "openalex",
+      "external_url": "https://openalex.org/W7217999052",
+      "external_title": "Synthesis of Peptidoglycan Fragments to Probe the Chemical Biology of the Innate Immune System",
+      "external_authors": "Ramsey, Jared",
+      "external_similarity": 1,
+      "full_authors": [
+        "Ramsey, Jared"
+      ],
+      "confirm_state": "confirmed",
+      "corroboration": "confirmed by openalex",
+      "needs_attention": false,
+      "attention_reason": ""
+    },
+    {
+      "index": 2,
+      "cid": "dFSExaNwatMJ",
+      "title": "糖芯片技术在肿瘤研究中的应用",
+      "rawTitle": "[HTML] 糖芯片技术在肿瘤研究中的应用",
+      "authors": "许倍宁， 刘银坤， 谢裕安 - 生物工程学报, 2020 - cjb.ijournals.cn",
+      "snippet": "糖基化修饰是蛋白质常见的翻译后修饰之一, 通过与糖结合蛋白如凝集素, 抗体等相互作用调节\n肿瘤细胞侵袭, 转移的能力及肿瘤异质性. 通过化学合成法, 化学-酶合成法或释放天然聚糖构建 …",
+      "truncated": false,
+      "link": "https://cjb.ijournals.cn/html/cjbcn/2020/11/gc20112313.htm",
+      "status": "INDEPENDENT",
+      "matched_authors": [],
+      "matched_pi": [],
+      "matched_former_pi": [],
+      "authors_used": "许倍宁， 刘银坤， 谢裕安 - 生物工程学报, 2020 - cjb.ijournals.cn",
+      "author_source": "scholar-list",
+      "language_flag": "non-latin script",
+      "page": 3,
+      "confirm_state": "unverified-coverage",
+      "corroboration": "not indexed in PubMed or OpenAlex; Scholar list is complete",
+      "corroboration_note": "no PubMed or OpenAlex record matched the title closely enough",
+      "attention_reason": "highlighted on Scholar's list alone - not indexed in PubMed or OpenAlex, worth a spot-check",
+      "needs_attention": true
+    },
+    {
+      "index": 3,
+      "cid": "18lxt48FPNEJ",
+      "title": "[CITATION] Tools and Methods to Study the Human Glycome",
+      "rawTitle": "[CITATION] Tools and Methods to Study the Human Glycome",
+      "authors": "X Song, RD Cummings, DF Smith - 2021 - Elsevier",
+      "snippet": "",
+      "truncated": false,
+      "link": "",
+      "status": "DEPENDENT",
+      "matched_authors": [
+        "RD Cummings"
+      ],
+      "matched_pi": [
+        "RD Cummings"
+      ],
+      "matched_former_pi": [],
+      "authors_used": "X Song, RD Cummings, DF Smith",
+      "author_source": "scholar-list",
+      "language_flag": "",
+      "page": 3,
+      "needs_attention": false,
+      "attention_reason": ""
+    }
+  ]
+}

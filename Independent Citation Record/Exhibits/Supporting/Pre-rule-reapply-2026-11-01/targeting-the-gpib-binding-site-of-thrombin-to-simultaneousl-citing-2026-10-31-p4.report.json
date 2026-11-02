@@ -1,0 +1,53 @@
+{
+  "cited_title": "Targeting the GPIbα Binding Site of Thrombin To Simultaneously Induce Dual Anticoagulant and Antiplatelet Effects",
+  "cited_authors": "Akul Y Mehta, Jay N Thakkar, Bassem M Mohammed, Erika J Martin, Donald F Brophy, Takao Kishimoto, Umesh R Desai",
+  "cited_venue": "Journal of medicinal chemistry",
+  "paper_url": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=dNLaKGAAAAAJ&citation_for_view=dNLaKGAAAAAJ:IjCSPb-OGe4C",
+  "cites_url": "https://scholar.google.com/scholar?start=30&hl=en&as_sdt=40000005&sciodt=0,22&cites=13760283595664836508&scipsc=",
+  "author_keys": [
+    "Akul Y Mehta",
+    "Jay N Thakkar",
+    "Bassem M Mohammed",
+    "Erika J Martin",
+    "Donald F Brophy",
+    "Takao Kishimoto",
+    "Umesh R Desai"
+  ],
+  "pi_keys": [
+    "RD Cummings"
+  ],
+  "former_keys": [
+    "UR Desai"
+  ],
+  "crosscheck": "PubMed then OpenAlex, no identifying email supplied, no API key",
+  "snapshot": "2026-10-31 17:34:59",
+  "page_header": "",
+  "end_reason": "last-page-of-results (1 row(s) on page)",
+  "page": 4,
+  "entries": [
+    {
+      "index": 0,
+      "cid": "Ph_B4pUeSiwJ",
+      "title": "[CITATION] Arimidex clotting trt prevent thrombosis Endocrine Abstracts",
+      "rawTitle": "[CITATION] Arimidex clotting trt prevent thrombosis Endocrine Abstracts",
+      "authors": "F Ianni, CA Rota, SM Corsello, A De Rosa, F Gallo…",
+      "snippet": "",
+      "truncated": true,
+      "link": "",
+      "status": "REVIEW",
+      "matched_authors": [],
+      "matched_pi": [],
+      "matched_former_pi": [],
+      "authors_used": "F Ianni, CA Rota, SM Corsello, A De Rosa, F Gallo",
+      "author_source": "scholar-list (truncated)",
+      "resolution": "no cite control found for this entry",
+      "language_flag": "",
+      "page": 4,
+      "confirm_state": "unresolved",
+      "corroboration": "not indexed in PubMed or OpenAlex and the Scholar list is incomplete",
+      "corroboration_note": "no PubMed or OpenAlex record matched the title closely enough",
+      "attention_reason": "not indexed in PubMed or OpenAlex and the Scholar list is incomplete",
+      "needs_attention": true
+    }
+  ]
+}

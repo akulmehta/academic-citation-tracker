@@ -1,0 +1,160 @@
+{
+  "cited_title": "Unique Glycans in Synaptic Glycoproteins in Mouse Brain",
+  "cited_authors": "Maxence Noel, Suttipong Suttapitugsakul, Mohui Wei, Catherine Tilton, Akul Y Mehta, Yasuyuki Matsumoto, Jamie Heimburg-Molinaro, Robert G Mealer, Richard D Cummings",
+  "cited_venue": "ACS Chemical Neuroscience",
+  "paper_url": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=dNLaKGAAAAAJ&cstart=20&pagesize=80&citation_for_view=dNLaKGAAAAAJ:mB3voiENLucC",
+  "cites_url": "https://scholar.google.com/scholar?oi=bibs&hl=en&cites=1956444758555575516",
+  "author_keys": [
+    "Maxence Noel",
+    "Suttipong Suttapitugsakul",
+    "Mohui Wei",
+    "Catherine Tilton",
+    "Akul Y Mehta",
+    "Yasuyuki Matsumoto",
+    "Jamie Heimburg-Molinaro",
+    "Robert G Mealer",
+    "Richard D Cummings"
+  ],
+  "pi_keys": [
+    "RD Cummings"
+  ],
+  "former_keys": [
+    "UR Desai"
+  ],
+  "crosscheck": "PubMed then OpenAlex, no identifying email supplied, no API key",
+  "snapshot": "2026-10-30 16:21:28",
+  "page_header": "",
+  "end_reason": "last-page-of-results (4 row(s) on page)",
+  "page": 1,
+  "entries": [
+    {
+      "index": 0,
+      "cid": "RP2JJVbrUOEJ",
+      "title": "The emerging landscape of brain glycosylation: from molecular complexity to therapeutic potential",
+      "rawTitle": "The emerging landscape of brain glycosylation: from molecular complexity to therapeutic potential",
+      "authors": "Y Seo, JE Park, JY Yu, B Lee, JH Yoon… - Experimental & Molecular …, 2025 - nature.com",
+      "snippet": "Glycosylation functions as a pivotal posttranslational modification in proteins and as a\ndistinct biosynthetic process in lipids. In the brain, it plays essential roles in development …",
+      "truncated": false,
+      "link": "https://www.nature.com/articles/s12276-025-01560-8",
+      "status": "INDEPENDENT",
+      "matched_authors": [],
+      "matched_pi": [],
+      "matched_former_pi": [],
+      "authors_used": "Seo, Youngsuk, Park, Ji Eun, Yu, Jae Young, Lee, Boyoung, Yoon, Jong Hyuk, An, Hyun Joo",
+      "author_source": "scholar-cite-bibtex",
+      "popup_sample": "@article{seo2025emerging,\n  title={The emerging landscape of brain glycosylation: from molecular complexity to therapeutic potential},\n  author={Seo, Youngsuk and Park, Ji Eun and Yu, Jae Young and Lee, Boyoung and Yoon, Jong Hyuk and An, Hyun Joo},\n  journal={Experimental \\& Molecular Medicine},\n  volume={57},\n  number={10},\n  pages={2214--2225},\n  year={2025},\n  publisher={Nature Publishing Grou",
+      "full_authors": [
+        "Seo, Youngsuk",
+        "Park, Ji Eun",
+        "Yu, Jae Young",
+        "Lee, Boyoung",
+        "Yoon, Jong Hyuk",
+        "An, Hyun Joo"
+      ],
+      "resolution": "resolved",
+      "language_flag": "",
+      "page": 1,
+      "pubmed_near_miss": {
+        "pmid": "42731085",
+        "title": "Post-Translational Modifications in Traumatic Brain Injury: Decoding the Proteomic Landscape and Molecular Mechanisms of Secondary Injury.",
+        "similarity": 0.38
+      },
+      "external_source": "openalex",
+      "external_url": "https://doi.org/10.1038/s12276-025-01560-8",
+      "external_title": "The emerging landscape of brain glycosylation: from molecular complexity to therapeutic potential",
+      "external_authors": "Youngsuk Seo, Ji Eun Park, Jae Young Yu, Boyoung Lee, Jong Hyuk Yoon, Hyun Joo An",
+      "external_similarity": 1,
+      "confirm_state": "confirmed",
+      "corroboration": "confirmed by openalex",
+      "needs_attention": false,
+      "attention_reason": "",
+      "language_flag_captured": ""
+    },
+    {
+      "index": 1,
+      "cid": "8N3onxhrI10J",
+      "title": "The importance of N-and O-glycosylation of brain cell surface glycoproteins",
+      "rawTitle": "The importance of N-and O-glycosylation of brain cell surface glycoproteins",
+      "authors": "M Noel, YM Zürcher, EKC Tulin, RD Cummings - Glycobiology, 2025 - academic.oup.com",
+      "snippet": "The mammalian brain is unique in its cell types, mainly neurons and glial cells, and the\nglycoproteins expressed by these cells. Two of the most abundant types of modifications of …",
+      "truncated": false,
+      "link": "https://academic.oup.com/glycob/article-abstract/35/11/cwaf054/8280426",
+      "status": "DEPENDENT",
+      "matched_authors": [
+        "M Noel",
+        "RD Cummings"
+      ],
+      "matched_pi": [
+        "RD Cummings"
+      ],
+      "matched_former_pi": [],
+      "authors_used": "M Noel, YM Zürcher, EKC Tulin, RD Cummings",
+      "author_source": "scholar-list",
+      "language_flag": "",
+      "page": 1,
+      "needs_attention": false,
+      "attention_reason": "",
+      "language_flag_captured": ""
+    },
+    {
+      "index": 2,
+      "cid": "xx1N-mn7hAMJ",
+      "title": "Sialoglycan engineering empowered by recombinant sialyltransferases",
+      "rawTitle": "[HTML] Sialoglycan engineering empowered by recombinant sialyltransferases",
+      "authors": "SN Woolcott, I Da Barp, CJ Capicciotti, H Cui… - … et Biophysica Acta (BBA …, 2026 - Elsevier",
+      "snippet": "Glycans that terminate in monosaccharides belonging to the sialic acid family of sugars\nregulate myriad biological processes and are increasingly being recognized as important …",
+      "truncated": false,
+      "link": "https://www.sciencedirect.com/science/article/pii/S0304416526000279",
+      "status": "INDEPENDENT",
+      "matched_authors": [],
+      "matched_pi": [],
+      "matched_former_pi": [],
+      "authors_used": "Woolcott, Sascha N, Da Barp, Isabelle, Capicciotti, Chantelle J, Cui, Haissi, Edgar, Landon J",
+      "author_source": "scholar-cite-bibtex",
+      "popup_sample": "@article{woolcott2026sialoglycan,\n  title={Sialoglycan engineering empowered by recombinant sialyltransferases},\n  author={Woolcott, Sascha N and Da Barp, Isabelle and Capicciotti, Chantelle J and Cui, Haissi and Edgar, Landon J},\n  journal={Biochimica et Biophysica Acta (BBA)-General Subjects},\n  volume={1870},\n  number={6},\n  pages={130927},\n  year={2026},\n  publisher={Elsevier}\n}\n",
+      "full_authors": [
+        "Woolcott, Sascha N",
+        "Da Barp, Isabelle",
+        "Capicciotti, Chantelle J",
+        "Cui, Haissi",
+        "Edgar, Landon J"
+      ],
+      "resolution": "resolved",
+      "language_flag": "",
+      "page": 1,
+      "external_source": "pubmed",
+      "external_url": "https://pubmed.ncbi.nlm.nih.gov/41849917/",
+      "external_title": "Sialoglycan engineering empowered by recombinant sialyltransferases.",
+      "external_authors": "Woolcott SN, Da Barp I, Capicciotti CJ, Cui H, Edgar LJ",
+      "external_similarity": 1,
+      "confirm_state": "confirmed",
+      "corroboration": "confirmed by pubmed",
+      "needs_attention": false,
+      "attention_reason": "",
+      "language_flag_captured": ""
+    },
+    {
+      "index": 3,
+      "cid": "hnBAzEOTjrIJ",
+      "title": "Regio-specific glycan expression within the mammalian brain and tumors",
+      "rawTitle": "[HTML] Regio-specific glycan expression within the mammalian brain and tumors",
+      "authors": "EKC Tulin, M Noel, LE Pepi, MH Florido, L Muerner… - iScience, 2026 - cell.com",
+      "snippet": "The mammalian brain exhibits a complex glycan code that orchestrates neural connectivity,\nyet the spatial organization of functionally critical modifications of glycoproteins, such as …",
+      "truncated": true,
+      "link": "https://www.cell.com/iscience/fulltext/S2589-0042(26)03357-2",
+      "status": "DEPENDENT",
+      "matched_authors": [
+        "M Noel"
+      ],
+      "matched_pi": [],
+      "matched_former_pi": [],
+      "authors_used": "EKC Tulin, M Noel, LE Pepi, MH Florido, L Muerner",
+      "author_source": "scholar-list (truncated)",
+      "language_flag": "",
+      "page": 1,
+      "needs_attention": false,
+      "attention_reason": "",
+      "language_flag_captured": ""
+    }
+  ]
+}

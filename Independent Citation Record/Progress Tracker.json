@@ -1,0 +1,603 @@
+{
+  "schema_version": 1,
+  "project": "EB1A RFE independent citation record",
+  "primary_platform": {
+    "name": "Google Scholar",
+    "reason": "The project guide directs citation-record preparation from Google Scholar, and the user's profile is available there.",
+    "profile_url": "https://scholar.google.com/citations?hl=en&user=dNLaKGAAAAAJ",
+    "last_access_checked": "2026-10-31",
+    "access_status": "Clear as of 2026-11-01: the user cleared the reCAPTCHA that appeared at 01:30 on the GlycoGlyph citing page, and the page then loaded normally showing 10 result rows, verified by tools/unblock.js before it closed and released the profile lock. The grant is held in tools/.playwright-profile and the re-capture of GlycoGlyph was started immediately afterwards. Expect the screen again on the citing-articles endpoint (scholar?oi=bibs&cites=...) after roughly 10-20 further citing requests; the profile page and publication list have never been blocked. The BibTeX link behind Scholar's Cite popup returning HTTP 404 is a different failure and is not evidence of a block.",
+    "citation_metrics_captured": true,
+    "metrics_snapshot": {
+      "source": "Google Scholar profile page HTML, saved locally",
+      "source_url": "https://scholar.google.com/citations?hl=en&user=dNLaKGAAAAAJ",
+      "snapshot_date": "2026-10-31",
+      "cited_by_all": 1496,
+      "cited_by_since_2021": 1011,
+      "h_index_all": 23,
+      "h_index_since_2021": 18,
+      "i10_index_all": 34,
+      "i10_index_since_2021": 30,
+      "label_note": "Scholar's second column is headed 'Since 2021', not 'Since 2020'. Earlier entries in this tracker named those fields since_2020, which was a misreading of the label on the 2026-10-29 capture - the saved HTML for that date also reads 'Since 2021'. Quote the window as 2021 onward.",
+      "note": "Figures read from the saved HTML of the dated snapshot and verified against the exhibit PDF of the same date. Quote them together with the snapshot date, since they move whenever Scholar updates.",
+      "exhibit": "Independent Citation Record/Exhibits/PDFs/akul-mehta-google-scholar-2026-10-31.pdf",
+      "html": "Independent Citation Record/Exhibits/Supporting/akul-mehta-google-scholar-2026-10-31.html"
+    },
+    "citation_total_history": [
+      {
+        "snapshot_date": "2026-10-29",
+        "cited_by_all": 1495,
+        "cited_by_since_2021": 1010,
+        "basis": "Profile metrics table, read from the saved profile HTML",
+        "source": "Exhibits/Supporting/akul-mehta-google-scholar-2026-10-29.html"
+      },
+      {
+        "snapshot_date": "2026-10-31",
+        "cited_by_all": 1496,
+        "cited_by_since_2021": 1011,
+        "basis": "Profile metrics table in the re-saved profile HTML, and independently the sum of the 48 per-publication counts in the re-fetched publication list. The two agree, and match the 1496 total the user reported.",
+        "source": "Exhibits/Supporting/akul-mehta-google-scholar-2026-10-31.html"
+      }
+    ]
+  },
+  "capture_tooling": {
+    "tool": "Playwright (Node.js), headed Chromium",
+    "scripts": {
+      "capture.js": "Capture any Scholar page as PDF/HTML/PNG.",
+      "list-all-publications.js": "Expand and export the full publication list with citation counts and URLs.",
+      "capture-citations.js": "Capture every page of a citing-articles list, classify independence, highlight, and emit one PDF per page plus a review sheet.",
+      "run-batch.js": "Sequential batch driver over the publication list: selection by citation range or title, --skip-done resume, --dry-run preview, and a progress record per publication.",
+      "summarize-progress.js": "Rolls the per-page report JSON up into per-publication totals, counting only publications whose exhibit PDF is still filed. Run before reporting any count.",
+      "test-pdf-fit.js": "Offline check that a citing page still fits one US Letter sheet at the exhibit print scale, using a saved HTML copy.",
+      "human.js": "Shared pacing: randomized waits, stepped mouse moves, uneven scrolling.",
+      "name-match.js": "Author matching on surname plus initials.",
+      "crosscheck.js": "External corroboration of author lists: PubMed (NCBI E-utilities) first, then OpenAlex. No account required.",
+      "test-name-match.js": "Offline tests for the matching rules (22 cases).",
+      "test-capture-helpers.js": "Offline tests for count parsing, language detection, pagination offsets, end-of-list decisions, highlight and attention rules (62 cases). The language cases pin the 2026-11-01 rule: a CJK title containing a Greek notation letter is still non-English, a Polish title in Latin Extended-A is caught, a German abstract under an English title is NOT flagged, and Greek notation in a snippet does not suppress a citation.",
+      "test-next-link.js": "Offline diagnosis of a truncated citing list: runs the capture's own pagination extraction and end-of-list verdict against a saved HTML copy. Contacts nothing.",
+      "tally.js": "Shared counting rules (what counts as independent, per-publication grouping, exhibit-page estimate). Used by both summarize-progress.js and build-ledger.js so the two can never report different numbers for the same evidence. Also holds the language-edition rule: markLanguageEditions keys a work on the article id inside its DOI plus an author signature, so a publisher's translation (10.1002/anie.7795967 vs 10.1002/ange.7795967) is recognised even when its title is translated, and isHighlighted refuses any row marked duplicate_of. Requiring both a DOI and an identical author list keeps it conservative; a pair sharing the identical DOI is the ordinary duplicate-version case and is deliberately not claimed as an edition. Since 2026-11-01 groupReports resolves the editions itself, walking each publication's pages in order with one carried map, so every reader of groupReports (ledger, catalog, audit) agrees without each re-implementing the walk - that centralisation removed a 44-vs-46 disagreement between the ledger and the catalog. isWithheldForLanguage(e) is the mirror of isHighlighted for the rows a translation would recover, and tallyEntries reports the English-only figures (english_records, english_independent, unique_english_records, unique_english_independent) alongside the headline ones.",
+      "build-ledger.js": "Builds the statistics log: one row per publication (independent, dependent, self-citation, review, coverage, non-English withheld, English-only records and independents) plus global totals, written as a dated JSON and a CSV that opens in a spreadsheet. Publications not yet captured are listed as not-started so the denominator is visible. Appends one line per run to citation-ledger-history.csv. Run after every batch, and after any reapply-language or reprint-exhibits run. Since 2026-11-01 it also prints the adjusted English-only total and percentage the guide asks for when no translations are obtained.",
+      "check-browser.js": "Offline check of which browser the pipeline actually launches: runs the capture's own launcher, prints the version, executable path and user agent, and warns on a silent fallback away from the Chrome channel. Makes no network request.",
+      "unblock.js": "Opens a page in the pipeline's own browser profile and waits, with no deadline, for the user to clear a verification screen. Exists because a batch run polls a wall for three minutes then closes the window, which is right unattended but leaves nothing to solve when someone returns. --check-only reports access and closes. Never attempts to solve or auto-retry a challenge.",
+      "work-type.js": "Separates citing patents from citing articles. Only positive evidence counts: a patent-server link (Google Patents, USPTO, Espacenet) or a venue string naming a patent document. Title and snippet are deliberately NOT scanned, so a journal article about patents is not misfiled as one; a venue that merely contains the word 'patents' (for example the journal Expert Opinion on Therapeutic Patents) is returned as work_type 'unknown' for a human to settle rather than guessed either way.",
+      "test-work-type.js": "Offline tests for the patent/article classifier (28 checks). Includes the regression case for an article about patents, the four captured patent records, and a guard that the scanned fields stay limited to the venue carriers.",
+      "build-catalog.js": "Builds Database/citation-catalog.sqlite (a folder at the project root, deliberately outside Exhibits, which is the evidence folder that gets reviewed and filed), a read-only lookup layer over every report JSON plus the publication snapshot. Full rebuild is idempotent; --pub=<base> upserts one publication and is called by run-batch.js after each capture. Keeps every observed row, including superseded captures, with a filed flag so a query can widen; stores the derived work_type, patent number, is_highlighted and is_primary_copy columns. Ends by recounting through tally.js and comparing to the database, so any drift from the ledger rule is reported rather than hidden. A blocked capture with no report file writes nothing.",
+      "query-catalog.js": "Read-only query CLI over the citation catalog: patents | editions | nonenglish | stats | search | pub | review | sql | tables. --csv for spreadsheet output, --all to include unfiled and archived captures, --limit=N to widen. Opens the database read-only and the sql subcommand accepts SELECT only, refusing writes, schema changes and stacked statements. Default totals are filed-only so they match the ledger. 'editions' lists each citing list where one article appears in two languages, naming the copy the exhibit marks and the copy held back; it changes no counted figure. 'nonenglish' lists the entries the language screen holds back with the reason and whether the row would otherwise have counted - the list a certified translation would have to cover. stats prints the adjusted English-only totals next to the headline ones.",
+      "audit-highlights.js": "Offline check that every filed exhibit page still carries exactly the marks the current rules call for. Replays the rule over each saved page's HTML in a headless browser with every network request aborted, comparing the yellow marks actually present row by row against tally.isHighlighted, and confirming the exhibit PDF exists and is non-empty. Exists because the PDF is a picture while the ledger reads the report JSON: when the counting rule changes, only this comparison notices a filed exhibit now disagrees. Read-only, exits 1 on any mismatch.",
+      "reapply-language.js": "Offline rule application for the language screen. Recomputes language_flag over the filed report JSON using the current capture-citations.js rule, preserving the value captured at capture time in a new language_flag_captured field so the original is never lost. Dry-run by default; --write backs every file it touches up to Exhibits/Supporting/Pre-rule-reapply-<date>/ before saving, prints each mark flip as ADD or DROP, and lists the exhibit pages that then need re-printing. Exists because a rule fix in the capture script cannot reach exhibits already captured - their flags were written at capture time. --all widens to archived and unfiled reports. No Scholar request is made.",
+      "reprint-exhibits.js": "Offline re-print of an exhibit page from its saved HTML, for when the counting rule changes but the capture must not be repeated. Loads the saved page in a headless browser with every network request aborted, strips all title backgrounds, re-applies tally.isHighlighted using the same row matching capture-citations.js uses, and refuses to save unless the marks it applied equal the count the rule expects. Rewrites the HTML (backing the original up first), archives the old PDF to Exhibits/Archive/SUPERSEDED-<base>.pdf, writes the new PDF at the exhibit print settings (US Letter, 75% scale, header from report.cites_url plus the snapshot date, footer with page numbers) and a fresh PNG. --page= / --pub= select one page, --changed re-prints every page whose marks drifted, --check reports without writing."
+    },
+    "run_command": "node \"c:\\Projects\\EB1A\\tools\\run-batch.js\" --out=Production --auto --min-citations=21 --max-citations=40 --count=5 [--skip-done] [--dry-run] [--email=\"you@example.org\"] [--ncbi-key=\"...\"]",
+    "single_publication_command": "node \"c:\\Projects\\EB1A\\tools\\capture-citations.js\" --paper=\"<view_citation url>\" --cites=\"<cites url>\" --name=\"<file name>\" [--out=Production] [--me=\"AY Mehta\"] [--pi=\"RD Cummings\"] [--former=\"UR Desai\"] [--email=\"you@example.org\"] [--ncbi-key=\"...\"] [--no-crosscheck] [--auto] [--debug]",
+    "offline_review_command": "node \"c:\\Projects\\EB1A\\tools\\capture-citations.js\" --report=\"<report.json>\"  (rebuilds a review sheet from saved data; no browser, no Scholar requests)",
+    "persistent_profile": "tools/.playwright-profile",
+    "output_layout": {
+      "Exhibits/PDFs": "Filed exhibits only. One PDF per citation-list page. This is the folder to review and to consolidate or zip for filing.",
+      "Exhibits/PDFs/Production": "Exhibit PDFs from the production batches, kept apart from earlier samples so they can be reviewed on their own. Written by --out=Production.",
+      "Exhibits/Supporting": "Workpapers: saved HTML, full-page PNG screenshots, per-page report JSON, and one combined review Markdown per publication.",
+      "Exhibits/Archive": "Superseded PDFs that must not be filed. Kept for the audit trail, prefixed SUPERSEDED-."
+    },
+    "pagination": "Scholar shows 10 citing articles per page for this profile and a pagesize=20 parameter does not change it, so the capture follows each page's own 'Next' link, which carries Scholar's real step size and its as_sdt/sciodt/scipsc parameters. Hand-built start= offsets drop those parameters and skip records. Each page is saved as its own PDF; page 1 keeps the plain name and later pages take a -p2, -p3 suffix. 24 of the 48 publications have more than 20 citations, so this is required rather than optional. The header count is a cross-check only, because Scholar counts duplicate versions that per-record dedupe removes.",
+    "auto_mode": "--auto saves each page without waiting for ENTER. The browser stays visible so a verification screen is still seen. On an access wall in --auto mode the script re-reads the already-open page only, making no new requests, and stops after three minutes with exit code 2 rather than hanging on a prompt nobody is there to answer.",
+    "batch_run_log": "Exhibits/Supporting/batch-runs.json records every publication attempted: cites id, pages captured versus expected, records and independent count, exit code, and whether it was blocked. An interrupted batch resumes with --skip-done. Since 2026-10-31 the batch driver also refreshes the citation catalog for each publication after writing the run log, and skips that step for a blocked attempt, which wrote no report and so cannot change the database.",
+    "citation_catalog": "Database/citation-catalog.sqlite at the project root, built by tools/build-catalog.js and queried with tools/query-catalog.js. Its full schema, with diagrams of what each table and column stores, is documented in Database/citation-catalog-schema.md. Kept out of Exhibits on purpose: that folder is the evidence packet, and a generated binary rewritten on every run does not belong in it. Deleting it is always safe - it rebuilds from the report JSON, which remains the source of truth. LOOKUP AID ONLY - not the ledger. Per project instructions any figure quoted in the packet comes from citation-ledger-<snapshot>.csv written by tools/build-ledger.js, which remains authoritative; if the two ever disagree, the CSV is right and the catalog has a bug. Rebuilt offline on 2026-11-01 at schema version 3 from the reports already on disk and reconciling against the ledger on all fifteen checks: 41 of 48 publications, 168 filed exhibit pages, 1497 filed records over 1479 distinct papers, 1033 countable independent (1020 distinct, 655 externally confirmed), 322 dependent, 0 self (PI), 5 self (former PI), 90 awaiting review, 52 flagged non-English of which 44 are withheld from the count by language alone. Schema v3 adds is_non_english, non_english_reason, is_countable_independent and withheld_for_language so a statistician can separate the non-English rows without re-reading any rule, plus the v_non_english view and its index. It also answers questions the ledger does not: 15 citing patents and applications across 7 publications, 8 counted as independent, kept separate from the article citations.",
+    "output_directory": "Independent Citation Record/Exhibits, split into PDFs (filed exhibits, with a Production sub-folder for batch runs), Supporting (workpapers) and Archive (superseded PDFs)",
+    "outputs_per_capture": [
+      "PDF exhibit (A4, print backgrounds): untouched-looking Scholar page with independent titles highlighted yellow only",
+      "HTML source copy",
+      "full-page PNG",
+      "report JSON with every entry and its decision",
+      "review Markdown with unresolved items listed first, then all entries"
+    ],
+    "exhibit_style": "Per user instruction on 2026-10-29 the saved PDF must look like a Google Scholar results page where only independent citations are highlighted: no legend box, no orange review marks, no faded rows. Those additions exist only under --debug for working copies. Entries awaiting review are left unmarked in the PDF and documented in the review Markdown. The one permitted annotation is the print header and footer, also per user instruction on 2026-10-29: every page shows the Scholar URL it was captured from and the snapshot date at the top, and the publication name with page numbering at the bottom. Paper size is US Letter at 75% print scale per user instruction on 2026-10-29, verified by tools/test-pdf-fit.js to hold a full 10-row citing page on one sheet (last row ends at 1142px of 1266px usable).",
+    "captcha_handling": "Scripts detect CAPTCHA / unusual-traffic text, never attempt to solve it, and pause for the user to solve it in the visible window. If the wall is still present at capture time they save nothing and exit with code 2.",
+    "rate_limit_mitigation": "Randomized pacing between pages and actions, human-like scrolling, persistent profile reuse, and rotating which publication is used during debugging so one citing list is not requested repeatedly.",
+    "known_limitation": "Google Scholar shows 20 publications by default; list-all-publications.js expands the list (48 found on 2026-10-29).",
+    "statistics_log": "tools/tally.js holds the single definition of what counts and every report uses it: summarize-progress.js, build-ledger.js, run-batch.js and capture-citations.js. Two row counts are reported on purpose - rows on the exhibit pages, and distinct papers after Scholar's duplicate versions collapse. Quote the distinct-paper figure when stating how many papers cite the work. A --no-crosscheck run is a working copy: its independent citations are not counted. The SQLite catalog added 2026-10-31 imports these rules rather than reimplementing them, and re-checks its own totals against tally.js on every build; it is a lookup layer over the same evidence, never a second ledger. A language edition of a paper already on the same citing list is recorded and never marked or counted, per the user's instruction on 2026-10-31 that such duplicates be documented in the database and not highlighted in the exhibits. The adjusted English-only figures added on 2026-11-01 divide English independent citations by the English citation records observed on the filed citing lists; Scholar publishes no English-only profile total, and the ledger's note field states that rather than leaving it implied."
+  },
+  "independence_rules": {
+    "definition": "A citing paper is independent only when it shares no author with the cited paper.",
+    "self_citation_pi": "Richard D. Cummings (current PI) - never counted as independent, even on papers the user did not co-author.",
+    "self_citation_former_pi": "Umesh R. Desai (former PI) - never counted as independent, even on papers the user did not co-author.",
+    "name_matching": "Surname plus initials, never surname alone, because Desai and Cummings are common. A surname collision without comparable initials is flagged for manual review rather than counted or excluded.",
+    "non_english": "Per the guide, a non-English citation must not be highlighted and cannot count toward the adjusted total without a certified human translation and affidavit; machine translation is explicitly not certified. The guide defines 'listed in English' as the title of the article, the list of authors and the venue - not the body - which is why the screen keys on the TITLE (user's option B, applied 2026-11-01), while a non-Latin script anywhere in the entry, snippet included, still flags it. Greek letters are treated as scientific notation, not evidence of a foreign paper: an alpha-1,2-mannosidase title is English. So NON_LATIN excludes the Greek range, ACCENTED spans Latin Extended-A/B as well as Latin-1, and FOREIGN_WORDS is scanned on the title only. The flag is a conservative screen, not a ruling, and flagged entries are listed in the review sheet for a human decision. Per the user's decision on 2026-11-01 no translations are obtained: flagged entries stay unhighlighted and out of the totals, and the packet reports an adjusted independent total and percentage based solely on English citations, as the guide's second path allows.",
+    "author_list_source": "Google Scholar only: the cited paper's profile article page for its authors, and for citing entries the result snippet plus, where Scholar truncated it, the BibTeX record behind that result's Cite control. Third-party databases are not used as the basis for independence.",
+    "external_corroboration": "Per user instruction on 2026-10-29, every entry Scholar leaves looking independent is additionally checked against PubMed (NCBI E-utilities esearch/esummary) and, failing that, OpenAlex, both of which publish the complete author list. Google Scholar remains the primary source, so the external look-up corroborates rather than decides. confirm_state values: confirmed (external list agrees there is no overlap); unverified-coverage (not indexed externally, Scholar's own list complete, still highlighted and flagged for a spot-check - typical of theses, preprints and patents); unresolved (not indexed and Scholar's list truncated, so not highlighted); contradicted (external list shows a shared or PI author, entry pulled back to REVIEW and never marked). An entry is never promoted to independent on an external record alone. CrossRef is deliberately excluded as a basis for any independence call.",
+    "corroboration_credentials": "Neither PubMed nor OpenAlex needs an account or token, and both were verified working anonymously on 2026-10-29. NCBI's usage policy asks for an identifying email and offers an optional API key that raises the limit from 3 to 10 requests/second. Both are optional for this tool because requests are few, sequential and paced. Supply with --email / --ncbi-key or the CROSSCHECK_EMAIL / NCBI_API_KEY environment variables; the email is also sent to OpenAlex as mailto for the polite pool.",
+    "statuses": [
+      "INDEPENDENT",
+      "DEPENDENT",
+      "SELF (PI)",
+      "SELF (FORMER PI)",
+      "REVIEW"
+    ],
+    "highlight_key": "In the exhibit PDF: yellow = confirmed independent, and nothing else is marked. Entries awaiting review are unmarked and listed in the review Markdown. The orange/faded marks and the on-page legend appear only in --debug working copies."
+  },
+  "publication_list": {
+    "source_url": "https://scholar.google.com/citations?hl=en&user=dNLaKGAAAAAJ",
+    "snapshot_date": "2026-10-31",
+    "total_publications": 48,
+    "files": [
+      "Independent Citation Record/Exhibits/Supporting/publications-list-2026-10-31.json",
+      "Independent Citation Record/Exhibits/Supporting/publications-list-2026-10-31.tsv"
+    ],
+    "previous_snapshots": [
+      "Independent Citation Record/Exhibits/Supporting/publications-list-2026-10-29.json"
+    ],
+    "note": "Seven entries have no citation count shown (recent papers and patents). Counts are as displayed by Scholar on the snapshot date. Diffing 2026-10-29 against 2026-10-31 found exactly one change: 'N-glycosylation of mannose receptor (CD206) regulates glycan binding by C-type lectin domains' rose 34 to 35. No publication was added or removed, and 'Insights into glycobiology' stayed at 32, which the user also confirmed by hand. Because CD206 is not yet captured, no filed exhibit is missing a row."
+  },
+  "progress": {
+    "stage": "All 41 publications that show a citation count are captured completely, one exhibit PDF per citing-list page, 168 of 168 expected pages, every page verified against its report and audited against the current rules. No capture is incomplete. The remaining 7 of 48 show no citation count on the profile and need no exhibit. The non-English question is CLOSED: on 2026-11-01 the user chose the guide's no-translation path, option B was applied across the corpus, and the 6 affected exhibit pages were re-printed. Headline counts are unchanged at 1033 counted independent rows / 1020 distinct independent papers; the adjusted English-only figures are now reported alongside.",
+    "publications_reviewed": 41,
+    "citation_records_reviewed": 1497,
+    "independent_citations_confirmed": 1033,
+    "independent_citations_externally_confirmed": 655,
+    "dependent_citations_confirmed": 322,
+    "unresolved_citations": 90,
+    "spot_check_items": 378,
+    "pdf_exhibits_created": 168,
+    "distinct_papers_citing": 1479,
+    "independent_distinct_papers": 1020,
+    "duplicate_records": 18,
+    "self_pi": 0,
+    "self_former_pi": 5,
+    "non_english_flagged": 52,
+    "non_english_withheld_from_count": 44,
+    "independent_pending": 47,
+    "publications_incomplete": 0,
+    "adjusted_english_only": {
+      "decided": "2026-11-01, by user instruction. The guide's second path: no translations are obtained, non-English entries stay unhighlighted, and an adjusted total and percentage based solely on English citations is reported.",
+      "english_citation_records": 1445,
+      "english_independent_records": 1033,
+      "english_independent_share_pct": 71.5,
+      "english_distinct_papers": 1427,
+      "english_independent_distinct_papers": 1020,
+      "english_independent_distinct_share_pct": 71.5,
+      "denominator_caveat": "Google Scholar publishes no English-only profile total, so the denominator is the English rows observed on the filed citing lists, not a profile-wide figure. The ledger's own note field says so rather than leaving it implied.",
+      "source": "citation-ledger-2026-10-31.csv columns english_records, english_independent, unique_english_records, unique_english_independent"
+    },
+    "figures_source": "Exhibits/Supporting/citation-ledger-2026-10-31.csv at the 2026-10-31 snapshot, rebuilt 2026-11-01 after option B was applied"
+  },
+  "reviewed_publications": [
+    {
+      "title": "Functional implications of glycans and their curation: insights from the workshop held at the 16th Annual International Biocuration Conference in Padua, Italy",
+      "venue": "Database 2024, baae073",
+      "cited_by_at_snapshot": 6,
+      "snapshot_date": "2026-10-29",
+      "results": {
+        "independent": 3,
+        "dependent_shares_author": 3,
+        "self_pi": 0,
+        "self_former_pi": 0,
+        "needs_review": 0
+      },
+      "independent_titles": [
+        "Updates to the Minimum Information Required for A Glycomics Experiment (MIRAGE) guidelines: Kettner and Zaia",
+        "Scalable Extraction and Curation of Glycan Biomarker Data From Biomedical Literature Using Large Language Models",
+        "Characterization of HOL-30: a novel tandem-repeat galectin from the marine sponge Halichondria okadai"
+      ],
+      "needs_review_detail": "Resolved on 2026-10-29: the HOL-30 galectin paper's author list was recovered from the BibTeX record behind its Scholar Cite control (Ohkawa, Kamata, Kawsar, Gerdol, Fujii, Ozeki) and independently confirmed against OpenAlex (DOI 10.1016/j.bbadva.2025.100153), which shows no overlap. It is now counted independent. The one remaining open item is the 'Scalable Extraction and Curation of Glycan Biomarker Data' entry: it is highlighted on Scholar's complete single-author list but is indexed in neither PubMed nor OpenAlex (ProQuest, likely a thesis), so it is flagged for a manual spot-check.",
+      "exhibit": "Independent Citation Record/Exhibits/PDFs/glycans-curation-biocuration-citing-2026-10-29-clean.pdf",
+      "exhibit_style": "Clean: yellow highlights only, 3 marks verified in the saved page.",
+      "corroboration": {
+        "date": "2026-10-29",
+        "confirmed": [
+          "Characterization of HOL-30 (OpenAlex)",
+          "Updates to the MIRAGE guidelines (PubMed 41663794)"
+        ],
+        "unverified_coverage": [
+          "Scalable Extraction and Curation of Glycan Biomarker Data"
+        ],
+        "contradicted": []
+      },
+      "note": "An earlier PDF for this publication misclassified the O-GlcNAc informatics paper as independent; it shares author Junfeng Ma and is now correctly DEPENDENT. The superseded file is kept as SUPERSEDED-bad-classification-glycans-curation.pdf and should not be used."
+    }
+  ],
+  "readiness": {
+    "assessment": "Tooling is ready for a production run; the volume is the main constraint, not correctness.",
+    "scale": "48 publications, 1,495 citations at the 2026-10-29 snapshot and 1,496 at the 2026-10-31 snapshot. Scholar shows 10 citing articles per page for this profile, so the full run is 168 exhibit pages at the newer snapshot, not the 94 estimated when 20 per page was assumed. All 168 are filed: 41 of 48 publications showing a citation count are captured completely, 0 pages remain, and the other 7 publications show no citation count so they need no exhibit. The capture phase is finished; what remains is human review of the unresolved rows, not volume.",
+    "time_estimate": "Roughly 60-150 seconds per page: paced navigation plus a Cite-popup look-up for each truncated author list (about 3-8s each, and a page often has five to seven) plus 10-25 seconds per independent candidate for corroboration. Order of 5-9 hours for all 168 pages, best split across sessions.",
+    "recommendation": "Run in batches, a handful of publications at a time, in interactive mode so a verification screen is noticed and cleared. Rotate order to spread requests. The persistent profile carries an access grant between runs.",
+    "open_items": [
+      "One entry needs manual review: 'Serum N-Glycan Profiling ... Alzheimer's Disease' - Scholar's BibTeX list is truncated with 'and others' and it is indexed in neither external service, so neither source settles independence.",
+      "The first capture of the differential-recognition publication is archived (SUPERSEDED-missing-highlight-and-incomplete-): it held only page 1 and one fewer highlight. Do not use it.",
+      "The verification screen now recurs on the citing endpoint after roughly 10-20 citing requests. Consider longer gaps between publications, or fewer publications per session, if it keeps interrupting.",
+      "CLOSED 2026-11-01: the Portuguese citing paper ('Impacto da inibição da galectina-3 na reversão da esteato-hepatite não alcoólica', ARM Santos, JPG Camporez, repositorio.usp.br, cid 2cEhMauZjFMJ, Galectin-3 exhibit page 2) is no longer highlighted. It escaped the old screen because the accented-letter test needed two distinct Latin-1 accents while the word test found only 'da'. Widening the accent range to Latin Extended-A/B plus Vietnamese catches it, and it was one of the three titles the applied rule (option B) removes.",
+      "Spot-check the 378 highlighted entries that neither PubMed nor OpenAlex indexes; they rest on Google Scholar's own complete author list. Each is listed in its publication's review sheet. Patents and theses make up most of them, which is expected since neither service indexes those well. The figure moved from 380 to 378 when option B was applied: three rows came back into the count and three left it.",
+      "Confirm the 18 duplicate rows Scholar shows of the same paper (a publisher copy plus a repository, thesis or preprint copy). The exhibit keeps every row because that is what Scholar displays, but the ledger counts one citing paper each. The pairs are listed in a 'Duplicate versions of the same paper' section of each review sheet.",
+      "Settle the 90 rows awaiting manual review and the 47 that look independent but are unsettled (node tools/query-catalog.js review). The patent review contributes 2 of the 14; its superseded capture is kept in Exhibits/Archive as SUPERSEDED-bib-404-* for comparison.",
+      "The patent review re-capture on 2026-10-31 resolved most of the BibTeX 404 damage: manual review on that publication fell from 12 rows to 2 and counted independent rose from 17 to 27. One Cite-popup parse failure remains there. The superseded capture is still in Exhibits/Archive as SUPERSEDED-bib-404-* and must not be filed.",
+      "Open rule question raised on 2026-10-31 while drafting a citing-work list: distinct-paper identity is title-based, so US10993914B2 and US12059497B2, both titled 'Stabilizing camptothecin pharmaceutical compositions', collapse to one work and only the first appears in a distinct-paper list. They are two granted patents with separate numbers. Decide with the attorney whether a patent list should count by publication number instead. No rule was changed; tally.js stays the single definition and node tools/query-catalog.js patents still shows all four rows.",
+      "Also from the 2026-10-31 draft: the per-publication distinct independent figures are distinct WITHIN each cited publication, so summing them double-counts a paper that cites more than one of the PI's works. Across the filed exhibits as they stand there are 338 distinct independent works behind the 367 per-publication figure, because 26 works cite two or more. A single global 'cited by N distinct papers' statement should use 338. Recompute with: node tools/query-catalog.js sql \"SELECT COUNT(DISTINCT paper_key) FROM citations WHERE filed=1 AND is_highlighted=1\". Review drafts in Drafts/ carry their own README and are not filing figures.",
+      "Resolved on 2026-10-31: 'Insights into glycobiology and the protein-glycan interactome' yielded 33 distinct records against 32 citations, which showed as 103.1% coverage. The extra row is a LANGUAGE EDITION of a paper already on the list, not a new citation. Scholar lists Angewandte Chemie's article twice, as 10.1002/anie.7795967 in English (page 2, cid _GJjgOnYMDMJ) and 10.1002/ange.7795967 in German (page 3, cid GZHuXnSToewJ), with the same author list and a translated title. The user confirmed by hand that the paper still has 32 citations. Detected and recorded by tally.markLanguageEditions; the German row is now explicitly held back as a duplicate rather than only by its language flag, and is never marked. The same pair also appears in two further citing lists (unique-repertoire-of-anti-carbohydrate-antibodies and reusable-glycan-microarrays, where the pair straddles pages 1 and 2), so 3 citing lists are affected and 3 rows are held back as an edition. No counted figure changes. See node tools/query-catalog.js editions.",
+      "Language edition detection is deliberately conservative and one known pair escapes it: the English and Chinese haemoglobin microarray papers are the same work, but the Chinese row publishes no DOI, so nothing can be proven from it. It stays excluded from the counted totals by its language flag, which is the correct outcome for it, but it is not recorded as an edition. Do not loosen the rule to catch it without a per-case check.",
+      "Scholar shows exactly 10 citing records per page and there is no way to change it - a pagesize= parameter is ignored on the citing-articles endpoint. Per user instruction on 2026-10-31 this is now a single named constant, tally.CITATIONS_PER_PAGE, that tally.expectedPages divides by and test-tally pins at 10, so the batch driver, the ledger and the catalog all derive page counts from one place. Paging itself has always followed Scholar's own 'Next' link rather than a computed offset.",
+      "CLOSED by user decision 2026-11-01 - Scholar's own title extraction is sometimes garbage and the pipeline inherits it. Found on 2026-10-31 in the CD206 citing list (page 3): rows titled 'Bakker' (byrnEdxkZpcJ) and 'DW, T' (TdRnpq_PossJ) are Scholar parsing a PDF reference list's author field as a title; both are Steuten et al., the same work row 3 (s7Sm7uARZv8J) records correctly, and all three are marked. Asked to choose, the user decided on 2026-11-01 to go by what Google Scholar displays: no cid override was created and no rule changed, so the exhibit keeps all three rows marked and the distinct-paper count stays inflated by 2 on that publication. Recorded so the effect is known if a reviewer queries a citation titled 'Bakker'. Do not revisit unless the user raises it.",
+      "CLOSED by user decision 2026-11-01 - non-English detection. The user chose the guide's conservative no-translation path and, within it, option B: the TITLE decides, while a non-Latin script anywhere in the entry still counts. Applied the same day. Three defects were fixed in capture-citations.js languageFlag: the Greek range was removed from NON_LATIN (Greek letters in a title are scientific notation, and leaving them there let the notation exemption veto the whole test - that is how the Chinese-titled row jSbVxJMuiTsJ came to be highlighted); the ACCENTED range was widened from Latin-1 Supplement to Latin Extended-A/B so Polish ł ą ę ś are visible; and FOREIGN_WORDS gained the French forms et, du, au, par, sans after an empirical check that they produce no false positive over all 1033 marked titles. Result on the filed set: 3 rows dropped (Portuguese 2cEhMauZjFMJ, Polish A2crVjMNOOkJ, Chinese jSbVxJMuiTsJ) and 3 English-titled papers wrongly suppressed on their snippet came back (5nNgqsE2ndYJ, GWzegG-549QJ, T7jE05WUFhMJ), so the headline totals are unchanged at 1033 rows / 1020 distinct papers while 6 exhibit pages changed marks. 52 rows are now flagged non-English (was 53) and 44 of them would count but for the language flag. Flags are stored in each report as language_flag with the original kept in language_flag_captured. Preview retained at Exhibits/Supporting/language-rule-preview-2026-11-01.txt.",
+      "OPEN, needs the user's confirmation before any filing - the 44 rows withheld for language are recoverable only with a certified human translation and affidavit. The decision on 2026-11-01 was not to obtain them, so they stay unhighlighted and out of the total. If that is ever revisited, node tools/query-catalog.js nonenglish lists exactly the rows a translator would have to cover, with the reason each was held back.",
+      "Note for any future rule change: a rule fix in capture-citations.js does NOT reach exhibits already captured, because their language_flag was written at capture time. Applying a change is now a three-step sequence: node tools/reapply-language.js --write (recomputes flags over the filed reports, backing each up to Exhibits/Supporting/Pre-rule-reapply-<date>), then node tools/reprint-exhibits.js --changed --write (re-marks the saved HTML offline, archives the old PDF as SUPERSEDED-, verifies the mark count before saving), then node tools/build-ledger.js and node tools/audit-highlights.js. reprint-exhibits.js --check reports drift without writing."
+    ]
+  },
+  "last_verified_step": "On 2026-11-01 the non-English question was decided and applied, entirely offline - no Scholar request was made. The user chose the guide's conservative no-translation path and, within it, option B: the TITLE decides whether an entry is listed in English, while a non-Latin script anywhere in the entry still flags it. Three defects in capture-citations.js languageFlag were fixed (Greek removed from NON_LATIN so scientific notation no longer vetoes the whole test; ACCENTED widened to Latin Extended-A/B; French forms et/du/au/par/sans added to FOREIGN_WORDS after a zero-false-positive check over all marked titles). tools/reapply-language.js --write recomputed the flag over all 168 filed reports, keeping each original in language_flag_captured and backing every file up to Exhibits/Supporting/Pre-rule-reapply-2026-11-01/. Six exhibit pages changed marks and were re-printed by tools/reprint-exhibits.js --changed --write, which verifies the applied mark count before saving and archives each old PDF as SUPERSEDED-<base>.pdf: antigenic-pressure p5 3->4, galectin-3 p2 5->4, GlyGen p9 9->10, potent-direct-factor-Xa p4 0->1, SPGG p11 7->6, targeting-GPIb p3 10->9. Flag accounting is exact: 53 - 4 unflagged + 3 newly flagged = 52. The headline totals are UNCHANGED at 1033 counted independent rows over 1020 distinct independent papers, because the three titles that dropped out were replaced by three English-titled papers that had been wrongly suppressed on their snippet. The split moved: 655 externally confirmed and 378 resting on Scholar's own complete list (was 653/380). 52 filed rows are now flagged non-English and 44 of them would count but for the language flag. The guide's adjusted English-only figures are now reported: 1033 of 1445 English citation records = 71.5%, and on the distinct-paper basis 1020 of 1427 = 71.5%. Verified afterwards: audit-highlights.js clean over 41 publications and 168 pages; test-pdf-fit.js confirms glygen p9 and SPGG p11 still hold one US Letter sheet at 75% scale; the print header was checked visually in a browser over the re-printed PDF; test-tally 74, test-capture-helpers 62 (was 58, +4 language cases), test-name-match 22, test-work-type 28 all pass. The ledger was rebuilt and the catalog rebuilt at schema version 3, which adds is_non_english, non_english_reason, is_countable_independent and withheld_for_language plus the v_non_english view, and reconciles against the ledger on all fifteen checks; node tools/query-catalog.js nonenglish lists the 44 recoverable rows. One structural fix came out of this: tally.groupReports now resolves language editions itself, walking each publication's pages in order with one carried map, which removed a 44-vs-46 disagreement between the ledger and the catalog over rows whose stored duplicate_of predated edition detection. Database/citation-catalog-schema.md was refreshed to this build (1557 rows stored, 1497 filed, 41 captured publications, 15 citing patents, 458 edition_key rows, 3 held-back editions across 3 citing lists) and the funnel diagram is now arithmetically exact.",
+  "next_steps": [
+    "DONE 2026-11-01: the non-English detection question is settled. The user chose the guide's no-translation path and option B within it (the title decides; a non-Latin script anywhere still flags). Applied offline across all 168 filed reports and 6 re-printed exhibit pages; headline totals unchanged at 1033 rows / 1020 distinct independent papers, with the adjusted English-only figures now reported at 71.5%. Detail in last_verified_step and in the closed open_item. Preview kept at Exhibits/Supporting/language-rule-preview-2026-11-01.txt.",
+    "DEFERRED by user instruction on 2026-11-01: the garbled-title cid override for the CD206 rows 'Bakker' (byrnEdxkZpcJ) and 'DW, T' (TdRnpq_PossJ). The user decided to go by what Google Scholar displays, so the exhibit keeps all three Steuten rows marked and the distinct-paper count stays inflated by 2 on that publication. No override file was created and no rule was changed. Do not revisit unless the user raises it again.",
+    "DONE 2026-11-01: every publication showing a citation count is captured (41 of 48, 168 of 168 exhibit pages). The remaining 7 show no citation count on the profile page, so per the guide they need no exhibit; confirm from the profile before attempting any of them, and note their counts may have moved since the 2026-10-31 snapshot.",
+    "After any change to what counts as independent, run node tools/audit-highlights.js. It replays the current rule over every filed exhibit page offline - saved HTML only, every network request aborted - and names each page whose printed yellow marks no longer match, along with the rows involved. Added 2026-10-31 and clean on all 168 filed pages as of 2026-11-01. A mismatch is not fixed by editing the rule: it needs the reapply/reprint sequence in the step above.",
+    "If the wall returns, node tools/unblock.js --target=\"<citing url>\" opens the citing endpoint directly and holds it open with no deadline, which is where the screen actually appears - the profile page always loads fine.",
+    "Answer questions about the captured evidence with node tools/query-catalog.js (patents | editions | nonenglish | stats | search | pub | review | sql). It is a lookup aid; keep quoting figures from the ledger CSV. stats prints the adjusted English-only totals alongside the headline ones; nonenglish lists the 44 rows a certified translation would recover.",
+    "Spot-check the citing patents (node tools/query-catalog.js patents) - 15 rows across 7 publications at this snapshot, 8 counted as independent. Each is counted on Google Scholar's own complete author list and is indexed in neither PubMed nor OpenAlex, which is normal for a patent. Confirm the assignee and inventor lists against USPTO before citing one in the response.",
+    "If a counting rule ever changes again, applying it to exhibits already captured is a three-step offline sequence, not a re-capture: node tools/reapply-language.js --write (recomputes the language flags over the filed reports, preserving each original in language_flag_captured and backing the files up), then node tools/reprint-exhibits.js --changed --write (re-marks the saved HTML with every request aborted, refuses to save unless the mark count matches the rule, archives the old PDF as SUPERSEDED-), then node tools/build-ledger.js and node tools/build-catalog.js followed by node tools/audit-highlights.js and node tools/test-pdf-fit.js. Run the first two without --write first to see the flips.",
+    "Rebuild the catalog after any archive or re-capture: node tools/build-catalog.js. It prints a reconciliation against tally.js; investigate a DIFF line rather than quoting either side.",
+    "If a verification screen appears, run node tools/unblock.js and clear it at your own pace: the window now stays open indefinitely instead of closing after three minutes.",
+    "DONE 2026-11-01: the largest publication, GlyGen (248 citations, 25 exhibit pages), was run alone in its own session as planned and completed with no access wall.",
+    "Spot-check the highlighted entries no external index covers - 378 at the 2026-10-31 snapshot with all 41 publications filed, listed by node tools/query-catalog.js and in each publication's review sheet.",
+    "DONE 2026-11-01: the Portuguese entry (Galectin-3 page 2, cid 2cEhMauZjFMJ) is unhighlighted, along with a Polish and a Chinese title, under the applied language rule. Three English-titled papers that had been suppressed on their German abstracts came back in their place.",
+    "Confirm each exhibit shows the cited article title at the top of the citing list, per the guide.",
+    "Consolidate citing-article PDFs into a single PDF or an organized .zip per the guide."
+  ],
+  "blockers": [
+    {
+      "date": "2026-10-29",
+      "what": "Google Scholar unusual-traffic/verification screen on the citing-articles endpoint (scholar?oi=bibs&cites=...). Hit on the first citing request of production batch 1, for 'Differential recognition of oligomannose isomers...' (cites=15061740354097007450).",
+      "impact": "Production batch 1 stopped before any exhibit was written. Profile and article pages loaded normally immediately beforehand, so this is specific to the citing-list endpoint.",
+      "action_taken": "Stopped without solving, bypassing, or retrying, per project instructions. No files written, so nothing needs to be discarded.",
+      "needed_to_resume": "Resolved on 2026-10-29: the user completed the verification in the browser window and the paused run resumed normally. A later run in the same session reached Scholar without a challenge, so the grant carried over in the persistent profile.",
+      "status": "resolved",
+      "evidence": "The attempt is recorded in Exhibits/Supporting/batch-runs.json with blocked=true and exit_code=2, and a dated screenshot and HTML copy of the screen were saved as BLOCKED-access-wall-2026-10-29T21-49-57. Nothing was written to Exhibits/PDFs by the blocked attempt, so no bad exhibit needed discarding."
+    },
+    {
+      "date": "2026-10-30",
+      "what": "Google Scholar unusual-traffic/verification screen on the citing-articles endpoint. Hit on the first citing request of a re-capture of 'Galectin-3 Decreases 4-1BBL Bioactivity...' (cites=10448952677968226961), immediately after that publication's article page loaded normally.",
+      "impact": "No exhibit written. The publication whose re-capture was blocked stays unfiled: its earlier one-page exhibit was archived as incomplete, so it is currently 5 of 48 publications filed.",
+      "action_taken": "Stopped without solving, bypassing, or retrying, per project instructions. The run polled the already-open page for three minutes, made no new requests, and exited 2.",
+      "needed_to_resume": "Resolved on 2026-10-30: the user cleared the reCAPTCHA and the batch resumed with no further challenge across six citing pages. tools/unblock.js now holds a window open with no deadline for the next time, and always releases the profile lock on exit.",
+      "status": "resolved",
+      "evidence": "Dated screenshot and HTML copy saved as BLOCKED-access-wall-2026-10-30T01-50-05 in Exhibits/Supporting. Earlier screens from 2026-10-29 (T21-49-57, T23-51-38, T23-55-15) are kept alongside."
+    },
+    {
+      "date": "2026-10-30",
+      "what": "Google Scholar unusual-traffic/verification screen on the citing-articles endpoint. Hit on the first citing request of a re-capture of 'An update on recent patents on thrombin inhibitors (2010-2013)' (cites=7585410930116882242), immediately after that publication's article page loaded normally.",
+      "impact": "No exhibit written. The publication whose re-capture was blocked is currently unfiled: its earlier capture was archived as SUPERSEDED-bib-404-* because 12 of 35 rows had an incomplete author list, so it is 23 of 48 publications filed.",
+      "action_taken": "Stopped without solving, bypassing, or retrying, per project instructions. The run polled the already-open page for three minutes, made no new requests, and exited 2. The batch driver stopped rather than moving to the next publication.",
+      "needed_to_resume": "Resolved on 2026-10-31: the user cleared the verification in the window tools/unblock.js held open directly on the citing URL, after which the re-capture of this publication ran clean across all four pages with no further challenge. Opening unblock.js with --target set to the citing page is the reliable route, because the profile page always loads normally and gives no warning. Expect the wall to return after roughly 10-20 further citing requests.",
+      "status": "resolved",
+      "evidence": "Dated screenshot and HTML copy saved as BLOCKED-access-wall-2026-10-30T21-28-42 in Exhibits/Supporting. The saved page carries the reCAPTCHA markup and unusual-traffic wording, and no 404 text, which distinguishes it from the separate BibTeX-link failures. The attempt is recorded in Exhibits/Supporting/batch-runs.json with blocked=true. A further attempt on 2026-10-31 19:44 was refused the same way on the same cites id and is saved as BLOCKED-access-wall-2026-10-31T19-44-12 (PNG + HTML), also with blocked=true and no exhibit written."
+    },
+    {
+      "date": "2026-10-31",
+      "what": "Google Scholar unusual-traffic/verification screen on the citing-articles endpoint. Hit on the first citing request of the batch of the three smallest pending publications, for 'Potent direct inhibitors of factor Xa based on the tetrahydroisoquinoline scaffold' (cites=5710710517199553350), immediately after that publication's article page loaded normally and returned its full author list.",
+      "impact": "Nothing written to Exhibits/PDFs and no exhibit needs discarding. The three pending publications in that batch (factor Xa 32, CD206 35, factor XIa 41) remain not started, so the filed totals are unchanged at 27 of 48 publications and 63 exhibit pages. Note the profile page and the publication list loaded fine minutes earlier in the same session, which is the usual pattern - the wall is specific to the citing-list endpoint.",
+      "action_taken": "Stopped without solving, bypassing, or retrying, per project instructions. The capture saved dated evidence, polls only the already-open page making no new requests, and will exit 2 after three minutes; the batch driver stops rather than walking into the next wall.",
+      "needed_to_resume": "Resolved on 2026-10-31: the user cleared the reCAPTCHA in the open browser window. The capture detected the clear on its own poll of the already-open page, continued without re-requesting, and the whole batch ran to completion with no further challenge - the grant again carried in the persistent profile.",
+      "status": "resolved",
+      "evidence": "Dated screenshot and HTML copy saved as BLOCKED-access-wall-2026-10-31T23-27-13 in Exhibits/Supporting (PNG 64.6 KB, HTML 155.8 KB). Nothing was written to Exhibits/PDFs or Exhibits/PDFs/Production by this attempt."
+    },
+    {
+      "date": "2026-11-01",
+      "what": "Google Scholar unusual-traffic/verification screen on the citing-articles endpoint. Hit while walking GlycoGlyph (cites=11088885855065116690), on the request for page 2 immediately after page 1 loaded and was filed normally. This was the third publication of the fourth batch; the two earlier publications in that batch ran without a challenge.",
+      "impact": "GlycoGlyph is filed incompletely: page 1 only, 10 records of the 78 citations at the snapshot, 3 independent. The batch driver reported it INCOMPLETE and stopped rather than continuing, and the ledger now flags it as the one captured publication that looks incomplete, so it cannot be mistaken for a finished exhibit. The two completed publications in the batch (Designing allosteric regulators of thrombin, 7 pages / 65 records / 33 independent; Rational design of potent small synthetic allosteric inhibitors of thrombin, 8 pages / 74 records / 43 independent) are complete and were kept. Nine publications remain not started, including the 248-citation GlyGen publication that must run alone.",
+      "action_taken": "Stopped without solving, bypassing, or retrying, per project instructions. The capture made no new requests while waiting, polled only the already-open page for three minutes, saved dated evidence, and exited 2; the batch driver halted on that exit code. Ledger rebuilt and the exhibit audit run afterwards.",
+      "needed_to_resume": "Resolved on 2026-11-01: the user cleared the reCAPTCHA in the window tools/unblock.js had held open directly on the GlycoGlyph citing URL. That tool re-read the already-loaded page and reported the citing list loading normally with 10 result rows, then closed the browser to release the profile lock. A --dry-run then confirmed --skip-done still excludes only the 38 complete captures, so GlycoGlyph was selected for a full re-capture that overwrites the partial page-1 set.",
+      "status": "resolved",
+      "evidence": "Dated screenshot and HTML copy saved as BLOCKED-access-wall-2026-11-01T01-30-50 in Exhibits/Supporting. The attempt is recorded in Exhibits/Supporting/batch-runs.json with blocked=true and exit_code=2. The partial GlycoGlyph exhibit (1 page) remains in Exhibits/PDFs/Production and is marked incomplete by the ledger rather than deleted, so no evidence is lost; it must be replaced by a full re-capture before filing."
+    }
+  ],
+  "activity_log": [
+    {
+      "date": "2026-10-29",
+      "activity": "Verified that the Google Scholar profile and publication list were accessible after the user completed the CAPTCHA.",
+      "result": "Profile content visible; citation-by-citation review not started."
+    },
+    {
+      "date": "2026-10-29",
+      "activity": "Tested PDF generation using the browser automation PDF command and Ctrl+P.",
+      "result": "Direct PDF generation was unsupported and Ctrl+P showed no visible print flow; no PDF file was produced."
+    },
+    {
+      "date": "2026-10-29",
+      "activity": "Installed Playwright 1.64.1 (Node.js) with Chromium and added tools/capture.js, a headed-mode capture script using a persistent browser profile so a user-solved CAPTCHA carries over between runs. Script pauses for the user before saving and never attempts to solve a CAPTCHA itself.",
+      "result": "Setup succeeded. Chromium downloaded to the user ms-playwright cache."
+    },
+    {
+      "date": "2026-10-29",
+      "activity": "Ran tools/capture.js against the Scholar profile URL in headed mode. No CAPTCHA or unusual-traffic screen appeared; the persistent profile retained access. Saved PDF, HTML, and full-page PNG to Independent Citation Record/Exhibits and verified the PDF exists and is non-empty.",
+      "result": "Verified PDF exhibit created: akul-mehta-google-scholar-2026-10-29.pdf (83.8 KB). Snapshot metrics from the dated HTML: Cited by 1,495 total / 1,010 since 2020; h-index 23 / 18; i10-index 34 / 30. Capture contained the default 20 publication rows."
+    },
+    {
+      "date": "2026-10-29",
+      "activity": "Added tools/list-all-publications.js and exported the expanded publication list.",
+      "result": "48 publications captured with citation counts, authors, venues, citing-list URLs, and article-page URLs, saved as dated JSON and TSV. Seven entries show no count (recent papers and patents)."
+    },
+    {
+      "date": "2026-10-29",
+      "activity": "Added tools/capture-citations.js to capture a citing-articles page, classify each citing paper, highlight the results in the live page, and emit a PDF plus a review sheet. Added tools/human.js for randomized pacing and human-like scrolling, and applied it across the capture scripts.",
+      "result": "Pacing and highlight pipeline in place. No exhibit saved yet."
+    },
+    {
+      "date": "2026-10-29",
+      "activity": "Applied user instructions on self-citations: papers by the PI (Richard D. Cummings) and former PI (Umesh R. Desai) are never independent. Because both surnames are common, matching was changed to surname plus initials with an explicit review state for unresolvable collisions, and moved into tools/name-match.js with offline tests.",
+      "result": "tools/test-name-match.js passes 20/20. Verified against the real author list of one 2024 paper: a different-initials Cummings and a different Desai are correctly not matched, while 'Richard D Cummings' matches 'RD Cummings'."
+    },
+    {
+      "date": "2026-10-29",
+      "activity": "Attempted a live capture on a low-citation publication. The cited-paper author list initially failed to parse, and an unusual-traffic/verification screen then appeared on the citing-articles page. Automation stopped without saving, and the author parser was given a text-based fallback.",
+      "result": "Blocked pending user verification. Debugging now rotates to a different publication on each attempt to avoid repeat rate limits."
+    },
+    {
+      "date": "2026-10-29",
+      "activity": "Re-ran the capture on a different publication (the 6-citation Database 2024 biocuration paper) to rotate away from previously requested citing lists. The author-parser fallback worked: all 36 authors of the cited paper were read from the Scholar article page, including the user, and surname-plus-initial keys were built for the cited authors, PI, and former PI.",
+      "result": "Author extraction confirmed working end to end. The unusual-traffic screen then appeared again on the citing-articles page; the run is paused awaiting the user and nothing was saved. The screen appears specifically on citing-article (scholar?oi=bibs&cites=...) pages, not on profile or article pages."
+    },
+    {
+      "date": "2026-10-29",
+      "activity": "User cleared the verification screen and the paused run resumed, producing the first citation exhibit for the Database 2024 biocuration paper.",
+      "result": "Verified PDF plus review sheet written. Initial counts reported 3 independent, 2 dependent, 1 review."
+    },
+    {
+      "date": "2026-10-29",
+      "activity": "Reviewed the saved exhibit and found a misclassification. Google Scholar separates authors from the venue with a non-breaking space, so the venue was not stripped and the last author merged with the journal name. This hid a genuine match: the O-GlcNAc informatics paper lists Junfeng Ma, an author of the cited paper, and was wrongly counted independent. Fixed the normalisation in tools/name-match.js and added regression tests.",
+      "result": "Tools tests pass 22/22. The superseded PDF was renamed SUPERSEDED-bad-classification-glycans-curation.pdf and the publication was re-captured. Corrected counts: 2 independent, 3 dependent, 1 needs review. Verified visually that independent titles are highlighted yellow, the review item orange, and non-independent entries faded."
+    },
+    {
+      "date": "2026-10-29",
+      "activity": "Checked the Cite-popup BibTeX reader, intended to complete author lists that Scholar truncates.",
+      "result": "It opened the popup but returned no author field, so the one truncated entry remains unresolved. Needs a corrected selector before truncated lists can be resolved automatically."
+    },
+    {
+      "date": "2026-10-29",
+      "activity": "Per user request, simplified the exhibit output so the saved PDF resembles an untouched Google Scholar results page with only independent citations highlighted. Removed the on-page legend box, the orange review highlight, the faded non-independent rows, and the dated print header/footer from the default path; all of these are now behind a --debug flag for working copies. Unresolved entries are left unmarked in the PDF and are instead listed at the top of the review Markdown, with the full decision table retained there and in the report JSON.",
+      "result": "capture-citations.js updated and syntax-checked; name matching unchanged and still covered by tools/test-name-match.js. Existing exhibits were produced with the older marked-up style and should be re-captured in clean mode."
+    },
+    {
+      "date": "2026-10-29",
+      "activity": "Re-captured the biocuration publication in clean mode. The Cite-popup BibTeX reader, previously reported as returning no author field, actually worked and recovered the HOL-30 paper's six authors, which resolved the outstanding REVIEW item.",
+      "result": "Saved artifacts were invalid: the saved HTML was 0.5 KB and the PDF showed the BibTeX record instead of the citing list. Clicking the BibTeX control navigates the tab away and nothing returned to the results page."
+    },
+    {
+      "date": "2026-10-29",
+      "activity": "Fixed the Cite-popup reader. Citation records are now fetched in a separate tab from the control's href and closed, so the results page is never navigated away; a click-in-place fallback restores the list explicitly. The cite control is located by title rather than positional index, and capture now refuses to save unless the tab is on a citing-articles page. Saved output is verified to contain the results container, and the yellow highlight count is compared with the expected number.",
+      "result": "Re-ran the capture successfully: verified PDF plus a saved page containing the results list and exactly 3 yellow highlights matching the 3 independent entries."
+    },
+    {
+      "date": "2026-10-29",
+      "activity": "Per user instruction, added external corroboration so a citation is not called independent on Scholar's word alone. New tools/crosscheck.js looks each candidate up in PubMed (NCBI E-utilities esearch plus esummary) and then OpenAlex, re-runs the same surname-plus-initials rule on the external author list, and records a confirm_state. Google Scholar remains primary: agreement confirms, a paper neither service indexes is still marked on Scholar's complete list and flagged for a spot-check, and any contradiction pulls the entry back to REVIEW. CrossRef is excluded as a basis for independence. Semantic Scholar and Europe PMC were tested and add nothing here; Semantic Scholar rate-limits aggressively.",
+      "result": "Verified against the four candidate titles: MIRAGE guidelines confirmed by PubMed, HOL-30 confirmed by OpenAlex, the GlyGen/UniProtKB paper's external list revealed Raja Mazumder and Maria Martin (already DEPENDENT via J Vora, so no change), and the glycan-biomarker LLM paper is in neither index so it is highlighted on Scholar's list and flagged."
+    },
+    {
+      "date": "2026-10-29",
+      "activity": "Checked whether the NCBI and OpenAlex look-ups need credentials.",
+      "result": "No account, email, or token is required and both were confirmed working anonymously. NCBI's policy asks for an identifying email and offers an optional API key raising the limit from 3 to 10 requests/second; both are optional for this tool and can be passed with --email and --ncbi-key or CROSSCHECK_EMAIL and NCBI_API_KEY. The email is also sent to OpenAlex as mailto."
+    },
+    {
+      "date": "2026-10-29",
+      "activity": "Corrected the review sheet, which had listed confidently decided DEPENDENT entries as needing review. Attention is now limited to unresolved REVIEW entries, external contradictions, and highlighted-but-not-indexed entries. The review-sheet builder was extracted so a sheet can be rebuilt offline from a saved report JSON with --report, without contacting Scholar.",
+      "result": "Offline rebuild of the exhibit's sheet now reports 1 open item, the ProQuest-indexed entry flagged for a spot-check, instead of 3."
+    },
+    {
+      "date": "2026-10-29",
+      "activity": "Reorganised Exhibits into PDFs, Supporting and Archive at the user's request, so filed exhibits sit apart from workpapers. capture-citations.js, capture.js and list-all-publications.js now write PDFs to Exhibits/PDFs and HTML, PNG, report JSON and review Markdown to Exhibits/Supporting. Existing files were moved accordingly.",
+      "result": "PDFs holds only the Scholar profile exhibit and the one clean citing-list PDF. Three superseded PDFs were renamed with a SUPERSEDED-marked-up or SUPERSEDED-bad-classification prefix and moved to Archive, including the click-coupling capture, which predates corroboration and pagination and must be re-captured before use."
+    },
+    {
+      "date": "2026-10-29",
+      "activity": "Found and fixed a blocking gap before any production run: the capture only ever saved the first 20 citing articles, while the guide asks for a PDF of every citation page. It now follows Scholar's start= offsets, saving one PDF per page, until a page returns fewer than 20 records or the reported result count is covered. Page 1 keeps the plain file name; later pages take a -pN suffix, and the review sheet names the PDF each entry came from.",
+      "result": "Material: 24 of 48 publications have more than 20 citations and the largest has 248, so roughly 94 citation pages are needed in total. Offset math is covered by offline tests."
+    },
+    {
+      "date": "2026-10-29",
+      "activity": "Added a non-English screen. The guide forbids highlighting a non-English citation without a certified human translation and affidavit, and says machine translation is not certified, so such entries must also be excluded from the adjusted English-only totals. Entries are flagged on any non-Latin script in the title or snippet, or two or more Latin-script function words that English does not use, and are never highlighted. main() was restructured into a per-page processCitingPage so the flag is applied before highlighting, and the module is now requirable without launching a browser.",
+      "result": "New tools/test-capture-helpers.js covers count parsing, language detection, pagination offsets and the highlight and attention rules: 36 passed. Existing tools/test-name-match.js still passes 22."
+    },
+    {
+      "date": "2026-10-29",
+      "activity": "Per user instruction, every exhibit PDF page now prints a header containing the Google Scholar URL it was captured from plus the snapshot date, and a footer with the publication name and page number. This applies to all pages of a paginated capture, each of which carries its own start= offset URL. Added tools/test-pdf-header.js, which renders the same markup at the real printable width offline to confirm a long offset URL is not clipped.",
+      "result": "Header always on for exhibits, overriding the earlier no-print-header rule. Measured at 793 px printable width: URL 269 px plus date 87 px on a 7 px line, well inside the 12 mm top margin. capture.js uses the same template."
+    },
+    {
+      "date": "2026-10-29",
+      "activity": "Added tools/run-batch.js, a sequential batch driver, and an --out=NAME option to the capture so a production batch files its PDFs to their own sub-folder. Selection is by citation range, count, or title substring, with --skip-done to resume and --dry-run to preview without contacting Scholar. Progress is appended to Exhibits/Supporting/batch-runs.json after every publication.",
+      "result": "Batch of 5 publications at 21-40 citations selected (~10 citation pages). PDFs go to Exhibits/PDFs/Production, leaving the two earlier sample PDFs untouched in Exhibits/PDFs. Only a plain folder name is accepted so a stray path cannot write outside Exhibits."
+    },
+    {
+      "date": "2026-10-29",
+      "activity": "Started production batch 1. The cited article's page loaded normally and all 15 authors were read, but the first citing-articles request of the batch returned the unusual-traffic/verification screen. Work stopped there per project instructions: the screen was not solved, bypassed, or retried. In --auto mode the wait now re-reads the open page only, without new requests, and gives up after three minutes so the run records a checkpoint and exits with code 2 rather than hanging.",
+      "result": "No exhibit captured; 0 PDFs written. Awaiting the user to clear the verification screen in the browser window, after which the same command with --skip-done resumes from this point."
+    },
+    {
+      "date": "2026-10-29",
+      "activity": "Added evidence capture for a blocked attempt: when an access wall is detected, the page is saved as a dated PNG and HTML copy into Exhibits/Supporting under a BLOCKED- prefix, once per run. These are the record of where work stopped, not exhibits, so they are kept out of the PDFs folder, and a failure to save them is logged rather than allowed to hide the block.",
+      "result": "In place for future runs. The batch-1 attempt above predates the change, so no wall screenshot exists for it; the terminal transcript and the blocked entry in batch-runs.json are the record for that attempt."
+    },
+    {
+      "date": "2026-10-29",
+      "activity": "The user cleared the verification screen and the paused run completed page 1 of the first production publication. Reviewing that output exposed four defects. (1) Citing pages hold 10 records, not 20, and a pagesize=20 parameter does not change it; the assumed page size both stopped after page 1 and would have skipped records 11-20. Paging now follows each page's own Next link so Scholar's real step size and its as_sdt/sciodt/scipsc parameters are preserved. (2) The guard that refused to save anything not on a citing page tested the URL for oi=bibs, which Scholar's own Next-page links omit, so pages 2 and beyond were read, corroborated, and then discarded while the Cite-popup loop re-navigated the list after every resolution. Replaced by a test on the cites= parameter. (3) Greek letters in a title were treated as a non-English signal, which wrongly suppressed a genuine independent citation on an alpha-1,2-mannosidase paper; a minority of Greek letters alongside substantial Latin text is now read as scientific notation. (4) Exhibits printed A4 at full scale; per user instruction they now print US Letter at 75%, verified by a new offline fit test.",
+      "result": "All four fixed and covered by offline tests, which now pass 22 and 44. The first capture was archived as SUPERSEDED-missing-highlight-and-incomplete- and the publication re-captured."
+    },
+    {
+      "date": "2026-10-29",
+      "activity": "Re-captured 'Differential recognition of oligomannose isomers...' across the whole citing list. Four pages were followed by their own Next links, 39 records captured against 39 citations at the snapshot, classified, corroborated, and saved as four single-sheet US Letter PDFs with the source URL header on each.",
+      "result": "Verified: 33 independent and highlighted (28 externally confirmed, 5 marked on Scholar's complete list but indexed in neither service), 5 dependent, 1 for manual review. Per-page highlight counts matched the reports exactly at 6, 9, 10 and 8, and every PDF measured one page at 612x792 points. Added tools/summarize-progress.js, which rolls per-page reports up into per-publication totals and counts only publications whose exhibit PDF is still filed."
+    },
+    {
+      "date": "2026-10-30",
+      "activity": "Investigated why 'Galectin-3 Decreases 4-1BBL Bioactivity...' filed a single exhibit page for a 17-citation list while exiting cleanly.",
+      "result": "Root cause found in the saved page copies: Scholar served the verification screen twice at the page-2 request, the wall poll then reported it clear, and the walk read the post-wall page as empty and called the list complete. Three fixes: after a wall clears, the citing URL is requested again if the tab no longer sits on a citing list; a page reached through a 'Next' link that shows no result rows is reported as unfinished and blocked rather than complete; and the exit status is set before the browser is closed, so a lost browser can no longer turn a blocked run into exit 0. A new end-of-list verdict distinguishes a verification interstitial (no results container) from a genuinely empty list and a real last page, and is recorded in each report. The incomplete one-page exhibit was archived as SUPERSEDED-incomplete-1-of-2-pages-galectin-3-decreases-4-1bbl.pdf. Added tools/test-next-link.js, which replays the capture's own pagination extraction against a saved HTML copy offline; it confirms the Next link resolves correctly on the saved page 1 and returns 'not-a-results-page' on a saved wall screen. Offline tests now 54 + 22."
+    },
+    {
+      "date": "2026-10-30",
+      "activity": "Added the statistics log the packet needs: tools/tally.js (shared counting rules), tools/build-ledger.js (per-article and global statistics), tools/test-tally.js, and tools/check-browser.js. summarize-progress.js now uses the shared rules instead of its own copy.",
+      "result": "Ledger written to Exhibits/Supporting/citation-ledger-2026-10-29.json and .csv, with one row per publication for all 48 (5 captured, 43 not started, 7 showing no count) and a global block tied to the 2026-10-29 snapshot: 99 records reviewed, 83 countable independent (70 externally confirmed, 13 on Scholar's complete list), 12 dependent, 0 self-citations by the current PI and 2 by the former PI, 2 awaiting review, 0 flagged non-English; independent share 83.8% of reviewed records and 85.6% of decided ones. Each run also appends a line to citation-ledger-history.csv so growth across sessions is a log rather than an overwrite. A publication counts toward totals only while its exhibit PDF is filed, and independent_countable excludes non-English and unsettled entries, so no pending item inflates a figure. Offline tests now 38 + 54 + 22."
+    },
+    {
+      "date": "2026-10-30",
+      "activity": "Verified the Chrome channel after the user installed Chrome, using the new tools/check-browser.js.",
+      "result": "Chrome is registered at C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe and the registry App Paths entry points there. pace.launch() reports browser version 156.0.8078.80, a headed window, and a user agent of Chrome/156.0.0.0 with no HeadlessChrome marker, so the real Chrome channel is in use rather than the bundled Chromium. Note that browserType().executablePath() still prints the Playwright-bundled path, which is a reporting artifact of the channel API and not the process actually running; the version and user agent are the reliable indicators."
+    },
+    {
+      "date": "2026-10-30",
+      "activity": "Added tools/unblock.js after the user reported not seeing the verification window, then re-checked access on the blocked citing page.",
+      "result": "The verification screen is still present on the citing endpoint (page shows 116 characters of text and no result rows). A window is now open on that URL through the persistent profile and will wait indefinitely rather than closing after three minutes, so the user can clear it without racing a timer. No attempt was made to solve it and no further requests were made."
+    },
+    {
+      "date": "2026-10-30",
+      "activity": "Resumed the batch after the user cleared the reCAPTCHA: three publications captured, beginning with the Galectin-3 / 4-1BBL re-capture that had been truncated.",
+      "result": "All three completed with no access wall. Galectin-3: 2 pages, 17 records for 17 citations (was 1 page and 10 records before the pagination fix). Chemoenzymatically prepared heparan sulfate: 2 pages, 17 records. Design/synthesis nitric oxide prodrugs: 2 pages, 16 records. Each citing walk ended on Scholar's own last page, recorded as end_reason=last-page-of-results. Ledger totals are now 8 of 48 publications, 17 exhibit pages, 149 records, 111 countable independent (95 externally confirmed, 16 on Scholar's complete list), 29 dependent, 2 self-citations by the former PI, 5 awaiting review. Independent share 74.5% of reviewed and 78.2% of decided records. All 16 exhibit pages verified to contain exactly the highlights their reports claim."
+    },
+    {
+      "date": "2026-10-30",
+      "activity": "Widened the non-English screen after a Portuguese title was highlighted as independent, per the user's instruction to keep the fix but not to obsess over language detection.",
+      "result": "The word list now covers Portuguese, Spanish, Italian, French, Dutch and Slavic function words, the snippet is scanned as well as the title, and two or more distinct accented letters in a title is treated as a language signal. Two-letter forms were deliberately left out after 'Nitric oxide binding geometry in heme-proteins' was falsely flagged from repeated 'NO' in its snippet: NO is the commonest abbreviation in this corpus. Re-running the screen over every captured entry now flags exactly one new item, the Portuguese galectin-3 paper, and no English one. That entry is still highlighted in the exhibit PDF filed today, since the flag is applied at capture time, and it is still counted in the 111; it will drop out automatically if that publication is re-captured. Offline tests now 57 + 38 + 22."
+    },
+    {
+      "date": "2026-10-30",
+      "activity": "Second resumed batch: three publications captured with no access wall and no retries.",
+      "result": "Recognition of highly branched N-glycans of the porcine whipworm: 2 pages, 15 records for 15 citations, 9 independent. Reusable glycan microarrays (MAWE): 2 pages, 15 records, 9 independent. Cholesterol-dependent enzyme activity of human TSPO1: 2 pages, 11 records, 9 independent. Each walk ended on Scholar's own last page. Ledger now 11 of 48 publications, 23 exhibit pages (22 in Production plus the one-page glycans-curation exhibit in PDFs), 190 records, 137 countable independent (116 externally confirmed, 21 on Scholar's complete list), 40 dependent, 3 self-citations by the former PI, 7 awaiting review, 3 flagged non-English. Independent share 72.1% of reviewed and 76.1% of decided records. All 23 exhibit pages re-verified against their reports with no mismatch."
+    },
+    {
+      "date": "2026-10-30",
+      "activity": "Third resumed batch: INLIGHT-labeled heparin analysis, novel click coupling chemistry, and azolylacryloyl hemoglobin modifiers.",
+      "result": "11 records (10 independent), 9 records (5 independent), and 9 records (4 independent) respectively, each matching Scholar's count and ending on its own last page. This batch also re-captured 'Novel click coupling chemistry to explore glycan recognition' with corroboration and pagination, closing the open item for the archived early capture. Ledger now 14 of 48 publications, 27 exhibit pages, 219 records, 154 countable independent (131 externally confirmed), 50 dependent, 7 awaiting review, 5 flagged non-English. Independent share 70.3% of reviewed and 74.4% of decided. All 26 Production exhibit pages verified with no highlight mismatch."
+    },
+    {
+      "date": "2026-10-30",
+      "activity": "Reviewed every entry the widened non-English screen has now flagged, to confirm none is an English paper.",
+      "result": "Five flagged: two Spanish, one French, one German, one Portuguese, and one Chinese paper whose title is English but whose snippet is Chinese (Journal of Central South University, PMC11208409). All are genuine non-English citations and are correctly excluded from the counted totals. Re-running the screen over every entry captured so far still changes exactly one decision, the Portuguese paper, so no English citation has been suppressed."
+    },
+    {
+      "date": "2026-10-30",
+      "activity": "Ran production batch 5 (three publications) and rebuilt the statistics log. Also fixed a duplicate-exhibit risk: --skip-done consulted only batch-runs.json, so a publication captured outside the batch driver (Functional implications of glycans and their curation, cites=16263333014302844300) would have been captured a second time under a new date. run-batch.js now also excludes any cites id that already has a filed exhibit set, and build-ledger.js warns if one cites id ever has more than one.",
+      "result": "Three exhibits added, all complete and verified: 9/9, 7/7 and 4/4 records with 4, 4 and 2 independent. Totals moved to 17 of 48 publications, 30 exhibit pages, 239 records, 164 countable independent (140 externally confirmed), 60 dependent, 7 awaiting review. No access wall encountered."
+    },
+    {
+      "date": "2026-10-30",
+      "activity": "Ran production batch 7 and consolidated the counting rules. Three places had their own copy of 'what counts as independent' and had drifted: the review sheet counted every entry with a confirm_state, including rows held back as non-English, so one sheet read '9 independent (10 externally confirmed)'; run-batch counted raw INDEPENDENT status and reported 23 where the ledger said 22; and a --no-crosscheck run highlighted rows the ledger refused to count. All now call tools/tally.js. Also found that Scholar's citing list shows the same paper twice when a publisher copy and a repository/thesis copy both exist (six publications affected), so the ledger now reports distinct papers alongside rows, and each review sheet lists its merges.",
+      "result": "Three exhibits added, all complete: 9 pages total for this batch. Totals moved to 21 of 48 publications, 40 exhibit pages, 316 rows over 311 distinct papers, 222 countable independent (218 distinct papers). Offline tests 58 + 50 + 22. All 21 review sheets rebuilt offline and verified to list exactly their report entries, with splits that sum to the highlighted total."
+    },
+    {
+      "date": "2026-10-30",
+      "activity": "Diagnosed the 404s the user reported in the browser's extra tab. They come from the BibTeX link behind Scholar's Cite popup (scholar.googleusercontent.com/scholar.bib?...&cd=-1, signed by scisig/scisdr), which Scholar serves a 404 for fairly often. The capture ignored the HTTP status, polled the dead page for seven seconds, and logged only 'could not parse authors', so the cause was invisible and the row lost its author list. Twelve of thirty-five rows on the patent review failed this way and all fell to manual review, which is why open items rose from 8 to 24. Fixed: report the real status, stop polling a refused page, retry once (the popup regenerates the signature), then try the popup's other format, which is a different link. Deliberately did not add a click-in-place fallback - that control is a real link to the URL that just failed, so clicking re-requests the same 404 and costs the results page. Archived the affected capture and started a re-capture, which is where the genuine verification screen appeared.",
+      "result": "Confirmed the two failures are distinct: the saved BLOCKED page carries reCAPTCHA markup and unusual-traffic wording with no 404 text. Re-capture blocked, nothing written, so nothing needs discarding. Ledger after archiving: 23 of 48 publications, 48 exhibit pages, 388 rows over 382 distinct papers, 274 countable independent (269 distinct papers), 12 awaiting review. Offline tests 58 + 50 + 22."
+    },
+    {
+      "date": "2026-10-31",
+      "activity": "While capture remains paused at the verification wall, built an offline SQLite catalog over the reports already on disk: tools/build-catalog.js writes Database/citation-catalog.sqlite (meta, publications, citations, an FTS5 index kept in sync by triggers, and v_patents / v_independent_counted / v_pub_stats views), and tools/query-catalog.js reads it with patents | stats | search | pub | review | sql subcommands plus --csv. The builder imports every counting rule from tools/tally.js rather than reimplementing one, keeps superseded and unfiled rows with a filed flag, and re-checks its own totals against tally.js at the end of every build. run-batch.js now refreshes the catalog for each publication after writing the run log and skips the step for a blocked attempt. No contact with Google Scholar; no exhibit PDF, report JSON or ledger file was modified.",
+      "result": "Catalog reproduces the 2026-10-30 ledger exactly: 23 of 48 publications, 48 exhibit pages, 388 filed records over 382 distinct papers, 274 countable independent (217 externally confirmed, 57 on Scholar's complete list), 90 dependent, 0 self (PI), 4 self (former PI), 12 awaiting review, 8 flagged non-English. The 413 rows in Exhibits/Supporting include 25 from superseded bases, stored with filed = 0 and excluded from every total. The database is a lookup aid; citation-ledger-2026-10-29.csv stays authoritative."
+    },
+    {
+      "date": "2026-10-31",
+      "activity": "Corrected tools/work-type.js, which decided a citing document was a patent by scanning its title and snippet for the word 'Patent' -- that would have misfiled a journal article about patent landscapes as a patent. Text matching is now limited to the venue carrier fields (authors, authors_used, external_title, external_authors) plus the link host, a patent document form is required to claim one, and a carrier that merely contains the word 'patents' (the journal Expert Opinion on Therapeutic Patents) is returned as work_type 'unknown' for a human rather than guessed. Added tools/test-work-type.js covering the regression, the four captured patent records, number extraction, and a guard that the scanned field list stays narrow.",
+      "result": "node tools/query-catalog.js patents lists four citing patents, all classified independent and counted: US20250084117A1 (application) citing the heparan sulfate glycomimetics paper, and US11052079B2, US10993914B2 and US12059497B2 (granted) citing the thrombin / sucrose octasulfate paper. Patent rows stay in their own view and are never added into the article total. Offline tests: work-type 28, tally 50, capture-helpers 58, name-match 22."
+    },
+    {
+      "date": "2026-10-31",
+      "activity": "Moved the catalog database from Exhibits/Supporting to a Database folder at the project root, because Exhibits is the evidence packet and a generated binary rewritten on every run does not belong in it. Rebuilt and deleted the old copy. Then tested a live capture of the publication that still needs one (An update on recent patents on thrombin inhibitors, cites=7585410930116882242, 35 citations, ~4 pages).",
+      "result": "Rebuild at the new path reconciles identically (448 rows stored, 388 filed, 274 independent). The capture reached the article page normally and was refused on the first citing request by the same verification wall; it polled the already-open page for three minutes, made no new requests, and exited 2 without saving an exhibit. Wall evidence saved as BLOCKED-access-wall-2026-10-31T19-44-12. The batch driver skipped the catalog refresh for the blocked attempt as designed - the database still reports 388 filed records and 274 independent, unchanged."
+    },
+    {
+      "date": "2026-10-31",
+      "activity": "The user cleared the verification screen in the window opened directly on the citing URL, and the patent-review re-capture was run: An update on recent patents on thrombin inhibitors (2010-2013), cites=7585410930116882242. Ledger rebuilt afterwards, which is the documented step after a batch. The prior 23-publication figures stay recoverable from the append-only citation-ledger-history.csv.",
+      "result": "Clean run, no challenge: 4 pages / 35 records against 35 citations at the snapshot, 27 independent highlighted and verified page by page (10 + 9 + 7 + 1 marks found, exactly as expected). Compared with the archived capture it had replaced, rows resolved from the Cite popup rose 5 to 15, manual review fell 12 to 2, and counted independent rose 17 to 27. Six rows are flagged non-English (Cyrillic, Chinese, Czech) and excluded; no highlighted row carries a language flag. New totals: 24 of 48 publications, 52 exhibit pages, 423 records over 417 distinct papers, 301 countable independent (296 distinct papers, 237 externally confirmed), 91 dependent, 4 self (former PI), 14 awaiting review, 13 unsettled. The catalog hook fired during the run and the database matches the ledger on every figure. Tests after the run: 50 + 58 + 22 + 28, and the print-fit check still holds."
+    },
+    {
+      "date": "2026-10-31",
+      "activity": "Ran the next batch of three pending publications. The command as written in next_steps (--skip-done --count=3 with no range) selected nothing, because --max-citations defaults to 20 and every not-started publication has at least 22 citations; a --dry-run confirmed the empty selection before anything was requested. Captured the three smallest pending instead, by title, leaving GlyGen (248 citations) for its own session: Insights into glycobiology and the protein-glycan interactome (cites=1097725010100349237), Targeting the GPIbalpha Binding Site of Thrombin (cites=13760283595664836508), and Parallel Glyco-SPOT Synthesis of Glycopeptide Libraries (cites=5067819667796015751).",
+      "result": "No access wall across eleven citing pages and no retries. 4 pages / 33 records / 28 independent, 4 pages / 31 records / 25 independent, and 3 pages / 22 records / 18 independent, each ending on Scholar's own last page with a partial final page of 3, 1 and 2 rows. Every page verified independently against its report: yellow marks counted in the saved HTML equal the highlighted rows, and no highlighted row carries a language flag or a non-INDEPENDENT status. New totals: 27 of 48 publications, 63 exhibit pages, 509 records over 503 distinct papers, 372 countable independent (367 distinct papers, 299 externally confirmed, 73 on Scholar's complete list), 103 dependent, 4 self (former PI), 15 awaiting review, 15 unsettled, 16 flagged non-English. Catalog reconciles on every figure. The insights publication shows 103.1% coverage - 33 distinct records against 32 at the snapshot - recorded as an open item."
+    },
+    {
+      "date": "2026-10-31",
+      "activity": "Per the user's reminder that Scholar shows only 10 citations per page and there is no way to change it, audited every place a page size is assumed. The capture path was already correct: it follows each page's own 'Next' link, so Scholar's real step size and its as_sdt/sciodt/scipsc parameters are preserved, and no code in that path builds an offset. Found and fixed the surrounding issues: run-batch.js kept its own copy of the page-count rule instead of calling tally.expectedPages; the 10 was an unnamed literal in tally.js; the legacy pageUrl helper and its tests still stepped by 20 and read as if 20 were a page size; parseResultCount's comment claimed a '1-20 of 248' header that this profile never renders (every report records an empty page_header); the print-header comment said page 2 shows a start=20 offset; and test-capture-helpers asserted 'page 2 starts at 20'.",
+      "result": "tally.js now exports CITATIONS_PER_PAGE = 10 and expectedPages divides by it; run-batch.js calls tally.expectedPages rather than recomputing; the legacy helper is documented as unused by the capture path and its tests step by 10; test-tally pins the constant at 10 and adds a 20-citation case. Comments corrected to describe the fixed 10 and the empty header. run-batch.js also explains an empty selection now, naming how many not-yet-captured publications sit above the --max-citations band, so an exhausted default range no longer looks like 'everything is done'. Tests after the change: test-tally 52 (was 50), test-capture-helpers 58, test-name-match 22, test-work-type 28, print-fit still one sheet, and a full catalog rebuild reconciles against the ledger on all twelve figures. No exhibit PDF, report JSON or ledger file was modified."
+    },
+    {
+      "date": "2026-10-31",
+      "activity": "Per the user's report that the citation total had risen by one, re-fetched the profile's full 48-item publication list rather than trusting a per-publication anomaly, and diffed it against the 2026-10-29 snapshot. Also root-caused the Insights 33-records-against-32-citations anomaly offline before requesting anything: the extra row is Angewandte Chemie's German language edition of an English article already on the same citing list, 10.1002/ange.7795967 against 10.1002/anie.7795967, same author list, translated title, separate Scholar cid and separate page.",
+      "result": "Snapshot total 1,495 to 1,496, with exactly one publication changed: 'N-glycosylation of mannose receptor (CD206)...' 34 to 35. No publication added or removed, and Insights stayed at 32, matching the user's manual check - so the 33rd row was never a new citation. Because CD206 is not yet captured, no filed exhibit is missing a row and no exhibit needed re-capture. New dated snapshot written to publications-list-2026-10-31.json/.tsv and the ledger rebuilt as citation-ledger-2026-10-31.csv with identical figures. The profile metrics page itself was re-captured in the following step."
+    },
+    {
+      "date": "2026-10-31",
+      "activity": "Per the user's instruction to document language-based duplicates in the database and not highlight them in the exhibits, implemented language-edition detection. tally.markLanguageEditions keys a work on the article id inside its DOI plus an author signature, which is what makes the two Wiley editions match while their titles and journal codes differ; the capture calls it per page after corroboration and before highlighting, and carries the prior pages' state so a later page defers to a copy already printed. isHighlighted now refuses any row carrying duplicate_of, while isHighlightCandidate still lets it be corroborated and recorded. Catalog moved to schema version 2 with doi, edition_key, duplicate_of, is_language_edition, is_edition_primary and edition_note columns, a v_language_editions view, and a query-catalog 'editions' subcommand.",
+      "result": "Exactly 2 citing lists in the corpus carry an edition pair (Insights into glycobiology and the reusable glycan microarrays), 2 rows held back, and no counted figure moves - the German rows were already excluded by their language flag, which is why the ledger is unchanged. 212 rows carry an edition key as provenance. The rule is conservative on purpose: it needs both a DOI and an identical author list, refuses to claim an edition when the two rows share the identical DOI (that is the ordinary duplicate-version case paper_key already merges), and never suppresses a lone row. The English/Chinese haemoglobin pair is therefore not caught, because the Chinese row publishes no DOI; it stays excluded by its language flag, which is the right answer for it. Tests: test-tally 74 (was 52), covering the real Wiley data, cross-page orderings in both directions, an unflagged translation never being marked, and the negative cases."
+    },
+    {
+      "date": "2026-10-31",
+      "activity": "Checked whether any filed exhibit needs re-fetching or re-highlighting after the rule change, and built tools/audit-highlights.js so the check is repeatable instead of ad hoc. It replays tally.isHighlighted over every filed page's saved HTML in a headless browser with every network request aborted, matching rows exactly as applyHighlights does, and compares against the yellow marks actually present; it also confirms each exhibit PDF exists and is non-empty and that no language edition is marked.",
+      "result": "All 27 filed publications and all 63 exhibit pages agree with the current rules, so nothing was re-fetched, re-highlighted or rewritten. The Insights exhibit was verified by hand as well: no highlight near the German title, the English copy marked, and the same in the reusable-glycan exhibit where the pair straddles pages 1 and 2. The audit exits 1 on any mismatch and is listed in next_steps to run after any future change to what counts as independent."
+    },
+    {
+      "date": "2026-10-31",
+      "activity": "Continued the batch that had stopped at the 23:27 verification screen, after the user cleared the reCAPTCHA in the browser window that had been left open. The running capture noticed the clear on its own poll and resumed without re-requesting the page, so no record was skipped. Completed three publications: potent direct inhibitors of factor Xa (cites=5710710517199553350) 4 pages / 32 records / 30 independent; N-glycosylation of mannose receptor CD206 (cites=14261724064241028813) 4 pages / 35 records / 32 independent; allosteric inhibition of human factor XIa (cites=14841343155251014256) 5 pages / 41 records / 29 independent plus 2 unsettled.",
+      "result": "Twenty exhibit pages written to Exhibits/PDFs/Production, each HTML verified showing exactly the expected number of yellow marks. Ledger rebuilt; audit-highlights clean over all 76 filed pages. Filled the 35-citation CD206 count that the 2026-10-31 snapshot showed, so no filed exhibit is short a row."
+    },
+    {
+      "date": "2026-10-31",
+      "activity": "Ran the following batch of three pending publications, again ordered fewest citations first: unique repertoire of anti-carbohydrate antibodies in individuals with congenital asplenia (cites=15495528352242228651) 44 citations / 5 pages; emerging patterns of tyrosine sulfation and O-glycosylation (cites=11053438270252762835) 5 pages / 46 records / 37 independent plus 2 unsettled; allosteric partial inhibition of monomeric proteases by sulfated coumarins (cites=16602028424913554890) 5 pages / 47 records / 28 independent plus 3 unsettled. No access wall was met during this batch.",
+      "result": "Fifteen exhibit pages written to Exhibits/PDFs/Production with every page's highlight count matching its report. Ledger rebuilt and audit-highlights clean over all 91 filed pages. Filed totals at the 2026-10-31 snapshot, quoted from citation-ledger-2026-10-31.csv: 33 of 48 publications captured (15 remaining, 7 of the 48 show no citation count), 91 of about 168 exhibit pages, 754 records over 744 distinct papers, 551 countable independent of which 544 distinct papers (408 externally confirmed, 143 resting on Scholar's own complete list), 144 dependent, 0 self (PI), 4 self (former PI), 30 awaiting review, 29 flagged non-English, 25 independent but unsettled and therefore not counted. That is 73.1 percent of reviewed records and 78.8 percent of decided records."
+    },
+    {
+      "date": "2026-11-01",
+      "activity": "Tested whether the garbled-title open item could be closed with a general rule, by building tools/title-duplicates.js - offline, read-only, no browser. It groups stored records by an aggressive title key (letters and digits, Greek notation stripped, Correction/Re prefixes removed) and separates two very different situations: two records with the same title on the SAME citing list, which is what a duplicate looks like, versus the same title on DIFFERENT citing lists, which is usually one real paper citing two of the user's articles and must not be merged.",
+      "result": "A title-based rule is not safe and was not adopted. Six same-list collisions exist and every one of them is a genuinely different work: three 'Factor XI antibodies and methods of use' records dated 2017, 2021 and 2024 on the factor XIa list are a patent family, not copies; 'Anti-CCR8 antibodies for treating cancer' appears as a 2023 and a 2024/2026 patent; CarboGrove appears as a 2021 preprint and a 2022 OUP article. Merging on title would have removed 10 distinct works and 5 counted independent citations. The CD206 'Bakker' and 'DW, T' rows do not even collide under this key, because Scholar's two garbled strings differ from each other and from the correct Steuten title - confirming that only the cid-keyed override (option b) can fix that one case without a rule that breaks patents. No rule, report, exhibit or ledger file was changed."
+    },
+    {
+      "date": "2026-11-01",
+      "activity": "Ran the third batch of pending publications while the user was away, having agreed to monitor progress and to stop and wait if the verification screen returned. Captured Antigenic pressure on H3N2 influenza virus drift strains (cites=16936816916736738985) 5 pages / 48 records / 34 independent plus 2 unsettled; Allosterism-based simultaneous dual anticoagulant and antiplatelet activity (cites=4631471255166879252) 6 pages / 56 records / 42 independent plus 3 unsettled; and GLAD: GLycan Array Dashboard (cites=5446863664671350528) 7 pages / 64 records / 44 independent. Each publication's record count matched its citation count at the snapshot exactly (48/48, 56/56, 64/64).",
+      "result": "Eighteen exhibit pages written to Exhibits/PDFs/Production and every saved HTML verified with exactly the expected number of yellow marks. Ledger rebuilt, then node tools/audit-highlights.js over all 36 filed publications and 109 exhibit pages: each page's marks equal its expected count, no missing or empty PDF, no language edition marked. No access wall was met during this batch. Filed totals at the 2026-10-31 snapshot, quoted from citation-ledger-2026-10-31.csv: 36 of 48 publications captured (12 remaining, 7 of the 48 show no citation count), 109 of about 168 exhibit pages, 922 records over 911 distinct papers, 671 countable independent of which 663 distinct papers (499 externally confirmed, 172 resting on Scholar's own complete list), 172 dependent, 0 self (PI), 4 self (former PI), 45 awaiting review, 34 flagged non-English, 30 independent but unsettled and not counted. That is 72.8 percent of reviewed records and 79.2 percent of decided ones. Two entries worth a look during review: on the GLAD list, OpenAlex contradicted a Scholar-only author list for 'Blood group A enhances SARS-CoV-2 infection', which was correctly downgraded to REVIEW rather than counted, and Scholar's own garbled title extraction reappeared there ('Diepen,. an' and a vowel-stripped 'Ad ancing helminth gl comics'), the same failure mode already logged for CD206."
+    },
+    {
+      "date": "2026-11-01",
+      "activity": "Ran the fourth batch of pending publications while the user slept, monitoring periodically. Completed Designing allosteric regulators of thrombin, exosite 2 (cites=5872921749676588753) 7 pages / 65 records / 33 independent, and Rational design of potent, small, synthetic allosteric inhibitors of thrombin (cites=6309677444540434342) 8 pages / 74 records / 43 independent, both matching their snapshot citation counts exactly. Started the third, GlycoGlyph (cites=11088885855065116690): page 1 captured and filed normally, then the verification screen appeared on the request for page 2.",
+      "result": "Stopped at the wall as instructed - no solving, bypassing or retrying; the capture polled only the already-open page for three minutes, saved dated evidence (BLOCKED-access-wall-2026-11-01T01-30-50, PNG and HTML) and exited 2, and the batch driver halted rather than continuing. GlycoGlyph is therefore filed incompletely at 1 page / 10 records of 78 and the ledger flags it as the one incomplete capture, so it is not mistaken for filing-ready; it needs a full re-capture that overwrites the partial set. The two completed publications were kept. Ledger rebuilt and audit-highlights run over all 39 filed publications and 125 exhibit pages: every filed page matches the current rules, including the partial GlycoGlyph page 1, which is internally correct. Filed totals at the 2026-10-31 snapshot, quoted from citation-ledger-2026-10-31.csv: 39 of 48 publications (9 remaining, 7 of the 48 show no citation count), 125 of about 168 exhibit pages, 1071 records over 1058 distinct papers, 750 countable independent of which 741 distinct papers (522 externally confirmed, 228 on Scholar's own complete list), 227 dependent, 0 self (PI), 4 self (former PI), 60 awaiting review, 36 flagged non-English, 30 independent but unsettled. That is 70.0 percent of reviewed records and 76.5 percent of decided ones; the share dips as the thrombin-heavy lists bring more shared-author (dependent) citations. Work paused awaiting the user clearing the screen."
+    },
+    {
+      "date": "2026-11-01",
+      "activity": "Resumed after the user cleared the verification screen. tools/unblock.js re-read the already-loaded GlycoGlyph citing page and reported the results list loading normally with 10 rows, then closed the browser to release the profile lock - no challenge was touched. A --dry-run confirmed --skip-done still excluded only the 38 complete captures, so GlycoGlyph was selected, then a --count=1 run captured it in full across 8 pages.",
+      "result": "GlycoGlyph is now complete: 8 pages / 78 records against 78 citations at the snapshot, 64 independent plus 3 unsettled, every saved HTML verified with exactly the expected number of yellow marks, and the ledger's incomplete-capture note is gone. Re-capturing also resolved entries the blocked attempt could not: in the partial run five Cite popups on page 1 failed to open, leaving rows on a truncated author list, and in the clean run those same rows resolved - which is why awaiting review fell from 60 to 58 while the record count rose by 68. This is the second time the same publication produced a different verdict set purely because of popup availability, so a REVIEW row is worth re-checking rather than treating as settled. Ledger rebuilt and audit-highlights over all 39 filed publications and 132 exhibit pages: every filed page matches the current rules, no missing or empty PDF, no language edition marked. Filed totals at the 2026-10-31 snapshot, quoted from citation-ledger-2026-10-31.csv: 39 of 48 publications, 132 of about 168 exhibit pages, 1139 records over 1125 distinct papers, 811 countable independent of which 801 distinct papers (552 externally confirmed, 259 resting on Scholar's own complete list), 233 dependent, 0 self (PI), 4 self (former PI), 58 awaiting review, 39 flagged non-English, 33 independent but unsettled. That is 71.2 percent of reviewed records and 77.4 percent of decided ones."
+    },
+    {
+      "date": "2026-10-31",
+      "activity": "Re-captured the profile metrics page, whose only filed exhibit still showed the 2026-10-29 total, so the packet's headline figures carry a current date. Saved as akul-mehta-google-scholar-2026-10-31 (PDF to Exhibits/PDFs, HTML and PNG to Exhibits/Supporting) and moved the older PDF to Exhibits/Archive as SUPERSEDED-akul-mehta-google-scholar-2026-10-29.pdf so exactly one profile exhibit is filed. No access wall; the persistent profile carried the grant.",
+      "result": "Verified PDF 77.8 KB. The metrics table reads Citations 1,496 all / 1,011 in the second column, h-index 23 / 18, i10-index 34 / 30, which agrees with the 1,496 total derived independently by summing the 48 per-publication counts. One correction found while reading the saved HTML: Scholar's second column is headed 'Since 2021', not 'Since 2020' as earlier tracker entries recorded - the 2026-10-29 HTML reads the same way, so it was a label misreading rather than a Scholar change. Tracker fields renamed to *_since_2021 and the misreading noted. The 2026-10-29 HTML and PNG are left in Supporting as the record of the earlier measurement."
+    },
+    {
+      "date": "2026-10-31",
+      "activity": "Started the next batch of pending publications. A --dry-run of the command recorded in next_steps (--all --count=3) exposed a selection bug before any request was made: the publication list is in Scholar's profile order, descending by citations, and --count truncates from the front, so --all --count=3 selected GlyGen (248 citations, ~25 pages) first - the one publication that must not be folded into a batch. Added --smallest to run-batch.js to order by citation count ascending, and verified by --dry-run that it selects factor Xa (32), CD206 (35) and factor XIa (41), about 13 pages.",
+      "result": "The verification screen appeared on the first citing request of the batch, for factor Xa (cites=5710710517199553350), immediately after that publication's article page loaded normally. Stopped without solving, bypassing or retrying, per project instructions; dated evidence saved as BLOCKED-access-wall-2026-10-31T23-27-13 (PNG + HTML) in Exhibits/Supporting. Nothing was written to Exhibits/PDFs, so no exhibit needs discarding and the filed totals are unchanged at 27 of 48 publications and 63 exhibit pages. Recorded as an open blocker with the exact resume command. The browser window is left open for the user to clear the screen; if it closed, tools/unblock.js --target set to that citing URL holds it open with no deadline."
+    },
+    {
+      "date": "2026-11-01",
+      "activity": "Captured the last countable publication before GlyGen: sulfated pentagalloylglucoside / factor XIa (cites=14331029933979420569, 110 citations at the snapshot), selected by --smallest --count=1 after a --dry-run. One run, no access wall.",
+      "result": "11 exhibit pages / 110 records, matching the snapshot citation count exactly; each page's yellow marks verified against its report. Ledger rebuilt and audit-highlights re-run over all 40 filed publications and 143 exhibit pages: every filed page matches the current rules, no incomplete-capture note. Quote figures only from citation-ledger-2026-10-31.csv: 40 of 48 publications, 143 exhibit pages, 1249 records over 1234 distinct papers, 861 countable independent (850 distinct papers, 570 externally confirmed, 291 on Scholar's complete list), 283 dependent, 0 self (PI), 4 self (former PI), 66 awaiting review, 35 independent but unsettled, 41 flagged non-English; 68.9 percent independent of reviewed records and 75 percent of decided records. Only GlyGen (248 citations, about 25 pages) remains with a count, plus seven publications showing no count on the profile."
+    },
+    {
+      "date": "2026-11-01",
+      "activity": "Captured GlyGen (cites=11657216136002863473, 248 citations at the snapshot) alone in its own session, as the standing instruction requires for the largest publication. Selected by --smallest --count=1 after a --dry-run confirmed it was the only publication left with a count.",
+      "result": "25 exhibit pages / 248 records, matching the snapshot citation count exactly; every page's yellow marks verified against its report; no access wall. This completes all 41 publications that show a citation count - 168 of 168 expected exhibit pages - leaving only 7 that show no count. Ledger rebuilt and audit-highlights re-run over all 41 filed publications and 168 exhibit pages: every filed page matches the current rules. Quote figures only from citation-ledger-2026-10-31.csv: 1497 records over 1479 distinct papers (18 extra copies), 1033 countable independent (1020 distinct papers, 653 externally confirmed, 380 on Scholar's complete list), 322 dependent, 0 self (PI), 5 self (former PI), 90 awaiting review, 47 independent but unsettled, 53 flagged non-English; 69 percent of reviewed records and 76 percent of decided ones. Tests: test-tally 74, test-capture-helpers 58, test-name-match 22, test-work-type 28."
+    },
+    {
+      "date": "2026-11-01",
+      "activity": "Fixed a ledger defect found while rebuilding after GlyGen. build-ledger.js summed unique_dependent, unique_self_pi and unique_self_former_pi into the global total, but only the main per-publication row block wrote unique_records and unique_independent; the three dependent/self distinct-paper keys were never written, so they accumulated as zero even though CSV_COLUMNS declared them. unique_decided_records therefore equalled unique_independent and unique_independent_share_of_decided_pct reported 100 on every snapshot, including the archived 2026-10-29 ledger.",
+      "result": "The three keys are now written on every row. unique_decided_records reads 1346 and the share 75.8 percent, against 76 percent on the row-based basis, which is the expected agreement. The CSV columns that were declared but blank now populate (unique_dependent sums to 321, unique_self_former_pi to 5). No headline figure moved: independent_countable stays 1033 and independent_unique_papers stays 1020. No exhibit, report or rule was touched. All four test suites pass and the catalog still reconciles."
+    },
+    {
+      "date": "2026-11-01",
+      "activity": "Checked the proposed non-English detection change against the attorney's guide before applying anything, and confirmed the capture is complete. The guide asks only whether a citation is 'listed in English', defining the entry as the title, the author list and the venue - not the body - and it offers a no-translation path: leave non-English entries unhighlighted and provide an adjusted independent total and percentage based solely on English citations. A title-based rule is therefore guide-consistent. Capture completeness: 41 of 48 publications are filed, which is every publication showing a citation count; the other 7 show none and need no exhibit. 168 of 168 expected pages, 1497 records, 0 publications incomplete, and the largest (GlyGen, 248 citations, 25 pages) ran without a wall.",
+      "result": "Both questions answered and recorded. Nothing was changed by this step."
+    },
+    {
+      "date": "2026-11-01",
+      "activity": "User chose the conservative no-translation pathway and, within it, option B: the TITLE decides whether an entry is listed in English, while a non-Latin script anywhere in the entry still flags it. Implemented in capture-citations.js languageFlag by fixing three defects - the Greek range was removed from NON_LATIN because Greek letters in a title are scientific notation and leaving them there let the notation exemption veto the whole non-Latin test (that is how a Chinese-titled row was highlighted); ACCENTED was widened from Latin-1 Supplement to Latin Extended-A/B plus Vietnamese so Polish forms are visible; and FOREIGN_WORDS gained the French et, du, au, par, sans, verified to produce no false positive over all marked titles, after two French titles were found to escape the word test. tally.js gained isWithheldForLanguage and the English-only figures; build-ledger.js, build-catalog.js and query-catalog.js report them; test-capture-helpers.js gained four cases.",
+      "result": "Rule landed and tested: test-tally 74, test-capture-helpers 62 (was 58), test-name-match 22, test-work-type 28, all passing. No exhibit or count changed by this step alone - the stored flags had to be recomputed, which is the next entry."
+    },
+    {
+      "date": "2026-11-01",
+      "activity": "Applied the new rule to exhibits already captured. A rule fix in the capture script cannot reach them, because each report's language_flag was written at capture time. The new tools/reapply-language.js recomputed the flag over all 168 filed reports offline, preserving each original in a new language_flag_captured field and backing every file up to Exhibits/Supporting/Pre-rule-reapply-2026-11-01/. Then the new tools/reprint-exhibits.js --changed --write re-marked the affected saved pages in a headless browser with every network request aborted, refusing to save unless the marks it applied equalled the count the rule expects, and archiving each old PDF as Exhibits/Archive/SUPERSEDED-<base>.pdf.",
+      "result": "Six pages re-printed: antigenic-pressure p5 3 to 4, galectin-3 p2 5 to 4, GlyGen p9 9 to 10, potent-direct-factor-Xa p4 0 to 1, SPGG p11 7 to 6, targeting-GPIb p3 10 to 9. Flag accounting is exact at 53 minus 4 plus 3 equals 52. Dropped: a Portuguese, a Polish and a Chinese title. Recovered: three English-titled papers previously suppressed on a German abstract or a Greek notation letter in the snippet. Headline totals unchanged at 1033 counted independent rows / 1020 distinct independent papers; the confirmed / spot-check split moved to 655 / 378. audit-highlights.js clean over 41 publications and 168 pages, and test-pdf-fit.js confirms the two densest re-printed pages still hold one US Letter sheet at 75 percent scale."
+    },
+    {
+      "date": "2026-11-01",
+      "activity": "Made non-English rows separable in the database for statistics, per the user's instruction. build-catalog.js moved to schema version 3 with four derived columns - is_non_english, non_english_reason, is_countable_independent and withheld_for_language - plus an index on is_non_english, a v_non_english view, and three new sums on v_pub_stats; query-catalog.js gained a 'nonenglish' command and prints the adjusted English-only line in stats. While rebuilding, a 44-versus-46 disagreement between the ledger and the catalog over rows whose stored duplicate_of predated edition detection was traced to each consumer re-implementing the edition walk, and fixed centrally in tally.groupReports, which now resolves editions per publication in page order with one carried map.",
+      "result": "Catalog rebuilt and reconciling against the ledger on all fifteen checks. 'nonenglish' reports 52 flagged filed rows, 44 of which would count but for language, and 3 that are a second-language copy of a row already marked. Adjusted English-only figures: 1033 of 1445 English citation records equals 71.5 percent, and on the distinct-paper basis 1020 of 1427 equals 71.5 percent. No headline figure moved. All 44 review sheets rebuilt. Database/citation-catalog-schema.md refreshed to this build."
+    }
+  ]
+}

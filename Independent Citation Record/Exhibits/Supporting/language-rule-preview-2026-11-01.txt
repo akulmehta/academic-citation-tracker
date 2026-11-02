@@ -1,0 +1,158 @@
+NON-ENGLISH DETECTION - PREVIEW OF THREE RULE OPTIONS
+Generated 2026-11-01 by an offline read-only pass over the filed report JSON,
+after GlyGen completed the capture set. NO exhibit, report, rule or ledger file
+was changed by this analysis.
+
+Question: if language is judged from the TITLE as Google Scholar displays it,
+which highlights change, which exhibit pages must be re-printed, and how do the
+counts move?
+
+Why the current screen misses foreign titles. capture-citations.js tests three
+things: a non-Latin script anywhere in title or snippet; two or more function
+words English does not use; and two or more distinct accented letters in the
+TITLE. The accented range is Latin-1 Supplement only, so Polish l a e s,
+Czech, Croatian and Turkish letters (Latin Extended-A/B) are invisible. The
+word list has no Polish, Croatian or Czech forms. Separately, the Greek-
+notation exemption vetoes the whole non-Latin test, so a CJK title containing a
+Greek letter such as the alpha in GPIba skips it entirely.
+
+Options:
+  A  TITLE ONLY, accents widened to Latin Extended-A/B + Vietnamese.
+     Literal reading of the instruction. Because the snippet stops mattering,
+     it also UN-SUPPRESSES rows flagged today only by their snippet, so A adds
+     marks as well as removing them.
+  B  TITLE decides, but a non-Latin SCRIPT anywhere still flags. CJK, Cyrillic,
+     Arabic and the rest cannot be scientific notation, so keeping them costs
+     no false positives; only Greek-based and word-based snippet flags are
+     dropped.
+  C  the currently stored flag OR the new title flag. Purely subtractive:
+     removes marks, never adds one.
+
+Rows in filed exhibits: 1497
+
+                     marked rows   distinct indep papers   pages to re-print
+  as filed                1033                  1020                     0
+  A                       1035                  1022                   8
+  B                       1033                  1020                   6
+  C                       1030                  1017                   3
+
+"marked rows" counts yellow marks on exhibit pages. "distinct indep papers" is
+the same set with Scholar's duplicate versions collapsed, per publication, which
+is the basis build-ledger.js uses for "papers citing the work".
+
+===================== OPTION A : 8 page(s) to re-print =====================
+allosteric-partial-inhibition-of-monomeric-proteases-sulfate-citing-2026-10-31  page 4      marks 5 -> 6
+   ADD     ScXdVbkWVIEJ
+          1H-1,2,4-Triazolo-5-diazonium Salts in the Synthesis of New 6H-Benzopyrano[4,3-e][1,2,4]triazolo[5,1-c][1,2,4]
+          MN Mawlood, AY Potapov, KS Shikhaliev - Russian Journal of Organic …, 2024 - Springer
+          flag today: "non-latin script"      under A: "(none)"
+antigenic-pressure-on-h3n2-influenza-virus-drift-strains-imp-citing-2026-11-01  page 5      marks 3 -> 4
+   ADD     5nNgqsE2ndYJ
+          Evaluation of the Antiviral Effect of Polyglycerols Functionalized with Sialic Acid on Influenza Virus
+          MN Stadtmüller - 2021 - edoc.hu-berlin.de
+          flag today: "possible non-English (von, mit, ist, der)"      under A: "(none)"
+design-synthesis-and-investigation-of-novel-nitric-oxide-no--citing-2026-10-30  page 1      marks 7 -> 8
+   ADD     gLKSnMa9tz8J
+          Effect of Hb conformational changes on oxygen transport physiology
+          YIN Ziyue, LI Doudou, GUO Qianwen… - Journal of Central …, 2024 - pmc.ncbi.nlm.nih.gov
+          flag today: "non-latin script"      under A: "(none)"
+galectin-3-decreases-4-1bbl-bioactivity-by-crosslinking-solu-citing-2026-10-30  page 2      marks 5 -> 4
+   REMOVE  2cEhMauZjFMJ
+          Impacto da inibição da galectina-3 na reversão da esteato-hepatite não alcoólica em modelo experimental
+          ARM Santos, JPG Camporez - 2025 - repositorio.usp.br
+          flag today: "(none)"      under A: "non-English (accents: ç ã ó)"
+glygen-computational-and-informatics-resources-for-glycoscie-citing-2026-11-01  page 9      marks 9 -> 10
+   ADD     GWzegG-549QJ
+          The tubulin database: Linking mutations, modifications, ligands and local interactions
+          I Abbaali, D Truong, SD Day, F Mushayeed… - PLoS …, 2023 - journals.plos.org
+          flag today: "non-latin script"      under A: "(none)"
+potent-direct-inhibitors-of-factor-xa-based-on-the-tetrahydr-citing-2026-10-31  page 4      marks 0 -> 1
+   ADD     T7jE05WUFhMJ
+          Peptide Nucleic Acids (PNA) as a versatile tool for modulation of biological systems with visible light
+          T Bantle - 2021 - publikationen.bibliothek.kit.edu
+          flag today: "possible non-English (des, mit)"      under A: "(none)"
+sulfated-pentagalloylglucoside-is-a-potent-allosteric-and-se-citing-2026-11-01  page 11      marks 7 -> 6
+   REMOVE  A2crVjMNOOkJ
+          Nowe perspektywy leczenia przeciwzakrzepowego—środki hamujące czynnik krzepnięcia XI
+          J Treliński - Hematologia, 2015 - publicum.umed.lodz.pl
+          flag today: "(none)"      under A: "non-English (accents: ś ą ę)"
+targeting-the-gpib-binding-site-of-thrombin-to-simultaneousl-citing-2026-10-31  page 3      marks 10 -> 9
+   REMOVE  jSbVxJMuiTsJ
+          基于血小板糖蛋白受体 GPIbα 琢的血栓形成研究进展.
+          陈相， 陈秋芳， 蒋艾豆， 沈惠亮… - Progress in Modern …, 2024 - openurl.ebsco.com
+          flag today: "(none)"      under A: "non-latin script (title)"
+
+===================== OPTION B : 6 page(s) to re-print =====================
+antigenic-pressure-on-h3n2-influenza-virus-drift-strains-imp-citing-2026-11-01  page 5      marks 3 -> 4
+   ADD     5nNgqsE2ndYJ
+          Evaluation of the Antiviral Effect of Polyglycerols Functionalized with Sialic Acid on Influenza Virus
+          MN Stadtmüller - 2021 - edoc.hu-berlin.de
+          flag today: "possible non-English (von, mit, ist, der)"      under B: "(none)"
+galectin-3-decreases-4-1bbl-bioactivity-by-crosslinking-solu-citing-2026-10-30  page 2      marks 5 -> 4
+   REMOVE  2cEhMauZjFMJ
+          Impacto da inibição da galectina-3 na reversão da esteato-hepatite não alcoólica em modelo experimental
+          ARM Santos, JPG Camporez - 2025 - repositorio.usp.br
+          flag today: "(none)"      under B: "non-English (accents: ç ã ó)"
+glygen-computational-and-informatics-resources-for-glycoscie-citing-2026-11-01  page 9      marks 9 -> 10
+   ADD     GWzegG-549QJ
+          The tubulin database: Linking mutations, modifications, ligands and local interactions
+          I Abbaali, D Truong, SD Day, F Mushayeed… - PLoS …, 2023 - journals.plos.org
+          flag today: "non-latin script"      under B: "(none)"
+potent-direct-inhibitors-of-factor-xa-based-on-the-tetrahydr-citing-2026-10-31  page 4      marks 0 -> 1
+   ADD     T7jE05WUFhMJ
+          Peptide Nucleic Acids (PNA) as a versatile tool for modulation of biological systems with visible light
+          T Bantle - 2021 - publikationen.bibliothek.kit.edu
+          flag today: "possible non-English (des, mit)"      under B: "(none)"
+sulfated-pentagalloylglucoside-is-a-potent-allosteric-and-se-citing-2026-11-01  page 11      marks 7 -> 6
+   REMOVE  A2crVjMNOOkJ
+          Nowe perspektywy leczenia przeciwzakrzepowego—środki hamujące czynnik krzepnięcia XI
+          J Treliński - Hematologia, 2015 - publicum.umed.lodz.pl
+          flag today: "(none)"      under B: "non-English (accents: ś ą ę)"
+targeting-the-gpib-binding-site-of-thrombin-to-simultaneousl-citing-2026-10-31  page 3      marks 10 -> 9
+   REMOVE  jSbVxJMuiTsJ
+          基于血小板糖蛋白受体 GPIbα 琢的血栓形成研究进展.
+          陈相， 陈秋芳， 蒋艾豆， 沈惠亮… - Progress in Modern …, 2024 - openurl.ebsco.com
+          flag today: "(none)"      under B: "non-latin script (title)"
+
+===================== OPTION C : 3 page(s) to re-print =====================
+galectin-3-decreases-4-1bbl-bioactivity-by-crosslinking-solu-citing-2026-10-30  page 2      marks 5 -> 4
+   REMOVE  2cEhMauZjFMJ
+          Impacto da inibição da galectina-3 na reversão da esteato-hepatite não alcoólica em modelo experimental
+          ARM Santos, JPG Camporez - 2025 - repositorio.usp.br
+          flag today: "(none)"      under C: "non-English (accents: ç ã ó)"
+sulfated-pentagalloylglucoside-is-a-potent-allosteric-and-se-citing-2026-11-01  page 11      marks 7 -> 6
+   REMOVE  A2crVjMNOOkJ
+          Nowe perspektywy leczenia przeciwzakrzepowego—środki hamujące czynnik krzepnięcia XI
+          J Treliński - Hematologia, 2015 - publicum.umed.lodz.pl
+          flag today: "(none)"      under C: "non-English (accents: ś ą ę)"
+targeting-the-gpib-binding-site-of-thrombin-to-simultaneousl-citing-2026-10-31  page 3      marks 10 -> 9
+   REMOVE  jSbVxJMuiTsJ
+          基于血小板糖蛋白受体 GPIbα 琢的血栓形成研究进展.
+          陈相， 陈秋芳， 蒋艾豆， 沈惠亮… - Progress in Modern …, 2024 - openurl.ebsco.com
+          flag today: "(none)"      under C: "non-latin script (title)"
+
+Notes on the five rows option A would newly mark:
+  - The tubulin database (PLoS) is flagged only on the Greek letters abgde in its
+    snippet. It is an English paper and should be marked.
+  - 1H-1,2,4-Triazolo-5-diazonium Salts is flagged on a single Cyrillic 'e' in the
+    snippet, most likely a Scholar rendering artefact of a Latin e.
+  - Peptide Nucleic Acids (PNA) and Evaluation of the Antiviral Effect of
+    Polyglycerols both have English titles and German abstracts: German
+    dissertations published in English.
+  - Effect of Hb conformational changes has an English title and a Chinese
+    abstract. Genuinely ambiguous.
+  The guide asks only for a certified translation of the CITATION ENTRY - title,
+  authors and venue - not of the article, so an English-titled entry arguably
+  satisfies it as Scholar displays it.
+
+Also tested and rejected: widening FOREIGN_WORDS with more Slavic, Romance and
+Germanic forms. It caught no additional foreign title and created one false
+positive ('Un estudio multiescala sobre la focalizacion multivalencia', already
+flagged by another test), so the word list should stay as it is.
+
+If any option is applied: the yellow marks are baked into the saved HTML, so the
+affected pages must be re-rendered offline. --report rebuilds only the review
+sheet, never the PDF, so a new re-print path is needed. The print header uses
+Chromium's class=url, which fills from the live address and would print a file
+path over file://, so it must take report.cites_url instead. Then re-run
+test-pdf-fit.js, audit-highlights.js and build-ledger.js.

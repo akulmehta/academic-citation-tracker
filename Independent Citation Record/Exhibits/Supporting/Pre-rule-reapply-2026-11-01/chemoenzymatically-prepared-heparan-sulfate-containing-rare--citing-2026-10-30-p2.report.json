@@ -1,0 +1,239 @@
+{
+  "cited_title": "Chemoenzymatically Prepared Heparan Sulfate Containing Rare 2-O-Sulfonated Glucuronic Acid Residues",
+  "cited_authors": "Rio S Boothello, Aurijit Sarkar, Vy My Tran, Thao Kim Nu Nguyen, Nehru Viji Sankaranarayanan, Akul Y Mehta, AlHumaidi Alabbas, Spencer Brown, Alessandro Rossi, April C Joice, Caitlin P Mencio, Maritza V Quintero, Balagurunathan Kuberan, Umesh R Desai",
+  "cited_venue": "ACS chemical biology",
+  "paper_url": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=dNLaKGAAAAAJ&cstart=20&pagesize=80&citation_for_view=dNLaKGAAAAAJ:W7OEmFMy1HYC",
+  "cites_url": "https://scholar.google.com/scholar?start=10&hl=en&as_sdt=40000005&sciodt=0,22&cites=5245048765174084502&scipsc=",
+  "author_keys": [
+    "Rio S Boothello",
+    "Aurijit Sarkar",
+    "Vy My Tran",
+    "Thao Kim Nu Nguyen",
+    "Nehru Viji Sankaranarayanan",
+    "Akul Y Mehta",
+    "AlHumaidi Alabbas",
+    "Spencer Brown",
+    "Alessandro Rossi",
+    "April C Joice",
+    "Caitlin P Mencio",
+    "Maritza V Quintero",
+    "Balagurunathan Kuberan",
+    "Umesh R Desai"
+  ],
+  "pi_keys": [
+    "RD Cummings"
+  ],
+  "former_keys": [
+    "UR Desai"
+  ],
+  "crosscheck": "PubMed then OpenAlex, no identifying email supplied, no API key",
+  "snapshot": "2026-10-30 15:29:33",
+  "page_header": "",
+  "end_reason": "last-page-of-results (7 row(s) on page)",
+  "page": 2,
+  "entries": [
+    {
+      "index": 0,
+      "cid": "2RT_kXAAZPAJ",
+      "title": "Estimating glycosaminoglycan–protein interaction affinity: Water dominates the specific antithrombin–heparin interaction",
+      "rawTitle": "Estimating glycosaminoglycan–protein interaction affinity: Water dominates the specific antithrombin–heparin interaction",
+      "authors": "A Sarkar, W Yu, UR Desai, AD MacKerell… - …, 2016 - academic.oup.com",
+      "snippet": "Glycosaminoglycan (GAG)–protein interactions modulate many important biological\nprocesses. Structure–function studies on GAGs may reveal probes and drugs, but their …",
+      "truncated": true,
+      "link": "https://academic.oup.com/glycob/article-abstract/26/10/1041/2514615",
+      "status": "DEPENDENT",
+      "matched_authors": [
+        "A Sarkar",
+        "UR Desai"
+      ],
+      "matched_pi": [],
+      "matched_former_pi": [
+        "UR Desai"
+      ],
+      "authors_used": "A Sarkar, W Yu, UR Desai, AD MacKerell",
+      "author_source": "scholar-list (truncated)",
+      "language_flag": "",
+      "page": 2,
+      "needs_attention": false,
+      "attention_reason": ""
+    },
+    {
+      "index": 1,
+      "cid": "GFXY_yWqIU4J",
+      "title": "Combinatorial virtual library screening analysis of antithrombin binding oligosaccharide motif generation by heparan sulfate 3-O-Sulfotransferase 1",
+      "rawTitle": "Combinatorial virtual library screening analysis of antithrombin binding oligosaccharide motif generation by heparan sulfate 3-O-Sulfotransferase 1",
+      "authors": "NV Sankaranarayanan, Y Bi, B Kuberan, UR Desai - 2020 - spj.science.org",
+      "snippet": "Pharmaceutical heparin's activity arises from a key high affinity and high selectivity\nantithrombin binding motif, which forms the basis for its use as an anticoagulant. The current …",
+      "truncated": false,
+      "link": "https://spj.science.org/doi/abs/10.1016/j.csbj.2020.03.008",
+      "status": "DEPENDENT",
+      "matched_authors": [
+        "NV Sankaranarayanan",
+        "B Kuberan",
+        "UR Desai"
+      ],
+      "matched_pi": [],
+      "matched_former_pi": [
+        "UR Desai"
+      ],
+      "authors_used": "NV Sankaranarayanan, Y Bi, B Kuberan, UR Desai",
+      "author_source": "scholar-list",
+      "language_flag": "",
+      "page": 2,
+      "needs_attention": false,
+      "attention_reason": ""
+    },
+    {
+      "index": 2,
+      "cid": "LnwEOs27JSoJ",
+      "title": "Continuous-flow accelerated sulfation of heparan sulfate intermediates",
+      "rawTitle": "Continuous-flow accelerated sulfation of heparan sulfate intermediates",
+      "authors": "S Anand, S Mardhekar, R Raigawali, N Mohanta… - Organic …, 2020 - ACS Publications",
+      "snippet": "We report for the first time a continuous-flow strategy to execute O-sulfation modification of\nheparan sulfate (HS) oligosaccharides. A systematic investigation of the influence of the flow …",
+      "truncated": false,
+      "link": "https://pubs.acs.org/doi/abs/10.1021/acs.orglett.0c00878",
+      "status": "INDEPENDENT",
+      "matched_authors": [],
+      "matched_pi": [],
+      "matched_former_pi": [],
+      "authors_used": "Anand, Saurabh, Mardhekar, Sandhya, Raigawali, Rakesh, Mohanta, Nirmala, Jain, Prashant, D. Shanthamurthy, Chethan, Gnanaprakasam, Boopathy, Kikkeri, Raghavendra",
+      "author_source": "scholar-cite-bibtex",
+      "popup_sample": "@article{anand2020continuous,\n  title={Continuous-flow accelerated sulfation of heparan sulfate intermediates},\n  author={Anand, Saurabh and Mardhekar, Sandhya and Raigawali, Rakesh and Mohanta, Nirmala and Jain, Prashant and D. Shanthamurthy, Chethan and Gnanaprakasam, Boopathy and Kikkeri, Raghavendra},\n  journal={Organic Letters},\n  volume={22},\n  number={9},\n  pages={3402--3406},\n  year={2020}",
+      "full_authors": [
+        "Anand, Saurabh",
+        "Mardhekar, Sandhya",
+        "Raigawali, Rakesh",
+        "Mohanta, Nirmala",
+        "Jain, Prashant",
+        "D. Shanthamurthy, Chethan",
+        "Gnanaprakasam, Boopathy",
+        "Kikkeri, Raghavendra"
+      ],
+      "resolution": "resolved",
+      "language_flag": "",
+      "page": 2,
+      "external_source": "pubmed",
+      "external_url": "https://pubmed.ncbi.nlm.nih.gov/32310663/",
+      "external_title": "Continuous-Flow Accelerated Sulfation of Heparan Sulfate Intermediates.",
+      "external_authors": "Anand S, Mardhekar S, Raigawali R, Mohanta N, Jain P, D Shanthamurthy C, Gnanaprakasam B, Kikkeri R",
+      "external_similarity": 1,
+      "confirm_state": "confirmed",
+      "corroboration": "confirmed by pubmed",
+      "needs_attention": false,
+      "attention_reason": ""
+    },
+    {
+      "index": 3,
+      "cid": "pjcHCtQqH18J",
+      "title": "Fluorous-tag assisted synthesis of a glycosaminoglycan mimetic tetrasaccharide as a high-affinity FGF-2 and midkine ligand",
+      "rawTitle": "Fluorous-tag assisted synthesis of a glycosaminoglycan mimetic tetrasaccharide as a high-affinity FGF-2 and midkine ligand",
+      "authors": "S Maza, N Gandia-Aguado, JL de Paz… - Bioorganic & medicinal …, 2018 - Elsevier",
+      "snippet": "Here, we present the preparation of a sulfated, fully protected tetrasaccharide derivative\nfollowing the glycosaminoglycan (GAG)-related sequence GlcNAc-β (1→ 4)-Glc-β (1→ 3) …",
+      "truncated": false,
+      "link": "https://www.sciencedirect.com/science/article/pii/S0968089617324434",
+      "status": "INDEPENDENT",
+      "matched_authors": [],
+      "matched_pi": [],
+      "matched_former_pi": [],
+      "authors_used": "Maza, Susana, Gandia-Aguado, Noel, de Paz, Jose L, Nieto, Pedro M",
+      "author_source": "scholar-cite-bibtex",
+      "popup_sample": "@article{maza2018fluorous,\n  title={Fluorous-tag assisted synthesis of a glycosaminoglycan mimetic tetrasaccharide as a high-affinity FGF-2 and midkine ligand},\n  author={Maza, Susana and Gandia-Aguado, Noel and de Paz, Jose L and Nieto, Pedro M},\n  journal={Bioorganic \\& medicinal chemistry},\n  volume={26},\n  number={5},\n  pages={1076--1085},\n  year={2018},\n  publisher={Elsevier}\n}\n",
+      "full_authors": [
+        "Maza, Susana",
+        "Gandia-Aguado, Noel",
+        "de Paz, Jose L",
+        "Nieto, Pedro M"
+      ],
+      "resolution": "resolved",
+      "language_flag": "",
+      "page": 2,
+      "pubmed_near_miss": {
+        "pmid": "31013665",
+        "title": "Synthesis of a Fluorous-Tagged Hexasaccharide and Interaction with Growth Factors Using Sugar-Coated Microplates.",
+        "similarity": 0.2
+      },
+      "external_source": "openalex",
+      "external_url": "https://doi.org/10.1016/j.bmc.2018.01.022",
+      "external_title": "Fluorous-tag assisted synthesis of a glycosaminoglycan mimetic tetrasaccharide as a high-affinity FGF-2 and midkine ligand",
+      "external_authors": "Susana Maza, Noel Gandia-Aguado, José L. de Paz, Pedro M. Nieto",
+      "external_similarity": 1,
+      "confirm_state": "confirmed",
+      "corroboration": "confirmed by openalex",
+      "needs_attention": false,
+      "attention_reason": ""
+    },
+    {
+      "index": 4,
+      "cid": "stLCBeNVN6gJ",
+      "title": "In-depth molecular dynamics study of all possible chondroitin sulfate disaccharides reveals key insight into structural heterogeneity and dynamism",
+      "rawTitle": "[HTML] In-depth molecular dynamics study of all possible chondroitin sulfate disaccharides reveals key insight into structural heterogeneity and dynamism",
+      "authors": "B Nagarajan, NV Sankaranarayanan, UR Desai - Biomolecules, 2022 - mdpi.com",
+      "snippet": "GAGs exhibit a high level of conformational and configurational diversity, which remains\nuntapped in terms of the recognition and modulation of proteins. Although GAGs are …",
+      "truncated": false,
+      "link": "https://www.mdpi.com/2218-273X/12/1/77",
+      "status": "DEPENDENT",
+      "matched_authors": [
+        "NV Sankaranarayanan",
+        "UR Desai"
+      ],
+      "matched_pi": [],
+      "matched_former_pi": [
+        "UR Desai"
+      ],
+      "authors_used": "B Nagarajan, NV Sankaranarayanan, UR Desai",
+      "author_source": "scholar-list",
+      "language_flag": "",
+      "page": 2,
+      "needs_attention": false,
+      "attention_reason": ""
+    },
+    {
+      "index": 5,
+      "cid": "_i6V099tlD0J",
+      "title": "Thermodynamic Affinity and Nature of Forces Defining Glycosaminoglycan-Protein Systems Using Fluorescence Spectroscopy",
+      "rawTitle": "Thermodynamic Affinity and Nature of Forces Defining Glycosaminoglycan-Protein Systems Using Fluorescence Spectroscopy",
+      "authors": "RS Boothello, U Desai - Glycosaminoglycans: Methods and Protocols, 2021 - Springer",
+      "snippet": "Among the biophysical techniques used to study glycosaminoglycan (GAG)–protein\ninteractions, fluorescence spectroscopy is a quantitative tool that has been extensively used …",
+      "truncated": false,
+      "link": "https://link.springer.com/protocol/10.1007/978-1-0716-1398-6_21",
+      "status": "DEPENDENT",
+      "matched_authors": [
+        "RS Boothello",
+        "U Desai"
+      ],
+      "matched_pi": [],
+      "matched_former_pi": [
+        "U Desai"
+      ],
+      "authors_used": "RS Boothello, U Desai",
+      "author_source": "scholar-list",
+      "language_flag": "",
+      "page": 2,
+      "needs_attention": false,
+      "attention_reason": ""
+    },
+    {
+      "index": 6,
+      "cid": "CU6s1npDXNsJ",
+      "title": "ORIGINAL RESEARCH 2-O, 3-O Desulfated Heparin Blocks High Mobility Group Box 1 Release by Inhibition of p300 Acetyltransferase Activity",
+      "rawTitle": "[HTML] ORIGINAL RESEARCH 2-O, 3-O Desulfated Heparin Blocks High Mobility Group Box 1 Release by Inhibition of p300 Acetyltransferase Activity",
+      "authors": "S Zheng - academia.edu",
+      "snippet": "High mobility group box 1 (HMGB1) is an alarmin released from macrophages after infection\nor inflammation and is a biomarker of lung disease progression in patients with cystic …",
+      "truncated": false,
+      "link": "https://www.academia.edu/download/63163721/Zheng_AJRCMB_2016_ODSH_block_p300_and_HMGB1_release20200501-105723-18j80u0.pdf",
+      "status": "INDEPENDENT",
+      "matched_authors": [],
+      "matched_pi": [],
+      "matched_former_pi": [],
+      "authors_used": "S Zheng",
+      "author_source": "scholar-list",
+      "language_flag": "",
+      "page": 2,
+      "confirm_state": "unverified-coverage",
+      "corroboration": "not indexed in PubMed or OpenAlex; Scholar list is complete",
+      "corroboration_note": "no PubMed or OpenAlex record matched the title closely enough",
+      "attention_reason": "highlighted on Scholar's list alone - not indexed in PubMed or OpenAlex, worth a spot-check",
+      "needs_attention": true
+    }
+  ]
+}

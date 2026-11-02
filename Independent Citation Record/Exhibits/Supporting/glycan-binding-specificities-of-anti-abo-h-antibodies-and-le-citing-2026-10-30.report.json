@@ -1,0 +1,55 @@
+{
+  "cited_title": "Glycan-binding specificities of anti-ABO (H) antibodies and lectins",
+  "cited_authors": "Prisca Hamm, Akul Y Mehta, Kelsey M Charon, Jamie Heimburg-Molinaro, Ea Kristine Clarisse Tulin, Sean R Stowell, Melissa Y Yeung, William J Lane, Richard D Cummings, Marie A Hollenhorst",
+  "cited_venue": "Transfusion",
+  "paper_url": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=dNLaKGAAAAAJ&cstart=20&pagesize=80&citation_for_view=dNLaKGAAAAAJ:RHpTSmoSYBkC",
+  "cites_url": "https://scholar.google.com/scholar?oi=bibs&hl=en&cites=8373409032364483140",
+  "author_keys": [
+    "Prisca Hamm",
+    "Akul Y Mehta",
+    "Kelsey M Charon",
+    "Jamie Heimburg-Molinaro",
+    "Ea Kristine Clarisse Tulin",
+    "Sean R Stowell",
+    "Melissa Y Yeung",
+    "William J Lane",
+    "Richard D Cummings",
+    "Marie A Hollenhorst"
+  ],
+  "pi_keys": [
+    "RD Cummings"
+  ],
+  "former_keys": [
+    "UR Desai"
+  ],
+  "crosscheck": "PubMed then OpenAlex, no identifying email supplied, no API key",
+  "snapshot": "2026-10-30 16:23:12",
+  "page_header": "",
+  "end_reason": "last-page-of-results (1 row(s) on page)",
+  "page": 1,
+  "entries": [
+    {
+      "index": 0,
+      "cid": "WqXeDrgmpNUJ",
+      "title": "Establishing “Glycoantigens” as a cross-field concept in Glycobiology, transfusion, transplant, and immunology",
+      "rawTitle": "Establishing “Glycoantigens” as a cross-field concept in Glycobiology, transfusion, transplant, and immunology",
+      "authors": "WJ Lane - Human Immunology, 2026 - Elsevier",
+      "snippet": "Cell-surface glycans (carbohydrate structures) serve as critical antigens in transfusion and\ntransplantation, yet their study remains fragmented across disciplines. The ABO blood group …",
+      "truncated": false,
+      "link": "https://www.sciencedirect.com/science/article/pii/S0198885926001588",
+      "status": "DEPENDENT",
+      "matched_authors": [
+        "WJ Lane"
+      ],
+      "matched_pi": [],
+      "matched_former_pi": [],
+      "authors_used": "WJ Lane",
+      "author_source": "scholar-list",
+      "language_flag": "",
+      "page": 1,
+      "needs_attention": false,
+      "attention_reason": "",
+      "language_flag_captured": ""
+    }
+  ]
+}

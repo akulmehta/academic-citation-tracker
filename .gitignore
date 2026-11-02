@@ -1,0 +1,33 @@
+# --- Secrets / browser state -------------------------------------------------
+# The persistent Playwright profile holds the signed-in Google session
+# (cookies, tokens, cache). It must never be committed.
+tools/.playwright-profile/
+
+# --- Dependencies ------------------------------------------------------------
+node_modules/
+
+# --- SQLite transient sidecars -----------------------------------------------
+# The database itself (citation-catalog.sqlite) is tracked; these are the
+# write-ahead log and shared-memory files that change while a process runs.
+*.sqlite-shm
+*.sqlite-wal
+*.sqlite-journal
+
+# --- Scratch runs and generated output ---------------------------------------
+*.log
+*.out.txt
+tools/.tmp-*
+tools/.pdf-fit-sample.*
+tools/.pdf-header-sample.*
+
+# --- Backup / superseded copies written by the re-print tools ---------------
+*.bak
+*.orig
+*.rej
+
+# --- Editor and OS noise -----------------------------------------------------
+.vscode/
+.DS_Store
+Thumbs.db
+desktop.ini
+*.tmp

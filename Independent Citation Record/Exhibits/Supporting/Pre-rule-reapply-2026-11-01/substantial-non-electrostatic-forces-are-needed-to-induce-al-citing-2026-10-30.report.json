@@ -1,0 +1,301 @@
+{
+  "cited_title": "Substantial non-electrostatic forces are needed to induce allosteric disruption of thrombin’s active site through exosite 2",
+  "cited_authors": "Akul Y Mehta, Umesh R Desai",
+  "cited_venue": "Biochemical and biophysical research communications",
+  "paper_url": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=dNLaKGAAAAAJ&cstart=20&pagesize=80&citation_for_view=dNLaKGAAAAAJ:Tyk-4Ss8FVUC",
+  "cites_url": "https://scholar.google.com/scholar?oi=bibs&hl=en&cites=13268313723721620254",
+  "author_keys": [
+    "Akul Y Mehta",
+    "Umesh R Desai"
+  ],
+  "pi_keys": [
+    "RD Cummings"
+  ],
+  "former_keys": [
+    "UR Desai"
+  ],
+  "crosscheck": "PubMed then OpenAlex, no identifying email supplied, no API key",
+  "snapshot": "2026-10-30 16:18:09",
+  "page_header": "",
+  "end_reason": "last-page-of-results (9 row(s) on page)",
+  "page": 1,
+  "entries": [
+    {
+      "index": 0,
+      "cid": "slB-wISK-eQJ",
+      "title": "Designing smaller, synthetic, functional mimetics of sulfated glycosaminoglycans as allosteric modulators of coagulation factors",
+      "rawTitle": "Designing smaller, synthetic, functional mimetics of sulfated glycosaminoglycans as allosteric modulators of coagulation factors",
+      "authors": "EI Abdelfadiel, R Gunta, BK Villuri… - Journal of Medicinal …, 2023 - pmc.ncbi.nlm.nih.gov",
+      "snippet": "Natural glycosaminoglycans (GAGs) are arguably the most diverse collection of natural\nproducts. Unfortunately, this bounty of structures remains untapped. Decades of research …",
+      "truncated": false,
+      "link": "https://pmc.ncbi.nlm.nih.gov/articles/PMC10108365/",
+      "status": "DEPENDENT",
+      "matched_authors": [
+        "Desai, Umesh R"
+      ],
+      "matched_pi": [],
+      "matched_former_pi": [
+        "Desai, Umesh R"
+      ],
+      "authors_used": "Abdelfadiel, Elsamani I, Gunta, Rama, Villuri, Bharath Kumar, Afosah, Daniel K, Sankaranarayanan, Nehru Viji, Desai, Umesh R",
+      "author_source": "scholar-cite-bibtex",
+      "popup_sample": "@article{abdelfadiel2023designing,\n  title={Designing smaller, synthetic, functional mimetics of sulfated glycosaminoglycans as allosteric modulators of coagulation factors},\n  author={Abdelfadiel, Elsamani I and Gunta, Rama and Villuri, Bharath Kumar and Afosah, Daniel K and Sankaranarayanan, Nehru Viji and Desai, Umesh R},\n  journal={Journal of Medicinal Chemistry},\n  volume={66},\n  number={7},\n",
+      "full_authors": [
+        "Abdelfadiel, Elsamani I",
+        "Gunta, Rama",
+        "Villuri, Bharath Kumar",
+        "Afosah, Daniel K",
+        "Sankaranarayanan, Nehru Viji",
+        "Desai, Umesh R"
+      ],
+      "resolution": "resolved",
+      "language_flag": "",
+      "page": 1,
+      "needs_attention": false,
+      "attention_reason": ""
+    },
+    {
+      "index": 1,
+      "cid": "NhZ19lOMzsYJ",
+      "title": "Sulfated non-saccharide glycosaminoglycan mimetics as novel drug discovery platform for various pathologies",
+      "rawTitle": "Sulfated non-saccharide glycosaminoglycan mimetics as novel drug discovery platform for various pathologies",
+      "authors": "DK Afosah, RA Al-Horani - Current medicinal chemistry, 2020 - benthamdirect.com",
+      "snippet": "Glycosaminoglycans (GAGs) are very complex, natural anionic polysaccharides. They are\npolymers of repeating disaccharide units of uronic acid and hexosamine residues. Owing to …",
+      "truncated": false,
+      "link": "https://www.benthamdirect.com/content/journals/cmc/10.2174/0929867325666181120101147",
+      "status": "INDEPENDENT",
+      "matched_authors": [],
+      "matched_pi": [],
+      "matched_former_pi": [],
+      "authors_used": "DK Afosah, RA Al-Horani",
+      "author_source": "scholar+openalex",
+      "language_flag": "",
+      "page": 1,
+      "pubmed_near_miss": {
+        "pmid": "42694774",
+        "title": "Targeting the heparan sulfate proteoglycan/heparanase axis as a novel therapeutic strategy to drive adipogenesis and block tumor growth of dedifferentiated liposarcoma.",
+        "similarity": 0
+      },
+      "external_source": "openalex",
+      "external_url": "https://doi.org/10.2174/0929867325666181120101147",
+      "external_title": "Sulfated Non-Saccharide Glycosaminoglycan Mimetics as Novel Drug Discovery Platform for Various Pathologies",
+      "external_authors": "Daniel K. Afosah, Rami A. Al-Horani",
+      "external_similarity": 1,
+      "full_authors": [
+        "Daniel K. Afosah",
+        "Rami A. Al-Horani"
+      ],
+      "confirm_state": "confirmed",
+      "corroboration": "confirmed by openalex",
+      "needs_attention": false,
+      "attention_reason": ""
+    },
+    {
+      "index": 2,
+      "cid": "m6VgJAFcpGsJ",
+      "title": "A unique nonsaccharide mimetic of heparin hexasaccharide inhibits colon cancer stem cells via p38 MAP kinase activation",
+      "rawTitle": "A unique nonsaccharide mimetic of heparin hexasaccharide inhibits colon cancer stem cells via p38 MAP kinase activation",
+      "authors": "RS Boothello, NJ Patel, C Sharon… - Molecular cancer …, 2019 - aacrjournals.org",
+      "snippet": "Targeting of cancer stem cells (CSC) is expected to be a paradigm-shifting approach for the\ntreatment of cancers. Cell surface proteoglycans bearing sulfated glycosaminoglycan (GAG) …",
+      "truncated": false,
+      "link": "https://aacrjournals.org/mct/article-abstract/18/1/51/273838",
+      "status": "DEPENDENT",
+      "matched_authors": [
+        "Desai, Umesh R"
+      ],
+      "matched_pi": [],
+      "matched_former_pi": [
+        "Desai, Umesh R"
+      ],
+      "authors_used": "Boothello, Rio S, Patel, Nirmita J, Sharon, Chetna, Abdelfadiel, Elsamani I, Morla, Shravan, Brophy, Donald F, Lippman, H Robert, Desai, Umesh R, Patel, Bhaumik B",
+      "author_source": "scholar-cite-bibtex",
+      "popup_sample": "@article{boothello2019unique,\n  title={A unique nonsaccharide mimetic of heparin hexasaccharide inhibits colon cancer stem cells via p38 MAP kinase activation},\n  author={Boothello, Rio S and Patel, Nirmita J and Sharon, Chetna and Abdelfadiel, Elsamani I and Morla, Shravan and Brophy, Donald F and Lippman, H Robert and Desai, Umesh R and Patel, Bhaumik B},\n  journal={Molecular cancer therapeutics",
+      "full_authors": [
+        "Boothello, Rio S",
+        "Patel, Nirmita J",
+        "Sharon, Chetna",
+        "Abdelfadiel, Elsamani I",
+        "Morla, Shravan",
+        "Brophy, Donald F",
+        "Lippman, H Robert",
+        "Desai, Umesh R",
+        "Patel, Bhaumik B"
+      ],
+      "resolution": "resolved",
+      "language_flag": "",
+      "page": 1,
+      "needs_attention": false,
+      "attention_reason": ""
+    },
+    {
+      "index": 3,
+      "cid": "V3TaCRtulmIJ",
+      "title": "Allosteric inhibition of α-thrombin enzymatic activity with ultrasmall gold nanoparticles",
+      "rawTitle": "Allosteric inhibition of α-thrombin enzymatic activity with ultrasmall gold nanoparticles",
+      "authors": "AL Lira, RS Ferreira, RJS Torquato, MLV Oliva… - Nanoscale …, 2019 - pubs.rsc.org",
+      "snippet": "The catalytic activity of enzymes can be regulated by interactions with synthetic\nnanoparticles (NPs) in a number of ways. To date, however, the potential use of NPs as …",
+      "truncated": false,
+      "link": "https://pubs.rsc.org/na/article-abstract/1/1/378/607990",
+      "status": "INDEPENDENT",
+      "matched_authors": [],
+      "matched_pi": [],
+      "matched_former_pi": [],
+      "authors_used": "Lira, Andr{\\'e} L, Ferreira, Rodrigo S, Torquato, Ricardo JS, Oliva, Maria Luiza V, Schuck, Peter, Sousa, Alioscka A",
+      "author_source": "scholar-cite-bibtex",
+      "popup_sample": "@article{lira2019allosteric,\n  title={Allosteric inhibition of $\\alpha$-thrombin enzymatic activity with ultrasmall gold nanoparticles},\n  author={Lira, Andr{\\'e} L and Ferreira, Rodrigo S and Torquato, Ricardo JS and Oliva, Maria Luiza V and Schuck, Peter and Sousa, Alioscka A},\n  journal={Nanoscale advances},\n  volume={1},\n  number={1},\n  pages={378--388},\n  year={2019},\n  publisher={The Royal S",
+      "full_authors": [
+        "Lira, Andr{\\'e} L",
+        "Ferreira, Rodrigo S",
+        "Torquato, Ricardo JS",
+        "Oliva, Maria Luiza V",
+        "Schuck, Peter",
+        "Sousa, Alioscka A"
+      ],
+      "resolution": "resolved",
+      "language_flag": "",
+      "page": 1,
+      "pubmed_near_miss": {
+        "pmid": "32590899",
+        "title": "Regulation of Thrombin Activity with Ultrasmall Nanoparticles: Effects of Surface Chemistry.",
+        "similarity": 0.5
+      },
+      "external_source": "openalex",
+      "external_url": "https://doi.org/10.1039/c8na00081f",
+      "external_title": "Allosteric inhibition of α-thrombin enzymatic activity with ultrasmall gold nanoparticles",
+      "external_authors": "André L. Lira, Rodrigo S. Ferreira, Ricardo J. S. Torquato, Maria Luiza V. Oliva, Peter Schuck, Alioscka A. Sousa",
+      "external_similarity": 1,
+      "confirm_state": "confirmed",
+      "corroboration": "confirmed by openalex",
+      "needs_attention": false,
+      "attention_reason": ""
+    },
+    {
+      "index": 4,
+      "cid": "FIanZ5FKRkAJ",
+      "title": "Allosterism‐based simultaneous, dual anticoagulant and antiplatelet action: allosteric inhibitor targeting the glycoprotein Ibα‐binding and heparin‐binding site of …",
+      "rawTitle": "Allosterism‐based simultaneous, dual anticoagulant and antiplatelet action: allosteric inhibitor targeting the glycoprotein Ibα‐binding and heparin‐binding site of …",
+      "authors": "AY Mehta, BM Mohammed, EJ Martin… - … of Thrombosis and …, 2016 - Wiley Online Library",
+      "snippet": "Essentials Allosteric inhibition is a promising method for reducing bleeding risk associated\nwith anticoagulants. Sulfated β‐O4 lignin (SbO4L) targets exosite 2 of thrombin to induce …",
+      "truncated": true,
+      "link": "https://onlinelibrary.wiley.com/doi/abs/10.1111/jth.13254",
+      "status": "DEPENDENT",
+      "matched_authors": [
+        "AY Mehta"
+      ],
+      "matched_pi": [],
+      "matched_former_pi": [],
+      "authors_used": "AY Mehta, BM Mohammed, EJ Martin",
+      "author_source": "scholar-list (truncated)",
+      "language_flag": "",
+      "page": 1,
+      "needs_attention": false,
+      "attention_reason": ""
+    },
+    {
+      "index": 5,
+      "cid": "UAtrSBNpw6IJ",
+      "title": "Allosteric partial inhibition of monomeric proteases. Sulfated coumarins induce regulation, not just inhibition, of thrombin",
+      "rawTitle": "Allosteric partial inhibition of monomeric proteases. Sulfated coumarins induce regulation, not just inhibition, of thrombin",
+      "authors": "S Verespy III, AY Mehta, D Afosah, RA Al-Horani… - Scientific Reports, 2016 - nature.com",
+      "snippet": "Allosteric partial inhibition of soluble, monomeric proteases can offer major regulatory\nadvantages, but remains a concept on paper to date; although it has been routinely …",
+      "truncated": true,
+      "link": "https://www.nature.com/articles/srep24043",
+      "status": "DEPENDENT",
+      "matched_authors": [
+        "AY Mehta"
+      ],
+      "matched_pi": [],
+      "matched_former_pi": [],
+      "authors_used": "S Verespy III, AY Mehta, D Afosah, RA Al-Horani",
+      "author_source": "scholar-list (truncated)",
+      "language_flag": "",
+      "page": 1,
+      "needs_attention": false,
+      "attention_reason": ""
+    },
+    {
+      "index": 6,
+      "cid": "LmgKFAVgkOcJ",
+      "title": "Development of orally active thrombin inhibitors for the treatment of thrombotic disorder diseases",
+      "rawTitle": "Development of orally active thrombin inhibitors for the treatment of thrombotic disorder diseases",
+      "authors": "LW He, WC Dai, NG Li - Molecules, 2015 - pmc.ncbi.nlm.nih.gov",
+      "snippet": "Thrombotic disorders represent the major share of the various cardiovascular diseases, and\nsignificant progress has been made in the development of synthetic thrombin inhibitors as …",
+      "truncated": false,
+      "link": "https://pmc.ncbi.nlm.nih.gov/articles/PMC6272601/",
+      "status": "INDEPENDENT",
+      "matched_authors": [],
+      "matched_pi": [],
+      "matched_former_pi": [],
+      "authors_used": "LW He, WC Dai, NG Li",
+      "author_source": "scholar+openalex",
+      "language_flag": "",
+      "page": 1,
+      "pubmed_near_miss": {
+        "pmid": "41724941",
+        "title": "Bannakunin: a dual-target Kunitz inhibitor bridging anticoagulation (FXa/XIIa) and anti-platelet (α2β1/P2Y12) pathways.",
+        "similarity": 0
+      },
+      "external_source": "openalex",
+      "external_url": "https://doi.org/10.3390/molecules200611046",
+      "external_title": "Development of Orally Active Thrombin Inhibitors for the Treatment of Thrombotic Disorder Diseases",
+      "external_authors": "Li-Wei He, Wei-Chen Dai, Nian-Guang Li",
+      "external_similarity": 1,
+      "full_authors": [
+        "Li-Wei He",
+        "Wei-Chen Dai",
+        "Nian-Guang Li"
+      ],
+      "confirm_state": "confirmed",
+      "corroboration": "confirmed by openalex",
+      "needs_attention": false,
+      "attention_reason": ""
+    },
+    {
+      "index": 7,
+      "cid": "gLoKFIUEXDoJ",
+      "title": "Novel heparin mimetics reveal cooperativity between exosite 2 and sodium-binding site of thrombin",
+      "rawTitle": "Novel heparin mimetics reveal cooperativity between exosite 2 and sodium-binding site of thrombin",
+      "authors": "MHA Aziz, UR Desai - Thrombosis research, 2018 - Elsevier",
+      "snippet": "Introduction Thrombin is a primary target of most anticoagulants. Yet, thrombin's dual and\nopposing role in pro-as well as anti-coagulant processes imposes considerable challenges …",
+      "truncated": false,
+      "link": "https://www.sciencedirect.com/science/article/pii/S0049384818302901",
+      "status": "DEPENDENT",
+      "matched_authors": [
+        "UR Desai"
+      ],
+      "matched_pi": [],
+      "matched_former_pi": [
+        "UR Desai"
+      ],
+      "authors_used": "MHA Aziz, UR Desai",
+      "author_source": "scholar-list",
+      "language_flag": "",
+      "page": 1,
+      "needs_attention": false,
+      "attention_reason": ""
+    },
+    {
+      "index": 8,
+      "cid": "bdUto-PC7LwJ",
+      "title": "This article has been accepted for publication and undergone full peer review but has not been through the copyediting, typesetting, pagination and …",
+      "rawTitle": "[PDF] This article has been accepted for publication and undergone full peer review but has not been through the copyediting, typesetting, pagination and …",
+      "authors": "SM Rudman, J Heavyside, DJ Rennison, D Schluter - boris-portal.unibe.ch",
+      "snippet": "Effectiveness of vertical ridge augmentation interventions. A systematic review and meta&#x2010;analysis\nPage 1 Accepted Article This article has been accepted for publication and undergone full …",
+      "truncated": false,
+      "link": "https://boris-portal.unibe.ch/bitstreams/b2d903ec-cab8-40a8-b807-ce8129002e65/download",
+      "status": "INDEPENDENT",
+      "matched_authors": [],
+      "matched_pi": [],
+      "matched_former_pi": [],
+      "authors_used": "SM Rudman, J Heavyside, DJ Rennison, D Schluter",
+      "author_source": "scholar-list",
+      "language_flag": "",
+      "page": 1,
+      "confirm_state": "unverified-coverage",
+      "corroboration": "not indexed in PubMed or OpenAlex; Scholar list is complete",
+      "corroboration_note": "no PubMed or OpenAlex record matched the title closely enough",
+      "attention_reason": "highlighted on Scholar's list alone - not indexed in PubMed or OpenAlex, worth a spot-check",
+      "needs_attention": true
+    }
+  ]
+}

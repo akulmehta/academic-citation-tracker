@@ -1,0 +1,86 @@
+{
+  "cited_title": "Parallel Glyco-SPOT Synthesis of Glycopeptide Libraries",
+  "cited_authors": "Akul Y Mehta, Ravi Kumar H Veeraiah, Sucharita Dutta, Christoffer K Goth, Melinda S Hanes, Chao Gao, Kathrin Stavenhagen, Robert Kardish, Yasuyuki Matsumoto, Jamie Heimburg-Molinaro, Michael Boyce, Nicola LB Pohl, Richard D Cummings",
+  "cited_venue": "Cell Chemical Biology",
+  "paper_url": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=dNLaKGAAAAAJ&cstart=20&pagesize=80&citation_for_view=dNLaKGAAAAAJ:aqlVkmm33-oC",
+  "cites_url": "https://scholar.google.com/scholar?start=20&hl=en&as_sdt=40000005&sciodt=0,22&cites=5067819667796015751&scipsc=",
+  "author_keys": [
+    "Akul Y Mehta",
+    "Ravi Kumar H Veeraiah",
+    "Sucharita Dutta",
+    "Christoffer K Goth",
+    "Melinda S Hanes",
+    "Chao Gao",
+    "Kathrin Stavenhagen",
+    "Robert Kardish",
+    "Yasuyuki Matsumoto",
+    "Jamie Heimburg-Molinaro",
+    "Michael Boyce",
+    "Nicola LB Pohl",
+    "Richard D Cummings"
+  ],
+  "pi_keys": [
+    "RD Cummings"
+  ],
+  "former_keys": [
+    "UR Desai"
+  ],
+  "crosscheck": "PubMed then OpenAlex, no identifying email supplied, no API key",
+  "snapshot": "2026-10-31 17:41:26",
+  "page_header": "",
+  "end_reason": "last-page-of-results (2 row(s) on page)",
+  "page": 3,
+  "entries": [
+    {
+      "index": 0,
+      "cid": "cZ11j1t2iNIJ",
+      "title": "Development of Novel Technologies for Parallel Synthesis of Glycans and Glycopeptides for Microarray Generation",
+      "rawTitle": "Development of Novel Technologies for Parallel Synthesis of Glycans and Glycopeptides for Microarray Generation",
+      "authors": "A Tsouka - 2022 - refubium.fu-berlin.de",
+      "snippet": "Carbohydrates are ubiquitous biopolymers mediating fundamental biological processes\nsuch as cell–cell interaction, immune response, and host-pathogen interactions. They can …",
+      "truncated": false,
+      "link": "https://refubium.fu-berlin.de/handle/fub188/39300",
+      "status": "INDEPENDENT",
+      "matched_authors": [],
+      "matched_pi": [],
+      "matched_former_pi": [],
+      "authors_used": "A Tsouka",
+      "author_source": "scholar-list",
+      "language_flag": "",
+      "page": 3,
+      "pubmed_near_miss": {
+        "pmid": "41498622",
+        "title": "Cell wall hydrolases of Escherichia coli.",
+        "similarity": 0
+      },
+      "confirm_state": "unverified-coverage",
+      "corroboration": "not indexed in PubMed or OpenAlex; Scholar list is complete",
+      "corroboration_note": "no PubMed or OpenAlex record matched the title closely enough",
+      "attention_reason": "highlighted on Scholar's list alone - not indexed in PubMed or OpenAlex, worth a spot-check",
+      "needs_attention": true
+    },
+    {
+      "index": 1,
+      "cid": "MH_Q3EalfakJ",
+      "title": "[CITATION] N-acetylgalactosamine mimetics and derivatives as potential protein-protein interaction inhibitors in Alzheimer's disease and other applications: from …",
+      "rawTitle": "[CITATION] N-acetylgalactosamine mimetics and derivatives as potential protein-protein interaction inhibitors in Alzheimer's disease and other applications: from …",
+      "authors": "JMVC Barros - 2026",
+      "snippet": "",
+      "truncated": false,
+      "link": "",
+      "status": "INDEPENDENT",
+      "matched_authors": [],
+      "matched_pi": [],
+      "matched_former_pi": [],
+      "authors_used": "JMVC Barros",
+      "author_source": "scholar-list",
+      "language_flag": "",
+      "page": 3,
+      "confirm_state": "unverified-coverage",
+      "corroboration": "not indexed in PubMed or OpenAlex; Scholar list is complete",
+      "corroboration_note": "no PubMed or OpenAlex record matched the title closely enough",
+      "attention_reason": "highlighted on Scholar's list alone - not indexed in PubMed or OpenAlex, worth a spot-check",
+      "needs_attention": true
+    }
+  ]
+}

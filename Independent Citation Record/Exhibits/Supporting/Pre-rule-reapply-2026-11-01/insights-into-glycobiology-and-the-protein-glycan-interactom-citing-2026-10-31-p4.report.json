@@ -1,0 +1,139 @@
+{
+  "cited_title": "Insights into glycobiology and the protein-glycan interactome using glycan microarray technologies",
+  "cited_authors": "Jamie Heimburg-Molinaro, Akul Y Mehta, Catherine A Tilton, Richard D Cummings",
+  "cited_venue": "2024/11/1",
+  "paper_url": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=dNLaKGAAAAAJ&citation_for_view=dNLaKGAAAAAJ:hFOr9nPyWt4C",
+  "cites_url": "https://scholar.google.com/scholar?start=30&hl=en&as_sdt=40000005&sciodt=0,22&cites=1097725010100349237&scipsc=",
+  "author_keys": [
+    "Jamie Heimburg-Molinaro",
+    "Akul Y Mehta",
+    "Catherine A Tilton",
+    "Richard D Cummings"
+  ],
+  "pi_keys": [
+    "RD Cummings"
+  ],
+  "former_keys": [
+    "UR Desai"
+  ],
+  "crosscheck": "PubMed then OpenAlex, no identifying email supplied, no API key",
+  "snapshot": "2026-10-31 17:27:57",
+  "page_header": "",
+  "end_reason": "last-page-of-results (3 row(s) on page)",
+  "page": 4,
+  "entries": [
+    {
+      "index": 0,
+      "cid": "g-IwImKL8tMJ",
+      "title": "A high-throughput microbial glycomics platform for prebiotic development",
+      "rawTitle": "A high-throughput microbial glycomics platform for prebiotic development",
+      "authors": "JL Modesto, SG Kabonick, JE Lausch, K Verma… - bioRxiv, 2025 - biorxiv.org",
+      "snippet": "The intestinal glycome contains carbohydrates that govern the composition and metabolism\nof the gut microbiome. Gut microbes differentially access intestinal glycans as a nutrient …",
+      "truncated": false,
+      "link": "https://www.biorxiv.org/content/10.1101/2025.07.13.664583.abstract",
+      "status": "INDEPENDENT",
+      "matched_authors": [],
+      "matched_pi": [],
+      "matched_former_pi": [],
+      "authors_used": "Modesto, Jennifer L, Kabonick, Seth G, Lausch, Jennifer E, Verma, Kamalesh, Winokur, Kailyn M, Gaydos, Jessica E, Poudel, Asia, Yochum, Gregory, Townsend, Guy E",
+      "author_source": "scholar-cite-bibtex",
+      "popup_sample": "@article{modesto2025high,\n  title={A high-throughput microbial glycomics platform for prebiotic development},\n  author={Modesto, Jennifer L and Kabonick, Seth G and Lausch, Jennifer E and Verma, Kamalesh and Winokur, Kailyn M and Gaydos, Jessica E and Poudel, Asia and Yochum, Gregory and Townsend, Guy E},\n  journal={bioRxiv},\n  pages={2025--07},\n  year={2025},\n  publisher={Cold Spring Harbor Labor",
+      "full_authors": [
+        "Modesto, Jennifer L",
+        "Kabonick, Seth G",
+        "Lausch, Jennifer E",
+        "Verma, Kamalesh",
+        "Winokur, Kailyn M",
+        "Gaydos, Jessica E",
+        "Poudel, Asia",
+        "Yochum, Gregory",
+        "Townsend, Guy E"
+      ],
+      "citation_read_via": "tab",
+      "resolution": "resolved",
+      "language_flag": "",
+      "page": 4,
+      "external_source": "openalex",
+      "external_url": "https://doi.org/10.1101/2025.07.13.664583",
+      "external_title": "A high-throughput microbial glycomics platform for prebiotic development",
+      "external_authors": "Jennifer L. Modesto, Seth G. Kabonick, Jennifer E. Lausch, Kamalesh Verma, Kailyn M. Winokur, Jessica E. Gaydos, Asia Poudel, Gregory Yochum, Guy E. Townsend",
+      "external_similarity": 1,
+      "confirm_state": "confirmed",
+      "corroboration": "confirmed by openalex",
+      "needs_attention": false,
+      "attention_reason": ""
+    },
+    {
+      "index": 1,
+      "cid": "L0yB0_q-zZoJ",
+      "title": "Glycosylation as a Universal Regulator of Pathogenesis and Therapeutic Target in Multifactorial Human Diseases",
+      "rawTitle": "Glycosylation as a Universal Regulator of Pathogenesis and Therapeutic Target in Multifactorial Human Diseases",
+      "authors": "V Ivchuk - 2026 - preprints.org",
+      "snippet": "Glycosylation is a fundamental molecular mechanism that integrates immune regulation,\noncogenesis, inflammation, and pathogen interaction. Despite significant progress in …",
+      "truncated": false,
+      "link": "https://www.preprints.org/manuscript/202608.1864",
+      "status": "INDEPENDENT",
+      "matched_authors": [],
+      "matched_pi": [],
+      "matched_former_pi": [],
+      "authors_used": "V Ivchuk",
+      "author_source": "scholar+openalex",
+      "language_flag": "",
+      "page": 4,
+      "pubmed_near_miss": {
+        "pmid": "40387385",
+        "title": "FUT8 Is a Critical Driver of Prostate Tumour Growth and Can Be Targeted Using Fucosylation Inhibitors.",
+        "similarity": 0
+      },
+      "external_source": "openalex",
+      "external_url": "https://doi.org/10.20944/preprints202608.1864.v1",
+      "external_title": "Glycosylation as a Universal Regulator of Pathogenesis and Therapeutic Target in Multifactorial Human Diseases",
+      "external_authors": "Vitalii Ivchuk",
+      "external_similarity": 1,
+      "full_authors": [
+        "Vitalii Ivchuk"
+      ],
+      "confirm_state": "confirmed",
+      "corroboration": "confirmed by openalex",
+      "needs_attention": false,
+      "attention_reason": ""
+    },
+    {
+      "index": 2,
+      "cid": "4bk8ZG6fiSYJ",
+      "title": "Identification of new targets for the diagnosis of cysts (four) and trophozoites (one) of the eye pathogen Acanthamoeba",
+      "rawTitle": "Identification of new targets for the diagnosis of cysts (four) and trophozoites (one) of the eye pathogen Acanthamoeba",
+      "authors": "BK Sundararaj, M Goyal, J Samuelson - bioRxiv, 2024 - biorxiv.org",
+      "snippet": "Acanthamoebae, which are free-living amoebae, cause corneal inflammation (keratitis) and\nblindness, if not diagnosed and effectively treated. While trophozoites adhere to and …",
+      "truncated": false,
+      "link": "https://www.biorxiv.org/content/10.1101/2024.10.16.618517.abstract",
+      "status": "INDEPENDENT",
+      "matched_authors": [],
+      "matched_pi": [],
+      "matched_former_pi": [],
+      "authors_used": "BK Sundararaj, M Goyal, J Samuelson",
+      "author_source": "scholar+openalex",
+      "language_flag": "",
+      "page": 4,
+      "pubmed_near_miss": {
+        "pmid": "40035521",
+        "title": "Targets for the diagnosis of Acanthamoeba eye infections include four cyst wall proteins and the mannose-binding domain of the trophozoite mannose-binding protein.",
+        "similarity": 0.5
+      },
+      "external_source": "openalex",
+      "external_url": "https://doi.org/10.1101/2024.10.16.618517",
+      "external_title": "Identification of new targets for the diagnosis of cysts (four) and trophozoites (one) of the eye pathogen Acanthamoeba",
+      "external_authors": "Bharath Kanakapura Sundararaj, Manish Goyal, John Samuelson",
+      "external_similarity": 1,
+      "full_authors": [
+        "Bharath Kanakapura Sundararaj",
+        "Manish Goyal",
+        "John Samuelson"
+      ],
+      "confirm_state": "confirmed",
+      "corroboration": "confirmed by openalex",
+      "needs_attention": false,
+      "attention_reason": ""
+    }
+  ]
+}

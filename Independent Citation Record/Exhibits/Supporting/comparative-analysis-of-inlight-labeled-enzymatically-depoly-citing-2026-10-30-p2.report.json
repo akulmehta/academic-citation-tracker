@@ -1,0 +1,63 @@
+{
+  "cited_title": "Comparative analysis of INLIGHT™-labeled enzymatically depolymerized heparin by reverse-phase chromatography and high-performance mass spectrometry",
+  "cited_authors": "John B Mangrum, Akul Y Mehta, Alhumaidi B Alabbas, Umesh R Desai, Adam M Hawkridge",
+  "cited_venue": "Analytical and bioanalytical chemistry",
+  "paper_url": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=dNLaKGAAAAAJ&cstart=20&pagesize=80&citation_for_view=dNLaKGAAAAAJ:5nxA0vEk-isC",
+  "cites_url": "https://scholar.google.com/scholar?start=10&hl=en&as_sdt=40000005&sciodt=0,22&cites=13271249835639697821&scipsc=",
+  "author_keys": [
+    "John B Mangrum",
+    "Akul Y Mehta",
+    "Alhumaidi B Alabbas",
+    "Umesh R Desai",
+    "Adam M Hawkridge"
+  ],
+  "pi_keys": [
+    "RD Cummings"
+  ],
+  "former_keys": [
+    "UR Desai"
+  ],
+  "crosscheck": "PubMed then OpenAlex, no identifying email supplied, no API key",
+  "snapshot": "2026-10-30 16:03:43",
+  "page_header": "",
+  "end_reason": "last-page-of-results (1 row(s) on page)",
+  "page": 2,
+  "entries": [
+    {
+      "index": 0,
+      "cid": "4L_xLNWFso0J",
+      "title": "Integrated Approach for Characterization of Highly Heterogeneous Drugs",
+      "rawTitle": "Integrated Approach for Characterization of Highly Heterogeneous Drugs",
+      "authors": "R Raman, Z Shriver, T Clark… - The Science and …, 2019 - Springer",
+      "snippet": "The transformative evolution of the life sciences field is at an important point of convergence\nwith data sciences, which is another dramatically evolving field. The advances in rapid …",
+      "truncated": false,
+      "link": "https://link.springer.com/chapter/10.1007/978-3-030-11751-1_18",
+      "status": "INDEPENDENT",
+      "matched_authors": [],
+      "matched_pi": [],
+      "matched_former_pi": [],
+      "authors_used": "Raman, Rahul, Shriver, Zachary, Clark, Thomas, Sasisekharan, Ram",
+      "author_source": "scholar-cite-bibtex",
+      "popup_sample": "@incollection{raman2019integrated,\n  title={Integrated Approach for Characterization of Highly Heterogeneous Drugs},\n  author={Raman, Rahul and Shriver, Zachary and Clark, Thomas and Sasisekharan, Ram},\n  booktitle={The Science and Regulations of Naturally Derived Complex Drugs},\n  pages={311--327},\n  year={2019},\n  publisher={Springer}\n}\n",
+      "full_authors": [
+        "Raman, Rahul",
+        "Shriver, Zachary",
+        "Clark, Thomas",
+        "Sasisekharan, Ram"
+      ],
+      "resolution": "resolved",
+      "language_flag": "",
+      "page": 2,
+      "external_source": "openalex",
+      "external_url": "https://doi.org/10.1007/978-3-030-11751-1_18",
+      "external_title": "Integrated Approach for Characterization of Highly Heterogeneous Drugs",
+      "external_authors": "Rahul Raman, Zachary Shriver, Thomas Clark, Ram Sasisekharan",
+      "external_similarity": 1,
+      "confirm_state": "confirmed",
+      "corroboration": "confirmed by openalex",
+      "needs_attention": false,
+      "attention_reason": "",
+      "language_flag_captured": ""
+    }
+  ]
+}

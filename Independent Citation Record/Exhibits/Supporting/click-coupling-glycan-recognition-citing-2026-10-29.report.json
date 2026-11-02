@@ -1,0 +1,191 @@
+{
+  "cited_title": "Novel click coupling chemistry to explore glycan recognition",
+  "cited_authors": "Tianwei Jia, Akul Y Mehta, Catherine A Tilton, Ea Kristine Clarisse Tulin, Lauren E Pepi, Lukas Muerner, Stephan von Gunten, Jamie Heimburg-Molinaro, Sean R Stowell, Richard D Cummings",
+  "cited_venue": "ACS Central Science",
+  "paper_url": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=dNLaKGAAAAAJ&citation_for_view=dNLaKGAAAAAJ:R3hNpaxXUhUC",
+  "cites_url": "https://scholar.google.com/scholar?oi=bibs&hl=en&cites=3693488939388521505",
+  "author_keys": [
+    "Tianwei Jia",
+    "Akul Y Mehta",
+    "Catherine A Tilton",
+    "Ea Kristine Clarisse Tulin",
+    "Lauren E Pepi",
+    "Lukas Muerner",
+    "Stephan von Gunten",
+    "Jamie Heimburg-Molinaro",
+    "Sean R Stowell",
+    "Richard D Cummings"
+  ],
+  "pi_keys": [
+    "RD Cummings"
+  ],
+  "former_keys": [
+    "UR Desai"
+  ],
+  "page_header": "",
+  "snapshot": "2026-10-29 15:25:12",
+  "entries": [
+    {
+      "index": 0,
+      "cid": "II8SYP3vd-EJ",
+      "title": "Labeling approaches for in vivo tracing of glycans: From labeling strategies to application advantages",
+      "rawTitle": "[HTML] Labeling approaches for in vivo tracing of glycans: From labeling strategies to application advantages",
+      "authors": "C Li, Z Zheng, J Liu, H Qin, S Li, Z Chen, Z He… - Glycoscience & …, 2026 - Elsevier",
+      "snippet": "While glycans perform essential biological roles, tracking them in vivo remains challenging\ndue to structural complexity and lack of inherent detectable signals. Fluorescent probes and …",
+      "truncated": true,
+      "link": "https://www.sciencedirect.com/science/article/pii/S3050608526000418",
+      "status": "REVIEW",
+      "matched_authors": [],
+      "matched_pi": [],
+      "matched_former_pi": [],
+      "authors_used": "C Li, Z Zheng, J Liu, H Qin, S Li, Z Chen, Z He",
+      "author_source": "scholar-list (truncated)",
+      "popup_sample": "",
+      "resolution": "no author field in cite popup"
+    },
+    {
+      "index": 1,
+      "cid": "NNP0epHe_5gJ",
+      "title": "Point-of-care GlycoStrips detect serum and salivary antibodies to blood group antigens and pathogens",
+      "rawTitle": "Point-of-care GlycoStrips detect serum and salivary antibodies to blood group antigens and pathogens",
+      "authors": "T Jia, AY Mehta, KM Charon, M Noel, P Singh… - Trends in …, 2026 - cell.com",
+      "snippet": "Antibodies to carbohydrate antigens present in blood group substances and pathogens are\nimportant to human health, transplantation, and transfusion medicine. Identifying such …",
+      "truncated": true,
+      "link": "https://www.cell.com/trends/biotechnology/fulltext/S0167-7799(26)00278-7",
+      "status": "DEPENDENT",
+      "matched_authors": [
+        "T Jia",
+        "AY Mehta"
+      ],
+      "matched_pi": [],
+      "matched_former_pi": [],
+      "authors_used": "T Jia, AY Mehta, KM Charon, M Noel, P Singh",
+      "author_source": "scholar-list (truncated)"
+    },
+    {
+      "index": 2,
+      "cid": "sWKEBkXw4bwJ",
+      "title": "Blood group O expression in normal tissues and tumors",
+      "rawTitle": "Blood group O expression in normal tissues and tumors",
+      "authors": "EKC Tulin, L Muerner, TR McKitrick, CA Tilton… - The FEBS …, 2025 - Wiley Online Library",
+      "snippet": "The H antigen (O blood group), the precursor to A and B blood groups, is expressed on\nhuman erythrocytes and other cells (eg, endothelial cells). Remarkably, the specific …",
+      "truncated": true,
+      "link": "https://febs.onlinelibrary.wiley.com/doi/abs/10.1111/febs.70172",
+      "status": "DEPENDENT",
+      "matched_authors": [
+        "CA Tilton",
+        "EKC Tulin",
+        "L Muerner"
+      ],
+      "matched_pi": [],
+      "matched_former_pi": [],
+      "authors_used": "EKC Tulin, L Muerner, TR McKitrick, CA Tilton",
+      "author_source": "scholar-list (truncated)"
+    },
+    {
+      "index": 3,
+      "cid": "TPM2iPzRajgJ",
+      "title": "Design and synthesis of novel fucosylated chondroitin sulfate derivatives as intrinsic FXase inhibitors and evaluation of their antithrombotic activities",
+      "rawTitle": "Design and synthesis of novel fucosylated chondroitin sulfate derivatives as intrinsic FXase inhibitors and evaluation of their antithrombotic activities",
+      "authors": "D Xu, X Gong, L Lin, H Dong, Y Wen, Y Li, G Fu… - Carbohydrate …, 2025 - Elsevier",
+      "snippet": "Thrombotic disease is one of the most serious threats to human health, underscoring the\nurgent need for novel anticoagulants. Fucosylated chondroitin sulfate (FuCS) …",
+      "truncated": true,
+      "link": "https://www.sciencedirect.com/science/article/pii/S0144861725016236",
+      "status": "REVIEW",
+      "matched_authors": [],
+      "matched_pi": [],
+      "matched_former_pi": [],
+      "authors_used": "D Xu, X Gong, L Lin, H Dong, Y Wen, Y Li, G Fu",
+      "author_source": "scholar-list (truncated)",
+      "resolution": "cite popup never appeared"
+    },
+    {
+      "index": 4,
+      "cid": "auMZCZDTJlgJ",
+      "title": "Development of lamprey-derived antibodies against human blood group antigens",
+      "rawTitle": "Development of lamprey-derived antibodies against human blood group antigens",
+      "authors": "PB Kunz, EKC Tulin, AY Mehta, T Jia… - …, 2025 - academic.oup.com",
+      "snippet": "A major challenge in the glycosciences is the scarcity of sensitive and specific glycan-\nbinding reagents, such as monoclonal antibodies, for detecting and isolating glycans. Here …",
+      "truncated": true,
+      "link": "https://academic.oup.com/glycob/article-abstract/35/11/cwaf043/8232419",
+      "status": "DEPENDENT",
+      "matched_authors": [
+        "T Jia",
+        "AY Mehta",
+        "EKC Tulin"
+      ],
+      "matched_pi": [],
+      "matched_former_pi": [],
+      "authors_used": "PB Kunz, EKC Tulin, AY Mehta, T Jia",
+      "author_source": "scholar-list (truncated)"
+    },
+    {
+      "index": 5,
+      "cid": "5aWZyqGonHEJ",
+      "title": "A trifunctional probe for generation of fluorogenic glycan-photocrosslinker conjugates",
+      "rawTitle": "A trifunctional probe for generation of fluorogenic glycan-photocrosslinker conjugates",
+      "authors": "B Vreulz, D De Crozals, S Cecioni - RSC chemical biology, 2025 - pubs.rsc.org",
+      "snippet": "Interactions between cell surface glycans and lectins mediate vital biological processes, yet\ntheir characterization is hindered by the low affinity of these binding events. While …",
+      "truncated": false,
+      "link": "https://pubs.rsc.org/cb/article-abstract/6/11/1779/312283",
+      "status": "INDEPENDENT",
+      "matched_authors": [],
+      "matched_pi": [],
+      "matched_former_pi": [],
+      "authors_used": "B Vreulz, D De Crozals, S Cecioni",
+      "author_source": "scholar-list"
+    },
+    {
+      "index": 6,
+      "cid": "MOl_CNWQfZ4J",
+      "title": "Dynamics of Anti-ABO (H) Antibody Expression in SARS-CoV-2-Infected Patients",
+      "rawTitle": "Dynamics of Anti-ABO (H) Antibody Expression in SARS-CoV-2-Infected Patients",
+      "authors": "T Jia, AY Mehta, KR Patel, KM Charon… - ACS Chemical …, 2026 - ACS Publications",
+      "snippet": "The association between ABO (H) blood groups and COVID-19 susceptibility and severity\nhas been studied throughout the pandemic. However, the comprehensively tracked dynamic …",
+      "truncated": true,
+      "link": "https://pubs.acs.org/acbcct/article-abstract/21/10/2597/5439447",
+      "status": "DEPENDENT",
+      "matched_authors": [
+        "T Jia",
+        "AY Mehta"
+      ],
+      "matched_pi": [],
+      "matched_former_pi": [],
+      "authors_used": "T Jia, AY Mehta, KR Patel, KM Charon",
+      "author_source": "scholar-list (truncated)"
+    },
+    {
+      "index": 7,
+      "cid": "WqXeDrgmpNUJ",
+      "title": "Establishing “Glycoantigens” as a cross-field concept in Glycobiology, transfusion, transplant, and immunology",
+      "rawTitle": "Establishing “Glycoantigens” as a cross-field concept in Glycobiology, transfusion, transplant, and immunology",
+      "authors": "WJ Lane - Human Immunology, 2026 - Elsevier",
+      "snippet": "Cell-surface glycans (carbohydrate structures) serve as critical antigens in transfusion and\ntransplantation, yet their study remains fragmented across disciplines. The ABO blood group …",
+      "truncated": false,
+      "link": "https://www.sciencedirect.com/science/article/pii/S0198885926001588",
+      "status": "INDEPENDENT",
+      "matched_authors": [],
+      "matched_pi": [],
+      "matched_former_pi": [],
+      "authors_used": "WJ Lane",
+      "author_source": "scholar-list"
+    },
+    {
+      "index": 8,
+      "cid": "A8DSoqY54sEJ",
+      "title": "Use of Microbial Microarrays to Define Antibody Specificity",
+      "rawTitle": "Use of Microbial Microarrays to Define Antibody Specificity",
+      "authors": "CJ Stowell, V Ortiz, CL Cepeda, VC Lee… - Methods in Transfusion …, 2026 - Springer",
+      "snippet": "The formation of alloantibodies against red blood cell (RBC) antigens is the most frequent\nimmune barrier to blood transfusion. Among these antibodies, those that occur naturally …",
+      "truncated": true,
+      "link": "https://link.springer.com/protocol/10.1007/978-1-0716-5376-0_30",
+      "status": "REVIEW",
+      "matched_authors": [],
+      "matched_pi": [],
+      "matched_former_pi": [],
+      "authors_used": "CJ Stowell, V Ortiz, CL Cepeda, VC Lee",
+      "author_source": "scholar-list (truncated)",
+      "resolution": "cite popup never appeared"
+    }
+  ]
+}

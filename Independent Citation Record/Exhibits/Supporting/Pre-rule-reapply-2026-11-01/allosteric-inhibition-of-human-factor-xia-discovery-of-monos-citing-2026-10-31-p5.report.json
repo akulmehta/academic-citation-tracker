@@ -1,0 +1,52 @@
+{
+  "cited_title": "Allosteric inhibition of human factor XIa: discovery of monosulfated benzofurans as a class of promising inhibitors",
+  "cited_authors": "Malaika D Argade, Akul Y Mehta, Aurijit Sarkar, Umesh R Desai",
+  "cited_venue": "Journal of medicinal chemistry",
+  "paper_url": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=dNLaKGAAAAAJ&citation_for_view=dNLaKGAAAAAJ:UeHWp8X0CEIC",
+  "cites_url": "https://scholar.google.com/scholar?start=40&hl=en&as_sdt=40000005&sciodt=0,22&cites=17765626390546429538&scipsc=",
+  "author_keys": [
+    "Malaika D Argade",
+    "Akul Y Mehta",
+    "Aurijit Sarkar",
+    "Umesh R Desai"
+  ],
+  "pi_keys": [
+    "RD Cummings"
+  ],
+  "former_keys": [
+    "UR Desai"
+  ],
+  "crosscheck": "PubMed then OpenAlex, no identifying email supplied, no API key",
+  "snapshot": "2026-10-31 19:45:29",
+  "page_header": "",
+  "end_reason": "last-page-of-results (1 row(s) on page)",
+  "page": 5,
+  "entries": [
+    {
+      "index": 0,
+      "cid": "GmBg66rIwFsJ",
+      "title": "[CITATION] Rh-Catalyzed Five-Membered Heterocycle Synthesis",
+      "rawTitle": "[CITATION] Rh-Catalyzed Five-Membered Heterocycle Synthesis",
+      "authors": "S Kathiravan, IA Nicholls - Noble Metal Noble Value: Ru-, Rh-, Pd …, 2016 - World Scientific",
+      "snippet": "The following sections are included: Introduction Rhodium-catalyzed nitrogen containing\nfive-membered heterocycle synthesis Rhodium-catalyzed oxygen containing five-membered …",
+      "truncated": true,
+      "link": "https://www.worldscientific.com/doi/abs/10.1142/9781783269242_0003",
+      "status": "REVIEW",
+      "matched_authors": [],
+      "matched_pi": [],
+      "matched_former_pi": [],
+      "authors_used": "S Kathiravan, IA Nicholls",
+      "author_source": "scholar-list (truncated)",
+      "resolution": "no cite control found for this entry",
+      "language_flag": "",
+      "page": 5,
+      "confirm_state": "unresolved",
+      "corroboration": "not indexed in PubMed or OpenAlex and the Scholar list is incomplete",
+      "corroboration_note": "no PubMed or OpenAlex record matched the title closely enough",
+      "edition_key": "doi:10.1142:9781783269242_0003:skathiravanianicholls",
+      "duplicate_of": "",
+      "attention_reason": "not indexed in PubMed or OpenAlex and the Scholar list is incomplete",
+      "needs_attention": true
+    }
+  ]
+}

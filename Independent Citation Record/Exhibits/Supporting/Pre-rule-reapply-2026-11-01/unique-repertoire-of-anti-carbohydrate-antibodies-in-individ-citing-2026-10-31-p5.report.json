@@ -1,0 +1,167 @@
+{
+  "cited_title": "Unique repertoire of anti-carbohydrate antibodies in individual human serum",
+  "cited_authors": "Ralph ND Luetscher, Tanya R McKitrick, Chao Gao, Akul Y Mehta, Alyssa M McQuillan, Robert Kardish, Kayluz Frias Boligan, Xuezheng Song, Lenette Lu, Jamie Heimburg-Molinaro, Stephan von Gunten, Galit Alter, Richard D Cummings",
+  "cited_venue": "Scientific reports",
+  "paper_url": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=dNLaKGAAAAAJ&citation_for_view=dNLaKGAAAAAJ:Wp0gIr-vW9MC",
+  "cites_url": "https://scholar.google.com/scholar?start=40&hl=en&as_sdt=40000005&sciodt=0,22&cites=6229834546150686384&scipsc=",
+  "author_keys": [
+    "Ralph ND Luetscher",
+    "Tanya R McKitrick",
+    "Chao Gao",
+    "Akul Y Mehta",
+    "Alyssa M McQuillan",
+    "Robert Kardish",
+    "Kayluz Frias Boligan",
+    "Xuezheng Song",
+    "Lenette Lu",
+    "Jamie Heimburg-Molinaro",
+    "Stephan von Gunten",
+    "Galit Alter",
+    "Richard D Cummings"
+  ],
+  "pi_keys": [
+    "RD Cummings"
+  ],
+  "former_keys": [
+    "UR Desai"
+  ],
+  "crosscheck": "PubMed then OpenAlex, no identifying email supplied, no API key",
+  "snapshot": "2026-10-31 19:57:35",
+  "page_header": "",
+  "end_reason": "last-page-of-results (4 row(s) on page)",
+  "page": 5,
+  "entries": [
+    {
+      "index": 0,
+      "cid": "u1UEtvMPwiAJ",
+      "title": "The anti-carbohydrate antibody repertoire in type 1 diabetes",
+      "rawTitle": "[PDF] The anti-carbohydrate antibody repertoire in type 1 diabetes",
+      "authors": "P Tran, F Dong, E Kin, K Richardson, L Tran, K Waugh… - 2022 - academia.edu",
+      "snippet": "Type 1 diabetes (T1D) is an autoimmune disease, characterized by the presence of 22\nautoantibodies to protein and non-protein antigens. We report circulating levels of …",
+      "truncated": true,
+      "link": "https://www.academia.edu/download/101850772/latest.pdf",
+      "status": "DEPENDENT",
+      "matched_authors": [
+        "Cummings, Richard"
+      ],
+      "matched_pi": [
+        "Cummings, Richard"
+      ],
+      "matched_former_pi": [],
+      "authors_used": "Tran, Paul, Dong, Fran, Kin, Eileen, Richardson, Katherine, Tran, Lynn, Waugh, Kathleen, Hopkins, Diane, Cummings, Richard, Wang, Peng George, Rewers, Marian",
+      "author_source": "scholar-cite-bibtex",
+      "popup_sample": "@article{tran2022anti,\n  title={The anti-carbohydrate antibody repertoire in type 1 diabetes},\n  author={Tran, Paul and Dong, Fran and Kin, Eileen and Richardson, Katherine and Tran, Lynn and Waugh, Kathleen and Hopkins, Diane and Cummings, Richard and Wang, Peng George and Rewers, Marian and others},\n  year={2022}\n}\n",
+      "full_authors": [
+        "Tran, Paul",
+        "Dong, Fran",
+        "Kin, Eileen",
+        "Richardson, Katherine",
+        "Tran, Lynn",
+        "Waugh, Kathleen",
+        "Hopkins, Diane",
+        "Cummings, Richard",
+        "Wang, Peng George",
+        "Rewers, Marian"
+      ],
+      "citation_read_via": "tab",
+      "resolution": "resolved but Scholar shows 'and others'",
+      "language_flag": "",
+      "page": 5,
+      "edition_key": "",
+      "duplicate_of": "",
+      "needs_attention": false,
+      "attention_reason": ""
+    },
+    {
+      "index": 1,
+      "cid": "HzhB37g-l0kJ",
+      "title": "Diversification of IgA antibody specificities by mild chemical modification?",
+      "rawTitle": "Diversification of IgA antibody specificities by mild chemical modification?",
+      "authors": "G Gorochov, S von Gunten - Pharmacology, 2022 - karger.com",
+      "snippet": "Intravenous immunoglobulin (IVIG) or subcutaneous immunoglobulin consisting mainly of\nIgG antibodies are used for substitution therapy in humoral immunodeficiency or as a high …",
+      "truncated": false,
+      "link": "https://karger.com/pha/article/107/7-8/339/826272",
+      "status": "DEPENDENT",
+      "matched_authors": [
+        "S von Gunten"
+      ],
+      "matched_pi": [],
+      "matched_former_pi": [],
+      "authors_used": "G Gorochov, S von Gunten",
+      "author_source": "scholar-list",
+      "language_flag": "",
+      "page": 5,
+      "edition_key": "",
+      "duplicate_of": "",
+      "needs_attention": false,
+      "attention_reason": ""
+    },
+    {
+      "index": 2,
+      "cid": "IJHx_JA3KjcJ",
+      "title": "Mapping the antibody repertoire to Staphylococcus aureus wall teichoic acid: a protective role for IgM in invasive infection?",
+      "rawTitle": "[PDF] Mapping the antibody repertoire to Staphylococcus aureus wall teichoic acid: a protective role for IgM in invasive infection?",
+      "authors": "A Hendriks¹, S Ali, MRJ Varkila… - Bittersweet …, 2022 - dspace.library.uu.nl",
+      "snippet": "Staphylococcus aureus is one of the leading causes of hospital-acquired infections with high\noverall mortality. Pre-existing immunity to S. aureusis common among healthy individuals …",
+      "truncated": true,
+      "link": "https://dspace.library.uu.nl/server/api/core/bitstreams/1493575a-a5a9-468e-9017-e6aa057e2cf6/content#page=80",
+      "status": "REVIEW",
+      "matched_authors": [],
+      "matched_pi": [],
+      "matched_former_pi": [],
+      "authors_used": "Hendriks$^1$, Astrid, Ali, Sara, Varkila, Meri RJ, Haitsma-Mulier, Jelle, de Haas$^1$, Carla JC, Aerts$^1$, Piet C, Cremer⁴, Olaf L, Bonten$^1$, Marc JM, van Strijp$^1$, Jos AG, Cod{\\'e}e, Jeroen DC",
+      "author_source": "scholar-cite-bibtex",
+      "popup_sample": "@article{hendriks12022mapping,\n  title={Mapping the antibody repertoire to Staphylococcus aureus wall teichoic acid: a protective role for IgM in invasive infection?},\n  author={Hendriks$^1$, Astrid and Ali, Sara and Varkila, Meri RJ and Haitsma-Mulier, Jelle and de Haas$^1$, Carla JC and Aerts$^1$, Piet C and Cremer⁴, Olaf L and Bonten$^1$, Marc JM and van Strijp$^1$, Jos AG and Cod{\\'e}e, Jeroen",
+      "full_authors": [
+        "Hendriks$^1$, Astrid",
+        "Ali, Sara",
+        "Varkila, Meri RJ",
+        "Haitsma-Mulier, Jelle",
+        "de Haas$^1$, Carla JC",
+        "Aerts$^1$, Piet C",
+        "Cremer⁴, Olaf L",
+        "Bonten$^1$, Marc JM",
+        "van Strijp$^1$, Jos AG",
+        "Cod{\\'e}e, Jeroen DC"
+      ],
+      "citation_read_via": "tab",
+      "resolution": "resolved but Scholar shows 'and others'",
+      "language_flag": "",
+      "page": 5,
+      "confirm_state": "unresolved",
+      "corroboration": "not indexed in PubMed or OpenAlex and the Scholar list is incomplete",
+      "corroboration_note": "no PubMed or OpenAlex record matched the title closely enough",
+      "edition_key": "",
+      "duplicate_of": "",
+      "attention_reason": "not indexed in PubMed or OpenAlex and the Scholar list is incomplete",
+      "needs_attention": true
+    },
+    {
+      "index": 3,
+      "cid": "_BX3m5UIvjkJ",
+      "title": "Targeting the Laminated Layer of Echinococcus multilocularis as a Potential Therapeutic Strategy",
+      "rawTitle": "[PDF] Targeting the Laminated Layer of Echinococcus multilocularis as a Potential Therapeutic Strategy",
+      "authors": "RD Cummings, S von Gunten - Pharmacology, 2021 - scholar.archive.org",
+      "snippet": "Alveolar echinococcosis (AE) caused by Echinococcus multilocularis is among the most\nlethal helminthic diseases, but current therapeutic strategies are suboptimal due to poor …",
+      "truncated": false,
+      "link": "https://scholar.archive.org/work/lxi637e3qve7zg3qogmthxld3m/access/wayback/https://www.karger.com/Article/Pdf/512769",
+      "status": "DEPENDENT",
+      "matched_authors": [
+        "S von Gunten",
+        "RD Cummings"
+      ],
+      "matched_pi": [
+        "RD Cummings"
+      ],
+      "matched_former_pi": [],
+      "authors_used": "RD Cummings, S von Gunten",
+      "author_source": "scholar-list",
+      "language_flag": "",
+      "page": 5,
+      "edition_key": "",
+      "duplicate_of": "",
+      "needs_attention": false,
+      "attention_reason": ""
+    }
+  ]
+}
