@@ -7,7 +7,13 @@
 // about, and nothing downstream would notice.
 
 const path = require("path");
-const { VERDICTS, reportFileFor, findEntry, splitCsvLine } = require("./apply-decision");
+const {
+  VERDICTS,
+  reportFileFor,
+  findEntry,
+  splitCsvLine,
+  foldProblem,
+} = require("./apply-decision");
 
 let pass = 0;
 let fail = 0;
@@ -125,6 +131,71 @@ check(
   "csv: the columns the tool reads survive a quoted title",
   splitCsvLine('cit-000082,"Title, with comma",,dependent,note here')[4],
   "note here",
+);
+
+// ---- A fold must stay within one cited paper -----------------------------
+//
+// tally.foldSameWork groups on same_work_key alone and never compares cites_id,
+// then marks the losing copies duplicate_of -- which isHighlighted() refuses. A
+// fold across two cited papers would therefore remove a highlight from one
+// exhibit. The confusion is easy to make because one citing article appears on
+// the "cited by" page of every paper it cites, so two rows can be the same WORK
+// while being two separate CITATIONS. Measured 2026-11-03, 178 title-keyed groups
+// in this corpus span more than one cited paper.
+
+const A = { cites_id: "111", title: "A paper" };
+const A2 = { cites_id: "111", title: "Another row on the same page" };
+const B = { cites_id: "222", title: "A row citing a different paper" };
+
+check("fold: same cited paper is allowed", foldProblem("cit-1", "cit-2", A, A2), "");
+check(
+  "fold: a different cited paper is refused",
+  Boolean(foldProblem("cit-1", "cit-2", A, B)),
+  true,
+);
+// The refusal must name both rows, or a batch of them cannot be untangled.
+check(
+  "fold: the message names the row and the anchor",
+  (() => {
+    const m = foldProblem("cit-000967", "cit-000487", A, B);
+    return m.includes("cit-000967") && m.includes("cit-000487");
+  })(),
+  true
+);
+
+// A missing cites_id is NOT treated as a match. It means the store could not say
+// which paper the row belongs to, and silently allowing the fold would let the
+// very case this guard exists for through on a falsy comparison. cites_id is
+// NOT NULL in the schema, so a refusal here points at a broken row to rebuild.
+check(
+  "fold: an unknown cites_id is refused, not assumed safe",
+  Boolean(foldProblem("cit-1", "cit-2", A, { cites_id: "" })),
+  true,
+);
+check(
+  "fold: an unknown cites_id on the subject is refused too",
+  Boolean(foldProblem("cit-1", "cit-2", { cites_id: "" }, A)),
+  true,
+);
+check(
+  "fold: the refusal says what to do about a missing cites_id",
+  foldProblem("cit-1", "cit-2", A, { cites_id: "" }).includes("build-catalog"),
+  true,
+);
+check("fold: a missing anchor row is not this guard's problem", foldProblem("cit-1", "cit-2", A, null), "");
+check("fold: a missing subject row is not this guard's problem", foldProblem("cit-1", "cit-2", null, A), "");
+
+// The fold the packet actually uses today: three copies of one preprint on the
+// exhibit of a single cited paper. Within one paper, so it must stay allowed.
+check(
+  "fold: the existing sw:cit-000108 group is within one cited paper",
+  foldProblem(
+    "cit-000132",
+    "cit-000108",
+    { cites_id: "4631471255166879252" },
+    { cites_id: "4631471255166879252" },
+  ),
+  "",
 );
 
 console.log(

@@ -325,10 +325,14 @@
       "snippet": "Sulfated glycosaminoglycans (GAGs), or synthetic mimetics thereof, are not favorably\nviewed as orally bioavailable drugs owing to their high number of anionic sulfate groups …",
       "truncated": true,
       "link": "https://pmc.ncbi.nlm.nih.gov/articles/PMC9884082/",
-      "status": "REVIEW",
-      "matched_authors": [],
+      "status": "DEPENDENT",
+      "matched_authors": [
+        "Umesh R. Desai"
+      ],
       "matched_pi": [],
-      "matched_former_pi": [],
+      "matched_former_pi": [
+        "Umesh R. Desai"
+      ],
       "authors_used": "Morla, Shravan, Ravikumar, Ongolu, O’Hara, Connor, Boothello, Rio, Vera, Alberto, Abdelfadiel, Elsamani I, Fayyad, Rawan, Afosah, Daniel K, Sharon, Chetna, Fernandez, Leopoldo",
       "author_source": "scholar-cite-bibtex",
       "popup_sample": "@article{morla2023designing,\n  title={Designing synthetic, sulfated glycosaminoglycan mimetics that are orally bioavailable and exhibiting in vivo anticancer activity},\n  author={Morla, Shravan and Ravikumar, Ongolu and O’Hara, Connor and Boothello, Rio and Vera, Alberto and Abdelfadiel, Elsamani I and Fayyad, Rawan and Afosah, Daniel K and Sharon, Chetna and Fernandez, Leopoldo and others},\n  jou",
@@ -348,14 +352,25 @@
       "resolution": "resolved but Scholar shows 'and others'",
       "language_flag": "",
       "page": 5,
-      "confirm_state": "unresolved",
-      "corroboration": "not indexed in PubMed or OpenAlex and the Scholar list is incomplete",
+      "confirm_state": "external-resolved",
+      "corroboration": "resolved against openalex (DEPENDENT)",
       "corroboration_note": "no PubMed or OpenAlex record matched the title closely enough",
       "edition_key": "",
       "duplicate_of": "",
-      "attention_reason": "not indexed in PubMed or OpenAlex and the Scholar list is incomplete",
-      "needs_attention": true,
-      "language_flag_captured": ""
+      "attention_reason": "",
+      "needs_attention": false,
+      "language_flag_captured": "",
+      "status_captured": "REVIEW",
+      "confirm_state_captured": "unresolved",
+      "external_source": "openalex",
+      "external_url": "https://doi.org/10.1021/acs.jmedchem.2c01511",
+      "external_title": "Designing Synthetic, Sulfated Glycosaminoglycan Mimetics That Are Orally Bioavailable and Exhibiting In Vivo Anticancer Activity",
+      "external_authors": "Shravan Morla, Ongolu Ravikumar, Connor O’Hara, Rio Boothello, Alberto Vera, Elsamani I. Abdelfadiel, Rawan Fayyad, Daniel K. Afosah, Chetna Sharon, Leopoldo Fernandez, Syed Ammer Shah, Bhaumik B. Patel, Umesh R. Desai",
+      "external_similarity": 1,
+      "external_matched": [
+        "Umesh R. Desai",
+        "Umesh R. Desai"
+      ]
     }
   ]
 }

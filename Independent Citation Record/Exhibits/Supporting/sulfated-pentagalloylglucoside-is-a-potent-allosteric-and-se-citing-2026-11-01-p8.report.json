@@ -70,10 +70,14 @@
       "snippet": "Human cytomegalovirus (HCMV) infections are wide-spread among the general population\nwith manifestations ranging from asymptomatic to severe developmental disabilities in …",
       "truncated": true,
       "link": "https://www.mdpi.com/1422-0067/21/5/1676",
-      "status": "REVIEW",
-      "matched_authors": [],
+      "status": "DEPENDENT",
+      "matched_authors": [
+        "Umesh R. Desai"
+      ],
       "matched_pi": [],
-      "matched_former_pi": [],
+      "matched_former_pi": [
+        "Umesh R. Desai"
+      ],
       "authors_used": "Elste, James, Kaltenbach, Dominik, Patel, Vraj R, Nguyen, Max T, Sharthiya, Harsh, Tandon, Ritesh, Mehta, Satish K, Volin, Michael V, Fornaro, Michele, Tiwari, Vaibhav",
       "author_source": "scholar-cite-bibtex",
       "popup_sample": "@article{elste2020inhibition,\n  title={Inhibition of human cytomegalovirus entry into host cells through a pleiotropic small molecule},\n  author={Elste, James and Kaltenbach, Dominik and Patel, Vraj R and Nguyen, Max T and Sharthiya, Harsh and Tandon, Ritesh and Mehta, Satish K and Volin, Michael V and Fornaro, Michele and Tiwari, Vaibhav and others},\n  journal={International Journal of Molecular ",
@@ -96,16 +100,27 @@
       "pubmed_near_miss": {
         "pmid": "42198647",
         "title": "A Potent Inhibitor of Human Cytomegalovirus Infection Works Post-Entry Specifically in Differentiating Myelo-Monocytic Cells.",
-        "similarity": 0.4
+        "similarity": 0.31
       },
-      "confirm_state": "unresolved",
-      "corroboration": "not indexed in PubMed or OpenAlex and the Scholar list is incomplete",
+      "confirm_state": "external-resolved",
+      "corroboration": "resolved against openalex (DEPENDENT)",
       "corroboration_note": "no PubMed or OpenAlex record matched the title closely enough",
       "edition_key": "",
       "duplicate_of": "",
-      "attention_reason": "not indexed in PubMed or OpenAlex and the Scholar list is incomplete",
-      "needs_attention": true,
-      "language_flag_captured": ""
+      "attention_reason": "",
+      "needs_attention": false,
+      "language_flag_captured": "",
+      "status_captured": "REVIEW",
+      "confirm_state_captured": "unresolved",
+      "external_source": "openalex",
+      "external_url": "https://doi.org/10.3390/ijms21051676",
+      "external_title": "Inhibition of Human Cytomegalovirus Entry into Host Cells through A Pleiotropic Small Molecule",
+      "external_authors": "James Elste, Dominik Kaltenbach, Vraj R. Patel, Max T. Nguyen, Harsh Sharthiya, Ritesh Tandon, Satish K. Mehta, Michael V. Volin, Michele Fornaro, Vaibhav Tiwari, Umesh R. Desai",
+      "external_similarity": 1,
+      "external_matched": [
+        "Umesh R. Desai",
+        "Umesh R. Desai"
+      ]
     },
     {
       "index": 2,

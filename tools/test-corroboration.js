@@ -54,6 +54,27 @@ check(
   false,
 );
 
+// The floor is THREE leading words, raised from two on 2026-11-02. Two words is
+// not enough: "[CITATION] Structural Biology" matched the unrelated
+// "Structural biology of allergens" and put a false external byline on a row.
+// Measured over the settled corpus the change costs nothing -- only three rows
+// rested on a prefix match and all three had three words or more.
+check(
+  "sim: a two-word leading fragment is not the same work",
+  titleMatchIsCredible(titleSimilarity("Structural Biology", "Structural biology of allergens")),
+  false,
+);
+check(
+  "sim: a three-word leading fragment is enough",
+  titleMatchIsCredible(
+    titleSimilarity(
+      "Structural biology of allergens",
+      "Structural biology of allergens revisited for the twenty first century",
+    ),
+  ),
+  true,
+);
+
 // Scholar truncates a long title with an ellipsis, so the row's own byline is a
 // leading fragment of the true title. That is the same work.
 check(

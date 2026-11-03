@@ -37,10 +37,12 @@ function tallyEntries(entries) {
     independent: t.independent,
     confirmed: t.independent_confirmed,
     coverage: t.independent_coverage,
+    decided: t.independent_user_decided,
     dependent: t.dependent,
     self_pi: t.self_pi,
     self_former: t.self_former_pi,
     review: t.review,
+    review_queue: t.review_queue,
     non_english: t.non_english,
   };
 }
@@ -95,15 +97,36 @@ function main() {
   );
   console.log(`Exhibit PDF pages:              ${total.pdf_pages}`);
   console.log(`Citation records reviewed:      ${total.records}`);
+  // The three bases must sum to the independent total. They are printed together
+  // for that reason: a line reading "685 externally confirmed + 387 Scholar list"
+  // beside a total of 1077 leaves 5 rows unexplained, and those 5 rest on a
+  // person's reading rather than on a machine, which the record is required to
+  // report separately rather than fold into "externally confirmed".
+  const bases = total.confirmed + total.coverage + total.decided;
   console.log(
     `Independent and highlighted:    ${total.independent} ` +
-      `(${total.confirmed} externally confirmed, ${total.coverage} not indexed externally so marked on Scholar's complete list)`
+      `(${total.confirmed} externally confirmed, ${total.coverage} not indexed externally so marked on Scholar's complete list` +
+      (total.decided ? `, ${total.decided} settled by you` : "") +
+      `)`
   );
+  if (bases !== total.independent) {
+    console.log(
+      `  WARNING: the bases sum to ${bases}, not ${total.independent}. ` +
+        `A confirm_state outside confirmed/unverified-coverage/user-decided is ` +
+        `being highlighted - investigate rather than quoting this figure.`
+    );
+  }
   console.log(`Dependent (shares an author):   ${total.dependent}`);
   console.log(
     `Self-citations (PI/former):     ${total.self_pi} / ${total.self_former}`
   );
-  console.log(`Awaiting manual review:         ${total.review}`);
+  console.log(
+    `Review queue:                   ${total.review_queue}` +
+      (total.review > total.review_queue
+        ? `  (${total.review} classified REVIEW, ${total.review - total.review_queue}` +
+          ` of them non-English and reported under Flagged non-English)`
+        : "")
+  );
   console.log(`Flagged non-English:            ${total.non_english}`);
   console.log(
     "\nCounts are tied to the snapshot date in each report and include only" +

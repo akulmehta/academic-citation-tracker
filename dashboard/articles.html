@@ -47,11 +47,14 @@
       shares no author with the paper it cites, is settled by corroboration or a
       complete Google Scholar author list, and is not withheld for language. It
       is what the exhibit PDFs mark in yellow. <b>Distinct</b> collapses the
-      duplicate versions Scholar shows of the same paper. <b>Unsettled</b>
-      includes the rows withheld for language, so adding the two would count them
-      twice. On paper the venue and status columns are dropped so the remaining
-      seventeen fit the sheet width; both appear here on screen and in
-      <code>dashboard/data/citation-data.json</code>.
+      duplicate versions Scholar shows of the same paper. <b>Review</b> is the
+      actionable queue and <b>Unsettled</b> is an English row classified
+      independent but awaiting corroboration; <b>Non-Eng.</b> holds every row the
+      language screen flags, which is its own bucket since 2026-11-03 &mdash; the
+      screen supersedes a row's other classifications, so those rows are not also
+      counted as unsettled. On paper the venue and status columns are dropped so
+      the remaining columns fit the sheet width; both appear here on screen and
+      in <code>dashboard/data/citation-data.json</code>.
     </p>
     <p class="method-note page-back">
       <a href="index.html">&larr; Back to the record</a> &middot;

@@ -84,10 +84,11 @@ function tallyFor(base) {
   let entries = 0;
   let independent = 0;
   let pending = 0;
+  let nonEnglish = 0;
   try {
     pdfs = fs.readdirSync(PDF_DIR).filter((f) => f.startsWith(base) && f.endsWith(".pdf")).length;
   } catch {
-    return { pdfs: 0, entries: 0, independent: 0, pending: 0 };
+    return { pdfs: 0, entries: 0, independent: 0, pending: 0, nonEnglish: 0 };
   }
   try {
     for (const f of fs.readdirSync(SUPPORT_DIR)) {
@@ -100,11 +101,14 @@ function tallyFor(base) {
       entries += t.records;
       independent += t.independent;
       pending += t.independent_pending;
+      // Reported apart from `pending` since 2026-11-03: a non-English row is a
+      // closed exclusion, not an unsettled author list.
+      nonEnglish += t.non_english_independent;
     }
   } catch {
     /* partial capture, report what was read */
   }
-  return { pdfs, entries, independent, pending };
+  return { pdfs, entries, independent, pending, nonEnglish };
 }
 
 function readRunLog() {
@@ -372,6 +376,9 @@ async function main() {
         `${tally.independent} independent` +
         (tally.pending
           ? ` (+${tally.pending} independent but unsettled, not counted)`
+          : "") +
+        (tally.nonEnglish
+          ? ` (+${tally.nonEnglish} non-English, excluded by the language screen)`
           : "") +
         (tally.pdfs < expectedPages ? "  <-- INCOMPLETE, re-run this one" : "")
     );

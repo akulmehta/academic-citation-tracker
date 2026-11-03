@@ -137,7 +137,7 @@ function lookup(db, uids) {
   for (const uid of uids) {
     const r = db
       .prepare(
-        `SELECT row_uid, base, page, row_index, cid, title, status, confirm_state,
+        `SELECT row_uid, base, page, row_index, cid, cites_id, title, status, confirm_state,
                 language_flag, duplicate_of, is_highlighted, needs_attention,
                 attention_reason, corroboration, external_source, external_url,
                 external_authors, external_matched, scholar_note
@@ -158,6 +158,46 @@ function lookup(db, uids) {
     out.push({ ...r, uid });
   }
   return out;
+}
+
+// A fold is only ever safe inside ONE cited paper.
+//
+// tally.foldSameWork groups purely on same_work_key and never compares cites_id,
+// then makes one copy stand and marks the rest duplicate_of -- which
+// isHighlighted() refuses. So folding a row that cites a different PI paper would
+// remove a highlight from that paper's exhibit.
+//
+// This is a live risk, not a theoretical one: two rows can look like the same
+// work because they ARE the same citing article, which appears on the "cited by"
+// page of every paper it cites. Measured 2026-11-03, 178 title-keyed groups in
+// this corpus span more than one cited paper. Those are one distinct work and
+// genuinely that many separate citations -- independence is relative to the cited
+// paper, so collapsing them is wrong twice over. Returns a message when the fold
+// would cross a cited paper, or "" when it is provably within one. A side with no
+// cites_id is refused too rather than waved through: an empty value here means the
+// store cannot say which paper the row belongs to, and treating "unknown" as
+// "same" is the exact inference this guard exists to prevent. cites_id is NOT NULL
+// in the schema, so a refusal on the floor is a sign of a broken row, not a
+// workflow to accommodate.
+function foldProblem(uid, sameWorkAs, mine, anchor) {
+  if (!mine || !anchor) return "";
+  if (!mine.cites_id || !anchor.cites_id) {
+    return (
+      `${uid}: cannot check that ${sameWorkAs} cites the same paper, because ` +
+      `${!mine.cites_id ? uid : sameWorkAs} has no cites_id in the store. ` +
+      `A fold across two cited papers would drop a highlight from one exhibit, so ` +
+      `this is refused rather than assumed safe. Rebuild the catalog ` +
+      `(node tools/build-catalog.js --write) and try again.`
+    );
+  }
+  if (mine.cites_id === anchor.cites_id) return "";
+  return (
+    `${uid}: cites a different paper (${sameWorkAs} belongs to ` +
+    `${anchor.cites_id}, this row to ${mine.cites_id}), so it is not a ` +
+    `duplicate of it. Two rows of one citing article appear once per paper ` +
+    `it cites and are separate citations; folding them would drop a ` +
+    `highlight from one exhibit. A fold must stay within one cited paper.`
+  );
 }
 
 // The entry inside the report that the store row refers to. Matched on index and
@@ -280,12 +320,44 @@ function decisionsFromArgs() {
     .split(",")
     .map((s) => s.trim())
     .filter(Boolean);
+  const sameWorkAs = arg("same-work-as").trim();
   if (!uids.length) {
     fail(
       "nothing to do. Give --row=cit-000123 [--verdict=independent] or --from-csv.\n" +
         "        Verdicts: independent | dependent | self | self-former-pi | review\n" +
-        "        --row=cit-000123 --revert   take a decision back off the row",
+        "        --row=cit-000123 --revert   take a decision back off the row\n" +
+        "        --row=cit-000123,cit-000124 --same-work-as=cit-000101 --note=\"...\"\n" +
+        "        (record that the listed rows are the same published work as another row)",
     );
+  }
+  // A same-work fold is a different claim from a verdict: it says two rows are
+  // one published work, not that a row is independent or dependent. It changes
+  // no classification, so it takes no verdict -- and it requires a note, because
+  // the 2026-11-02 rule is that a merge must rest on demonstrated identity, and
+  // an unproven identity claim written into a filing is the failure that rule
+  // exists to prevent. An undocumented fold is unauditable.
+  if (sameWorkAs) {
+    if (arg("verdict")) {
+      fail(
+        "--same-work-as records identity, not a verdict. Run the fold on its own, " +
+          "then decide a classification separately if one is still open.",
+      );
+    }
+    if (!arg("note").trim()) {
+      fail(
+        "--same-work-as requires --note= explaining the evidence that these are one " +
+          "work (a matching complete byline plus a venue/DOI chain, or the published " +
+          "paper's own statement of a prior version). A preprint server alone, or a " +
+          "similar title, is not that evidence.",
+      );
+    }
+    if (!uids.includes(sameWorkAs)) uids.push(sameWorkAs);
+    return uids.map((uid) => ({
+      uid,
+      verdict: sameWorkAs === uid ? "SAME-WORK-ANCHOR" : "SAME-WORK",
+      note: arg("note"),
+      sameWorkAs,
+    }));
   }
   // A revert restores the rule's own answer, so it takes no verdict.
   if (doRevert) return uids.map((uid) => ({ uid, verdict: "REVERT", note: arg("note") }));
@@ -357,7 +429,27 @@ function main() {
       problems.push(`${req.uid}: ${req.error || "no verdict given (add --verdict=...)"}`);
       continue;
     }
-    plan.push({ ...row, verdict, note: req.note || "" });
+    // A fold must name a row that exists and is addressable. Folding onto a uid
+    // that resolves to nothing would leave the group with no copy standing for
+    // the work, silently dropping the citation rather than counting it once.
+    if (req.sameWorkAs && !byUid.get(req.sameWorkAs)) {
+      problems.push(`${req.uid}: --same-work-as=${req.sameWorkAs} is not a known row`);
+      continue;
+    }
+    // A fold is only ever safe inside ONE cited paper -- see foldProblem().
+    if (req.sameWorkAs) {
+      const bad = foldProblem(
+        req.uid,
+        req.sameWorkAs,
+        byUid.get(req.uid),
+        byUid.get(req.sameWorkAs),
+      );
+      if (bad) {
+        problems.push(bad);
+        continue;
+      }
+    }
+    plan.push({ ...row, verdict, note: req.note || "", sameWorkAs: req.sameWorkAs || "" });
   }
   if (problems.length) {
     for (const p of problems) console.error(`  ! ${p}`);
@@ -377,6 +469,25 @@ function main() {
   const caveats = [];
   for (const p of plan) {
     if (p.verdict === "REVERT") continue;
+    if (p.verdict === "SAME-WORK" || p.verdict === "SAME-WORK-ANCHOR") {
+      const anchor = byUid.get(p.sameWorkAs);
+      if (p.verdict === "SAME-WORK-ANCHOR") {
+        caveats.push(
+          `${p.uid} is the copy that stands for the work. It keeps whatever the rules ` +
+            `already decided; the other rows fold into it and stop counting as separate papers.`,
+        );
+      } else {
+        caveats.push(
+          `${p.uid} stops standing for its own work. Its classification is unchanged and the ` +
+            `exhibit still prints it, but it is counted once through ${p.sameWorkAs}` +
+            `${anchor ? ` (${anchor.status}/${anchor.confirm_state})` : ""}.`,
+        );
+      }
+      if (anchor && anchor.error) {
+        problems.push(`${p.sameWorkAs}: ${anchor.error} - cannot fold rows onto it`);
+      }
+      continue;
+    }
     // Re-basing a row that already rests on evidence would quietly rewrite how a
     // counted figure was established, so it is surfaced rather than applied
     // silently. tally.copyReliability ranks a decided copy above an evidenced
@@ -479,8 +590,10 @@ function main() {
       if (p.verdict === "REVERT") {
         // Take the decision back off the row. A row that was never decided has
         // nothing to undo, and saying so beats writing a blank over a state that
-        // was set by the rules.
-        if (!tally.isUserDecided(e)) {
+        // was set by the rules. A recorded same-work fold counts as a recorded
+        // decision even though it left confirm_state alone -- identity is a
+        // decision too, and it is the one thing on such a row to undo.
+        if (!tally.isUserDecided(e) && !e.same_work_key) {
           console.log(`\n  ${p.uid}: no decision recorded, nothing to revert`);
           skipped++;
           continue;
@@ -500,6 +613,24 @@ function main() {
         delete e.status_before_decision;
         delete e.confirm_state_before_decision;
         delete e.corroboration_before_decision;
+        // A recorded same-work fold comes off too. The row goes back to standing
+        // for its own work, which is what it did before anyone proved otherwise.
+        delete e.same_work_key;
+        delete e.same_work_note;
+      } else if (p.verdict === "SAME-WORK" || p.verdict === "SAME-WORK-ANCHOR") {
+        // An identity claim, not a classification. The title, the byline, the
+        // status and the confirm_state are all left exactly as they are -- the
+        // exhibit still shows the row as Scholar printed it, and the row is
+        // still whatever it was. What changes is that it no longer stands as a
+        // separate WORK: tally.foldSameWork gives the mark to one copy of the
+        // group and the ledger counts the group once.
+        e.same_work_key = `sw:${p.sameWorkAs}`;
+        e.same_work_note = p.note;
+        e.decided_by = DECIDED_BY;
+        e.decided_on = TODAY;
+        e.decided_note =
+          `recorded as the same published work as ${p.sameWorkAs}` +
+          (p.note ? `: ${p.note}` : "");
       } else {
         e.status = p.verdict;
         e.confirm_state = tally.USER_DECIDED;
@@ -521,7 +652,9 @@ function main() {
       const moved =
         before.status !== e.status ||
         before.confirm_state !== e.confirm_state ||
-        before.attention_reason !== e.attention_reason;
+        before.attention_reason !== e.attention_reason ||
+        (p.verdict === "SAME-WORK" || p.verdict === "SAME-WORK-ANCHOR") ||
+        (p.verdict === "REVERT" && e.same_work_key !== undefined);
       if (moved) changedCount++;
       // Two different lists. The review queue is v_review, which selects on
       // status = 'REVIEW', so any verdict other than REVIEW leaves it. The wider
@@ -696,4 +829,10 @@ if (require.main === module) {
   main();
 }
 
-module.exports = { VERDICTS, reportFileFor, findEntry, splitCsvLine };
+module.exports = {
+  VERDICTS,
+  reportFileFor,
+  findEntry,
+  splitCsvLine,
+  foldProblem,
+};

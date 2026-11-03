@@ -217,7 +217,12 @@
       "corroboration_note": "no PubMed or OpenAlex record matched the title closely enough",
       "attention_reason": "highlighted on Scholar's list alone - not indexed in PubMed or OpenAlex, worth a spot-check",
       "needs_attention": true,
-      "language_flag_captured": ""
+      "language_flag_captured": "",
+      "pubmed_near_miss": {
+        "pmid": "34554641",
+        "title": "Air Bubble Bridge-Based Bioinspired Underwater Adhesion.",
+        "similarity": 0.14
+      }
     },
     {
       "index": 6,
@@ -313,17 +318,30 @@
       "link": "https://search.proquest.com/openview/e1a468b156d847178495d75ea4846638/1?pq-origsite=gscholar&cbl=18750",
       "status": "DEPENDENT",
       "matched_authors": [
-        "AY Mehta"
+        "Akul Mehta"
       ],
       "matched_pi": [],
       "matched_former_pi": [],
-      "authors_used": "AY Mehta",
+      "authors_used": "AY Mehta - 2014 - search.proquest.com",
       "author_source": "scholar-list",
       "language_flag": "",
       "page": 3,
       "needs_attention": false,
       "attention_reason": "",
-      "language_flag_captured": ""
+      "language_flag_captured": "",
+      "status_captured": "DEPENDENT",
+      "external_source": "openalex",
+      "external_url": "https://doi.org/10.25772/9fkf-gp77",
+      "external_title": "Synthetic, Sulfated, Lignin-Based Anticoagulants",
+      "external_authors": "Akul Mehta",
+      "external_similarity": 1,
+      "confirm_state": "external-resolved",
+      "corroboration": "resolved against openalex (DEPENDENT)",
+      "external_matched": [
+        "Akul Mehta"
+      ],
+      "confirm_state_captured": "external-resolved",
+      "full_authors": []
     },
     {
       "index": 9,

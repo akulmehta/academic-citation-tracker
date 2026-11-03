@@ -845,6 +845,21 @@ async function corroborateIndependence(results, keys, skip) {
       // A Scholar snippet that was not cut short is a complete author list, so
       // a missing external record is a gap in the external index, not in the
       // evidence. A truncated list with no external record proves nothing.
+      //
+      // But an incomplete look-up is neither of those. When a request failed
+      // (rate limit, timeout, service fault) nothing was actually established,
+      // so the row must not land on 'unverified-coverage' -- tally.js counts a
+      // non-truncated row in that state as settled, which would turn a failed
+      // request into countable evidence. 'lookup-failed' is deliberately not a
+      // settling state, so the row stays open and a later run can ask again.
+      if (ext.unknown) {
+        r.confirm_state = "lookup-failed";
+        r.corroboration = "external look-up incomplete (network or rate limit)";
+        r.corroboration_note = ext.reason;
+        if (r.status === "INDEPENDENT") r.status = "REVIEW";
+        log(`  LOOKUP FAILED, left open: ${r.title}`);
+        continue;
+      }
       const scholarListComplete = !r.truncated;
       r.confirm_state = scholarListComplete ? "unverified-coverage" : "unresolved";
       r.corroboration = scholarListComplete

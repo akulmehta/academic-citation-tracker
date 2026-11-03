@@ -14,6 +14,14 @@
 // empty on purpose, because a decision on one of these rows changes the totals
 // and must come from the user, not from a rule.
 //
+// A row that is also non-English is not on this sheet (user instruction,
+// 2026-11-03). The queue is the list where reading the published byline settles
+// something; with no certified translations being obtained a decision on a
+// non-English row changes no figure, so those rows are reported with the other
+// non-English entries instead -- `node tools/query-catalog.js nonenglish`. The
+// language_flag column is kept so a row that ever reappears here with a flag is
+// visible rather than silently worked.
+//
 // Filling your_decision is machine-readable. Writing INDEPENDENT, DEPENDENT,
 // SELF (PI), SELF (FORMER PI) or REVIEW in it (any case) and running
 //   node tools/apply-decision.js --from-csv --write --reprint --rebuild
@@ -66,23 +74,34 @@ const rows = db
        row_uid, bucket, cites_id, cited_work, cited_venue, cited_year, cid,
        title, scholar_byline, truncated, confirm_state, why,
        external_source, external_url, external_authors, external_matched,
-       matched_authors, language_flag, link, base, page, row_index
+       matched_authors, external_match_credible, language_flag, link, base, page, row_index
      FROM v_review`
   )
   .all();
 const totals = db
   .prepare(
     `SELECT COUNT(*) AS active,
-            SUM(CASE WHEN status = 'REVIEW' THEN 1 ELSE 0 END) AS review
+            SUM(CASE WHEN status = 'REVIEW' THEN 1 ELSE 0 END) AS review,
+            SUM(CASE WHEN status = 'REVIEW' AND is_non_english = 0 THEN 1 ELSE 0 END)
+              AS review_queue,
+            SUM(CASE WHEN status = 'REVIEW' AND is_non_english = 1 THEN 1 ELSE 0 END)
+              AS review_non_english
      FROM v_active`
   )
   .get();
 db.close();
 
-if (rows.length !== totals.review) {
+// The queue is the actionable subset: a REVIEW row that is also non-English is
+// not here, because no reading of its byline can change the packet (see
+// tally.isReviewQueue). Guarding against review_queue rather than review is what
+// keeps that true -- if the view and the store ever disagree about which rows
+// are actionable, the sheet refuses to publish rather than quietly dropping rows
+// a person is waiting on.
+if (rows.length !== totals.review_queue) {
   throw new Error(
-    `v_review holds ${rows.length} rows but the active set has ${totals.review} with ` +
-      `status REVIEW. Rebuild the store; do not publish a sheet over a disagreement.`
+    `v_review holds ${rows.length} rows but the active set has ${totals.review_queue} ` +
+      `that are REVIEW and English. Rebuild the store; do not publish a sheet over a ` +
+      `disagreement.`
   );
 }
 
@@ -130,10 +149,19 @@ const out = rows.map((r) => ({
   "exhibit_row": r.row_index,
   "exhibit_base": r.base,
   "why_unresolved": r.why,
-  "external_record": r.external_source || "",
+  // A record whose title overlap was too thin to be the same work is stored on
+  // the row as the audit trail of the rejection, NOT as evidence about the
+  // paper. Label it, or a reviewer sees "pubmed" beside a why_unresolved that
+  // says nothing indexes it and follows the link to an unrelated article --
+  // cit-001476 points at a swine-lung paper for exactly this reason.
+  "external_record": r.external_match_credible === 0
+    ? `${r.external_source || ""} (match rejected: not the same work)`
+    : r.external_source || "",
   "external_authors": parseNames(r.external_authors),
   "external_overlap_names": overlapNames(r),
-  "external_link": r.external_url || "",
+  // No link when the match was rejected: there is nothing here to check, and a
+  // URL that implies a usable external source is worse than a blank cell.
+  "external_link": r.external_match_credible === 0 ? "" : r.external_url || "",
   "citing_paper_link": r.link || "",
   "scholar_cid": r.cid,
   "language_flag": r.language_flag || "",
@@ -176,11 +204,21 @@ if (AS_MD) {
   md.push(``);
   md.push(
     `Scholar snapshot **${stamp}**, store built ${meta.built_at}. ` +
-      `**${rows.length}** of ${totals.active} active citation rows are still classified ` +
-      `REVIEW, so none of them is counted as independent and none is counted as ` +
-      `dependent either.`
+      `**${rows.length}** of ${totals.active} active citation rows are on this queue, ` +
+      `so none of them is counted as independent and none is counted as dependent either.`
   );
   md.push(``);
+  if (totals.review > totals.review_queue) {
+    md.push(
+      `${totals.review} rows are classified REVIEW in total. The ` +
+        `${totals.review - totals.review_queue} not listed here are also flagged ` +
+        `non-English: with no certified translations being obtained (decision of ` +
+        `2026-11-01), no reading of such a row can change the packet, so it is ` +
+        `reported with the non-English entries rather than as a decision to make. ` +
+        `See \`node tools/query-catalog.js nonenglish\`.`
+    );
+    md.push(``);
+  }
   md.push(
     `Quote the **row_uid** when answering — it is permanent, so it still means the same ` +
       `row after a re-capture or a rebuild. The integer id is a frozen legacy alias and ` +

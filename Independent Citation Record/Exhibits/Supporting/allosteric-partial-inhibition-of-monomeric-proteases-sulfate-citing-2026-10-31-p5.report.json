@@ -204,28 +204,42 @@
       "snippet": "",
       "truncated": true,
       "link": "",
-      "status": "REVIEW",
+      "status": "INDEPENDENT",
       "matched_authors": [],
       "matched_pi": [],
       "matched_former_pi": [],
       "authors_used": "A Hartmann, M Ganzera, U Karsten, A Skhirtladze",
-      "author_source": "scholar-list (truncated)",
+      "author_source": "scholar+openalex",
       "resolution": "no cite control found for this entry",
       "language_flag": "",
       "page": 5,
       "pubmed_near_miss": {
-        "pmid": "42571273",
-        "title": "Phytochemical Characterization and Bioactive Potential of Stachys germanica L.: LC-MS/MS Profiling and Multi-Target Biological Activities.",
-        "similarity": 0.5
+        "pmid": "42943788",
+        "title": "Phytochemical Profiling and Biological Activities of Stachys cataonica Bhattacharjee et Hub.-Mor. Extracts: An LC-MS/MS-Based Approach.",
+        "similarity": 0.07
       },
-      "confirm_state": "unresolved",
-      "corroboration": "not indexed in PubMed or OpenAlex and the Scholar list is incomplete",
+      "confirm_state": "confirmed",
+      "corroboration": "resolved against openalex",
       "corroboration_note": "no PubMed or OpenAlex record matched the title closely enough",
       "edition_key": "",
       "duplicate_of": "",
-      "attention_reason": "not indexed in PubMed or OpenAlex and the Scholar list is incomplete",
-      "needs_attention": true,
-      "language_flag_captured": ""
+      "attention_reason": "",
+      "needs_attention": false,
+      "language_flag_captured": "",
+      "status_captured": "REVIEW",
+      "confirm_state_captured": "unresolved",
+      "external_source": "openalex",
+      "external_url": "https://doi.org/10.1016/j.jpba.2017.10.031",
+      "external_title": "Phytochemical and analytical characterization of constituents in Urceola rosea (Hook. & Arn.) D.J. Middleton leaves",
+      "external_authors": "Hieu Nguyen Ngoc, Duc Trong Nghiem, Thi Linh Giang Pham, Hermann Stuppner, Markus Ganzera",
+      "external_similarity": 0.8,
+      "full_authors": [
+        "Hieu Nguyen Ngoc",
+        "Duc Trong Nghiem",
+        "Thi Linh Giang Pham",
+        "Hermann Stuppner",
+        "Markus Ganzera"
+      ]
     },
     {
       "index": 6,
@@ -251,7 +265,12 @@
       "duplicate_of": "",
       "attention_reason": "highlighted on Scholar's list alone - not indexed in PubMed or OpenAlex, worth a spot-check",
       "needs_attention": true,
-      "language_flag_captured": ""
+      "language_flag_captured": "",
+      "pubmed_near_miss": {
+        "pmid": "42794437",
+        "title": "Medicinal Chemistry of Small-Molecule c-Met Inhibitors: From Approved Therapies to Emerging Multitarget Anticancer Agents.",
+        "similarity": 0
+      }
     }
   ]
 }

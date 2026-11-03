@@ -188,7 +188,15 @@
       "duplicate_of": "",
       "attention_reason": "not indexed in PubMed or OpenAlex and the Scholar list is incomplete",
       "needs_attention": true,
-      "language_flag_captured": ""
+      "language_flag_captured": "",
+      "status_before_decision": "REVIEW",
+      "confirm_state_before_decision": "unresolved",
+      "corroboration_before_decision": "not indexed in PubMed or OpenAlex and the Scholar list is incomplete",
+      "same_work_key": "sw:cit-000108",
+      "same_work_note": "One published work listed three times on the same citing list. bioRxiv 2022.06.18.496670 (cit-000132, academia.edu copy of the preprint PDF) is recorded by Crossref as is-preprint-of 10.1016/j.actbio.2025.04.047, the Acta Biomaterialia article cit-000108; OpenAlex resolves both DOIs to one work W4409777451 whose locations include the bioRxiv acceptedVersion. cit-000144 is the same preprint again, which Scholar labelled [CITATION] and printed with no link. The 20-author bylines agree. The published title differs from the preprint title, so the merge rests on the DOI chain plus the byline, not on the title.",
+      "decided_by": "Akul Mehta",
+      "decided_on": "2026-11-03",
+      "decided_note": "recorded as the same published work as cit-000108: One published work listed three times on the same citing list. bioRxiv 2022.06.18.496670 (cit-000132, academia.edu copy of the preprint PDF) is recorded by Crossref as is-preprint-of 10.1016/j.actbio.2025.04.047, the Acta Biomaterialia article cit-000108; OpenAlex resolves both DOIs to one work W4409777451 whose locations include the bioRxiv acceptedVersion. cit-000144 is the same preprint again, which Scholar labelled [CITATION] and printed with no link. The 20-author bylines agree. The published title differs from the preprint title, so the merge rests on the DOI chain plus the byline, not on the title."
     },
     {
       "index": 4,

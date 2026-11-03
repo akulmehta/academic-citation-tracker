@@ -113,21 +113,50 @@ for (const r of rows) {
     });
   }
 
-  // 2. per-article arithmetic. Decided + review + pending should cover records.
+  // 2. per-article arithmetic. Decided + review + pending + the non-English
+  // independent rows should cover every record.
+  //
+  // The last term was added on 2026-11-03 when the language screen began to
+  // supersede the independence classification: a non-English row classified
+  // INDEPENDENT no longer sits in independent_pending, so without naming it here
+  // the sum fell short by exactly those rows. They are not open work -- no
+  // certified translation is being obtained -- so they must be reported, not
+  // counted as something a reviewer still has to settle.
   const decided =
     num(r.independent) +
     num(r.dependent) +
     num(r.self_pi) +
     num(r.self_former_pi);
   const covered = decided + num(r.review);
-  if (covered + num(r.independent_pending) !== records) {
+  const neIndependent = num(r.non_english_independent);
+  if (covered + num(r.independent_pending) + neIndependent !== records) {
     console.log(
       `[check] ARITHMETIC ${r.title.slice(0, 48)}: ${records} records but ` +
         `independent ${r.independent} + dependent ${r.dependent} + self ${num(
           r.self_pi
         )}/${num(r.self_former_pi)} + review ${r.review} + pending ${
           r.independent_pending
-        } = ${covered + num(r.independent_pending)}`
+        } + non-English independent ${neIndependent} = ${
+          covered + num(r.independent_pending) + neIndependent
+        }`
+    );
+    problems++;
+  }
+  // The queue is a subset of the REVIEW rows, and the rows it leaves out are
+  // non-English by definition. Checking the containment rather than an exact
+  // formula keeps this valid for a ledger written before the queue existed,
+  // where review_queue is simply absent and reads 0.
+  const queue = num(r.review_queue);
+  if (queue > num(r.review)) {
+    console.log(
+      `[check] QUEUE ${r.title.slice(0, 48)}: review_queue ${queue} exceeds the ` +
+        `${r.review} rows classified REVIEW`
+    );
+    problems++;
+  } else if (queue < num(r.review) && num(r.review) - queue > num(r.non_english)) {
+    console.log(
+      `[check] QUEUE ${r.title.slice(0, 48)}: ${num(r.review) - queue} rows left the ` +
+        `queue but only ${r.non_english} is/are flagged non-English`
     );
     problems++;
   }
@@ -179,10 +208,23 @@ const checks = [
     sum("independent_user_decided"),
   ],
   ["independent_pending", "independent_pending", sum("independent_pending")],
+  // Added 2026-11-03: the non-English rows that carry an INDEPENDENT
+  // classification. They left independent_pending when the language screen began
+  // to supersede it, so the partition needs them under their own name.
+  [
+    "non_english_independent",
+    "non_english_independent",
+    sum("non_english_independent"),
+  ],
   ["dependent", "dependent", sum("dependent")],
   ["self_pi", "self_pi", sum("self_pi")],
   ["self_former_pi", "self_former_pi", sum("self_former_pi")],
   ["awaiting_review", "review", sum("review")],
+  // The actionable queue, checked the same way. It is a different figure from
+  // awaiting_review -- the non-English REVIEW rows are on the Non-English page
+  // rather than in a queue -- so both are verified independently rather than one
+  // being derived from the other here.
+  ["review_queue", "review_queue", sum("review_queue")],
   ["flagged_non_english", "non_english", sum("non_english")],
   [
     "non_english_withheld",

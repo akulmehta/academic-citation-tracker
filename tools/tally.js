@@ -9,6 +9,7 @@
 
 const fs = require("fs");
 const path = require("path");
+const { stripScholarMarker } = require("./scholar-marker");
 
 // The confirm_state a row carries when a person settled it rather than a rule.
 // The whole point of the review queue is that some rows cannot be settled by
@@ -68,6 +69,29 @@ function isHighlightCandidate(e) {
   );
 }
 
+// Whether a row belongs on the review queue -- the list a person works through
+// to settle an author list. Per the user's instruction on 2026-11-03 a
+// non-English row is NOT on it, even when its status is REVIEW.
+//
+// The queue exists because a reading of the published byline can settle a row.
+// For a non-English entry no reading settles anything: the 2026-11-01 decision
+// is that no certified translations are being obtained, so the row is excluded
+// whatever it says, and apply-decision.js refuses to let a decision on one reach
+// the totals. A row that cannot change a figure does not belong in a work queue;
+// it belongs on the Non-English page, which states the closed decision.
+//
+// This is the single definition. v_review, v_pub_stats, the ledger's
+// awaiting_review, the review sheet and the dashboard all read it from here (or
+// mirror its one condition), so the queue length cannot mean different things in
+// different places -- the class of disagreement the reconciliation gates exist to
+// catch.
+//
+// The count this removes is not lost: tallyEntries reports it alongside as
+// review_non_english, and those rows remain in v_non_english.
+function isReviewQueue(e) {
+  return e.status === "REVIEW" && !e.language_flag;
+}
+
 // An entry the language screen alone is holding back: independent by
 // classification, settled by corroboration or a complete Scholar list, and not a
 // language edition of another row -- so a certified human translation of this
@@ -83,13 +107,43 @@ function isWithheldForLanguage(e) {
   );
 }
 
-// Independent by classification but not yet countable: still open, never
-// included in a filing total until corroboration or a certified translation
-// settles it.
+// A row the language screen supersedes: classified INDEPENDENT but flagged
+// non-English. Per the user's instruction on 2026-11-03 this is where such a row
+// is reported, in place of independent_pending.
+//
+// It exists for two reasons. Substantively, it names what the packet is giving up:
+// these are citations that look independent on the author comparison and are
+// excluded purely because no certified translation exists. Mechanically, the
+// status partition in tallyEntries and the ledger's arithmetic gate must still sum
+// to `records`, so rows that leave the unsettled bucket need a bucket of their
+// own. Note this is deliberately NOT the same set as `non_english_withheld`: that
+// one additionally requires a settled basis and excludes second-language copies,
+// because it answers "what would a translator reclaim".
+function isNonEnglishIndependent(e) {
+  return e.status === "INDEPENDENT" && Boolean(e.language_flag);
+}
+
+// Independent by classification but not yet countable for an AUTHOR reason: the
+// row is English, classified INDEPENDENT, and not highlighted only because no
+// source has settled its author list. Never included in a filing total until
+// corroboration settles it.
+//
+// Per the user's instruction on 2026-11-03 a non-English row does NOT belong
+// here: the language screen supersedes the independence classification, because
+// no certified translation is being obtained (decision of 2026-11-01) so no
+// amount of settling the byline can make such a row count. Those rows are
+// reported once, under the non-English bucket (`non_english` /
+// `non_english_withheld`), never as unsettled-independent work. Before this the
+// bucket swept in all 45 non-English independent rows (42 withheld by the screen
+// plus 3 second-language editions), which made a closed language decision look
+// like 45 open author questions. With the screen applied the bucket is empty on
+// this snapshot -- every genuinely-independent-but-unconfirmed row has already
+// been settled -- and that is the honest result, not a broken query.
 function isIndependentPending(e) {
   return (
     e.status === "INDEPENDENT" &&
-    !isHighlighted(e)
+    !isHighlighted(e) &&
+    !e.language_flag
   );
 }
 
@@ -103,8 +157,19 @@ function isIndependentPending(e) {
 //
 // Identity is the title, normalised. Two genuinely different papers sharing a
 // title is rare, and the review sheet lists every merge so a person can check.
+//
+// Scholar's bracketed link-type marker is removed first, because it is part of
+// Scholar's rendering and not part of the title. Without this a row Scholar
+// labelled "[CITATION] Some Title" never merges with the same work listed
+// plainly as "Some Title", so one citing paper is counted twice. Measured over
+// the filed set on 2026-11-02, removing the marker merges exactly two same-list
+// pairs and nothing else: the bioRxiv lignin preprint cit-000132 with its
+// [CITATION] copy cit-000144, and the JACS Au influenza paper cit-000187 with
+// its [CITATION] copy cit-000220. Only the markers Scholar is observed to emit
+// are removed (see crosscheck.stripScholarMarker) -- a chemistry title's own
+// brackets, as in "...Benzopyrano[4,3-e][1,2,4]triazolo...", are left alone.
 function paperKey(e) {
-  const t = String(e.title || "")
+  const t = stripScholarMarker(e.title)
     .toLowerCase()
     .replace(/[^a-z0-9]+/g, "");
   if (t.length >= 24) return `t:${t}`;
@@ -119,12 +184,52 @@ function paperKey(e) {
 // above status matters: a copy whose list was truncated may say INDEPENDENT
 // while the complete list reveals a shared author, and the complete list is
 // the one that should decide.
+//
+// A demonstrated shared author outranks a clean read (2026-11-03), which is the
+// same argument taken one step further. The guide defines an independent
+// citation as one where the citing paper and the cited paper share NO author --
+// a universal claim that a single counterexample refutes. So a copy that
+// matched an author settles the paper even if another copy, whose byline was
+// read differently, matched nobody.
+//
+// The case that prompted it: VCU dissertation 2956, "Kinetic and Thermodynamic
+// Studies of Thrombin Inhibitors" (2013), appears on one citing list twice, as
+// "AM Abdel" at scholarscompass.vcu.edu and as "[BOOK] ... MHA Aziz" at
+// ProQuest. The VCU record names the author as Aziz May Abdel with Umesh Desai
+// as first advisor, and the cited paper's own author list includes May H Abdel
+// Aziz -- so it is a Desai-group self-citation. Scholar's two bylines are both
+// untruncated, so completeness tied, and the copy that matched nobody scored
+// higher only because it had been confirmed. Matching on surname plus initials
+// is the standard this packet already applies everywhere else; it should not be
+// the standard only when the alternative happens to look tidier.
+//
+// A person's decision stays above it (64): the instructions are explicit that a
+// human reading of the published article is its own basis and outranks any
+// machine reading, including this one.
 function copyReliability(e) {
   let score = 0;
+  // Only a match the row actually concluded on. matched_authors can survive a
+  // later re-apply that discarded the external record it came from (see the
+  // non-credible branch of corroboration.applyExternalVerdict, which restores
+  // the Scholar byline but leaves the match fields), and a row that says
+  // INDEPENDENT while carrying a match is internally inconsistent -- neither is
+  // evidence of a shared author.
+  const concludesOverlap =
+    e.status === "DEPENDENT" ||
+    e.status === "SELF (PI)" ||
+    e.status === "SELF (FORMER PI)";
+  const matched = concludesOverlap
+    ? [
+        ...(e.matched_authors || []),
+        ...(e.matched_pi || []),
+        ...(e.matched_former_pi || []),
+      ]
+    : [];
+  if (matched.length) score += 12;
   // A person who read the published article outranks any machine reading, so a
   // decided copy stands for the paper even when its Scholar byline is truncated
   // - which is exactly the case the queue exists for.
-  if (isUserDecided(e)) score += 16;
+  if (isUserDecided(e)) score += 64;
   if (!/truncated/.test(String(e.author_source || ""))) score += 8;
   if (e.confirm_state === "confirmed") score += 4;
   else if (e.confirm_state === "unverified-coverage") score += 2;
@@ -135,10 +240,33 @@ function copyReliability(e) {
 // Collapse duplicate copies of one paper. Returns the surviving entries, in the
 // order their first copy appeared, plus the pairs that were merged so the
 // review sheet can name them.
+//
+// Two identity keys are applied, one level apart.
+//
+//   paperKey        the machine rule: a normalised title. It can only ever merge
+//                   rows Scholar spelled the same way.
+//   same_work_key   a key a person recorded after PROVING two differently-titled
+//                   rows are one work. It exists because a title rule cannot see
+//                   that relationship at all -- a preprint and the article it
+//                   became usually have different titles, so they never share a
+//                   paperKey and one work is counted twice.
+//
+// The 2026-11-02 rule governs what may set it: a preprint server is not the test
+// and a similar title is not the test; a matching complete byline plus a
+// matching venue/DOI chain, or the published paper's own statement of a prior
+// version, is. Merging on suspicion would both hide a real citation and rest on
+// an unproven identity claim in a filing, so this key is written only by
+// tools/apply-decision.js, never inferred here.
+//
+// Every member of such a group carries the same key, including the copy that
+// stands for the work, so the grouping states itself on each row rather than
+// depending on which rows a caller happens to pass together. A row that is
+// folded away also carries duplicate_of, which isHighlighted() already refuses,
+// so the exhibit mark and this count cannot disagree.
 function uniquePapers(entries) {
   const groups = new Map();
   for (const e of entries) {
-    const k = paperKey(e);
+    const k = e.same_work_key || paperKey(e);
     if (!groups.has(k)) groups.set(k, []);
     groups.get(k).push(e);
   }
@@ -285,10 +413,12 @@ function markLanguageEditions(entries, prior = new Map()) {
     for (const e of current) {
       if (e === winner && !printed) {
         e.duplicate_of = "";
+        e.duplicate_kind = "";
         e.edition_note = `primary language edition (${[...dois].join(" vs ")})`;
       } else {
         const stands = printed ? seen.find((x) => isHighlighted(x)) || seen[0] : winner;
         e.duplicate_of = stands.cid || "";
+        e.duplicate_kind = "language-edition";
         e.edition_note =
           `language edition of ${stands.cid || "an earlier row"}` +
           (stands.page ? ` on page ${stands.page}` : "") +
@@ -296,6 +426,59 @@ function markLanguageEditions(entries, prior = new Map()) {
       }
     }
     prior.set(key, all);
+  }
+  return entries;
+}
+
+// Apply the same-work folds recorded by a person.
+//
+// Called by every consumer that counts -- tally.groupReports and
+// build-catalog.applyEditions -- so the exhibit mark, the ledger, the store and
+// the audit all resolve a fold the same way. It is deliberately NOT folded into
+// uniquePapers: grouping happens after this, and this function's job is to write
+// the consequence onto the rows so a reader of a single row can see why it does
+// or does not count.
+//
+// For each group of rows sharing a same_work_key, one copy stands for the work
+// (editionPreference, the same ranking used for language editions -- the copy
+// that would be marked wins, so a fold never deletes the citation the packet is
+// claiming) and the rest carry duplicate_of pointing at it, which isHighlighted
+// already refuses. duplicate_kind says which rule folded it, because
+// "language edition" and "same work under two titles" are different claims and a
+// filing must not blur them.
+//
+// A row already folded by the language rule is left folded -- that determination
+// is more specific and was made from a DOI plus an author list.
+function foldSameWork(entries) {
+  const groups = new Map();
+  for (const e of entries) {
+    if (e.duplicate_kind === undefined) e.duplicate_kind = "";
+    if (!e.same_work_key) continue;
+    if (!groups.has(e.same_work_key)) groups.set(e.same_work_key, []);
+    groups.get(e.same_work_key).push(e);
+  }
+  for (const list of groups.values()) {
+    if (list.length < 2) continue;
+    const winner = list.reduce((a, b) => (editionPreference(b) > editionPreference(a) ? b : a));
+    for (const e of list) {
+      if (e === winner) {
+        // Initialised rather than left alone, exactly as duplicate_kind is above:
+        // in the pipeline markLanguageEditions has already set this to "", but a
+        // fold is a claim about which copy stands, and a caller reading one row
+        // should see that answer here rather than infer it from an absent field.
+        if (e.duplicate_of === undefined) e.duplicate_of = "";
+        e.same_work_stands = true;
+        if (!e.edition_note) e.edition_note = "copy that stands for this work";
+        continue;
+      }
+      e.same_work_stands = false;
+      if (e.duplicate_of) continue; // already folded, and by a better-proven rule
+      e.duplicate_of = winner.cid || "";
+      e.duplicate_kind = "same-work";
+      e.same_work_note =
+        `same work as the row on page ${winner.page || 1} ` +
+        `("${String(winner.title || "").slice(0, 60)}"), counted once`;
+    }
   }
   return entries;
 }
@@ -327,10 +510,29 @@ function tallyEntries(entries) {
     // row should be visible rather than hidden inside one of the other two.
     independent_user_decided: highlighted.filter(isUserDecided).length,
     independent_pending: entries.filter(isIndependentPending).length,
+    // The rows the language screen supersedes (user instruction, 2026-11-03):
+    // classified INDEPENDENT but flagged non-English, so they are reported here
+    // rather than in independent_pending. They exist because the status partition
+    // has to keep summing to `records`: a non-English row still carries an
+    // INDEPENDENT classification, and once it leaves the unsettled bucket the
+    // partition needs its own named term or the ledger's arithmetic gate fails.
+    // Never a counted total -- it is the same set as `non_english_withheld` plus
+    // the second-language copies of an article already on the list.
+    non_english_independent: entries.filter(isNonEnglishIndependent).length,
     dependent: entries.filter((e) => e.status === "DEPENDENT").length,
     self_pi: entries.filter((e) => e.status === "SELF (PI)").length,
     self_former_pi: entries.filter((e) => e.status === "SELF (FORMER PI)").length,
     review: entries.filter((e) => e.status === "REVIEW").length,
+    // The queue a person works, after the non-English rows are taken out of it.
+    // Both figures are reported: `review` keeps the status partition summing to
+    // `records` (independent + dependent + self + review), and `review_queue` is
+    // the length of the sheet a reviewer opens. Their difference is exactly
+    // `review_non_english`, which is still counted in `non_english` below and
+    // listed in full on the Non-English page.
+    review_queue: entries.filter(isReviewQueue).length,
+    review_non_english: entries.filter(
+      (e) => e.status === "REVIEW" && Boolean(e.language_flag)
+    ).length,
     non_english: entries.filter((e) => e.language_flag).length,
     // Non-English rows that would otherwise have been counted. This is the
     // number the filing gives up by not obtaining certified translations, and
@@ -444,6 +646,10 @@ function groupReports(supportDir, pdfDir) {
     // the copy held back is non-English and was already excluded.
     const prior = new Map();
     for (const p of g.pages) markLanguageEditions(p.entries, prior);
+    // Then the same-work folds a person recorded. Order matters: the language
+    // rule is proven from a DOI plus an author list, so it claims a row first
+    // and foldSameWork only folds what is left over.
+    foldSameWork(g.entries);
   }
   return groups;
 }
@@ -475,14 +681,18 @@ module.exports = {
   isSettled,
   isHighlighted,
   isHighlightCandidate,
+  isReviewQueue,
   isWithheldForLanguage,
   isIndependentPending,
+  isNonEnglishIndependent,
   paperKey,
+  stripScholarMarker,
   doiOf,
   doiArticleId,
   authorSignature,
   editionKey,
   markLanguageEditions,
+  foldSameWork,
   uniquePapers,
   tallyEntries,
   emptyTally,

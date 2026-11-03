@@ -197,6 +197,103 @@ check(
   "DEPENDENT"
 );
 
+// ---------------------------------------------------------------------------
+// toDisplayName / tornAuthors (crosscheck.js)
+//
+// An external record's author list is stored on the row as ONE comma-joined
+// string and split on commas again later. PubMed returns "Surname, Given", so
+// before names were normalised to natural order the join tore each such name
+// into a bare surname plus a given name -- 21 of 692 rows carrying a record.
+// A bare surname colliding with a real author returns UNKNOWN, which decided a
+// correctly DEPENDENT row as REVIEW. These guard the normalisation at the source.
+// ---------------------------------------------------------------------------
+const { toDisplayName, tornAuthors } = require("./crosscheck");
+
+console.log("\ntoDisplayName (external records -> natural order)");
+check(
+  "PubMed inverted name is flipped",
+  toDisplayName("Verespy, Stephen"),
+  "Stephen Verespy"
+);
+check(
+  "inverted name with initials is flipped",
+  toDisplayName("Mehta, Akul Y"),
+  "Akul Y Mehta"
+);
+check(
+  "initials-only given part is flipped",
+  toDisplayName("Cummings, R D"),
+  "R D Cummings"
+);
+check(
+  "already natural order is untouched",
+  toDisplayName("Akul Y Mehta"),
+  "Akul Y Mehta"
+);
+// The whole point: the round trip through a comma join must be exact.
+check(
+  "a flipped name survives the comma join",
+  toDisplayName("Mehta, Akul").split(",").map((s) => s.trim()).filter((s) => !/\s/.test(s)),
+  []
+);
+check(
+  "degrees after a suffix are NOT a given name",
+  toDisplayName("Smith, Jr., M.D."),
+  "Smith, Jr., M.D."
+);
+check(
+  "a lone suffix is not inverted",
+  toDisplayName("Brown, III"),
+  "Brown, III"
+);
+check(
+  "an empty name stays empty",
+  toDisplayName(""),
+  ""
+);
+check(
+  "a name that is only a comma stays as-is",
+  toDisplayName(","),
+  ","
+);
+check(
+  "hyphenated surname inverts cleanly",
+  toDisplayName("Garcia-Lopez, Maria Elena"),
+  "Maria Elena Garcia-Lopez"
+);
+
+console.log("\ntornAuthors (detect a byline assembled out of fragments)");
+// Every fragment of a comma-joined list that has no whitespace at all cannot be
+// a person's name, so a torn "Surname, Given" yields BOTH halves -- which is
+// exactly why it is detectable rather than guessable.
+check(
+  "a torn list yields every fragment",
+  tornAuthors("Verespy, Stephen, Cummings, RD"),
+  ["Verespy", "Stephen", "Cummings", "RD"]
+);
+check(
+  "a clean natural-order list yields nothing",
+  tornAuthors("Stephen Verespy, RD Cummings"),
+  []
+);
+check(
+  "an empty stored string yields nothing",
+  tornAuthors(""),
+  []
+);
+check(
+  "the real failure case is detected",
+  tornAuthors("Mehta, Akul, Jin, X, Desai, Umesh R"),
+  ["Mehta", "Akul", "Jin", "X", "Desai"]
+);
+check(
+  "a byline repaired by toDisplayName no longer reads as torn",
+  tornAuthors(
+    ["Mehta, Akul", "Jin, X", "Desai, Umesh R"].map(toDisplayName).join(", ")
+  ),
+  []
+);
+
 console.log(
   `\n${passed} passed${process.exitCode ? ", some FAILED" : ", all good"}`
 );

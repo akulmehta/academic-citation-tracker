@@ -91,6 +91,17 @@ function pdfsFor(base) {
 // store already carries the resolved language-edition decision in duplicate_of,
 // so the rows go straight to tallyEntries -- groupReports' own page walk must not
 // be replayed here, or the edition rule would be applied twice.
+function parseJsonArray(v) {
+  if (Array.isArray(v)) return v;
+  if (!v || typeof v !== "string") return [];
+  try {
+    const parsed = JSON.parse(v);
+    return Array.isArray(parsed) ? parsed : [];
+  } catch {
+    return [];
+  }
+}
+
 function storeEntries() {
   if (!fs.existsSync(DB_PATH)) {
     throw new Error(
@@ -113,7 +124,8 @@ function storeEntries() {
     .prepare(
       `SELECT cites_id, base, page, row_index, cid, title, raw_title, authors,
               authors_used, author_source, status, confirm_state, language_flag,
-              duplicate_of, edition_key
+              duplicate_of, edition_key, same_work_key,
+              matched_authors, matched_pi, matched_former_pi
          FROM citations
         WHERE filed = 1 AND superseded_at = ''
         ORDER BY cites_id, page, row_index`
@@ -130,6 +142,16 @@ function storeEntries() {
       // author_source; both arrive under the name the reports use.
       index: r.row_index,
       rawTitle: r.raw_title,
+      // The matched_* columns are stored as JSON text. copyReliability needs
+      // them as arrays: which copy of a duplicated paper stands for it can turn
+      // on a demonstrated shared author, and reading the store without them
+      // made the store pick a different copy than the reports did -- the ledger
+      // then reported one more distinct independent paper than the store, per
+      // publication. Parse here so both sides of the comparison see the same
+      // fields.
+      matched_authors: parseJsonArray(r.matched_authors),
+      matched_pi: parseJsonArray(r.matched_pi),
+      matched_former_pi: parseJsonArray(r.matched_former_pi),
     };
     if (!byId.has(r.cites_id)) byId.set(r.cites_id, []);
     byId.get(r.cites_id).push(e);
@@ -172,6 +194,7 @@ function build() {
     "self_pi",
     "self_former_pi",
     "review",
+    "review_queue",
     "withheld_language",
     "unique_records",
     "unique_independent",
@@ -247,10 +270,21 @@ function build() {
       independent_coverage: t.independent_coverage,
       independent_user_decided: t.independent_user_decided,
       independent_pending: t.independent_pending,
+      // The independent-classified rows the language screen supersedes. Named so
+      // the status partition (independent + pending + non_english_independent +
+      // dependent + self + review = records) still sums after non-English rows
+      // left the unsettled bucket on 2026-11-03.
+      non_english_independent: t.non_english_independent,
       dependent: t.dependent,
       self_pi: t.self_pi,
       self_former_pi: t.self_former_pi,
       review: t.review,
+      // The actionable subset of review. Both are carried: `review` keeps the
+      // status partition (independent + dependent + self + review = records),
+      // `review_queue` is the length of the sheet a person opens, and their
+      // difference is the non-English rows that belong on the Non-English page
+      // rather than in a work queue (user instruction, 2026-11-03).
+      review_queue: t.review_queue,
       non_english: t.non_english,
       non_english_withheld: t.non_english_withheld,
       english_records: t.english_records,
@@ -279,8 +313,14 @@ function build() {
       exhibit_folder: captured ? "Exhibits/PDFs" : "",
       // Anything a reviewer still has to settle, including a capture that is
       // missing citing pages, so an incomplete exhibit cannot look finished.
+      // review_queue and not review: a non-English row is not something a
+      // reviewer settles (no translations are being obtained) and it is already
+      // counted by the non_english term, so using `review` here counted those
+      // rows twice. Likewise independent_pending stopped including non-English
+      // rows on 2026-11-03, so the pending and non_english terms no longer
+      // overlap -- before that this line counted 45 rows twice.
       open_items:
-        t.review + t.independent_pending + t.non_english + (captured && pages < expected ? 1 : 0),
+        t.review_queue + t.independent_pending + t.non_english + (captured && pages < expected ? 1 : 0),
     });
   }
 
@@ -306,10 +346,12 @@ function build() {
       independent_coverage: t.independent_coverage,
       independent_user_decided: t.independent_user_decided,
       independent_pending: t.independent_pending,
+      non_english_independent: t.non_english_independent,
       dependent: t.dependent,
       self_pi: t.self_pi,
       self_former_pi: t.self_former_pi,
       review: t.review,
+      review_queue: t.review_queue,
       non_english: t.non_english,
       non_english_withheld: t.non_english_withheld,
       english_records: t.english_records,
@@ -330,7 +372,8 @@ function build() {
       unique_independent_share_pct: tally.pct(t.unique_independent, t.unique_records),
       exhibit_pdfs: pdfsFor(base),
       exhibit_folder: "Exhibits/PDFs",
-      open_items: t.review + t.independent_pending + t.non_english,
+      open_items:
+        t.review_queue + t.independent_pending + t.non_english,
     });
   }
 
@@ -345,10 +388,12 @@ function build() {
       "independent_coverage",
       "independent_user_decided",
       "independent_pending",
+      "non_english_independent",
       "dependent",
       "self_pi",
       "self_former_pi",
       "review",
+      "review_queue",
       "non_english",
       "non_english_withheld",
       "english_records",
@@ -420,10 +465,19 @@ function build() {
     independent_scholar_list_only: total.independent_coverage,
     independent_user_decided: total.independent_user_decided,
     independent_pending: total.independent_pending,
+    // The independent-classified rows held by the language screen. Published so
+    // the partition reconciles: with non-English rows no longer counted as
+    // unsettled work, they need a named bucket of their own. See tally.js.
+    non_english_independent: total.non_english_independent,
     dependent: total.dependent,
     self_pi: total.self_pi,
     self_former_pi: total.self_former_pi,
     awaiting_review: total.review,
+    // The queue a person works. Awaiting review counts every row still classified
+    // REVIEW; the queue excludes the ones that are also non-English, which cannot
+    // be settled by reading a byline and are reported under flagged_non_english
+    // instead. Awaiting a decision that cannot change the packet is not work.
+    review_queue: total.review_queue,
     flagged_non_english: total.non_english,
     non_english_withheld: total.non_english_withheld,
     // The guide's second path, which the user chose on 2026-11-01: no certified
@@ -493,10 +547,12 @@ const CSV_COLUMNS = [
   "independent_coverage",
   "independent_user_decided",
   "independent_pending",
+  "non_english_independent",
   "dependent",
   "self_pi",
   "self_former_pi",
   "review",
+  "review_queue",
   "non_english",
   "non_english_withheld",
   "english_records",
@@ -649,10 +705,30 @@ function printSummary(ledger) {
   }
   console.log(`[ledger] Dependent (shares author): ${g.dependent}`);
   console.log(`[ledger] Self-citations PI/former:  ${g.self_pi} / ${g.self_former_pi}`);
-  console.log(`[ledger] Awaiting review:           ${g.awaiting_review}`);
-  console.log(`[ledger] Flagged non-English:       ${g.flagged_non_english}`);
+  // The queue length first, since that is the number of rows a person opens.
+  // The raw REVIEW count is shown alongside only when it is larger, so the
+  // difference -- rows that are non-English and therefore not a decision to make
+  // -- is visible rather than silently dropped from the queue.
+  console.log(
+    `[ledger] Review queue:              ${g.review_queue}` +
+      (g.awaiting_review > g.review_queue
+        ? `  (${g.awaiting_review} classified REVIEW, ${
+            g.awaiting_review - g.review_queue
+          } of them non-English and reported under Flagged non-English below)`
+        : "")
+  );
+  console.log(
+    `[ledger] Flagged non-English:       ${g.flagged_non_english}` +
+      (g.non_english_independent
+        ? `  (${g.non_english_independent} carry an INDEPENDENT classification but the ` +
+          `language screen supersedes it -- reported here, not as unsettled work)`
+        : "")
+  );
   if (g.independent_pending) {
-    console.log(`[ledger] Independent but unsettled:  ${g.independent_pending} (not counted)`);
+    console.log(
+      `[ledger] Independent but unsettled:  ${g.independent_pending} English rows ` +
+        `awaiting corroboration (not counted)`
+    );
   }
   // The adjusted English-only figures the guide asks for when no certified
   // translations are filed. Printed on their own lines so the headline count

@@ -347,24 +347,27 @@
       "snippet": "Glycans cover the surface of essentially all cells, giving rise to the so-called glycocalyx.\nGlycans, and particularly N-glycans are key players in defining the fate and the nature of the …",
       "truncated": true,
       "link": "https://books.rsc.org/books/edited-volume/2487/chapter/8761831",
-      "status": "REVIEW",
+      "status": "INDEPENDENT",
       "matched_authors": [],
       "matched_pi": [],
       "matched_former_pi": [],
       "authors_used": "Azevedo, Catarina M, Santos-Pereira, Beatriz, Leite-Gomes, Eduarda, Rodrigues, Cl{\\'a}udia S, Dantas, Carolina S, Faria, Guilherme, Nogueira, Rafaela, Almeida, Pedro, Tavares-Gomes, Let{\\'\\i}cia, Gaifem, Joana",
-      "author_source": "scholar-cite-bibtex",
+      "author_source": "scholar+openalex",
       "popup_sample": "@article{azevedo2025n,\n  title={N-Glycans as fundamental immune-checkpoints at the frontiers of inflammation, autoimmunity and cancer},\n  author={Azevedo, Catarina M and Santos-Pereira, Beatriz and Leite-Gomes, Eduarda and Rodrigues, Cl{\\'a}udia S and Dantas, Carolina S and Faria, Guilherme and Nogueira, Rafaela and Almeida, Pedro and Tavares-Gomes, Let{\\'\\i}cia and Gaifem, Joana and others},\n  ye",
       "full_authors": [
-        "Azevedo, Catarina M",
-        "Santos-Pereira, Beatriz",
-        "Leite-Gomes, Eduarda",
-        "Rodrigues, Cl{\\'a}udia S",
-        "Dantas, Carolina S",
-        "Faria, Guilherme",
-        "Nogueira, Rafaela",
-        "Almeida, Pedro",
-        "Tavares-Gomes, Let{\\'\\i}cia",
-        "Gaifem, Joana"
+        "Catarina M. Azevedo",
+        "Beatriz Santos-Pereira",
+        "Eduarda Leite-Gomes",
+        "Cláudia S. Rodrigues",
+        "Carolina S. Dantas",
+        "Guilherme Faria",
+        "Rafaela Nogueira",
+        "Pedro Almeida",
+        "Letícia Tavares-Gomes",
+        "Joana Gaifem",
+        "Inês Alves",
+        "Ângela Fernandes",
+        "Salomé S. Pinho"
       ],
       "resolution": "resolved but Scholar shows 'and others'",
       "language_flag": "",
@@ -372,14 +375,21 @@
       "pubmed_near_miss": {
         "pmid": "36757621",
         "title": "Emerging glyco-risk prediction model to forecast response to immune checkpoint inhibitors in colorectal cancer.",
-        "similarity": 0.22
+        "similarity": 0.17
       },
-      "confirm_state": "unresolved",
-      "corroboration": "not indexed in PubMed or OpenAlex and the Scholar list is incomplete",
+      "confirm_state": "confirmed",
+      "corroboration": "resolved against openalex",
       "corroboration_note": "no PubMed or OpenAlex record matched the title closely enough",
-      "attention_reason": "not indexed in PubMed or OpenAlex and the Scholar list is incomplete",
-      "needs_attention": true,
-      "language_flag_captured": ""
+      "attention_reason": "",
+      "needs_attention": false,
+      "language_flag_captured": "",
+      "status_captured": "REVIEW",
+      "confirm_state_captured": "unresolved",
+      "external_source": "openalex",
+      "external_url": "https://doi.org/10.1039/9781837676101-00001",
+      "external_title": "N -Glycans as fundamental immune-checkpoints at the frontiers of inflammation, autoimmunity and cancer",
+      "external_authors": "Catarina M. Azevedo, Beatriz Santos-Pereira, Eduarda Leite-Gomes, Cláudia S. Rodrigues, Carolina S. Dantas, Guilherme Faria, Rafaela Nogueira, Pedro Almeida, Letícia Tavares-Gomes, Joana Gaifem, Inês Alves, Ângela Fernandes, Salomé S. Pinho",
+      "external_similarity": 1
     }
   ]
 }

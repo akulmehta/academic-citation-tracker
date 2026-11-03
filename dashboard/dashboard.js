@@ -198,6 +198,55 @@
       .attr("transform", `translate(${margin.left},${margin.top})`);
   }
 
+  // Measure how wide strings render in a given css class. The probe has to be
+  // in the document to lay out, so it is parked off to the side rather than
+  // display:none, which reports zero. Used where a column width must fit real
+  // text — a character-count estimate is wrong enough to clip titles whose
+  // words are dense with gene and enzyme names.
+  function measureTextWidths(strings, cls) {
+    const NS = "http://www.w3.org/2000/svg";
+    const svg = document.createElementNS(NS, "svg");
+    svg.setAttribute("aria-hidden", "true");
+    svg.style.position = "absolute";
+    svg.style.left = "-10000px";
+    svg.style.top = "0";
+    svg.style.width = "1px";
+    svg.style.height = "1px";
+    svg.style.overflow = "hidden";
+    const g = document.createElementNS(NS, "g");
+    g.setAttribute("class", cls);
+    svg.appendChild(g);
+    document.body.appendChild(svg);
+    let widest = 0;
+    try {
+      for (const s of strings) {
+        const t = document.createElementNS(NS, "text");
+        t.setAttribute("class", cls);
+        t.textContent = String(s == null ? "" : s);
+        g.appendChild(t);
+        const w = typeof t.getComputedTextLength === "function"
+          ? t.getComputedTextLength()
+          : String(s || "").length * 6;
+        if (w > widest) widest = w;
+        g.removeChild(t);
+      }
+    } finally {
+      svg.remove();
+    }
+    return widest;
+  }
+
+  // How wide the chart's own container currently is. The other charts draw to a
+  // fixed 620 and are fine, but this one has a wide label column, and a fixed
+  // width either wastes the right-hand side of the page or squeezes the bars.
+  // Measured rather than guessed so the figure also holds up when the window is
+  // narrower than the page's max width.
+  function containerWidth(id, fallback) {
+    const node = el(id);
+    const w = node ? node.clientWidth : 0;
+    return w > 320 ? Math.floor(w) : fallback;
+  }
+
   function legend(target, entries) {
     const node = el(target);
     node.innerHTML = "";
@@ -352,10 +401,12 @@
       `<b>Independent</b> means the citing work shares no author with the paper it ` +
       `cites, and lists neither the PI (Richard D. Cummings) nor the former PI ` +
       `(Umesh R. Desai). It is the only thing an exhibit PDF marks. <b>Awaiting ` +
-      `review</b> and <b>unsettled</b> rows are left unmarked and are excluded from ` +
+      `review</b> and <b>Non-English</b> rows are left unmarked and are excluded from ` +
       `the counted total, so the share quoted for the packet is never padded. The ` +
-      `language screen sits inside <b>unsettled</b> rather than beside it, so no row ` +
-      `is counted twice.`;
+      `<b>Non-English</b> bucket is its own since 2026-11-03: the language screen ` +
+      `supersedes a row's independence classification, because no certified ` +
+      `translation is being obtained, so those ${fmt(g.flagged_non_english)} rows are ` +
+      `a closed matter reported once rather than unsettled work awaiting a decision.`;
 
     drawWaffle(D);
     drawSplit(D);
@@ -432,6 +483,14 @@
     table(
       "patents-table",
       [
+        // Same handle as every other citing-work listing (2026-11-03). A patent
+        // row is a citation like any other and is quoted by its uid when a
+        // verdict on it is questioned.
+        {
+          key: "row_uid",
+          label: "row_uid",
+          render: (r) => `<span class="uid">${esc(r.row_uid)}</span>`,
+        },
         {
           key: "patent_number",
           label: "Publication no.",
@@ -466,6 +525,11 @@
       pats.map((p) => ({ ...p, _cls: p.counted ? "" : "unfiled" })),
       { caption: `${pats.length} citing patent documents, independent first.` }
     );
+    // Same sheet-fit fix as the works and per-article tables. This table was
+    // already wider than a Letter page before the uid column went in, so Chrome
+    // had been clipping its last column silently; fixed layout divides the sheet
+    // instead. Widths live in styles.css next to the other two.
+    el("patents-table").querySelector("table").classList.add("fixed-print");
 
     el(
       "patents-method"
@@ -500,38 +564,53 @@
     el(
       "open-lede"
     ).innerHTML =
-      `A citation that cannot be settled is not counted, and is not marked. ` +
-      `${fmt(g.awaiting_review)} records await a settled author list and ` +
-      `${fmt(g.independent_pending)} look independent but no source has confirmed them. ` +
-      `${fmt(g.flagged_non_english)} are flagged non-English, of which ` +
-      `${fmt(g.non_english_withheld)} would otherwise have counted; those ` +
-      `${fmt(g.non_english_withheld)} are inside the ${fmt(g.independent_pending)} ` +
-      `unsettled figure, not additional to it. Per the guide a ` +
-      `non-English citation needs a certified human translation and affidavit, which the ` +
-      `project has decided not to obtain, so those entries stay unhighlighted and the ` +
-      `packet reports the adjusted English-only total instead. The rows a person can ` +
-      `still decide are on <a href="review.html">the review queue</a>; the language rows ` +
-      `are <a href="language.html">kept apart</a> and are not offered for decision.`;
+      `A citation that cannot be settled is not counted, and is not marked. There ` +
+      `are two quite different reasons a row is left out, and they are kept apart.` +
+      `<br><br>` +
+      `<b>Open author questions.</b> ${fmt(g.review_queue ?? g.awaiting_review)} ` +
+      `records await a settled author list, and ` +
+      `${fmt(g.independent_pending)} are classified independent but await ` +
+      `corroboration. Each of these is a row a person can settle, and a decision ` +
+      `either way changes a figure; they are on <a href="review.html">the review ` +
+      `queue</a>.` +
+      `<br><br>` +
+      `<b>Non-English, a closed matter.</b> ${fmt(g.flagged_non_english)} records ` +
+      `are flagged non-English, of which ${fmt(g.non_english_independent)} also ` +
+      `carry an independent classification. Since 2026-11-03 the language screen ` +
+      `<i>supersedes</i> that classification: per the guide a non-English citation ` +
+      `needs a certified human translation and affidavit, and the project decided on ` +
+      `2026-11-01 not to obtain any, so no reading of one of these bylines can change ` +
+      `the packet. They are therefore reported once, as non-English, and are not ` +
+      `counted as unsettled work &mdash; ${fmt(g.non_english_withheld)} of them would ` +
+      `otherwise have counted, which is what the packet gives up. They are ` +
+      `<a href="language.html">kept apart</a> and not offered for decision, and the ` +
+      `packet reports the adjusted English-only total instead.`;
 
-    // "Unsettled" and "held for language" overlap, and the overlap is all of it
-    // on this snapshot. Saying the residual out loud stops the 47 reading as 47
-    // decisions still outstanding. A bare "0 apart from language" reads as a
-    // glitch, so the wording states the conclusion when the residual is zero.
+    // The unsettled figure is English open author work only. It is normally zero
+    // now that the language rows have their own bucket; the sub-line says so
+    // plainly, because a bare 0 next to 45 non-English rows would read as a glitch.
     const unsettledApart = (D.unsettled_rows || []).length;
     statBand(el("open-band"), [
-      { label: "Awaiting review", value: fmt(g.awaiting_review), sub: "on the review queue" },
+      // The queue, not the raw REVIEW count: the non-English REVIEW rows sit on
+      // the language page, so pointing this at awaiting_review would promise more
+      // rows than review.html lists.
+      { label: "Awaiting review", value: fmt(g.review_queue ?? g.awaiting_review), sub: "on the review queue" },
       {
         label: "Independent, unsettled",
         value: fmt(g.independent_pending),
         sub: unsettledApart
-          ? `${fmt(unsettledApart)} not language-related`
-          : "all of it language",
+          ? `${fmt(unsettledApart)} English row(s) awaiting corroboration`
+          : "none — all open work is on the queue",
       },
-      { label: "Flagged non-English", value: fmt(g.flagged_non_english) },
       {
-        label: "Withheld for language",
+        label: "Non-English",
+        value: fmt(g.flagged_non_english),
+        sub: `${fmt(g.non_english_independent)} classified independent, superseded`,
+      },
+      {
+        label: "Withheld from the count",
         value: fmt(g.non_english_withheld),
-        sub: "counted within unsettled",
+        sub: "would count with a translation",
       },
       { label: "Self (PI)", value: fmt(g.self_pi) },
       { label: "Self (former PI)", value: fmt(g.self_former_pi) },
@@ -582,9 +661,11 @@
       { key: "independent_confirmed", label: "Confirmed", num: true, render: (r) => fmt(r.independent_confirmed) },
       { key: "dependent", label: "Depend.", num: true, render: (r) => fmt(r.dependent) },
       { key: "self_former_pi", label: "Self", num: true, render: (r) => fmt(r.self_pi + r.self_former_pi) },
-      { key: "review", label: "Review", num: true, render: (r) => fmt(r.review) },
+      { key: "review_queue", label: "Review", num: true, render: (r) => fmt(r.review_queue) },
+      // Unsettled is English open author work only; the non-English rows are the
+      // next column and are no longer counted here (2026-11-03).
       { key: "independent_pending", label: "Unsettled", num: true, render: (r) => fmt(r.independent_pending) },
-      { key: "non_english_withheld", label: "Lang.", num: true, render: (r) => fmt(r.non_english_withheld) },
+      { key: "non_english", label: "Non-Eng.", num: true, render: (r) => fmt(r.non_english) },
       { key: "patent_independent", label: "Patents", num: true, render: (r) => (r.patent_rows ? `${fmt(r.patent_independent)}/${fmt(r.patent_rows)}` : "—") },
       { key: "pages_captured", label: "Pages", num: true, render: (r) => (r.pages_expected ? `${fmt(r.pages_captured)}/${fmt(r.pages_expected)}` : "—") },
       { key: "independent_share_pct", label: "Indep. %", num: true, render: (r) => pct1(r.independent_share_pct) },
@@ -624,12 +705,28 @@
       `${fmt(works.length)} distinct citing papers appear on the exhibit pages, of which ` +
       `${fmt(works.filter((w) => w.marked).length)} are highlighted. The list is ordered ` +
       `by the cited publication's size, then by title — the same order the exhibit pages ` +
-      `were reviewed in.`;
+      `were reviewed in. The first column is each row's permanent <code>row_uid</code>, ` +
+      `the same identifier the review queue, the non-English listing and the decision ` +
+      `CSV use, so a row named here can be looked up anywhere else in the packet.`;
     el("works-csv-name").textContent = D.sources.ledger;
 
     const workCols = [
+      // The uid leads here as it does on the queue, unsettled and non-English
+      // tables, because it is the handle a row is quoted back by. Added
+      // 2026-11-03 at the user's request: this is the longest listing and the
+      // one most likely to prompt a question about a specific record, and
+      // without it the only way to name a row was its title plus exhibit page.
+      {
+        key: "row_uid",
+        label: "row_uid",
+        render: (r) => `<span class="uid">${esc(r.row_uid)}</span>`,
+      },
       { key: "title", label: "Citing work", render: (r) => workTitle(r) },
-      { key: "byline", label: "Authors / venue (Scholar byline)", render: (r) => `<span class="hint">${esc(r.byline)}</span>` },
+      // Dropped on paper only, exactly as the review tables drop it: the byline
+      // is printed on the exhibit page the next column names, and this table is
+      // the widest thing in the packet. Keeping it alongside a new uid column
+      // would push the sheet further past its edge.
+      { key: "byline", label: "Authors / venue (Scholar byline)", printHide: true, render: (r) => `<span class="hint">${esc(r.byline)}</span>` },
       { key: "cited_title", label: "Cites", render: (r) => esc(shorten(r.cited_title, 58)) },
       { key: "status", label: "Decision", render: (r) => decisionTag(r) },
       { key: "confirm_state", label: "Corroboration", render: (r) => corrobTag(r) },
@@ -653,7 +750,9 @@
         return (
           String(w.title).toLowerCase().includes(q) ||
           String(w.byline).toLowerCase().includes(q) ||
-          String(w.cited_title).toLowerCase().includes(q)
+          String(w.cited_title).toLowerCase().includes(q) ||
+          // Typing a uid should find its row, as it does on every other table.
+          String(w.row_uid).toLowerCase().includes(q)
         );
       });
       return out;
@@ -672,6 +771,11 @@
       el("works-count").textContent =
         `${fmt(rows.length)} of ${fmt(works.length)} works` +
         (rows.length > 250 ? ` (first ${fmt(printed)} print)` : "");
+      // Same reason as the per-article table: with the uid column added this is
+      // wider than a Letter sheet at natural widths, and Chrome clips what
+      // hangs off the page edge without warning. Fixed layout plus the widths in
+      // styles.css keeps every column on the sheet.
+      el("works-table").querySelector("table").classList.add("fixed-print");
     };
     renderWorks(workRows());
     enableSort("works-table", workCols, works, () => renderWorks(workRows()));
@@ -773,10 +877,19 @@
     {
       key: "external_source",
       label: "External",
-      render: (r) =>
-        r.external_url
+      render: (r) => {
+        // A record the rules discarded because its title overlap was too thin to
+        // be the same work is still stored on the row, as the audit trail of the
+        // rejection. It is not a source to check, so it gets no link: sending a
+        // reviewer to a paper this row is not (cit-001476, a swine-lung article)
+        // wastes their time and implies evidence that does not exist.
+        if (r.external_match_credible === false) {
+          return `<span class="hint">${esc(r.external_source || "external")} match rejected</span>`;
+        }
+        return r.external_url
           ? ext(r.external_url, esc(r.external_source))
-          : `<span class="hint">none indexed</span>`,
+          : `<span class="hint">none indexed</span>`;
+      },
     },
     {
       key: "exhibit_page",
@@ -792,14 +905,10 @@
           : `<span class="hint">${where}</span>`;
       },
     },
-    {
-      key: "language_flag",
-      label: "Also",
-      render: (r) =>
-        r.language_flag
-          ? `<span class="tag lang">non-English</span>`
-          : `<span class="hint">—</span>`,
-    },
+    // No "also non-English" column. v_review has excluded those rows since
+    // 2026-11-03, so the column would be a dash on every row; a flagged row that
+    // ever appears anyway is still rendered muted, with the caption below
+    // explaining it.
     {
       key: "decision",
       label: "Your decision",
@@ -811,43 +920,45 @@
     const g = D.global;
     const queue = D.review_queue || [];
     const buckets = D.review_buckets || {};
-    const actionable = D.review_actionable ?? queue.length;
+    // v_review has excluded non-English rows since 2026-11-03 (user instruction:
+    // such a row belongs on the Non-English page, not in a queue of decisions).
+    // Nothing here filters on the flag any more, but a row that still carries one
+    // is rendered muted with an explanatory caption below, so a stale build reads
+    // as a defect rather than as an unexplained row in a work queue.
 
-    // Both of these live in the page's markup as generic text and are filled in
-    // here, so a count or a dated filename can never go stale in the HTML.
-    const label = el("review-hide-lang-label");
-    if (label) {
-      const alsoLang = queue.length - actionable;
-      label.textContent =
-        `Hide the ${fmt(alsoLang)} that ${alsoLang === 1 ? "is" : "are"} also ` +
-        `non-English`;
-    }
     const sheet = el("review-sheet");
     if (sheet) sheet.textContent = D.sources.review_sheet || "";
 
     el("review-lede").innerHTML =
       `${fmt(queue.length)} of the ${fmt(g.citation_records_reviewed)} citation rows ` +
       `on the exhibit pages cannot be settled by the rules, so they are counted ` +
-      `neither as independent nor as dependent. ${fmt(actionable)} of them can ` +
-      `change a figure if you decide them; the other ${fmt(
-        queue.length - actionable
-      )} are also flagged non-English, and with no translations being obtained a ` +
-      `decision on one changes nothing. Every row links to the exhibit PDF page ` +
-      `it came from.`;
+      `neither as independent nor as dependent. Each one is a row you can settle: ` +
+      `a decision either way changes a figure. Rows that are also non-English are ` +
+      `not listed here &mdash; with no translations being obtained no decision on ` +
+      `one can change the packet, so they appear with the other non-English ` +
+      `entries on <a href="language.html">the Non-English page</a>. Every row here ` +
+      `links to the exhibit PDF page it came from.`;
 
     statBand(el("review-band"), [
       { label: "Awaiting review", value: fmt(queue.length), sub: "counted neither way" },
       { label: "Contradicted", value: fmt(buckets["1 contradicted"] || 0), sub: "external list overlaps" },
       { label: "External, no overlap", value: fmt(buckets["2 external-no-overlap"] || 0), sub: "likeliest to be independent" },
       { label: "Unresolvable", value: fmt(buckets["3 unresolvable"] || 0), sub: "needs the published article" },
-      { label: "Independent, unsettled", value: fmt((D.unsettled_rows || []).length), sub: "excluding language" },
+      {
+        label: "Independent, unsettled",
+        value: fmt((D.unsettled_rows || []).length),
+        sub: "awaiting corroboration",
+      },
+      {
+        label: "Non-English",
+        value: fmt(g.flagged_non_english),
+        sub: "on its own page, not work",
+      },
     ]);
 
     const filter = (rows) => {
       const query = el("review-search").value.trim().toLowerCase();
-      const hideLang = el("review-hide-lang").checked;
       return rows.filter((r) => {
-        if (hideLang && r.language_flag) return false;
         if (!query) return true;
         return (
           String(r.title).toLowerCase().includes(query) ||
@@ -886,7 +997,6 @@
       enableSort(meta.anchor, queueCols, queue, redraw);
     }
     el("review-search").addEventListener("input", redraw);
-    el("review-hide-lang").addEventListener("change", redraw);
   }
 
   // The second list the user asked for: classified independent, not highlighted,
@@ -901,23 +1011,26 @@
     head.textContent = `Independent but unsettled — ${fmt(rows.length)} row${rows.length === 1 ? "" : "s"}`;
     if (!rows.length) {
       why.innerHTML =
-        `None. Every row classified independent and not highlighted is held back ` +
-        `by the language screen or is a second-language copy of an article ` +
-        `already on the same citing list, so there is nothing author-related left ` +
-        `to settle here. The ` +
-        `${fmt(D.global.flagged_non_english)} flagged rows are on ` +
-        `<a href="language.html">their own page</a>, and are not offered for ` +
-        `review. If a future capture produces a row that is genuinely open, it ` +
-        `appears in this table &mdash; <code>tools/build-dashboard-data.js</code> ` +
-        `fails the build rather than let one go unlisted.`;
+        `None. Every row classified independent and not highlighted is flagged ` +
+        `non-English, and since 2026-11-03 the language screen supersedes that ` +
+        `classification &mdash; with no certified translations being obtained, no ` +
+        `reading of such a byline can change the packet, so it is not open work. ` +
+        `Those ${fmt(D.global.flagged_non_english)} rows are on ` +
+        `<a href="language.html">their own page</a> and are not offered for review. ` +
+        `The rows a person <i>can</i> settle are the ${fmt(
+          (D.global.review_queue ?? D.global.awaiting_review) || 0
+        )} in the buckets above. If a future capture produces an English row that ` +
+        `is genuinely open, it appears in this table &mdash; ` +
+        `<code>tools/build-dashboard-data.js</code> fails the build rather than let ` +
+        `one go unlisted.`;
       table("table-unsettled", queueCols.map((c) => ({ ...c })), [], {
         caption: "No rows.",
       });
       return;
     }
     why.innerHTML =
-      `Classified independent by the author comparison, but not highlighted, and ` +
-      `not for a language reason. These need settling.`;
+      `Classified independent by the author comparison, English, and not ` +
+      `highlighted only because no source has settled the list. These need settling.`;
     table("table-unsettled", unsettledCols, rows, {
       caption: `${fmt(rows.length)} independent-but-unhighlighted row(s).`,
       sortable: true,
@@ -1066,6 +1179,11 @@
 
     statBand(el("lang-band"), [
       { label: "Flagged non-English", value: fmt(rows.length), sub: "a screen, not a ruling" },
+      {
+        label: "Classified independent",
+        value: fmt(g.non_english_independent),
+        sub: "superseded by this screen",
+      },
       { label: "Withheld from the count", value: fmt(g.non_english_withheld), sub: "look independent otherwise" },
       { label: "Translations obtained", value: "none", sub: "decided 2026-11-01" },
       { label: "Adjusted English-only", value: pct1(g.unique_english_independent_share_pct), sub: "independent share" },
@@ -1229,15 +1347,15 @@
       )}
       ${row(
         "Language",
-        `${fmt(g.flagged_non_english)} records are flagged non-English and are never highlighted. The guide's test is whether an entry is <i>listed</i> in English — its title, author list and venue, not its body — so the screen keys on the title, while a non-Latin script elsewhere flags it only where that script is the bulk of the text. A Greek letter is read as scientific notation while it stays a clear minority of the title's letters; a title written in Greek is flagged. Two English rows were recovered on 2026-11-02 when these became share tests rather than absolute counts. No certified translations are being obtained, so the packet reports the adjusted English-only total: ${fmt(
+        `${fmt(g.flagged_non_english)} records are flagged non-English and are never highlighted. The guide's test is whether an entry is <i>listed</i> in English — its title, author list and venue, not its body — so the screen keys on the title, while a non-Latin script elsewhere flags it only where that script is the bulk of the text. A Greek letter is read as scientific notation while it stays a clear minority of the title's letters; a title written in Greek is flagged. Two English rows were recovered on 2026-11-02 when these became share tests rather than absolute counts. Per the user's instruction on 2026-11-03 the language screen <i>supersedes</i> a row's other classifications: ${fmt(
+          g.non_english_independent
+        )} of these also carry an independent classification, and they are reported as non-English rather than as unsettled work, because no certified translation is being obtained so nothing a person could read changes the outcome. No certified translations are being obtained, so the packet reports the adjusted English-only total: ${fmt(
           g.english_independent_records
         )} independent of ${fmt(
           g.english_citation_records
         )} English records, ${pct1(g.english_independent_share_pct)}. The ${fmt(
           g.non_english_withheld
-        )} of those that are otherwise settled and would have counted are shown as <i>withheld for language</i>, and are a subset of the ${fmt(
-          g.independent_pending
-        )} unsettled rows rather than a bucket beside them.`
+        )} that are otherwise settled and would have counted are listed as <i>withheld for language</i>, which is what the packet gives up by not filing translations.`
       )}
       ${row(
         "Duplicate versions",
@@ -1337,24 +1455,37 @@
 
   function drawWaffle(D) {
     const g = D.global;
-    // The withheld-for-language rows are a subset of independent_pending, not a
-    // bucket beside it: tools/tally.js defines isIndependentPending as
-    // status INDEPENDENT and not isHighlighted, and isHighlighted fails on the
-    // language flag. Splitting them out would double-count, so the count is
-    // named in the label instead.
-    const withheld = Number(g.non_english_withheld) || 0;
-    const pendingLabel =
-      withheld > 0
-        ? `Independent but unsettled (includes ${fmt(withheld)} withheld for language)`
-        : "Independent but unsettled";
+    // Six buckets that partition every record exactly once. The non-English rows
+    // became their own bucket on 2026-11-03 at the user's instruction that the
+    // language screen supersedes the independence classification: they are not
+    // unsettled work, because with no certified translations being obtained no
+    // reading of a byline can make one count. Previously they sat inside
+    // `independent_pending` and had to be named in that label to avoid a
+    // double-count, which made a closed decision look like open work.
+    //
+    // Awaiting review is the queue (English REVIEW rows) rather than every row
+    // classified REVIEW, so the five non-English REVIEW rows land in the
+    // language bucket with the rest of their kind instead of being counted twice.
+    const queued = Number(g.review_queue ?? g.awaiting_review) || 0;
     const parts = [
       { key: "independent", label: "Independent (highlighted)", value: g.independent_countable, color: COLORS.independent, edge: COLORS.independentEdge },
       { key: "dependent", label: "Dependent (shares an author)", value: g.dependent, color: COLORS.dependent },
-      { key: "review", label: "Awaiting review", value: g.awaiting_review, color: COLORS.review },
-      { key: "pending", label: pendingLabel, value: g.independent_pending, color: COLORS.pending },
+      { key: "review", label: "Awaiting review", value: queued, color: COLORS.review },
+      { key: "non_english", label: "Non-English (not counted)", value: g.flagged_non_english, color: COLORS.language },
       { key: "self_former_pi", label: "Self, former PI", value: g.self_former_pi, color: COLORS.self_former_pi },
       { key: "self_pi", label: "Self, PI", value: g.self_pi, color: COLORS.self_pi },
     ];
+    // Open author work, English rows awaiting corroboration. Normally empty now
+    // that the language rows have moved out; drawn only when there is some, so a
+    // zero does not add an empty square-colour to the legend.
+    if (g.independent_pending > 0) {
+      parts.splice(3, 0, {
+        key: "pending",
+        label: "Independent, unsettled",
+        value: g.independent_pending,
+        color: COLORS.pending,
+      });
+    }
     // Safety net: if the rule ever changes so these buckets no longer cover
     // every record, show the remainder rather than silently shrinking the grid.
     const covered = d3.sum(parts, (p) => p.value);
@@ -1530,39 +1661,129 @@
       `excludes anything still open, so that share is the strictest of the group.`;
   }
 
+  // Word-wrap a title into at most `maxLines` lines that each fit inside
+  // `maxPx`, measured in the real font rather than counted in characters —
+  // these titles are dense with gene and enzyme names, so a character count is
+  // wrong by enough to clip. Returns the lines and whether anything was cut.
+  // Cut text is folded into the last line with an ellipsis: dropping a tail
+  // silently would hide part of a source title, while an ellipsis says plainly
+  // that there is more. A single word longer than the column overflows rather
+  // than being hyphenated, since inventing a hyphenation would alter the title
+  // too. `truncated` is reported rather than detected by looking for the
+  // ellipsis, because Scholar's own titles are already truncated at source and
+  // can end with one this wrapper never added.
+  function wrapToWidth(s, maxPx, maxLines, cls) {
+    const t = String(s || "").trim();
+    const fits = (str) => measureTextWidths([str], cls) <= maxPx;
+    if (fits(t)) return { lines: [t], truncated: false };
+    const words = t.split(/\s+/);
+    const lines = [];
+    let cur = "";
+    for (const w of words) {
+      const next = cur ? `${cur} ${w}` : w;
+      if (cur && !fits(next)) {
+        lines.push(cur);
+        cur = w;
+      } else {
+        cur = next;
+      }
+    }
+    if (cur) lines.push(cur);
+    if (lines.length <= maxLines) return { lines, truncated: false };
+    const kept = lines.slice(0, maxLines - 1);
+    let rest = lines.slice(maxLines - 1).join(" ");
+    while (rest.length > 1 && !fits(`${rest}…`)) rest = rest.slice(0, -1);
+    kept.push(`${rest.trim()}…`);
+    return { lines: kept, truncated: true };
+  }
+
   function drawLollipop(D) {
     const arts = D.articles
       .filter((a) => a.status === "captured")
       .slice()
       .sort((a, b) => b.independent - a.independent);
+    // The same six buckets the waffle uses, so a bar here is the whole
+    // publication and its segments add up to its record count. Two changes
+    // made on 2026-11-03 at the user's request:
+    //   - Awaiting review is the queue (English REVIEW rows), not every REVIEW
+    //     row, so the non-English ones are not counted twice.
+    //   - Unsettled is drawn only when there is open English author work. It is
+    //     zero across this packet, and an empty stack still printed a legend
+    //     key, which read as though undecided citations were hidden in every
+    //     bar. Non-English was missing entirely, so the bars fell short of the
+    //     record count they claim to show.
     const stacks = [
       ["independent", "Independent", COLORS.independent, COLORS.independentEdge],
       ["dependent", "Dependent", COLORS.dependent],
-      ["review", "Awaiting review", COLORS.review],
-      ["independent_pending", "Unsettled", COLORS.pending],
+      ["review_queue", "Awaiting review", COLORS.review],
+      ["non_english", "Non-English (not counted)", COLORS.language],
       ["self_former_pi", "Self, former PI", COLORS.self_former_pi],
       ["self_pi", "Self, PI", COLORS.self_pi],
     ];
-    const W = 620;
-    const rowH = 17;
-    const m = { top: 22, right: 58, bottom: 26, left: 210 };
-    const H = arts.length * rowH + m.top + m.bottom;
+    if (d3.sum(arts, (a) => a.independent_pending) > 0) {
+      stacks.splice(3, 0, [
+        "independent_pending",
+        "Independent, unsettled",
+        COLORS.pending,
+      ]);
+    }
+    // Labels are the full publication title over up to three lines rather than a
+    // 42-character fragment, which the user asked for — a truncated title is not
+    // enough to tell one paper from the next. Three is the budget; the one title
+    // in this packet that will not fit in three (180 characters) is allowed a
+    // fourth rather than be cut, since it is source text and every other row
+    // stays at three or fewer.
+    const MAXLINES = 3;
+    const wrapTitle = (t, px) => {
+      const first = wrapToWidth(t, px, MAXLINES, "row-label");
+      return first.truncated
+        ? wrapToWidth(t, px, MAXLINES + 1, "row-label").lines
+        : first.lines;
+    };
+    // Draw at exactly the container width. The page caps its column at 60rem and
+    // the other charts fit inside that at a fixed 620, but this one has a wide
+    // label column: a fixed width either left the right of the page empty or,
+    // when the window is narrow, shrank the whole figure below 100% and made the
+    // labels smaller than every other chart's. One to one avoids both.
+    const W = containerWidth("chart-lollipop", 620);
+    // Wrap against the widest column the layout will allow, then tighten the
+    // column to the widest line that actually came out. Wrapping first and
+    // shrinking after means every line still fits by construction, and the bars
+    // get the space back when the titles are short.
+    const maxLabelW = Math.max(150, Math.min(Math.round(W * 0.58), 430));
+    const labels = arts.map((a) => wrapTitle(a.title, maxLabelW - 20));
+    const labelW = Math.min(
+      maxLabelW,
+      Math.ceil(measureTextWidths(labels.flat(), "row-label")) + 20
+    );
+    // A row is as tall as its own label. A uniform height sized for a three-line
+    // title would leave most rows empty, since the median title needs two. The
+    // bar itself keeps one thickness and sits centred in the row — a bar that
+    // grew with its label would read as a second, meaningless quantity.
+    const LINE_H = 13;
+    const PAD = 10;
+    const BAR_H = 15;
+    const rowMid = new Map();
+    let stack = 0;
+    arts.forEach((a, i) => {
+      const h = labels[i].length * LINE_H + PAD;
+      rowMid.set(a.title, stack + h / 2);
+      stack += h;
+    });
+    const innerH = stack;
+    const m = { top: 22, right: 58, bottom: 26, left: labelW };
+    const H = innerH + m.top + m.bottom;
     const g = svgFor("chart-lollipop", W, H, m);
     const iw = W - m.left - m.right;
     const maxTotal = d3.max(arts, (a) => a.records) || 1;
     const x = d3.scaleLinear().domain([0, maxTotal]).range([0, iw]);
-    const y = d3
-      .scaleBand()
-      .domain(arts.map((a) => a.title))
-      .range([0, arts.length * rowH])
-      .padding(0.24);
 
     g.append("g")
       .attr("class", "grid")
-      .call(d3.axisLeft(x).ticks(5).tickSize(-arts.length * rowH).tickFormat(""));
+      .call(d3.axisLeft(x).ticks(5).tickSize(-innerH).tickFormat(""));
     g.append("g")
       .attr("class", "axis")
-      .attr("transform", `translate(0,${arts.length * rowH})`)
+      .attr("transform", `translate(0,${innerH})`)
       .call(d3.axisBottom(x).ticks(5).tickFormat(d3.format(",")));
 
     // Segments sit side by side, so each stack starts where the previous one
@@ -1574,16 +1795,16 @@
         .enter()
         .append("rect")
         .attr("x", (d) => x(offset.get(d.title)))
-        .attr("y", (d) => y(d.title))
+        .attr("y", (d) => rowMid.get(d.title) - BAR_H / 2)
         .attr("width", (d) => x(d[key] || 0))
-        .attr("height", y.bandwidth())
+        .attr("height", BAR_H)
         .attr("fill", color)
         .attr("stroke", edge || "rgba(0,0,0,.15)")
         .attr("stroke-width", edge ? 0.8 : 0.4)
         .on("mousemove", (ev, d) =>
           showTip(
             ev,
-            `<b>${esc(shorten(d.title, 70))}</b><br>${esc(label)}: ${fmt(
+            `<b>${esc(d.title)}</b><br>${esc(label)}: ${fmt(
               d[key] || 0
             )}<br>${fmt(d.records)} records on ${fmt(d.pages_captured)} exhibit page(s)`
           )
@@ -1592,16 +1813,29 @@
       for (const a of arts) offset.set(a.title, offset.get(a.title) + (a[key] || 0));
     }
 
+    const linesByTitle = new Map(arts.map((a, i) => [a.title, labels[i]]));
     g.selectAll(".t")
       .data(arts)
       .enter()
       .append("text")
       .attr("class", (d) => `row-label${d.independent ? "" : " dim"}`)
       .attr("x", -8)
-      .attr("y", (d) => y(d.title) + y.bandwidth() / 2)
+      .attr("y", (d) => rowMid.get(d.title))
       .attr("text-anchor", "end")
-      .attr("dominant-baseline", "middle")
-      .text((d) => shorten(d.title, 42));
+      .each(function (d) {
+        // One to three lines, centred vertically on the bar. The dy lives on the
+        // first tspan rather than the text element, so a one-line title sits on
+        // the bar's middle while a taller stack straddles it.
+        const lines = linesByTitle.get(d.title) || [d.title];
+        const t = d3.select(this);
+        t.append("tspan")
+          .attr("x", -8)
+          .attr("dy", lines.length > 1 ? `${0.32 - (lines.length - 1) * 0.575}em` : "0.32em")
+          .text(lines[0]);
+        for (let i = 1; i < lines.length; i++) {
+          t.append("tspan").attr("x", -8).attr("dy", "1.15em").text(lines[i]);
+        }
+      });
 
     g.selectAll(".v")
       .data(arts)
@@ -1609,16 +1843,21 @@
       .append("text")
       .attr("class", "bar-value")
       .attr("x", (d) => x(d.records) + 5)
-      .attr("y", (d) => y(d.title) + y.bandwidth() / 2)
+      .attr("y", (d) => rowMid.get(d.title))
       .attr("dominant-baseline", "middle")
       .text((d) => fmt(d.independent));
 
     el(
       "cap-lollipop"
     ).textContent =
-      `Right-hand numbers are independent citations; the bar behind them is every record ` +
-      `on that publication's exhibit pages, so the unmarked remainder is visible too. ` +
-      `Bars are ordered by independent citations, descending.`;
+      `Each bar is every record on that publication's exhibit pages, split into the same ` +
+      `buckets as the grid above, so the segments add up to the publication's record ` +
+      `count. The number at the right is its independent citations. Awaiting review is ` +
+      `the queue, i.e. English rows only; non-English rows sit in their own bucket ` +
+      `because the language screen supersedes their classification. Open English ` +
+      `author work would appear as a pale segment, and there is none in this packet. ` +
+      `Titles wrap over up to three lines and rows are ordered by independent ` +
+      `citations, descending.`;
     legend(
       "legend-lollipop",
       stacks.map(([, label, color, edge]) => ({
@@ -1771,6 +2010,39 @@
       .text((d) => fmt(d.independent));
 
     el("years-undated").textContent = fmt(D.undated.records);
+    // Say what was taken out and why, and name it, rather than letting a year
+    // simply not appear. See the year block in tools/build-dashboard-data.js.
+    const anom = D.year_anomalies || [];
+    const anomNode = el("years-anomalies");
+    if (anom.length) {
+      anomNode.innerHTML =
+        `${fmt(anom.length)} record${anom.length === 1 ? "" : "s"} dated earlier than ` +
+        `the paper it cites, which cannot be right, so the date is unusable rather ` +
+        `than merely absent: ` +
+        anom
+          .map(
+            (a) =>
+              `<code>${esc(a.row_uid)}</code> &ldquo;${esc(
+                shorten(a.title, 60)
+              )}&rdquo; dated ${a.citing_year} against a ${a.cited_year} paper ` +
+              `(exhibit <code>${esc(a.exhibit_base)}-p${esc(
+                String(a.exhibit_page || 1)
+              )}</code>)`
+          )
+          .join("; ") +
+        `. The citation itself is unaffected: it stays on its exhibit and in the ` +
+        `totals. Only the date is dropped here.`;
+    } else {
+      anomNode.textContent = "none";
+    }
+    legend("legend-years", [
+      { label: "All citing records", color: COLORS.ruleSoft, edge: COLORS.rule },
+      {
+        label: "Of which independent",
+        color: COLORS.independent,
+        edge: COLORS.independentEdge,
+      },
+    ]);
   }
 
   function drawPatentPubs(D) {

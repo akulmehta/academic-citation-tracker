@@ -9,6 +9,8 @@ const {
   isHighlighted,
   isHighlightCandidate,
   isIndependentPending,
+  isNonEnglishIndependent,
+  isReviewQueue,
   isWithheldForLanguage,
   isSettled,
   isUserDecided,
@@ -17,6 +19,7 @@ const {
   doiArticleId,
   editionKey,
   markLanguageEditions,
+  foldSameWork,
   uniquePapers,
   tallyEntries,
   emptyTally,
@@ -106,9 +109,90 @@ check(
 // An independent-looking entry that is not yet countable has to stay visible as
 // open, otherwise a pending item silently disappears from the totals.
 check("pending: unresolved corroboration is pending", isIndependentPending({ status: "INDEPENDENT", confirm_state: "unresolved" }), true);
-check("pending: non-English independent is pending", isIndependentPending({ status: "INDEPENDENT", language_flag: "x" }), true);
+// Per the user's instruction on 2026-11-03 the language screen SUPERSEDES the
+// independence classification: a non-English row is reported as non-English, not
+// as unsettled independent work. With no certified translations being obtained no
+// reading of its byline can change the packet, so it is a closed matter. Before
+// this rule all 45 non-English independent rows appeared as 45 open questions.
+check(
+  "pending: non-English independent is NOT pending -- language supersedes",
+  isIndependentPending({ status: "INDEPENDENT", language_flag: "x" }),
+  false
+);
+check(
+  "pending: a non-English row is reported as non-English independent instead",
+  isNonEnglishIndependent({ status: "INDEPENDENT", language_flag: "x" }),
+  true
+);
+check(
+  "pending: an English row is not non-English independent",
+  isNonEnglishIndependent(confirmed),
+  false
+);
 check("pending: counted entry is not pending", isIndependentPending(confirmed), false);
 check("pending: a DEPENDENT entry is decided, not pending", isIndependentPending(dependent), false);
+
+// A look-up that never completed is NOT a settling state. Throttled OpenAlex
+// requests used to be recorded as "nothing indexes it", which is
+// unverified-coverage -- a basis for counting. capture-citations.js files that
+// outcome as lookup-failed instead, so a rate limit cannot manufacture evidence.
+check("lookup-failed: does not settle a row", isSettled({ status: "INDEPENDENT", confirm_state: "lookup-failed" }), false);
+check(
+  "lookup-failed: an independent row stays pending, not counted",
+  [isHighlighted({ status: "INDEPENDENT", confirm_state: "lookup-failed" }),
+   isIndependentPending({ status: "INDEPENDENT", confirm_state: "lookup-failed" })],
+  [false, true]
+);
+
+// ---- The review queue ----------------------------------------------------
+// The user's instruction of 2026-11-03: a non-English entry is not on the review
+// queue, only on the Non-English page. The reasoning is that the queue is the
+// list of rows where reading the published byline settles something, and with no
+// certified translations being obtained no reading of a non-English row can
+// change the packet -- apply-decision.js says so rather than recording a
+// decision that moves nothing. The rule lives in one predicate; v_review,
+// v_pub_stats, the ledger, the review sheet and the dashboard all mirror it, so
+// pinning it here pins the queue length everywhere.
+const langReview = { ...unresolved, language_flag: "cyrillic" };
+check("queue: an open English row is queued", isReviewQueue(unresolved), true);
+check("queue: a contradicted row is queued", isReviewQueue(contradicted), true);
+check("queue: a non-English row is NOT queued", isReviewQueue(langReview), false);
+check("queue: a counted row is not queued", isReviewQueue(confirmed), false);
+check(
+  "queue: a non-English row is not queued even once decided",
+  isReviewQueue({ status: "REVIEW", confirm_state: USER_DECIDED, language_flag: "cyrillic" }),
+  false
+);
+
+// The queue figures reported alongside the raw status count. Both are published
+// because status is a partition that has to keep summing to records, while the
+// queue is the number of rows a person opens.
+const queueTally = tallyEntries([
+  unresolved,
+  contradicted,
+  langReview,
+  { ...confirmed, language_flag: "cyrillic" },
+  dependent,
+]);
+check("queue tally: raw review counts every REVIEW row", queueTally.review, 3);
+check("queue tally: queued excludes the non-English one", queueTally.review_queue, 2);
+check("queue tally: the excluded rows are counted", queueTally.review_non_english, 1);
+check(
+  "queue tally: queued plus excluded equals raw review",
+  queueTally.review_queue + queueTally.review_non_english,
+  queueTally.review
+);
+check(
+  "queue tally: status partition still sums to records",
+  queueTally.independent +
+    queueTally.independent_pending +
+    queueTally.non_english_independent +
+    queueTally.dependent +
+    queueTally.self_pi +
+    queueTally.self_former_pi +
+    queueTally.review,
+  queueTally.records
+);
 
 // ---- Tally arithmetic ----------------------------------------------------
 
@@ -127,7 +211,14 @@ check("tally: records", t.records, 8);
 check("tally: countable independent excludes non-English", t.independent, 2);
 check("tally: confirmed split", t.independent_confirmed, 1);
 check("tally: coverage split", t.independent_coverage, 1);
-check("tally: pending independent", t.independent_pending, 2);
+// The non-English row in this set is no longer counted as unsettled work, so the
+// only pending row is the English one whose corroboration is unresolved.
+check("tally: pending independent", t.independent_pending, 1);
+check(
+  "tally: the non-English independent row is named in its own bucket",
+  t.non_english_independent,
+  1
+);
 check("tally: dependent", t.dependent, 1);
 check("tally: self PI", t.self_pi, 1);
 check("tally: self former PI", t.self_former_pi, 1);
@@ -159,9 +250,18 @@ check(
 );
 
 // Every record must land in exactly one bucket, or the ledger hides evidence.
+// The non_english_independent term was added on 2026-11-03, when a non-English
+// row stopped being reported as unsettled independent work: the status partition
+// still has to sum to records, so the rows it moved out of need a named bucket.
 check(
-  "tally: countable plus pending plus non-independent equals all records",
-  t.independent + t.independent_pending + t.dependent + t.self_pi + t.self_former_pi + t.review,
+  "tally: countable plus pending plus non-English independent plus the rest equals all records",
+  t.independent +
+    t.independent_pending +
+    t.non_english_independent +
+    t.dependent +
+    t.self_pi +
+    t.self_former_pi +
+    t.review,
   t.records
 );
 
@@ -243,6 +343,39 @@ check(
   "duplicate: identity ignores case and punctuation",
   paperKey({ title: "Design, Synthesis, and Antisickling Investigation of a Prodrug" }) ===
     paperKey({ title: "design synthesis and antisickling investigation of a prodrug" }),
+  true
+);
+
+// Scholar's bracketed link-type marker is part of its rendering, not the title,
+// so a row labelled "[CITATION] Some Title" must merge with the same work listed
+// plainly. Measured over the filed set on 2026-11-02 this merges exactly two
+// same-list pairs and nothing else.
+check(
+  "marker: a [CITATION] copy keys to its plain twin",
+  paperKey({ title: "[CITATION] Lignin composites with sustained oxygenation" }) ===
+    paperKey({ title: "Lignin composites with sustained oxygenation" }),
+  true
+);
+check(
+  "marker: [BOOK] and [TXT] are stripped too",
+  paperKey({ title: "[BOOK] Glycans in immunology" }) ===
+    paperKey({ title: "Glycans in immunology" }) &&
+    paperKey({ title: "[TXT] Glycans in immunology" }) ===
+      paperKey({ title: "Glycans in immunology" }),
+  true
+);
+// A chemistry title's own brackets are the compound name, not a Scholar marker,
+// and must survive. Stripping them would corrupt a cited title in a filing.
+check(
+  "marker: a chemistry bracket in the title is preserved",
+  paperKey({ title: "Synthesis of Benzopyrano[4,3-e][1,2,4]triazolo derivatives" }) !==
+    paperKey({ title: "Synthesis of Benzopyrano derivatives" }),
+  true
+);
+check(
+  "marker: a bracket mid-title is not a marker",
+  paperKey({ title: "Binding of [CITATION] tagged ligands to galectin-1" }) !==
+    paperKey({ title: "Binding of tagged ligands to galectin-1" }),
   true
 );
 
@@ -444,6 +577,181 @@ check(
   markLanguageEditions([lone], new Map());
   check("edition: a lone row is never suppressed", lone.duplicate_of, "");
   check("edition: a lone row still records its key", lone.edition_key !== "", true);
+}
+
+// ---- Same-work folds recorded by a person --------------------------------
+// The lignin case of 2026-11-02: a bioRxiv preprint and its published Acta
+// Biomaterialia article have DIFFERENT titles, so paperKey never merges them,
+// and the published paper was already on the list as its own row. A person
+// proved the identity from the DOI chain plus the byline and recorded it with
+// tools/apply-decision.js --same-work-as. foldSameWork is what turns that record
+// into a row that does not count twice.
+const swPreprint = {
+  title: "Lignin Composites with Sustained Oxygenation and Reactive Oxygen Species-Scavenging",
+  cid: "pre1",
+  page: 2,
+  status: "INDEPENDENT",
+  confirm_state: "confirmed",
+  same_work_key: "sw:actbio-2025",
+};
+const swCitation = {
+  title: "[CITATION] Lignin Composites with Sustained Oxygenation",
+  cid: "pre2",
+  page: 3,
+  status: "INDEPENDENT",
+  confirm_state: "confirmed",
+  same_work_key: "sw:actbio-2025",
+};
+const swPublished = {
+  title: "Oxygen-releasing lignin composites for diabetic wound healing",
+  cid: "pub9",
+  page: 1,
+  status: "INDEPENDENT",
+  confirm_state: "confirmed",
+  duplicate_of: "",
+};
+{
+  const rows = [swPreprint, swCitation, swPublished];
+  foldSameWork(rows);
+  check("same-work: one copy of the folded pair stands", swPreprint.duplicate_of, "");
+  check("same-work: the other defers to it", swCitation.duplicate_of, "pre1");
+  check("same-work: the fold names its kind", swCitation.duplicate_kind, "same-work");
+  check("same-work: a row outside the fold is untouched", swPublished.duplicate_of, "");
+  check(
+    "same-work: the folded copy is not counted",
+    isHighlighted(swCitation),
+    false
+  );
+  check("same-work: the standing copy still counts", isHighlighted(swPreprint), true);
+}
+// A fold needs at least two rows carrying the key. A single row with a key is a
+// claim about one row and proves nothing, so nothing is folded and nothing is
+// lost.
+{
+  const only = { ...swPreprint, duplicate_of: "" };
+  foldSameWork([only]);
+  check("same-work: a lone keyed row is not folded", only.duplicate_of, "");
+}
+// A row the language rule already folded stays folded by that rule: the language
+// determination came from a DOI plus an author list and is the more specific
+// claim, and duplicate_kind must not be rewritten to the weaker one. Uses the
+// real Angewandte pair, whose two DOIs are what make it a language edition.
+{
+  const english = editionEnglish();
+  const german = editionGerman();
+  english.same_work_key = "sw:x";
+  german.same_work_key = "sw:x";
+  markLanguageEditions([english, german], new Map());
+  const kindBefore = german.duplicate_kind;
+  const standsBefore = german.duplicate_of;
+  check("same-work: the language rule folded it first", kindBefore, "language-edition");
+  foldSameWork([english, german]);
+  check("same-work: the language rule keeps its kind", german.duplicate_kind, kindBefore);
+  check("same-work: a language-folded row keeps its pointer", german.duplicate_of, standsBefore);
+  check("same-work: the English copy still counts", isHighlighted(english), true);
+}
+// uniquePapers groups on same_work_key when there is one, so a differently-titled
+// preprint and its published article count as one paper -- and when there is
+// none, they count as two. Say which basis a figure is on rather than implying
+// the packet proved they are one work.
+{
+  const a = { ...swPreprint, duplicate_of: "" };
+  const b = { ...swCitation, duplicate_of: "" };
+  check(
+    "same-work: keyed rows collapse to one paper",
+    tallyEntries([a, b]).unique_records,
+    1
+  );
+  const unkeyedA = { ...a, same_work_key: "" };
+  const unkeyedB = { ...b, same_work_key: "" };
+  check(
+    "same-work: without a key the two titles are two papers",
+    tallyEntries([unkeyedA, unkeyedB]).unique_records,
+    2
+  );
+}
+
+// ---- Which copy of a duplicated paper carries the decision ----------------
+// copyReliability is private, and it should stay that way -- its only effect on
+// the packet is through uniquePapers, so that is what is tested here. The rule
+// that must not regress: a DEMONSTRATED shared author outranks a clean but blind
+// read, and a person's reading outranks both.
+//
+// The real case (2026-11-03): VCU dissertation 2956 appears on one citing list
+// as "AM Abdel" (scholarscompass.vcu.edu) and as "[BOOK] ... MHA Aziz"
+// (ProQuest). The VCU record's advisor is the former PI, so it is a Desai-group
+// self-citation. Both Scholar bylines are untruncated, so completeness tied, and
+// the copy that matched nobody was winning on its confirmation alone -- which
+// was counting a self-citation.
+console.log("\ncopyReliability: a demonstrated match beats a cleaner read");
+{
+  const title =
+    "Kinetic and Thermodynamic Studies of Thrombin Inhibitors Using Immobilized Enzyme";
+  // The ProQuest copy: untruncated, confirmed, and it matched nobody.
+  const cleanRead = {
+    title,
+    page: 3,
+    cid: "azizProquest",
+    status: "DEPENDENT",
+    confirm_state: "confirmed",
+    author_source: "scholar-snippet",
+    authors: "MHA Aziz, X Someone - ProQuest, 2013",
+    truncated: false,
+    matched_authors: [],
+  };
+  // The VCU copy: same completeness, no external confirmation, but its byline
+  // names the former PI, which is the actual evidence.
+  const showsOverlap = {
+    title,
+    page: 3,
+    cid: "abdelVcu",
+    status: "SELF (FORMER PI)",
+    confirm_state: "unresolved",
+    author_source: "scholar-snippet",
+    authors: "AM Abdel - scholarscompass.vcu.edu, 2013",
+    truncated: false,
+    matched_former_pi: ["UR Desai"],
+  };
+  const { kept, merged } = uniquePapers([cleanRead, showsOverlap]);
+  check("copy: the overlapping copy stands", kept.length, 1);
+  check("copy: it is the one naming the former PI", kept[0].cid, "abdelVcu");
+  check("copy: the pair is reported as merged", merged.length, 1);
+
+  // The inverse must hold too: a match the row did NOT conclude on is not
+  // evidence. matched_authors can survive a later re-apply that discarded the
+  // external record it came from, so a row saying INDEPENDENT while carrying a
+  // leftover match must not be scored as though it had proved an overlap.
+  // Tested as a tie in both orders: if the field were worth anything, the row
+  // carrying it would win whichever position it was passed in.
+  const leftover = {
+    ...showsOverlap,
+    cid: "leftoverMatch",
+    status: "INDEPENDENT",
+    confirm_state: "confirmed",
+  };
+  const noMatch = { ...leftover, cid: "noMatch", matched_former_pi: [] };
+  const forward = uniquePapers([noMatch, leftover]);
+  const reverse = uniquePapers([leftover, noMatch]);
+  check(
+    "copy: a leftover match adds nothing (order 1)",
+    forward.kept[0].cid,
+    "noMatch"
+  );
+  check(
+    "copy: a leftover match adds nothing (order 2)",
+    reverse.kept[0].cid,
+    "leftoverMatch"
+  );
+
+  // A person's reading of the published article outranks a machine match: the
+  // instructions are explicit that it is its own basis.
+  const decided = {
+    ...cleanRead,
+    cid: "humanRead",
+    confirm_state: "user-decided",
+  };
+  const third = uniquePapers([decided, showsOverlap]);
+  check("copy: a human reading outranks the machine match", third.kept[0].cid, "humanRead");
 }
 
 console.log(

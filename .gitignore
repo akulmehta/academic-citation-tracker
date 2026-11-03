@@ -1,4 +1,13 @@
 # --- Secrets / browser state -------------------------------------------------
+# Local credentials for the PubMed/OpenAlex corroboration look-ups. tools/env.js
+# reads this file at require time. It must never be committed: it holds a live
+# API key, and a key in a query string would also be persisted into a report
+# JSON by the failure notes, which is why crosscheck.js sends it as a header.
+# .env.example is the tracked template.
+.env
+.env.*
+!.env.example
+
 # The persistent Playwright profile holds the signed-in Google session
 # (cookies, tokens, cache). It must never be committed.
 tools/.playwright-profile/

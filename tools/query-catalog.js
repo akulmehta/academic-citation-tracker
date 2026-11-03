@@ -214,7 +214,9 @@ function stats(db) {
          SUM(CASE WHEN status = 'SELF (PI)' THEN 1 ELSE 0 END) AS self_pi,
          SUM(CASE WHEN status = 'SELF (FORMER PI)' THEN 1 ELSE 0 END) AS self_former_pi,
          SUM(CASE WHEN status = 'REVIEW' THEN 1 ELSE 0 END) AS review,
+         SUM(CASE WHEN status = 'REVIEW' AND is_non_english = 0 THEN 1 ELSE 0 END) AS review_queue,
          SUM(CASE WHEN language_flag <> '' THEN 1 ELSE 0 END) AS non_english,
+         SUM(CASE WHEN status = 'INDEPENDENT' AND language_flag <> '' THEN 1 ELSE 0 END) AS non_english_independent,
          SUM(CASE WHEN withheld_for_language = 1 THEN 1 ELSE 0 END) AS non_english_withheld,
          SUM(CASE WHEN is_non_english = 0 THEN 1 ELSE 0 END) AS english_records,
          SUM(CASE WHEN is_non_english = 0 AND is_highlighted = 1 THEN 1 ELSE 0 END) AS english_independent,
@@ -254,8 +256,18 @@ function stats(db) {
     );
     console.log(`Dependent (shares an author):  ${g.dependent}`);
     console.log(`Self-citations (PI / former):  ${g.self_pi} / ${g.self_former_pi}`);
-    console.log(`Awaiting manual review:        ${g.review}`);
-    console.log(`Flagged non-English:           ${g.non_english}`);
+    console.log(
+      `Review queue:                  ${g.review_queue}` +
+        (g.review > g.review_queue
+          ? `  (${g.review} classified REVIEW, ${g.review - g.review_queue} of them` +
+            ` non-English -- see "Flagged non-English" and the nonenglish subcommand)`
+          : "")
+    );
+    console.log(`Flagged non-English:           ${g.non_english}` +
+      (g.non_english_independent
+        ? `  (${g.non_english_independent} classified independent; the language screen`
+          + ` supersedes that, so they are not counted as unsettled work)`
+        : ""));
     console.log(
       `English only (adjusted):       ${g.english_independent} independent of ` +
         `${g.english_records} English records = ` +
@@ -512,9 +524,16 @@ const BUCKET_SQL = `CASE
   ELSE '3 unresolvable' END`;
 
 function review(db) {
-  // The unresolved citations: active rows still classified REVIEW. This is the
-  // queue the user works through, and row_uid is what to quote back.
-  const where = `c.status = 'REVIEW' ${FILED}`;
+  // The unresolved citations a person can settle: active rows still classified
+  // REVIEW, and not flagged non-English. This is the queue behind v_review, the
+  // dated review sheet and the dashboard, and row_uid is what to quote back.
+  //
+  // The language exclusion is the user's instruction of 2026-11-03. A non-English
+  // row cannot be settled here -- no certified translations are being obtained, so
+  // a decision on one changes nothing -- and it is listed by the `nonenglish`
+  // subcommand instead. --all widens to every REVIEW row, as it does elsewhere.
+  const where =
+    `c.status = 'REVIEW' ${ALL ? "" : "AND c.is_non_english = 0 "} ${FILED}`;
   const rows = db
     .prepare(
       `SELECT
@@ -526,7 +545,18 @@ function review(db) {
          c.page,
          c.row_index,
          substr(c.attention_reason, 1, 58) AS why,
-         COALESCE(NULLIF(c.external_source,''), '-') AS external,
+         -- A stored external record can be one the rules DISCARDED because the
+         -- title overlap was too thin to be the same work, and the record stays
+         -- on the row as the audit trail of that rejection. Say so: printing the
+         -- bare source name next to a "why" that reads "not indexed in PubMed or
+         -- OpenAlex" looks like a contradiction, and invites someone to click a
+         -- link to a paper this row is not. cit-001476 is that case.
+         CASE
+           WHEN c.external_source = '' THEN '-'
+           WHEN c.external_match_credible = 0
+             THEN c.external_source || ' (match rejected)'
+           ELSE c.external_source
+         END AS external,
          -- The names an external record matched against the PI's. Read the
          -- corroboration column first: on a contradicted row that is where the
          -- overlap is actually stored, and matched_authors is the older

@@ -225,14 +225,26 @@
       "resolution": "no cite control found for this entry",
       "language_flag": "non-latin script (title)",
       "page": 4,
-      "confirm_state": "unresolved",
-      "corroboration": "not indexed in PubMed or OpenAlex and the Scholar list is incomplete",
+      "confirm_state": "confirmed",
+      "corroboration": "external list shows no overlap (openalex); not promoted, entry is non-English and excluded on language alone",
       "corroboration_note": "no PubMed or OpenAlex record matched the title closely enough",
       "edition_key": "",
       "duplicate_of": "",
-      "attention_reason": "not indexed in PubMed or OpenAlex and the Scholar list is incomplete",
+      "attention_reason": "external list shows no overlap (openalex); not promoted, entry is non-English and excluded on language alone",
       "needs_attention": true,
-      "language_flag_captured": "non-latin script"
+      "language_flag_captured": "non-latin script",
+      "pubmed_near_miss": {
+        "pmid": "38257286",
+        "title": "Design, Synthesis, and Evaluation of New Hybrid Derivatives of 5,6-Dihydro-4H-pyrrolo[3,2,1-ij]quinolin-2(1H)-one as Potential Dual Inhibitors of Blood Coagulation Factors Xa and XIa.",
+        "similarity": 0.12
+      },
+      "status_captured": "REVIEW",
+      "confirm_state_captured": "unresolved",
+      "external_source": "openalex",
+      "external_url": "https://doi.org/10.1007/s11172-021-3114-6",
+      "external_title": "Synthesis and study of new 2H-pyranoquinolin-2-one-based inhibitors of blood coagulation factors Xa and XIa",
+      "external_authors": "A. Yu. Potapov, B. V. Paponov, N. A. Podoplelova, M. A. Panteleev, V. A. Polikarchuk, I. V. Ledenyova, N. V. Stolpovskaya, D. V. Kryl’skii, Kh. S. Shikhaliev",
+      "external_similarity": 0.8
     },
     {
       "index": 6,

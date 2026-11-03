@@ -136,9 +136,13 @@
       "snippet": "Mucins are large gel-forming polymers inside the mucus barrier that inhibit the yeast-to-\nhyphal transition of Candida albicans, a key virulence trait of this important human fungal …",
       "truncated": true,
       "link": "https://www.nature.com/articles/s41589-022-01035-1",
-      "status": "REVIEW",
-      "matched_authors": [],
-      "matched_pi": [],
+      "status": "DEPENDENT",
+      "matched_authors": [
+        "Richard D. Cummings"
+      ],
+      "matched_pi": [
+        "Richard D. Cummings"
+      ],
       "matched_former_pi": [],
       "authors_used": "Takagi, Julie, Aoki, Kazuhiro, Turner, Bradley S, Lamont, Sabrina, Lehoux, Sylvain, Kavanaugh, Nicole, Gulati, Megha, Valle Arevalo, Ashley, Lawrence, Travis J, Kim, Colin Y",
       "author_source": "scholar-cite-bibtex",
@@ -159,14 +163,25 @@
       "resolution": "resolved but Scholar shows 'and others'",
       "language_flag": "",
       "page": 1,
-      "confirm_state": "unresolved",
-      "corroboration": "not indexed in PubMed or OpenAlex and the Scholar list is incomplete",
+      "confirm_state": "external-resolved",
+      "corroboration": "resolved against openalex (DEPENDENT)",
       "corroboration_note": "no PubMed or OpenAlex record matched the title closely enough",
       "edition_key": "",
       "duplicate_of": "",
-      "attention_reason": "not indexed in PubMed or OpenAlex and the Scholar list is incomplete",
-      "needs_attention": true,
-      "language_flag_captured": ""
+      "attention_reason": "",
+      "needs_attention": false,
+      "language_flag_captured": "",
+      "status_captured": "REVIEW",
+      "confirm_state_captured": "unresolved",
+      "external_source": "openalex",
+      "external_url": "https://doi.org/10.1038/s41589-022-01035-1",
+      "external_title": "Mucin O-glycans are natural inhibitors of Candida albicans pathogenicity",
+      "external_authors": "Julie Takagi, Kazuhiro Aoki, Bradley S. Turner, Sabrina Lamont, Sylvain Lehoux, Nicole Kavanaugh, Megha Gulati, Ashley Valle Arevalo, Travis J. Lawrence, Colin Y. Kim, Bhavya Bakshi, Mayumi Ishihara, Clarissa J. Nobile, Richard D. Cummings, Daniel J. Wozniak, Michael Tiemeyer, Rachel Hevey, Katharina Ribbeck",
+      "external_similarity": 1,
+      "external_matched": [
+        "Richard D. Cummings",
+        "Richard D. Cummings"
+      ]
     },
     {
       "index": 4,

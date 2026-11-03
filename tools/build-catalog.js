@@ -73,7 +73,21 @@ const DB_DIR = path.join(ROOT, "Database");
 const DB_PATH = path.join(DB_DIR, "citation-catalog.sqlite");
 const BACKUP_DIR = path.join(DB_DIR, "Backups");
 
-const SCHEMA_VERSION = 6;
+// v8 (2026-11-03): no column changed. v_review stopped selecting non-English rows
+// and v_pub_stats gained review_queue, so the view definitions changed, which
+// needsMigration() detects by comparing stored SQL to the DDL. The version is
+// bumped anyway so a store built under the old queue rule is visibly a different
+// generation from one where the queue means what the review sheet says it means.
+//
+// v9 (2026-11-03): v_review also exposes external_match_credible. A stored
+// external record can be DISCARDED because its title overlap is too thin to be
+// the same work, and the record is left on the row on purpose as the audit trail
+// of that rejection. Until now nothing downstream could tell the two apart, so a
+// reviewer was shown a link under "External" on a row whose own text says
+// nothing indexes it -- cit-001476, linked to a swine-lung paper it is not.
+// Still no column added to citations: the field has been stored since the
+// 2026-11-02 rule.
+const SCHEMA_VERSION = 9;
 
 // A short opaque token, not a bare integer, so it reads as an identifier when
 // quoted in a sentence: "row cit-000123 is contradicted". Minted from the id
@@ -327,7 +341,10 @@ const COLUMNS = [
   "is_primary_copy",
   "doi",
   "edition_key",
+  "same_work_key",
   "duplicate_of",
+  "duplicate_kind",
+  "same_work_note",
   "is_language_edition",
   "is_edition_primary",
   "edition_note",
@@ -519,6 +536,17 @@ CREATE TABLE citations (
   -- copy is already excluded from the independent total by language_flag.
   doi                 TEXT NOT NULL DEFAULT '',
   edition_key         TEXT NOT NULL DEFAULT '',
+  -- Same-work identity (schema v7). paper_key can only merge rows Scholar
+  -- spelled alike, so a preprint and the article it became -- which usually have
+  -- different titles -- are counted as two works. same_work_key is set by a
+  -- person through tools/apply-decision.js after PROVING the two rows are one
+  -- work (a matching complete byline plus a venue/DOI chain, or the published
+  -- paper's own statement of a prior version). It is never inferred.
+  -- duplicate_kind then says which rule folded a row: 'language-edition' or
+  -- 'same-work'. They are different claims and must not be blurred in a filing.
+  same_work_key       TEXT NOT NULL DEFAULT '',
+  duplicate_kind      TEXT NOT NULL DEFAULT '',
+  same_work_note      TEXT NOT NULL DEFAULT '',
   duplicate_of        TEXT NOT NULL DEFAULT '',
   is_language_edition INTEGER NOT NULL DEFAULT 0,
   is_edition_primary  INTEGER NOT NULL DEFAULT 1,
@@ -605,9 +633,11 @@ SELECT c.* FROM citations c WHERE c.filed = 1 AND c.superseded_at = '';
 --                         date still carries the state.
 --   2 external-no-overlap an external record has a complete list with no
 --                         overlap, but the row was not promoted. After the
---                         2026-11-02 decision the only rows left here are the
---                         ones that CANNOT be promoted because the entry is
---                         non-English and no translations are being obtained.
+--                         2026-11-02 decision the only rows that landed here
+--                         were the non-English ones that CANNOT be promoted
+--                         because no translations are being obtained, and those
+--                         left the queue on 2026-11-03. The bucket is kept so a
+--                         re-applied corpus still shows the shape of the rule.
 --   3 unresolvable        nothing credible to compare against -- neither PubMed
 --                         nor OpenAlex indexes the paper (or the look-up's title
 --                         overlap was too thin to be the same work) and
@@ -616,6 +646,19 @@ SELECT c.* FROM citations c WHERE c.filed = 1 AND c.superseded_at = '';
 -- Bucketing reads attention_reason, the string the corroboration step wrote at
 -- the time, rather than external_source alone: a row can name a source and
 -- still be unresolvable when that source returned nothing usable for it.
+--
+-- A non-English row is NOT in this queue, per the user's instruction on
+-- 2026-11-03. The queue is the list a person works to settle an author list, and
+-- for a non-English entry no reading settles anything: the 2026-11-01 decision is
+-- that no certified translations are being obtained, so the row stays excluded
+-- whatever a reviewer concludes, and tools/apply-decision.js says so out loud
+-- rather than recording a decision that moves nothing. cit-000077 was the example
+-- given. Those rows are listed in full by v_non_english, which is where they
+-- belong, and v_pub_stats still counts every REVIEW row in its review column so
+-- the status partition keeps summing to records; the queue length is published
+-- separately as review_queue.
+-- Mirrors tally.isReviewQueue, the single definition -- change it there and here
+-- together.
 CREATE VIEW v_review AS
 SELECT
   c.row_uid,
@@ -638,6 +681,14 @@ SELECT
   c.external_source,
   c.external_url,
   c.external_authors,
+  -- Whether the external record on the row is actually the same work. A match
+  -- can be stored and then DISCARDED because the title overlap is too thin
+  -- (corroboration.applyExternalVerdict), and the record is deliberately left
+  -- on the row as the audit trail of that rejection. Without this column a
+  -- reviewer sees a link under "External" for a row whose own "why" says
+  -- nothing indexes it -- cit-001476 is that case, linked to a swine-lung
+  -- paper it is not. So the flag has to reach the sheet and the dashboard.
+  c.external_match_credible,
   -- Both overlap columns are exposed because they come from different steps and
   -- are not interchangeable. external_matched is what the corroboration step
   -- recorded against the external list and is the one populated on a contradicted
@@ -655,7 +706,7 @@ SELECT
   c.id
 FROM citations c
 LEFT JOIN publications p ON p.cites_id = c.cites_id
-WHERE c.status = 'REVIEW' AND c.filed = 1 AND c.superseded_at = ''
+WHERE c.status = 'REVIEW' AND c.is_non_english = 0 AND c.filed = 1 AND c.superseded_at = ''
 ORDER BY bucket, c.base, c.page, c.row_index;
 
 -- Full-text over the three fields a reviewer searches. External content keeps
@@ -842,6 +893,12 @@ SELECT
   SUM(CASE WHEN c.filed = 1 AND c.superseded_at = '' AND c.status = 'SELF (PI)' THEN 1 ELSE 0 END) AS self_pi,
   SUM(CASE WHEN c.filed = 1 AND c.superseded_at = '' AND c.status = 'SELF (FORMER PI)' THEN 1 ELSE 0 END) AS self_former_pi,
   SUM(CASE WHEN c.filed = 1 AND c.superseded_at = '' AND c.status = 'REVIEW' THEN 1 ELSE 0 END) AS review,
+  -- The actionable subset of review: a row that is also non-English is not on
+  -- the queue a person works, because no reading of its byline can change the
+  -- packet (no certified translations are being obtained). Both are published so
+  -- the status partition still sums to records while the queue length is the
+  -- number the review sheet and dashboard show. Mirrors tally.isReviewQueue.
+  SUM(CASE WHEN c.filed = 1 AND c.superseded_at = '' AND c.status = 'REVIEW' AND c.is_non_english = 0 THEN 1 ELSE 0 END) AS review_queue,
   SUM(CASE WHEN c.filed = 1 AND c.superseded_at = '' AND c.language_flag <> '' THEN 1 ELSE 0 END) AS non_english,
   SUM(CASE WHEN c.filed = 1 AND c.superseded_at = '' AND c.withheld_for_language = 1 THEN 1 ELSE 0 END) AS non_english_withheld,
   SUM(CASE WHEN c.filed = 1 AND c.superseded_at = '' AND c.is_non_english = 0 THEN 1 ELSE 0 END) AS english_records,
@@ -868,6 +925,21 @@ function asArray(v) {
   if (Array.isArray(v)) return v;
   if (v === null || v === undefined || v === "") return [];
   return [v];
+}
+
+// The inverse, for reading a stored JSON array column back. applyPrimaryCopy
+// runs on rows that have already been through citationRow, so their matched_*
+// values are JSON text, not arrays. Accepts both so a caller cannot be bitten by
+// which side of the boundary it sits on.
+function parseArray(v) {
+  if (Array.isArray(v)) return v;
+  if (!v || typeof v !== "string") return [];
+  try {
+    const parsed = JSON.parse(v);
+    return Array.isArray(parsed) ? parsed : [];
+  } catch {
+    return [];
+  }
 }
 
 // One Scholar row -> one database row. Derived columns come from tally.js and
@@ -931,6 +1003,11 @@ function citationRow(entry, ctx) {
     doi: tally.doiOf(entry.link) || tally.doiOf(entry.external_url),
     edition_key: "", // settled below, once every row of the publication is known
     duplicate_of: "",
+    // A fold a person proved and recorded on the report. Read through, never
+    // derived here -- see the schema note above.
+    same_work_key: text(entry.same_work_key),
+    duplicate_kind: "",
+    same_work_note: "",
     is_language_edition: 0,
     is_edition_primary: 1,
     edition_note: "",
@@ -977,6 +1054,14 @@ function applyPrimaryCopy(rows) {
     }
     // uniquePapers returns its own objects, so carry the position along and
     // read it back rather than comparing object identity.
+    //
+    // The projection has to carry every field copyReliability consults. It
+    // omitted the matched_* lists, so when a duplicate group was settled by a
+    // demonstrated shared author (tally.copyReliability, 2026-11-03) the store
+    // still picked the other copy and reported one fewer distinct independent
+    // paper than the ledger computed from the reports -- a DIFF on a figure the
+    // packet quotes. Adding a signal to copyReliability means adding its inputs
+    // here, and test-catalog-merge.js is what catches the disagreement.
     const { kept } = tally.uniquePapers(
       group.map((r, i) => ({
         __i: i,
@@ -988,6 +1073,13 @@ function applyPrimaryCopy(rows) {
         confirm_state: r.confirm_state,
         status: r.status,
         language_flag: r.language_flag,
+        // uniquePapers groups on same_work_key when a person recorded one, so
+        // the projection has to carry it or the store merges a different set of
+        // rows than the ledger does from the reports.
+        same_work_key: r.same_work_key,
+        matched_authors: parseArray(r.matched_authors),
+        matched_pi: parseArray(r.matched_pi),
+        matched_former_pi: parseArray(r.matched_former_pi),
       }))
     );
     for (const r of group) r.is_primary_copy = 0;
@@ -1035,9 +1127,14 @@ function applyEditions(rows) {
       tally.markLanguageEditions(group.slice(offset, end), prior);
       offset = end;
     }
+    // Then the same-work folds. Same order as tally.groupReports, for the same
+    // reason: the language rule is proven from a DOI plus an author list and
+    // claims a row first. Without this the store and the ledger resolve a fold
+    // differently and unique_independent disagrees per publication.
+    tally.foldSameWork(group);
     for (const r of group) {
       r.doi = tally.doiOf(r.link) || tally.doiOf(r.external_url);
-      r.is_language_edition = r.duplicate_of ? 1 : 0;
+      r.is_language_edition = r.duplicate_kind === "language-edition" ? 1 : 0;
       r.is_edition_primary = r.duplicate_of ? 0 : 1;
       r.is_highlighted = bool(tally.isHighlighted(r));
       // Both of these depend on duplicate_of, which the walk above only just
@@ -1368,6 +1465,11 @@ function migrateV3toV4(db, { write }) {
     ["decided_by", "TEXT NOT NULL DEFAULT ''"],
     ["decided_on", "TEXT NOT NULL DEFAULT ''"],
     ["decided_note", "TEXT NOT NULL DEFAULT ''"],
+    // Same-work identity (v7). Default empty: no row was ever folded by a
+    // person until tools/apply-decision.js writes a same_work_key.
+    ["same_work_key", "TEXT NOT NULL DEFAULT ''"],
+    ["duplicate_kind", "TEXT NOT NULL DEFAULT ''"],
+    ["same_work_note", "TEXT NOT NULL DEFAULT ''"],
   ];
   console.log(
     `[catalog] Bringing the store to schema v${SCHEMA_VERSION} in place (${before} citation rows).`
@@ -1923,7 +2025,9 @@ function reconcile(db) {
          SUM(CASE WHEN status = 'SELF (PI)' THEN 1 ELSE 0 END) AS self_pi,
          SUM(CASE WHEN status = 'SELF (FORMER PI)' THEN 1 ELSE 0 END) AS self_former_pi,
          SUM(CASE WHEN status = 'REVIEW' THEN 1 ELSE 0 END) AS review,
+         SUM(CASE WHEN status = 'REVIEW' AND is_non_english = 0 THEN 1 ELSE 0 END) AS review_queue,
          SUM(CASE WHEN language_flag <> '' THEN 1 ELSE 0 END) AS non_english,
+         SUM(CASE WHEN status = 'INDEPENDENT' AND language_flag <> '' THEN 1 ELSE 0 END) AS non_english_independent,
          SUM(CASE WHEN withheld_for_language = 1 THEN 1 ELSE 0 END) AS non_english_withheld,
          SUM(CASE WHEN is_non_english = 0 THEN 1 ELSE 0 END) AS english_records,
          SUM(CASE WHEN is_non_english = 0 AND is_highlighted = 1 THEN 1 ELSE 0 END) AS english_independent,
@@ -1948,7 +2052,20 @@ function reconcile(db) {
     ["self (PI)", Number(row.self_pi), expected.self_pi],
     ["self (former PI)", Number(row.self_former_pi), expected.self_former_pi],
     ["awaiting review", Number(row.review), expected.review],
+    // The queue, checked separately from the raw REVIEW count: the view that
+    // feeds the review sheet and the dashboard must agree with the rule, not
+    // merely with the status. A disagreement here means one of the two stopped
+    // mirroring tally.isReviewQueue.
+    ["review queue", Number(row.review_queue), expected.review_queue],
     ["flagged non-English", Number(row.non_english), expected.non_english],
+    // The independent-classified rows the language screen supersedes. Checked so
+    // the store's SQL and tally.isIndependentPending cannot disagree about which
+    // rows are unsettled work -- the partition depends on that line.
+    [
+      "  independent but non-English",
+      Number(row.non_english_independent),
+      expected.non_english_independent,
+    ],
     ["  withheld for language", Number(row.non_english_withheld), expected.non_english_withheld],
     ["English citation records", Number(row.english_records), expected.english_records],
     ["English independent", Number(row.english_independent), expected.english_independent],

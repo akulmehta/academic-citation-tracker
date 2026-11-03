@@ -48,6 +48,21 @@ function log(m) {
   console.log(`[dash] ${m}`);
 }
 
+// The external record's URL, or "" when the match behind it was discarded.
+//
+// A row can carry an external_source and external_url whose title overlap was
+// judged too thin to be the same work (external_match_credible = 0). That record
+// is the audit trail of a rejection, not a source to check: cit-001476's PubMed
+// hit is a swine-lung article that scored 0.07. Publishing the link would put a
+// pointer to an unrelated paper in data that ships with the packet, and the page
+// could only hide it at render time -- the JSON underneath would still carry it.
+// One helper, used by every projection out of the store, so a rejected link is
+// absent from the published data rather than merely unrendered. The source name
+// is kept, since "we looked and rejected it" is the useful fact.
+function externalUrl(r) {
+  return r.external_match_credible === 0 ? "" : r.external_url || "";
+}
+
 // A row's exhibit PDF, as a path relative to dashboard/ so a file:// page can
 // open it. Filed sets live in PDFs/ or PDFs/Production/, and page 1 carries no
 // -pN suffix, so all four combinations are tried. Returns "" when nothing is on
@@ -196,11 +211,17 @@ const articles = ledger.rows.map((r) => {
     independent_confirmed: Number(r.independent_confirmed),
     independent_coverage: Number(r.independent_coverage),
     independent_pending: Number(r.independent_pending),
+    non_english_independent: Number(r.non_english_independent),
     unique_independent: Number(r.unique_independent),
     dependent: Number(r.dependent),
     self_pi: Number(r.self_pi),
     self_former_pi: Number(r.self_former_pi),
     review: Number(r.review),
+    // The actionable queue, kept apart from the raw REVIEW count so the table's
+    // numeric columns partition the records exactly: with the non-English rows in
+    // their own column, showing every REVIEW row would count the five
+    // non-English ones twice.
+    review_queue: Number(r.review_queue || 0),
     non_english: Number(r.non_english),
     non_english_withheld: Number(r.non_english_withheld),
     english_records: Number(r.english_records),
@@ -251,19 +272,56 @@ log(`Citing patents/applications: ${patents.length} (${patents.filter((p) => p.c
 // Scholar puts the year in the byline ("X Author - Journal, 2014 - site"), so it
 // is parsed here rather than trusted from a separate field. Only rows on filed
 // pages contribute.
-const yearRows = q(`SELECT c.authors, c.is_countable_independent AS ind, c.is_primary_copy AS prim
-  FROM citations c WHERE ${ACTIVE}`);
+//
+// A year is also refused when it is impossible rather than unreadable: a citing
+// work cannot predate the paper it cites. Found 2026-11-03 when the chart showed
+// a 2003 bar although the earliest publication in the packet is 2011. The row
+// behind it (cit-000036, "Anticoagulants", DOI 10.1002/0471266949.bmc182.pub2)
+// is a reference-work chapter whose Scholar byline carries the date of the
+// parent work — Scholar itself renders "2003", so this is not a capture
+// artifact, and Crossref dates the chapter 2021-04-26. The citation is real and
+// stays counted and highlighted on its exhibit; only its date is unusable, so
+// the row leaves the year chart and is reported by name in `year_anomalies`
+// rather than silently dropped. Nothing here changes a counting rule or an
+// exhibit mark: deleting a counted citation is a filing decision, not a chart
+// cleanup.
+const yearRows = q(`SELECT c.row_uid, c.title, c.authors, c.base, c.page,
+    c.is_countable_independent AS ind, p.year AS cited_year
+  FROM citations c
+  LEFT JOIN publications p ON p.cites_id = c.cites_id
+  WHERE ${ACTIVE}`);
 const byYear = new Map();
+const yearAnomalies = [];
+const thisYear = new Date().getFullYear();
 for (const r of yearRows) {
   // Take the last 4-digit year in the byline: "X Author - Journal, 2014 - site".
   const matches = String(r.authors || "").match(/\b(19|20)\d{2}\b/g) || [];
   const year = matches.length ? Number(matches[matches.length - 1]) : null;
-  const key = year && year >= 1990 && year <= new Date().getFullYear() + 1 ? year : null;
+  const readable = year && year >= 1990 && year <= thisYear + 1;
+  // Only a known cited year can rule a date out. An empty cited_year is
+  // unknown, not evidence, and must never exclude a row.
+  const impossible =
+    readable && r.cited_year && Number(r.cited_year) > 0 && year < Number(r.cited_year);
+  if (impossible) {
+    yearAnomalies.push({
+      row_uid: r.row_uid,
+      title: r.title,
+      citing_year: year,
+      cited_year: Number(r.cited_year),
+      byline: r.authors,
+      counted: r.ind === 1,
+      exhibit_base: r.base,
+      exhibit_page: r.page,
+    });
+    continue;
+  }
+  const key = readable ? year : null;
   const slot = byYear.get(key) || { year: key, records: 0, independent: 0 };
   slot.records += 1;
   if (r.ind === 1) slot.independent += 1;
   byYear.set(key, slot);
 }
+yearAnomalies.sort((a, b) => a.citing_year - b.citing_year || a.row_uid.localeCompare(b.row_uid));
 const years = [...byYear.values()]
   .filter((y) => y.year !== null)
   .sort((a, b) => a.year - b.year);
@@ -302,6 +360,7 @@ const allWorks = q(`SELECT
     c.external_url, c.link, c.work_type, c.cites_id, p.title AS cited_title,
     p.year AS cited_year, c.base, c.page, c.cid,
     c.is_countable_independent AS marked, c.language_flag, c.attention_reason,
+    c.external_match_credible,
     p.cited_by_at_snapshot AS cited_by
   FROM citations c
   LEFT JOIN publications p ON p.cites_id = c.cites_id
@@ -316,7 +375,7 @@ const allWorks = q(`SELECT
   language_flag: r.language_flag || "",
   attention_reason: r.attention_reason || "",
   external_source: r.external_source,
-  external_url: r.external_url,
+  external_url: externalUrl(r),
   link: r.link,
   work_type: r.work_type,
   cites_id: r.cites_id,
@@ -333,11 +392,18 @@ const allWorks = q(`SELECT
 // dashboard, the query tool and a decision sheet all name the same rows in the
 // same three buckets. The user works through these by row_uid; a decision on one
 // changes the totals, so nothing here infers an answer.
+//
+// Since 2026-11-03 the view itself excludes non-English rows, so every row here
+// is one a decision can actually settle. Earlier the queue held them and the page
+// had to explain, row by row, which five were not worth reading; that per-row
+// split (review_also_non_english) is gone from the published data entirely, since
+// a queue that excludes them at the source makes it always zero. The non-English
+// rows are published once, in language_held, and listed on the Non-English page.
 const reviewQueue = q(`SELECT
     row_uid, bucket, cites_id, cited_work, cited_venue, cited_year, cid, title,
     scholar_byline, truncated, confirm_state, why, external_source, external_url,
-    external_authors, external_matched, matched_authors, language_flag, link,
-    base, page, row_index
+    external_authors, external_matched, matched_authors, external_match_credible,
+    language_flag, link, base, page, row_index
   FROM v_review`).map((r) => ({
   row_uid: r.row_uid,
   bucket: r.bucket,
@@ -354,8 +420,14 @@ const reviewQueue = q(`SELECT
   confirm_state: r.confirm_state,
   why: r.why,
   external_source: r.external_source,
-  external_url: r.external_url,
+  external_url: externalUrl(r),
   external_authors: r.external_authors,
+  // False when the stored record was discarded because its title overlap is too
+  // thin to be the same work. The record stays on the row as the audit trail of
+  // that rejection, so the page must not present it as a source to check -- the
+  // External column would otherwise link an "unresolvable" row to a paper it is
+  // not (cit-001476, a swine-lung article).
+  external_match_credible: r.external_match_credible !== 0,
   // The names an external record matched against the PI's. Two columns hold
   // that idea and only the corroboration one is populated on a contradicted
   // row, so take whichever has names -- an empty overlap beside
@@ -377,13 +449,10 @@ const reviewBuckets = reviewQueue.reduce((acc, r) => {
   acc[r.bucket] = (acc[r.bucket] || 0) + 1;
   return acc;
 }, {});
-// Five of the 94 also carry a language flag. They stay in the queue -- the
-// ledger counts them as awaiting review and the exhibit leaves them unmarked --
-// but a decision on one cannot change any figure, because no translations are
-// being obtained and a non-English entry is excluded either way. Counted here so
-// the page can say "these 89 are worth your time, these 5 are not" without the
-// reader having to re-derive the rule per row.
-const reviewActionable = reviewQueue.filter((r) => !r.language_flag);
+// v_review no longer admits a non-English row, so this filter is expected to
+// return nothing. It is computed rather than assumed: if a future view edit lets
+// a flagged row back in, the log line below says so, instead of the page quietly
+// presenting an unactionable row as work.
 const reviewLanguage = reviewQueue.filter((r) => r.language_flag);
 log(
   `Review queue: ${reviewQueue.length} unresolved citation(s) -- ` +
@@ -391,36 +460,48 @@ log(
       .sort()
       .map(([k, v]) => `${v} ${k.replace(/^\d+ /, "")}`)
       .join(", ") +
-    `; ${reviewActionable.length} actionable, ${reviewLanguage.length} also ` +
-    `flagged non-English and uncountable either way`
+    // Only printed when the invariant breaks, so the normal line stays short.
+    (reviewLanguage.length
+      ? `; WARNING ${reviewLanguage.length} of them is/are also flagged non-English ` +
+        `and cannot be settled (no translations are being obtained) -- v_review is ` +
+        `admitting rows tally.isReviewQueue excludes`
+      : "")
 );
-if (Number(g.awaiting_review) !== reviewQueue.length) {
+// The ledger keeps both figures: awaiting_review is every row whose status is
+// REVIEW, review_queue is the actionable subset the view and this page show.
+// Checking the queue against the raw status count would fail on the five
+// non-English rows the user asked to move out of the queue on 2026-11-03.
+if (Number(g.review_queue ?? g.awaiting_review) !== reviewQueue.length) {
   throw new Error(
-    `The ledger says ${g.awaiting_review} citations await review and the store's ` +
-      `v_review says ${reviewQueue.length}. Rebuild both; do not publish a ` +
+    `The ledger says ${g.review_queue ?? g.awaiting_review} citations await a decision ` +
+      `and the store's v_review says ${reviewQueue.length}. Rebuild both; do not publish a ` +
       `dashboard over a disagreement.`
   );
 }
 
-// ---- independent-but-unsettled, with the language rows held apart ----
-// tally.isIndependentPending is "classified INDEPENDENT and not highlighted",
-// which mixes two things the user treats completely differently: a row the
-// language screen is holding back (a closed decision of 2026-11-01 -- no
-// translations will be obtained, so there is nothing to resolve) and a row whose
-// author list is genuinely open. They are emitted as two arrays rather than one
-// list with a flag, because a reviewer scrolling a combined list would have to
-// re-derive the rule on every row to know whether to bother.
+// ---- independent-but-unsettled: the ENGLISH open rows only ----
+// tally.isIndependentPending is "classified INDEPENDENT, not highlighted, and
+// NOT flagged non-English". Per the user's instruction on 2026-11-03 the
+// language screen supersedes the independence classification: a non-English row
+// is reported once, under the non-English bucket below, and never here -- with no
+// certified translations being obtained (decision of 2026-11-01) no reading of
+// its byline can change the packet, so it is a closed matter, not open work.
+//
+// The query mirrors that exactly with `is_non_english = 0`, so this list cannot
+// re-admit a language row that the ledger already filed elsewhere.
 const pendingRows = q(`SELECT
     c.row_uid, c.title, COALESCE(NULLIF(c.authors_used,''), c.authors) AS byline,
     c.status, c.confirm_state, c.language_flag, c.withheld_for_language,
     c.duplicate_of, c.edition_key,
     c.attention_reason, c.external_source, c.external_url, c.link,
+    c.external_match_credible,
     p.title AS cited_title, p.year AS cited_year, c.cites_id,
     c.patent_number, c.work_type, c.base, c.page, c.row_index, c.cid
   FROM citations c
   LEFT JOIN publications p ON p.cites_id = c.cites_id
   WHERE ${ACTIVE} AND c.status = 'INDEPENDENT' AND c.is_highlighted = 0
-  ORDER BY c.withheld_for_language, p.title, c.page, c.row_index`);
+    AND c.is_non_english = 0
+  ORDER BY p.title, c.page, c.row_index`);
 
 const mapPending = (r) => ({
   row_uid: r.row_uid,
@@ -431,7 +512,7 @@ const mapPending = (r) => ({
   language_flag: r.language_flag || "",
   reason: r.attention_reason || "",
   external_source: r.external_source || "",
-  external_url: r.external_url || "",
+  external_url: externalUrl(r),
   link: r.link || "",
   cited_title: r.cited_title,
   cited_year: r.cited_year,
@@ -445,16 +526,15 @@ const mapPending = (r) => ({
   cid: r.cid,
 });
 
-// The open half: independent by classification, not highlighted, and held back
-// by NEITHER the language screen NOR the language-edition rule. On the
-// 2026-11-02 store this is empty, and that is a real result rather than a broken
-// query -- every one of the 47 pending rows is language-related (44 withheld by
-// the screen, 3 second-language copies of an article already on the same list).
-// The guard below fails loudly if a future capture produces a row that is
-// genuinely open, so the review page cannot silently omit one.
-const isLanguageReason = (r) => Boolean(r.language_flag) || Boolean(r.duplicate_of);
-const unsettledRows = pendingRows.filter((r) => !isLanguageReason(r)).map(mapPending);
-const pendingByLanguage = pendingRows.length - unsettledRows.length;
+// Every row the query returns is genuinely open author work: English, classified
+// independent, not highlighted, and held by neither the language screen nor a
+// same-work fold. On the 2026-11-03 store this is empty, and that is the honest
+// result rather than a broken query -- every independently-classified English row
+// has already been settled, and the 45 non-English rows that used to appear here
+// now live only in `language_held` below. The guard further down fails loudly if
+// a future capture produces a genuinely open row, so the review page cannot
+// silently omit one.
+const unsettledRows = pendingRows.map(mapPending);
 
 // The closed half, from v_non_english so the reason and the "would count"
 // judgement come from the same place the audit reads. Deliberately NOT part of
@@ -486,27 +566,29 @@ const languageHeld = q(`SELECT
   exhibit_pdf: exhibitPdf(r.base, r.page),
 }));
 
-// The two halves must account for the ledger's figure exactly, or the review
-// page would be quietly showing a different set than the packet counts. Note
-// this compares against the STORE's own pending count, then checks that against
-// the ledger, so a row that is open for a non-language reason cannot be dropped.
-if (unsettledRows.length + pendingByLanguage !== pendingRows.length) {
+// The open list must equal the ledger's figure exactly, or the review page would
+// show a different set than the packet counts. Because both now exclude
+// non-English rows, a language row cannot leak into (or vanish from) this bucket.
+if (unsettledRows.length !== Number(g.independent_pending)) {
   throw new Error(
-    `Split of the pending rows does not add up: ${unsettledRows.length} unsettled + ` +
-      `${pendingByLanguage} language-related != ${pendingRows.length} pending rows.`
+    `The store holds ${unsettledRows.length} English independent-but-unhighlighted ` +
+      `rows and the ledger reports independent_pending = ${g.independent_pending}. ` +
+      `Rebuild both; publish neither figure until they agree.`
   );
 }
-if (pendingRows.length !== Number(g.independent_pending)) {
+// The Non-English listing must be the whole flagged set, so collapsing the
+// unsettled bucket into it cannot drop a row. v_non_english is keyed on
+// is_non_english, the same column the ledger's flagged_non_english counts.
+if (languageHeld.length !== Number(g.flagged_non_english)) {
   throw new Error(
-    `The store holds ${pendingRows.length} independent-but-unhighlighted rows and ` +
-      `the ledger reports independent_pending = ${g.independent_pending}. Rebuild ` +
-      `both; publish neither figure until they agree.`
+    `The Non-English listing holds ${languageHeld.length} rows but the ledger flags ` +
+      `${g.flagged_non_english} as non-English. The two must be the same set now ` +
+      `that language supersedes independence; rebuild both before publishing.`
   );
 }
 log(
-  `Independent but not counted: ${pendingRows.length} total -- ` +
-    `${unsettledRows.length} unsettled (reviewable), ${pendingByLanguage} ` +
-    `held back for language (closed, listed separately)`
+  `Not counted as independent: ${unsettledRows.length} English open rows, ` +
+    `${languageHeld.length} non-English (reported once, on the language page)`
 );
 
 // ---- unresolved items, so the dashboard does not overstate certainty ----
@@ -576,10 +658,18 @@ const out = {
     independent_externally_confirmed: g.independent_externally_confirmed,
     independent_scholar_list_only: g.independent_scholar_list_only,
     independent_pending: g.independent_pending,
+    // The independent-classified rows the language screen supersedes (2026-11-03).
+    // Published so the waffle can draw them as their own bucket and the open-work
+    // figure can state plainly that it excludes them.
+    non_english_independent: g.non_english_independent,
     dependent: g.dependent,
     self_pi: g.self_pi,
     self_former_pi: g.self_former_pi,
     awaiting_review: g.awaiting_review,
+    // The actionable queue, which is what the Review page lists. Kept apart from
+    // awaiting_review (every row whose status is REVIEW) so the status partition
+    // still sums while the queue length means the same thing everywhere.
+    review_queue: g.review_queue,
     flagged_non_english: g.flagged_non_english,
     non_english_withheld: g.non_english_withheld,
     decided_records: g.decided_records,
@@ -600,13 +690,18 @@ const out = {
   patents,
   years,
   undated,
+  // Byline dates that cannot be right, named rather than quietly omitted. See
+  // the year block above.
+  year_anomalies: yearAnomalies,
   corroboration,
   corroboration_distinct: corroborationDistinct,
   works: allWorks,
   review_queue: reviewQueue,
   review_buckets: reviewBuckets,
-  review_actionable: reviewActionable.length,
-  review_also_non_english: reviewLanguage.length,
+  // No review_actionable / review_also_non_english split any more. Since
+  // 2026-11-03 the queue excludes non-English rows at the source, so every row
+  // published here is actionable and a split would only restate that; the
+  // non-English rows are published once, in language_held.
   unsettled_rows: unsettledRows,
   language_held: languageHeld,
   open_items: openItems,
@@ -617,7 +712,8 @@ if (CHECK) {
     `${years.length} years, ${allWorks.length} distinct citing works ` +
     `(${allWorks.filter((w) => w.marked).length} marked), ` +
     `${reviewQueue.length} in the review queue, ${unsettledRows.length} unsettled, ` +
-    `${languageHeld.length} held for language. Nothing written.`);
+    `${languageHeld.length} held for language, ` +
+    `${yearAnomalies.length} impossible byline dates. Nothing written.`);
   db.close();
   return;
 }

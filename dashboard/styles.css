@@ -428,6 +428,31 @@ code {
      so the title and the numeric columns are weighted instead */
   #articles-table table.fixed-print th:first-child { width: 26%; }
   #articles-table table.fixed-print th:nth-child(2) { width: 5%; }
+  /* The citing-work list gained a leading row_uid column on 2026-11-03 and is
+     the widest table in the packet, so it divides the sheet the same way. The
+     uid column is only as wide as a uid, the two title columns take the rest,
+     and the tag columns stay narrow enough to read on one or two lines. The
+     byline is hidden on paper, so nth-child counts below skip it. */
+  #works-table table.fixed-print { table-layout: fixed; }
+  #works-table table.fixed-print th:first-child { width: 10%; }
+  #works-table table.fixed-print th:nth-child(2) { width: 30%; }
+  #works-table table.fixed-print th:nth-child(4) { width: 17%; }
+  #works-table table.fixed-print th:nth-child(5) { width: 15%; }
+  #works-table table.fixed-print th:nth-child(6) { width: 13%; }
+  #works-table table.fixed-print th:last-child { width: 15%; }
+  /* The citing-patent table was already 869px wide against a 663px sheet before
+     the row_uid column went in on 2026-11-03, i.e. Chrome had been clipping its
+     last column all along and nothing warned. Same fix: divide the sheet and let
+     the two title columns wrap. */
+  #patents-table table.fixed-print { table-layout: fixed; }
+  #patents-table table.fixed-print th:first-child { width: 9%; }
+  #patents-table table.fixed-print th:nth-child(2) { width: 10%; }
+  #patents-table table.fixed-print th:nth-child(3) { width: 8%; }
+  #patents-table table.fixed-print th:nth-child(4) { width: 22%; }
+  #patents-table table.fixed-print th:nth-child(5) { width: 13%; }
+  #patents-table table.fixed-print th:nth-child(6) { width: 17%; }
+  #patents-table table.fixed-print th:nth-child(7) { width: 14%; }
+  #patents-table table.fixed-print th:last-child { width: 7%; }
   .hide-print { display: none !important; }
   /* the works list would run to dozens of sheets; print a bounded, sorted view
      and point at the CSV for the rest */

@@ -95,11 +95,13 @@
     <figure class="figure" id="fig-years">
       <h3>Citing records by year of the citing work</h3>
       <div class="chart" id="chart-years"></div>
+      <div class="legend" id="legend-years"></div>
       <figcaption>
-        The year is read from Scholar's own byline for each citing record
+        The year is read from Scholar&rsquo;s own byline for each citing record
         (&ldquo;X Author &mdash; Journal, 2014 &mdash; site&rdquo;). Records whose
         byline carries no readable year
-        (<span id="years-undated"></span>) are excluded from this chart.
+        (<span id="years-undated"></span>) are excluded from this chart, as are
+        <span id="years-anomalies"></span>.
       </figcaption>
     </figure>
   </section>
@@ -161,7 +163,8 @@
             contradicted, cleared externally but truncated on Scholar, or not
             indexed anywhere. Each row carries its row_uid, the record it cites,
             the overlap that caused the conflict, and a link to the exhibit page
-            it sits on.</span
+            it sits on. Rows flagged non-English are not offered here &mdash; see
+            chapter 9.</span
           >
         </span>
       </a>
