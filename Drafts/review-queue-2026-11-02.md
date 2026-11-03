@@ -1,21 +1,20 @@
 # Unresolved citations — review queue
 
-Scholar snapshot **2026-11-02**, store built 2026-11-02T22:17:45.038Z. **78** of 1498 active citation rows are still classified REVIEW, so none of them is counted as independent and none is counted as dependent either.
+Scholar snapshot **2026-11-02**, store built 2026-11-03T00:14:07.484Z. **77** of 1498 active citation rows are still classified REVIEW, so none of them is counted as independent and none is counted as dependent either.
 
 Quote the **row_uid** when answering — it is permanent, so it still means the same row after a re-capture or a rebuild. The integer id is a frozen legacy alias and should not be used.
 
 | Bucket | Rows | What it means |
 |---|---:|---|
-| 3 unresolvable | 78 | Neither PubMed nor OpenAlex indexes the paper and Scholar's byline is truncated, so there is nothing to compare. Resolving one needs a human look at the published article — put the answer in your_decision, or run tools/apply-decision.js. |
+| 3 unresolvable | 77 | Neither PubMed nor OpenAlex indexes the paper and Scholar's byline is truncated, so there is nothing to compare. Resolving one needs a human look at the published article — put the answer in your_decision, or run tools/apply-decision.js. |
 
 
-## 3 unresolvable — 78 row(s)
+## 3 unresolvable — 77 row(s)
 
 Neither PubMed nor OpenAlex indexes the paper and Scholar's byline is truncated, so there is nothing to compare. Resolving one needs a human look at the published article — put the answer in your_decision, or run tools/apply-decision.js.
 
 | row_uid | Citing title | Scholar byline | Cites (PI work) | Pg | Row | Why unresolved | External record | Your decision |
 |---|---|---|---|---:|---:|---|---|---|
-| `cit-000019` | Phenylimidazoles as potent and selective inhibitors of coagulation factor XIa with in vivo antithrombotic activity | Hangeland, Jon J, Friends, Todd J, Rossi, Karen A, Smallheer, Joanne M, Wang, Cailan, Sun, Zhong, Corte, James R, Fang, Tianan, Wong, Pancras C, Rendina, Alan R | Allosteric inhibition of human factor XIa: discovery of monosulfated benzofurans as a class of promising inhibitors | 2 | 8 | not indexed in PubMed or OpenAlex and the Scholar list is incomplete | *(none indexed)* |  |
 | `cit-000040` | [CITATION] Double-Enzyme Cascade Fluorescence Signal Amplification Method for Screening Coagulation Factor Fxia Inhibitor in Complex System | Y Zhan, P Hu, R Huang, X Bao, J Ning, Z Yan, H Cheng | Allosteric inhibition of human factor XIa: discovery of monosulfated benzofurans as a class of promising inhibitors | 4 | 9 | not indexed in PubMed or OpenAlex and the Scholar list is incomplete | *(none indexed)* |  |
 | `cit-000041` | [CITATION] Rh-Catalyzed Five-Membered Heterocycle Synthesis | S Kathiravan, IA Nicholls | Allosteric inhibition of human factor XIa: discovery of monosulfated benzofurans as a class of promising inhibitors | 5 | 0 | not indexed in PubMed or OpenAlex and the Scholar list is incomplete | *(none indexed)* |  |
 | `cit-000057` | Quantitative proteomics analysis reveals core and variable tick salivary proteins at the tick‐vertebrate host interface | Bensaoud, Chaima, Tenzer, Stefan, Poplawski, Alicia, Medina, Jos{\'e} Mar{\'\i}a, Jmel, Mohamed Amine, Voet, Hanne, Mekki, Imen, Aparicio-Puerta, Ernesto, Cuveele, Brent, Distler, Ute | Allosteric partial inhibition of monomeric proteases. Sulfated coumarins induce regulation, not just inhibition, of thrombin | 2 | 5 | not indexed in PubMed or OpenAlex and the Scholar list is incomplete | *(none indexed)* |  |

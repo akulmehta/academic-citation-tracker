@@ -11,7 +11,13 @@
 //   1. the yellow marks actually present in the saved HTML, row by row, versus
 //      what tally.isHighlighted says now - the same rule applyHighlights used;
 //   2. that the exhibit PDF exists and is not empty;
-//   3. that the page's entries carry no language edition that is marked.
+//   3. that the page's entries carry no language edition that is marked;
+//   4. that the exhibit PDF is ONE sheet -- one Scholar citing page is meant to
+//      print to one Letter sheet, and a tall page silently spilling onto a
+//      second is invisible to every other check here. Added 2026-11-02 after
+//      three filed exhibits were found on two sheets while test-pdf-fit.js
+//      reported them fitting, because that test judged by DOM height rather
+//      than by the sheets the PDF actually has.
 //
 // Row matching replicates applyHighlights exactly: rows are read in document
 // order and each is matched to the FIRST entry whose normalised rawTitle is
@@ -32,6 +38,7 @@ const fs = require("fs");
 const path = require("path");
 const { chromium } = require("playwright");
 const lib = require("./tally");
+const { countPdfPages } = require("./print-settings");
 
 const ROOT = path.resolve(__dirname, "..");
 const EXHIBITS = path.join(ROOT, "Independent Citation Record", "Exhibits");
@@ -159,6 +166,13 @@ async function main() {
       }
       if (!pdf) problems.push("no exhibit PDF on disk");
       else if (fs.statSync(pdf).size < 1024) problems.push(`exhibit PDF too small (${fs.statSync(pdf).size} B)`);
+      else {
+        // One saved Scholar page must be one sheet. Read the object tree rather
+        // than trusting the print settings, since a page can overflow at any
+        // scale and a rule change can add enough text to tip one over.
+        const sheets = countPdfPages(fs.readFileSync(pdf));
+        if (sheets !== 1) problems.push(`exhibit PDF prints to ${sheets} sheets, expected 1`);
+      }
 
       if (problems.length) {
         pubOk = false;

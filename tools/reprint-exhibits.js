@@ -14,7 +14,8 @@
 //   3. re-applies tally.isHighlighted over the publication's entries, matching
 //      rows exactly as applyHighlights did (document order, first entry whose
 //      normalised rawTitle is equal wins);
-//   4. prints to US Letter at 0.75 scale with the same margins as the capture;
+//   4. prints with the shared print settings (see print-settings.js) with the
+//      same margins as the capture;
 //   5. replaces the exhibit only after the new PDF is verified non-trivial, and
 //      moves the old one to Exhibits/Archive with a SUPERSEDED- prefix so the
 //      filing folder never holds two versions of one page.
@@ -36,6 +37,7 @@ const fs = require("fs");
 const path = require("path");
 const { chromium } = require("playwright");
 const lib = require("./tally");
+const { PRINT_OPTIONS } = require("./print-settings");
 
 const ROOT = path.resolve(__dirname, "..");
 const EXHIBITS = path.join(ROOT, "Independent Citation Record", "Exhibits");
@@ -55,13 +57,7 @@ const onePub = arg("pub");
 
 // Identical to saveArtifacts, so a re-print is indistinguishable from a capture
 // apart from the header source.
-const PDF_OPTIONS = {
-  format: "Letter",
-  scale: 0.75,
-  printBackground: true,
-  margin: { top: "12mm", bottom: "16mm", left: "8mm", right: "8mm" },
-  displayHeaderFooter: true,
-};
+const PDF_OPTIONS = { ...PRINT_OPTIONS };
 
 function findPdf(base) {
   for (const dir of [PDF_DIR, path.join(PDF_DIR, "Production")]) {

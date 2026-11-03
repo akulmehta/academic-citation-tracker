@@ -27,6 +27,7 @@ const readline = require("readline");
 const { chromium } = require("playwright");
 const pace = require("./human");
 const lib = require("./tally");
+const { PRINT_OPTIONS } = require("./print-settings");
 
 const ROOT = path.resolve(__dirname, "..");
 const EXHIBITS = path.join(ROOT, "Independent Citation Record", "Exhibits");
@@ -1052,14 +1053,10 @@ async function saveArtifacts(base, page, results, meta, debug) {
 
   await page.pdf({
     path: pdfPath,
-    // Per user instruction on 2026-10-29: US Letter at 75% scale, which the
-    // user verified fits a citing-articles page onto a single sheet. The print
+    // Shared print settings -- see print-settings.js for the scale's history
+    // and why it must agree with the re-printer and the fit test. The print
     // header and footer are drawn by Chromium outside this scale.
-    format: "Letter",
-    scale: 0.75,
-    printBackground: true,
-    margin: { top: "12mm", bottom: "16mm", left: "8mm", right: "8mm" },
-    displayHeaderFooter: true,
+    ...PRINT_OPTIONS,
     headerTemplate,
     footerTemplate,
   });

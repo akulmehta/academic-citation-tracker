@@ -1,20 +1,42 @@
-// Offline check: does a citing-articles page fit on ONE US Letter sheet at the
-// exhibit print settings? Uses a previously saved HTML copy, so no request is
-// made to Google Scholar.
+// Offline check: does a citing-articles page print on ONE US Letter sheet?
+// Uses a previously saved HTML copy, so no request is made to Google Scholar.
 //
 //   node tools/test-pdf-fit.js                       (uses the latest saved page)
 //   node tools/test-pdf-fit.js "<path-to-saved.html>"
+//   node tools/test-pdf-fit.js --all                 every saved citing page
 //
-// The user asked for 75% scale on Letter after testing it by hand; this
-// measures the result rather than trusting it. Page count is read from the PDF
-// object tree, which is reliable because Chromium writes uncompressed object
-// headers.
+// --all walks the saved HTML in Supporting, which is a handful of workpapers
+// wider than the filed set (early captures whose PDF was archived). That is
+// deliberate -- an unfiled page that would not fit is worth knowing about --
+// but it means the count printed is not the exhibit count. The audit is the
+// check over exactly the filed set.
+//
+// What changed on 2026-11-02, and why it matters. This used to decide by
+// measuring where the last result row ends and comparing that with a computed
+// usable height. That number is not the thing being asked: a Scholar row carries
+// snippets, links and a "Related" line that can extend past the last row's own
+// box, so a page could pass the arithmetic and still print to two sheets. It did
+// exactly that -- three exhibits printed to two sheets while this test reported
+// every page fitting. The PDF page count is the ground truth, so the check now
+// prints the page and counts its sheets. The layout measurement is still
+// reported, because "the last row ends 40px past the limit" explains a failure
+// better than "2 sheets" does.
+//
+// Print settings come from print-settings.js, the same module the capture and
+// the re-printer use, so this cannot drift from what actually gets filed.
 //
 // Output: .pdf-fit-sample.pdf / .txt next to this script.
 
 const fs = require("fs");
 const path = require("path");
 const { chromium } = require("playwright");
+const {
+  PRINT_SCALE,
+  PRINT_OPTIONS,
+  usableLayoutPx,
+  layoutWidthPx,
+  countPdfPages,
+} = require("./print-settings");
 
 const SUPPORT_DIR = path.join(
   __dirname,
@@ -24,26 +46,11 @@ const SUPPORT_DIR = path.join(
   "Supporting"
 );
 
-// Same box as the capture: A4/Letter margins are set in the print options, and
-// the header/footer live inside the top/bottom margins.
-const PDF_OPTIONS = {
-  format: "Letter",
-  scale: 0.75,
-  printBackground: true,
-  margin: { top: "12mm", bottom: "16mm", left: "8mm", right: "8mm" },
-  displayHeaderFooter: true,
-  headerTemplate:
-    `<div style="font-size:7px;color:#444;width:100%;display:flex;` +
-    `justify-content:space-between;padding:0 8mm;overflow:hidden;white-space:nowrap;">` +
-    `<span class="url"></span><span>Snapshot 2026-10-29</span></div>`,
-  footerTemplate:
-    `<div style="font-size:7px;color:#444;width:100%;text-align:center;` +
-    `padding:0 8mm;">fit-test - page <span class="pageNumber"></span> of ` +
-    `<span class="totalPages"></span></div>`,
-};
+// Same box as the capture, imported rather than restated -- see
+// print-settings.js.
 
-function latestSavedPage() {
-  const files = fs
+function savedPages() {
+  return fs
     .readdirSync(SUPPORT_DIR)
     .filter((f) => f.endsWith(".html") && f.includes("citing"))
     .map((f) => ({
@@ -51,6 +58,10 @@ function latestSavedPage() {
       mtime: fs.statSync(path.join(SUPPORT_DIR, f)).mtimeMs,
     }))
     .sort((a, b) => b.mtime - a.mtime);
+}
+
+function latestSavedPage() {
+  const files = savedPages();
   if (!files.length) {
     throw new Error(`No saved citing HTML found in ${SUPPORT_DIR}`);
   }
@@ -59,70 +70,94 @@ function latestSavedPage() {
 
 // Chromium's page objects are written as "N 0 obj ... /Type /Page" and the
 // /Pages tree node is "/Type /Pages", so counting the singular form that is
-// not followed by "s" gives the page count without a PDF library.
-function countPdfPages(buf) {
-  const text = buf.toString("latin1");
-  const all = (text.match(/\/Type\s*\/Page[^s]/g) || []).length;
-  return all;
-}
+// not followed by "s" gives the page count without a PDF library. Lives in
+// print-settings.js so the audit and this test count identically.
 
 async function main() {
-  const htmlPath = process.argv[2] || latestSavedPage();
-  const html = fs.readFileSync(htmlPath, "utf8");
-  const rows = (html.match(/gs_or\b/g) || []).length;
+  const all = process.argv.includes("--all");
+  const explicit =
+    process.argv[2] && !process.argv[2].startsWith("--") ? process.argv[2] : "";
+  const targets = all
+    ? savedPages().map((f) => path.join(SUPPORT_DIR, f.f))
+    : [explicit || latestSavedPage()];
 
   const browser = await chromium.launch();
   const page = await browser.newPage();
-  await page.setContent(html, { waitUntil: "domcontentloaded" });
 
   const outPdf = path.join(__dirname, ".pdf-fit-sample.pdf");
-  await page.pdf({ ...PDF_OPTIONS, path: outPdf });
-  const pages = countPdfPages(fs.readFileSync(outPdf));
+  const lines = [];
+  const failures = [];
+  for (const target of targets) {
+    await page.setContent(fs.readFileSync(target, "utf8"), {
+      waitUntil: "domcontentloaded",
+    });
+    await page.pdf({
+      ...PRINT_OPTIONS,
+      path: outPdf,
+      headerTemplate:
+        `<div style="font-size:7px;color:#444;width:100%;display:flex;` +
+        `justify-content:space-between;padding:0 8mm;overflow:hidden;white-space:nowrap;">` +
+        `<span class="url"></span><span>Snapshot 2026-10-29</span></div>`,
+      footerTemplate:
+        `<div style="font-size:7px;color:#444;width:100%;text-align:center;` +
+        `padding:0 8mm;">fit-test - page <span class="pageNumber"></span> of ` +
+        `<span class="totalPages"></span></div>`,
+    });
+    // The sheet count is the verdict. Everything below only explains it.
+    const pages = countPdfPages(fs.readFileSync(outPdf));
+    if (pages !== 1) failures.push({ f: path.basename(target), pages });
 
-  // Chromium lays printed content out at pageWidth / scale, then shrinks it, so
-  // a lower scale both compresses and reflows to a wider box. Measure in print
-  // media at that width, or the numbers will not describe what was printed.
-  await page.emulateMedia({ media: "print" });
-  const layoutWidth = Math.round(((8.5 * 25.4 - 16) / 25.4) * 96 / PDF_OPTIONS.scale);
-  await page.setViewportSize({ width: layoutWidth, height: 900 });
-  const metrics = await page.evaluate(() => {
-    const rows = [...document.querySelectorAll("#gs_res_ccl_mid .gs_or")];
-    const last = rows[rows.length - 1];
-    return {
-      rowCount: rows.length,
-      contentHeightPx: document.body.scrollHeight,
-      lastRowBottomPx: last
-        ? Math.round(last.getBoundingClientRect().bottom + window.scrollY)
-        : 0,
-    };
-  });
+    // Chromium lays printed content out at pageWidth / scale, then shrinks it, so
+    // a lower scale both compresses and reflows to a wider box. Measure in print
+    // media at that width, or the numbers will not describe what was printed.
+    await page.emulateMedia({ media: "print" });
+    await page.setViewportSize({ width: layoutWidthPx(), height: 900 });
+    const metrics = await page.evaluate(() => {
+      const rows = [...document.querySelectorAll("#gs_res_ccl_mid .gs_or")];
+      const last = rows[rows.length - 1];
+      return {
+        rowCount: rows.length,
+        contentHeightPx: document.body.scrollHeight,
+        lastRowBottomPx: last
+          ? Math.round(last.getBoundingClientRect().bottom + window.scrollY)
+          : 0,
+      };
+    });
+
+    lines.push(
+      ...[
+        `source html         : ${path.basename(target)}`,
+        `citing rows on page : ${metrics.rowCount}`,
+        `print settings      : Letter, scale ${PRINT_SCALE}`,
+        `layout width used   : ${layoutWidthPx()}px (page width / scale)`,
+        `content height      : ${metrics.contentHeightPx}px`,
+        `last row ends at    : ${metrics.lastRowBottomPx}px`,
+        `usable per sheet    : ~${usableLayoutPx()}px`,
+        `PDF sheets produced : ${pages}`,
+        pages === 1
+          ? "RESULT: fits on one sheet"
+          : `RESULT: does NOT fit on one sheet (${pages} sheets)`,
+      ]
+    );
+  }
 
   await browser.close();
 
-  // Letter is 279.4mm tall; 12mm + 16mm margins leave 251.4mm. Content is laid
-  // out at 1/scale, so that much paper holds 251.4mm / scale of layout pixels.
-  const usableMm = 279.4 - 12 - 16;
-  const pxPerSheet = Math.floor(((usableMm * 96) / 25.4) / PDF_OPTIONS.scale);
-  const clipped = metrics.lastRowBottomPx > pxPerSheet;
-  const lines = [
-    `source html         : ${path.basename(htmlPath)}`,
-    `citing rows on page : ${metrics.rowCount}`,
-    `print settings      : Letter, scale ${PDF_OPTIONS.scale}`,
-    `layout width used   : ${layoutWidth}px (page width / scale)`,
-    `content height      : ${metrics.contentHeightPx}px`,
-    `last row ends at    : ${metrics.lastRowBottomPx}px`,
-    `usable per sheet    : ~${pxPerSheet}px`,
-    `PDF pages produced  : ${pages}`,
-    pages === 1 && !clipped
-      ? "RESULT: all rows fit on one sheet"
-      : `RESULT: does NOT fit on one sheet (${pages} sheets${
-          clipped ? ", last row overflows" : ""
-        })`,
-  ];
+  if (all) {
+    lines.push(
+      "",
+      `Pages checked        : ${targets.length}`,
+      `Not on one sheet     : ${failures.length}`
+    );
+    for (const f of failures) lines.push(`  ${f.pages} sheets  ${f.f}`);
+  }
+
   const outTxt = path.join(__dirname, ".pdf-fit-sample.txt");
   fs.writeFileSync(outTxt, lines.join("\r\n"), "utf8");
   console.log(lines.join("\n"));
   console.log(`\nPDF: ${outPdf}`);
+  // A page that spills onto a second sheet is a filing defect, not a note.
+  if (failures.length) process.exitCode = 1;
 }
 
 main().catch((e) => {

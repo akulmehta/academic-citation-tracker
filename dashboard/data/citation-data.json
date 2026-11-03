@@ -1,9 +1,9 @@
 {
- "generated_at": "2026-11-02T22:18:26.260Z",
+ "generated_at": "2026-11-03T00:14:08.133Z",
  "sources": {
   "ledger": "Exhibits/Supporting/citation-ledger-2026-11-02.json",
   "catalog": "Database/citation-catalog.sqlite",
-  "catalog_built_at": "2026-11-02T22:17:45.038Z",
+  "catalog_built_at": "2026-11-03T00:14:07.484Z",
   "review_sheet": "Drafts/review-queue-2026-11-02.csv",
   "note": "Database/citation-catalog.sqlite is the primary store; the dated ledger written by tools/build-ledger.js is a derived report of the same rows, and the headline figures here are that report's global block. The two were checked against each other when this file was written and agreed. Rows are the active set (filed and not superseded). Quote row_uid to refer to a row -- it never changes. This file is generated; regenerate it rather than editing it."
  },
@@ -18,24 +18,24 @@
   "citation_records_reviewed": 1498,
   "unique_papers_citing": 1480,
   "duplicate_records": 18,
-  "independent_countable": 1042,
-  "independent_unique_papers": 1029,
+  "independent_countable": 1043,
+  "independent_unique_papers": 1030,
   "independent_externally_confirmed": 652,
   "independent_scholar_list_only": 390,
   "independent_pending": 45,
   "dependent": 328,
   "self_pi": 0,
   "self_former_pi": 5,
-  "awaiting_review": 78,
+  "awaiting_review": 77,
   "flagged_non_english": 50,
   "non_english_withheld": 42,
-  "decided_records": 1375,
-  "unique_decided_records": 1361,
+  "decided_records": 1376,
+  "unique_decided_records": 1362,
   "english_citation_records": 1448,
-  "english_independent_records": 1042,
+  "english_independent_records": 1043,
   "english_independent_share_pct": 72,
   "unique_english_papers": 1430,
-  "unique_english_independent": 1029,
+  "unique_english_independent": 1030,
   "unique_english_independent_share_pct": 72,
   "independent_share_of_reviewed_pct": 69.6,
   "independent_share_of_decided_pct": 75.8,
@@ -464,22 +464,22 @@
    "records": 41,
    "unique_records": 39,
    "duplicate_records": 2,
-   "independent": 29,
+   "independent": 30,
    "independent_confirmed": 6,
    "independent_coverage": 23,
    "independent_pending": 2,
-   "unique_independent": 27,
+   "unique_independent": 28,
    "dependent": 7,
    "self_pi": 0,
    "self_former_pi": 0,
-   "review": 3,
+   "review": 2,
    "non_english": 2,
    "non_english_withheld": 2,
    "english_records": 39,
-   "english_independent": 29,
+   "english_independent": 30,
    "coverage_pct": 100,
-   "independent_share_pct": 70.7,
-   "open_items": 7,
+   "independent_share_pct": 73.2,
+   "open_items": 6,
    "patent_rows": 4,
    "patent_independent": 4,
    "exhibit_base": "allosteric-inhibition-of-human-factor-xia-discovery-of-monos-citing-2026-10-31",
@@ -2058,7 +2058,7 @@
   {
    "year": 2014,
    "records": 55,
-   "independent": 19
+   "independent": 20
   },
   {
    "year": 2015,
@@ -2151,6 +2151,11 @@
    "confirm_state": "unverified-coverage",
    "author_source": "scholar-list",
    "count": 245
+  },
+  {
+   "confirm_state": "user-decided",
+   "author_source": "scholar-cite-bibtex",
+   "count": 1
   }
  ],
  "corroboration_distinct": [
@@ -2161,6 +2166,10 @@
   {
    "confirm_state": "unverified-coverage",
    "count": 384
+  },
+  {
+   "confirm_state": "user-decided",
+   "count": 1
   }
  ],
  "works": [
@@ -20900,11 +20909,11 @@
    "row_uid": "cit-000019",
    "title": "Phenylimidazoles as potent and selective inhibitors of coagulation factor XIa with in vivo antithrombotic activity",
    "byline": "JJ Hangeland, TJ Friends, KA Rossi… - Journal of Medicinal …, 2014 - ACS Publications",
-   "status": "REVIEW",
-   "marked": false,
-   "confirm_state": "unresolved",
+   "status": "INDEPENDENT",
+   "marked": true,
+   "confirm_state": "user-decided",
    "language_flag": "",
-   "attention_reason": "not indexed in PubMed or OpenAlex and the Scholar list is incomplete",
+   "attention_reason": "",
    "external_source": "",
    "external_url": "",
    "link": "https://pubs.acs.org/doi/abs/10.1021/jm5010607",
@@ -33247,31 +33256,6 @@
  ],
  "review_queue": [
   {
-   "row_uid": "cit-000019",
-   "bucket": "3 unresolvable",
-   "cites_id": "17765626390546429538",
-   "cited_work": "Allosteric inhibition of human factor XIa: discovery of monosulfated benzofurans as a class of promising inhibitors",
-   "cited_venue": "Journal of medicinal chemistry 57 (8), 3559-3569 , 2014",
-   "cited_year": "2014",
-   "cid": "sIBE3fKb8OAJ",
-   "title": "Phenylimidazoles as potent and selective inhibitors of coagulation factor XIa with in vivo antithrombotic activity",
-   "scholar_byline": "Hangeland, Jon J, Friends, Todd J, Rossi, Karen A, Smallheer, Joanne M, Wang, Cailan, Sun, Zhong, Corte, James R, Fang, Tianan, Wong, Pancras C, Rendina, Alan R",
-   "byline_truncated": true,
-   "confirm_state": "unresolved",
-   "why": "not indexed in PubMed or OpenAlex and the Scholar list is incomplete",
-   "external_source": "",
-   "external_url": "",
-   "external_authors": "",
-   "external_overlap": [],
-   "language_flag": "",
-   "link": "https://pubs.acs.org/doi/abs/10.1021/jm5010607",
-   "exhibit_base": "allosteric-inhibition-of-human-factor-xia-discovery-of-monos-citing-2026-10-31",
-   "exhibit_page": 2,
-   "exhibit_row": 8,
-   "exhibit_pdf": "../Independent Citation Record/Exhibits/PDFs/Production/allosteric-inhibition-of-human-factor-xia-discovery-of-monos-citing-2026-10-31-p2.pdf",
-   "decision": ""
-  },
-  {
    "row_uid": "cit-000040",
    "bucket": "3 unresolvable",
    "cites_id": "17765626390546429538",
@@ -35198,9 +35182,9 @@
   }
  ],
  "review_buckets": {
-  "3 unresolvable": 78
+  "3 unresolvable": 77
  },
- "review_actionable": 73,
+ "review_actionable": 72,
  "review_also_non_english": 5,
  "unsettled_rows": [],
  "language_held": [
@@ -36164,7 +36148,7 @@
   {
    "status": "REVIEW",
    "reason": "not indexed in PubMed or OpenAlex and the Scholar list is incomplete",
-   "count": 78
+   "count": 77
   },
   {
    "status": "DEPENDENT",

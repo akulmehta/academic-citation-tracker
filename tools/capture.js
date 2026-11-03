@@ -21,6 +21,7 @@ const path = require("path");
 const readline = require("readline");
 const { chromium } = require("playwright");
 const pace = require("./human");
+const { PRINT_OPTIONS } = require("./print-settings");
 
 const PROFILE_URL =
   "https://scholar.google.com/citations?hl=en&user=dNLaKGAAAAAJ";
@@ -163,15 +164,11 @@ async function main() {
   await pace.pause("before capture", 1500, 3500);
 
   log("Saving PDF...");
+  // Shared print settings -- see print-settings.js for why the scale is what
+  // it is and why it must not be restated here.
   await page.pdf({
     path: pdfPath,
-    // US Letter at 75% scale, matching capture-citations.js so exhibits are
-    // uniform. The user verified 75% fits a citing-articles page on one sheet.
-    format: "Letter",
-    scale: 0.75,
-    printBackground: true,
-    margin: { top: "12mm", bottom: "16mm", left: "8mm", right: "8mm" },
-    displayHeaderFooter: true,
+    ...PRINT_OPTIONS,
     headerTemplate,
     footerTemplate,
   });

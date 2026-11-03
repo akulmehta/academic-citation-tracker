@@ -29,6 +29,7 @@ const fs = require("fs");
 const path = require("path");
 const readline = require("readline");
 const pace = require("./human");
+const { PRINT_OPTIONS } = require("./print-settings");
 
 const PROFILE_URL =
   "https://scholar.google.com/citations?hl=en&user=dNLaKGAAAAAJ";
@@ -473,11 +474,8 @@ async function main() {
   log("Saving PDF exhibit of the expanded profile...");
   await page.pdf({
     path: pdfPath,
-    format: "Letter",
-    scale: 0.75,
-    printBackground: true,
-    margin: { top: "12mm", bottom: "16mm", left: "8mm", right: "8mm" },
-    displayHeaderFooter: true,
+    // Shared print settings -- see print-settings.js.
+    ...PRINT_OPTIONS,
     headerTemplate,
     footerTemplate,
   });
