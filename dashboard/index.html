@@ -57,9 +57,13 @@
       <div class="legend" id="legend-waffle"></div>
       <figcaption>
         Squares are rows printed on the exhibit pages, so a paper Google Scholar
-        lists twice appears twice. Counting distinct papers instead gives
-        <span id="waffle-distinct"></span>. Yellow is the only mark an exhibit
-        PDF carries.
+        lists twice appears twice &mdash; as a <i>Preprint / copy</i> square, unless
+        the copy is non-English, in which case it is reported with the other
+        non-English rows. Counting distinct papers instead gives
+        <span id="waffle-distinct"></span>. A square&rsquo;s colour is its category,
+        not its mark: yellow is the only mark an exhibit PDF carries, and most
+        <i>Preprint / copy</i> rows do carry one, because the exhibit reproduces
+        Scholar&rsquo;s page. Chapter 7 lists which.
       </figcaption>
     </figure>
     <figure class="figure" id="fig-split">
@@ -139,6 +143,19 @@
     <h2>What is deliberately not counted</h2>
     <p class="prose" id="open-lede"></p>
     <div class="figure-band" id="open-band"></div>
+    <h3>Citing works Google Scholar lists twice</h3>
+    <p class="prose tiny">
+      A preprint, repository copy, author upload, thesis or database copy of a
+      paper that is already on the same citing page. The packet counts the work
+      once, under the row shown in <i>Counted once as</i>. Some of these rows are
+      still highlighted on the exhibit PDF, because the exhibit reproduces
+      Scholar&rsquo;s page rather than the count.
+    </p>
+    <div class="table-tools no-print">
+      <input type="search" id="copy-search" placeholder="Search titles, bylines, cited paper, row_uid&hellip;">
+      <span class="hint">Click a column heading to sort.</span>
+    </div>
+    <div class="table-wrap" id="copy-table"></div>
     <div class="table-wrap" id="open-table"></div>
   </section>
 
@@ -148,23 +165,24 @@
     <h2>The working pages</h2>
     <p class="prose">
       Two pages hold the rows that are not simply counted. They are kept apart on
-      purpose. One is a queue of citations a person has to decide; the other is a
-      disclosure of citations withheld for language, which no decision is being
-      sought on. Do not mix them: a decision on a row from the second cannot
-      change a figure in the first.
+      purpose. One is the record of citations that no rule could settle and a
+      person had to decide; the other is a disclosure of citations withheld for
+      language, on which no decision is being sought. Do not mix them: a decision
+      on a row from the second cannot change a figure in the first.
     </p>
     <div class="page-links">
       <a class="page-link" href="review.html">
         <span class="page-link-n">8</span>
         <span class="page-link-body">
-          <b>Review queue</b>
+          <b>Open rows, settled</b>
           <span class="hint"
-            >The citations awaiting review, grouped by what would settle them:
-            contradicted, cleared externally but truncated on Scholar, or not
-            indexed anywhere. Each row carries its row_uid, the record it cites,
-            the overlap that caused the conflict, and a link to the exhibit page
-            it sits on. Rows flagged non-English are not offered here &mdash; see
-            chapter 9.</span
+            >The citations no rule could settle, grouped by what made them hard:
+            contradicted by an external record, cleared externally but truncated on
+            Scholar, or not indexed anywhere. Every one has been decided, so the
+            buckets are empty on this snapshot; the chapter keeps the shape of what
+            was checked, and each decision carries its row_uid, the record it cites
+            and a link to the exhibit page it sits on. Rows flagged non-English were
+            never offered here &mdash; see chapter 9.</span
           >
         </span>
       </a>

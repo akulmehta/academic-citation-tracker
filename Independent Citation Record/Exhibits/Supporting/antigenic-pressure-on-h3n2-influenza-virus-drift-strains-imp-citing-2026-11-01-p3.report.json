@@ -149,7 +149,15 @@
       "attention_reason": "",
       "language_flag_captured": "",
       "status_captured": "INDEPENDENT",
-      "confirm_state_captured": "confirmed"
+      "confirm_state_captured": "confirmed",
+      "status_before_decision": "INDEPENDENT",
+      "confirm_state_before_decision": "confirmed",
+      "corroboration_before_decision": "confirmed by openalex",
+      "same_work_key": "sw:cit-000202",
+      "same_work_note": "Crossref record for the published article 10.1128/jvi.01941-23 (Journal of Virology) carries relation has-preprint -> 10.1101/2023.12.15.571923, asserted-by object, which is this row's DOI. Both rows sit on the same citing page. Crossref gives both records the identical 13-author byline (Spruit, Palme, Li, Rios Carrasco, Gabarroca Garcia, Sweet, Kuryshko, Maliepaard, Reiding, Scheibner, Boons, Abdelwhab, de Vries).",
+      "decided_by": "Akul Mehta",
+      "decided_on": "2026-11-04",
+      "decided_note": "recorded as the same published work as cit-000202: Crossref record for the published article 10.1128/jvi.01941-23 (Journal of Virology) carries relation has-preprint -> 10.1101/2023.12.15.571923, asserted-by object, which is this row's DOI. Both rows sit on the same citing page. Crossref gives both records the identical 13-author byline (Spruit, Palme, Li, Rios Carrasco, Gabarroca Garcia, Sweet, Kuryshko, Maliepaard, Reiding, Scheibner, Boons, Abdelwhab, de Vries)."
     },
     {
       "index": 3,

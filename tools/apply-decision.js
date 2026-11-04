@@ -82,11 +82,50 @@ const arg = (name, fallback = "") => {
 };
 const has = (name) => process.argv.includes(`--${name}`);
 
+// Every occurrence of --name=value, in command-line order.
+//
+// arg() above keeps the first match, which is wrong for a repeatable flag. On
+// 2026-11-03 a dry run given two --row= flags printed "Decisions requested: 1"
+// and would have written one decision while the operator believed two had been
+// accepted. A silently dropped row is the worst failure this tool can have, so a
+// repeated flag is refused outright rather than parsed loosely -- the documented
+// form remains the comma list, which is unambiguous.
+function argValues(name) {
+  const prefix = `--${name}=`;
+  return process.argv.filter((a) => a.startsWith(prefix)).map((a) => a.slice(prefix.length));
+}
+
+// Split a repeatable flag into its values, refusing the repeated form. Returns
+// the flattened list of non-empty tokens.
+function repeatableArg(name) {
+  const seen = argValues(name);
+  if (seen.length > 1) {
+    fail(
+      `--${name}= was given ${seen.length} times (${seen
+        .map((s) => `"${s}"`)
+        .join(", ")}). Only the first would be read, so the others would be ` +
+        `dropped without telling you. Put them in one list instead: ` +
+        `--${name}=${seen.join(",")}`,
+    );
+  }
+  return seen
+    .join(",")
+    .split(",")
+    .map((s) => s.trim())
+    .filter(Boolean);
+}
+
 const write = has("write");
 const doReprint = has("reprint");
 const doRebuild = has("rebuild");
 const fromCsv = has("from-csv");
 const doRevert = has("revert");
+// Escape hatch for the one case the copy really is the better record: deciding it
+// is meant to take the exhibit mark off the standing copy. See the refusal in
+// main(), which this overrides. Off by default because the default outcome of a
+// verdict on a duplicate is a highlight that moves between exhibit pages with no
+// change to any count, which is invisible to every downstream check.
+const allowMarkMove = has("allow-mark-move");
 const DECIDED_BY = arg("by", "Akul Mehta");
 
 const BACKUP_DIR = path.join(SUPPORT_DIR, `Pre-decision-${TODAY}`);
@@ -138,7 +177,8 @@ function lookup(db, uids) {
     const r = db
       .prepare(
         `SELECT row_uid, base, page, row_index, cid, cites_id, title, status, confirm_state,
-                language_flag, duplicate_of, is_highlighted, needs_attention,
+                language_flag, duplicate_of, duplicate_kind, stands_for_row_uid,
+                is_highlighted, needs_attention,
                 attention_reason, corroboration, external_source, external_url,
                 external_authors, external_matched, scholar_note
            FROM (
@@ -316,10 +356,7 @@ function splitCsvLine(line) {
 }
 
 function decisionsFromArgs() {
-  const uids = arg("row")
-    .split(",")
-    .map((s) => s.trim())
-    .filter(Boolean);
+  const uids = repeatableArg("row");
   const sameWorkAs = arg("same-work-as").trim();
   if (!uids.length) {
     fail(
@@ -380,13 +417,30 @@ function decisionsFromArgs() {
 function describe(row) {
   const flags = [];
   if (row.language_flag) flags.push(`non-English (${row.language_flag})`);
-  if (row.duplicate_of) flags.push("language edition of another row");
+  if (row.duplicate_of) flags.push(duplicateLabel(row));
   return (
     `${row.uid}  ${row.status}/${row.confirm_state}` +
     (flags.length ? `  [${flags.join("; ")}]` : "") +
     `\n         ${String(row.title).slice(0, 92)}` +
     `\n         exhibit ${row.base} p${row.page} row ${row.row_index}`
   );
+}
+
+// Which rule folded a row away. duplicate_of is set by two different mechanisms
+// and they mean different things: a language edition is the same article in
+// another language, while a same-work copy is a preprint, thesis or repository
+// upload of the same paper. Saying "language edition" on a preprint is not merely
+// imprecise -- it tells the reader the row is a translation, which is a factual
+// claim about the evidence. duplicate_kind records which it was; an older row with
+// no kind recorded is described by the pointer alone rather than guessed at.
+function duplicateLabel(row) {
+  const onto = row.stands_for_row_uid || row.duplicate_of;
+  const where = onto ? ` through ${onto}` : "";
+  if (row.duplicate_kind === "language-edition") return `language edition${where}`;
+  if (row.duplicate_kind === "same-work") {
+    return `copy of another row${where} (preprint / repository / thesis edition)`;
+  }
+  return `duplicate of another row${where}`;
 }
 
 function main() {
@@ -408,6 +462,21 @@ function main() {
 
   const db = new DatabaseSync(DB_PATH, { readOnly: true });
   const rows = lookup(db, requested.map((r) => r.uid));
+  // The standing copy of a duplicate is read too, when it was not itself part of
+  // the request. It is never written here -- it is context, so a refusal can name
+  // the row whose highlight is at stake and say what that row currently is.
+  const uids = new Set(rows.map((r) => r.uid));
+  const parents = rows
+    .map((r) => r.stands_for_row_uid)
+    .filter((u) => u && !uids.has(u));
+  for (const extra of parents) {
+    for (const r of lookup(db, [extra])) {
+      if (!uids.has(r.uid)) {
+        uids.add(r.uid);
+        rows.push(r);
+      }
+    }
+  }
   db.close();
   const byUid = new Map(rows.map((r) => [r.uid, r]));
 
@@ -446,6 +515,53 @@ function main() {
       );
       if (bad) {
         problems.push(bad);
+        continue;
+      }
+    }
+    // Deciding a copy of an already-settled work is refused, not warned.
+    //
+    // tally.copyReliability ranks a human verdict (+64) above every machine
+    // reading, so marking a copy decided makes IT the copy that stands for the
+    // work -- and isHighlighted resolves through duplicate_of, so the yellow mark
+    // leaves the published record and lands on the preprint or repository upload.
+    // Measured on this corpus: deciding cit-000132 takes the mark off cit-000108
+    // on exhibit page 2 and puts it on page 5. The two rows are one paper, so the
+    // count does not change and nothing downstream complains -- an exhibit set
+    // would quietly redraw itself.
+    //
+    // That is why inheritance exists: since schema v10 a copy reports its
+    // parent's classification as inherited_status and leaves the review queue, so
+    // there is nothing left to decide here. A copy whose parent is still open is a
+    // different case -- deciding it is the only way to settle the work -- so that
+    // one is allowed and explained below rather than refused.
+    if (
+      row.duplicate_of &&
+      verdict !== "REVERT" &&
+      verdict !== "SAME-WORK" &&
+      verdict !== "SAME-WORK-ANCHOR" &&
+      !allowMarkMove
+    ) {
+      const parent = row.stands_for_row_uid ? byUid.get(row.stands_for_row_uid) : null;
+      const parentSettled = parent
+        ? tally.isSettled(parent) && parent.status !== "REVIEW"
+        : null;
+      if (parentSettled !== false) {
+        problems.push(
+          `${req.uid} is a ${duplicateLabel(row)} and is not the copy that stands for ` +
+            `the work` +
+            (parent
+              ? `, where ${row.stands_for_row_uid} already carries ` +
+                `${parent.status}/${parent.confirm_state}`
+              : row.stands_for_row_uid
+                ? `, at ${row.stands_for_row_uid}`
+                : ` (the store cannot name the copy that stands)`) +
+            `. That verdict is already reported on this row through inheritance and it is ` +
+            `off the review queue, so there is nothing to decide. Writing it would make ` +
+            `this copy stand for the work and MOVE the exhibit highlight off ` +
+            `${row.stands_for_row_uid || "the standing copy"}. If that is genuinely ` +
+            `intended -- the standing copy is wrong and this one is right -- re-run with ` +
+            `--allow-mark-move and the exhibits will be re-printed.`,
+        );
         continue;
       }
     }
@@ -517,9 +633,19 @@ function main() {
       );
     }
     if (p.verdict === "INDEPENDENT" && p.duplicate_of) {
+      // Reaching here means either the standing copy is itself unresolved -- so
+      // this verdict is the thing that settles the work -- or the operator asked
+      // for the mark to move. Say which, and never claim a number will not move.
+      const parent = p.stands_for_row_uid ? byUid.get(p.stands_for_row_uid) : null;
       caveats.push(
-        `${p.uid} is recorded as a language edition of another row on the same citing list, ` +
-          `so it is counted once through that other row and will not add to the total.`,
+        `${p.uid} is a ${duplicateLabel(p)}. ` +
+          (allowMarkMove
+            ? `Because --allow-mark-move was given, this copy becomes the one that stands ` +
+              `for the work, so the exhibit highlight moves off ` +
+              `${p.stands_for_row_uid || "the current standing copy"} onto it. Re-print the exhibits.`
+            : `The copy that stands for the work is not settled yet, so your reading is ` +
+              `what decides the paper${parent ? ` (${parent.status}/${parent.confirm_state})` : ""}. ` +
+              `Only the standing copy is counted, and only the standing copy is highlighted.`),
       );
     }
     if (p.verdict === "REVIEW") {

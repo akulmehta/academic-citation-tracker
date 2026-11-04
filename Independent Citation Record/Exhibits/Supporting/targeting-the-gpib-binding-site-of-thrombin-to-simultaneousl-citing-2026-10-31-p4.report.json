@@ -34,7 +34,7 @@
       "snippet": "",
       "truncated": true,
       "link": "",
-      "status": "REVIEW",
+      "status": "INDEPENDENT",
       "matched_authors": [],
       "matched_pi": [],
       "matched_former_pi": [],
@@ -43,12 +43,18 @@
       "resolution": "no cite control found for this entry",
       "language_flag": "",
       "page": 4,
-      "confirm_state": "unresolved",
-      "corroboration": "not indexed in PubMed or OpenAlex and the Scholar list is incomplete",
+      "confirm_state": "user-decided",
+      "corroboration": "decided by Akul Mehta on 2026-11-04: User decision 2026-11-04: the citing work is a conference abstract (Endocrine Abstracts), Google Scholar cluster cid Ph_B4pUeSiwJ, rendered with a truncated byline and no Cite control, so no source publishes a complete author list for it. The user read it as independent. Its visible names (F Ianni, CA Rota, SM Corsello, A De Rosa, F Gallo) share nobody with the cited paper (Targeting the GPIb alpha Binding Site of Thrombin..., J Med Chem 57(7) 3030-3040, 2014). The same abstract also appears as cit-000382 and cit-001229, each citing a different PI paper; independence is relative to the cited paper, so each row is decided on its own and none is folded into another. (rule had REVIEW/unresolved) | not indexed in PubMed or OpenAlex and the Scholar list is incomplete",
       "corroboration_note": "no PubMed or OpenAlex record matched the title closely enough",
-      "attention_reason": "not indexed in PubMed or OpenAlex and the Scholar list is incomplete",
-      "needs_attention": true,
-      "language_flag_captured": ""
+      "attention_reason": "",
+      "needs_attention": false,
+      "language_flag_captured": "",
+      "status_before_decision": "REVIEW",
+      "confirm_state_before_decision": "unresolved",
+      "corroboration_before_decision": "not indexed in PubMed or OpenAlex and the Scholar list is incomplete",
+      "decided_by": "Akul Mehta",
+      "decided_on": "2026-11-04",
+      "decided_note": "User decision 2026-11-04: the citing work is a conference abstract (Endocrine Abstracts), Google Scholar cluster cid Ph_B4pUeSiwJ, rendered with a truncated byline and no Cite control, so no source publishes a complete author list for it. The user read it as independent. Its visible names (F Ianni, CA Rota, SM Corsello, A De Rosa, F Gallo) share nobody with the cited paper (Targeting the GPIb alpha Binding Site of Thrombin..., J Med Chem 57(7) 3030-3040, 2014). The same abstract also appears as cit-000382 and cit-001229, each citing a different PI paper; independence is relative to the cited paper, so each row is decided on its own and none is folded into another."
     }
   ]
 }

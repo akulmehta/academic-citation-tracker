@@ -76,7 +76,7 @@
       "snippet": "Currently, only two sets of donors of attenuation (A and B) for preparation of licensed live\ninfluenza cold-adapted reassortant intranasal vaccines (LAIV) are available globally …",
       "truncated": true,
       "link": "https://iimmun.ru/iimm/article/view/18211",
-      "status": "REVIEW",
+      "status": "INDEPENDENT",
       "matched_authors": [],
       "matched_pi": [],
       "matched_former_pi": [],
@@ -99,14 +99,20 @@
       "resolution": "resolved but Scholar shows 'and others'",
       "language_flag": "",
       "page": 4,
-      "confirm_state": "unresolved",
-      "corroboration": "not indexed in PubMed or OpenAlex and the Scholar list is incomplete",
+      "confirm_state": "user-decided",
+      "corroboration": "decided by Akul Mehta on 2026-11-04: Publisher record iimmun.ru/iimm/article/view/18211 (DOI 10.15789/2220-7619-BCO-18211), Russian Journal of Immunology. Complete 11-author list read from the publisher page: Kiseleva, Sokolovsky, Larionova, Chistyakova, Vorsina, Donina, Matiushenko, Petrachkova, Kopylova, Rudenko, Desheva (Scholar truncated after 10). No author shared with the cited paper and neither PI named. Title, author list and venue are all listed in English, so the language screen does not apply. (rule had REVIEW/unresolved) | not indexed in PubMed or OpenAlex and the Scholar list is incomplete",
       "corroboration_note": "no PubMed or OpenAlex record matched the title closely enough",
       "edition_key": "",
       "duplicate_of": "",
-      "attention_reason": "not indexed in PubMed or OpenAlex and the Scholar list is incomplete",
-      "needs_attention": true,
-      "language_flag_captured": ""
+      "attention_reason": "",
+      "needs_attention": false,
+      "language_flag_captured": "",
+      "status_before_decision": "REVIEW",
+      "confirm_state_before_decision": "unresolved",
+      "corroboration_before_decision": "not indexed in PubMed or OpenAlex and the Scholar list is incomplete",
+      "decided_by": "Akul Mehta",
+      "decided_on": "2026-11-04",
+      "decided_note": "Publisher record iimmun.ru/iimm/article/view/18211 (DOI 10.15789/2220-7619-BCO-18211), Russian Journal of Immunology. Complete 11-author list read from the publisher page: Kiseleva, Sokolovsky, Larionova, Chistyakova, Vorsina, Donina, Matiushenko, Petrachkova, Kopylova, Rudenko, Desheva (Scholar truncated after 10). No author shared with the cited paper and neither PI named. Title, author list and venue are all listed in English, so the language screen does not apply."
     },
     {
       "index": 2,
@@ -152,7 +158,15 @@
       "duplicate_of": "",
       "attention_reason": "not indexed in PubMed or OpenAlex and the Scholar list is incomplete",
       "needs_attention": true,
-      "language_flag_captured": ""
+      "language_flag_captured": "",
+      "status_before_decision": "REVIEW",
+      "confirm_state_before_decision": "unresolved",
+      "corroboration_before_decision": "not indexed in PubMed or OpenAlex and the Scholar list is incomplete",
+      "same_work_key": "sw:cit-000182",
+      "same_work_note": "Crossref record for the published article 10.1371/journal.ppat.1013812 (PLOS Pathogens) carries relation has-preprint -> 10.1101/2025.04.24.650378, asserted-by object, which is this row's DOI. Both rows sit on the same citing page. Crossref gives both records the identical 15-author byline (Weber, Ponse, Zhu, Rios Carrasco, Han, Funk, Lin, Gabarroca Garcia, Spruit, Zhang, Yu, Wilson, Richard, Boons, de Vries).",
+      "decided_by": "Akul Mehta",
+      "decided_on": "2026-11-04",
+      "decided_note": "recorded as the same published work as cit-000182: Crossref record for the published article 10.1371/journal.ppat.1013812 (PLOS Pathogens) carries relation has-preprint -> 10.1101/2025.04.24.650378, asserted-by object, which is this row's DOI. Both rows sit on the same citing page. Crossref gives both records the identical 15-author byline (Weber, Ponse, Zhu, Rios Carrasco, Han, Funk, Lin, Gabarroca Garcia, Spruit, Zhang, Yu, Wilson, Richard, Boons, de Vries)."
     },
     {
       "index": 3,
@@ -341,7 +355,15 @@
       "duplicate_of": "",
       "attention_reason": "not indexed in PubMed or OpenAlex and the Scholar list is incomplete",
       "needs_attention": true,
-      "language_flag_captured": ""
+      "language_flag_captured": "",
+      "status_before_decision": "REVIEW",
+      "confirm_state_before_decision": "unresolved",
+      "corroboration_before_decision": "not indexed in PubMed or OpenAlex and the Scholar list is incomplete",
+      "same_work_key": "sw:cit-000202",
+      "same_work_note": "Crossref record for the published article 10.1128/jvi.01941-23 (Journal of Virology) carries relation has-preprint -> 10.1101/2023.12.15.571923, asserted-by object, which is this row's DOI. Both rows sit on the same citing page. Crossref gives both records the identical 13-author byline (Spruit, Palme, Li, Rios Carrasco, Gabarroca Garcia, Sweet, Kuryshko, Maliepaard, Reiding, Scheibner, Boons, Abdelwhab, de Vries).",
+      "decided_by": "Akul Mehta",
+      "decided_on": "2026-11-04",
+      "decided_note": "recorded as the same published work as cit-000202: Crossref record for the published article 10.1128/jvi.01941-23 (Journal of Virology) carries relation has-preprint -> 10.1101/2023.12.15.571923, asserted-by object, which is this row's DOI. Both rows sit on the same citing page. Crossref gives both records the identical 13-author byline (Spruit, Palme, Li, Rios Carrasco, Gabarroca Garcia, Sweet, Kuryshko, Maliepaard, Reiding, Scheibner, Boons, Abdelwhab, de Vries)."
     },
     {
       "index": 7,

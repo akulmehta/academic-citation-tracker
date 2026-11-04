@@ -1,4 +1,4 @@
-// Offline tests for the shared counting rules in tally.js.
+﻿// Offline tests for the shared counting rules in tally.js.
 // Run: node tools/test-tally.js
 //
 // These matter because the filing totals are quoted in the response packet.
@@ -20,6 +20,12 @@ const {
   editionKey,
   markLanguageEditions,
   foldSameWork,
+  markSecondaryCopies,
+  recordInheritance,
+  inheritedFrom,
+  effectiveStatus,
+  standingSet,
+  bucketOf,
   uniquePapers,
   tallyEntries,
   emptyTally,
@@ -477,7 +483,7 @@ const editionEnglish = () => ({
   language_flag: "",
 });
 const editionGerman = () => ({
-  title: "Untersuchung von Anti-Glykan-Antikörpern und Erforschung ihres medizinischen Potenzials mithilfe synthetischer Glykane",
+  title: "Untersuchung von Anti-Glykan-AntikÃ¶rpern und Erforschung ihres medizinischen Potenzials mithilfe synthetischer Glykane",
   cid: "GZHuXnSToewJ",
   page: 3,
   status: "INDEPENDENT",
@@ -485,7 +491,7 @@ const editionGerman = () => ({
   author_source: "scholar-cite-bibtex",
   authors_used: WILEY_AUTHORS,
   link: "https://onlinelibrary.wiley.com/doi/abs/10.1002/ange.7795967",
-  language_flag: "possible non-English (von, und, für, des)",
+  language_flag: "possible non-English (von, und, fÃ¼r, des)",
 });
 
 check("edition: article id ignores the journal code", doiArticleId("10.1002/ange.7795967"), "7795967");
@@ -752,6 +758,255 @@ console.log("\ncopyReliability: a demonstrated match beats a cleaner read");
   };
   const third = uniquePapers([decided, showsOverlap]);
   check("copy: a human reading outranks the machine match", third.kept[0].cid, "humanRead");
+}
+
+// ---- The five reviewer-facing categories ------------------------------------
+// The dashboard draws exactly five buckets and a reviewer adds them up by eye,
+// so the partition must be exhaustive and mutually exclusive for ANY row, not
+// merely for the ones that happen to exist today. bucketOf is tested directly
+// because the property that matters is "one row, one bucket" -- a row that fell
+// through every branch would silently shrink a chart rather than fail a build.
+console.log("\nbucketOf: five categories, exhaustive and exclusive");
+{
+  const ind = {
+    title: "A genuinely independent citing paper",
+    cid: "b1",
+    status: "INDEPENDENT",
+    confirm_state: "confirmed",
+  };
+  check("bucket: settled independent", bucketOf(ind), "independent");
+  check(
+    "bucket: dependent",
+    bucketOf({ ...ind, cid: "b2", status: "DEPENDENT", confirm_state: "unresolved" }),
+    "dependent"
+  );
+  // Self-citations collapse into dependent at the display layer (user,
+  // 2026-11-03) but keep their own status underneath, so the split stays
+  // recoverable from the store.
+  check(
+    "bucket: self (PI) folds into dependent",
+    bucketOf({ ...ind, cid: "b3", status: "SELF (PI)" }),
+    "dependent"
+  );
+  check(
+    "bucket: self (former PI) folds into dependent",
+    bucketOf({ ...ind, cid: "b4", status: "SELF (FORMER PI)" }),
+    "dependent"
+  );
+  check(
+    "bucket: on the queue",
+    bucketOf({ ...ind, cid: "b5", status: "REVIEW", confirm_state: "unresolved" }),
+    "review"
+  );
+  check(
+    "bucket: a second copy of a counted work",
+    bucketOf({ ...ind, cid: "b6", is_secondary_copy: true }),
+    "preprint_copy"
+  );
+  // A language edition is a secondary copy too, but the language screen
+  // supersedes it (2026-11-03) so it is reported once, as non-English.
+  check(
+    "bucket: language beats being a copy",
+    bucketOf({ ...ind, cid: "b7", is_secondary_copy: true, language_flag: "possible non-English (und)" }),
+    "non_english"
+  );
+  check(
+    "bucket: language beats independent",
+    bucketOf({ ...ind, cid: "b8", language_flag: "possible non-English (und)" }),
+    "non_english"
+  );
+  // A queued row is reported on the queue even when it is also a copy, so the
+  // bucket keeps matching the length of the sheet a reviewer works. Moving this
+  // test below the copy rule would silently shorten that sheet.
+  check(
+    "bucket: review beats being a copy",
+    bucketOf({
+      ...ind,
+      cid: "b9",
+      status: "REVIEW",
+      confirm_state: "unresolved",
+      is_secondary_copy: true,
+    }),
+    "review"
+  );
+  // Independent-looking but unsettled: not countable, not a copy, not on the
+  // queue. It gets its own bucket so the sum still closes, and the chart draws
+  // it only when it is non-zero.
+  check(
+    "bucket: independent but unsettled",
+    bucketOf({ ...ind, cid: "b10", confirm_state: "unresolved" }),
+    "pending"
+  );
+  // A status nothing recognises must surface as `other`, not disappear.
+  check(
+    "bucket: an unrecognised status surfaces",
+    bucketOf({ ...ind, cid: "b11", status: "SOMETHING NEW" }),
+    "other"
+  );
+}
+
+// The bucket counts published by tallyEntries must sum to the record count, and
+// must agree with bucketOf row by row -- the ledger and the charts both read the
+// counts, so a drift between the two is a packet with two totals for one bucket.
+console.log("\nbucketOf: the published counts sum to the records");
+{
+  const rows = [
+    { title: "One independent work on glycan arrays", cid: "s1", status: "INDEPENDENT", confirm_state: "confirmed" },
+    { title: "One dependent work", cid: "s2", status: "DEPENDENT", confirm_state: "unresolved" },
+    { title: "One self work", cid: "s3", status: "SELF (FORMER PI)", confirm_state: "unresolved" },
+    { title: "One queued work", cid: "s4", status: "REVIEW", confirm_state: "unresolved" },
+    { title: "One non-English work", cid: "s5", status: "INDEPENDENT", confirm_state: "confirmed", language_flag: "possible non-English (pl)" },
+    { title: "A preprint of the first work", cid: "s6", status: "INDEPENDENT", confirm_state: "confirmed" },
+  ];
+  // The preprint shares the first row's title, so the machine rule makes it the
+  // second copy -- which is what markSecondaryCopies has to record on the row.
+  // The title has to clear paperKey's 24-character floor to be treated as an
+  // identity at all, which is exactly why the short ones above stay distinct.
+  rows[5].title = rows[0].title;
+  markSecondaryCopies(rows);
+  check("copies: the preprint is marked secondary", rows[5].is_secondary_copy, true);
+  check("copies: the copy that stands is not", rows[0].is_secondary_copy, false);
+  const t = tallyEntries(rows);
+  const sum =
+    t.bucket_independent +
+    t.bucket_dependent +
+    t.bucket_review +
+    t.bucket_non_english +
+    t.bucket_preprint_copy +
+    t.bucket_pending +
+    t.bucket_other;
+  check("buckets: sum to the record count", sum, t.records);
+  check("buckets: the preprint bucket holds the copy", t.bucket_preprint_copy, 1);
+  check("buckets: the standing copy still counts", t.bucket_independent, 1);
+  check("buckets: dependent includes self", t.bucket_dependent, 2);
+  check("buckets: one row on the queue", t.bucket_review, 1);
+  check("buckets: one non-English row", t.bucket_non_english, 1);
+  check("buckets: nothing fell through", t.bucket_other, 0);
+  // The whole point of the bucket: the exhibit marks both copies, because that is
+  // the Scholar page that was printed, while the category claims the work once.
+  // The gap between the two figures IS the copy count, and must be visible rather
+  // than reconciled by silently dropping a mark.
+  check("buckets: both copies are still marked on the exhibit", t.independent, 2);
+  check("buckets: the exhibit marks exceed the counted works by the copies", t.independent - t.bucket_independent, t.bucket_preprint_copy);
+}
+
+// ---- Inheritance from the copy that stands -------------------------------
+//
+// The user's instruction of 2026-11-03: a duplicate reports the classification of
+// the copy that stands for its work, and is shown as a copy rather than as open
+// queue work. Two things must stay true while it does, and both are pinned here.
+//
+//   1. `status` is never overwritten. A report's status is what was concluded from
+//      that row's own author list -- the provenance the packet is built on.
+//   2. No exhibit mark moves. copyReliability ranks a human verdict above any
+//      machine reading, so a verdict written onto a copy would make the copy stand
+//      and relocate the highlight. Inheritance is a read-only view, so it cannot.
+//
+// Titles must clear paperKey's 24-character floor to count as an identity, or
+// every fixture below would collapse into one work group.
+{
+  const PARENT = "Allosteric inhibition of coagulation factor XIa by a peptide"
+    .slice(0, 40);
+  const parent = {
+    row_uid: "cit-000108",
+    title: PARENT,
+    cid: "p1",
+    status: "INDEPENDENT",
+    confirm_state: "confirmed",
+  };
+  const copy = {
+    row_uid: "cit-000132",
+    title: PARENT,
+    cid: "p2",
+    status: "REVIEW",
+    confirm_state: "unresolved",
+  };
+  const set = standingSet([parent, copy]);
+
+  check("inherit: a copy of a settled work inherits its verdict", inheritedFrom(copy, set).status, "INDEPENDENT");
+  check("inherit: the basis is inherited too", inheritedFrom(copy, set).confirm_state, "confirmed");
+  check("inherit: the parent row is named", inheritedFrom(copy, set).row_uid, "cit-000108");
+  check("inherit: the standing copy inherits nothing", inheritedFrom(parent, set), null);
+  check(
+    "inherit: status is never rewritten by the view",
+    [copy.status, copy.confirm_state],
+    ["REVIEW", "unresolved"]
+  );
+  check("inherit: effective status reads through to the parent", effectiveStatus(copy, set), "INDEPENDENT");
+  check("inherit: effective status of a standing row is its own", effectiveStatus(parent, set), "INDEPENDENT");
+
+  // The consequence the user asked for: the copy leaves the queue, and it is
+  // reported as a copy rather than as a fifth category of open work.
+  check("inherit: the copy leaves the review queue", isReviewQueue(copy, set), false);
+  check("inherit: the standing copy is still counted", bucketOf(parent, set), "independent");
+  check("inherit: the copy is bucketed as a copy", bucketOf(copy, set), "preprint_copy");
+
+  // A copy with nothing to inherit from stays queued. A patent family folds on
+  // title under paperKey while the standing copy is itself unresolved, so reading
+  // the byline is still the only way to settle it -- the queue must keep it.
+  const PATER = "Dual anticoagulant and antiplatelet agent composition and method";
+  const openParent = { row_uid: "cit-000467", title: PATER, cid: "q1", status: "REVIEW", confirm_state: "unresolved" };
+  const openCopy = { row_uid: "cit-000473", title: PATER, cid: "q2", status: "REVIEW", confirm_state: "unresolved" };
+  const openSet = standingSet([openParent, openCopy]);
+  check("inherit: an unsettled parent offers nothing", inheritedFrom(openCopy, openSet), null);
+  check("inherit: such a copy stays on the queue", isReviewQueue(openCopy, openSet), true);
+  check("inherit: and is bucketed as review work", bucketOf(openCopy, openSet), "review");
+
+  // A non-English parent settles nothing: its own classification is superseded by
+  // the language screen and excluded from the packet, so an English copy of it
+  // must not inherit its way off the queue from a citation nobody counts.
+  const langParent = {
+    row_uid: "cit-000990",
+    title: PARENT,
+    cid: "p0",
+    status: "INDEPENDENT",
+    confirm_state: "confirmed",
+    language_flag: "german",
+  };
+  const langSet = standingSet([langParent, copy]);
+  check("inherit: a non-English parent is not a basis", inheritedFrom(copy, langSet), null);
+  check("inherit: so the English copy stays queued", isReviewQueue(copy, langSet), true);
+
+  // A row answers from its own columns when there is no standing Set -- which is
+  // how the store projects the same rule in SQL. Emptiness means "nothing to
+  // inherit", so an absent column must not be read as a settled copy.
+  check(
+    "inherit: recorded columns answer without a set",
+    [
+      isReviewQueue({ ...copy, inherited_status: "INDEPENDENT" }),
+      isReviewQueue({ ...copy, inherited_status: "" }),
+      isReviewQueue({ ...copy }),
+    ],
+    [false, true, true]
+  );
+  check(
+    "inherit: a language-flagged row never inherits",
+    inheritedFrom({ ...copy, language_flag: "cyrillic", inherited_status: "INDEPENDENT" }),
+    null
+  );
+
+  // recordInheritance is what build-catalog writes, so the columns the store
+  // mirrors have to be exactly what the live rule concluded.
+  const recorded = recordInheritance([parent, copy, openParent, openCopy]);
+  check("record: the copy gains the parent's status", recorded[1].inherited_status, "INDEPENDENT");
+  check("record: and names the parent row", recorded[1].inherited_from, "cit-000108");
+  check("record: the standing row stays empty", recorded[0].inherited_status, "");
+  check("record: an unsettled group stays empty", recorded[3].inherited_status, "");
+
+  // The ledger footnote that explains the queue gap. Without review_inherited it
+  // blamed every row that left the queue on the language screen, which is how two
+  // inherited copies were reported as non-English on 2026-11-03.
+  const gapTally = tallyEntries([parent, copy, openParent, openCopy, langReview]);
+  // Two of the four REVIEW rows stay queued: the unsettled patent copy and its
+  // own standing sibling. Only the copy of a settled work leaves.
+  check("inherit tally: two rows stay queued", gapTally.review_queue, 2);
+  check("inherit tally: one left as non-English", gapTally.review_non_english, 1);
+  check("inherit tally: one left as an inherited copy", gapTally.review_inherited, 1);
+  check(
+    "inherit tally: the named reasons explain the whole gap",
+    gapTally.review - gapTally.review_queue,
+    gapTally.review_non_english + gapTally.review_inherited
+  );
 }
 
 console.log(

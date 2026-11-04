@@ -87,7 +87,7 @@ const BACKUP_DIR = path.join(DB_DIR, "Backups");
 // nothing indexes it -- cit-001476, linked to a swine-lung paper it is not.
 // Still no column added to citations: the field has been stored since the
 // 2026-11-02 rule.
-const SCHEMA_VERSION = 9;
+const SCHEMA_VERSION = 10;
 
 // A short opaque token, not a bare integer, so it reads as an identifier when
 // quoted in a sentence: "row cit-000123 is contradicted". Minted from the id
@@ -360,6 +360,8 @@ const COLUMNS = [
   "origin_dir",
   "work_key",
   "stands_for_row_uid",
+  "inherited_status",
+  "inherited_confirm_state",
   "superseded_at",
   "replaced_by_row_uid",
   "supersede_reason",
@@ -575,6 +577,26 @@ CREATE TABLE citations (
   --                         which repeats across citing lists -- one cid matched
   --                         three rows on 2026-11-02 -- so it is provenance only
   --                         and must never be used to resolve a row.
+  --   inherited_status      the status of the copy that stands for this row's
+  --                         work, per the user's instruction on 2026-11-03 that a
+  --                         duplicate inherits the parent's independent/dependent
+  --                         tag. Set only on a copy whose standing sibling IS
+  --                         settled; empty otherwise, which is what keeps a copy
+  --                         of an unresolved work (the anti-CCR8 patent family)
+  --                         on the review queue.
+  --   inherited_confirm_state  that parent's basis, so a listing can name where
+  --                         the inherited verdict came from.
+  --
+  --                         These two exist so SQL can mirror a JS rule it cannot
+  --                         re-derive: v_review and v_pub_stats cannot run
+  --                         uniquePapers, so they test inherited_status = ''
+  --                         instead. The values are WRITTEN by tally.recordInheritance
+  --                         through the same standing set the rule uses, and
+  --                         reconcile() checks the SQL count against the JS count
+  --                         row for row, so the two cannot drift silently.
+  --                         status ITSELF is NEVER overwritten -- it records what
+  --                         was concluded from this row's own byline, and a row
+  --                         must not appear decided by a reading nobody performed.
   --   superseded_at         set once when a row's exhibit was archived or
   --                         re-captured. The row is KEPT; it is excluded from
   --                         every default count. Never a delete.
@@ -587,6 +609,8 @@ CREATE TABLE citations (
   origin_dir          TEXT NOT NULL DEFAULT '',
   work_key            TEXT NOT NULL DEFAULT '',
   stands_for_row_uid  TEXT NOT NULL DEFAULT '',
+  inherited_status    TEXT NOT NULL DEFAULT '',
+  inherited_confirm_state TEXT NOT NULL DEFAULT '',
   superseded_at       TEXT NOT NULL DEFAULT '',
   replaced_by_row_uid TEXT NOT NULL DEFAULT '',
   supersede_reason    TEXT NOT NULL DEFAULT '',
@@ -659,6 +683,17 @@ SELECT c.* FROM citations c WHERE c.filed = 1 AND c.superseded_at = '';
 -- separately as review_queue.
 -- Mirrors tally.isReviewQueue, the single definition -- change it there and here
 -- together.
+--
+-- AND c.inherited_status = '' is the second half of that rule (schema v10, user
+-- instruction 2026-11-03). A row that is Google Scholar's second listing of a work
+-- whose standing copy is already settled is a settled COPY, not open work: its own
+-- byline may be truncated, but the work has an answer, so it belongs on the
+-- Preprint/Copy listing rather than on the sheet a person works. cit-000132 and
+-- cit-000144 are that case -- both REVIEW on their own lists, both copies of
+-- cit-000108, which is INDEPENDENT and confirmed. A copy whose standing sibling is
+-- itself unresolved has nothing to inherit and stays here: the anti-CCR8 patent
+-- family (cit-000473, cit-000475) is that case, and reading those bylines really
+-- is the only remaining evidence.
 CREATE VIEW v_review AS
 SELECT
   c.row_uid,
@@ -706,7 +741,8 @@ SELECT
   c.id
 FROM citations c
 LEFT JOIN publications p ON p.cites_id = c.cites_id
-WHERE c.status = 'REVIEW' AND c.is_non_english = 0 AND c.filed = 1 AND c.superseded_at = ''
+WHERE c.status = 'REVIEW' AND c.is_non_english = 0 AND c.inherited_status = ''
+  AND c.filed = 1 AND c.superseded_at = ''
 ORDER BY bucket, c.base, c.page, c.row_index;
 
 -- Full-text over the three fields a reviewer searches. External content keeps
@@ -895,10 +931,12 @@ SELECT
   SUM(CASE WHEN c.filed = 1 AND c.superseded_at = '' AND c.status = 'REVIEW' THEN 1 ELSE 0 END) AS review,
   -- The actionable subset of review: a row that is also non-English is not on
   -- the queue a person works, because no reading of its byline can change the
-  -- packet (no certified translations are being obtained). Both are published so
-  -- the status partition still sums to records while the queue length is the
-  -- number the review sheet and dashboard show. Mirrors tally.isReviewQueue.
-  SUM(CASE WHEN c.filed = 1 AND c.superseded_at = '' AND c.status = 'REVIEW' AND c.is_non_english = 0 THEN 1 ELSE 0 END) AS review_queue,
+  -- packet (no certified translations are being obtained). Neither is a copy of a
+  -- work whose standing copy is settled -- that row is a settled copy, listed on
+  -- the Preprint/Copy page instead (schema v10). Both are published so the status
+  -- partition still sums to records while the queue length is the number the
+  -- review sheet and dashboard show. Mirrors tally.isReviewQueue.
+  SUM(CASE WHEN c.filed = 1 AND c.superseded_at = '' AND c.status = 'REVIEW' AND c.is_non_english = 0 AND c.inherited_status = '' THEN 1 ELSE 0 END) AS review_queue,
   SUM(CASE WHEN c.filed = 1 AND c.superseded_at = '' AND c.language_flag <> '' THEN 1 ELSE 0 END) AS non_english,
   SUM(CASE WHEN c.filed = 1 AND c.superseded_at = '' AND c.withheld_for_language = 1 THEN 1 ELSE 0 END) AS non_english_withheld,
   SUM(CASE WHEN c.filed = 1 AND c.superseded_at = '' AND c.is_non_english = 0 THEN 1 ELSE 0 END) AS english_records,
@@ -1146,6 +1184,34 @@ function applyEditions(rows) {
   return rows;
 }
 
+// Record which classification each row inherits from the copy that stands for its
+// work (user instruction, 2026-11-03: "duplicates should inherit the dependent /
+// independent tag from the parent ... and also be marked as a copy/preprint").
+//
+// Partitioned exactly as applyPrimaryCopy is -- by cites_id plus filed -- so the
+// standing set used here is the same one that set is_primary_copy. A different
+// partitioning would make the store inherit from a copy the ledger does not treat
+// as standing, and the two would disagree about the fifth bucket.
+//
+// Runs AFTER applyEditions, because a language edition or a proven same-work fold
+// is what makes a row a copy in the first place: duplicate_of has to be settled
+// before the standing set means anything.
+//
+// The columns are stored so SQL can mirror a JS rule it cannot re-derive --
+// v_review and v_pub_stats cannot run uniquePapers, so they test
+// `inherited_status = ''`. reconcile() then checks the SQL count against the same
+// figure computed from the reports, which is what stops the two drifting silently.
+function applyInheritance(rows) {
+  const partitions = new Map();
+  for (const r of rows) {
+    const k = `${r.cites_id}\u0000${r.filed}`;
+    if (!partitions.has(k)) partitions.set(k, []);
+    partitions.get(k).push(r);
+  }
+  for (const group of partitions.values()) tally.recordInheritance(group);
+  return rows;
+}
+
 // Everything the catalog knows, ready to write.
 function collect() {
   const { file: listFile, data: listData } = readSnapshot();
@@ -1171,6 +1237,7 @@ function collect() {
   }
   applyPrimaryCopy(citations);
   applyEditions(citations);
+  applyInheritance(citations);
   // Publications: the snapshot drives the denominator, and a capture with no
   // matching snapshot row is kept and labelled rather than dropped.
   const publications = [];
@@ -1452,6 +1519,11 @@ function migrateV3toV4(db, { write }) {
     ["origin_dir", "TEXT NOT NULL DEFAULT ''"],
     ["work_key", "TEXT NOT NULL DEFAULT ''"],
     ["stands_for_row_uid", "TEXT NOT NULL DEFAULT ''"],
+    // Inherited classification (v10). Default empty: a row that stands for its
+    // work inherits nothing, and a copy whose standing sibling is unresolved
+    // inherits nothing either -- emptiness is what keeps such a copy queued.
+    ["inherited_status", "TEXT NOT NULL DEFAULT ''"],
+    ["inherited_confirm_state", "TEXT NOT NULL DEFAULT ''"],
     ["superseded_at", "TEXT NOT NULL DEFAULT ''"],
     ["replaced_by_row_uid", "TEXT NOT NULL DEFAULT ''"],
     ["supersede_reason", "TEXT NOT NULL DEFAULT ''"],
@@ -2025,14 +2097,41 @@ function reconcile(db) {
          SUM(CASE WHEN status = 'SELF (PI)' THEN 1 ELSE 0 END) AS self_pi,
          SUM(CASE WHEN status = 'SELF (FORMER PI)' THEN 1 ELSE 0 END) AS self_former_pi,
          SUM(CASE WHEN status = 'REVIEW' THEN 1 ELSE 0 END) AS review,
-         SUM(CASE WHEN status = 'REVIEW' AND is_non_english = 0 THEN 1 ELSE 0 END) AS review_queue,
+         SUM(CASE WHEN status = 'REVIEW' AND is_non_english = 0
+                   AND inherited_status = '' THEN 1 ELSE 0 END) AS review_queue,
          SUM(CASE WHEN language_flag <> '' THEN 1 ELSE 0 END) AS non_english,
          SUM(CASE WHEN status = 'INDEPENDENT' AND language_flag <> '' THEN 1 ELSE 0 END) AS non_english_independent,
          SUM(CASE WHEN withheld_for_language = 1 THEN 1 ELSE 0 END) AS non_english_withheld,
          SUM(CASE WHEN is_non_english = 0 THEN 1 ELSE 0 END) AS english_records,
          SUM(CASE WHEN is_non_english = 0 AND is_highlighted = 1 THEN 1 ELSE 0 END) AS english_independent,
          SUM(CASE WHEN is_primary_copy = 1 THEN 1 ELSE 0 END) AS unique_records,
-         SUM(CASE WHEN is_primary_copy = 1 AND is_highlighted = 1 THEN 1 ELSE 0 END) AS unique_independent
+         SUM(CASE WHEN is_primary_copy = 1 AND is_highlighted = 1 THEN 1 ELSE 0 END) AS unique_independent,
+         -- The five reviewer-facing categories, mirroring bucketOf in tally.js in
+         -- the SAME order, because the order is the rule. Language first (a
+         -- non-English row is reported once, as non-English), then the queue, then
+         -- the second copies. is_primary_copy = 0 is the store's spelling of
+         -- is_secondary_copy -- both are uniquePapers' answer to "which copy
+         -- stands" -- and duplicate_of <> '' adds the folds a person recorded.
+         --
+         -- inherited_status = '' is the queue's second half (schema v10): a copy
+         -- whose standing sibling is settled is reported as a copy, not as open
+         -- work, so it leaves bucket_review and lands in bucket_preprint_copy. The
+         -- copy term below does not test the status at all, which is what lets it
+         -- catch those rows.
+         SUM(CASE WHEN language_flag = '' AND status <> 'REVIEW'
+                   AND is_primary_copy = 1 AND duplicate_of = ''
+                   AND is_highlighted = 1 THEN 1 ELSE 0 END) AS bucket_independent,
+         SUM(CASE WHEN language_flag = '' AND status <> 'REVIEW'
+                   AND is_primary_copy = 1 AND duplicate_of = ''
+                   AND status IN ('DEPENDENT','SELF (PI)','SELF (FORMER PI)')
+                   THEN 1 ELSE 0 END) AS bucket_dependent,
+         SUM(CASE WHEN language_flag = '' AND status = 'REVIEW'
+                   AND inherited_status = '' THEN 1 ELSE 0 END) AS bucket_review,
+         SUM(CASE WHEN language_flag <> '' THEN 1 ELSE 0 END) AS bucket_non_english,
+         SUM(CASE WHEN language_flag = ''
+                   AND NOT (status = 'REVIEW' AND inherited_status = '')
+                   AND (is_primary_copy = 0 OR duplicate_of <> '')
+                   THEN 1 ELSE 0 END) AS bucket_preprint_copy
        FROM citations WHERE filed = 1 AND superseded_at = ''`
     )
     .get();
@@ -2071,6 +2170,19 @@ function reconcile(db) {
     ["English independent", Number(row.english_independent), expected.english_independent],
     ["distinct papers", Number(row.unique_records), expected.unique_records],
     ["distinct independent", Number(row.unique_independent), expected.unique_independent],
+    // The five reviewer-facing categories, checked one by one so a chart drawn
+    // from the store cannot disagree with the rule in tally.js. The bucket
+    // partition is what a reviewer adds up by eye on the dashboard, so a drift
+    // here is a packet whose chart lies, not a cosmetic mismatch.
+    ["bucket: independent", Number(row.bucket_independent), expected.bucket_independent],
+    ["bucket: not independent", Number(row.bucket_dependent), expected.bucket_dependent],
+    ["bucket: awaiting review", Number(row.bucket_review), expected.bucket_review],
+    ["bucket: non-English", Number(row.bucket_non_english), expected.bucket_non_english],
+    [
+      "bucket: preprint / copy",
+      Number(row.bucket_preprint_copy),
+      expected.bucket_preprint_copy,
+    ],
   ];
 
   const mismatches = checks.filter(([, a, b]) => a !== b);
@@ -2149,6 +2261,7 @@ function upsertPublication(baseArg) {
   }
   applyPrimaryCopy(rows);
   applyEditions(rows);
+  applyInheritance(rows);
   const snap = (listData.publications || []).find(
     (p) => tally.citesId(p.citesUrl) && tally.citesId(p.citesUrl) === g.cites_id
   );

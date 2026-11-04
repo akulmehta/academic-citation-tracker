@@ -211,7 +211,15 @@
       "duplicate_of": "",
       "attention_reason": "not indexed in PubMed or OpenAlex and the Scholar list is incomplete",
       "needs_attention": true,
-      "language_flag_captured": ""
+      "language_flag_captured": "",
+      "status_before_decision": "REVIEW",
+      "confirm_state_before_decision": "unresolved",
+      "corroboration_before_decision": "not indexed in PubMed or OpenAlex and the Scholar list is incomplete",
+      "same_work_key": "sw:cit-001239",
+      "same_work_note": "Crossref record for the published article 10.1016/j.jbc.2024.107944 (Journal of Biological Chemistry, PubMed 39481603) carries relation has-preprint -> 10.1101/2024.07.18.600072, asserted-by object, which is this row's DOI. Both rows sit on the same citing page. Crossref gives both records the identical 15-author byline (Kendler, Woels, Thapliyal, Arcalis, Gabriel, Kubitschek, Malzl, Strobl, Palmberger, Luber, Unverzagt, Paschinger, Glauser, Wilson, Yan); the title was reworded at publication.",
+      "decided_by": "Akul Mehta",
+      "decided_on": "2026-11-04",
+      "decided_note": "recorded as the same published work as cit-001239: Crossref record for the published article 10.1016/j.jbc.2024.107944 (Journal of Biological Chemistry, PubMed 39481603) carries relation has-preprint -> 10.1101/2024.07.18.600072, asserted-by object, which is this row's DOI. Both rows sit on the same citing page. Crossref gives both records the identical 15-author byline (Kendler, Woels, Thapliyal, Arcalis, Gabriel, Kubitschek, Malzl, Strobl, Palmberger, Luber, Unverzagt, Paschinger, Glauser, Wilson, Yan); the title was reworded at publication."
     },
     {
       "index": 5,
@@ -222,7 +230,7 @@
       "snippet": "Helminths are parasitic macroorganisms belonging to the two major phyla of nematodes\n(roundworms) or platyhelminths (flatworms) 1. The latter include trematodes (flukes) and …",
       "truncated": true,
       "link": "https://scholarlypublications.universiteitleiden.nl/access/item%3A4212215/download",
-      "status": "REVIEW",
+      "status": "INDEPENDENT",
       "matched_authors": [],
       "matched_pi": [],
       "matched_former_pi": [],
@@ -232,14 +240,20 @@
       "resolution": "citation record read but contained no author field",
       "language_flag": "",
       "page": 2,
-      "confirm_state": "unresolved",
-      "corroboration": "not indexed in PubMed or OpenAlex and the Scholar list is incomplete",
+      "confirm_state": "user-decided",
+      "corroboration": "decided by Akul Mehta on 2026-11-04: User decision 2026-11-04: INDEPENDENT, as instructed. Same citing work as cit-000555 -- Leiden University repository item 4212215 (handle 1887/4212211), whose own record gives the true title 'Advancing helminth glycomics: structural specificity and immunogenicity of schistosomal and filarial glycans', author Petralia, L.M.C. only, dated 2025-04-16, no DOI (doctoral thesis). Scholar rendered this row with the same garbled PDF-extracted title and a one-name byline with no author field. NOT folded with cit-000555: this row cites a different PI paper (Recognition of highly branched N-glycans of the porcine whip, MCP 23(2) 2024) while cit-000555 cites GLAD, and a fold must stay within one cited paper -- one citing work appears on the 'cited by' page of every paper it cites, so the same WORK is legitimately two CITATIONS. name-match against this cited paper's complete list returns INDEPENDENT, matched=[], pi=[], former=[]; a sole-author thesis by Petralia shares no author with it. (rule had REVIEW/unresolved) | not indexed in PubMed or OpenAlex and the Scholar list is incomplete",
       "corroboration_note": "no PubMed or OpenAlex record matched the title closely enough",
       "edition_key": "",
       "duplicate_of": "",
-      "attention_reason": "not indexed in PubMed or OpenAlex and the Scholar list is incomplete",
-      "needs_attention": true,
-      "language_flag_captured": ""
+      "attention_reason": "",
+      "needs_attention": false,
+      "language_flag_captured": "",
+      "status_before_decision": "REVIEW",
+      "confirm_state_before_decision": "unresolved",
+      "corroboration_before_decision": "not indexed in PubMed or OpenAlex and the Scholar list is incomplete",
+      "decided_by": "Akul Mehta",
+      "decided_on": "2026-11-04",
+      "decided_note": "User decision 2026-11-04: INDEPENDENT, as instructed. Same citing work as cit-000555 -- Leiden University repository item 4212215 (handle 1887/4212211), whose own record gives the true title 'Advancing helminth glycomics: structural specificity and immunogenicity of schistosomal and filarial glycans', author Petralia, L.M.C. only, dated 2025-04-16, no DOI (doctoral thesis). Scholar rendered this row with the same garbled PDF-extracted title and a one-name byline with no author field. NOT folded with cit-000555: this row cites a different PI paper (Recognition of highly branched N-glycans of the porcine whip, MCP 23(2) 2024) while cit-000555 cites GLAD, and a fold must stay within one cited paper -- one citing work appears on the 'cited by' page of every paper it cites, so the same WORK is legitimately two CITATIONS. name-match against this cited paper's complete list returns INDEPENDENT, matched=[], pi=[], former=[]; a sole-author thesis by Petralia shares no author with it."
     }
   ]
 }

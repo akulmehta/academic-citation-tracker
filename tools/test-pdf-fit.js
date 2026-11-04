@@ -73,13 +73,42 @@ function latestSavedPage() {
 // not followed by "s" gives the page count without a PDF library. Lives in
 // print-settings.js so the audit and this test count identically.
 
+// Resolve the page argument to a saved HTML file.
+//
+// The argument used to be read as a path, so passing a page's NAME -- which is
+// how every other tool in this folder takes a page (reprint-exhibits,
+// audit-highlights, query-catalog pub) -- failed with ENOENT against the current
+// working directory. Accepted now: a real path, a name with or without the
+// .html suffix, and a name relative to Supporting. A path that genuinely exists
+// still wins, so nothing that worked before stops working.
+function resolveTarget(arg) {
+  if (!arg) return latestSavedPage();
+  if (fs.existsSync(arg) && fs.statSync(arg).isFile()) return arg;
+  const name = arg.endsWith(".html") ? arg : `${arg}.html`;
+  const inSupport = path.join(SUPPORT_DIR, name);
+  if (fs.existsSync(inSupport)) return inSupport;
+  // Page 1 is saved WITHOUT the -p1 suffix (capture convention: the first page
+  // keeps the bare name, later pages take -pN). So a "-p1" argument can never
+  // resolve as written, and the reader has no clue why.
+  if (/-p1$/.test(name)) {
+    const first = path.join(SUPPORT_DIR, name.replace(/-p1$/, ""));
+    if (fs.existsSync(first)) return first;
+  }
+  throw new Error(
+    `no saved citing HTML named "${arg}". Looked for the path as given and for ` +
+      `${name} in ${SUPPORT_DIR}. Use --all for every saved page, or a bare page ` +
+      `name such as "n-glycosylation-of-mannose-receptor-cd206-citing-2026-10-30-p2" ` +
+      `(page 1 carries no -p1 suffix).`
+  );
+}
+
 async function main() {
   const all = process.argv.includes("--all");
   const explicit =
     process.argv[2] && !process.argv[2].startsWith("--") ? process.argv[2] : "";
   const targets = all
     ? savedPages().map((f) => path.join(SUPPORT_DIR, f.f))
-    : [explicit || latestSavedPage()];
+    : [resolveTarget(explicit)];
 
   const browser = await chromium.launch();
   const page = await browser.newPage();

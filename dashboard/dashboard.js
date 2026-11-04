@@ -22,6 +22,12 @@
     review: "#e0a24a",
     pending: "#f0d9a8",
     language: "#9b7fc0",
+    // The fifth bucket: a citing work Scholar lists twice on one page, so the
+    // row does not stand for a counted paper. Deliberately a hollow square with a
+    // teal edge — it is not a decision about a citation, it is a note about the
+    // listing, and it should not read as a fourth shade of grey verdict.
+    copy: "#eef6f4",
+    copyEdge: "#14776b",
     patent: "#14776b",
     patentApp: "#7fbdb2",
     accent: "#0b5cad",
@@ -34,6 +40,12 @@
 
   const fmt = d3.format(",");
   const pct1 = (n) => (n === null || n === undefined ? "—" : `${n}%`);
+  // One decimal, always, so a share reads the same in a bar label as it does in
+  // the ledger's percentage columns. A zero denominator yields an em dash rather
+  // than NaN%. The charts and the tables both go through this so a share cannot
+  // read 77.8% in one place and 78% in another.
+  const pctOf = (part, whole) =>
+    whole > 0 ? `${((part / whole) * 100).toFixed(1)}%` : "—";
   const esc = (s) =>
     String(s === null || s === undefined ? "" : s).replace(
       /[&<>"]/g,
@@ -103,7 +115,7 @@
     { id: "patents", file: "index.html", label: "Patents citing the work" },
     { id: "verification", file: "index.html", label: "Verification" },
     { id: "open", file: "index.html", label: "Not counted" },
-    { id: "review", file: "review.html", label: "Review queue" },
+    { id: "review", file: "review.html", label: "Open rows, settled" },
     { id: "language", file: "language.html", label: "Non-English (not queued)" },
     { id: "articles", file: "articles.html", label: "Per-article table" },
     { id: "works", file: "works.html", label: "Every citing work" },
@@ -328,6 +340,79 @@
     });
   }
 
+  // The categories a chart draws, in the order a bar stacks. The bucket_* figures
+  // come from tools/tally.js through the ledger, so the squares here, the
+  // per-publication bars, the ledger CSV and the store's own SQL are four
+  // readings of ONE rule rather than four rules.
+  //
+  // "Awaiting review" is deliberately absent (user instruction of 2026-11-04).
+  // The review queue was worked down to nothing on that date, so the bucket held
+  // zero rows everywhere, and a category that is always empty asks a reader to
+  // hold a definition for a state the record no longer has. The bucket still
+  // exists in the data -- tools/tally.js and the ledger still compute it, and the
+  // ledger's partition still sums to the record count with it — it is just not a
+  // heading on a chart an officer reads. dropAwaitingReview() is the guard that
+  // makes that safe rather than a silent omission: it fails loudly if awaiting
+  // review ever holds a row again, because at that point the row is real work and
+  // the page has to say so instead of dropping it.
+  const REVIEW_BUCKET = "bucket_review";
+  // `keyOf` reads the bucket key out of a part, because the waffle builds objects
+  // and the stacked bars build tuples.
+  function dropAwaitingReview(parts, g, keyOf) {
+    const held = Number((g && g[REVIEW_BUCKET]) || 0);
+    if (held > 0) {
+      throw new Error(
+        `bucket_review holds ${fmt(held)} record(s), but the charts no longer draw ` +
+          `that category (user instruction of 2026-11-04, when the review queue ` +
+          `closed). A row awaiting a decision must be visible, not omitted: restore ` +
+          `the category in dashboard.js before publishing this data.`
+      );
+    }
+    return parts.filter((p) => keyOf(p) !== REVIEW_BUCKET);
+  }
+
+  // Is an "unsettled" row actually open work? The ledger's independent_pending
+  // figure counts every English row classified INDEPENDENT yet not highlighted,
+  // which is right as a counting rule but can outlive its meaning: a row that is
+  // the second listing of a work already counted through another row (a same-work
+  // fold recorded by hand) is not awaiting anything, because its standing row
+  // carries the verdict. Both rows on this snapshot are of that kind. So the
+  // figure is described from the copy listing rather than from the rule's label --
+  // an officer must not be told an open question exists where the packet already
+  // has an answer. The rule and the number are untouched; this is wording only.
+  function unsettledSub(D) {
+    const rows = D.unsettled_rows || [];
+    if (!rows.length) return "none";
+    const copies = new Set((D.preprint_copies || []).map((r) => r.row_uid));
+    const asCopies = rows.filter((r) => copies.has(r.row_uid)).length;
+    if (asCopies === rows.length) {
+      return `all ${fmt(rows.length)} a second listing of a work counted once`;
+    }
+    if (asCopies) {
+      return `${fmt(rows.length - asCopies)} open, ${fmt(asCopies)} a second listing`;
+    }
+    return `${fmt(rows.length)} English row(s) awaiting corroboration`;
+  }
+
+  // Where a value label belongs when it describes ONE segment of a bar rather than
+  // the whole bar: just past that segment's end, so the number sits where the
+  // colour stops and cannot be read as the bar's total. Two cases are handled
+  // rather than one. A label that would hang past the end of the track is printed
+  // inside the segment instead, right-aligned against its end, since Chrome clips
+  // whatever crosses the sheet edge without warning -- and yellow is dark enough
+  // ink on. A segment too short to hold the text keeps the label outside, where it
+  // overlaps the following segment rather than disappearing; that case needs a very
+  // narrow container, and a clipped number is the worse failure.
+  function endLabel(endPx, textW, trackW, gap = 5) {
+    if (endPx + textW + gap + 4 <= trackW) {
+      return { x: endPx + gap, anchor: "start" };
+    }
+    if (endPx >= textW + gap * 2) {
+      return { x: endPx - gap, anchor: "end" };
+    }
+    return { x: endPx + gap, anchor: "start" };
+  }
+
   // =====================================================================
   // Story page: index.html
   // =====================================================================
@@ -384,7 +469,12 @@
       },
     ]);
 
-    el("record-note").innerHTML = esc(g.note);
+    // The ledger's own note, quoted verbatim so the page cannot drift from the file
+    // it is quoting. It speaks in column names, which the story page itself never
+    // prints, so it is introduced as what it is -- a note on how the figures are
+    // defined -- rather than left to read as a stray internal comment.
+    el("record-note").innerHTML =
+      `<b>How these figures are defined.</b> ` + esc(g.note);
 
     // history of the Scholar cited-by total
     drawHistory(D);
@@ -395,18 +485,27 @@
     el(
       "breakdown-lede"
     ).innerHTML =
-      `Every row on every exhibit page falls into exactly one of these buckets, ` +
-      `and the squares below add up to the ${fmt(g.citation_records_reviewed)} rows ` +
+      `Every row on every exhibit page falls into exactly one of the categories ` +
+      `below, and the squares add up to the ${fmt(g.citation_records_reviewed)} rows ` +
       `on the pages. ` +
       `<b>Independent</b> means the citing work shares no author with the paper it ` +
       `cites, and lists neither the PI (Richard D. Cummings) nor the former PI ` +
-      `(Umesh R. Desai). It is the only thing an exhibit PDF marks. <b>Awaiting ` +
-      `review</b> and <b>Non-English</b> rows are left unmarked and are excluded from ` +
-      `the counted total, so the share quoted for the packet is never padded. The ` +
-      `<b>Non-English</b> bucket is its own since 2026-11-03: the language screen ` +
-      `supersedes a row's independence classification, because no certified ` +
-      `translation is being obtained, so those ${fmt(g.flagged_non_english)} rows are ` +
-      `a closed matter reported once rather than unsettled work awaiting a decision.`;
+      `(Umesh R. Desai). It is the only thing an exhibit PDF marks. <b>Not ` +
+      `independent</b> covers every row that does share an author, including the ` +
+      `${fmt(g.self_pi + g.self_former_pi)} self-citations by the PI or former PI, ` +
+      `which are broken out in chapter 7. <b>Preprint / copy</b> is a citing work ` +
+      `Google Scholar lists twice on one page &mdash; a preprint, repository, author ` +
+      `or database copy of a paper already counted &mdash; so the work is credited ` +
+      `once, and those ${fmt(g.bucket_preprint_copy)} rows are itemised in chapter 7. ` +
+      `<b>Non-English</b> rows are excluded from the counted total, so the share ` +
+      `quoted for the packet is never padded; that bucket is its own since 2026-11-03, ` +
+      `when the language screen came to supersede a row's independence classification, ` +
+      `because no certified translation is being obtained &mdash; those ` +
+      `${fmt(g.flagged_non_english)} rows are a closed matter reported once rather ` +
+      `than unsettled work. <b>Nothing awaits a decision:</b> the category for rows ` +
+      `no rule could settle holds ${fmt(g.bucket_review)} rows on this snapshot, so ` +
+      `it is no longer drawn on the charts; chapter 7 records how those rows were ` +
+      `settled.`;
 
     drawWaffle(D);
     drawSplit(D);
@@ -536,10 +635,13 @@
     ).innerHTML =
       `Each row is one Google Scholar result on a citing-articles page whose venue or ` +
       `link identifies it as patent literature. ${families} distinct title/applicant ` +
-      `combinations appear, so a family such as the Factor XI antibody documents counts ` +
-      `once per published document, which is how Scholar presents them. Spot-check each ` +
-      `one before filing: patents are indexed unevenly by PubMed and OpenAlex, so most ` +
-      `of them carry the <span class="tag coverage">not indexed</span> state and rest on ` +
+      `combinations appear. Note how these are counted: where a family shares one ` +
+      `title &mdash; an application with its grant, a WO filing with its US national ` +
+      `phase &mdash; the distinct-paper figure treats the family as <b>one</b> citing ` +
+      `work, while this table and the exhibit still show each published document. So ` +
+      `the rows below can exceed the distinct-papers contribution. Spot-check each one ` +
+      `before filing: patents are indexed unevenly by PubMed and OpenAlex, so most of ` +
+      `them carry the <span class="tag coverage">not indexed</span> state and rest on ` +
       `Scholar's own complete author list.`;
 
     // =================================================================
@@ -553,8 +655,18 @@
       `Scholar truncates it, the BibTeX record behind that result's Cite control. ` +
       `Every entry that looks independent is then <b>corroborated</b> against PubMed ` +
       `(NCBI E-utilities) and, failing that, OpenAlex, both of which publish a complete ` +
-      `author list. An external record can confirm an entry or pull it back to review; ` +
-      `it never promotes one.`;
+      `author list. Since 2026-11-02 a complete external list settles a row rather than ` +
+      `merely shadowing it: an overlap makes the entry dependent, and a list that shares ` +
+      `nobody clears a byline Scholar had truncated. Where neither Scholar nor either ` +
+      `database could settle an author list, the entry was left uncounted rather than ` +
+      `guessed at and read from the published article by hand. That work is ` +
+      `<b>complete</b>: ${fmt(g.review_queue ?? g.awaiting_review)} citations remain ` +
+      `undecided on this snapshot. Of the ${fmt(g.independent_countable)} counted ` +
+      `independent citations, ${fmt(g.independent_externally_confirmed)} are backed by ` +
+      `an external author list, ${fmt(g.independent_user_decided || 0)} were settled by ` +
+      `a person reading the published article, and ${fmt(
+        g.independent_scholar_list_only
+      )} rest on Scholar's own complete list.`;
 
     drawCorroboration(D);
 
@@ -564,43 +676,63 @@
     el(
       "open-lede"
     ).innerHTML =
-      `A citation that cannot be settled is not counted, and is not marked. There ` +
-      `are two quite different reasons a row is left out, and they are kept apart.` +
+      `Every citing record falls into exactly one of the categories on the waffle in ` +
+      `chapter 2. Two of them are not counted as independent, for reasons that are the ` +
+      `opposite of one another.` +
       `<br><br>` +
-      `<b>Open author questions.</b> ${fmt(g.review_queue ?? g.awaiting_review)} ` +
-      `records await a settled author list, and ` +
-      `${fmt(g.independent_pending)} are classified independent but await ` +
-      `corroboration. Each of these is a row a person can settle, and a decision ` +
-      `either way changes a figure; they are on <a href="review.html">the review ` +
-      `queue</a>.` +
+      `<b>Preprint / copy &mdash; ${fmt(g.bucket_preprint_copy)} rows.</b> Google ` +
+      `Scholar lists some papers twice on one citing page: the journal record and a ` +
+      `bioRxiv preprint, institutional repository, author upload, thesis or database ` +
+      `copy of the same work. The packet counts the work <b>once</b>. Each row here ` +
+      `names the row that stands in its place, so the exhibit and the count can be ` +
+      `reconciled by hand. A copy also <b>takes the verdict of that standing row</b>: ` +
+      `where the published record was settled, the duplicate is reported under the same ` +
+      `classification and is not left as an open question, since its own byline cannot ` +
+      `change an answer the work already has. Only a copy whose standing row is itself ` +
+      `unresolved would stay open. ${fmt((D.preprint_copies || []).filter((r) => r.marked).length)} ` +
+      `of them still carry a yellow mark on the exhibit, because the exhibit is a ` +
+      `picture of Scholar's page and both rows are printed on it &mdash; that is the ` +
+      `gap between ${fmt(g.independent_countable)} marks and ` +
+      `${fmt(g.independent_unique_papers)} counted independent works.` +
       `<br><br>` +
-      `<b>Non-English, a closed matter.</b> ${fmt(g.flagged_non_english)} records ` +
-      `are flagged non-English, of which ${fmt(g.non_english_independent)} also ` +
-      `carry an independent classification. Since 2026-11-03 the language screen ` +
-      `<i>supersedes</i> that classification: per the guide a non-English citation ` +
-      `needs a certified human translation and affidavit, and the project decided on ` +
-      `2026-11-01 not to obtain any, so no reading of one of these bylines can change ` +
-      `the packet. They are therefore reported once, as non-English, and are not ` +
-      `counted as unsettled work &mdash; ${fmt(g.non_english_withheld)} of them would ` +
-      `otherwise have counted, which is what the packet gives up. They are ` +
-      `<a href="language.html">kept apart</a> and not offered for decision, and the ` +
-      `packet reports the adjusted English-only total instead.`;
+      `<b>Non-English, a closed matter &mdash; ${fmt(g.flagged_non_english)} rows.</b> ` +
+      `Of these, ${fmt(g.non_english_independent)} also carry an independent ` +
+      `classification. Since 2026-11-03 the language screen <i>supersedes</i> that ` +
+      `classification: per the guide a non-English citation needs a certified human ` +
+      `translation and affidavit, and the project decided on 2026-11-01 not to obtain ` +
+      `any, so no reading of one of these bylines can change the packet. They are ` +
+      `reported once, as non-English &mdash; ${fmt(g.non_english_withheld)} of them ` +
+      `would otherwise have counted, which is what the packet gives up. They are ` +
+      `<a href="language.html">kept apart</a> and not offered for decision.` +
+      `<br><br>` +
+      `<b>Nothing awaits a decision &mdash; ${fmt(
+        g.review_queue ?? g.awaiting_review
+      )} rows open.</b> Every citation whose author list no source could settle was ` +
+      `read from the published article and its verdict recorded against the row_uid; ` +
+      `the last of them closed on 2026-11-04, so no figure on this page is ` +
+      `provisional. The <a href="review.html">open-rows chapter</a> stays in the packet ` +
+      `as the record of how each row was settled &mdash; what was checked, what it ` +
+      `turned on, and who decided it &mdash; rather than as a list of work left to do.`;
 
-    // The unsettled figure is English open author work only. It is normally zero
-    // now that the language rows have their own bucket; the sub-line says so
-    // plainly, because a bare 0 next to 45 non-English rows would read as a glitch.
+    // Is an "unsettled" row actually open work? On this snapshot the two rows the
+    // pending figure counts are the second listing of a work that is already
+    // counted through another row (a same-work fold recorded by hand), so their
+    // standing row carries the verdict and neither one is awaiting anything.
+    // Saying "awaiting corroboration" over them would tell a reader an open
+    // question exists where the packet has an answer, so the figure is described
+    // from the copy listing rather than from the counting rule's label. The rule
+    // itself is untouched -- this is presentation, and the number still comes from
+    // the ledger.
+    const copyUids = new Set((D.preprint_copies || []).map((r) => r.row_uid));
     const unsettledApart = (D.unsettled_rows || []).length;
+    const unsettledCopies = (D.unsettled_rows || []).filter(
+      (r) => copyUids.has(r.row_uid)
+    ).length;
     statBand(el("open-band"), [
-      // The queue, not the raw REVIEW count: the non-English REVIEW rows sit on
-      // the language page, so pointing this at awaiting_review would promise more
-      // rows than review.html lists.
-      { label: "Awaiting review", value: fmt(g.review_queue ?? g.awaiting_review), sub: "on the review queue" },
       {
-        label: "Independent, unsettled",
-        value: fmt(g.independent_pending),
-        sub: unsettledApart
-          ? `${fmt(unsettledApart)} English row(s) awaiting corroboration`
-          : "none — all open work is on the queue",
+        label: "Preprint / copy",
+        value: fmt(g.bucket_preprint_copy),
+        sub: "same work, counted once",
       },
       {
         label: "Non-English",
@@ -612,24 +744,175 @@
         value: fmt(g.non_english_withheld),
         sub: "would count with a translation",
       },
-      { label: "Self (PI)", value: fmt(g.self_pi) },
-      { label: "Self (former PI)", value: fmt(g.self_former_pi) },
+      // The queue, not the raw REVIEW count: the non-English REVIEW rows sit on
+      // the language page, so pointing this at awaiting_review would promise more
+      // rows than review.html lists.
+      {
+        label: "Awaiting a decision",
+        value: fmt(g.review_queue ?? g.awaiting_review),
+        sub: "queue closed 2026-11-04",
+      },
+      {
+        label: "Independent, not marked",
+        value: fmt(g.independent_pending),
+        sub:
+          unsettledApart === 0
+            ? "none"
+            : unsettledCopies === unsettledApart
+            ? `all ${fmt(unsettledApart)} a second listing of a work counted once`
+            : `${fmt(unsettledApart)} English row(s) awaiting corroboration`,
+      },
+      // The self-citation split, kept visible here per the user's instruction of
+      // 2026-11-03: the charts fold these into "not independent", so this is where
+      // a reviewer asking "how many are your own, or your former PI's?" is answered.
+      {
+        label: "Of which self-citations",
+        value: fmt(g.self_pi + g.self_former_pi),
+        sub: `${fmt(g.self_pi)} current PI · ${fmt(g.self_former_pi)} former PI`,
+      },
     ]);
+
+    // The fifth bucket, row by row. A reviewer comparing a two-sheet exhibit to
+    // the count needs to see which row stands for the work, not merely that some
+    // rows were dropped.
+    {
+      const copies = (D.preprint_copies || []).slice();
+      const copyCols = [
+        { key: "row_uid", label: "row_uid", render: (r) => `<code>${esc(r.row_uid)}</code>` },
+        {
+          key: "title",
+          label: "Citing work, listed twice",
+          render: (r) =>
+            r.link
+              ? ext(r.link, esc(shorten(r.title, 90)), "Open the second listing")
+              : esc(shorten(r.title, 90)),
+        },
+        { key: "reason", label: "Why it is a second listing", render: (r) => `<span class="hint">${esc(r.reason)}</span>` },
+        {
+          // The classification this copy is reported under. Per the user's
+          // instruction of 2026-11-03 a duplicate takes the verdict of the copy
+          // that stands for its work, so a REVIEW row here is shown as its
+          // parent's INDEPENDENT/DEPENDENT rather than as open queue work. The
+          // tag names the parent so the reader can see the verdict is inherited,
+          // not concluded from this row's own byline.
+          //
+          // When nothing was inherited the row's OWN status is shown, not
+          // "review": a copy can already be settled on its own reading (a
+          // DEPENDENT duplicate, or an INDEPENDENT one covered by a complete
+          // Scholar list), and labelling those as open work would be false.
+          // A copy with an unsettled parent is the case that really is queued.
+          key: "inherited_status",
+          label: "Reported as",
+          render: (r) => {
+            const word = (s) =>
+              s === "INDEPENDENT"
+                ? "independent"
+                : s === "DEPENDENT"
+                  ? "dependent"
+                  : s === "SELF (PI)"
+                    ? "self · PI"
+                    : s === "SELF (FORMER PI)"
+                      ? "self · former PI"
+                      : esc(s);
+            if (r.inherited_status)
+              return `<span class="tag confirmed">${word(r.inherited_status)} · inherited</span>`;
+            if (r.status === "REVIEW")
+              return `<span class="tag review">review · own row</span>`;
+            return `<span class="tag">${word(r.status)} · own row</span>`;
+          },
+        },
+        {
+          key: "stands_for_row_uid",
+          label: "Counted once as",
+          render: (r) =>
+            r.stands_for_row_uid
+              ? `<code>${esc(r.stands_for_row_uid)}</code>` +
+                (r.stands_for_link
+                  ? " " + ext(r.stands_for_link, "↗", "Open the counted version")
+                  : "")
+              : `<span class="hint">—</span>`,
+        },
+        {
+          key: "marked",
+          label: "On exhibit",
+          num: true,
+          render: (r) =>
+            r.marked
+              ? `<span class="mark">marked</span>`
+              : `<span class="hint">unmarked</span>`,
+        },
+        {
+          key: "cited_title",
+          label: "Cites (PI work)",
+          render: (r) => `<span class="hint">${esc(shorten(r.cited_title, 46))}</span>`,
+        },
+        {
+          key: "exhibit_page",
+          label: "Pg · Row",
+          num: true,
+          render: (r) =>
+            r.exhibit_pdf
+              ? ext(r.exhibit_pdf, `${r.exhibit_page} · ${r.exhibit_row}`, "Open the exhibit page")
+              : `${r.exhibit_page} · ${r.exhibit_row}`,
+        },
+      ];
+      const drawCopies = () => {
+        const query = (el("copy-search")?.value || "").trim().toLowerCase();
+        const out = copies.filter(
+          (r) =>
+            !query ||
+            String(r.title).toLowerCase().includes(query) ||
+            String(r.byline).toLowerCase().includes(query) ||
+            String(r.cited_title).toLowerCase().includes(query) ||
+            String(r.stands_for_row_uid).toLowerCase().includes(query) ||
+            String(r.row_uid).toLowerCase().includes(query)
+        );
+        table("copy-table", copyCols, out, {
+          caption:
+            `${fmt(out.length)} of ${fmt(copies.length)} second listings. Each is ` +
+            `one citing work Google Scholar shows twice; the packet counts it once, ` +
+            `under the row_uid in "Counted once as".`,
+          sortable: true,
+        });
+      };
+      if (el("copy-table")) {
+        drawCopies();
+        enableSort("copy-table", copyCols, copies, drawCopies);
+        el("copy-search")?.addEventListener("input", drawCopies);
+      }
+    }
 
     const openRows = D.open_items.map((o) => ({
       status: o.status,
       reason: o.reason || "(no reason recorded)",
       count: o.count,
     }));
+    // These notes are written onto a row when its page is captured, and they are
+    // never rewritten afterwards -- which is right for an audit trail but reads
+    // badly to someone arriving at the end of the project. A row that took its
+    // verdict from the copy standing for it, or that the language screen holds,
+    // still carries a note saying its author list was incomplete. So the heading
+    // says what the table is (a capture-time note, grouped) rather than implying
+    // the row still needs something, and the caption points at the figure that
+    // actually answers "is anything undecided?".
     table(
       "open-table",
       [
-        { key: "status", label: "Record status" },
-        { key: "reason", label: "Why it needs attention" },
+        { key: "status", label: "Classification of the row" },
+        { key: "reason", label: "Note recorded when the page was captured" },
         { key: "count", label: "Records", num: true, render: (r) => fmt(r.count) },
       ],
       openRows,
-      { caption: "Attention flags recorded at capture time, grouped." }
+      {
+        caption:
+          `Capture-time notes, grouped. A note is what the capture observed about ` +
+          `a row's author list at the time, not a request: the row's own ` +
+          `classification is the first column, and ` +
+          `${fmt(g.review_queue ?? g.awaiting_review)} rows are open on this ` +
+          `snapshot. A row classified REVIEW here is one whose verdict came from ` +
+          `the copy standing for its work, or which the language screen holds — ` +
+          `both are listed above, and neither is on the open list.`,
+      }
     );
 
   }
@@ -663,8 +946,11 @@
       { key: "self_former_pi", label: "Self", num: true, render: (r) => fmt(r.self_pi + r.self_former_pi) },
       { key: "review_queue", label: "Review", num: true, render: (r) => fmt(r.review_queue) },
       // Unsettled is English open author work only; the non-English rows are the
-      // next column and are no longer counted here (2026-11-03).
-      { key: "independent_pending", label: "Unsettled", num: true, render: (r) => fmt(r.independent_pending) },
+      // next column and are no longer counted here (2026-11-03). The heading is
+      // "Not marked" rather than "Unsettled" because on this packet every row in
+      // the column is a second listing of a work counted once, not an open
+      // question -- see the note under the table.
+      { key: "independent_pending", label: "Not marked", num: true, render: (r) => fmt(r.independent_pending) },
       { key: "non_english", label: "Non-Eng.", num: true, render: (r) => fmt(r.non_english) },
       { key: "patent_independent", label: "Patents", num: true, render: (r) => (r.patent_rows ? `${fmt(r.patent_independent)}/${fmt(r.patent_rows)}` : "—") },
       { key: "pages_captured", label: "Pages", num: true, render: (r) => (r.pages_expected ? `${fmt(r.pages_captured)}/${fmt(r.pages_expected)}` : "—") },
@@ -699,15 +985,24 @@
   // =====================================================================
   function renderWorks(D) {
     const works = D.works;
+    const copies = works.filter((w) => w.is_copy);
+    // The list is every row on a filed exhibit page, so its length is the record
+    // count, not the distinct-paper count. Saying only "distinct papers" is what
+    // made a copy invisible to someone searching for it: the page claimed to hold
+    // papers and silently left the second listing of one out.
     el(
       "works-lede"
     ).innerHTML =
-      `${fmt(works.length)} distinct citing papers appear on the exhibit pages, of which ` +
-      `${fmt(works.filter((w) => w.marked).length)} are highlighted. The list is ordered ` +
-      `by the cited publication's size, then by title — the same order the exhibit pages ` +
-      `were reviewed in. The first column is each row's permanent <code>row_uid</code>, ` +
-      `the same identifier the review queue, the non-English listing and the decision ` +
-      `CSV use, so a row named here can be looked up anywhere else in the packet.`;
+      `${fmt(works.length)} citing rows appear on the exhibit pages, of which ` +
+      `${fmt(works.filter((w) => w.marked).length)} are highlighted and ` +
+      `${fmt(copies.length)} are a second listing of a work already in the list — ` +
+      `a preprint, a repository copy, another document in a patent family, or a ` +
+      `translation. They are shown here because the exhibit prints them; the packet ` +
+      `credits each work once, so this table is longer than the ` +
+      `${fmt(D.global.unique_papers_citing)} distinct papers the ledger counts. The ` +
+      `first column is each row's permanent <code>row_uid</code>, the same identifier ` +
+      `the open-rows chapter, the non-English listing and the decision CSV use, so a ` +
+      `row named here can be looked up anywhere else in the packet.`;
     el("works-csv-name").textContent = D.sources.ledger;
 
     const workCols = [
@@ -721,7 +1016,7 @@
         label: "row_uid",
         render: (r) => `<span class="uid">${esc(r.row_uid)}</span>`,
       },
-      { key: "title", label: "Citing work", render: (r) => workTitle(r) },
+      { key: "title", label: "Citing work", render: (r) => workTitle(r) + copyNote(r) },
       // Dropped on paper only, exactly as the review tables drop it: the byline
       // is printed on the exhibit page the next column names, and this table is
       // the widest thing in the packet. Keeping it alongside a new uid column
@@ -783,6 +1078,10 @@
     el("works-marked-only").addEventListener("change", () => renderWorks(workRows()));
 
   }
+
+  // Set by renderReview: which queue columns to draw. See the note there for why
+  // the decision column disappears when there is nothing to decide.
+  let showDecision = () => true;
 
   // =====================================================================
   // Review queue page: review.html
@@ -920,6 +1219,11 @@
     const g = D.global;
     const queue = D.review_queue || [];
     const buckets = D.review_buckets || {};
+    // The whole page reads differently once there is nothing to decide, and this
+    // flag is what switches between the two. It is derived, never hard-coded, so a
+    // future capture that produces an open row brings the working wording back on
+    // its own.
+    const closed = queue.length === 0;
     // v_review has excluded non-English rows since 2026-11-03 (user instruction:
     // such a row belongs on the Non-English page, not in a queue of decisions).
     // Nothing here filters on the flag any more, but a row that still carries one
@@ -929,25 +1233,94 @@
     const sheet = el("review-sheet");
     if (sheet) sheet.textContent = D.sources.review_sheet || "";
 
-    el("review-lede").innerHTML =
-      `${fmt(queue.length)} of the ${fmt(g.citation_records_reviewed)} citation rows ` +
-      `on the exhibit pages cannot be settled by the rules, so they are counted ` +
-      `neither as independent nor as dependent. Each one is a row you can settle: ` +
-      `a decision either way changes a figure. Rows that are also non-English are ` +
-      `not listed here &mdash; with no translations being obtained no decision on ` +
-      `one can change the packet, so they appear with the other non-English ` +
-      `entries on <a href="language.html">the Non-English page</a>. Every row here ` +
-      `links to the exhibit PDF page it came from.`;
+    // The callout on review.html is written here rather than in the HTML so it can
+    // tell the truth about the queue's state. Addressing the reader as someone with
+    // rows to decide, when there are none, is exactly the kind of stale workpaper
+    // instruction that misleads whoever reads the packet next.
+    const howTitle = el("review-how-title");
+    const how = el("review-how");
+    if (howTitle && how) {
+      howTitle.textContent = closed
+        ? "What this chapter records"
+        : "How to use this page";
+      how.innerHTML = closed
+        ? `<p>
+             Each row that once appeared here was settled by reading the published
+             article, and the verdict was written into
+             <code>${esc(D.sources.review_sheet || "the dated review sheet")}</code>
+             against its <code>row_uid</code> before the record was rebuilt. Those
+             decisions carry the name of the person who made them, the date, and the
+             reason, and are reported in chapter&nbsp;6 separately from the machine
+             readings &mdash; so a reader can see how much of the total rests on a
+             human check of the byline.
+           </p>
+           <p>
+             Nothing on this page is editable, and nothing here changes a count.
+             A row that is also non-English never appears on this list: with no
+             certified translations being obtained, no reading of such a row can
+             change the packet, so it belongs with the other non-English entries on
+             <a href="language.html">the Non-English page</a>.
+           </p>`
+        : `<p>
+             Write the decision into
+             <code>${esc(D.sources.review_sheet || "the dated review sheet")}</code>
+             in the <code>your_decision</code> column. Nothing on this page is
+             editable and nothing here changes a count: none of these rows is
+             currently counted as independent <i>or</i> as dependent, so a decision
+             moves the totals either way.
+           </p>
+           <p>
+             A row that is also non-English is not on this queue. With no certified
+             translations being obtained, no reading of such a row can change the
+             packet, so it belongs with the other non-English entries on
+             <a href="language.html">the Non-English page</a> rather than in a list
+             of decisions to make.
+           </p>`;
+    }
+
+    // The "Your decision" column exists to point a reader at the CSV column to
+    // fill in. With nothing queued it is an invitation to decide a row nobody asked
+    // about, printed on an empty table, so it is dropped while the queue is closed
+    // and comes back on its own the day a row appears.
+    showDecision = (c) => c.key !== "decision" || !closed;
+
+    el("review-lede").innerHTML = closed
+      ? `This chapter is the record of decisions that have been made, not a list of ` +
+        `decisions left to make. Every one of the ` +
+        `${fmt(g.citation_records_reviewed)} citation rows on the exhibit pages now ` +
+        `carries a classification: ${fmt(g.bucket_independent)} independent, ` +
+        `${fmt(g.bucket_dependent)} not independent, ` +
+        `${fmt(g.bucket_preprint_copy)} a second listing of a work already counted, ` +
+        `and ${fmt(g.bucket_non_english)} withheld for language &mdash; which is the ` +
+        `whole ${fmt(g.citation_records_reviewed)}. ` +
+        `${fmt(g.review_queue ?? g.awaiting_review)} rows remain open on this ` +
+        `snapshot. Citations no source could settle were read from the published ` +
+        `article one at a time, and each verdict is recorded against its row_uid with ` +
+        `the date and the reason &mdash; the last closed on 2026-11-04. The buckets ` +
+        `below are therefore empty, and are kept so a reader can see the shape of ` +
+        `what was checked and confirm that nothing was left in them.`
+      : `${fmt(queue.length)} of the ${fmt(g.citation_records_reviewed)} citation rows ` +
+        `on the exhibit pages cannot be settled by the rules, so they are counted ` +
+        `neither as independent nor as dependent. Each one is a row you can settle: ` +
+        `a decision either way changes a figure. Rows that are also non-English are ` +
+        `not listed here &mdash; with no translations being obtained no decision on ` +
+        `one can change the packet, so they appear with the other non-English ` +
+        `entries on <a href="language.html">the Non-English page</a>. Every row here ` +
+        `links to the exhibit PDF page it came from.`;
 
     statBand(el("review-band"), [
-      { label: "Awaiting review", value: fmt(queue.length), sub: "counted neither way" },
+      {
+        label: "Awaiting a decision",
+        value: fmt(queue.length),
+        sub: closed ? "queue closed 2026-11-04" : "counted neither way",
+      },
       { label: "Contradicted", value: fmt(buckets["1 contradicted"] || 0), sub: "external list overlaps" },
       { label: "External, no overlap", value: fmt(buckets["2 external-no-overlap"] || 0), sub: "likeliest to be independent" },
       { label: "Unresolvable", value: fmt(buckets["3 unresolvable"] || 0), sub: "needs the published article" },
       {
-        label: "Independent, unsettled",
+        label: "Independent, not marked",
         value: fmt((D.unsettled_rows || []).length),
-        sub: "awaiting corroboration",
+        sub: unsettledSub(D),
       },
       {
         label: "Non-English",
@@ -974,8 +1347,13 @@
       const rows = filter(queue.filter((r) => r.bucket === name));
       el(meta.head).textContent =
         `${name.charAt(0)} · ${meta.label} — ${fmt(rows.length)} row${rows.length === 1 ? "" : "s"}`;
-      el(meta.why).innerHTML = meta.text;
-      table(meta.anchor, queueCols, rows.map((r) => ({ ...r, _cls: r.language_flag ? "held" : "" })), {
+      // With the queue closed the bucket text is kept — it is what the categories
+      // meant — and the reader is told plainly that none remains, rather than left
+      // to wonder whether an empty table is a filter or a fault.
+      el(meta.why).innerHTML = closed
+        ? `${meta.text} <i>No row is in this bucket on this snapshot.</i>`
+        : meta.text;
+      table(meta.anchor, queueCols.filter(showDecision), rows.map((r) => ({ ...r, _cls: r.language_flag ? "held" : "" })), {
         caption:
           `${fmt(rows.length)} row${rows.length === 1 ? "" : "s"} in this bucket.` +
           (rows.some((r) => r.language_flag)
@@ -989,8 +1367,9 @@
     const redraw = () => {
       const shown = Object.keys(BUCKET_META).reduce((n, name) => n + drawBucket(name), 0);
       drawUnsettled(D);
-      el("review-count").textContent =
-        `${fmt(shown)} of ${fmt(queue.length)} queued rows shown`;
+      el("review-count").textContent = closed
+        ? `Queue closed — nothing left to decide`
+        : `${fmt(shown)} of ${fmt(queue.length)} queued rows shown`;
     };
     redraw();
     for (const meta of Object.values(BUCKET_META)) {
@@ -999,16 +1378,20 @@
     el("review-search").addEventListener("input", redraw);
   }
 
-  // The second list the user asked for: classified independent, not highlighted,
-  // and NOT held back by the language screen. On the 2026-11-02 store this is
-  // empty, and the empty state says so explicitly rather than showing a blank
-  // box that looks like a broken page.
+  // The second list: classified independent, not highlighted, and NOT held back by
+  // the language screen. On this snapshot the two rows it holds are the second
+  // listing of a work already counted through another row, so the heading and the
+  // explanation say what they are rather than calling them open work -- see
+  // unsettledSub() for why the counting rule's label misleads here.
   function drawUnsettled(D) {
     const rows = D.unsettled_rows || [];
     const head = el("unsettled-head");
     const why = el("unsettled-why");
     if (!head || !why) return;
-    head.textContent = `Independent but unsettled — ${fmt(rows.length)} row${rows.length === 1 ? "" : "s"}`;
+    const copies = new Set((D.preprint_copies || []).map((r) => r.row_uid));
+    const asCopies = rows.filter((r) => copies.has(r.row_uid)).length;
+    head.textContent =
+      `Independent but not marked — ${fmt(rows.length)} row${rows.length === 1 ? "" : "s"}`;
     if (!rows.length) {
       why.innerHTML =
         `None. Every row classified independent and not highlighted is flagged ` +
@@ -1017,22 +1400,32 @@
         `reading of such a byline can change the packet, so it is not open work. ` +
         `Those ${fmt(D.global.flagged_non_english)} rows are on ` +
         `<a href="language.html">their own page</a> and are not offered for review. ` +
-        `The rows a person <i>can</i> settle are the ${fmt(
-          (D.global.review_queue ?? D.global.awaiting_review) || 0
-        )} in the buckets above. If a future capture produces an English row that ` +
-        `is genuinely open, it appears in this table &mdash; ` +
+        `There is nothing in the buckets above either: the queue closed on 2026-11-04. ` +
+        `If a future capture produces an English row that is genuinely open, it ` +
+        `appears in this table &mdash; ` +
         `<code>tools/build-dashboard-data.js</code> fails the build rather than let ` +
         `one go unlisted.`;
-      table("table-unsettled", queueCols.map((c) => ({ ...c })), [], {
+      table("table-unsettled", queueCols.filter(showDecision).map((c) => ({ ...c })), [], {
         caption: "No rows.",
       });
       return;
     }
     why.innerHTML =
-      `Classified independent by the author comparison, English, and not ` +
-      `highlighted only because no source has settled the list. These need settling.`;
-    table("table-unsettled", unsettledCols, rows, {
-      caption: `${fmt(rows.length)} independent-but-unhighlighted row(s).`,
+      asCopies === rows.length
+        ? `Classified independent by the author comparison and English, but not ` +
+          `highlighted because each of these rows is the <b>second listing of a work ` +
+          `the packet already counts once</b> through the row named in the ` +
+          `<a href="index.html#open">preprint / copy table</a> of chapter 7. The work ` +
+          `itself is counted; the duplicate is not marked on the exhibit, and nothing ` +
+          `here is awaiting a decision.`
+        : `Classified independent by the author comparison, English, and not ` +
+          `highlighted only because no source has settled the list. These need settling.`;
+    table("table-unsettled", unsettledCols.filter(showDecision), rows, {
+      caption:
+        `${fmt(rows.length)} independent-but-unhighlighted row(s)` +
+        (asCopies === rows.length
+          ? ` — every one a second listing of a counted work, not open work.`
+          : `.`),
       sortable: true,
     });
     enableSort("table-unsettled", unsettledCols, rows, () => {});
@@ -1284,7 +1677,7 @@
     // machine match, and it is shown separately rather than folded into
     // "confirmed" so a packet figure can say how much rests on a decision.
     if (r.confirm_state === "user-decided")
-      return `<span class="tag decided">your decision</span>`;
+      return `<span class="tag decided">decided by a person</span>`;
     if (r.confirm_state === "confirmed")
       return `<span class="tag confirmed">confirmed</span>`;
     if (r.confirm_state === "unverified-coverage")
@@ -1308,6 +1701,28 @@
     if (r.language_flag)
       extra.push(`<span class="tag lang">non-English</span>`);
     return base + (extra.length ? ` ${extra.join(" ")}` : "");
+  }
+  // Which row this one duplicates, in the same words the preprint/copy appendix
+  // uses, so a copy reads as a copy wherever it is listed instead of looking
+  // like a second citation the packet counted twice. Naming the standing row's
+  // uid is the point: a reviewer can jump from one to the other and see that the
+  // exhibit marks both while the ledger credits one.
+  function copyNote(r) {
+    if (!r.is_copy) return "";
+    const kind =
+      r.duplicate_kind === "same-work"
+        ? "same work, different title"
+        : r.duplicate_kind === "language-edition"
+        ? "language edition"
+        : r.duplicate_kind === "patent-family"
+        ? "patent family"
+        : "second listing of a work above";
+    // The uid is emitted as its own span so it picks up the same styling it has
+    // in the first column, and the tag text is built from escaped pieces only.
+    const stands = r.stands_for_row_uid
+      ? ` · counted once through <span class="uid">${esc(r.stands_for_row_uid)}</span>`
+      : "";
+    return ` <span class="tag coverage">${esc(kind)}</span>${stands}`;
   }
   function exhibitRef(r) {
     if (!r.exhibit_base) return "—";
@@ -1339,11 +1754,27 @@
       )}
       ${row(
         "What counts as independent",
-        `A citing work shares no author with the paper it cites, and lists neither the PI (Richard D. Cummings) nor the former PI (Umesh R. Desai), both of whose papers are self-citations. Authors are matched on surname plus initials, never surname alone, because both surnames are common. A surname collision with no comparable initials becomes <i>review</i>, and is counted neither way.`
+        `A citing work shares no author with the paper it cites, and lists neither the PI (Richard D. Cummings) nor the former PI (Umesh R. Desai), both of whose papers are self-citations. Authors are matched on surname plus initials, never surname alone, because both surnames are common. A surname collision with no comparable initials became <i>review</i>, counted neither way until the published article was read.`
       )}
       ${row(
         "Corroboration",
-        `PubMed (NCBI E-utilities) first, then OpenAlex. <i>Confirmed</i> means the external author list also shows no overlap. <i>Not indexed</i> means no external record covers the work — typical of theses, preprints and patents — so the entry rests on Scholar's own complete list and is flagged for a spot-check. An external record never promotes an entry; a disagreement pulls it back to review.`
+        `PubMed (NCBI E-utilities) first, then OpenAlex; Scholar stays the primary
+        source and a third-party database is never believed unless its title matches
+        the Scholar entry closely enough to be the same work. <i>Confirmed</i> means
+        the external author list also shows no overlap. <i>Not indexed</i> means no
+        external record covers the work &mdash; typical of theses, preprints and
+        patents &mdash; so the entry rests on Scholar&rsquo;s own complete list and is
+        flagged for a spot-check. Since 2026-11-02 a complete external list
+        <i>settles</i> a row rather than merely shadowing it: where it shares an
+        author with the cited paper, or names either PI, the row is dependent
+        (<i>resolved externally</i>); where it shares nobody, it clears a byline
+        Scholar had truncated. A row that no source could settle went to the review
+        chapter rather than being guessed at, and a decision there is recorded as
+        <i>decided by a person</i> — reported separately from the machine readings, so a
+        reader can see how much of the total rests on a person reading the published
+        byline. That queue closed on 2026-11-04: ${fmt(
+          g.review_queue ?? g.awaiting_review
+        )} rows remain undecided.`
       )}
       ${row(
         "Language",
@@ -1358,12 +1789,51 @@
         )} that are otherwise settled and would have counted are listed as <i>withheld for language</i>, which is what the packet gives up by not filing translations.`
       )}
       ${row(
+        "The categories",
+        `Every citing record on an exhibit page is placed in exactly one category,
+        defined once in <code>tools/tally.js</code> and read from there by the charts,
+        the ledger and the database&rsquo;s own reconciliation checks:
+        <b>independent</b> ${fmt(g.bucket_independent)}, <b>not independent</b>
+        ${fmt(g.bucket_dependent)}, <b>non-English</b> ${fmt(g.bucket_non_english)},
+        and <b>preprint / copy</b> ${fmt(g.bucket_preprint_copy)} &mdash; which sum to
+        the ${fmt(g.citation_records_reviewed)} records. A fifth category, <b>awaiting
+        review</b>, holds the rows no rule could settle; it holds
+        ${fmt(g.bucket_review)} on this snapshot and so is not drawn on the charts
+        (user instruction of 2026-11-04, when the queue closed). It is still computed
+        in the ledger and the store, and the figures above still leave room for it, so
+        the partition closes on the record count either way. Self-citations are folded
+        into <i>not independent</i>, since a paper by the PI or former PI shares an
+        author with the paper it cites; the split is ${fmt(
+          g.self_pi
+        )} by the current PI and ${fmt(g.self_former_pi)} by the former PI.`
+      )}
+      ${row(
         "Duplicate versions",
-        `Scholar's profile count includes duplicate versions of the same paper that its own citing list folds together, so a publication's exhibit can show fewer distinct papers than the profile number. Both bases are reported everywhere: ${fmt(
+        `Google Scholar lists some papers twice on one citing page: the journal
+        record and a bioRxiv preprint, institutional repository, author upload,
+        thesis, database or language copy of the same work. The packet counts such a
+        work <b>once</b>, and the ${fmt(
+          g.bucket_preprint_copy
+        )} rows that do not stand for theirs are itemised in chapter 7 with the row
+        that does. ${fmt(
+          g.duplicate_records
+        )} extra copies exist in all; the difference is copies that are also
+        non-English, reported once under that heading instead. Both bases are
+        reported everywhere: ${fmt(
           g.citation_records_reviewed
-        )} rows on the exhibit pages, ${fmt(
+        )} rows on the exhibit pages against ${fmt(
           g.unique_papers_citing
-        )} distinct papers, ${fmt(g.duplicate_records)} extra copies.`
+        )} distinct papers. Where the exhibit shows a yellow mark on a
+        <i>preprint / copy</i> row, that is not a second claim &mdash; the exhibit
+        reproduces Scholar&rsquo;s page as printed, and the count credits the work
+        once. A copy is also reported under the standing row&rsquo;s classification
+        rather than as an open question: a row awaiting review that is a copy of a
+        settled work leaves the queue, because reading its byline cannot change an
+        answer the work already has. Two consequences are stated rather than hidden: a patent family sharing
+        one title (an application with its grant, a WO filing with its US national
+        phase) is counted once, and a work whose two listings differ in title is not
+        merged automatically but only where the identity was demonstrated and
+        recorded by hand.`
       )}
       ${row(
         "Completeness",
@@ -1455,47 +1925,65 @@
 
   function drawWaffle(D) {
     const g = D.global;
-    // Six buckets that partition every record exactly once. The non-English rows
-    // became their own bucket on 2026-11-03 at the user's instruction that the
-    // language screen supersedes the independence classification: they are not
-    // unsettled work, because with no certified translations being obtained no
-    // reading of a byline can make one count. Previously they sat inside
-    // `independent_pending` and had to be named in that label to avoid a
-    // double-count, which made a closed decision look like open work.
+    // The categories drawn here, per the user's instruction of 2026-11-03, came
+    // from the ledger's bucket_* figures, which tools/tally.js defines, so the
+    // squares here, the per-publication bars, the ledger CSV and the store's own
+    // SQL are four readings of ONE rule rather than four rules.
     //
-    // Awaiting review is the queue (English REVIEW rows) rather than every row
-    // classified REVIEW, so the five non-English REVIEW rows land in the
-    // language bucket with the rest of their kind instead of being counted twice.
-    const queued = Number(g.review_queue ?? g.awaiting_review) || 0;
-    const parts = [
-      { key: "independent", label: "Independent (highlighted)", value: g.independent_countable, color: COLORS.independent, edge: COLORS.independentEdge },
-      { key: "dependent", label: "Dependent (shares an author)", value: g.dependent, color: COLORS.dependent },
-      { key: "review", label: "Awaiting review", value: queued, color: COLORS.review },
-      { key: "non_english", label: "Non-English (not counted)", value: g.flagged_non_english, color: COLORS.language },
-      { key: "self_former_pi", label: "Self, former PI", value: g.self_former_pi, color: COLORS.self_former_pi },
-      { key: "self_pi", label: "Self, PI", value: g.self_pi, color: COLORS.self_pi },
+    // What changed from the six buckets drawn before:
+    //   - Self (PI) and Self (former PI) fold into "not independent". They were
+    //     always dependent in substance -- the citing paper shares an author with
+    //     the cited one -- and a reviewer asking "how many are your own?" is
+    //     answered in chapter 7 and the method notes, where the split is stated.
+    //   - The second copies of works Scholar lists twice became their own bucket.
+    //     Before they sat inside "independent", which is why the yellow squares
+    //     did not equal the counted independent works with nothing on the page to
+    //     explain the gap. Now the gap is a named category.
+    //
+    // And on 2026-11-04, once the review queue had been worked down to nothing,
+    // the user asked for "Awaiting review" to come off the waffle and every other
+    // plot. It held 0 rows, so the squares still fill the grid exactly -- the
+    // figure dropped is zero, not evidence. dropAwaitingReview() refuses to let
+    // this page draw over a queue that has rows in it again.
+    //
+    // The bucket values sum to the record count by construction, so the squares
+    // always fill the grid exactly.
+    let parts = [
+      { key: "independent", label: "Independent", value: g.bucket_independent, color: COLORS.independent, edge: COLORS.independentEdge },
+      { key: "dependent", label: "Not independent (shares an author)", value: g.bucket_dependent, color: COLORS.dependent },
+      { key: "review", label: "Awaiting review", value: g.bucket_review, color: COLORS.review },
+      { key: "non_english", label: "Non-English (not counted)", value: g.bucket_non_english, color: COLORS.language },
+      { key: "preprint_copy", label: "Preprint / copy", value: g.bucket_preprint_copy, color: COLORS.copy, edge: COLORS.copyEdge },
     ];
-    // Open author work, English rows awaiting corroboration. Normally empty now
-    // that the language rows have moved out; drawn only when there is some, so a
-    // zero does not add an empty square-colour to the legend.
-    if (g.independent_pending > 0) {
-      parts.splice(3, 0, {
+    parts = dropAwaitingReview(parts, g, (p) => `bucket_${p.key}`);
+    // Open author work, English rows awaiting corroboration. Normally empty now;
+    // drawn only when there is some, so a zero adds no empty colour to the legend.
+    if (g.bucket_pending > 0) {
+      parts.splice(2, 0, {
         key: "pending",
         label: "Independent, unsettled",
-        value: g.independent_pending,
+        value: g.bucket_pending,
         color: COLORS.pending,
       });
     }
-    // Safety net: if the rule ever changes so these buckets no longer cover
-    // every record, show the remainder rather than silently shrinking the grid.
+    // A row that fell through every bucket. Should be impossible -- bucketOf is
+    // exhaustive and tested -- but showing it beats silently shrinking the grid.
+    if (g.bucket_other > 0) {
+      parts.push({
+        key: "other",
+        label: "Other records not classified here",
+        value: g.bucket_other,
+        color: COLORS.inkFaint,
+      });
+    }
     const covered = d3.sum(parts, (p) => p.value);
     const rest = Math.max(0, g.citation_records_reviewed - covered);
     if (rest > 0) {
       parts.push({
-        key: "other",
-        label: "Other records not classified here",
+        key: "unclassified",
+        label: "Records the ledger does not bucket",
         value: rest,
-        color: COLORS.language,
+        color: COLORS.inkFaint,
       });
     }
     const total = covered + rest;
@@ -1631,16 +2119,26 @@
       .attr("dominant-baseline", "middle")
       .text((d) => d.label);
 
+    // The count and its percentage sit where the yellow ends (user instruction of
+    // 2026-11-04), so a reader's eye goes from the colour to the number that
+    // describes it. The denominator moves to the right margin, muted, which is
+    // where a total belongs -- it is the length of the track, not the number the
+    // row is quoted by.
+    const splitText = (d) => `${fmt(d.part)} · ${pctOf(d.part, d.whole)}`;
+    const splitTextW = measureTextWidths(rows.map(splitText), "bar-value");
+    const splitPlace = (d) =>
+      endLabel((d.part / d.whole) * iw, splitTextW, iw, 6);
     gsvg
       .selectAll(".val")
       .data(rows)
       .enter()
       .append("text")
       .attr("class", "bar-value")
-      .attr("x", iw + 6)
+      .attr("x", (d) => splitPlace(d).x)
       .attr("y", (d) => y(d.label) + y.bandwidth() / 2)
+      .attr("text-anchor", (d) => splitPlace(d).anchor)
       .attr("dominant-baseline", "middle")
-      .text((d) => `${((d.part / d.whole) * 100).toFixed(1)}%`);
+      .text(splitText);
 
     gsvg
       .selectAll(".sub")
@@ -1648,17 +2146,20 @@
       .enter()
       .append("text")
       .attr("class", "annot")
-      .attr("x", 4)
+      .attr("x", iw + 8)
       .attr("y", (d) => y(d.label) + y.bandwidth() / 2)
       .attr("dominant-baseline", "middle")
-      .text((d) => `${fmt(d.part)} / ${fmt(d.whole)}`);
+      .text((d) => `of ${fmt(d.whole)}`);
 
     el(
       "cap-split"
     ).textContent =
       `The same evidence on five denominators, because the packet needs to be explicit ` +
-      `about which one it is quoting. The ledger publishes all of them; "decided records" ` +
-      `excludes anything still open, so that share is the strictest of the group.`;
+      `about which one it is quoting. Beside each bar is the independent count and the ` +
+      `share of that row's own denominator, printed where the yellow ends; the muted ` +
+      `figure at the right is the denominator. The ledger publishes all of them; ` +
+      `"decided records" excludes anything still open, so that share is the strictest ` +
+      `of the group.`;
   }
 
   // Word-wrap a title into at most `maxLines` lines that each fit inside
@@ -1702,30 +2203,35 @@
       .filter((a) => a.status === "captured")
       .slice()
       .sort((a, b) => b.independent - a.independent);
-    // The same six buckets the waffle uses, so a bar here is the whole
-    // publication and its segments add up to its record count. Two changes
-    // made on 2026-11-03 at the user's request:
-    //   - Awaiting review is the queue (English REVIEW rows), not every REVIEW
-    //     row, so the non-English ones are not counted twice.
-    //   - Unsettled is drawn only when there is open English author work. It is
-    //     zero across this packet, and an empty stack still printed a legend
-    //     key, which read as though undecided citations were hidden in every
-    //     bar. Non-English was missing entirely, so the bars fell short of the
-    //     record count they claim to show.
-    const stacks = [
-      ["independent", "Independent", COLORS.independent, COLORS.independentEdge],
-      ["dependent", "Dependent", COLORS.dependent],
-      ["review_queue", "Awaiting review", COLORS.review],
-      ["non_english", "Non-English (not counted)", COLORS.language],
-      ["self_former_pi", "Self, former PI", COLORS.self_former_pi],
-      ["self_pi", "Self, PI", COLORS.self_pi],
+    // The same buckets the waffle draws, read from the same bucket_* figures, so a
+    // bar here is the whole publication and its segments add up to its record
+    // count. Self-citations are inside "Not independent" and a second copy of a
+    // counted work is "Preprint / copy", which is why a bar's yellow segment can be
+    // shorter than that publication's independent count: the exhibit still marks
+    // both rows, the bar counts the work once.
+    //
+    // "Awaiting review" is dropped here too (user instruction of 2026-11-04, the
+    // same one that took it off the waffle). Because the queue is empty the bar
+    // still adds up to the publication's record count exactly -- removing a
+    // zero-length segment changes no geometry -- and dropAwaitingReview() throws
+    // rather than let a real open row disappear from a bar.
+    let stacks = [
+      ["bucket_independent", "Independent", COLORS.independent, COLORS.independentEdge],
+      ["bucket_dependent", "Not independent", COLORS.dependent],
+      ["bucket_review", "Awaiting review", COLORS.review],
+      ["bucket_non_english", "Non-English", COLORS.language],
+      ["bucket_preprint_copy", "Preprint / copy", COLORS.copy, COLORS.copyEdge],
     ];
-    if (d3.sum(arts, (a) => a.independent_pending) > 0) {
-      stacks.splice(3, 0, [
-        "independent_pending",
+    stacks = dropAwaitingReview(stacks, D.global, (s) => s[0]);
+    if (d3.sum(arts, (a) => a.bucket_pending) > 0) {
+      stacks.splice(2, 0, [
+        "bucket_pending",
         "Independent, unsettled",
         COLORS.pending,
       ]);
+    }
+    if (d3.sum(arts, (a) => a.bucket_other) > 0) {
+      stacks.push(["bucket_other", "Not classified", COLORS.inkFaint]);
     }
     // Labels are the full publication title over up to three lines rather than a
     // 42-character fragment, which the user asked for — a truncated title is not
@@ -1771,7 +2277,9 @@
       stack += h;
     });
     const innerH = stack;
-    const m = { top: 22, right: 58, bottom: 26, left: labelW };
+    // The right margin has to hold the muted total ("1,498 rows") that now sits at
+    // the end of the track instead of the count that used to be there.
+    const m = { top: 22, right: 74, bottom: 26, left: labelW };
     const H = innerH + m.top + m.bottom;
     const g = svgFor("chart-lollipop", W, H, m);
     const iw = W - m.left - m.right;
@@ -1837,27 +2345,57 @@
         }
       });
 
+    // The independent count sits where the yellow segment ends, not at the right
+    // edge of the bar (user instruction of 2026-11-04). At the total end the number
+    // read as the length of the whole bar, which is that publication's record count,
+    // not its independent count -- the one figure a reader is here to take away.
+    // The share of the publication's own records is printed with it, so the count
+    // cannot be read against the wrong denominator, and the whole bar's length is
+    // still on the axis below plus the muted total at the right.
+    const indText = (d) =>
+      `${fmt(d.bucket_independent)} · ${pctOf(d.bucket_independent, d.records)}`;
+    const indLabelW = measureTextWidths(arts.map(indText), "bar-value");
+    const indPlace = (d) => endLabel(x(d.bucket_independent || 0), indLabelW, iw);
     g.selectAll(".v")
       .data(arts)
       .enter()
       .append("text")
       .attr("class", "bar-value")
-      .attr("x", (d) => x(d.records) + 5)
+      .attr("x", (d) => indPlace(d).x)
       .attr("y", (d) => rowMid.get(d.title))
       .attr("dominant-baseline", "middle")
-      .text((d) => fmt(d.independent));
+      .attr("text-anchor", (d) => indPlace(d).anchor)
+      // The COUNTED independent figure, matching the yellow segment. Before the
+      // buckets existed this printed d.independent, the rows marked on the page,
+      // which sits above the segment by the number of second copies -- a bar
+      // whose label disagreed with its own colour.
+      .text(indText);
+
+    // The bar's own total, so that dropping it from the number at the yellow's end
+    // does not lose the denominator: "190 · 76.6%" then a muted "248 rows".
+    g.selectAll(".tot")
+      .data(arts)
+      .enter()
+      .append("text")
+      .attr("class", "annot")
+      .attr("x", iw + 8)
+      .attr("y", (d) => rowMid.get(d.title))
+      .attr("dominant-baseline", "middle")
+      .text((d) => `${fmt(d.records)} row${d.records === 1 ? "" : "s"}`);
 
     el(
       "cap-lollipop"
     ).textContent =
       `Each bar is every record on that publication's exhibit pages, split into the same ` +
-      `buckets as the grid above, so the segments add up to the publication's record ` +
-      `count. The number at the right is its independent citations. Awaiting review is ` +
-      `the queue, i.e. English rows only; non-English rows sit in their own bucket ` +
-      `because the language screen supersedes their classification. Open English ` +
-      `author work would appear as a pale segment, and there is none in this packet. ` +
-      `Titles wrap over up to three lines and rows are ordered by independent ` +
-      `citations, descending.`;
+      `categories as the grid above, so the segments add up to the publication's ` +
+      `record count. The number beside each bar is the independent citations counted for ` +
+      `that publication, printed where the yellow segment ends, with the share of that ` +
+      `publication's own records after the dot; the muted figure at the right is the ` +
+      `publication's total records. A publication whose exhibit marks more rows than this ` +
+      `number is one where Google Scholar listed a paper twice: both rows are printed and ` +
+      `marked, and the work is counted once. Non-English rows sit in their own bucket because the ` +
+      `language screen supersedes their classification. Titles wrap over up to three ` +
+      `lines and rows are ordered by independent citations, descending.`;
     legend(
       "legend-lollipop",
       stacks.map(([, label, color, edge]) => ({
@@ -1999,15 +2537,39 @@
       )
       .on("mouseleave", hideTip);
 
+    // The count sits at the height the YELLOW bar reaches, not above the pale
+    // total bar (user instruction of 2026-11-04): the number describes the
+    // independent citations, so it belongs where that colour stops. The share of
+    // that year's records follows it, since a bare count over a bar whose total is
+    // not named invites the wrong denominator. The two lines stack vertically
+    // because a horizontal "162 · 82.2%" would collide with the neighbouring year
+    // in a band only ~27px wide.
+    const yearBottom = H - m.top - m.bottom;
     g.selectAll(".v")
       .data(years)
       .enter()
       .append("text")
       .attr("class", "bar-value")
-      .attr("x", (d) => x(d.year) + x.bandwidth() / 2)
-      .attr("y", (d) => y(d.records) - 4)
       .attr("text-anchor", "middle")
-      .text((d) => fmt(d.independent));
+      .each(function (d) {
+        const cx = x(d.year) + x.bandwidth() / 2;
+        const yInd = y(d.independent);
+        // Inside the yellow when it is tall enough to hold both lines; otherwise
+        // just above its top edge. Dark ink on yellow, so an in-bar label reads.
+        const inside = yearBottom - yInd >= 26;
+        const countY = inside ? yInd + 12 : yInd - 5;
+        const shareY = inside ? yInd + 23 : yInd - 16;
+        const t = d3.select(this);
+        t.append("tspan")
+          .attr("x", cx)
+          .attr("y", countY)
+          .text(fmt(d.independent));
+        t.append("tspan")
+          .attr("class", "annot")
+          .attr("x", cx)
+          .attr("y", shareY)
+          .text(pctOf(d.independent, d.records));
+      });
 
     el("years-undated").textContent = fmt(D.undated.records);
     // Say what was taken out and why, and name it, rather than letting a year
@@ -2056,9 +2618,20 @@
       }))
       .sort((a, b) => b.total - a.total || b.counted - a.counted);
 
+    // The title column is right-anchored into the left margin, so a title wider
+    // than that margin is clipped by the edge of the svg and prints starting
+    // mid-letter. Chrome warns about nothing. Measured here rather than guessed:
+    // 210 units held five of these titles by up to 7 units too little.
     const W = 620;
     const rowH = 26;
-    const m = { top: 16, right: 74, bottom: 24, left: 210 };
+    const labelFor = (d) => shorten(d.title, 44);
+    const labelW = measureTextWidths(byPub.map(labelFor), "row-label");
+    const m = {
+      top: 16,
+      right: 96,
+      bottom: 24,
+      left: Math.min(320, Math.max(210, Math.ceil(labelW) + 14)),
+    };
     const H = byPub.length * rowH + m.top + m.bottom;
     const g = svgFor("chart-patent-pubs", W, H, m);
     const iw = W - m.left - m.right;
@@ -2107,23 +2680,43 @@
       .attr("y", (d) => y(d.title) + y.bandwidth() / 2)
       .attr("text-anchor", "end")
       .attr("dominant-baseline", "middle")
-      .text((d) => shorten(d.title, 44));
+      .text(labelFor);
 
+    // Same rule as the other bars (user instruction of 2026-11-04): the number
+    // describing the independent portion sits where the yellow ends, with its
+    // share, and the total number of documents moves to the right margin.
+    const patText = (d) => `${fmt(d.counted)} · ${pctOf(d.counted, d.total)}`;
+    const patTextW = measureTextWidths(byPub.map(patText), "bar-value");
+    const patPlace = (d) => endLabel(x(d.counted), patTextW, iw, 6);
     g.selectAll(".v")
       .data(byPub)
       .enter()
       .append("text")
       .attr("class", "bar-value")
-      .attr("x", (d) => x(d.total) + 6)
+      .attr("x", (d) => patPlace(d).x)
+      .attr("y", (d) => y(d.title) + y.bandwidth() / 2)
+      .attr("text-anchor", (d) => patPlace(d).anchor)
+      .attr("dominant-baseline", "middle")
+      .text(patText);
+
+    g.selectAll(".tot")
+      .data(byPub)
+      .enter()
+      .append("text")
+      .attr("class", "annot")
+      .attr("x", iw + 8)
       .attr("y", (d) => y(d.title) + y.bandwidth() / 2)
       .attr("dominant-baseline", "middle")
-      .text((d) => `${fmt(d.counted)} / ${fmt(d.total)}`);
+      .text((d) => `${fmt(d.total)} document${d.total === 1 ? "" : "s"}`);
 
     el(
       "cap-patent-pubs"
     ).textContent =
-      `Yellow is the portion judged independent; teal is the rest. The full list with ` +
-      `patent numbers, inventors and links is the table below.`;
+      `Yellow is the portion judged independent; teal is the rest. The number beside ` +
+      `each bar is that independent count with its share of the publication's patent ` +
+      `documents, printed where the yellow ends; the muted figure at the right is the ` +
+      `number of documents. The full list with patent numbers, inventors and links is ` +
+      `the table below.`;
   }
 
   function drawCorroboration(D) {
@@ -2133,7 +2726,7 @@
       "unverified-coverage": "No external record covers it — Scholar's own list only",
       unresolved: "Not indexed and Scholar truncated the list",
       "external-resolved": "External list settles it — shared author or PI",
-      "user-decided": "Settled by you — read from the published article",
+      "user-decided": "Settled by a person — read the published article",
       contradicted: "External list disagreed — pulled back to review",
       skipped: "Corroboration skipped for this capture",
     };
@@ -2147,9 +2740,29 @@
       skipped: COLORS.dependent,
     };
     const total = d3.sum(rows, (r) => r.count);
+    // The category names are right-anchored into the left margin, so a name
+    // longer than that margin gets clipped by the edge of the svg -- and the
+    // shorten() ellipsis was hiding the fact, printing "Scholar's own list…"
+    // where the caption below quotes the full phrase. Measured across every
+    // label the map can produce, not just the ones present today, so a category
+    // reappearing later cannot clip.
     const W = 620;
     const rowH = 30;
-    const m = { top: 14, right: 78, bottom: 22, left: 250 };
+    const labelW = measureTextWidths(Object.values(labelFor), "row-label");
+    if (labelW + 14 > 340) {
+      throw new Error(
+        `The corroboration chart's category labels need ${Math.ceil(labelW)} units ` +
+          `of left margin, more than the 340 this layout allows. Shorten a label in ` +
+          `labelFor above rather than letting the svg clip it -- a clipped label ` +
+          `prints mid-word and nothing downstream notices.`
+      );
+    }
+    const m = {
+      top: 14,
+      right: 78,
+      bottom: 22,
+      left: Math.max(250, Math.ceil(labelW) + 14),
+    };
     const H = rows.length * rowH + m.top + m.bottom;
     const g = svgFor("chart-corroboration", W, H, m);
     const iw = W - m.left - m.right;
@@ -2177,7 +2790,7 @@
       .attr("y", (d) => y(d.confirm_state) + y.bandwidth() / 2)
       .attr("text-anchor", "end")
       .attr("dominant-baseline", "middle")
-      .text((d) => shorten(labelFor[d.confirm_state] || d.confirm_state, 50));
+      .text((d) => labelFor[d.confirm_state] || d.confirm_state);
 
     g.selectAll(".v")
       .data(rows)
@@ -2187,7 +2800,7 @@
       .attr("x", (d) => x(d.count) + 6)
       .attr("y", (d) => y(d.confirm_state) + y.bandwidth() / 2)
       .attr("dominant-baseline", "middle")
-      .text((d) => `${fmt(d.count)} · ${((d.count / total) * 100).toFixed(0)}%`);
+      .text((d) => `${fmt(d.count)} · ${pctOf(d.count, total)}`);
 
     el(
       "cap-corroboration"
@@ -2226,11 +2839,14 @@
       const works = D.works;
       renderMasthead(
         D,
-        `Every distinct citing paper that appears on a filed exhibit page — ` +
+        `Every citing row that appears on a filed exhibit page — ` +
           `${fmt(works.length)} in all, of which ${fmt(
             works.filter((w) => w.marked).length
-          )} are highlighted as independent. Search, or sort by any column, to ` +
-          `find a work and see which exhibit page carries it.`
+          )} are highlighted as independent. Some rows are a second listing of the ` +
+          `same work — a preprint, a repository copy, another patent in a family, or ` +
+          `a translation — and each is shown next to the row the packet credits it ` +
+          `through. Search by <code>row_uid</code>, or sort by any column, to find a ` +
+          `row and see which exhibit page carries it.`
       );
       renderWorks(D);
     },
@@ -2239,15 +2855,27 @@
       const buckets = D.review_buckets || {};
       renderMasthead(
         D,
-        `The ${fmt(q.length)} citations the rules cannot settle, grouped by what ` +
-          `would settle them: ${fmt(buckets["1 contradicted"] || 0)} an external ` +
-          `record contradicts, ${fmt(
-            buckets["2 external-no-overlap"] || 0
-          )} an external record clears but Scholar truncates, and ${fmt(
-            buckets["3 unresolvable"] || 0)
-          } nothing indexes. Quote the row_uid. The ` +
-          `${fmt(D.global.flagged_non_english)} non-English rows are on their own ` +
-          `page and are not offered for review.`
+        q.length
+          ? `The ${fmt(q.length)} citations the rules cannot settle, grouped by what ` +
+              `would settle them: ${fmt(buckets["1 contradicted"] || 0)} an external ` +
+              `record contradicts, ${fmt(
+                buckets["2 external-no-overlap"] || 0
+              )} an external record clears but Scholar truncates, and ${fmt(
+                buckets["3 unresolvable"] || 0)
+              } nothing indexes. Quote the row_uid. The ` +
+              `${fmt(D.global.flagged_non_english)} non-English rows are on their own ` +
+              `page and are not offered for review.`
+          : `Every citation on the exhibit pages now carries a classification. The ` +
+              `rows that no rule could settle were read from the published article ` +
+              `and decided one at a time, the last on 2026-11-04, so the buckets below ` +
+              `are empty and this chapter is the record of how each row was settled ` +
+              `rather than a list of work left to do. ` +
+              `${fmt(
+                D.global.review_queue ?? D.global.awaiting_review
+              )} rows remain open on this snapshot. The ` +
+              `${fmt(
+                D.global.flagged_non_english
+              )} non-English rows are on their own page, where no decision is sought.`
       );
       renderReview(D);
     },

@@ -125,6 +125,7 @@ function storeEntries() {
       `SELECT cites_id, base, page, row_index, cid, title, raw_title, authors,
               authors_used, author_source, status, confirm_state, language_flag,
               duplicate_of, edition_key, same_work_key,
+              inherited_status, inherited_confirm_state,
               matched_authors, matched_pi, matched_former_pi
          FROM citations
         WHERE filed = 1 AND superseded_at = ''
@@ -198,6 +199,15 @@ function build() {
     "withheld_language",
     "unique_records",
     "unique_independent",
+    // The five reviewer-facing categories. Compared store-vs-reports like every
+    // other figure, because a bucket is now quoted on the dashboard: the store's
+    // SQL mirror in build-catalog.js and bucketOf in tally.js must agree row for
+    // row, or a chart would show one number while the ledger's CSV shows another.
+    "bucket_independent",
+    "bucket_dependent",
+    "bucket_review",
+    "bucket_non_english",
+    "bucket_preprint_copy",
   ];
 
   for (const pub of listData.publications || []) {
@@ -275,6 +285,21 @@ function build() {
       // dependent + self + review = records) still sums after non-English rows
       // left the unsettled bucket on 2026-11-03.
       non_english_independent: t.non_english_independent,
+      // The five reviewer-facing categories (user instruction, 2026-11-03). Per
+      // publication as well as globally, so the dashboard's per-publication bars
+      // draw the same partition as the waffle instead of inventing their own.
+      // `bucket_review` equals `review_queue`, not the raw REVIEW count: a
+      // non-English row sits in bucket_non_english and a copy whose standing
+      // sibling settled its work sits in bucket_preprint_copy, so the five terms
+      // plus pending/other still sum to records_captured while the review term
+      // matches the sheet a reviewer opens.
+      bucket_independent: t.bucket_independent,
+      bucket_dependent: t.bucket_dependent,
+      bucket_review: t.bucket_review,
+      bucket_non_english: t.bucket_non_english,
+      bucket_preprint_copy: t.bucket_preprint_copy,
+      bucket_pending: t.bucket_pending,
+      bucket_other: t.bucket_other,
       dependent: t.dependent,
       self_pi: t.self_pi,
       self_former_pi: t.self_former_pi,
@@ -285,6 +310,13 @@ function build() {
       // difference is the non-English rows that belong on the Non-English page
       // rather than in a work queue (user instruction, 2026-11-03).
       review_queue: t.review_queue,
+      // Why the queue is shorter than the raw REVIEW count, named rather than
+      // left to arithmetic. A footnote that guesses at this gap is how copies of
+      // a settled work came to be described as non-English rows. Both terms come
+      // from tallyEntries on each side, so the store-vs-reports comparison below
+      // covers them without a new view column.
+      review_non_english: t.review_non_english,
+      review_inherited: t.review_inherited,
       non_english: t.non_english,
       non_english_withheld: t.non_english_withheld,
       english_records: t.english_records,
@@ -347,11 +379,20 @@ function build() {
       independent_user_decided: t.independent_user_decided,
       independent_pending: t.independent_pending,
       non_english_independent: t.non_english_independent,
+      bucket_independent: t.bucket_independent,
+      bucket_dependent: t.bucket_dependent,
+      bucket_review: t.bucket_review,
+      bucket_non_english: t.bucket_non_english,
+      bucket_preprint_copy: t.bucket_preprint_copy,
+      bucket_pending: t.bucket_pending,
+      bucket_other: t.bucket_other,
       dependent: t.dependent,
       self_pi: t.self_pi,
       self_former_pi: t.self_former_pi,
       review: t.review,
       review_queue: t.review_queue,
+      review_non_english: t.review_non_english,
+      review_inherited: t.review_inherited,
       non_english: t.non_english,
       non_english_withheld: t.non_english_withheld,
       english_records: t.english_records,
@@ -389,11 +430,20 @@ function build() {
       "independent_user_decided",
       "independent_pending",
       "non_english_independent",
+      "bucket_independent",
+      "bucket_dependent",
+      "bucket_review",
+      "bucket_non_english",
+      "bucket_preprint_copy",
+      "bucket_pending",
+      "bucket_other",
       "dependent",
       "self_pi",
       "self_former_pi",
       "review",
       "review_queue",
+      "review_non_english",
+      "review_inherited",
       "non_english",
       "non_english_withheld",
       "english_records",
@@ -469,14 +519,34 @@ function build() {
     // the partition reconciles: with non-English rows no longer counted as
     // unsettled work, they need a named bucket of their own. See tally.js.
     non_english_independent: total.non_english_independent,
+    // The five categories a reviewer reads, per the user's instruction of
+    // 2026-11-03: independent, not-independent, awaiting review, non-English, and
+    // preprint/copy. Self-citations are folded into bucket_dependent at this layer
+    // while self_pi and self_former_pi above keep the split recoverable. The seven
+    // terms (including pending and other, both normally zero) sum to
+    // citation_records_reviewed, so a chart drawn from them has no hidden remainder.
+    // See bucketOf in tools/tally.js for the one definition.
+    bucket_independent: total.bucket_independent,
+    bucket_dependent: total.bucket_dependent,
+    bucket_review: total.bucket_review,
+    bucket_non_english: total.bucket_non_english,
+    bucket_preprint_copy: total.bucket_preprint_copy,
+    bucket_pending: total.bucket_pending,
+    bucket_other: total.bucket_other,
     dependent: total.dependent,
     self_pi: total.self_pi,
     self_former_pi: total.self_former_pi,
     awaiting_review: total.review,
+    // How much of the gap between awaiting_review and review_queue each reason
+    // accounts for. Both are summed per row, and the summary line below refuses
+    // to print a footnote whose parts do not add up to the whole.
+    review_non_english: total.review_non_english,
+    review_inherited: total.review_inherited,
     // The queue a person works. Awaiting review counts every row still classified
     // REVIEW; the queue excludes the ones that are also non-English, which cannot
     // be settled by reading a byline and are reported under flagged_non_english
-    // instead. Awaiting a decision that cannot change the packet is not work.
+    // instead, and the copies whose standing sibling already settled the work.
+    // Awaiting a decision that cannot change the packet is not work.
     review_queue: total.review_queue,
     flagged_non_english: total.non_english,
     non_english_withheld: total.non_english_withheld,
@@ -548,11 +618,20 @@ const CSV_COLUMNS = [
   "independent_user_decided",
   "independent_pending",
   "non_english_independent",
+  "bucket_independent",
+  "bucket_dependent",
+  "bucket_review",
+  "bucket_non_english",
+  "bucket_preprint_copy",
+  "bucket_pending",
+  "bucket_other",
   "dependent",
   "self_pi",
   "self_former_pi",
   "review",
   "review_queue",
+  "review_non_english",
+  "review_inherited",
   "non_english",
   "non_english_withheld",
   "english_records",
@@ -709,14 +788,35 @@ function printSummary(ledger) {
   // The raw REVIEW count is shown alongside only when it is larger, so the
   // difference -- rows that are non-English and therefore not a decision to make
   // -- is visible rather than silently dropped from the queue.
-  console.log(
-    `[ledger] Review queue:              ${g.review_queue}` +
-      (g.awaiting_review > g.review_queue
-        ? `  (${g.awaiting_review} classified REVIEW, ${
-            g.awaiting_review - g.review_queue
-          } of them non-English and reported under Flagged non-English below)`
-        : "")
-  );
+  // The queue length first, since that is the number of rows a person opens. The
+  // raw REVIEW count is shown alongside only when it is larger, and then every
+  // row it leaves out is attributed to a named reason. The parts are checked
+  // against the gap rather than assumed: when tally.js gains a third reason for
+  // leaving the queue, an unexplained remainder is printed instead of a footnote
+  // that confidently blames non-English for all of it -- which is exactly what
+  // happened on 2026-11-03, when two inherited copies were described that way.
+  // The queue length first, since that is the number of rows a person opens. The
+  // raw REVIEW count is shown alongside only when it is larger, and then every
+  // row it leaves out is attributed to a named reason. The parts are checked
+  // against the gap rather than assumed: when tally.js gains a third reason for
+  // leaving the queue, an unexplained remainder is printed instead of a footnote
+  // that confidently blames non-English for all of it -- which is exactly what
+  // happened on 2026-11-03, when two inherited copies were described that way.
+  const queueGap = g.awaiting_review - g.review_queue;
+  let gapText = "";
+  if (queueGap > 0) {
+    const parts = [
+      g.review_non_english ? `${g.review_non_english} non-English` : "",
+      g.review_inherited ? `${g.review_inherited} copy/copies of a settled work` : "",
+    ].filter(Boolean);
+    const explained = (g.review_non_english || 0) + (g.review_inherited || 0);
+    const remainder = queueGap - explained;
+    gapText =
+      `  (${g.awaiting_review} classified REVIEW, ${parts.join(" and ") || "none"}` +
+      (remainder > 0 ? ` + ${remainder} UNEXPLAINED` : "") +
+      ` left the queue)`;
+  }
+  console.log(`[ledger] Review queue:              ${g.review_queue}${gapText}`);
   console.log(
     `[ledger] Flagged non-English:       ${g.flagged_non_english}` +
       (g.non_english_independent
@@ -751,6 +851,35 @@ function printSummary(ledger) {
     `[ledger] Independent share: ${g.independent_share_of_reviewed_pct}% of reviewed records, ` +
       `${g.independent_share_of_decided_pct}% of decided ones`
   );
+  // The five categories a reviewer reads on the dashboard, printed so the
+  // partition can be checked by addition rather than trusted. Self-citations are
+  // inside "not independent" here (user instruction, 2026-11-03) while the two
+  // lines above keep the split. `pending` and `other` are omitted when zero, so a
+  // non-zero one is conspicuous rather than hidden in a column of noughts.
+  {
+    const parts = [
+      ["independent", g.bucket_independent],
+      ["not indep", g.bucket_dependent],
+      ["review", g.bucket_review],
+      ["non-Eng", g.bucket_non_english],
+      ["preprint/copy", g.bucket_preprint_copy],
+    ];
+    if (g.bucket_pending) parts.push(["unsettled", g.bucket_pending]);
+    if (g.bucket_other) parts.push(["OTHER", g.bucket_other]);
+    const sum = parts.reduce((a, [, v]) => a + v, 0);
+    console.log(
+      `[ledger] Five categories:        ${parts.map(([k, v]) => `${v} ${k}`).join(" + ")} = ${sum}`
+    );
+    // A partition that does not close is a chart with a hole in it, so it is
+    // called out on the same line rather than left for a reader to notice.
+    if (sum !== g.citation_records_reviewed) {
+      console.log(
+        `[ledger] *** DEFECT: the five categories sum to ${sum}, not the ` +
+          `${g.citation_records_reviewed} records reviewed. bucketOf in tools/tally.js ` +
+          `is no longer exhaustive -- do not quote these figures.`
+      );
+    }
+  }
 }
 
 // Every reason this ledger must not be written, as human-readable lines. Empty

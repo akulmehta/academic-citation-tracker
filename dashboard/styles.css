@@ -162,6 +162,13 @@ figcaption {
 .grid .domain { display: none; }
 .bar-label { font-family: ui-sans-serif, system-ui, "Segoe UI", sans-serif; font-size: 10.5px; fill: var(--ink-soft); }
 .bar-value { font-family: ui-sans-serif, system-ui, "Segoe UI", sans-serif; font-size: 10.5px; fill: var(--ink); font-weight: 600; }
+/* A value label is now printed where its own segment ends, which means the bar
+   often continues underneath it -- the number describes the yellow, but the grey
+   and teal segments follow. A white halo drawn BEHIND the glyphs keeps the figure
+   legible over those fills. paint-order puts the stroke under the fill, so on the
+   white page background the halo is invisible and the text is unchanged; only
+   where a glyph crosses a bar does it matter. */
+.bar-value { paint-order: stroke fill; stroke: #fff; stroke-width: 3px; stroke-linejoin: round; }
 .row-label { font-family: ui-sans-serif, system-ui, "Segoe UI", sans-serif; font-size: 10.5px; fill: var(--ink); }
 .row-label.dim { fill: var(--ink-faint); }
 .annot { font-family: ui-sans-serif, system-ui, "Segoe UI", sans-serif; font-size: 10px; fill: var(--ink-faint); }

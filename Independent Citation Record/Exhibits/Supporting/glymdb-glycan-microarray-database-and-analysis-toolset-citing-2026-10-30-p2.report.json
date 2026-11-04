@@ -335,7 +335,15 @@
       "attention_reason": "",
       "language_flag_captured": "",
       "status_captured": "INDEPENDENT",
-      "confirm_state_captured": "confirmed"
+      "confirm_state_captured": "confirmed",
+      "status_before_decision": "INDEPENDENT",
+      "confirm_state_before_decision": "confirmed",
+      "corroboration_before_decision": "confirmed by pubmed",
+      "same_work_key": "sw:cit-000924",
+      "same_work_note": "The user supplied the PDF header of the Scholar [PDF] link: DOI https://doi.org/10.1101/2021.05.28.446191, this version posted May 29, 2021, and the bioRxiv page states Now published in Glycobiology doi: 10.1093/glycob/cwac057. Crossref confirms the link in both directions: the bioRxiv posted-content record 10.1101/2021.05.28.446191 declares is-preprint-of 10.1093/glycob/cwac057, and that article declares has-preprint for it. The published article is Glycobiology 32(12) 1101-1115, published 2022-09-01, with exactly the sixteen names the user read (Sasmal et al.). cit-000924 on exhibit page 2 of the same cited paper is that published article, already INDEPENDENT and externally confirmed via PubMed 36048714, so this row is the preprint edition of a work this packet already files. Folded onto cit-000924. Note that cit-001471 shares the published article title on a DIFFERENT cited paper and was deliberately not folded: the same work can be two separate citations, and a fold must stay within one cited paper. ",
+      "decided_by": "Akul Mehta",
+      "decided_on": "2026-11-04",
+      "decided_note": "recorded as the same published work as cit-000924: The user supplied the PDF header of the Scholar [PDF] link: DOI https://doi.org/10.1101/2021.05.28.446191, this version posted May 29, 2021, and the bioRxiv page states Now published in Glycobiology doi: 10.1093/glycob/cwac057. Crossref confirms the link in both directions: the bioRxiv posted-content record 10.1101/2021.05.28.446191 declares is-preprint-of 10.1093/glycob/cwac057, and that article declares has-preprint for it. The published article is Glycobiology 32(12) 1101-1115, published 2022-09-01, with exactly the sixteen names the user read (Sasmal et al.). cit-000924 on exhibit page 2 of the same cited paper is that published article, already INDEPENDENT and externally confirmed via PubMed 36048714, so this row is the preprint edition of a work this packet already files. Folded onto cit-000924. Note that cit-001471 shares the published article title on a DIFFERENT cited paper and was deliberately not folded: the same work can be two separate citations, and a fold must stay within one cited paper. "
     },
     {
       "index": 8,

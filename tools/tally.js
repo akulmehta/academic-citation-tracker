@@ -88,8 +88,18 @@ function isHighlightCandidate(e) {
 //
 // The count this removes is not lost: tallyEntries reports it alongside as
 // review_non_english, and those rows remain in v_non_english.
-function isReviewQueue(e) {
-  return e.status === "REVIEW" && !e.language_flag;
+//
+// A second copy of a work whose standing copy is already settled is NOT on it
+// either (user instruction, 2026-11-03 -- see inheritedFrom). Its own byline may
+// be unresolved, but the work has an answer, so the row is reported as a copy and
+// not as open work. A copy with nothing to inherit from stays queued.
+//
+// `secondary` is optional and works exactly as in isSecondaryCopy: pass the
+// standing set for a live group, or omit it and the answer comes from the
+// inherited_* columns a rebuild recorded, so the store and the rule agree.
+function isReviewQueue(e, secondary) {
+  if (e.status !== "REVIEW" || e.language_flag) return false;
+  return inheritedFrom(e, secondary) === null;
 }
 
 // An entry the language screen alone is holding back: independent by
@@ -121,6 +131,231 @@ function isWithheldForLanguage(e) {
 // because it answers "what would a translator reclaim".
 function isNonEnglishIndependent(e) {
   return e.status === "INDEPENDENT" && Boolean(e.language_flag);
+}
+
+// Mark the copies that do not stand for their work.
+//
+// `uniquePapers` already answers "which copy of this work counts" -- it is what
+// produces the distinct-paper figure -- but it answers it by returning a subset,
+// so a reader holding ONE row cannot see that it is the second copy of a paper
+// counted elsewhere. This writes that answer onto the rows.
+//
+// It matters because the exhibit and the count legitimately disagree: Google
+// Scholar lists one paper twice (a journal record and its bioRxiv, repository,
+// academia.edu, ProQuest or Ovid copy), the exhibit must show both rows because
+// that is the page that was printed, and the counted figure must credit the work
+// once. Without a flag on the row the gap between 1077 marks and 1059 distinct
+// independent works is invisible, and a reviewer with the PDF in one hand and the
+// summary in the other has no way to reconcile them.
+//
+// Only the machine rule is covered here. A row folded by the language rule or by
+// a proven same-work claim already carries `duplicate_of`, set earlier in
+// groupReports, and is a secondary copy too -- `isHighlighted` refuses both for
+// the same reason.
+function markSecondaryCopies(entries) {
+  const { kept } = uniquePapers(entries);
+  const stands = new Set(kept);
+  for (const e of entries) {
+    e.is_secondary_copy = !stands.has(e) ? true : e.is_secondary_copy || false;
+  }
+  return recordInheritance(entries, stands);
+}
+
+// Record the classification each row inherits from the copy that stands for its
+// work, so a reader holding ONE row can see it (user instruction, 2026-11-03).
+//
+// Written as three plain fields rather than as a live lookup for one reason: the
+// answer must survive being read out of the store, where there is no standing Set
+// to consult. `inherited_status` being non-empty IS the fact -- a REVIEW row with
+// a value there is a settled copy, not open work -- so isReviewQueue and bucketOf
+// can answer from the row alone and the store's SQL can mirror them with one
+// column test instead of re-deriving the standing set in SQL.
+//
+// `row_uid` is a store column, so a report entry has none and `inherited_from`
+// stays empty on the report path. build-catalog.js resolves it to the parent's
+// row_uid after the rows are written; it is provenance for a listing to display,
+// never part of the rule.
+function recordInheritance(entries, stands) {
+  const set = stands instanceof Set ? stands : standingSet(entries);
+  for (const e of entries) {
+    const p = inheritedFrom(e, set);
+    e.inherited_status = p ? p.status || "" : "";
+    e.inherited_confirm_state = p ? p.confirm_state || "" : "";
+    e.inherited_from = p ? p.row_uid || "" : "";
+  }
+  return entries;
+}
+
+// Which rows of a group STAND for their work, one per duplicate group.
+//
+// A Set rather than a filtered array, so a caller can ask "does this row stand?"
+// by identity. uniquePapers returns the survivors but not in a form you can test
+// membership against, and every consumer that needs the answer needs it per row.
+function standingSet(entries) {
+  return new Set(uniquePapers(entries).kept);
+}
+
+// Whether a row is Google Scholar's second listing of a work already counted.
+//
+// `secondary` is the standing set for the group the row belongs to, when the
+// caller has one -- which is the only correct way to answer the question, because
+// "is this a duplicate?" is a fact about the whole citing list, not about a row.
+// Without a set it falls back to fields already on the row: `is_secondary_copy`
+// where a caller (markSecondaryCopies, or a rebuild) recorded it, and
+// `duplicate_of`, which the language rule and a proven same-work fold both set.
+//
+// A language edition is a secondary copy as well, but per the instruction of
+// 2026-11-03 the language screen supersedes every other classification, so such a
+// row is reported under non-English and NOT here -- `bucketOf` tests the language
+// flag first for exactly that reason.
+//
+// A patent family is deliberately NOT treated as one work by this rule's author,
+// but it is by `paperKey`, which groups on title alone. Measured 2026-11-03 that
+// folds 5 patent rows (a WO filing with its US national phase, an application
+// with its grant, two continuations). The user was shown the five and chose to
+// keep counting a family once, so the behaviour stands -- but it is a title
+// inference, not a demonstrated identity, and it is named here so a future reader
+// does not mistake it for the proven-identity rule of 2026-11-02.
+function isSecondaryCopy(e, secondary) {
+  if (e.language_flag) return false;
+  // Tested with instanceof rather than truthiness: a caller that forwards an
+  // array callback's second argument would otherwise reach `.has` on a number.
+  const set = secondary instanceof Set ? secondary : null;
+  // duplicate_of is tested even when a set is supplied: a row a person proved is
+  // the same work, or a publisher's second-language copy, is deferred by a rule
+  // more specific than the title grouping, and uniquePapers can still let such a
+  // row stand when its title is unlike its twin's.
+  const isCopy = set
+    ? !set.has(e) || Boolean(e.duplicate_of)
+    : Boolean(e.is_secondary_copy) || Boolean(e.duplicate_of);
+  return isCopy;
+}
+
+// The five categories a reviewer reads, in the order they are tested.
+//
+// The partition is exhaustive and mutually exclusive by construction: every
+// active row lands in exactly one bucket, so a chart drawn from these sums to the
+// record count with no remainder. `other` exists only so a future status that
+// nothing recognises shows up as itself instead of vanishing from a chart.
+//
+// Why this order.
+//   language first  -- the instruction of 2026-11-03: a non-English row is
+//                      reported once, as non-English, whatever else it is.
+//   review second   -- a row still on the reviewer's sheet, read through
+//                      isReviewQueue, so this bucket always equals the length of
+//                      the queue a person actually works. It is NOT the raw
+//                      REVIEW count: a non-English row went to the bucket above,
+//                      and a copy whose standing sibling settled its work goes to
+//                      the copy bucket below, because that row is not open work.
+//   copy third      -- this is what reconciles the exhibit with the count: the
+//                      second copy of a counted work is shown as a copy rather
+//                      than claimed as another independent citation.
+//
+// The copy test comes before the mark test, and that ordering is what reconciles
+// the packet's two independent figures: 1077 rows are yellow on an exhibit while
+// 1059 works are counted, because a second copy is a copy first.
+//
+// `review` reads isReviewQueue rather than the bare status, so the bucket and the
+// reviewer's sheet cannot disagree about what is still work. A copy whose standing
+// sibling settled its work is therefore a copy here, not an open row (see
+// inheritedFrom); a copy with nothing to inherit from stays in `review`.
+function bucketOf(e, secondary) {
+  if (e.language_flag) return "non_english";
+  if (isReviewQueue(e, secondary)) return "review";
+  if (isSecondaryCopy(e, secondary)) return "preprint_copy";
+  if (isHighlighted(e)) return "independent";
+  if (isIndependentPending(e)) return "pending";
+  if (
+    e.status === "DEPENDENT" ||
+    e.status === "SELF (PI)" ||
+    e.status === "SELF (FORMER PI)"
+  ) {
+    return "dependent";
+  }
+  return "other";
+}
+
+// The classification a duplicate inherits from the copy that stands for its work.
+//
+// Per the user's instruction on 2026-11-03: "duplicates should inherit the
+// dependent / independent tag from the parent (of which they are a duplicate) and
+// also be marked as a copy/preprint."
+//
+// Independence is a property of the WORK, not of the row. Google Scholar lists
+// one paper several times -- a publisher record, a repository copy, a preprint --
+// and the row that stands for it carries the verdict that was reached from the
+// best available byline. A second copy whose own byline Scholar truncated is
+// therefore not an open question: the question was already answered on its twin.
+// cit-000132 and cit-000144 are exactly this -- both REVIEW on their own lists,
+// both copies of cit-000108, which is INDEPENDENT and confirmed.
+//
+// This is deliberately a READ-ONLY view and deliberately does not touch `status`:
+//
+//   - A report JSON's `status` records what was concluded from that row's own
+//     author list, which is the provenance the packet is built on. Overwriting it
+//     would make a row look decided by a reading nobody performed, and would
+//     survive a rebuild as a claim the capture never made.
+//   - A human verdict on a copy must not be written at all here. copyReliability
+//     ranks a decided row (+64) above any machine reading, so marking a copy
+//     decided would make IT the copy that stands for the work -- which
+//     isHighlighted resolves through duplicate_of, and so would move the yellow
+//     mark off the published record onto, say, an academia.edu upload. Measured
+//     on this fold: deciding cit-000132 takes the mark off cit-000108 on exhibit
+//     page 2 and puts it on page 5. Inheritance reports the same verdict without
+//     moving a single mark, so no exhibit needs re-printing.
+//   - It must also never feed copyReliability. The parent is chosen BY that
+//     ranking, so letting the rank read an inherited status would make the score
+//     depend on its own answer.
+//
+// `secondary` is optional and behaves as in isSecondaryCopy: given the standing
+// set it answers for a live group; without one it falls back to the fields a
+// rebuild recorded, so a store projection answers the same question.
+function inheritedFrom(e, secondary) {
+  if (e.language_flag) return null;
+  const set = secondary instanceof Set ? secondary : null;
+  if (set) {
+    if (!isSecondaryCopy(e, set)) return null;
+    // The standing copy of this row's work. uniquePapers groups on same_work_key
+    // when a person proved one, else on paperKey, so the parent is found the same
+    // way the copy was identified -- no separate identity rule.
+    const key = e.same_work_key || paperKey(e);
+    for (const o of set) {
+      if (o === e) continue;
+      if ((o.same_work_key || paperKey(o)) !== key) continue;
+      // A non-English parent settles nothing. Its own classification is superseded
+      // by the language screen (2026-11-03) and excluded from the packet, so a
+      // copy of it has nothing usable to inherit and stays open work. Without
+      // this test an English row could inherit its way off the queue from a
+      // citation the packet does not count at all.
+      if (o.language_flag) continue;
+      if (!isSettled(o) || !o.status) continue;
+      return o;
+    }
+    return null;
+  }
+  // Store fallback: build-catalog.js records the answer per row, resolved with the
+  // standing-set logic above. Here the column IS the fact -- recordInheritance
+  // writes it only for a copy with a settled parent, and clears it otherwise -- so
+  // this branch deliberately does NOT re-test isSecondaryCopy. The store's SQL
+  // mirrors (v_review, v_pub_stats, the bucket counts) test inherited_status alone,
+  // and requiring a second condition here would make the rule and its mirror
+  // disagree about the same row, which is the class of defect the reconciliation
+  // gates exist to catch. A stale value on a row that stands for its work would be
+  // caught by those gates rather than silently shortening the queue.
+  if (!e.inherited_status) return null;
+  return {
+    row_uid: e.inherited_from || "",
+    status: e.inherited_status,
+    confirm_state: e.inherited_confirm_state || "",
+  };
+}
+
+// The status a row is reported under: its own, or its parent's when it is a copy
+// with a settled parent. A row that stands for its work is untouched, so every
+// counted figure keeps reading `status` as before.
+function effectiveStatus(e, secondary) {
+  const p = inheritedFrom(e, secondary);
+  return p ? p.status : e.status;
 }
 
 // Independent by classification but not yet countable for an AUTHOR reason: the
@@ -487,6 +722,28 @@ function tallyEntries(entries) {
   const highlighted = entries.filter(isHighlighted);
   const { kept, merged } = uniquePapers(entries);
   const keptHighlighted = kept.filter(isHighlighted);
+  // Which rows stand for their work, computed once and passed to bucketOf rather
+  // than written onto the rows. Deliberately not a mutation: capture-citations.js
+  // calls tallyEntries on the very objects it then serialises into the filed
+  // report JSON, and a page-scoped answer baked into that file would outlive the
+  // page it was true for -- the same class of bug as trusting a duplicate_of that
+  // a different grouping would not have set.
+  const secondary = new Set(kept);
+  // The five reviewer-facing categories, counted from bucketOf so the partition
+  // is derived, not restated. Counting them here rather than in each report is
+  // what keeps the waffle, the per-publication bars and the ledger agreeing; a
+  // CASE expression copied into three SQL queries is how a packet ends up with
+  // two different totals for one bucket.
+  const buckets = {
+    independent: 0,
+    dependent: 0,
+    review: 0,
+    non_english: 0,
+    preprint_copy: 0,
+    pending: 0,
+    other: 0,
+  };
+  for (const e of entries) buckets[bucketOf(e, secondary)]++;
   // English-only figures, per the guide's second path: no certified
   // translations, so the record reports an adjusted total and percentage based
   // solely on English citations, dividing English independent citations by the
@@ -529,9 +786,25 @@ function tallyEntries(entries) {
     // the length of the sheet a reviewer opens. Their difference is exactly
     // `review_non_english`, which is still counted in `non_english` below and
     // listed in full on the Non-English page.
-    review_queue: entries.filter(isReviewQueue).length,
+    // Wrapped rather than passed directly: Array#filter hands the callback an
+    // index, and a bare `filter(isReviewQueue)` would arrive here with a number
+    // where the standing Set belongs.
+    review_queue: entries.filter((e) => isReviewQueue(e, secondary)).length,
     review_non_english: entries.filter(
       (e) => e.status === "REVIEW" && Boolean(e.language_flag)
+    ).length,
+    // The REVIEW rows that left the queue because the work already has an answer
+    // on its standing copy (user instruction, 2026-11-03 -- see inheritedFrom).
+    // This term exists for the same reason review_non_english does: without it,
+    // `review - review_queue` has no explanation and a reader (or the ledger's
+    // own footnote) is forced to guess, which is how a queue gap came to be
+    // described as entirely non-English when two of the rows were copies. These
+    // rows are counted again under preprint_copy, never as open work.
+    review_inherited: entries.filter(
+      (e) =>
+        e.status === "REVIEW" &&
+        !e.language_flag &&
+        inheritedFrom(e, secondary) !== null
     ).length,
     non_english: entries.filter((e) => e.language_flag).length,
     // Non-English rows that would otherwise have been counted. This is the
@@ -552,6 +825,18 @@ function tallyEntries(entries) {
     unique_review: kept.filter((e) => e.status === "REVIEW").length,
     duplicate_records: entries.length - kept.length,
     duplicate_groups: merged.length,
+    // The five categories, plus `pending` and `other` so the seven always sum to
+    // `records`. `bucket_review` is the raw REVIEW count, not the queue: the
+    // queue excludes non-English rows, and those are already inside
+    // `bucket_non_english`, so using the queue here would double-count them and
+    // break the sum. The dashboard draws the queue and says so in the label.
+    bucket_independent: buckets.independent,
+    bucket_dependent: buckets.dependent,
+    bucket_review: buckets.review,
+    bucket_non_english: buckets.non_english,
+    bucket_preprint_copy: buckets.preprint_copy,
+    bucket_pending: buckets.pending,
+    bucket_other: buckets.other,
   };
 }
 
@@ -650,6 +935,10 @@ function groupReports(supportDir, pdfDir) {
     // rule is proven from a DOI plus an author list, so it claims a row first
     // and foldSameWork only folds what is left over.
     foldSameWork(g.entries);
+    // Finally mark which rows are the second listing of a work already counted,
+    // so a reader of one row can see it. After the folds, because a row a person
+    // proved is the same work IS a secondary copy and must not be re-decided here.
+    markSecondaryCopies(g.entries);
   }
   return groups;
 }
@@ -685,6 +974,13 @@ module.exports = {
   isWithheldForLanguage,
   isIndependentPending,
   isNonEnglishIndependent,
+  isSecondaryCopy,
+  markSecondaryCopies,
+  recordInheritance,
+  inheritedFrom,
+  effectiveStatus,
+  standingSet,
+  bucketOf,
   paperKey,
   stripScholarMarker,
   doiOf,

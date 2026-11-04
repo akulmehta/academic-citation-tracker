@@ -80,7 +80,15 @@
         "Geert-Jan Boons",
         "Jesús Jiménez-Barbero",
         "Robert P. de Vries"
-      ]
+      ],
+      "status_before_decision": "INDEPENDENT",
+      "confirm_state_before_decision": "confirmed",
+      "corroboration_before_decision": "resolved against openalex",
+      "same_work_key": "sw:cit-000187",
+      "same_work_note": "User decision 2026-11-04 (option a): cit-000220 is the same published work as cit-000187 - identical title ('Revealing the specificity of human H1 influenza avirus neuraminidase') and identical DOI 10.1021/jacsau.2c00664 - listed twice on the citing page of the same paper, once as a journal record and once as a [CITATION] entry. Both were highlighted, which double-counted one paper: unique_papers_citing and independent_unique_papers were each 1 too high because grouping keys on same_work_key OR paper_key and never both, so a fold on one title-keyed copy stranded the other. Folding the second copy onto cit-000187 makes the group complete. The user accepted that the duplicate loses its exhibit mark, to be re-printed with the rest at the end.",
+      "decided_by": "Akul Mehta",
+      "decided_on": "2026-11-04",
+      "decided_note": "recorded as the same published work as cit-000187: User decision 2026-11-04 (option a): cit-000220 is the same published work as cit-000187 - identical title ('Revealing the specificity of human H1 influenza avirus neuraminidase') and identical DOI 10.1021/jacsau.2c00664 - listed twice on the citing page of the same paper, once as a journal record and once as a [CITATION] entry. Both were highlighted, which double-counted one paper: unique_papers_citing and independent_unique_papers were each 1 too high because grouping keys on same_work_key OR paper_key and never both, so a fold on one title-keyed copy stranded the other. Folding the second copy onto cit-000187 makes the group complete. The user accepted that the duplicate loses its exhibit mark, to be re-printed with the rest at the end."
     },
     {
       "index": 1,
@@ -126,7 +134,15 @@
       "duplicate_of": "",
       "attention_reason": "not indexed in PubMed or OpenAlex and the Scholar list is incomplete",
       "needs_attention": true,
-      "language_flag_captured": ""
+      "language_flag_captured": "",
+      "status_before_decision": "REVIEW",
+      "confirm_state_before_decision": "unresolved",
+      "corroboration_before_decision": "not indexed in PubMed or OpenAlex and the Scholar list is incomplete",
+      "same_work_key": "sw:cit-000187",
+      "same_work_note": "Crossref confirms the identity in both directions: the record for 10.1021/jacsau.2c00664 (JACS Au) carries relation has-preprint -> 10.26434/chemrxiv-2022-0lbq4, and this row's own record carries is-preprint-of -> 10.1021/jacsau.2c00664, asserted-by subject. Both rows sit on the same citing page and share the published DOI. Recorded at the user's instruction on 2026-11-03.",
+      "decided_by": "Akul Mehta",
+      "decided_on": "2026-11-04",
+      "decided_note": "recorded as the same published work as cit-000187: Crossref confirms the identity in both directions: the record for 10.1021/jacsau.2c00664 (JACS Au) carries relation has-preprint -> 10.26434/chemrxiv-2022-0lbq4, and this row's own record carries is-preprint-of -> 10.1021/jacsau.2c00664, asserted-by subject. Both rows sit on the same citing page and share the published DOI. Recorded at the user's instruction on 2026-11-03."
     },
     {
       "index": 2,
@@ -172,7 +188,15 @@
       "duplicate_of": "",
       "attention_reason": "not indexed in PubMed or OpenAlex and the Scholar list is incomplete",
       "needs_attention": true,
-      "language_flag_captured": ""
+      "language_flag_captured": "",
+      "status_before_decision": "REVIEW",
+      "confirm_state_before_decision": "unresolved",
+      "corroboration_before_decision": "not indexed in PubMed or OpenAlex and the Scholar list is incomplete",
+      "same_work_key": "sw:cit-000195",
+      "same_work_note": "Crossref record for the published article 10.1128/jvi.00906-23 (Journal of Virology) carries relation has-preprint -> 10.1101/2022.06.29.498208, asserted-by object, which is this row's DOI. Both rows sit on the same citing page. The 15 preprint authors are a subset of the 24 article authors and every shared name matches (Liang, Huang, Han, Manivasagam, Plung, Yu, Kandasamy, Gourronc, Klingelhutz, Choudhury, Rong, Perez, Neelamegham, Manicassamy); the title was reworded at publication, as the journal record shows.",
+      "decided_by": "Akul Mehta",
+      "decided_on": "2026-11-04",
+      "decided_note": "recorded as the same published work as cit-000195: Crossref record for the published article 10.1128/jvi.00906-23 (Journal of Virology) carries relation has-preprint -> 10.1101/2022.06.29.498208, asserted-by object, which is this row's DOI. Both rows sit on the same citing page. The 15 preprint authors are a subset of the 24 article authors and every shared name matches (Liang, Huang, Han, Manivasagam, Plung, Yu, Kandasamy, Gourronc, Klingelhutz, Choudhury, Rong, Perez, Neelamegham, Manicassamy); the title was reworded at publication, as the journal record shows."
     },
     {
       "index": 3,

@@ -271,7 +271,15 @@
       "duplicate_of": "",
       "needs_attention": false,
       "attention_reason": "",
-      "language_flag_captured": ""
+      "language_flag_captured": "",
+      "status_before_decision": "INDEPENDENT",
+      "confirm_state_before_decision": "confirmed",
+      "corroboration_before_decision": "confirmed by pubmed",
+      "same_work_key": "sw:cit-000195",
+      "same_work_note": "Crossref record for the published article 10.1128/jvi.00906-23 (Journal of Virology) carries relation has-preprint -> 10.1101/2022.06.29.498208, asserted-by object, which is this row's DOI. Both rows sit on the same citing page. The 15 preprint authors are a subset of the 24 article authors and every shared name matches (Liang, Huang, Han, Manivasagam, Plung, Yu, Kandasamy, Gourronc, Klingelhutz, Choudhury, Rong, Perez, Neelamegham, Manicassamy); the title was reworded at publication, as the journal record shows.",
+      "decided_by": "Akul Mehta",
+      "decided_on": "2026-11-04",
+      "decided_note": "recorded as the same published work as cit-000195: Crossref record for the published article 10.1128/jvi.00906-23 (Journal of Virology) carries relation has-preprint -> 10.1101/2022.06.29.498208, asserted-by object, which is this row's DOI. Both rows sit on the same citing page. The 15 preprint authors are a subset of the 24 article authors and every shared name matches (Liang, Huang, Han, Manivasagam, Plung, Yu, Kandasamy, Gourronc, Klingelhutz, Choudhury, Rong, Perez, Neelamegham, Manicassamy); the title was reworded at publication, as the journal record shows."
     },
     {
       "index": 6,

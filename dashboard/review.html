@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Review queue — Akul Mehta independent citation record</title>
+<title>Open rows, settled — Akul Mehta independent citation record</title>
 <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -14,20 +14,23 @@
     dashboard/data/citation-data.json works over http (a fetch)
   Regenerate both with:  node tools/build-dashboard-data.js
 
-  This page exists to be worked through by hand. It changes nothing: the rows
-  here are read from the store's v_review view and the ledger's counts, and a
-  decision on one of them is recorded in Drafts/review-queue-<snapshot>.csv, not
-  in the browser. The non-English rows are on their own chapter at the bottom,
-  deliberately apart, because the decision of 2026-11-01 was that no
-  translations will be obtained and there is nothing here to resolve about them.
+  This page was built to be worked through by hand, and on this snapshot there is
+  nothing left to work: the queue closed on 2026-11-04. It changes nothing either
+  way — the rows here are read from the store's v_review view and the ledger's
+  counts, and a decision is recorded in Drafts/review-queue-<snapshot>.csv, not in
+  the browser. The chapter stays in the packet as the record of how each open row
+  was settled and what the categories meant. The non-English rows are on their own
+  chapter at the bottom, deliberately apart, because the decision of 2026-11-01 was
+  that no translations will be obtained and there is nothing here to resolve about
+  them.
 -->
 <script src="data/citation-data.js"></script>
 <script src="vendor/d3.min.js"></script>
 
 <header class="masthead">
   <div class="masthead-inner">
-    <p class="kicker">Independent citation record &middot; workpaper</p>
-    <h1>Review queue</h1>
+    <p class="kicker">Independent citation record &middot; open rows, settled</p>
+    <h1>Citations that needed a person</h1>
     <p class="standfirst" id="standfirst"></p>
     <p class="sourcing" id="masthead-sourcing"></p>
   </div>
@@ -42,32 +45,17 @@
   <!-- ============ 8. the queue to work through ============ -->
   <section id="review" class="chapter">
     <p class="chapter-num">8</p>
-    <h2>Awaiting review</h2>
+    <h2>Open rows, and how each was settled</h2>
     <p class="prose" id="review-lede"></p>
     <div class="figure-band" id="review-band"></div>
 
     <div class="callout">
-      <p class="callout-title">How to use this page</p>
+      <p class="callout-title" id="review-how-title">How to use this page</p>
+      <div id="review-how"></div>
       <p>
-        Quote the <b>row_uid</b> when you tell me about a row &mdash; it is
-        permanent, so <code>cit-000106</code> still means the same row after a
-        re-capture or a rebuild. The integer id is a frozen legacy alias and is
-        not used anywhere.
-      </p>
-      <p>
-        Write the decision into
-        <code id="review-sheet">the dated review sheet</code> in the
-        <code>your_decision</code> column, or tell me the row_uid and the answer.
-        Nothing on this page is editable and nothing here changes a count: none of
-        these rows is currently counted as independent <i>or</i> as dependent, so
-        a decision moves the totals either way.
-      </p>
-      <p>
-        A row that is also non-English is not on this queue. With no certified
-        translations being obtained, no reading of such a row can change the
-        packet, so it belongs with the other non-English entries on
-        <a href="language.html">the Non-English page</a> rather than in a list of
-        decisions to make.
+        Quote the <b>row_uid</b> when referring to a row &mdash; it is permanent,
+        so <code>cit-000106</code> still means the same row after a re-capture or a
+        rebuild. The integer id is a frozen legacy alias and is not used anywhere.
       </p>
     </div>
 
@@ -89,7 +77,7 @@
     <p class="bucket-why" id="bucket-3-why"></p>
     <div class="table-wrap tall" id="table-unresolvable"></div>
 
-    <h3 class="bucket-head" id="unsettled-head">Independent but unsettled</h3>
+    <h3 class="bucket-head" id="unsettled-head">Independent but not marked</h3>
     <p class="bucket-why" id="unsettled-why"></p>
     <div class="table-wrap" id="table-unsettled"></div>
 

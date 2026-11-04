@@ -131,7 +131,7 @@
       "snippet": "Alzheimer's disease (AD) is a neurodegenerative disorder marked by progressive cognitive\ndecline, affecting millions worldwide. Early diagnosis and intervention are crucial yet …",
       "truncated": true,
       "link": "https://pubs.acs.org/jprobs/article-abstract/24/9/4417/3761569",
-      "status": "REVIEW",
+      "status": "INDEPENDENT",
       "matched_authors": [],
       "matched_pi": [],
       "matched_former_pi": [],
@@ -158,12 +158,18 @@
         "title": "Serum Proteoglycan Alterations Associated with Cardiovascular Risk in Pb-Battery Recycling Workers Using Exploratory Proteomics and Independent ELISA Validation.",
         "similarity": 0.08
       },
-      "confirm_state": "unresolved",
-      "corroboration": "not indexed in PubMed or OpenAlex and the Scholar list is incomplete",
+      "confirm_state": "user-decided",
+      "corroboration": "decided by Akul Mehta on 2026-11-04: User decision 2026-11-04, with the complete author list read from the published article: Onigbinde, Solomon, Gutierrez-Reyes, Daramola, Fowowe, Adeniyi, DuBois, Bakulski, Kanaan, Lubman, Mechref (11). The row was queued because Scholar's own Cite BibTeX cut the list with 'and others', dropping Mechref, and neither PubMed nor OpenAlex indexes it. Crossref publishes the same 11 names for DOI 10.1021/acs.jproteome.5c00018 (J. Proteome Res. 24(9):4417-4436, 2025-08-12), which matches the user's list name for name. Against the cited paper's complete 15-author list (Gao, Stavenhagen, Eckmair, McKitrick, Mehta, Matsumoto, McQuillan, Hanes, Eris, Baker, Jia, Wei, Heimburg-Molinaro, Ernst, Cummings) the name-match rule returns INDEPENDENT with no shared author and neither PI; it returns the same on Scholar's truncated 10-name list, so the verdict does not depend on which list is read. No fold: this title appears once in the corpus. (rule had REVIEW/unresolved) | not indexed in PubMed or OpenAlex and the Scholar list is incomplete",
       "corroboration_note": "no PubMed or OpenAlex record matched the title closely enough",
-      "attention_reason": "not indexed in PubMed or OpenAlex and the Scholar list is incomplete",
-      "needs_attention": true,
-      "language_flag_captured": ""
+      "attention_reason": "",
+      "needs_attention": false,
+      "language_flag_captured": "",
+      "status_before_decision": "REVIEW",
+      "confirm_state_before_decision": "unresolved",
+      "corroboration_before_decision": "not indexed in PubMed or OpenAlex and the Scholar list is incomplete",
+      "decided_by": "Akul Mehta",
+      "decided_on": "2026-11-04",
+      "decided_note": "User decision 2026-11-04, with the complete author list read from the published article: Onigbinde, Solomon, Gutierrez-Reyes, Daramola, Fowowe, Adeniyi, DuBois, Bakulski, Kanaan, Lubman, Mechref (11). The row was queued because Scholar's own Cite BibTeX cut the list with 'and others', dropping Mechref, and neither PubMed nor OpenAlex indexes it. Crossref publishes the same 11 names for DOI 10.1021/acs.jproteome.5c00018 (J. Proteome Res. 24(9):4417-4436, 2025-08-12), which matches the user's list name for name. Against the cited paper's complete 15-author list (Gao, Stavenhagen, Eckmair, McKitrick, Mehta, Matsumoto, McQuillan, Hanes, Eris, Baker, Jia, Wei, Heimburg-Molinaro, Ernst, Cummings) the name-match rule returns INDEPENDENT with no shared author and neither PI; it returns the same on Scholar's truncated 10-name list, so the verdict does not depend on which list is read. No fold: this title appears once in the corpus."
     },
     {
       "index": 4,

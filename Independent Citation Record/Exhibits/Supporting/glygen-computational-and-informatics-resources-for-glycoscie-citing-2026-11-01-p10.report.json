@@ -206,7 +206,15 @@
       "duplicate_of": "",
       "attention_reason": "highlighted on Scholar's list alone - not indexed in PubMed or OpenAlex, worth a spot-check",
       "needs_attention": true,
-      "language_flag_captured": ""
+      "language_flag_captured": "",
+      "status_before_decision": "INDEPENDENT",
+      "confirm_state_before_decision": "unverified-coverage",
+      "corroboration_before_decision": "not indexed in PubMed or OpenAlex; Scholar list is complete",
+      "same_work_key": "sw:cit-000752",
+      "same_work_note": "Google Scholar lists this row as its own citing work, but its title is the words 'Supplementary Materials for' followed by the title of cit-000752 (Enhanced surface accessibility of SARS-CoV-2 Omicron, ACS Infectious Diseases, PMC11184558) and its byline is the same (D Wang, Z Zhang, J Baudys, C Haynes, SH Osman). Both rows sit on the same citing page. It is the supporting information of that article, not a separate publication.",
+      "decided_by": "Akul Mehta",
+      "decided_on": "2026-11-04",
+      "decided_note": "recorded as the same published work as cit-000752: Google Scholar lists this row as its own citing work, but its title is the words 'Supplementary Materials for' followed by the title of cit-000752 (Enhanced surface accessibility of SARS-CoV-2 Omicron, ACS Infectious Diseases, PMC11184558) and its byline is the same (D Wang, Z Zhang, J Baudys, C Haynes, SH Osman). Both rows sit on the same citing page. It is the supporting information of that article, not a separate publication."
     },
     {
       "index": 4,

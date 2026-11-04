@@ -82,10 +82,20 @@ const totals = db
   .prepare(
     `SELECT COUNT(*) AS active,
             SUM(CASE WHEN status = 'REVIEW' THEN 1 ELSE 0 END) AS review,
-            SUM(CASE WHEN status = 'REVIEW' AND is_non_english = 0 THEN 1 ELSE 0 END)
+            -- Mirrors tally.isReviewQueue: excludes non-English rows and, since
+            -- schema v10, copies whose standing sibling already settled the work.
+            SUM(CASE WHEN status = 'REVIEW' AND is_non_english = 0
+                      AND inherited_status = '' THEN 1 ELSE 0 END)
               AS review_queue,
             SUM(CASE WHEN status = 'REVIEW' AND is_non_english = 1 THEN 1 ELSE 0 END)
-              AS review_non_english
+              AS review_non_english,
+            -- The third reason a REVIEW row is not on this sheet: it is a copy of
+            -- a work whose standing copy is already settled (tally.inheritedFrom).
+            -- Named separately because a header that blamed the whole gap on
+            -- language was wrong, and this sheet is what the user reads.
+            SUM(CASE WHEN status = 'REVIEW' AND is_non_english = 0
+                      AND inherited_status <> '' THEN 1 ELSE 0 END)
+              AS review_inherited
      FROM v_active`
   )
   .get();
@@ -169,7 +179,34 @@ const out = rows.map((r) => ({
   "your_notes": "",
 }));
 
-const ORDER = Object.keys(out[0]);
+// The column order is stated rather than read off the first row. The queue can
+// legitimately be empty -- it closed on 2026-11-04 -- and taking the header from
+// out[0] crashed on exactly that. It also matters that an empty sheet still gets
+// a full header: apply-decision.js --from-csv reads this file and refuses one
+// with no row_uid / your_decision column, so a closed queue must remain a sheet
+// it can read, not a blank file.
+const ORDER = [
+  "row_uid",
+  "bucket",
+  "citing_title",
+  "scholar_byline",
+  "byline_truncated",
+  "cites_this_PI_work",
+  "cited_venue_year",
+  "exhibit_page",
+  "exhibit_row",
+  "exhibit_base",
+  "why_unresolved",
+  "external_record",
+  "external_authors",
+  "external_overlap_names",
+  "external_link",
+  "citing_paper_link",
+  "scholar_cid",
+  "language_flag",
+  "your_decision",
+  "your_notes",
+];
 
 function csvCell(v) {
   const s = v === null || v === undefined ? "" : String(v);
@@ -209,13 +246,35 @@ if (AS_MD) {
   );
   md.push(``);
   if (totals.review > totals.review_queue) {
+    // Every row missing from this sheet gets its reason named. The two reasons
+    // are different in kind -- one is a closed decision, one is an answer the
+    // work already has -- and lumping them together previously told the reader
+    // that 7 rows were non-English when only 5 were.
+    const why = [];
+    if (totals.review_non_english) {
+      why.push(
+        `${totals.review_non_english} are flagged non-English, where no certified ` +
+          `translation is being obtained (decision of 2026-11-01) so no reading of the ` +
+          `byline can change the packet -- see \`node tools/query-catalog.js nonenglish\``
+      );
+    }
+    if (totals.review_inherited) {
+      why.push(
+        `${totals.review_inherited} are a second copy of a work whose published record ` +
+          `is already settled, so they take that verdict by inheritance and are listed ` +
+          `under Preprint / copy on the dashboard instead`
+      );
+    }
+    const gap = totals.review - totals.review_queue;
+    const explained = totals.review_non_english + totals.review_inherited;
+    const unexplained =
+      explained === gap
+        ? ""
+        : `; ${gap - explained} UNEXPLAINED, so the sheet's totals query and the ` +
+          `queue rule disagree -- rebuild the store`;
     md.push(
-      `${totals.review} rows are classified REVIEW in total. The ` +
-        `${totals.review - totals.review_queue} not listed here are also flagged ` +
-        `non-English: with no certified translations being obtained (decision of ` +
-        `2026-11-01), no reading of such a row can change the packet, so it is ` +
-        `reported with the non-English entries rather than as a decision to make. ` +
-        `See \`node tools/query-catalog.js nonenglish\`.`
+      `${totals.review} rows are classified REVIEW in total. ` +
+        `${gap} not listed here: ${why.join("; ")}${unexplained}.`
     );
     md.push(``);
   }
@@ -229,6 +288,17 @@ if (AS_MD) {
   md.push(`|---|---:|---|`);
   for (const [b, n] of Object.entries(buckets).sort()) {
     md.push(`| ${b} | ${n} | ${BUCKET_LABELS[b] || ""} |`);
+  }
+  if (!out.length) {
+    // An empty queue is a result, not a missing build. Say so, and say what the
+    // remaining REVIEW rows are, so a reader never mistakes a blank table for a
+    // sheet that failed to generate.
+    md.push(``);
+    md.push(
+      `**The queue is empty.** Every citation on a filed exhibit page is classified, so ` +
+        `nothing is left where reading the published byline would change a figure. A new ` +
+        `row can still appear here after a re-capture or a change to what counts.`
+    );
   }
   md.push(``);
   for (const [b, n] of Object.entries(buckets).sort()) {

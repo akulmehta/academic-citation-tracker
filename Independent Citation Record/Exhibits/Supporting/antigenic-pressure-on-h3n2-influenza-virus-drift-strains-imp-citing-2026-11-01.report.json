@@ -126,7 +126,15 @@
       "duplicate_of": "",
       "needs_attention": false,
       "attention_reason": "",
-      "language_flag_captured": ""
+      "language_flag_captured": "",
+      "status_before_decision": "INDEPENDENT",
+      "confirm_state_before_decision": "confirmed",
+      "corroboration_before_decision": "confirmed by pubmed",
+      "same_work_key": "sw:cit-000182",
+      "same_work_note": "Crossref record for the published article 10.1371/journal.ppat.1013812 (PLOS Pathogens) carries relation has-preprint -> 10.1101/2025.04.24.650378, asserted-by object, which is this row's DOI. Both rows sit on the same citing page. Crossref gives both records the identical 15-author byline (Weber, Ponse, Zhu, Rios Carrasco, Han, Funk, Lin, Gabarroca Garcia, Spruit, Zhang, Yu, Wilson, Richard, Boons, de Vries).",
+      "decided_by": "Akul Mehta",
+      "decided_on": "2026-11-04",
+      "decided_note": "recorded as the same published work as cit-000182: Crossref record for the published article 10.1371/journal.ppat.1013812 (PLOS Pathogens) carries relation has-preprint -> 10.1101/2025.04.24.650378, asserted-by object, which is this row's DOI. Both rows sit on the same citing page. Crossref gives both records the identical 15-author byline (Weber, Ponse, Zhu, Rios Carrasco, Han, Funk, Lin, Gabarroca Garcia, Spruit, Zhang, Yu, Wilson, Richard, Boons, de Vries)."
     },
     {
       "index": 3,
@@ -137,7 +145,7 @@
       "snippet": "H5Nx viruses continue to wreak havoc in avian and mammalian species worldwide. The\nvirus distinguishes itself by the ability to replicate to high titers and transmit efficiently in a …",
       "truncated": true,
       "link": "https://www.pnas.org/doi/abs/10.1073/pnas.2419800122",
-      "status": "REVIEW",
+      "status": "INDEPENDENT",
       "matched_authors": [],
       "matched_pi": [],
       "matched_former_pi": [],
@@ -160,14 +168,20 @@
       "resolution": "resolved but Scholar shows 'and others'",
       "language_flag": "",
       "page": 1,
-      "confirm_state": "unresolved",
-      "corroboration": "not indexed in PubMed or OpenAlex and the Scholar list is incomplete",
+      "confirm_state": "user-decided",
+      "corroboration": "decided by Akul Mehta on 2026-11-03 (rule had REVIEW/unresolved) | not indexed in PubMed or OpenAlex and the Scholar list is incomplete",
       "corroboration_note": "no PubMed or OpenAlex record matched the title closely enough",
       "edition_key": "doi:10.1073:2419800122:rioscarrascomarialintinghuizhuxueyonggabarrocagarciaalbausluelifliangruonanspruitcindymrichardmathildeboonsgeertjanwilsoniana",
       "duplicate_of": "",
-      "attention_reason": "not indexed in PubMed or OpenAlex and the Scholar list is incomplete",
-      "needs_attention": true,
-      "language_flag_captured": ""
+      "attention_reason": "",
+      "needs_attention": false,
+      "language_flag_captured": "",
+      "status_before_decision": "REVIEW",
+      "confirm_state_before_decision": "unresolved",
+      "corroboration_before_decision": "not indexed in PubMed or OpenAlex and the Scholar list is incomplete",
+      "decided_by": "Akul Mehta",
+      "decided_on": "2026-11-03",
+      "decided_note": ""
     },
     {
       "index": 4,
@@ -342,7 +356,15 @@
       "duplicate_of": "",
       "needs_attention": false,
       "attention_reason": "",
-      "language_flag_captured": ""
+      "language_flag_captured": "",
+      "status_before_decision": "INDEPENDENT",
+      "confirm_state_before_decision": "confirmed",
+      "corroboration_before_decision": "confirmed by openalex",
+      "same_work_key": "sw:cit-000187",
+      "same_work_note": "User decision 2026-11-04 (option a): cit-000220 is the same published work as cit-000187 - identical title ('Revealing the specificity of human H1 influenza avirus neuraminidase') and identical DOI 10.1021/jacsau.2c00664 - listed twice on the citing page of the same paper, once as a journal record and once as a [CITATION] entry. Both were highlighted, which double-counted one paper: unique_papers_citing and independent_unique_papers were each 1 too high because grouping keys on same_work_key OR paper_key and never both, so a fold on one title-keyed copy stranded the other. Folding the second copy onto cit-000187 makes the group complete. The user accepted that the duplicate loses its exhibit mark, to be re-printed with the rest at the end.",
+      "decided_by": "Akul Mehta",
+      "decided_on": "2026-11-04",
+      "decided_note": "recorded as the same published work as cit-000187: User decision 2026-11-04 (option a): cit-000220 is the same published work as cit-000187 - identical title ('Revealing the specificity of human H1 influenza avirus neuraminidase') and identical DOI 10.1021/jacsau.2c00664 - listed twice on the citing page of the same paper, once as a journal record and once as a [CITATION] entry. Both were highlighted, which double-counted one paper: unique_papers_citing and independent_unique_papers were each 1 too high because grouping keys on same_work_key OR paper_key and never both, so a fold on one title-keyed copy stranded the other. Folding the second copy onto cit-000187 makes the group complete. The user accepted that the duplicate loses its exhibit mark, to be re-printed with the rest at the end."
     },
     {
       "index": 8,

@@ -214,7 +214,18 @@ function stats(db) {
          SUM(CASE WHEN status = 'SELF (PI)' THEN 1 ELSE 0 END) AS self_pi,
          SUM(CASE WHEN status = 'SELF (FORMER PI)' THEN 1 ELSE 0 END) AS self_former_pi,
          SUM(CASE WHEN status = 'REVIEW' THEN 1 ELSE 0 END) AS review,
-         SUM(CASE WHEN status = 'REVIEW' AND is_non_english = 0 THEN 1 ELSE 0 END) AS review_queue,
+         -- Mirrors tally.isReviewQueue: not non-English, and not a copy whose
+         -- standing sibling already settled the work (schema v10).
+         SUM(CASE WHEN status = 'REVIEW' AND is_non_english = 0
+                   AND inherited_status = '' THEN 1 ELSE 0 END) AS review_queue,
+         -- The two reasons a REVIEW row is NOT queued, counted separately. A
+         -- header that blamed the whole gap on language was wrong once copies
+         -- began inheriting a verdict: on 2026-11-04 the 17 unqueued REVIEW rows
+         -- were 5 non-English and 12 inherited copies.
+         SUM(CASE WHEN status = 'REVIEW' AND is_non_english = 1 THEN 1 ELSE 0 END)
+           AS review_non_english,
+         SUM(CASE WHEN status = 'REVIEW' AND is_non_english = 0
+                   AND inherited_status <> '' THEN 1 ELSE 0 END) AS review_inherited,
          SUM(CASE WHEN language_flag <> '' THEN 1 ELSE 0 END) AS non_english,
          SUM(CASE WHEN status = 'INDEPENDENT' AND language_flag <> '' THEN 1 ELSE 0 END) AS non_english_independent,
          SUM(CASE WHEN withheld_for_language = 1 THEN 1 ELSE 0 END) AS non_english_withheld,
@@ -259,8 +270,15 @@ function stats(db) {
     console.log(
       `Review queue:                  ${g.review_queue}` +
         (g.review > g.review_queue
-          ? `  (${g.review} classified REVIEW, ${g.review - g.review_queue} of them` +
-            ` non-English -- see "Flagged non-English" and the nonenglish subcommand)`
+          ? `  (${g.review} classified REVIEW, ${g.review - g.review_queue} not queued:` +
+            ` ${g.review_non_english} non-English -- see "Flagged non-English" and the` +
+            ` nonenglish subcommand -- ${g.review_inherited} a second copy of a work whose` +
+            ` standing row is settled, so it inherits that verdict` +
+            (g.review - g.review_queue - g.review_non_english - g.review_inherited > 0
+              ? ` -- and ${g.review - g.review_queue - g.review_non_english - g.review_inherited}` +
+                ` UNEXPLAINED, rebuild the store`
+              : "") +
+            `)`
           : "")
     );
     console.log(`Flagged non-English:           ${g.non_english}` +
@@ -531,9 +549,14 @@ function review(db) {
   // The language exclusion is the user's instruction of 2026-11-03. A non-English
   // row cannot be settled here -- no certified translations are being obtained, so
   // a decision on one changes nothing -- and it is listed by the `nonenglish`
-  // subcommand instead. --all widens to every REVIEW row, as it does elsewhere.
+  // subcommand instead. The inherited_status exclusion is the instruction of the
+  // same day: a row that is Google Scholar's second listing of a work whose
+  // standing copy is settled is a settled COPY, not open work, and belongs on the
+  // Preprint/Copy listing. --all widens to every REVIEW row, as it does elsewhere.
   const where =
-    `c.status = 'REVIEW' ${ALL ? "" : "AND c.is_non_english = 0 "} ${FILED}`;
+    `c.status = 'REVIEW' ` +
+    (ALL ? "" : `AND c.is_non_english = 0 AND c.inherited_status = '' `) +
+    FILED;
   const rows = db
     .prepare(
       `SELECT

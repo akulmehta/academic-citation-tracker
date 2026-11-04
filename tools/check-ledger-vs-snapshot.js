@@ -143,19 +143,33 @@ for (const r of rows) {
     problems++;
   }
   // The queue is a subset of the REVIEW rows, and the rows it leaves out are
-  // non-English by definition. Checking the containment rather than an exact
-  // formula keeps this valid for a ledger written before the queue existed,
-  // where review_queue is simply absent and reads 0.
+  // either non-English or copies whose standing sibling already settled the work
+  // (tally.isReviewQueue). Checking the containment rather than an exact formula
+  // keeps this valid for a ledger written before those terms existed, where
+  // review_queue is simply absent and reads 0. When the named parts ARE present
+  // they must add up to the gap exactly -- a gap explained by the wrong reason is
+  // the defect that let two inherited copies be reported as non-English rows.
   const queue = num(r.review_queue);
+  const gap = num(r.review) - queue;
   if (queue > num(r.review)) {
     console.log(
       `[check] QUEUE ${r.title.slice(0, 48)}: review_queue ${queue} exceeds the ` +
         `${r.review} rows classified REVIEW`
     );
     problems++;
-  } else if (queue < num(r.review) && num(r.review) - queue > num(r.non_english)) {
+  } else if (r.review_non_english !== undefined || r.review_inherited !== undefined) {
+    const parts = num(r.review_non_english) + num(r.review_inherited);
+    if (parts !== gap) {
+      console.log(
+        `[check] QUEUE ${r.title.slice(0, 48)}: ${gap} rows left the queue but the ` +
+          `named reasons (${num(r.review_non_english)} non-English + ` +
+          `${num(r.review_inherited)} inherited) account for ${parts}`
+      );
+      problems++;
+    }
+  } else if (gap > 0 && gap > num(r.non_english)) {
     console.log(
-      `[check] QUEUE ${r.title.slice(0, 48)}: ${num(r.review) - queue} rows left the ` +
+      `[check] QUEUE ${r.title.slice(0, 48)}: ${gap} rows left the ` +
         `queue but only ${r.non_english} is/are flagged non-English`
     );
     problems++;

@@ -212,6 +212,17 @@ const articles = ledger.rows.map((r) => {
     independent_coverage: Number(r.independent_coverage),
     independent_pending: Number(r.independent_pending),
     non_english_independent: Number(r.non_english_independent),
+    // Same five categories as the waffle, per publication, so a bar's segments
+    // add up to its record count and mean the same thing the waffle says they
+    // mean. Read straight from the ledger row -- recomputing them here from the
+    // status columns is how the two charts would drift apart.
+    bucket_independent: Number(r.bucket_independent),
+    bucket_dependent: Number(r.bucket_dependent),
+    bucket_review: Number(r.bucket_review),
+    bucket_non_english: Number(r.bucket_non_english),
+    bucket_preprint_copy: Number(r.bucket_preprint_copy),
+    bucket_pending: Number(r.bucket_pending),
+    bucket_other: Number(r.bucket_other),
     unique_independent: Number(r.unique_independent),
     dependent: Number(r.dependent),
     self_pi: Number(r.self_pi),
@@ -349,23 +360,52 @@ const corroborationDistinct = q(`SELECT
   count: r.n,
 }));
 
-// ---- every distinct citing work, marked or not, for the scrolling list ----
+// ---- every citing row on a filed exhibit page, marked or not ----
 // No LIMIT and no status filter: the user asked for the entire dataset to be
 // visualisable, and a list of only the highlighted rows would make the
 // dependent and unresolved side invisible. `marked` carries the exhibit's own
 // decision so the dashboard can never disagree with the PDF. row_uid is the
 // handle for a row: quote it, not the integer id, which is a frozen legacy alias.
+//
+// This list used to carry only the copy that stands for each work
+// (`is_primary_copy = 1`), which made it a list of distinct PAPERS. That was
+// wrong for a page titled "every citing work ON THE EXHIBIT PAGES": a row the
+// exhibit prints, and in many cases highlights, was simply absent and could not
+// be searched for. Found 2026-11-03 when the user could not find cit-000220 --
+// a second Scholar listing of the JACS Au article cit-000187, same DOI, marked
+// yellow on exhibit page 5, and invisible here. The preprint/copy appendix on
+// the main page named it, but that is a different page and a reviewer following
+// a row off a PDF has no reason to go looking there.
+//
+// So the filter is gone and every active row appears, with `stands_for_row_uid`
+// and `duplicate_kind` carried so the renderer can say which rows are one work.
+// No counted figure comes from this list -- the headline guards above read their
+// own aggregate queries, and the ledger is still the source a filing quotes --
+// so widening it cannot move a packet number. It is a listing, and a listing
+// that hides rows the exhibit shows is the defect.
 const allWorks = q(`SELECT
     c.row_uid, c.title, c.authors, c.status, c.confirm_state, c.external_source,
     c.external_url, c.link, c.work_type, c.cites_id, p.title AS cited_title,
     p.year AS cited_year, c.base, c.page, c.cid,
     c.is_countable_independent AS marked, c.language_flag, c.attention_reason,
-    c.external_match_credible,
-    p.cited_by_at_snapshot AS cited_by
+    c.external_match_credible, c.is_primary_copy, c.duplicate_kind,
+    c.duplicate_of, c.inherited_status, c.stands_for_row_uid,
+    p.cited_by_at_snapshot AS cited_by,
+    -- The row that stands for this work, found the way tally.uniquePapers groups
+    -- it: same_work_key when a person proved one, otherwise the normalised title.
+    -- Same correlated lookup the preprint/copy listing uses, so the two pages
+    -- cannot name different anchors for the same copy.
+    (SELECT o.row_uid FROM citations o
+      WHERE o.filed = 1 AND o.superseded_at = ''
+        AND o.cites_id = c.cites_id
+        AND COALESCE(NULLIF(o.same_work_key,''), o.work_key)
+          = COALESCE(NULLIF(c.same_work_key,''), c.work_key)
+        AND o.is_primary_copy = 1 AND o.duplicate_of = ''
+      ORDER BY o.page, o.row_index LIMIT 1) AS stands_uid
   FROM citations c
   LEFT JOIN publications p ON p.cites_id = c.cites_id
-  WHERE ${ACTIVE} AND c.is_primary_copy = 1
-  ORDER BY p.cited_by_at_snapshot DESC, c.title`).map((r) => ({
+  WHERE ${ACTIVE}
+  ORDER BY p.cited_by_at_snapshot DESC, c.title, c.page, c.row_index`).map((r) => ({
   row_uid: r.row_uid,
   title: r.title,
   byline: r.authors,
@@ -385,6 +425,17 @@ const allWorks = q(`SELECT
   exhibit_base: r.base,
   exhibit_page: r.page,
   cid: r.cid,
+  // A row is a copy when it does not stand for its work, or when a recorded fold
+  // points elsewhere. This is deliberately the same predicate the preprint/copy
+  // listing below uses (`is_primary_copy = 0 OR duplicate_of <> ''`) rather than
+  // `is_primary_copy = 0` alone: three German language-edition rows are the
+  // primary copy on their own page yet carry a duplicate_of pointing at the
+  // English copy that stands, so a narrower test would label them as standing
+  // work here while the copy appendix lists them as copies.
+  is_copy: r.is_primary_copy === 0 || !!r.duplicate_of,
+  duplicate_kind: r.duplicate_kind || "",
+  inherited_status: r.inherited_status || "",
+  stands_for_row_uid: r.stands_uid || r.stands_for_row_uid || "",
 }));
 
 // ---- the review queue: citations whose independence is still unresolved ----
@@ -591,6 +642,190 @@ log(
     `${languageHeld.length} non-English (reported once, on the language page)`
 );
 
+// ---- the preprint / copy listing ----
+//
+// Google Scholar lists some papers twice on one citing page: a journal record and
+// its bioRxiv, institutional-repository, academia.edu, ProQuest or Ovid copy. The
+// exhibit must show both rows because that is the page that was printed, but the
+// packet credits the work once -- otherwise a preprint whose published article is
+// already counted would be claimed a second time.
+//
+// This listing names every row that does not stand for its work, and the row that
+// does, so a reviewer holding a two-sheet PDF can see why one row is counted and
+// the other is not. It is the fifth bucket on the waffle.
+//
+// `stands_for` is resolved here rather than read from stands_for_row_uid, which
+// build-catalog.js only fills for rows carrying duplicate_of -- that is, the
+// language editions and the same-work folds a person proved. A machine-detected
+// copy has no duplicate_of, so its anchor is found the same way uniquePapers
+// found it: the sibling on the same citing list with the same work key that was
+// not deferred.
+const copyRows = q(`SELECT
+    c.row_uid, c.cites_id, c.cid, c.title,
+    COALESCE(NULLIF(c.authors_used,''), c.authors) AS byline,
+    c.link, c.work_key, c.duplicate_kind, c.duplicate_of, c.patent_number,
+    c.work_type, c.status, c.confirm_state, c.is_highlighted,
+    c.inherited_status, c.inherited_confirm_state, c.stands_for_row_uid,
+    p.title AS cited_title, p.year AS cited_year,
+    c.base, c.page, c.row_index,
+    -- The copy that stands for this work, found the way uniquePapers groups it:
+    -- same_work_key when a person proved one, otherwise the normalised title.
+    -- Matching on work_key alone cannot find cit-000108 from cit-000132, because
+    -- the fold that links them was proven by hand across DIFFERENT titles (a
+    -- bioRxiv preprint and the article it became), so the two rows carry different
+    -- work_key values and only same_work_key joins them.
+    (SELECT o.row_uid FROM citations o
+      WHERE o.filed = 1 AND o.superseded_at = ''
+        AND o.cites_id = c.cites_id
+        AND COALESCE(NULLIF(o.same_work_key,''), o.work_key)
+          = COALESCE(NULLIF(c.same_work_key,''), c.work_key)
+        AND o.is_primary_copy = 1 AND o.duplicate_of = ''
+      ORDER BY o.page, o.row_index LIMIT 1) AS stands_uid,
+    (SELECT o.title FROM citations o
+      WHERE o.filed = 1 AND o.superseded_at = ''
+        AND o.cites_id = c.cites_id
+        AND COALESCE(NULLIF(o.same_work_key,''), o.work_key)
+          = COALESCE(NULLIF(c.same_work_key,''), c.work_key)
+        AND o.is_primary_copy = 1 AND o.duplicate_of = ''
+      ORDER BY o.page, o.row_index LIMIT 1) AS stands_title,
+    (SELECT o.link FROM citations o
+      WHERE o.filed = 1 AND o.superseded_at = ''
+        AND o.cites_id = c.cites_id
+        AND COALESCE(NULLIF(o.same_work_key,''), o.work_key)
+          = COALESCE(NULLIF(c.same_work_key,''), c.work_key)
+        AND o.is_primary_copy = 1 AND o.duplicate_of = ''
+      ORDER BY o.page, o.row_index LIMIT 1) AS stands_link
+  FROM citations c
+  LEFT JOIN publications p ON p.cites_id = c.cites_id
+  WHERE ${ACTIVE} AND c.is_non_english = 0
+    -- Mirrors the copy term of bucketOf in tools/tally.js exactly: a row that does
+    -- not stand for its work (is_primary_copy = 0, or a recorded duplicate_of fold),
+    -- MINUS a row still genuinely open on the queue. A REVIEW row is only excluded
+    -- when it has NOTHING to inherit (inherited_status = ''); a REVIEW row that IS
+    -- a settled copy -- cit-000132, cit-000144, both copies of the INDEPENDENT
+    -- cit-000108 -- belongs here, per the instruction of 2026-11-03. The guard
+    -- below compares this listing against bucket_preprint_copy, so the two clauses
+    -- are the same rule and must be edited together.
+    AND NOT (c.status = 'REVIEW' AND c.inherited_status = '')
+    AND (c.is_primary_copy = 0 OR c.duplicate_of <> '')
+  ORDER BY p.title, c.page, c.row_index`);
+
+// Which kind of second listing, in words a reviewer can read without knowing the
+// pipeline. Ordered most-specific first: a proven same-work fold or a patent
+// family is a stronger claim than a host-name guess, and the reason shown should
+// be the one that actually decided it.
+function copyReason(r) {
+  if (r.duplicate_kind === "same-work") {
+    return "Same work under a different title, proven and recorded by hand";
+  }
+  if (r.patent_number) {
+    return "Another document in the same patent family (same title, different number)";
+  }
+  const url = String(r.link || "");
+  const host = (re) => re.test(url);
+  if (/biorxiv|medrxiv|chemrxiv|researchsquare/.test(url)) {
+    return "Preprint of the published article";
+  }
+  if (/academia\.edu|researchgate/.test(url)) {
+    return "Author-uploaded copy of the published article";
+  }
+  if (/handle\.|dspace|scholarlypublications|scientiasalut|scholarscompass|salilab|repository|etd\b|proquest/.test(url)) {
+    return "Repository or thesis copy of the published article";
+  }
+  if (/ovid|scitepress|ebsco|gencat|digital\.csic/.test(url)) {
+    return "Database or aggregator copy of the published article";
+  }
+  if (!url) return "Second Google Scholar entry for the same record (no link)";
+  return "Second listing of the same work on this citing page";
+}
+
+const preprintCopies = copyRows.map((r) => ({
+  row_uid: r.row_uid,
+  cites_id: r.cites_id,
+  cited_title: r.cited_title,
+  cited_year: r.cited_year,
+  title: r.title,
+  byline: r.byline,
+  link: r.link || "",
+  reason: copyReason(r),
+  duplicate_kind: r.duplicate_kind || "",
+  patent_number: r.patent_number || "",
+  work_type: r.work_type,
+  // Whether this row is nevertheless marked yellow on the exhibit. It usually is:
+  // the exhibit is a picture of Scholar's page and both rows are printed, so the
+  // mark and the count differ by design. Saying so here is what lets a reviewer
+  // reconcile 1077 marks with 1059 counted works.
+  marked: r.is_highlighted === 1,
+  // The verdict this row takes from the copy that stands for its work, and the
+  // basis of that verdict. Empty when the row's own classification already stands.
+  // A REVIEW row here is the case the user asked for on 2026-11-03: its own byline
+  // was unresolved, so the row reads as its parent's category rather than as work
+  // still awaiting a decision.
+  inherited_status: r.inherited_status || "",
+  inherited_confirm_state: r.inherited_confirm_state || "",
+  // The row's own classification, needed alongside the inherited one: a copy can
+  // be settled on its own reading, and a listing that showed only the inherited
+  // field would have to imply those were open review rows. They are not.
+  status: r.status || "",
+  confirm_state: r.confirm_state || "",
+  stands_for_row_uid: r.stands_uid || r.stands_for_row_uid || "",
+  stands_for_title: r.stands_title || "",
+  stands_for_link: r.stands_link || "",
+  exhibit_base: r.base,
+  exhibit_page: r.page,
+  exhibit_row: r.row_index,
+  exhibit_pdf: exhibitPdf(r.base, r.page),
+  cid: r.cid,
+}));
+
+// The listing must be the fifth bucket exactly, or the waffle square count and
+// the page that explains it would disagree.
+if (preprintCopies.length !== Number(g.bucket_preprint_copy)) {
+  throw new Error(
+    `The preprint/copy listing holds ${preprintCopies.length} rows but the ledger's ` +
+      `fifth bucket is ${g.bucket_preprint_copy}. The listing's WHERE clause and ` +
+      `bucketOf in tools/tally.js must be the same rule; rebuild both before ` +
+      `publishing either.`
+  );
+}
+
+// The invariant the user asked for on 2026-11-03: a row the exhibit prints must
+// be findable on the citing-work page. The preprint/copy appendix names rows
+// deliberately left out of the distinct-paper count, and before this they were
+// left out of that listing too -- which is how cit-000220, marked yellow on
+// exhibit page 5, became impossible to search for. Every copy named anywhere has
+// to be present there. Checked here rather than next to allWorks because it
+// needs both lists.
+{
+  const listed = new Set(allWorks.map((w) => w.row_uid));
+  const missing = preprintCopies.filter((c) => !listed.has(c.row_uid));
+  if (missing.length) {
+    throw new Error(
+      `The citing-work listing omits ${missing.length} row(s) the preprint/copy ` +
+        `appendix names: ${missing.map((m) => m.row_uid).join(", ")}. Every row ` +
+        `on an exhibit page has to be findable on that page.`
+    );
+  }
+  // And the flag has to agree with the appendix, or a row would read as standing
+  // work on one page and as a copy on the other.
+  const disagree = preprintCopies.filter((c) => {
+    const w = allWorks.find((x) => x.row_uid === c.row_uid);
+    return w && !w.is_copy;
+  });
+  if (disagree.length) {
+    throw new Error(
+      `${disagree.length} row(s) are listed as a copy in the appendix but not ` +
+        `flagged as one on the citing-work page: ${disagree
+          .map((d) => d.row_uid)
+          .join(", ")}. The two use the same predicate and must say the same thing.`
+    );
+  }
+}
+log(
+  `Preprint/copy bucket: ${preprintCopies.length} rows that do not stand for their ` +
+    `work (${preprintCopies.filter((r) => r.marked).length} of them still marked on the exhibit)`
+);
+
 // ---- unresolved items, so the dashboard does not overstate certainty ----
 const openItems = q(`SELECT
     c.status, c.attention_reason, COUNT(*) AS n
@@ -657,11 +892,31 @@ const out = {
     independent_unique_papers: g.independent_unique_papers,
     independent_externally_confirmed: g.independent_externally_confirmed,
     independent_scholar_list_only: g.independent_scholar_list_only,
+    // How much of the counted total rests on a person reading the published
+    // article rather than on a machine match. Published so chapter 6 can state
+    // the three-way split in one place; the corroboration chart below reports the
+    // same states on the distinct-paper basis, so the two are not interchangeable.
+    independent_user_decided: g.independent_user_decided,
     independent_pending: g.independent_pending,
     // The independent-classified rows the language screen supersedes (2026-11-03).
     // Published so the waffle can draw them as their own bucket and the open-work
     // figure can state plainly that it excludes them.
     non_english_independent: g.non_english_independent,
+    // The five reviewer-facing categories (user instruction, 2026-11-03). The
+    // charts draw THESE rather than recombining the status counts below, so a
+    // bucket means one thing everywhere: self-citations are inside
+    // bucket_dependent, a second copy of a counted work is in bucket_preprint_copy,
+    // and the seven terms sum to citation_records_reviewed with no remainder.
+    // bucket_review is the raw REVIEW count, which on this store equals the queue
+    // because non-English rows left it; review_queue above is what the queue page
+    // lists, and the two are kept apart so neither is silently substituted.
+    bucket_independent: g.bucket_independent,
+    bucket_dependent: g.bucket_dependent,
+    bucket_review: g.bucket_review,
+    bucket_non_english: g.bucket_non_english,
+    bucket_preprint_copy: g.bucket_preprint_copy,
+    bucket_pending: g.bucket_pending,
+    bucket_other: g.bucket_other,
     dependent: g.dependent,
     self_pi: g.self_pi,
     self_former_pi: g.self_former_pi,
@@ -704,15 +959,20 @@ const out = {
   // non-English rows are published once, in language_held.
   unsettled_rows: unsettledRows,
   language_held: languageHeld,
+  // The fifth bucket, named row by row: every citing work Scholar lists twice on
+  // a page, with the row that stands in its place.
+  preprint_copies: preprintCopies,
   open_items: openItems,
 };
 
 if (CHECK) {
   log(`--check: ${articles.length} articles, ${patents.length} patents, ` +
-    `${years.length} years, ${allWorks.length} distinct citing works ` +
-    `(${allWorks.filter((w) => w.marked).length} marked), ` +
+    `${years.length} years, ${allWorks.length} citing rows on the exhibit pages ` +
+    `(${allWorks.filter((w) => w.marked).length} marked, ` +
+    `${allWorks.filter((w) => w.is_copy).length} of them a copy of another row), ` +
     `${reviewQueue.length} in the review queue, ${unsettledRows.length} unsettled, ` +
     `${languageHeld.length} held for language, ` +
+    `${preprintCopies.length} preprint/copy, ` +
     `${yearAnomalies.length} impossible byline dates. Nothing written.`);
   db.close();
   return;
