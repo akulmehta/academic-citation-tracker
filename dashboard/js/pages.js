@@ -34,9 +34,9 @@
           g.citation_records_reviewed
         )} citing records. After checking every author list, ${fmt(
           g.independent_countable
-        )} of those records — ${fmt(
-          g.independent_unique_papers
-        )} distinct papers — share no author with the paper they cite. ` +
+        )} of those records — ${fmt(g.independent_unique_papers)} counted ` +
+        `independent citations from ${fmt(g.distinct_independent_papers)} distinct ` +
+        `papers — share no author with the paper they cite. ` +
         `Each one is highlighted in yellow on an exhibit page, and every figure here ` +
         `traces to the ${g.snapshot_date} snapshot.`
     );
@@ -45,12 +45,19 @@
       {
         label: "Citing records",
         value: fmt(g.citation_records_reviewed),
-        sub: `${fmt(g.unique_papers_citing)} distinct papers`,
+        // Both bases, spelled out. A citation is counted once against each of the
+        // PI's works it cites, so a paper citing two of them is two citations on
+        // two exhibit pages; the distinct-paper figure collapses it to one.
+        sub: `${fmt(g.unique_papers_citing)} counted citations · ${fmt(
+          g.distinct_citing_papers
+        )} distinct papers`,
       },
       {
         label: "Independent",
         value: fmt(g.independent_countable),
-        sub: `${fmt(g.independent_unique_papers)} distinct papers`,
+        sub: `${fmt(g.independent_unique_papers)} counted citations · ${fmt(
+          g.distinct_independent_papers
+        )} distinct papers`,
       },
       {
         label: "Share of decided",
@@ -88,11 +95,15 @@
   }
 
   // =====================================================================
-  // overview.html — the headline and the partition
+  // partition.html — the waffle and the independent-share chart
   // =====================================================================
-  function renderOverview(D) {
+  //
+  // Split out of renderOverview on 2026-11-05 at the user's request so both
+  // figures print on their own sheet count. The lede below is the legend for the
+  // squares, so it travels with them; the prose explaining what the partition
+  // deliberately leaves out stays on overview.html with the tables that itemise it.
+  function renderPartition(D) {
     const g = D.global;
-    drawHistory(D);
 
     el(
       "breakdown-lede"
@@ -105,7 +116,7 @@
       `(Umesh R. Desai). It is the only thing an exhibit PDF marks. <b>Not ` +
       `independent</b> covers every row that does share an author, including the ` +
       `${fmt(g.self_pi + g.self_former_pi)} self-citations by the PI or former PI, ` +
-      `which are broken out below. <b>Preprint / copy</b> is a citing work ` +
+      `which are broken out on the <a href="overview.html">overview page</a>. <b>Preprint / copy</b> is a citing work ` +
       `Google Scholar lists twice on one page &mdash; a preprint, repository, author ` +
       `or database copy of a paper already counted &mdash; so the work is credited ` +
       `once, and those ${fmt(g.bucket_preprint_copy)} rows are itemised on the page ` +
@@ -121,14 +132,23 @@
 
     drawWaffle(D);
     drawSplit(D);
+  }
 
-    // What the partition leaves out, on the same sheet as the partition, since a
-    // reader asking "why is the yellow not the whole independent total?" is asking
-    // about this page.
+  // =====================================================================
+  // overview.html — the snapshot trend and what the partition leaves out
+  // =====================================================================
+  function renderOverview(D) {
+    const g = D.global;
+    drawHistory(D);
+
+    // What the partition leaves out. The partition itself moved to
+    // partition.html on 2026-11-05; the two pages stay linked because a reader
+    // asking "why is the yellow not the whole independent total?" is asking about
+    // both, and the tables that itemise each category stay here.
     el(
       "notcounted-lede"
     ).innerHTML =
-      `Two of the categories above are not counted as independent, for reasons that ` +
+      `Two of the categories in the <a href="partition.html">partition</a> are not counted as independent, for reasons that ` +
       `are the opposite of one another.` +
       `<br><br>` +
       `<b>Preprint / copy &mdash; ${fmt(g.bucket_preprint_copy)} rows.</b> Google ` +
@@ -145,7 +165,18 @@
       `carry a yellow mark on the exhibit, because the exhibit is a picture of ` +
       `Scholar's page and both rows are printed on it &mdash; that is the gap between ` +
       `${fmt(g.independent_countable)} marks and ` +
-      `${fmt(g.independent_unique_papers)} counted independent works.` +
+      `${fmt(g.independent_unique_papers)} counted independent citations.` +
+      `<br><br>` +
+      `<b>The counted-citation basis, stated plainly.</b> A citation is credited ` +
+      `against the work it cites, so a paper that cites two of the PI's publications ` +
+      `is <b>two</b> independent citations and is marked once on each of the two ` +
+      `exhibit pages. Nothing here collapses it to one: of the ` +
+      `${fmt(g.independent_unique_papers)} counted citations, ` +
+      `${fmt(g.distinct_independent_papers)} are distinct papers, and the difference ` +
+      `is genuine double-citing rather than a duplicate listing. A second listing of ` +
+      `the same paper against the <b>same</b> cited work is the opposite case &mdash; ` +
+      `one citation printed twice &mdash; and that is the only thing the counted basis ` +
+      `drops.` +
       `<br><br>` +
       `<b>Non-English, a closed matter &mdash; ${fmt(g.flagged_non_english)} rows.</b> ` +
       `Of these, ${fmt(g.non_english_independent)} also carry an independent ` +
@@ -504,6 +535,7 @@
   Object.assign(window.DASH, {
     renderContents,
     renderOverview,
+    renderPartition,
     renderPerPublication,
     renderTimeline,
     renderPatents,

@@ -181,6 +181,65 @@ for (const [name, dbv, ledv] of guards) {
   log(`ok  ${name.padEnd(20)} ${ledv}`);
 }
 
+// ---- the third basis, which the two above are routinely mistaken for ----
+//
+// `unique_papers_citing` and `independent_unique_papers` have always been
+// per-CITATION counts, not paper counts: applyPrimaryCopy in
+// tools/build-catalog.js partitions by `cites_id`, so a citing paper that cites
+// two of the PI's works keeps one standing row under each, and contributes two.
+// That is the correct basis for a packet built on citations, and it is what the
+// ledger's bucket_independent reports -- but the column names say "papers", and
+// every label downstream inherited the word, so a reader could only conclude the
+// packet was collapsing a two-work paper to one and losing a citation.
+//
+// Measured on the store's own identity (a hand-proved same_work_key where a
+// person recorded one, else the ledger's normalised work_key -- never a
+// dashboard title, which has Scholar's [CITATION] markers stripped):
+//
+//   1,094  rows carrying a yellow mark on a filed exhibit page
+//   1,077  ...of which stand for their work against the paper they cite
+//     917  distinct papers among those
+//
+// The 17 between the first two are Google Scholar listing the same paper twice
+// against the SAME cited work, which is not a second citation; the 160 between
+// the last two are one paper cited by two or more of the PI's works, which IS a
+// second citation. Those two gaps point in opposite directions and must never be
+// described by the same word, so the real paper counts are published here rather
+// than left for a caption to gesture at.
+const distinctPapers = (where) =>
+  q(`SELECT COUNT(*) AS n FROM (
+       SELECT DISTINCT COALESCE(NULLIF(c.same_work_key,''), c.work_key) AS k
+         FROM citations c
+        WHERE ${ACTIVE} AND c.is_primary_copy = 1
+          AND (c.duplicate_of = '' OR c.duplicate_of IS NULL) ${where}
+     )`)[0].n;
+const STANDALONE_ENGLISH =
+  "AND (c.language_flag = '' OR c.language_flag IS NULL)";
+const STANDALONE_INDEP = "AND c.is_countable_independent = 1";
+const basis = {
+  // Distinct works, globally, collapsing a paper cited by several PI works to one.
+  distinct_citing_papers: distinctPapers(""),
+  distinct_independent_papers: distinctPapers(STANDALONE_INDEP),
+  distinct_independent_papers_english: distinctPapers(
+    `${STANDALONE_ENGLISH} ${STANDALONE_INDEP}`
+  ),
+  distinct_citing_papers_english: distinctPapers(STANDALONE_ENGLISH),
+};
+log(
+  `basis distinct papers:    ${basis.distinct_citing_papers} citing / ` +
+    `${basis.distinct_independent_papers} independent ` +
+    `(against ${g.unique_papers_citing} / ${g.independent_unique_papers} citations)`
+);
+// A distinct-paper total can never exceed the citation total it collapses: the
+// two are equal only when no paper cites more than one of the PI's works.
+if (basis.distinct_independent_papers > g.independent_unique_papers) {
+  throw new Error(
+    `Distinct independent papers (${basis.distinct_independent_papers}) exceeds the ` +
+      `independent citation count (${g.independent_unique_papers}). A paper cannot ` +
+      `count as more works than it is cited by — check the identity columns.`
+  );
+}
+
 // ---- per-article rows: copied from the ledger, enriched with catalog detail ----
 const pubDetail = q(`SELECT
     p.cites_id, p.authors AS cited_authors, p.paper_url, p.cites_url,
@@ -1083,6 +1142,16 @@ const out = {
     duplicate_records: g.duplicate_records,
     independent_countable: g.independent_countable,
     independent_unique_papers: g.independent_unique_papers,
+    // The true distinct-WORK totals, collapsing a paper that cites several of the
+    // PI's publications to one. `unique_papers_citing` and
+    // `independent_unique_papers` are per-citation despite their names -- see the
+    // block above that derives these -- so anything that says "distinct papers"
+    // must read one of these four instead.
+    distinct_citing_papers: basis.distinct_citing_papers,
+    distinct_independent_papers: basis.distinct_independent_papers,
+    distinct_independent_papers_english:
+      basis.distinct_independent_papers_english,
+    distinct_citing_papers_english: basis.distinct_citing_papers_english,
     independent_externally_confirmed: g.independent_externally_confirmed,
     independent_scholar_list_only: g.independent_scholar_list_only,
     // How much of the counted total rests on a person reading the published

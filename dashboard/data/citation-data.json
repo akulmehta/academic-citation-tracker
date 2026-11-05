@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-11-05T01:16:21.948Z",
+ "generated_at": "2026-11-05T12:20:12.780Z",
  "sources": {
   "ledger": "Exhibits/Supporting/citation-ledger-2026-11-02.json",
   "catalog": "Database/citation-catalog.sqlite",
@@ -20,6 +20,10 @@
   "duplicate_records": 32,
   "independent_countable": 1094,
   "independent_unique_papers": 1077,
+  "distinct_citing_papers": 1152,
+  "distinct_independent_papers": 917,
+  "distinct_independent_papers_english": 917,
+  "distinct_citing_papers_english": 1105,
   "independent_externally_confirmed": 684,
   "independent_scholar_list_only": 386,
   "independent_user_decided": 24,

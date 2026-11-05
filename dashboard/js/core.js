@@ -31,7 +31,15 @@
     // row does not stand for a counted paper. Deliberately a hollow square with a
     // teal edge — it is not a decision about a citation, it is a note about the
     // listing, and it should not read as a fourth shade of grey verdict.
-    copy: "#eef6f4",
+    //
+    // Deepened from #eef6f4 on 2026-11-05. That fill was chosen for a hollow
+    // square carried by its edge; as an exhibit highlight band a fill has no edge
+    // to borrow, and at L=95 it reads as unmarked. #a8dccf is L=76, keeps black
+    // body text at 13.8:1, and sits 108 degrees of hue from the independent
+    // yellow (#fff200, hue 57) — far enough that two adjacent highlight bands
+    // cannot be mistaken for one another, which a lighter yellow could not claim
+    // (a paler yellow lands within ~15 degrees and reads as "independent, weaker").
+    copy: "#a8dccf",
     copyEdge: "#14776b",
     patent: "#14776b",
     patentApp: "#7fbdb2",
@@ -109,7 +117,7 @@
   // ---------- small helpers ----------
   const el = (id) => document.getElementById(id);
 
-  // The record is told across thirteen files, one figure or table per page, so
+  // The record is told across fourteen files, one figure or table per page, so
   // each can be printed to PDF on its own sheet count. This list is the single
   // source for the contents bar, so a page can never be missing from another
   // page's nav, and the numbers stay the same wherever the reader is. The number
@@ -117,7 +125,8 @@
   // together, since nothing at runtime reconciles them.
   const PAGES = [
     { id: "contents", file: "index.html", label: "Contents & method" },
-    { id: "overview", file: "overview.html", label: "Overview & partition" },
+    { id: "overview", file: "overview.html", label: "Overview & totals" },
+    { id: "partition", file: "partition.html", label: "How it divides" },
     { id: "per-work", file: "per-publication.html", label: "Per publication" },
     { id: "time", file: "timeline.html", label: "Over time" },
     { id: "patents", file: "patents.html", label: "Patents citing the work" },
@@ -600,12 +609,16 @@
         with the row that does. ${fmt(
           g.duplicate_records
         )} extra copies exist in all; the difference is copies that are also
-        non-English, reported once under that heading instead. Both bases are
-        reported everywhere: ${fmt(
-          g.citation_records_reviewed
-        )} rows on the exhibit pages against ${fmt(
-          g.unique_papers_citing
-        )} distinct papers. Where the exhibit shows a yellow mark on a
+        non-English, reported once under that heading instead. Three bases are
+        reported everywhere, and they answer three different questions:
+        ${fmt(g.citation_records_reviewed)} rows on the exhibit pages,
+        ${fmt(g.unique_papers_citing)} counted citations once those duplicate
+        listings are dropped, and ${fmt(g.distinct_citing_papers)} distinct papers
+        once a work cited by more than one of the PI's publications is collapsed
+        to one. The middle figure is the packet's basis, and it is the one the
+        exhibits and the ledger are built on: a citation is credited against the
+        work it cites, so a paper citing two of them is two citations and is
+        marked on two pages. Where the exhibit shows a yellow mark on a
         <i>preprint / copy</i> row, that is not a second claim &mdash; the exhibit
         reproduces Scholar&rsquo;s page as printed, and the count credits the work
         once. A copy is also reported under the standing row&rsquo;s classification

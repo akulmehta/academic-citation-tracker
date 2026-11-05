@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>How it divides — Akul Mehta independent citation record</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<!--
+  Chapter 3: the partition of every citing record, drawn two ways. Pulled out of
+  the overview page on 2026-11-05 at the user's request so both figures print on
+  their own sheet count: the waffle is 1,498 squares and the share chart sits
+  directly under it, which together ran over the overview's other sections.
+  Nothing here recomputes anything &mdash; both figures read the ledger's bucket_*
+  figures through tools/tally.js, as every other page does.
+-->
+<script src="data/citation-data.js"></script>
+<script src="vendor/d3.min.js"></script>
+<script src="js/core.js"></script>
+<script src="js/charts.js"></script>
+<script src="js/networks.js"></script>
+<script src="js/pages.js"></script>
+<script src="js/tables.js"></script>
+<script src="js/review.js"></script>
+<script src="js/boot.js"></script>
+
+<header class="masthead">
+  <div class="masthead-inner">
+    <p class="kicker">Independent citation record &middot; chapter 3</p>
+    <h1>How the record divides</h1>
+    <p class="standfirst" id="standfirst"></p>
+    <p class="sourcing" id="masthead-sourcing"></p>
+  </div>
+</header>
+
+<nav class="toc" id="toc" aria-label="Sections">
+  <div class="toc-inner"></div>
+</nav>
+
+<main>
+
+  <section id="partition" class="chapter">
+    <p class="chapter-num">3</p>
+    <h2>Every citing record, one square each</h2>
+
+    <p class="prose" id="breakdown-lede"></p>
+    <figure class="figure" id="fig-waffle">
+      <h3>One square per citing record on the exhibit pages</h3>
+      <div class="chart" id="chart-waffle"></div>
+      <div class="legend" id="legend-waffle"></div>
+      <figcaption>
+        Squares are rows printed on the exhibit pages, so a paper Google Scholar
+        lists twice appears twice &mdash; as a <i>Preprint / copy</i> square, unless
+        the copy is non-English, in which case it is reported with the other
+        non-English rows. Counting each work once instead gives
+        <span id="waffle-distinct"></span>. A square&rsquo;s colour is its category,
+        not its mark: yellow is the only mark an exhibit PDF carries, and most
+        <i>Preprint / copy</i> rows do carry one, because the exhibit reproduces
+        Scholar&rsquo;s page. The rows behind each colour are itemised on the
+        <a href="overview.html">overview page</a>.
+      </figcaption>
+    </figure>
+    <figure class="figure" id="fig-split">
+      <h3>Independent share, on each basis the ledger publishes</h3>
+      <div class="chart" id="chart-split"></div>
+      <figcaption id="cap-split"></figcaption>
+    </figure>
+
+    <p class="method-note page-back">
+      <a href="overview.html">&larr; Overview</a> &middot;
+      <a href="per-publication.html">Per publication &rarr;</a>
+    </p>
+  </section>
+
+</main>
+
+<footer class="colophon">
+  <p id="colophon-line"></p>
+  <p class="tiny">
+    This page is a workpaper generated from the project's own records. It is not
+    legal advice and makes no prediction about any filing outcome.
+  </p>
+</footer>
+
+</body>
+</html>

@@ -191,7 +191,7 @@
              <code>${esc(D.sources.review_sheet || "the dated review sheet")}</code>
              against its <code>row_uid</code> before the record was rebuilt. Those
              decisions carry the name of the person who made them, the date, and the
-             reason, and are reported in chapter&nbsp;6 separately from the machine
+             reason, and are reported on the verification page separately from the machine
              readings &mdash; so a reader can see how much of the total rests on a
              human check of the byline.
            </p>

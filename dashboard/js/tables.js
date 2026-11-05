@@ -98,8 +98,11 @@
       `${fmt(copies.length)} are a second listing of a work already in the list — ` +
       `a preprint, a repository copy, another document in a patent family, or a ` +
       `translation. They are shown here because the exhibit prints them; the packet ` +
-      `credits each work once, so this table is longer than the ` +
-      `${fmt(D.global.unique_papers_citing)} distinct papers the ledger counts. The ` +
+      `credits each work once against the paper it cites, so this table is longer ` +
+      `than the ${fmt(D.global.unique_papers_citing)} counted citations the ledger ` +
+      `keeps — and longer still than the ${fmt(D.global.distinct_citing_papers)} ` +
+      `distinct papers behind them, since a work that cites two of the PI's ` +
+      `publications is two citations. The ` +
       `first column is each row's permanent <code>row_uid</code>, the same identifier ` +
       `the open-rows chapter, the non-English listing and the decision CSV use, so a ` +
       `row named here can be looked up anywhere else in the packet.`;

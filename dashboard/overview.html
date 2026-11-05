@@ -9,8 +9,10 @@
 <body>
 
 <!--
-  Chapter 2: the partition of every citing record, plus what the partition leaves
-  out. Prints as its own sheet set; nothing here depends on the contents page.
+  Chapter 2: the headline figures, how the total has moved across snapshots, and
+  what the partition deliberately leaves out. The partition itself &mdash; the
+  waffle and the share chart &mdash; moved to partition.html on 2026-11-05 at the
+  user's request so those two figures print on their own sheet count.
 -->
 <script src="data/citation-data.js"></script>
 <script src="vendor/d3.min.js"></script>
@@ -39,34 +41,18 @@
 
   <section id="overview" class="chapter">
     <p class="chapter-num">2</p>
-    <h2>How the total has moved, and how it divides</h2>
+    <h2>How the total has moved</h2>
     <figure class="figure" id="fig-history">
       <h3>Cited-by total across dated snapshots</h3>
       <div class="chart" id="chart-history"></div>
       <figcaption id="cap-history"></figcaption>
     </figure>
-
-    <p class="prose" id="breakdown-lede"></p>
-    <figure class="figure" id="fig-waffle">
-      <h3>One square per citing record on the exhibit pages</h3>
-      <div class="chart" id="chart-waffle"></div>
-      <div class="legend" id="legend-waffle"></div>
-      <figcaption>
-        Squares are rows printed on the exhibit pages, so a paper Google Scholar
-        lists twice appears twice &mdash; as a <i>Preprint / copy</i> square, unless
-        the copy is non-English, in which case it is reported with the other
-        non-English rows. Counting distinct papers instead gives
-        <span id="waffle-distinct"></span>. A square&rsquo;s colour is its category,
-        not its mark: yellow is the only mark an exhibit PDF carries, and most
-        <i>Preprint / copy</i> rows do carry one, because the exhibit reproduces
-        Scholar&rsquo;s page. The table below lists which.
-      </figcaption>
-    </figure>
-    <figure class="figure" id="fig-split">
-      <h3>Independent share, on each basis the ledger publishes</h3>
-      <div class="chart" id="chart-split"></div>
-      <figcaption id="cap-split"></figcaption>
-    </figure>
+    <p class="method-note">
+      The partition of every citing record &mdash; one square per record, and the
+      independent share on each basis the ledger publishes &mdash; is on its own
+      page, <a href="partition.html">How it divides</a>, so it prints cleanly
+      rather than running over the sections below.
+    </p>
   </section>
 
   <section id="not-counted" class="chapter">
@@ -89,7 +75,7 @@
     <div class="table-wrap" id="copy-table"></div>
     <div class="table-wrap" id="open-table"></div>
     <p class="method-note page-back">
-      <a href="index.html">Back to contents</a> &middot;
+      <a href="partition.html">How it divides &rarr;</a> &middot;
       <a href="per-publication.html">Per publication &rarr;</a>
     </p>
   </section>

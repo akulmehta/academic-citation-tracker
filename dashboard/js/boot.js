@@ -24,14 +24,25 @@
       const g = D.global;
       renderMasthead(
         D,
-        `The whole record on one sheet: the headline figures, and every citing ` +
-          `record on the exhibit pages drawn as one square each. This is the page ` +
-          `to print first, and the page the other figures expand on. ` +
+        `The headline figures, how the cited-by total has moved across dated ` +
+          `snapshots, and what the record deliberately does not count. This is the ` +
+          `page to print first, and the page the other figures expand on. ` +
           `${fmt(g.independent_countable)} of the ${fmt(
             g.citation_records_reviewed
           )} citing records share no author with the paper they cite.`
       );
       window.DASH.renderOverview(D);
+    },
+    "partition.html": (D) => {
+      const g = D.global;
+      renderMasthead(
+        D,
+        `Every citing record on the exhibit pages as one square, in exactly one ` +
+          `category, and the independent share on each basis the ledger publishes. ` +
+          `The squares add up to the ${fmt(g.citation_records_reviewed)} rows on the ` +
+          `pages, so the partition and the count can be reconciled on one sheet.`
+      );
+      window.DASH.renderPartition(D);
     },
     "per-publication.html": (D) => {
       const g = D.global;

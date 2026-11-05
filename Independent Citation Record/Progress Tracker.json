@@ -1319,5 +1319,37 @@
       "corroboration_label_clipped": "drawCorroboration right-anchored its category names into a hardcoded 250-unit left margin and passed them through shorten(label, 50), so \"No external record covers it - Scholar's own list only\" (246 units) rendered as 'Scholar's own list...' - ellipsised AND still within 4 units of the edge. Fixed the way the patent chart was fixed: measure every label labelFor can produce (all seven categories, not just the three present today), set m.left from the measurement, and drop the shorten() call so a long name is never hidden behind an ellipsis. A guard throws if the labels ever need more than 340 units, telling whoever edits labelFor to shorten the wording rather than let the svg clip it. The chart caption's quoted phrase now matches the label verbatim.",
       "principle": "An ellipsis is not a fix for a clip. shorten() exists for table cells, where truncation is honest and a title link follows; on a chart axis it manufactures a label that agrees with nothing, and here it also contradicted the caption two lines below, which quoted the full phrase."
     }
+  },
+  "last_verified_step_2026-11-05_partition_page_and_bases": {
+    "date": "2026-11-05",
+    "what": [
+      "New dashboard page partition.html (chapter 3) holds the waffle and the independent-share chart, moved out of overview.html at the user's request so both print on their own sheet count. renderPartition in js/pages.js; overview keeps the snapshot trend and the not-counted prose and tables.",
+      "Every later chapter renumbered 3->4 through 12->13, in each page's chapter-num, kicker and header comment, and in index.html's contents list. The dashboard is now 13 pages.",
+      "tools/check-dashboard-nav.js added: read-only, exits 1 naming the page and which of the four number sites disagrees. Needed because a chapter number is written in PAGES (js/core.js), each page's chapter-num, its kicker, its header comment and index.html's list, with nothing reconciling them.",
+      "Counting basis clarified, NOT changed. The packet headline 1,077 already counts a paper that cites two of the PI's works twice, once per work - the user's premise was already satisfied. What was wrong was the WORDS: independent_unique_papers and unique_papers_citing are per-citation counts whose names say 'papers'.",
+      "build-dashboard-data.js now publishes the true distinct-work totals as distinct_citing_papers (1152), distinct_independent_papers (917) and the _english variants (1105 / 917), from COALESCE(NULLIF(same_work_key,''), work_key). Guarded: a distinct-paper total may never exceed the citation total it collapses.",
+      "Labels corrected everywhere a citation count was called papers: the contents stat band, the waffle's distinct line, drawSplit (now 7 rows, each naming its basis), the corroboration caption, the works-page lede, and the method note in js/core.js."
+    ],
+    "measured": {
+      "rows_on_exhibit_pages": 1498,
+      "yellow_marks": 1094,
+      "counted_independent_citations": 1077,
+      "distinct_independent_papers": 917,
+      "distinct_citing_papers": 1152,
+      "gap_1094_to_1077": "17 rows where Scholar lists one paper twice against the SAME cited work - one citation printed twice, so the counted basis drops them",
+      "gap_1077_to_917": "160 from 100 papers that cite 2+ of the PI's works - genuine double-citing, which the counted basis deliberately keeps"
+    },
+    "gates": {
+      "check_dashboard_nav": "exit 0, 13 pages agree",
+      "check_dashboard_nav_negative_test": "fixture with one mis-numbered page -> exit 1 naming timeline.html",
+      "build_dashboard_data_check": "exit 0",
+      "check_ledger_vs_snapshot": "exit 0, internal arithmetic consistent",
+      "unit_suites": "test-tally, test-name-match, test-corroboration, test-catalog-merge, test-work-type, test-capture-helpers, test-apply-decision all exit 0",
+      "browser": "all 13 pages boot with no error banner, no empty chart, no unfilled caption; toc shows 13 with the right entry marked; 0 horizontal overflow against the 725px sheet on partition.html"
+    },
+    "not_done": [
+      "No exhibit was re-printed and no count changed, so the filed PDFs are unaffected. Nothing downstream of build-dashboard-data.js needed a rebuild.",
+      "The ledger column names (unique_papers_citing, independent_unique_papers) still say 'papers' while counting citations. Renaming them would touch build-ledger, build-catalog reconcile, check-ledger-vs-snapshot and the dated CSV, so it was left alone and the labels were fixed at the point of reading instead. Raise with the user before renaming."
+    ]
   }
 }

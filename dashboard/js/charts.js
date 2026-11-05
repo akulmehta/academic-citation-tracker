@@ -103,7 +103,7 @@
     //   - Self (PI) and Self (former PI) fold into "not independent". They were
     //     always dependent in substance -- the citing paper shares an author with
     //     the cited one -- and a reviewer asking "how many are your own?" is
-    //     answered in chapter 7 and the method notes, where the split is stated.
+    //     answered on overview.html and the method notes, where the split is stated.
     //   - The second copies of works Scholar lists twice became their own bucket.
     //     Before they sat inside "independent", which is why the yellow squares
     //     did not equal the counted independent works with nothing on the page to
@@ -208,14 +208,26 @@
       }))
     );
     el("waffle-distinct").textContent =
-      `${fmt(g.unique_papers_citing)} papers, of which ${fmt(
-        g.independent_unique_papers
+      `${fmt(g.distinct_citing_papers)} distinct papers, of which ${fmt(
+        g.distinct_independent_papers
       )} are independent`;
   }
 
   function drawSplit(D) {
     const g = D.global;
     const rows = [
+      // The first two rows are per-record: every row printed on an exhibit page,
+      // including a second listing of a work counted once elsewhere. The third is
+      // per-CITATION -- the packet's own basis -- which drops those second listings
+      // but keeps a paper cited by two of the PI's works twice, once per work. The
+      // fourth collapses that paper to one, which is the only true paper count.
+      // The last three apply the English-only screen to each basis in turn.
+      //
+      // Every label here names its own basis, and no label says "papers" unless
+      // the numerator is a distinct-paper figure. The underlying ledger columns are
+      // named unique_* while counting citations, so a row labelled "distinct
+      // papers" reading 1,077 against a real paper count of 917 is a discrepancy a
+      // reviewer should never be left to reconcile.
       {
         label: "Of records on the exhibit pages",
         part: g.independent_countable,
@@ -227,9 +239,14 @@
         whole: g.decided_records,
       },
       {
-        label: "Of distinct citing papers",
+        label: "Counted citations (packet basis)",
         part: g.independent_unique_papers,
         whole: g.unique_papers_citing,
+      },
+      {
+        label: "Distinct papers only",
+        part: g.distinct_independent_papers,
+        whole: g.distinct_citing_papers,
       },
       {
         label: "English records only (adjusted)",
@@ -237,14 +254,25 @@
         whole: g.english_citation_records,
       },
       {
-        label: "English distinct papers",
+        label: "English counted citations",
         part: g.unique_english_independent,
         whole: g.unique_english_papers,
+      },
+      {
+        label: "English distinct papers",
+        part: g.distinct_independent_papers_english,
+        whole: g.distinct_citing_papers_english,
       },
     ];
     const W = 620;
     const rowH = 30;
-    const m = { top: 8, right: 92, bottom: 26, left: 214 };
+    // The row labels are right-anchored into the left margin, so a label longer
+    // than that margin is clipped by the edge of the svg and prints as a truncated
+    // phrase. Measured from the labels actually in `rows`, rather than assumed from
+    // whichever set was longest when this was written — the basis labels changed on
+    // 2026-11-05 and would have been cut.
+    const labelW = measureTextWidths(rows.map((r) => r.label), "row-label");
+    const m = { top: 8, right: 92, bottom: 26, left: Math.max(214, labelW + 14) };
     const H = rows.length * rowH + m.top + m.bottom;
     const gsvg = svgFor("chart-split", W, H, m);
     const iw = W - m.left - m.right;
@@ -323,12 +351,21 @@
     el(
       "cap-split"
     ).textContent =
-      `The same evidence on five denominators, because the packet needs to be explicit ` +
+      `The same evidence on ${rows.length} denominators, because the packet needs to be explicit ` +
       `about which one it is quoting. Beside each bar is the independent count and the ` +
       `share of that row's own denominator, printed where the yellow ends; the muted ` +
       `figure at the right is the denominator. The ledger publishes all of them; ` +
       `"decided records" excludes anything still open, so that share is the strictest ` +
-      `of the group.`;
+      `of the group.` +
+      `<br><br>` +
+      `Two of these are easy to confuse and are deliberately named apart. ` +
+      `<i>Counted citations</i> is the packet's basis: a paper that cites two of the ` +
+      `PI's publications is two citations, credited once against each, and is marked ` +
+      `on two exhibit pages. <i>Distinct papers</i> collapses that paper to one. The ` +
+      `gap between them is real double-citing, not a duplicate listing, and the ` +
+      `packet counts it. What the counted-citation basis does drop is a paper Google ` +
+      `Scholar lists twice against the <b>same</b> cited work &mdash; a preprint beside ` +
+      `its journal record &mdash; since that is one citation printed twice, not two.`;
   }
 
   // Word-wrap a title into at most `maxLines` lines that each fit inside
@@ -1013,9 +1050,10 @@
     el(
       "cap-corroboration"
     ).textContent =
-      `Distinct citing papers only (${fmt(
-        total
-      )}), so a paper Scholar lists twice is counted once. ` +
+      `Counted citations only (${fmt(total)}), so a paper Scholar lists twice against ` +
+      `the same cited work appears once here. A work cited by two of the PI's ` +
+      `publications does appear twice, once per citation, since each was checked ` +
+      `against the paper it cites. ` +
       `"No external record covers it" is expected for theses, preprints and patents: those ` +
       `are highlighted on the strength of Scholar's own complete author list and flagged for ` +
       `a manual spot-check, which is the honest state of that evidence.`;
