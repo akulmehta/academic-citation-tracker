@@ -20,10 +20,13 @@
 //      reported them fitting, because that test judged by DOM height rather
 //      than by the sheets the PDF actually has.
 //
-// Row matching replicates applyHighlights exactly: rows are read in document
-// order and each is matched to the FIRST entry whose normalised rawTitle is
-// equal. That detail matters for the duplicate rows Scholar shows of one paper,
-// where two rows share a title and both take the first entry's decision.
+// Row matching pairs each row with its entry by Scholar's per-record id
+// (data-cid), falling back to a title only where the title is unique on the
+// page. tools/row-match.js holds that rule and explains why the capture's
+// first-equal-title match cannot be used here: Scholar renders the same title
+// twice on a page, and since 2026-11-05 exactly one of those two rows is marked,
+// so a title rule gives both rows the same answer and cannot see the difference.
+// The same module drives tools/reprint-exhibits.js, so the two cannot disagree.
 //
 // Read-only. Nothing here writes a file or contacts Google: the saved HTML is
 // parsed by a headless browser with every network request aborted, so the DOM
@@ -39,6 +42,7 @@ const fs = require("fs");
 const path = require("path");
 const { chromium } = require("playwright");
 const lib = require("./tally");
+const match = require("./row-match");
 const { countPdfPages } = require("./print-settings");
 
 const ROOT = path.resolve(__dirname, "..");
@@ -68,6 +72,10 @@ const log = (...a) => {
 // document order, using the same selectors the capture used. The regex is
 // written out inside the evaluate callback rather than closed over: page.evaluate
 // serialises the function, so an outer reference would be undefined in the page.
+//
+// Each row also carries Scholar's per-record id (data-cid), which is what
+// row-match.js uses to pair a row with the entry that decides it. The capture
+// reads the same attribute (capture-citations.js:324).
 async function rowsFromSavedHtml(browser, htmlPath) {
   const html = fs.readFileSync(htmlPath, "utf8");
   const page = await browser.newPage();
@@ -81,10 +89,13 @@ async function rowsFromSavedHtml(browser, htmlPath) {
     const norm = (s) => s.toLowerCase().replace(/\s+/g, " ").trim();
     const re = /background-color:\s*rgb\(255,\s*242,\s*0\)|background-color:\s*#fff200/i;
     const out = [];
+    let i = 0;
     for (const row of document.querySelectorAll("#gs_res_ccl_mid .gs_or")) {
       const titleEl = row.querySelector("h3.gs_rt") || row.querySelector(".gs_rt");
       if (!titleEl) continue;
       out.push({
+        index: i++,
+        cid: row.getAttribute("data-cid") || row.getAttribute("data-aid") || "",
         title: norm(titleEl.innerText),
         marked: re.test(titleEl.getAttribute("style") || ""),
       });
@@ -95,22 +106,52 @@ async function rowsFromSavedHtml(browser, htmlPath) {
   return { rows, html };
 }
 
-// Replicate applyHighlights' matching: first entry with an equal normalised
-// title decides the row, and a row with no matching entry is left alone.
+// Decide every row of a saved page under the current rule. The matching itself
+// lives in tools/row-match.js so this audit and tools/reprint-exhibits.js can
+// never disagree about what a page should look like -- if they did, the audit
+// would fail a page the re-printer had just corrected, or pass one it broke.
+//
+// It used to replicate applyHighlights' first-equal-title match here. That could
+// not express the decision the rule now makes: Scholar prints the same title
+// twice on a page, and since 2026-11-05 exactly one of those two rows is marked.
+// A title rule hands both rows the same answer, so three copy marks were
+// physically impossible to detect as wrong -- the audit reported those pages
+// clean. row-match.js has the full account.
 function expectedMarks(entries, rows) {
-  const norm = (s) => String(s || "").toLowerCase().replace(/\s+/g, " ").trim();
-  const perRow = rows.map((r) => {
-    const hit = entries.find((e) => norm(e.rawTitle) === r.title);
-    return { row: r, entry: hit || null, want: hit ? lib.isHighlighted(hit) : false };
-  });
+  const { perRow, basis } = match.planPage(rows, entries, (e) => lib.isHighlighted(e));
   const markedRows = perRow.filter((x) => x.row.marked);
   const wantRows = perRow.filter((x) => x.want);
   const changes = perRow.filter((x) => x.want !== x.row.marked);
   // An entry no row matched means the saved page does not contain it at all.
   const unmatched = entries.filter(
-    (e) => !rows.some((r) => norm(e.rawTitle) === norm(r.title))
+    (e) => !rows.some((r) => (r.cid && e.cid ? r.cid === e.cid : r.title === match.norm(e.rawTitle)))
   );
-  return { perRow, marked: markedRows.length, want: wantRows.length, changes, unmatched };
+  // Rows the matcher could not decide: a title repeated on the page with no cid
+  // to separate the copies. `want` echoes the current mark for those, so they do
+  // not appear as changes -- they are reported as a separate problem instead,
+  // because a page this tool cannot read is not a page this tool can certify.
+  const ambiguous = perRow.filter((x) => x.basis === "ambiguous");
+  return {
+    perRow,
+    basis,
+    ambiguous,
+    marked: markedRows.length,
+    want: wantRows.length,
+    changes,
+    unmatched,
+    // One mark per entry that earns one. Compared against the mark count so a
+    // page missing a row entirely cannot agree with itself.
+    wantFromEntries: match.expectedFromEntries(entries, (e) => lib.isHighlighted(e)),
+  };
+}
+
+// A row that does not stand for its work, by either spelling: `duplicate_of` for
+// a language edition or a proven same-work fold, and the standing flag
+// (is_primary_copy / is_secondary_copy) for Scholar's second listing of one
+// paper. tally.doesNotStand is the single definition -- the audit must not
+// restate it here or the two can drift.
+function tallyDoesNotStand(e) {
+  return lib.doesNotStand(e);
 }
 
 async function main() {
@@ -151,10 +192,12 @@ async function main() {
       }
       const { rows } = await rowsFromSavedHtml(browser, htmlPath);
       const cmp = expectedMarks(p.entries, rows);
-      // No row that does not stand for its work may carry a mark -- isHighlighted
-      // refuses one whether it is a language edition, a same-work fold or a patent
-      // family. This check has to look at the PAGE, because that is the only thing
-      // it can prove. It used to ask isHighlightCandidate instead -- "would this
+      // No row that does not stand for its work may carry a mark. Because rows
+      // are now paired by data-cid, `entry` is the row's OWN entry rather than
+      // whichever entry happened to share its title, so this catches a marked
+      // second listing of a duplicated work -- the class the title match was
+      // blind to. It has to look at the PAGE, because that is the only thing it
+      // can prove. It used to ask isHighlightCandidate instead -- "would this
       // copy be marked if it stood?" -- which is true of nearly every copy by
       // construction, since the only reason a copy does not stand is the duplicate
       // decision the candidate test deliberately ignores. So it reported
@@ -162,11 +205,29 @@ async function main() {
       // right, and could not have detected a copy that actually WAS marked. Found
       // 2026-11-04 as the last two "disagreements" after a genuine re-print: both
       // were correct exhibits flagged by a hypothetical.
-      const copyRows = cmp.perRow.filter((x) => x.entry && x.entry.duplicate_of);
+      const copyRows = cmp.perRow.filter(
+        (x) => x.entry && (x.entry.duplicate_of || tallyDoesNotStand(x.entry))
+      );
       const copyMarked = copyRows.filter((x) => x.row.marked);
       const problems = [];
       if (cmp.marked !== cmp.want) {
         problems.push(`marks ${cmp.marked} vs ${cmp.want} expected under current rules`);
+      }
+      // A page that agrees with itself is not necessarily a page that is right:
+      // if a row is missing from the saved HTML, the marks can match the rows and
+      // still disagree with the entries. Compare against the entry count too.
+      if (cmp.want !== cmp.wantFromEntries) {
+        problems.push(
+          `${cmp.want} rows marked but ${cmp.wantFromEntries} of ${p.entries.length} ` +
+            `report entries earn a mark (rows on page: ${rows.length})`
+        );
+      }
+      if (cmp.ambiguous.length) {
+        problems.push(
+          `${cmp.ambiguous.length} row(s) have a title repeated on the page with no ` +
+            `data-cid to tell them apart, so their mark could not be verified: ` +
+            cmp.ambiguous.map((x) => x.row.title.slice(0, 48)).join(" | ")
+        );
       }
       if (cmp.unmatched.length) {
         problems.push(`${cmp.unmatched.length} report entry/entries not found on the saved page`);

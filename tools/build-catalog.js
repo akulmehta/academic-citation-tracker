@@ -2101,6 +2101,21 @@ function reconcile(db) {
                    AND inherited_status = '' THEN 1 ELSE 0 END) AS review_queue,
          SUM(CASE WHEN language_flag <> '' THEN 1 ELSE 0 END) AS non_english,
          SUM(CASE WHEN status = 'INDEPENDENT' AND language_flag <> '' THEN 1 ELSE 0 END) AS non_english_independent,
+         -- The store's mirror of tally.isSecondaryIndependent: an English row
+         -- classified INDEPENDENT, settled on some basis, that is Scholar's second
+         -- listing of a work counted once or a fold. is_primary_copy = 0 is the
+         -- standing decision applyPrimaryCopy recorded; duplicate_of <> '' adds
+         -- the language editions and proven same-work folds. The confirm_state
+         -- list must match tally.isSettled exactly -- an unsettled copy is open
+         -- work and stays in independent_pending, so leaving the term out of the
+         -- SQL would make the store and the rule disagree about which bucket an
+         -- unsettled copy belongs to. Checked against the reports so the two
+         -- cannot drift on which rows the mark rule refuses: on 2026-11-05 the
+         -- yellow mark began to depend on exactly this.
+         SUM(CASE WHEN status = 'INDEPENDENT' AND language_flag = ''
+                   AND confirm_state IN ('confirmed','unverified-coverage','user-decided')
+                   AND (is_primary_copy = 0 OR duplicate_of <> '')
+              THEN 1 ELSE 0 END) AS secondary_copy_independent,
          SUM(CASE WHEN withheld_for_language = 1 THEN 1 ELSE 0 END) AS non_english_withheld,
          SUM(CASE WHEN is_non_english = 0 THEN 1 ELSE 0 END) AS english_records,
          SUM(CASE WHEN is_non_english = 0 AND is_highlighted = 1 THEN 1 ELSE 0 END) AS english_independent,
@@ -2164,6 +2179,15 @@ function reconcile(db) {
       "  independent but non-English",
       Number(row.non_english_independent),
       expected.non_english_independent,
+    ],
+    // The rows the exhibit no longer highlights because they do not stand for
+    // their work (user decision, 2026-11-05). Checked so a store that recorded a
+    // different standing set than the rule produces is caught here rather than
+    // in a PDF that quietly lost or kept a mark.
+    [
+      "  independent but a second copy",
+      Number(row.secondary_copy_independent),
+      expected.secondary_copy_independent,
     ],
     ["  withheld for language", Number(row.non_english_withheld), expected.non_english_withheld],
     ["English citation records", Number(row.english_records), expected.english_records],

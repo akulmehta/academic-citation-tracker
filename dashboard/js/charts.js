@@ -412,9 +412,13 @@
     // The same buckets the waffle draws, read from the same bucket_* figures, so a
     // bar here is the whole publication and its segments add up to its record
     // count. Self-citations are inside "Not independent" and a second copy of a
-    // counted work is "Preprint / copy", which is why a bar's yellow segment can be
-    // shorter than that publication's independent count: the exhibit still marks
-    // both rows, the bar counts the work once.
+    // counted work is "Preprint / copy".
+    //
+    // Since 2026-11-05 the yellow segment equals the publication's independent
+    // count exactly: the exhibit marks only the rows that stand for their work, so
+    // a second listing is a copy in the bar and unmarked on the page. Before that
+    // decision the two differed by the number of second copies, and this comment
+    // recorded why.
     //
     // "Awaiting review" is dropped here too (user instruction of 2026-11-04, the
     // same one that took it off the waffle). Because the queue is empty the bar
@@ -597,9 +601,10 @@
       `record count. The number beside each bar is the independent citations counted for ` +
       `that publication, printed where the yellow segment ends, with the share of that ` +
       `publication's own records after the dot; the muted figure at the right is the ` +
-      `publication's total records. A publication whose exhibit marks more rows than this ` +
-      `number is one where Google Scholar listed a paper twice: both rows are printed and ` +
-      `marked, and the work is counted once. Non-English rows sit in their own bucket because the ` +
+      `publication's total records. The yellow segment and the number beside the bar are ` +
+      `now the same figure: since 2026-11-05 an exhibit marks only the rows that stand for ` +
+      `their work, so a paper Google Scholar lists twice against the same cited work is ` +
+      `printed on the page but marked once. Non-English rows sit in their own bucket because the ` +
       `language screen supersedes their classification. Titles wrap over up to three ` +
       `lines and rows are ordered by independent citations, descending.`;
     legend(

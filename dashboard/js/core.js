@@ -393,10 +393,13 @@
   // which is right as a counting rule but can outlive its meaning: a row that is
   // the second listing of a work already counted through another row (a same-work
   // fold recorded by hand) is not awaiting anything, because its standing row
-  // carries the verdict. Both rows on this snapshot are of that kind. So the
-  // figure is described from the copy listing rather than from the rule's label --
-  // an officer must not be told an open question exists where the packet already
-  // has an answer. The rule and the number are untouched; this is wording only.
+  // carries the verdict. Since 2026-11-05 such a row is named in its own ledger
+  // bucket, secondary_copy_independent, rather than being swept into pending, so
+  // this list is normally empty -- but the wording is derived from the copy
+  // listing rather than from the rule's label, so it stays honest if a future
+  // snapshot has both kinds at once. An officer must not be told an open question
+  // exists where the packet already has an answer. The rule and the number are
+  // untouched; this is wording only.
   function unsettledSub(D) {
     const rows = D.unsettled_rows || [];
     if (!rows.length) return "none";
@@ -618,10 +621,17 @@
         to one. The middle figure is the packet's basis, and it is the one the
         exhibits and the ledger are built on: a citation is credited against the
         work it cites, so a paper citing two of them is two citations and is
-        marked on two pages. Where the exhibit shows a yellow mark on a
-        <i>preprint / copy</i> row, that is not a second claim &mdash; the exhibit
-        reproduces Scholar&rsquo;s page as printed, and the count credits the work
-        once. A copy is also reported under the standing row&rsquo;s classification
+        marked on two pages. <b>The same rule holds inside the independent
+        subset, where it is also the number of yellow marks on the exhibits:</b>
+        ${fmt(g.independent_countable)} counted independent citations and
+        ${fmt(g.independent_countable)} marks, over
+        ${fmt(g.distinct_independent_papers)} distinct independent papers. Per the
+        decision of 2026-11-05 a row that does not stand for its work is printed
+        unmarked, so an exhibit never makes a second claim for one citation; until
+        then an exhibit marked both listings of a duplicated paper, and the mark
+        count ran ahead of the counted citations by exactly the number of copies.
+        A copy
+        is also reported under the standing row&rsquo;s classification
         rather than as an open question: a row awaiting review that is a copy of a
         settled work leaves the queue, because reading its byline cannot change an
         answer the work already has. Two consequences are stated rather than hidden: a patent family sharing

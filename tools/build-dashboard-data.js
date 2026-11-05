@@ -600,6 +600,15 @@ if (Number(g.review_queue ?? g.awaiting_review) !== reviewQueue.length) {
 //
 // The query mirrors that exactly with `is_non_english = 0`, so this list cannot
 // re-admit a language row that the ledger already filed elsewhere.
+//
+// The NOT clause added 2026-11-05 mirrors the other half of
+// tally.isIndependentPending -- a row that is settled AND does not stand for its
+// work is tally.isSecondaryIndependent, reported under its own bucket, not open
+// author work. Without it the store listed 19 second copies here while the ledger
+// correctly reported independent_pending = 0, and the guard below failed the run
+// rather than publish a review page full of work nobody can act on. The
+// confirm_state list must match tally.isSettled exactly: an UNSETTLED second copy
+// is still open work and stays in this list.
 const pendingRows = q(`SELECT
     c.row_uid, c.title, COALESCE(NULLIF(c.authors_used,''), c.authors) AS byline,
     c.status, c.confirm_state, c.language_flag, c.withheld_for_language,
@@ -612,6 +621,10 @@ const pendingRows = q(`SELECT
   LEFT JOIN publications p ON p.cites_id = c.cites_id
   WHERE ${ACTIVE} AND c.status = 'INDEPENDENT' AND c.is_highlighted = 0
     AND c.is_non_english = 0
+    AND NOT (
+      c.confirm_state IN ('confirmed','unverified-coverage','user-decided')
+      AND (c.is_primary_copy = 0 OR c.duplicate_of <> '')
+    )
   ORDER BY p.title, c.page, c.row_index`);
 
 const mapPending = (r) => ({

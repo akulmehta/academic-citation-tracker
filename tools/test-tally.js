@@ -8,7 +8,9 @@
 const {
   isHighlighted,
   isHighlightCandidate,
+  doesNotStand,
   isIndependentPending,
+  isSecondaryIndependent,
   isNonEnglishIndependent,
   isReviewQueue,
   isWithheldForLanguage,
@@ -882,12 +884,124 @@ console.log("\nbucketOf: the published counts sum to the records");
   check("buckets: one row on the queue", t.bucket_review, 1);
   check("buckets: one non-English row", t.bucket_non_english, 1);
   check("buckets: nothing fell through", t.bucket_other, 0);
-  // The whole point of the bucket: the exhibit marks both copies, because that is
-  // the Scholar page that was printed, while the category claims the work once.
-  // The gap between the two figures IS the copy count, and must be visible rather
-  // than reconciled by silently dropping a mark.
-  check("buckets: both copies are still marked on the exhibit", t.independent, 2);
-  check("buckets: the exhibit marks exceed the counted works by the copies", t.independent - t.bucket_independent, t.bucket_preprint_copy);
+  // The exhibit no longer marks both copies. Per the user's decision of
+  // 2026-11-05 ("keep this new color but not to highlight these Preprint/copy
+  // entries in my pdfs"), a row that does not stand for its work carries no
+  // yellow mark, so the marks on the page and the counted citations are the same
+  // figure. Before that decision these two checks asserted the opposite -- that
+  // both copies were marked and the gap between the two figures equalled the copy
+  // count -- which is exactly the discrepancy the user chose to remove rather
+  // than keep explaining in prose.
+  check("buckets: only the standing copy is marked", t.independent, 1);
+  check("buckets: marks and counted works now agree", t.independent - t.bucket_independent, 0);
+  // The copy is named, not lost: it left `independent` and did NOT land in
+  // `independent_pending`, because its standing sibling already settled the work.
+  check("buckets: the copy is named as a second-copy independent", t.secondary_copy_independent, 1);
+  check("buckets: the copy is not counted as unsettled work", t.independent_pending, 0);
+  // The counted-work figure is unchanged by the mark rule -- it counted the work
+  // once before and still does.
+  check("buckets: counted independent works unchanged", t.unique_independent, 1);
+}
+
+// ---- The mark rule and standing-ness -------------------------------------
+//
+// isHighlighted now refuses a row that does not stand for its work. Four things
+// are pinned here, one per way a caller can arrive holding a row.
+{
+  const base = {
+    title: "A work listed twice on the same citing page",
+    status: "INDEPENDENT",
+    confirm_state: "confirmed",
+  };
+  // 1. The store's spelling. build-catalog.applyPrimaryCopy writes
+  // is_primary_copy 0 or 1 on every row, never null.
+  check(
+    "mark: a store row that does not stand is not marked",
+    isHighlighted({ ...base, is_primary_copy: 0 }),
+    false
+  );
+  check(
+    "mark: a store row that stands is marked",
+    isHighlighted({ ...base, is_primary_copy: 1 }),
+    true
+  );
+  // 2. The groupReports spelling.
+  check(
+    "mark: a report row flagged secondary is not marked",
+    isHighlighted({ ...base, is_secondary_copy: true }),
+    false
+  );
+  // 3. THE LOAD-BEARING ONE. A filed report JSON carries neither field (measured
+  // 2026-11-05: 0 of 171 report files have is_secondary_copy at all), because
+  // markSecondaryCopies runs after a report is written. An absent decision must
+  // NOT read as "does not stand" or every row on a report-driven path would lose
+  // its mark and the re-printer would blank the exhibits.
+  check(
+    "mark: a bare report entry with no standing decision still marks",
+    isHighlighted({ ...base }),
+    true
+  );
+  check(
+    "mark: is_primary_copy null is treated as undecided, not as a copy",
+    isHighlighted({ ...base, is_primary_copy: null }),
+    true
+  );
+  check("standing: is_primary_copy 0 is the store's 'does not stand'", doesNotStand({ ...base, is_primary_copy: 0 }), true);
+  check("standing: is_primary_copy 1 stands", doesNotStand({ ...base, is_primary_copy: 1 }), false);
+  check("standing: an absent decision is not 'does not stand'", doesNotStand({ ...base }), false);
+  check("standing: is_secondary_copy true does not stand", doesNotStand({ ...base, is_secondary_copy: true }), true);
+  // 4. Standing-ness cannot rescue a row the other grounds refuse.
+  check(
+    "mark: a standing non-English row is still not marked",
+    isHighlighted({ ...base, is_primary_copy: 1, language_flag: "possible non-English (pl)" }),
+    false
+  );
+  check(
+    "mark: a standing but unsettled row is not marked",
+    isHighlighted({ ...base, is_primary_copy: 1, confirm_state: "unresolved" }),
+    false
+  );
+  // A language edition or a proven fold carries duplicate_of, which already
+  // refused the mark before this change. isSecondaryIndependent catches it too,
+  // so the row is named rather than falling through to pending.
+  const folded = { ...base, is_primary_copy: 1, duplicate_of: "abc123" };
+  check("mark: a fold is not marked", isHighlighted(folded), false);
+  check(
+    "mark: a fold is named as a second-copy independent",
+    isSecondaryIndependent(folded),
+    true
+  );
+  // A DEPENDENT copy is NOT this term -- it is a copy, and bucketOf puts it with
+  // the copies. The term is only about independent-classified rows.
+  check(
+    "mark: a dependent second copy is not a secondary-copy independent",
+    isSecondaryIndependent({ ...base, status: "DEPENDENT", is_primary_copy: 0 }),
+    false
+  );
+  // A second copy whose OWN byline was never settled stays open work. This
+  // predicate cannot see the standing sibling, so it must not assume the sibling
+  // settled anything -- the conservative direction is to keep it visible in
+  // independent_pending rather than bury it in a bucket nobody acts on.
+  const unsettledCopy = {
+    ...base,
+    is_primary_copy: 0,
+    confirm_state: "lookup-failed",
+  };
+  check(
+    "mark: an unsettled second copy is still not marked",
+    isHighlighted(unsettledCopy),
+    false
+  );
+  check(
+    "mark: an unsettled second copy stays open work, not a settled copy",
+    isSecondaryIndependent(unsettledCopy),
+    false
+  );
+  check(
+    "mark: an unsettled second copy remains in independent_pending",
+    isIndependentPending(unsettledCopy),
+    true
+  );
 }
 
 // ---- Inheritance from the copy that stands -------------------------------

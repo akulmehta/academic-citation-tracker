@@ -161,11 +161,13 @@
       `reported under the same classification and is not left as an open question, ` +
       `since its own byline cannot change an answer the work already has. Only a copy ` +
       `whose standing row is itself unresolved would stay open. ` +
-      `${fmt((D.preprint_copies || []).filter((r) => r.marked).length)} of them still ` +
-      `carry a yellow mark on the exhibit, because the exhibit is a picture of ` +
-      `Scholar's page and both rows are printed on it &mdash; that is the gap between ` +
-      `${fmt(g.independent_countable)} marks and ` +
-      `${fmt(g.independent_unique_papers)} counted independent citations.` +
+      `<b>No copy carries a yellow mark on the exhibit</b> &mdash; per the decision of ` +
+      `2026-11-05 a row that does not stand for its work is left unprinted, so the ` +
+      `${fmt(g.independent_countable)} marks on the exhibit pages and the ` +
+      `${fmt(g.independent_unique_papers)} counted independent citations are now the ` +
+      `same figure. Before that decision the exhibit marked both rows, because it is a ` +
+      `picture of Scholar's page, and the copies that carried a mark had to be ` +
+      `reconciled in prose instead.` +
       `<br><br>` +
       `<b>The counted-citation basis, stated plainly.</b> A citation is credited ` +
       `against the work it cites, so a paper that cites two of the PI's publications ` +

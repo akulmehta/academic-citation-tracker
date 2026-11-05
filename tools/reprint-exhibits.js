@@ -37,6 +37,7 @@ const fs = require("fs");
 const path = require("path");
 const { chromium } = require("playwright");
 const lib = require("./tally");
+const match = require("./row-match");
 const { PRINT_OPTIONS } = require("./print-settings");
 
 const ROOT = path.resolve(__dirname, "..");
@@ -70,6 +71,11 @@ function findPdf(base) {
 // Decide the marks for every page of one publication. tally.groupReports has
 // already resolved language editions across the publication's pages in order,
 // exactly as the capture did, so the entries here agree with the ledger.
+//
+// The cid is carried because it, not the title, is what maps an entry to a row.
+// See row-match.js: Scholar prints the same title twice on a page often enough
+// that a title rule cannot remove one copy's mark, and since 2026-11-05 exactly
+// one copy of a duplicated work is marked.
 function planPublication(group) {
   const byPage = new Map();
   for (const p of group.pages) {
@@ -83,6 +89,55 @@ function planPublication(group) {
     );
   }
   return byPage;
+}
+
+// Read every result row of a loaded page, in document order, with the per-record
+// id Scholar rendered on it. No decisions happen here -- the row is data, and the
+// rule is applied in Node by row-match.js so this tool and the audit share it.
+async function readRows(pg) {
+  return pg.evaluate(() => {
+    const re = /background-color:\s*(rgb\(255,\s*242,\s*0\)|#fff200)/i;
+    const out = [];
+    let i = 0;
+    for (const row of document.querySelectorAll("#gs_res_ccl_mid .gs_or")) {
+      const el = row.querySelector("h3.gs_rt") || row.querySelector(".gs_rt");
+      if (!el) continue;
+      out.push({
+        index: i++,
+        cid: row.getAttribute("data-cid") || row.getAttribute("data-aid") || "",
+        title: el.innerText,
+        marked: re.test(el.getAttribute("style") || ""),
+      });
+    }
+    return out;
+  });
+}
+
+// Paint the rows from an explicit per-row decision list. Matching is already
+// done, so this cannot disagree with the comparison that chose to re-print --
+// and it can express a one-for-one swap, which a title rule physically cannot.
+async function applyMarks(pg, wantByIndex) {
+  return pg.evaluate((want) => {
+    const rows = [...document.querySelectorAll("#gs_res_ccl_mid .gs_or")];
+    let marked = 0;
+    let cleared = 0;
+    for (let i = 0; i < rows.length; i++) {
+      const el = rows[i].querySelector("h3.gs_rt") || rows[i].querySelector(".gs_rt");
+      if (!el) continue;
+      // Clear first: a mark baked in by an earlier capture must not survive when
+      // the rule no longer calls for it, and a debug orange mark must never
+      // reach a filing exhibit.
+      const had = el.style.backgroundColor !== "";
+      el.style.backgroundColor = "";
+      el.style.opacity = "";
+      if (had) cleared++;
+      if (want[i]) {
+        el.style.backgroundColor = "#fff200";
+        marked++;
+      }
+    }
+    return { marked, cleared, rows: rows.length };
+  }, wantByIndex);
 }
 
 async function main() {
@@ -134,83 +189,77 @@ async function main() {
     // already correct and the exhibit ships with two wrong marks. This happened
     // 2026-11-04 on glad-...-p6, where a user decision marked one copy of a
     // folded paper while its duplicate stayed yellow: --changed skipped the page
-    // for two days because 9 == 9. Matching below is the same first-equal-title
-    // rule the apply step uses, so the decision to re-print and the marks applied
-    // cannot disagree with each other.
-    const state = await pg.evaluate(
-      ({ items }) => {
-        const norm = (s) => s.toLowerCase().replace(/\s+/g, " ").trim();
-        const re = /background-color:\s*(rgb\(255,\s*242,\s*0\)|#fff200)/i;
-        let before = 0;
-        let want = 0;
-        const wrong = [];
-        for (const row of document.querySelectorAll("#gs_res_ccl_mid .gs_or")) {
-          const el = row.querySelector("h3.gs_rt") || row.querySelector(".gs_rt");
-          if (!el) continue;
-          const isMarked = re.test(el.getAttribute("style") || "");
-          const hit = items.find((i) => norm(i.rawTitle) === norm(el.innerText));
-          const should = !!hit && !!hit.highlight;
-          if (isMarked) before++;
-          if (should) want++;
-          if (isMarked !== should) {
-            wrong.push(`${should ? "unmarked-but-should-be" : "marked-but-should-not"}: ${norm(el.innerText).slice(0, 56)}`);
-          }
-        }
-        return { before, want, wrong };
-      },
-      { items: marks.map((m) => ({ rawTitle: m.rawTitle, highlight: m.highlight })) }
-    );
-    const { before, want } = state;
+    // for two days because 9 == 9.
+    //
+    // Rows are matched by Scholar's per-record id, not by title. Since 2026-11-05
+    // only the copy that stands for a work is marked, and Scholar prints the same
+    // title twice on a page often enough that a title rule cannot tell the two
+    // rows apart -- it gives both the same answer, so three copy marks were
+    // physically impossible to remove and --changed reported those pages as
+    // already correct. row-match.js explains it in full. The comparison and the
+    // apply step below both consume this one decision list, so the choice to
+    // re-print and the marks painted cannot disagree.
+    const rows = await readRows(pg);
+    const { perRow, basis } = match.planPage(rows, marks, (m) => m.highlight);
+    const wantByIndex = perRow.map((x) => x.want);
+    const before = rows.filter((r) => r.marked).length;
+    const want = wantByIndex.filter(Boolean).length;
+    const wrong = perRow
+      .filter((x) => x.want !== x.row.marked)
+      .map(
+        (x) =>
+          `  ${x.want ? "unmarked-but-should-be" : "marked-but-should-not"}: ` +
+          `${match.norm(x.row.title).slice(0, 56)}  [${x.basis}]`
+      );
+    // A page the matcher could not resolve row by row is a defect, not a pass.
+    // Anything other than a clean cid join means a mark here is a guess.
+    const unresolved = perRow.filter((x) => x.basis === "ambiguous");
+    if (unresolved.length) {
+      console.log(
+        `  ERROR: ${unresolved.length} row(s) on ${p.base} have a title repeated ` +
+          `on the page and no cid to tell them apart. Those rows are left exactly ` +
+          `as they are and the page is NOT saved.`
+      );
+      for (const x of unresolved) console.log(`    ${match.norm(x.row.title).slice(0, 70)}`);
+      await pg.close();
+      failed++;
+      continue;
+    }
+    // The count a correct page must reach: one mark per entry that earns one.
+    // Compared against the entry count rather than the matched-row count so a
+    // page that silently dropped a row is caught rather than agreed with.
+    const wantFromEntries = match.expectedFromEntries(marks, (m) => m.highlight);
+    if (want !== wantFromEntries) {
+      console.log(
+        `  ERROR: ${p.base} matched ${want} marks but ${wantFromEntries} of ` +
+          `${marks.length} report entries earn one (rows on page: ${rows.length}; ` +
+          `by cid ${basis.cid}, by title ${basis.title}, no entry ${basis["no-entry"]}). Not saving.`
+      );
+      await pg.close();
+      failed++;
+      continue;
+    }
 
-    if (changedOnly && state.wrong.length === 0) {
+    if (changedOnly && wrong.length === 0) {
       await pg.close();
       continue;
     }
     reprint++;
     console.log(`${p.base}  marks ${before} -> ${want}`);
-    for (const w of state.wrong) console.log(`  ${w}`);
+    for (const w of wrong) console.log(w);
 
     if (checkOnly) {
       await pg.close();
       continue;
     }
 
-    // Strip every previous mark, then apply the current rule with the same row
-    // matching applyHighlights uses.
-    const applied = await pg.evaluate(
-      ({ items }) => {
-        const norm = (s) => s.toLowerCase().replace(/\s+/g, " ").trim();
-        const rows = [...document.querySelectorAll("#gs_res_ccl_mid .gs_or")];
-        let marked = 0;
-        let unmatched = 0;
-        for (const row of rows) {
-          const titleEl = row.querySelector("h3.gs_rt") || row.querySelector(".gs_rt");
-          if (!titleEl) continue;
-          const t = norm(titleEl.innerText);
-          const hit = items.find((i) => norm(i.rawTitle) === t);
-          // Clear first: a mark baked in by an earlier capture must not survive
-          // when the rule no longer calls for it, and a debug orange mark must
-          // never reach a filing exhibit.
-          titleEl.style.backgroundColor = "";
-          titleEl.style.opacity = "";
-          if (!hit) {
-            unmatched++;
-            continue;
-          }
-          if (hit.highlight) {
-            titleEl.style.backgroundColor = "#fff200";
-            marked++;
-          }
-        }
-        return { marked, unmatched, rows: rows.length };
-      },
-      { items: marks.map((m) => ({ rawTitle: m.rawTitle, highlight: m.highlight })) }
-    );
+    // Strip every previous mark, then paint from the decision list above.
+    const applied = await applyMarks(pg, wantByIndex);
 
     if (applied.marked !== want) {
       console.log(
         `  ERROR: applied ${applied.marked} marks but the rules call for ${want}. ` +
-          `Rows on page: ${applied.rows}, unmatched: ${applied.unmatched}. Not saving.`
+          `Rows on page: ${applied.rows}. Not saving.`
       );
       await pg.close();
       failed++;

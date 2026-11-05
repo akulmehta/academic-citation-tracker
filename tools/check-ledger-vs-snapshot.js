@@ -114,7 +114,7 @@ for (const r of rows) {
   }
 
   // 2. per-article arithmetic. Decided + review + pending + the non-English
-  // independent rows should cover every record.
+  // independent rows + the second-copy independent rows should cover every record.
   //
   // The last term was added on 2026-11-03 when the language screen began to
   // supersede the independence classification: a non-English row classified
@@ -122,6 +122,14 @@ for (const r of rows) {
   // the sum fell short by exactly those rows. They are not open work -- no
   // certified translation is being obtained -- so they must be reported, not
   // counted as something a reviewer still has to settle.
+  //
+  // The term after it was added on 2026-11-05 for the same reason one bucket
+  // over. The mark rule began to refuse a row that does not stand for its work
+  // (user decision -- no preprint/copy row is highlighted in a PDF), so 17 rows
+  // left `independent` while the same change took them out of
+  // `independent_pending`, since the standing sibling already settled their
+  // verdict. Four terms now partition the INDEPENDENT rows: highlighted,
+  // unsettled, non-English, and second-copy.
   const decided =
     num(r.independent) +
     num(r.dependent) +
@@ -129,16 +137,18 @@ for (const r of rows) {
     num(r.self_former_pi);
   const covered = decided + num(r.review);
   const neIndependent = num(r.non_english_independent);
-  if (covered + num(r.independent_pending) + neIndependent !== records) {
+  const copyIndependent = num(r.secondary_copy_independent);
+  const summed =
+    covered + num(r.independent_pending) + neIndependent + copyIndependent;
+  if (summed !== records) {
     console.log(
       `[check] ARITHMETIC ${r.title.slice(0, 48)}: ${records} records but ` +
         `independent ${r.independent} + dependent ${r.dependent} + self ${num(
           r.self_pi
         )}/${num(r.self_former_pi)} + review ${r.review} + pending ${
           r.independent_pending
-        } + non-English independent ${neIndependent} = ${
-          covered + num(r.independent_pending) + neIndependent
-        }`
+        } + non-English independent ${neIndependent} + second-copy independent ` +
+        `${copyIndependent} = ${summed}`
     );
     problems++;
   }
@@ -229,6 +239,14 @@ const checks = [
     "non_english_independent",
     "non_english_independent",
     sum("non_english_independent"),
+  ],
+  // Added 2026-11-05: the independent rows that are Scholar's second listing of
+  // a work counted once. They left independent_countable when the mark rule
+  // began to refuse a non-standing row, so the partition needs them named.
+  [
+    "secondary_copy_independent",
+    "secondary_copy_independent",
+    sum("secondary_copy_independent"),
   ],
   ["dependent", "dependent", sum("dependent")],
   ["self_pi", "self_pi", sum("self_pi")],

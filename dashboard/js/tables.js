@@ -46,10 +46,12 @@
       { key: "self_former_pi", label: "Self", num: true, render: (r) => fmt(r.self_pi + r.self_former_pi) },
       { key: "review_queue", label: "Review", num: true, render: (r) => fmt(r.review_queue) },
       // Unsettled is English open author work only; the non-English rows are the
-      // next column and are no longer counted here (2026-11-03). The heading is
-      // "Not marked" rather than "Unsettled" because on this packet every row in
-      // the column is a second listing of a work counted once, not an open
-      // question -- see the note under the table.
+      // next column and are no longer counted here (2026-11-03). A row that is a
+      // second listing of a work counted once is likewise no longer counted here
+      // -- since 2026-11-05 it has its own ledger term, so this column is open
+      // author work and nothing else. It reads 0 on this snapshot; the heading
+      // stays "Not marked" rather than "Unsettled" so a reader never infers an
+      // open question from a column that could hold a settled copy.
       { key: "independent_pending", label: "Not marked", num: true, render: (r) => fmt(r.independent_pending) },
       { key: "non_english", label: "Non-Eng.", num: true, render: (r) => fmt(r.non_english) },
       { key: "patent_independent", label: "Patents", num: true, render: (r) => (r.patent_rows ? `${fmt(r.patent_independent)}/${fmt(r.patent_rows)}` : "—") },

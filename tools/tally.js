@@ -50,13 +50,57 @@ function isSettled(e) {
 // obtained, so a non-English row cannot count however it was classified. The
 // guide's requirement is a translation, not an opinion about independence, and
 // tools/apply-decision.js says so out loud rather than silently dropping it.
+//
+// A row that does not STAND for its work is not marked either (user decision,
+// 2026-11-05: "I have decided to keep this new color but not to highlight these
+// Preprint/copy entries in my pdfs. Please remove the highlights from these
+// entries"). Until then the exhibit yellow and the packet total disagreed by
+// design -- 1094 marks against 1077 counted citations -- and the difference was
+// explained in prose. It is now zero: one row, one mark, and the mark means
+// "this row is the listing we count".
+//
+// Standing-ness is read off the row rather than recomputed, for two reasons.
+// Recomputing it needs the whole citing list, which the reprint and the audit do
+// have but the store cannot re-derive in SQL; and `uniquePapers` consults
+// copyReliability, which consults this function -- so a live call here would be
+// circular. The row carries the answer instead:
+//
+//   is_primary_copy   written by build-catalog.applyPrimaryCopy, the store's
+//                     spelling of "this row stands for its work"
+//   is_secondary_copy written by markSecondaryCopies on the groupReports path
+//
+// Both are tested through `doesNotStand`, so a caller holding a bare report
+// entry (no standing decision recorded at all) still gets the old, correct
+// answer rather than an unmarked page. See that function for why an absent
+// field must NOT be read as "does not stand".
 function isHighlighted(e) {
   return (
     e.status === "INDEPENDENT" &&
     isSettled(e) &&
     !e.language_flag &&
-    !e.duplicate_of
+    !e.duplicate_of &&
+    !doesNotStand(e)
   );
+}
+
+// Whether a row is recorded as a copy that does not stand for its work.
+//
+// An ABSENT flag means no decision was recorded, which is not the same as a
+// decision that the row does not stand. This distinction is load-bearing: the
+// filed report JSON carries no `is_secondary_copy` at all (measured 2026-11-05
+// across all 171 report files -- zero entries have the field), because
+// markSecondaryCopies runs after a report is written and the capture's own
+// per-page call cannot see the citing list. Treating `undefined` as falsy-in-the-
+// other-direction would unmark every row on a report-driven path.
+//
+// So only an explicit true counts, and only for the field a caller in this
+// position would have had set. A store row always carries is_primary_copy (0 or
+// 1, never null); a report entry never carries is_secondary_copy unless a rebuild
+// wrote one.
+function doesNotStand(e) {
+  if (e.is_secondary_copy === true) return true;
+  if (e.is_primary_copy === undefined || e.is_primary_copy === null) return false;
+  return Number(e.is_primary_copy) === 0;
 }
 
 // Whether a row would be marked on its own merits, ignoring the duplicate
@@ -378,7 +422,49 @@ function isIndependentPending(e) {
   return (
     e.status === "INDEPENDENT" &&
     !isHighlighted(e) &&
-    !e.language_flag
+    !e.language_flag &&
+    !isSecondaryIndependent(e)
+  );
+}
+
+// An INDEPENDENT row that is Google Scholar's second listing of a work counted
+// once, or a row folded away by a proven same-work claim or a language edition.
+//
+// This term exists for the same reason `non_english_independent` does -- see the
+// instruction of 2026-11-03, which is exactly the reasoning applied one bucket
+// over. A row that cannot change a packet figure is not open work, and before
+// 2026-11-05 these rows sat in `independent_pending`, which the dashboard draws
+// as "Independent, unsettled" and the review sheet treats as a queue. For a
+// second copy nothing is unsettled: the standing sibling carries the verdict
+// (that is what inheritedFrom records), so calling it pending overstated the
+// remaining work.
+//
+// It also keeps the status partition exhaustive after the mark rule began to
+// refuse a non-standing row on 2026-11-05. Those 17 rows left `independent`;
+// without a named term of their own the arithmetic gate in
+// check-ledger-vs-snapshot.js would fall short by 17, which is the guard
+// working -- the rows need naming, not the gate routing around.
+//
+// Note this is NOT the same set as `bucket_preprint_copy`: that one is a
+// reviewer-facing bucket over every status (a DEPENDENT copy lands there too) and
+// sends a non-English copy to the language bucket, because bucketOf tests the
+// language flag first. This term is specifically the independent-classified,
+// English rows the counted figure declines to mark twice.
+// isSettled is required, and deliberately so. A second copy whose OWN byline was
+// never settled (confirm_state unresolved or lookup-failed) is still open work:
+// this predicate cannot see the standing sibling, so it must not assume the
+// sibling settled anything. Leaving such a row to fall through keeps it in
+// `independent_pending`, which is the conservative direction -- open work stays
+// visible rather than disappearing into a bucket nobody has to act on. Measured
+// 2026-11-05 every one of the 17 rows this term names is settled (8 confirmed,
+// 9 Scholar-list-covered), so the guard changes no figure today; it is here so a
+// future throttled capture cannot quietly reclassify its own failures.
+function isSecondaryIndependent(e) {
+  return (
+    e.status === "INDEPENDENT" &&
+    !e.language_flag &&
+    isSettled(e) &&
+    (doesNotStand(e) || Boolean(e.duplicate_of))
   );
 }
 
@@ -468,7 +554,24 @@ function copyReliability(e) {
   if (!/truncated/.test(String(e.author_source || ""))) score += 8;
   if (e.confirm_state === "confirmed") score += 4;
   else if (e.confirm_state === "unverified-coverage") score += 2;
-  if (isHighlighted(e)) score += 1;
+  // The tie-break on the row's OWN merits, deliberately not isHighlighted.
+  //
+  // This is the one call site where the choice is load-bearing rather than
+  // cosmetic. copyReliability decides which copy of a duplicated work stands;
+  // isHighlighted now consults standing-ness (doesNotStand), so scoring it here
+  // would make the rule read its own output -- uniquePapers -> copyReliability ->
+  // isHighlighted -> is_secondary_copy, which is the field uniquePapers exists to
+  // write. On the groupReports path that read happens to land on an unset field
+  // and so behaves like the old +1, but "happens to be unset when evaluated" is
+  // not a design.
+  //
+  // isHighlightCandidate is the same predicate minus the duplicate decision,
+  // which is what a tie-break between two copies of one work should be: neither
+  // copy can earn the right to stand by already having been chosen. Measured
+  // 2026-11-05 over all 1466 duplicate groups, swapping the two changes which
+  // copy stands in ZERO groups, and dropping the term entirely also changes zero
+  // -- so this is a correctness fix with no effect on any filed figure.
+  if (isHighlightCandidate(e)) score += 1;
   return score;
 }
 
@@ -586,6 +689,21 @@ function editionKey(e) {
 // the same grounds as copyReliability.
 function editionPreference(e) {
   let score = 0;
+  // isHighlightCandidate, NOT isHighlighted -- and the reason became load-bearing
+  // on 2026-11-05, when the mark rule began to consult standing-ness.
+  //
+  // "Which copy of this work should stand" cannot depend on "which copy already
+  // stands". It also has to answer identically on both code paths, and reading
+  // the mark would break that: a store row carries is_primary_copy from
+  // applyPrimaryCopy before build-catalog's edition walk runs, while a report
+  // entry carries nothing until markSecondaryCopies runs afterwards. So the same
+  // language-edition pair could resolve to different winners depending on which
+  // projection asked -- precisely the store-vs-reports disagreement the
+  // reconciliation gates exist to catch.
+  //
+  // isHighlightCandidate is the row's own merits minus every duplicate decision,
+  // which is the only question that is well-defined before a winner is picked.
+  // Measured 2026-11-05 across the filed set this changes no existing fold.
   if (isHighlightCandidate(e)) score += 16;
   if (!e.language_flag) score += 8;
   score += copyReliability(e);
@@ -643,7 +761,18 @@ function markLanguageEditions(entries, prior = new Map()) {
     const winner = all.reduce((a, b) => (editionPreference(b) > editionPreference(a) ? b : a));
     // Rows already printed cannot be re-marked, so a printed copy that earns the
     // mark keeps it and this page defers to it.
-    const printed = seen.some((e) => isHighlighted(e));
+    //
+    // isHighlightCandidate, not isHighlighted -- same reasoning as
+    // editionPreference above, and the same load-bearing date. "Was this copy
+    // going to be marked on its own merits" must not read a standing flag that
+    // one code path has set and the other has not, or a pair straddling two
+    // exhibits resolves differently in build-catalog than in groupReports and the
+    // mark disappears from one of them. Measured 2026-11-05 over the filed set:
+    // 3 edition groups resolve against an earlier page, all 3 already carry the
+    // mark on that earlier copy, and the earlier copy is the standing copy in
+    // every case -- so the two predicates agree today and the change is a
+    // guard against divergence rather than a fix to a live figure.
+    const printed = seen.some((e) => isHighlightCandidate(e));
 
     for (const e of current) {
       if (e === winner && !printed) {
@@ -651,7 +780,8 @@ function markLanguageEditions(entries, prior = new Map()) {
         e.duplicate_kind = "";
         e.edition_note = `primary language edition (${[...dois].join(" vs ")})`;
       } else {
-        const stands = printed ? seen.find((x) => isHighlighted(x)) || seen[0] : winner;
+        const stands =
+          printed ? seen.find((x) => isHighlightCandidate(x)) || seen[0] : winner;
         e.duplicate_of = stands.cid || "";
         e.duplicate_kind = "language-edition";
         e.edition_note =
@@ -767,6 +897,16 @@ function tallyEntries(entries) {
     // row should be visible rather than hidden inside one of the other two.
     independent_user_decided: highlighted.filter(isUserDecided).length,
     independent_pending: entries.filter(isIndependentPending).length,
+    // The independent-classified rows that are Scholar's second listing of a work
+    // counted once (or a fold). They left `independent` on 2026-11-05 when the
+    // mark rule began to refuse a row that does not stand for its work, and they
+    // are NOT `independent_pending` -- the standing sibling already settled the
+    // work, so nothing is unsettled. Named for the same reason
+    // `non_english_independent` is: the status partition has to keep summing to
+    // `records`, and rows that leave two buckets need a term of their own or the
+    // arithmetic gate in check-ledger-vs-snapshot.js falls short. Never a counted
+    // total -- these are citations the packet deliberately does not highlight.
+    secondary_copy_independent: entries.filter(isSecondaryIndependent).length,
     // The rows the language screen supersedes (user instruction, 2026-11-03):
     // classified INDEPENDENT but flagged non-English, so they are reported here
     // rather than in independent_pending. They exist because the status partition
@@ -970,9 +1110,11 @@ module.exports = {
   isSettled,
   isHighlighted,
   isHighlightCandidate,
+  doesNotStand,
   isReviewQueue,
   isWithheldForLanguage,
   isIndependentPending,
+  isSecondaryIndependent,
   isNonEnglishIndependent,
   isSecondaryCopy,
   markSecondaryCopies,

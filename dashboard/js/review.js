@@ -320,10 +320,12 @@
   }
 
   // The second list: classified independent, not highlighted, and NOT held back by
-  // the language screen. On this snapshot the two rows it holds are the second
-  // listing of a work already counted through another row, so the heading and the
-  // explanation say what they are rather than calling them open work -- see
-  // unsettledSub() for why the counting rule's label misleads here.
+  // the language screen. Since 2026-11-05 a row that is the second listing of a
+  // work counted through another row is named in its own ledger term instead of
+  // landing here, so this table is normally empty -- but the heading and the
+  // explanation are still derived from the copy listing rather than from the
+  // rule's label, so they stay honest if a future snapshot has both kinds at once.
+  // See unsettledSub() for why the counting rule's label misleads.
   function drawUnsettled(D) {
     const rows = D.unsettled_rows || [];
     const head = el("unsettled-head");

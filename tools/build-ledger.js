@@ -125,7 +125,7 @@ function storeEntries() {
       `SELECT cites_id, base, page, row_index, cid, title, raw_title, authors,
               authors_used, author_source, status, confirm_state, language_flag,
               duplicate_of, edition_key, same_work_key,
-              inherited_status, inherited_confirm_state,
+              inherited_status, inherited_confirm_state, is_primary_copy,
               matched_authors, matched_pi, matched_former_pi
          FROM citations
         WHERE filed = 1 AND superseded_at = ''
@@ -285,6 +285,15 @@ function build() {
       // dependent + self + review = records) still sums after non-English rows
       // left the unsettled bucket on 2026-11-03.
       non_english_independent: t.non_english_independent,
+      // The independent-classified rows that are Scholar's second listing of a
+      // work counted once. Named for the same reason as the term above: on
+      // 2026-11-05 the mark rule began to refuse a row that does not stand for
+      // its work (user decision -- no preprint/copy row is highlighted in a PDF),
+      // so those rows left `independent` and need a bucket of their own or the
+      // arithmetic gate falls short. They are not open work: the standing sibling
+      // already settled the verdict, which is why they left `independent_pending`
+      // in the same change.
+      secondary_copy_independent: t.secondary_copy_independent,
       // The five reviewer-facing categories (user instruction, 2026-11-03). Per
       // publication as well as globally, so the dashboard's per-publication bars
       // draw the same partition as the waffle instead of inventing their own.
@@ -379,6 +388,7 @@ function build() {
       independent_user_decided: t.independent_user_decided,
       independent_pending: t.independent_pending,
       non_english_independent: t.non_english_independent,
+      secondary_copy_independent: t.secondary_copy_independent,
       bucket_independent: t.bucket_independent,
       bucket_dependent: t.bucket_dependent,
       bucket_review: t.bucket_review,
@@ -430,6 +440,7 @@ function build() {
       "independent_user_decided",
       "independent_pending",
       "non_english_independent",
+      "secondary_copy_independent",
       "bucket_independent",
       "bucket_dependent",
       "bucket_review",
@@ -519,6 +530,12 @@ function build() {
     // the partition reconciles: with non-English rows no longer counted as
     // unsettled work, they need a named bucket of their own. See tally.js.
     non_english_independent: total.non_english_independent,
+    // The independent-classified rows that are Scholar's second listing of a work
+    // counted once. Published because the mark rule no longer highlights them
+    // (user decision, 2026-11-05), so they left `independent_countable`; without
+    // a named term the status partition no longer reconciles and a reader cannot
+    // account for the difference. See tally.isSecondaryIndependent.
+    secondary_copy_independent: total.secondary_copy_independent,
     // The five categories a reviewer reads, per the user's instruction of
     // 2026-11-03: independent, not-independent, awaiting review, non-English, and
     // preprint/copy. Self-citations are folded into bucket_dependent at this layer
@@ -576,17 +593,26 @@ function build() {
     ),
     note:
       "independent_countable counts rows on the exhibit pages and excludes entries " +
-      "flagged non-English and entries whose author list no source has settled. Per " +
-      "the guide a non-English citation needs a certified human translation and " +
-      "affidavit before it may be counted. independent_unique_papers collapses the " +
-      "duplicate versions Scholar shows of the same paper and is the figure to quote " +
-      "when stating how many distinct papers cite this work. Per the user's decision " +
+      "flagged non-English, entries whose author list no source has settled, and " +
+      "(per the user's decision on 2026-11-05) entries that do not stand for their " +
+      "work because Google Scholar lists the same paper twice against the same cited " +
+      "paper. It is therefore the number of yellow marks printed on the filed " +
+      "exhibits, and it counts citations rather than papers. Per the guide a " +
+      "non-English citation needs a certified human translation and affidavit before " +
+      "it may be counted. independent_unique_papers is the same counted-citation " +
+      "basis after duplicate listings are dropped -- despite the name it is NOT a " +
+      "paper count; distinct_citing_papers and distinct_independent_papers are the " +
+      "true paper counts and are the figures to quote when stating how many papers " +
+      "cite this work. Per the user's decision " +
       "on 2026-11-01 no certified translations are being obtained, so every " +
       "non-English entry is left unhighlighted and the english_* columns are the " +
       "adjusted English-only figures the guide asks for; non_english_withheld is the " +
       "count of entries that look independent and corroborated but are withheld for " +
-      "language. The english_* denominator is the English rows on the citing lists, " +
-      "because Google Scholar publishes no English-only total for a profile.",
+      "language. secondary_copy_independent is the independent rows held back only " +
+      "because they do not stand for their work, named separately so they are never " +
+      "mistaken for unsettled author work. The english_* denominator is the English " +
+      "rows on the citing lists, because Google Scholar publishes no English-only " +
+      "total for a profile.",
   };
 
   // Rows in the store under a citing id the snapshot list does not mention -- a
@@ -618,6 +644,7 @@ const CSV_COLUMNS = [
   "independent_user_decided",
   "independent_pending",
   "non_english_independent",
+  "secondary_copy_independent",
   "bucket_independent",
   "bucket_dependent",
   "bucket_review",
