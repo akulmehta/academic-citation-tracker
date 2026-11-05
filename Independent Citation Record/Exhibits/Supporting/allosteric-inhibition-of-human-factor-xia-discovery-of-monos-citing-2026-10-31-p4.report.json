@@ -77,7 +77,15 @@
       "duplicate_of": "",
       "attention_reason": "highlighted on Scholar's list alone - not indexed in PubMed or OpenAlex, worth a spot-check",
       "needs_attention": true,
-      "language_flag_captured": ""
+      "language_flag_captured": "",
+      "status_before_decision": "INDEPENDENT",
+      "confirm_state_before_decision": "unverified-coverage",
+      "corroboration_before_decision": "not indexed in PubMed or OpenAlex; Scholar list is complete",
+      "same_work_key": "sw:cit-000030",
+      "same_work_note": "US12012464B2 states it is a continuation of Ser. No. 16/472,646, which issued as US11168147B2; identical complete inventor list Aigner/Koch/Waldhuber and same priority 2016-12-23 from provisional 62/438,648, assignees Novartis AG and MorphoSys GmbH. cit-000027 (US20170022292A1) is a separate family: inventors Eder/Ewert/Hassiepen/Khder/Mayr/Melkko/Schiering, provisionals 62/184,955 (2015-06-26) and 62/341,568 (2016-05-25), priority 2015-06-26. Verified against patents.google.com on 2026-11-05.",
+      "decided_by": "Akul Mehta",
+      "decided_on": "2026-11-05",
+      "decided_note": "recorded as the same published work as cit-000030: US12012464B2 states it is a continuation of Ser. No. 16/472,646, which issued as US11168147B2; identical complete inventor list Aigner/Koch/Waldhuber and same priority 2016-12-23 from provisional 62/438,648, assignees Novartis AG and MorphoSys GmbH. cit-000027 (US20170022292A1) is a separate family: inventors Eder/Ewert/Hassiepen/Khder/Mayr/Melkko/Schiering, provisionals 62/184,955 (2015-06-26) and 62/341,568 (2016-05-25), priority 2015-06-26. Verified against patents.google.com on 2026-11-05."
     },
     {
       "index": 2,

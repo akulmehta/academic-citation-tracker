@@ -1,6 +1,6 @@
 # Unresolved citations — review queue
 
-Scholar snapshot **2026-11-02**, store built 2026-11-05T15:20:40.334Z. **0** of 1498 active citation rows are on this queue, so none of them is counted as independent and none is counted as dependent either.
+Scholar snapshot **2026-11-02**, store built 2026-11-05T21:01:50.431Z. **0** of 1498 active citation rows are on this queue, so none of them is counted as independent and none is counted as dependent either.
 
 17 rows are classified REVIEW in total. 17 not listed here: 5 are flagged non-English, where no certified translation is being obtained (decision of 2026-11-01) so no reading of the byline can change the packet -- see `node tools/query-catalog.js nonenglish`; 12 are a second copy of a work whose published record is already settled, so they take that verdict by inheritance and are listed under Preprint / copy on the dashboard instead.
 

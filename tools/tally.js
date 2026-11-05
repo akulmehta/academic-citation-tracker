@@ -184,13 +184,13 @@ function isNonEnglishIndependent(e) {
 // so a reader holding ONE row cannot see that it is the second copy of a paper
 // counted elsewhere. This writes that answer onto the rows.
 //
-// It matters because the exhibit and the count legitimately disagree: Google
-// Scholar lists one paper twice (a journal record and its bioRxiv, repository,
-// academia.edu, ProQuest or Ovid copy), the exhibit must show both rows because
-// that is the page that was printed, and the counted figure must credit the work
-// once. Without a flag on the row the gap between 1077 marks and 1059 distinct
-// independent works is invisible, and a reviewer with the PDF in one hand and the
-// summary in the other has no way to reconcile them.
+// It matters because one paper can be listed twice (a journal record and its
+// bioRxiv, repository, academia.edu, ProQuest or Ovid copy) while the counted
+// figure must credit the work once. Before the user's decision of 2026-11-05 the
+// exhibit marked both rows, so a reviewer holding the PDF and the summary needed
+// this flag to reconcile 1094 marks with the works counted; since that decision a
+// copy prints plain, so the marks and the count are equal and the flag is what
+// EXPLAINS a plain row rather than what reconciles a gap.
 //
 // Only the machine rule is covered here. A row folded by the language rule or by
 // a proven same-work claim already carries `duplicate_of`, set earlier in
@@ -295,9 +295,11 @@ function isSecondaryCopy(e, secondary) {
 //                      second copy of a counted work is shown as a copy rather
 //                      than claimed as another independent citation.
 //
-// The copy test comes before the mark test, and that ordering is what reconciles
-// the packet's two independent figures: 1077 rows are yellow on an exhibit while
-// 1059 works are counted, because a second copy is a copy first.
+// The copy test comes before the mark test, and that ordering is what keeps a
+// second copy out of the unsettled bucket: a folded row is a copy first, not open
+// author work. It also reconciles the exhibit with the count -- since the user's
+// decision of 2026-11-05 a copy prints plain, so the yellow marks and the counted
+// citations are the same figure and must stay equal.
 //
 // `review` reads isReviewQueue rather than the bare status, so the bucket and the
 // reviewer's sheet cannot disagree about what is still work. A copy whose standing

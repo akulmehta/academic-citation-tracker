@@ -196,11 +196,11 @@ for (const [name, dbv, ledv] of guards) {
 // person recorded one, else the ledger's normalised work_key -- never a
 // dashboard title, which has Scholar's [CITATION] markers stripped):
 //
-//   1,094  rows carrying a yellow mark on a filed exhibit page
-//   1,077  ...of which stand for their work against the paper they cite
-//     917  distinct papers among those
+//   1,094  rows carrying a yellow mark, before the 2026-11-05 no-mark-on-a-copy rule
+//   1,078  ...which is now BOTH the marks printed and the counted citations
+//     918  distinct papers among those
 //
-// The 17 between the first two are Google Scholar listing the same paper twice
+// The 17 between the first two were Google Scholar listing the same paper twice
 // against the SAME cited work, which is not a second citation; the 160 between
 // the last two are one paper cited by two or more of the PI's works, which IS a
 // second citation. Those two gaps point in opposite directions and must never be
@@ -824,10 +824,10 @@ const preprintCopies = copyRows.map((r) => ({
   duplicate_kind: r.duplicate_kind || "",
   patent_number: r.patent_number || "",
   work_type: r.work_type,
-  // Whether this row is nevertheless marked yellow on the exhibit. It usually is:
-  // the exhibit is a picture of Scholar's page and both rows are printed, so the
-  // mark and the count differ by design. Saying so here is what lets a reviewer
-  // reconcile 1077 marks with 1059 counted works.
+  // Whether this row is nevertheless marked yellow on the exhibit. Since the
+  // user's decision of 2026-11-05 a row that does not stand for its work prints
+  // PLAIN, so for these rows this is normally false and the mark and the count
+  // agree; a copy that IS marked is drift, and audit-highlights.js fails on it.
   marked: r.is_highlighted === 1,
   // The verdict this row takes from the copy that stands for its work, and the
   // basis of that verdict. Empty when the row's own classification already stands.
