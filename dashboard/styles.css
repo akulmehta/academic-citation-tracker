@@ -354,6 +354,57 @@ a { color: var(--accent); }
   white-space: nowrap;
   color: var(--ink-soft);
 }
+
+/* ---------- network figures ---------- */
+/* The two network pages carry a figure wider than a paragraph column, so they
+   opt out of the prose width rather than shrinking the drawing. */
+.figure-wide { max-width: none; }
+.figure-wide .chart { overflow-x: visible; }
+/* The number inside a node. White on a family fill whose lightness is capped in
+   networks.js precisely so this stays legible; the halo is what keeps it readable
+   where a node edge or an overlapping link crosses a glyph. */
+.node-num {
+  font-family: ui-sans-serif, system-ui, "Segoe UI", sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  fill: #fff;
+  text-anchor: middle;
+  pointer-events: none;
+  paint-order: stroke fill;
+  stroke: rgba(0, 0, 0, .28);
+  stroke-width: 2px;
+  stroke-linejoin: round;
+}
+.cluster-label {
+  font-family: ui-sans-serif, system-ui, "Segoe UI", sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  text-anchor: middle;
+}
+.wheel-total {
+  font-family: ui-sans-serif, system-ui, "Segoe UI", sans-serif;
+  font-size: 27px;
+  font-weight: 600;
+  letter-spacing: -.02em;
+  text-anchor: middle;
+  fill: var(--ink);
+}
+/* The node key repeats the figure's badge in a table cell, so a reader can match
+   a row to a dot without a colour-only legend. Same circle, same colours. */
+.node-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.55em;
+  height: 1.55em;
+  border-radius: 50%;
+  border: 1px solid rgba(0, 0, 0, .25);
+  color: #fff;
+  font-family: ui-sans-serif, system-ui, "Segoe UI", sans-serif;
+  font-size: .74rem;
+  font-weight: 700;
+  line-height: 1;
+}
 .overlap { color: #96591a; font-weight: 600; }
 /* Rows the language screen is also holding back: still in the queue, but a
    decision on one cannot change a figure, so they read as quieter. */
@@ -460,6 +511,41 @@ code {
   #patents-table table.fixed-print th:nth-child(6) { width: 17%; }
   #patents-table table.fixed-print th:nth-child(7) { width: 14%; }
   #patents-table table.fixed-print th:last-child { width: 7%; }
+  /* The node key under each network figure is a 40-row reference table with a
+     full title in it, so it prints dense and divides the sheet the same way the
+     other wide tables do. The badge column is only as wide as a badge. */
+  #key-cocitation, #key-wheel { font-size: 7.5pt; line-height: 1.3; }
+  #key-cocitation td, #key-wheel td { padding: .12rem .25rem; }
+  #key-cocitation table, #key-wheel table { table-layout: fixed; }
+  #key-cocitation table th:first-child, #key-wheel table th:first-child { width: 5%; }
+  #key-cocitation table th:nth-child(3), #key-wheel table th:nth-child(3) { width: 40%; }
+  /* The drawing itself: let it own the sheet width and keep the figure and its
+     caption together. The svg scales to the container via max-width, so nothing
+     hangs past the margin. */
+  .figure-wide { break-inside: avoid; page-break-inside: avoid; }
+  /* The wheel is square, so at full sheet width (725 px) it plus its heading,
+     legend and caption measured 1,056 px against a 950 px sheet -- and with
+     break-inside: avoid on the figure Chrome has no legal place to put it, so it
+     pushes the whole figure to a second sheet and the first prints empty. Capping
+     the width caps the height too, because the viewBox is 1:1. The caption goes
+     back to the full sheet width for the same reason: held to 46rem it ran to
+     eleven lines and cost another 35 px of the sheet, which is what tipped the
+     figure over. 168 mm of drawing is still a legible 225 mm-wide circle on paper. */
+  #fig-wheel svg { max-width: 160mm; margin: 0 auto; }
+  #fig-wheel .chart { text-align: center; }
+  /* The caption is the longest on the dashboard and it, not the drawing, is what
+     decides whether this figure fits: at 46rem it wrapped to eleven lines. Full
+     sheet width plus a smaller face brings it to about seven. */
+  #fig-wheel figcaption { max-width: none; font-size: .68rem; }
+  /* The wheel is drawn at 83% of its coordinate size on paper, which pulls the
+     node numbers down to about 6 pt -- too small to read a two-digit reference
+     off a printed sheet. This rule beats the per-node font-size attribute because
+     CSS outranks a presentation attribute. 11.5 px still clears the smallest
+     hub circle, whose diameter is 20 units. */
+  #fig-wheel .node-num { font-size: 11.5px; }
+  .node-num { font-size: 9.5px; }
+  .cluster-label { font-size: 10.5px; }
+  .wheel-total { font-size: 22px; }
   .hide-print { display: none !important; }
   /* the works list would run to dozens of sheets; print a bounded, sorted view
      and point at the CSV for the rest */

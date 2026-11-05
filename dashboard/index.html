@@ -9,6 +9,12 @@
 <body>
 
 <!--
+  Contents page: the headline figures, where each figure lives, and the method.
+
+  Each figure is on a page of its own so it can be printed to PDF on its own sheet
+  count rather than running over a dozen pages of one long document. The pages are
+  generated from the same data file, so no figure differs between them.
+
   Generated data. Two paths are supported on purpose:
     dashboard/data/citation-data.js  works over file:// (a script tag)
     dashboard/data/citation-data.json works over http (a fetch)
@@ -17,6 +23,13 @@
 -->
 <script src="data/citation-data.js"></script>
 <script src="vendor/d3.min.js"></script>
+<script src="js/core.js"></script>
+<script src="js/charts.js"></script>
+<script src="js/networks.js"></script>
+<script src="js/pages.js"></script>
+<script src="js/tables.js"></script>
+<script src="js/review.js"></script>
+<script src="js/boot.js"></script>
 
 <header class="masthead">
   <div class="masthead-inner">
@@ -33,212 +46,146 @@
 
 <main>
 
-  <!-- ============ 1. the headline ============ -->
-  <section id="record" class="chapter">
+  <!-- ============ 1. the headline and where to go ============ -->
+  <section id="contents" class="chapter">
     <p class="chapter-num">1</p>
     <h2>The record on the snapshot date</h2>
     <div class="figure-band" id="headline-band"></div>
     <p class="prose" id="record-note"></p>
-    <figure class="figure" id="fig-history">
-      <h3>Cited-by total across dated snapshots</h3>
-      <div class="chart" id="chart-history"></div>
-      <figcaption id="cap-history"></figcaption>
-    </figure>
-  </section>
+    <p class="prose" id="contents-lede"></p>
 
-  <!-- ============ 2. how the citations break down ============ -->
-  <section id="breakdown" class="chapter">
-    <p class="chapter-num">2</p>
-    <h2>Every citing record, and what was decided about it</h2>
-    <p class="prose" id="breakdown-lede"></p>
-    <figure class="figure" id="fig-waffle">
-      <h3>One square per citing record on the exhibit pages</h3>
-      <div class="chart" id="chart-waffle"></div>
-      <div class="legend" id="legend-waffle"></div>
-      <figcaption>
-        Squares are rows printed on the exhibit pages, so a paper Google Scholar
-        lists twice appears twice &mdash; as a <i>Preprint / copy</i> square, unless
-        the copy is non-English, in which case it is reported with the other
-        non-English rows. Counting distinct papers instead gives
-        <span id="waffle-distinct"></span>. A square&rsquo;s colour is its category,
-        not its mark: yellow is the only mark an exhibit PDF carries, and most
-        <i>Preprint / copy</i> rows do carry one, because the exhibit reproduces
-        Scholar&rsquo;s page. Chapter 7 lists which.
-      </figcaption>
-    </figure>
-    <figure class="figure" id="fig-split">
-      <h3>Independent share, on each basis the ledger publishes</h3>
-      <div class="chart" id="chart-split"></div>
-      <figcaption id="cap-split"></figcaption>
-    </figure>
-  </section>
-
-  <!-- ============ 3. per-publication ============ -->
-  <section id="per-work" class="chapter">
-    <p class="chapter-num">3</p>
-    <h2>Which of the 48 publications carries the citations</h2>
-    <p class="prose" id="perwork-lede"></p>
-    <figure class="figure" id="fig-lollipop">
-      <h3>Citations per publication, split by decision</h3>
-      <div class="chart" id="chart-lollipop"></div>
-      <div class="legend" id="legend-lollipop"></div>
-      <figcaption id="cap-lollipop"></figcaption>
-    </figure>
-    <figure class="figure" id="fig-concentration">
-      <h3>How concentrated the independent citations are</h3>
-      <div class="chart" id="chart-concentration"></div>
-      <figcaption id="cap-concentration"></figcaption>
-    </figure>
-  </section>
-
-  <!-- ============ 4. time ============ -->
-  <section id="time" class="chapter">
-    <p class="chapter-num">4</p>
-    <h2>When the citing work appeared</h2>
-    <p class="prose" id="time-lede"></p>
-    <figure class="figure" id="fig-years">
-      <h3>Citing records by year of the citing work</h3>
-      <div class="chart" id="chart-years"></div>
-      <div class="legend" id="legend-years"></div>
-      <figcaption>
-        The year is read from Scholar&rsquo;s own byline for each citing record
-        (&ldquo;X Author &mdash; Journal, 2014 &mdash; site&rdquo;). Records whose
-        byline carries no readable year
-        (<span id="years-undated"></span>) are excluded from this chart, as are
-        <span id="years-anomalies"></span>.
-      </figcaption>
-    </figure>
-  </section>
-
-  <!-- ============ 5. patents ============ -->
-  <section id="patents" class="chapter">
-    <p class="chapter-num">5</p>
-    <h2>Patents citing this work</h2>
-    <p class="prose" id="patents-lede"></p>
-    <div class="figure-band" id="patent-band"></div>
-    <figure class="figure" id="fig-patent-pubs">
-      <h3>Which publications the patents cite</h3>
-      <div class="chart" id="chart-patent-pubs"></div>
-      <figcaption id="cap-patent-pubs"></figcaption>
-    </figure>
-    <div class="table-wrap" id="patents-table"></div>
-    <p class="method-note" id="patents-method"></p>
-  </section>
-
-  <!-- ============ 6. verification ============ -->
-  <section id="verification" class="chapter">
-    <p class="chapter-num">6</p>
-    <h2>How each highlighted citation was verified</h2>
-    <p class="prose" id="verify-lede"></p>
-    <figure class="figure" id="fig-corroboration">
-      <h3>Source of the author list behind a highlight</h3>
-      <div class="chart" id="chart-corroboration"></div>
-      <figcaption id="cap-corroboration"></figcaption>
-    </figure>
-  </section>
-
-  <!-- ============ 7. what is not counted ============ -->
-  <section id="open" class="chapter">
-    <p class="chapter-num">7</p>
-    <h2>What is deliberately not counted</h2>
-    <p class="prose" id="open-lede"></p>
-    <div class="figure-band" id="open-band"></div>
-    <h3>Citing works Google Scholar lists twice</h3>
-    <p class="prose tiny">
-      A preprint, repository copy, author upload, thesis or database copy of a
-      paper that is already on the same citing page. The packet counts the work
-      once, under the row shown in <i>Counted once as</i>. Some of these rows are
-      still highlighted on the exhibit PDF, because the exhibit reproduces
-      Scholar&rsquo;s page rather than the count.
-    </p>
-    <div class="table-tools no-print">
-      <input type="search" id="copy-search" placeholder="Search titles, bylines, cited paper, row_uid&hellip;">
-      <span class="hint">Click a column heading to sort.</span>
-    </div>
-    <div class="table-wrap" id="copy-table"></div>
-    <div class="table-wrap" id="open-table"></div>
-  </section>
-
-  <!-- ============ 8 and 9. the pages you work from ============ -->
-  <section id="working" class="chapter">
-    <p class="chapter-num">8&ndash;9</p>
-    <h2>The working pages</h2>
-    <p class="prose">
-      Two pages hold the rows that are not simply counted. They are kept apart on
-      purpose. One is the record of citations that no rule could settle and a
-      person had to decide; the other is a disclosure of citations withheld for
-      language, on which no decision is being sought. Do not mix them: a decision
-      on a row from the second cannot change a figure in the first.
-    </p>
     <div class="page-links">
-      <a class="page-link" href="review.html">
+      <a class="page-link" href="overview.html">
+        <span class="page-link-n">2</span>
+        <span class="page-link-body">
+          <b>Overview and partition</b>
+          <span class="hint"
+            >The cited-by total across dated snapshots, every citing record drawn as
+            one square and coloured by what was decided about it, the independent
+            share on each basis the ledger publishes, and the two categories that are
+            deliberately not counted &mdash; with the second listings itemised row by
+            row.</span
+          >
+        </span>
+      </a>
+      <a class="page-link" href="per-publication.html">
+        <span class="page-link-n">3</span>
+        <span class="page-link-body">
+          <b>Per publication</b>
+          <span class="hint"
+            >Every captured publication as a bar of its own citing records, split by
+            decision, with the full title beside each. Followed by how concentrated
+            the independent citations are across the profile.</span
+          >
+        </span>
+      </a>
+      <a class="page-link" href="timeline.html">
+        <span class="page-link-n">4</span>
+        <span class="page-link-body">
+          <b>Over time</b>
+          <span class="hint"
+            >Citing records by the year of the citing work, read from
+            Scholar&rsquo;s own byline. Records with no readable year, and the few
+            whose date cannot be right, are named rather than dropped.</span
+          >
+        </span>
+      </a>
+      <a class="page-link" href="patents.html">
+        <span class="page-link-n">5</span>
+        <span class="page-link-body">
+          <b>Patents citing the work</b>
+          <span class="hint"
+            >Which publications the patent documents cite, with the full title of
+            each, and the complete list with patent numbers, inventors and links to
+            the patent record.</span
+          >
+        </span>
+      </a>
+      <a class="page-link" href="verification.html">
+        <span class="page-link-n">6</span>
+        <span class="page-link-body">
+          <b>Verification</b>
+          <span class="hint"
+            >What each highlight rests on: an external author list from PubMed or
+            OpenAlex, Google Scholar&rsquo;s own complete list, or a person reading
+            the published article. Reported separately, never folded together.</span
+          >
+        </span>
+      </a>
+      <a class="page-link" href="cocitation.html">
+        <span class="page-link-n">7</span>
+        <span class="page-link-body">
+          <b>Co-citation network</b>
+          <span class="hint"
+            >The publications as numbered nodes coloured by research programme, joined
+            where one independent citing paper cites two of them. The key below the
+            figure names every node and its strongest link.</span
+          >
+        </span>
+      </a>
+      <a class="page-link" href="citation-wheel.html">
         <span class="page-link-n">8</span>
+        <span class="page-link-body">
+          <b>Citation wheel</b>
+          <span class="hint"
+            >Every counted independent citation as a dot, in the sector of the
+            publication it cites, with the papers that cite more than one drawn as
+            lines across the middle. The clearest single-sheet view of the whole
+            record.</span
+          >
+        </span>
+      </a>
+      <a class="page-link" href="review.html">
+        <span class="page-link-n">9</span>
         <span class="page-link-body">
           <b>Open rows, settled</b>
           <span class="hint"
-            >The citations no rule could settle, grouped by what made them hard:
-            contradicted by an external record, cleared externally but truncated on
-            Scholar, or not indexed anywhere. Every one has been decided, so the
-            buckets are empty on this snapshot; the chapter keeps the shape of what
-            was checked, and each decision carries its row_uid, the record it cites
-            and a link to the exhibit page it sits on. Rows flagged non-English were
-            never offered here &mdash; see chapter 9.</span
+            >The citations no rule could settle, grouped by what made them hard. Every
+            one has been decided, so the buckets are empty on this snapshot; the
+            chapter keeps the shape of what was checked, and each decision carries its
+            row_uid and a link to the exhibit page it sits on.</span
           >
         </span>
       </a>
       <a class="page-link" href="language.html">
-        <span class="page-link-n">9</span>
+        <span class="page-link-n">10</span>
         <span class="page-link-body">
           <b>Non-English rows</b>
           <span class="hint"
-            >Every row flagged as possibly not listed in English, and what the
-            packet gives up by excluding it. No decision is recorded here and no
-            column invites one.</span
+            >Every row flagged as possibly not listed in English, and what the packet
+            gives up by excluding it. No decision is recorded here and no column
+            invites one.</span
           >
         </span>
       </a>
-    </div>
-  </section>
-
-  <!-- ============ 10 and 11. the two long tables, on their own pages ============ -->
-  <section id="appendices" class="chapter">
-    <p class="chapter-num">10&ndash;11</p>
-    <h2>The detailed tables</h2>
-    <p class="prose">
-      The two long tables live on pages of their own so they can be read, sorted
-      and searched at full width, and printed on their own sheet count. Both are
-      generated from the same data file as this page, so no figure differs
-      between them.
-    </p>
-    <div class="page-links">
       <a class="page-link" href="articles.html">
-        <span class="page-link-n">10</span>
+        <span class="page-link-n">11</span>
         <span class="page-link-body">
           <b>Per-article statistics</b>
           <span class="hint"
-            >One row per publication on the profile, with the records, the
-            independent count, corroboration, patents and exhibit pages. Sortable
-            by any column.</span
+            >One row per publication on the profile, with the records, the independent
+            count, corroboration, patents and exhibit pages. Sortable by any
+            column.</span
           >
         </span>
       </a>
       <a class="page-link" href="works.html">
-        <span class="page-link-n">11</span>
+        <span class="page-link-n">12</span>
         <span class="page-link-body">
           <b>Every citing work</b>
           <span class="hint"
-            >One row per distinct citing paper on the exhibit pages, with its
-            decision, corroboration and the exhibit page that carries it. Search
-            by title, byline or cited paper.</span
+            >One row per citing record on the exhibit pages, with its decision,
+            corroboration and the exhibit page that carries it. Search by title,
+            byline, cited paper or row_uid.</span
           >
         </span>
       </a>
     </div>
   </section>
 
-  <!-- ============ 12. method ============ -->
+  <!-- ============ method ============ -->
   <section id="method" class="chapter">
-    <p class="chapter-num">12</p>
+    <p class="chapter-num">Method</p>
     <h2>Sources and method</h2>
     <div id="method-body"></div>
   </section>
@@ -253,6 +200,5 @@
   </p>
 </footer>
 
-<script src="dashboard.js"></script>
 </body>
 </html>

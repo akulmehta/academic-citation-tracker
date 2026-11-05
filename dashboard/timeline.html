@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Over time — Akul Mehta independent citation record</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<!--
+  Chapter 4: the year of the citing work. One figure, one sheet.
+-->
+<script src="data/citation-data.js"></script>
+<script src="vendor/d3.min.js"></script>
+<script src="js/core.js"></script>
+<script src="js/charts.js"></script>
+<script src="js/networks.js"></script>
+<script src="js/pages.js"></script>
+<script src="js/tables.js"></script>
+<script src="js/review.js"></script>
+<script src="js/boot.js"></script>
+
+<header class="masthead">
+  <div class="masthead-inner">
+    <p class="kicker">Independent citation record &middot; chapter 4</p>
+    <h1>When the citing work appeared</h1>
+    <p class="standfirst" id="standfirst"></p>
+    <p class="sourcing" id="masthead-sourcing"></p>
+  </div>
+</header>
+
+<nav class="toc" id="toc" aria-label="Sections">
+  <div class="toc-inner"></div>
+</nav>
+
+<main>
+
+  <section id="time" class="chapter">
+    <p class="chapter-num">4</p>
+    <h2>Citing records by year</h2>
+    <p class="prose" id="time-lede"></p>
+    <figure class="figure" id="fig-years">
+      <h3>Citing records by year of the citing work</h3>
+      <div class="chart" id="chart-years"></div>
+      <div class="legend" id="legend-years"></div>
+      <figcaption>
+        The year is read from Scholar&rsquo;s own byline for each citing record
+        (&ldquo;X Author &mdash; Journal, 2014 &mdash; site&rdquo;). Records whose
+        byline carries no readable year
+        (<span id="years-undated"></span>) are excluded from this chart, as are
+        <span id="years-anomalies"></span>.
+      </figcaption>
+    </figure>
+    <p class="method-note page-back">
+      <a href="index.html">Back to contents</a>
+    </p>
+  </section>
+
+</main>
+
+<footer class="colophon">
+  <p id="colophon-line"></p>
+  <p class="tiny">
+    This page is a workpaper generated from the project's own records. It is not
+    legal advice and makes no prediction about any filing outcome.
+  </p>
+</footer>
+
+</body>
+</html>

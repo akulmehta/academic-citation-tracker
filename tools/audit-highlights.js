@@ -11,7 +11,8 @@
 //   1. the yellow marks actually present in the saved HTML, row by row, versus
 //      what tally.isHighlighted says now - the same rule applyHighlights used;
 //   2. that the exhibit PDF exists and is not empty;
-//   3. that the page's entries carry no language edition that is marked;
+//   3. that no row which does not stand for its work -- a language edition, a
+//      same-work fold or a patent-family copy -- carries a mark;
 //   4. that the exhibit PDF is ONE sheet -- one Scholar citing page is meant to
 //      print to one Letter sheet, and a tall page silently spilling onto a
 //      second is invisible to every other check here. Added 2026-11-02 after
@@ -150,7 +151,19 @@ async function main() {
       }
       const { rows } = await rowsFromSavedHtml(browser, htmlPath);
       const cmp = expectedMarks(p.entries, rows);
-      const editionMarked = p.entries.filter((e) => e.duplicate_of && lib.isHighlightCandidate(e));
+      // No row that does not stand for its work may carry a mark -- isHighlighted
+      // refuses one whether it is a language edition, a same-work fold or a patent
+      // family. This check has to look at the PAGE, because that is the only thing
+      // it can prove. It used to ask isHighlightCandidate instead -- "would this
+      // copy be marked if it stood?" -- which is true of nearly every copy by
+      // construction, since the only reason a copy does not stand is the duplicate
+      // decision the candidate test deliberately ignores. So it reported
+      // "language edition(s) would be marked" on pages whose marks were exactly
+      // right, and could not have detected a copy that actually WAS marked. Found
+      // 2026-11-04 as the last two "disagreements" after a genuine re-print: both
+      // were correct exhibits flagged by a hypothetical.
+      const copyRows = cmp.perRow.filter((x) => x.entry && x.entry.duplicate_of);
+      const copyMarked = copyRows.filter((x) => x.row.marked);
       const problems = [];
       if (cmp.marked !== cmp.want) {
         problems.push(`marks ${cmp.marked} vs ${cmp.want} expected under current rules`);
@@ -158,10 +171,19 @@ async function main() {
       if (cmp.unmatched.length) {
         problems.push(`${cmp.unmatched.length} report entry/entries not found on the saved page`);
       }
-      if (editionMarked.length) {
+      if (copyMarked.length) {
         problems.push(
-          `${editionMarked.length} language edition(s) would be marked: ` +
-            editionMarked.map((e) => e.title.slice(0, 48)).join(" | ")
+          `${copyMarked.length} non-standing cop${
+            copyMarked.length === 1 ? "y is" : "ies are"
+          } marked, and only the copy that stands may be: ` +
+            copyMarked
+              .map(
+                (x) =>
+                  `${x.entry.title.slice(0, 48)} [${
+                    x.entry.duplicate_kind || "duplicate"
+                  } -> ${x.entry.duplicate_of}]`
+              )
+              .join(" | ")
         );
       }
       if (!pdf) problems.push("no exhibit PDF on disk");

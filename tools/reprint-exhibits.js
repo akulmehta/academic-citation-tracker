@@ -128,23 +128,47 @@ async function main() {
     await pg.route("**/*", (route) => route.abort());
     await pg.setContent(html, { waitUntil: "domcontentloaded", timeout: 60000 }).catch(() => {});
 
-    // Count what is marked now, before touching anything.
-    const before = await pg.evaluate(() => {
-      const re = /background-color:\s*(rgb\(255,\s*242,\s*0\)|#fff200)/i;
-      return [...document.querySelectorAll("#gs_res_ccl_mid .gs_or")].filter((row) => {
-        const el = row.querySelector("h3.gs_rt") || row.querySelector(".gs_rt");
-        return el && re.test(el.getAttribute("style") || "");
-      }).length;
-    });
+    // Compare the page row by row, not by counting marks. A one-for-one swap --
+    // one row that should be marked and is not, another that should not be and
+    // is -- leaves the total untouched, so a count comparison calls such a page
+    // already correct and the exhibit ships with two wrong marks. This happened
+    // 2026-11-04 on glad-...-p6, where a user decision marked one copy of a
+    // folded paper while its duplicate stayed yellow: --changed skipped the page
+    // for two days because 9 == 9. Matching below is the same first-equal-title
+    // rule the apply step uses, so the decision to re-print and the marks applied
+    // cannot disagree with each other.
+    const state = await pg.evaluate(
+      ({ items }) => {
+        const norm = (s) => s.toLowerCase().replace(/\s+/g, " ").trim();
+        const re = /background-color:\s*(rgb\(255,\s*242,\s*0\)|#fff200)/i;
+        let before = 0;
+        let want = 0;
+        const wrong = [];
+        for (const row of document.querySelectorAll("#gs_res_ccl_mid .gs_or")) {
+          const el = row.querySelector("h3.gs_rt") || row.querySelector(".gs_rt");
+          if (!el) continue;
+          const isMarked = re.test(el.getAttribute("style") || "");
+          const hit = items.find((i) => norm(i.rawTitle) === norm(el.innerText));
+          const should = !!hit && !!hit.highlight;
+          if (isMarked) before++;
+          if (should) want++;
+          if (isMarked !== should) {
+            wrong.push(`${should ? "unmarked-but-should-be" : "marked-but-should-not"}: ${norm(el.innerText).slice(0, 56)}`);
+          }
+        }
+        return { before, want, wrong };
+      },
+      { items: marks.map((m) => ({ rawTitle: m.rawTitle, highlight: m.highlight })) }
+    );
+    const { before, want } = state;
 
-    const want = marks.filter((m) => m.highlight).length;
-
-    if (changedOnly && before === want) {
+    if (changedOnly && state.wrong.length === 0) {
       await pg.close();
       continue;
     }
     reprint++;
     console.log(`${p.base}  marks ${before} -> ${want}`);
+    for (const w of state.wrong) console.log(`  ${w}`);
 
     if (checkOnly) {
       await pg.close();

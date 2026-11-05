@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Citation wheel — Akul Mehta independent citation record</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<!--
+  Chapter 8: every counted independent citation as a dot.
+
+  917 distinct citing papers produce 1,077 counted independent citations, because
+  100 of them appear on the cited-by page of more than one of the PI's papers. A
+  free force layout over that many links collapses into one grey disc at Letter
+  size, so the citations are placed by sector: a publication's angular width is its
+  share of the total, and the multi-paper citing works are drawn as lines across the
+  middle where a free layout would never let a reader find them.
+
+  Inside a sector the dots are positioned by d3-force collision, projected back into
+  the owning wedge after every tick -- a fixed polar grid is blind to dot size and
+  printed 190 citations of one paper as a single grey rope. The simulation is seeded
+  from each dot's sector and needs no randomness, so two people printing this page
+  still get the same figure.
+-->
+<script src="data/citation-data.js"></script>
+<script src="vendor/d3.min.js"></script>
+<script src="js/core.js"></script>
+<script src="js/charts.js"></script>
+<script src="js/networks.js"></script>
+<script src="js/pages.js"></script>
+<script src="js/tables.js"></script>
+<script src="js/review.js"></script>
+<script src="js/boot.js"></script>
+
+<header class="masthead">
+  <div class="masthead-inner">
+    <p class="kicker">Independent citation record &middot; chapter 8</p>
+    <h1>Every independent citation, in the sector of the paper it cites</h1>
+    <p class="standfirst" id="standfirst"></p>
+    <p class="sourcing" id="masthead-sourcing"></p>
+  </div>
+</header>
+
+<nav class="toc" id="toc" aria-label="Sections">
+  <div class="toc-inner"></div>
+</nav>
+
+<main>
+
+  <section id="wheel" class="chapter">
+    <p class="chapter-num">8</p>
+    <h2>Citation wheel</h2>
+    <p class="prose">
+      The numbered circles are the PI&rsquo;s publications, coloured by research
+      programme in the same shades as the <a href="cocitation.html">co-citation
+      network</a>. Around them, one dot per counted independent citation, grouped
+      into the tinted sector of the publication it cites; a sector&rsquo;s width is
+      that publication&rsquo;s share of the whole, so the rim reads as a second
+      version of the per-publication bars. The solid band outside the dots shows
+      where each programme&rsquo;s sectors lie. Most dots are grey. The blue ones are
+      the papers that cite <i>more than one</i> of these publications, and each is
+      drawn with a line to the others it cites &mdash; those crossing lines are where
+      the anticoagulant work and the glycoscience work are shown to be read together.
+    </p>
+    <figure class="figure figure-wide" id="fig-wheel">
+      <h3>Independent citations arranged by the publication they cite</h3>
+      <div class="chart" id="chart-wheel"></div>
+      <div class="legend" id="legend-wheel"></div>
+      <figcaption id="cap-wheel"></figcaption>
+    </figure>
+    <h3>Which node is which publication</h3>
+    <div class="table-wrap" id="key-wheel"></div>
+    <p class="method-note">
+      Hovering a dot gives the citing paper&rsquo;s title, byline and a link to it;
+      a printed sheet carries the sector colours, the node numbers and the counts
+      instead, since a printout has no hover. The dots are spread by a collision
+      pass so that none covers another, and each is held inside its own sector, so a
+      dot&rsquo;s position answers &ldquo;which paper does this cite&rdquo; on paper
+      exactly as it does on screen. The complete row-level list, with each
+      citation&rsquo;s <code>row_uid</code> and the exhibit page that carries it, is
+      <a href="works.html">every citing work</a>.
+    </p>
+    <p class="method-note page-back">
+      <a href="index.html">Back to contents</a>
+    </p>
+  </section>
+
+</main>
+
+<footer class="colophon">
+  <p id="colophon-line"></p>
+  <p class="tiny">
+    This page is a workpaper generated from the project's own records. It is not
+    legal advice and makes no prediction about any filing outcome.
+  </p>
+</footer>
+
+</body>
+</html>

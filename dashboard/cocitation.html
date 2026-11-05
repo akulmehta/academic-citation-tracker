@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Co-citation network — Akul Mehta independent citation record</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<!--
+  Chapter 7: the publications as nodes, joined where one independent citing paper
+  cites two of them.
+
+  The node set is exactly the packet's counted independent citations --
+  tools/build-dashboard-data.js builds it from is_countable_independent = 1 AND
+  is_primary_copy = 1 AND duplicate_of = '' and refuses to write the data file if
+  that set disagrees with the ledger's bucket_independent figure. So a node's
+  number here is the same figure the waffle and the ledger report.
+
+  The layout is run to a settled state before drawing, so the printed figure is
+  reproducible rather than one sample from a random start.
+-->
+<script src="data/citation-data.js"></script>
+<script src="vendor/d3.min.js"></script>
+<script src="js/core.js"></script>
+<script src="js/charts.js"></script>
+<script src="js/networks.js"></script>
+<script src="js/pages.js"></script>
+<script src="js/tables.js"></script>
+<script src="js/review.js"></script>
+<script src="js/boot.js"></script>
+
+<header class="masthead">
+  <div class="masthead-inner">
+    <p class="kicker">Independent citation record &middot; chapter 7</p>
+    <h1>The literature that cites two of these papers together</h1>
+    <p class="standfirst" id="standfirst"></p>
+    <p class="sourcing" id="masthead-sourcing"></p>
+  </div>
+</header>
+
+<nav class="toc" id="toc" aria-label="Sections">
+  <div class="toc-inner"></div>
+</nav>
+
+<main>
+
+  <section id="cocitation" class="chapter">
+    <p class="chapter-num">7</p>
+    <h2>Co-citation network</h2>
+    <p class="prose">
+      Each circle is one of the PI&rsquo;s publications, numbered, sized by its
+      independent citations and coloured by research programme: <b style="color:#c0392b">red</b>
+      for the anticoagulant and thrombosis work, <b style="color:#1d5fa8">blue</b>
+      for glycoscience, <b style="color:#6b4fa0">purple</b> where a paper genuinely
+      belongs to both, and <b style="color:#2f7d4f">green</b> for the
+      medicinal-chemistry papers that belong to neither. Within a programme the
+      shade deepens for the earlier publication. A line joins two publications that
+      the same independent citing paper cites, and its thickness is how many papers
+      cite both &mdash; so the picture is not a metaphor for connection, it is a
+      count. That the red and blue groups are joined at all is the point: the
+      literature itself does not keep the two programmes apart.
+    </p>
+    <figure class="figure figure-wide" id="fig-cocitation">
+      <h3>Publications as nodes, joined by shared independent citing works</h3>
+      <div class="chart" id="chart-cocitation"></div>
+      <div class="legend" id="legend-cocitation"></div>
+      <figcaption id="cap-cocitation"></figcaption>
+    </figure>
+    <h3>Which node is which publication</h3>
+    <div class="table-wrap" id="key-cocitation"></div>
+    <p class="method-note">
+      Node numbers are assigned once, by research programme and then by citation
+      count, and are identical on the <a href="citation-wheel.html">citation
+      wheel</a>, so a number quoted from one figure means the same publication on
+      the other. The area programme is recorded in
+      <code>tools/topics.js</code> and is a classification of the publication, not a
+      count: no figure in the packet depends on it.
+    </p>
+    <p class="method-note page-back">
+      <a href="index.html">Back to contents</a>
+    </p>
+  </section>
+
+</main>
+
+<footer class="colophon">
+  <p id="colophon-line"></p>
+  <p class="tiny">
+    This page is a workpaper generated from the project's own records. It is not
+    legal advice and makes no prediction about any filing outcome.
+  </p>
+</footer>
+
+</body>
+</html>

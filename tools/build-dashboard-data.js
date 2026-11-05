@@ -30,6 +30,7 @@
 const fs = require("fs");
 const path = require("path");
 const { DatabaseSync } = require("node:sqlite");
+const { TOPICS, FAMILY } = require("./topics.js");
 
 const ROOT = path.resolve(__dirname, "..");
 const SUPPORT = path.join(
@@ -826,6 +827,198 @@ log(
     `work (${preprintCopies.filter((r) => r.marked).length} of them still marked on the exhibit)`
 );
 
+// =====================================================================
+// The two network figures: which of the PI's publications an independent
+// citing work attaches to, and which publications the literature cites
+// together.
+//
+// Both are built from the SAME set of rows, and that set is the packet's own:
+//
+//     is_countable_independent = 1 AND is_primary_copy = 1 AND duplicate_of = ''
+//
+// which is `tally.bucketOf` returning "independent" — the 1,077 counted
+// independent citations. Not every highlighted row: a second listing of a work
+// already counted is marked on the exhibit but contributes nothing, so drawing
+// it would put 17 dots on a diagram that claims to show counted citations. A
+// node here therefore means the same thing as a yellow square in the waffle.
+//
+// One citing WORK can appear on the cited-by page of two of the PI's papers. It
+// is one node with two links, which is exactly what makes the co-citation figure
+// worth drawing: an edge means a real, independent paper treated two of these
+// publications as one conversation.
+// =====================================================================
+const graphRows = q(`SELECT
+    c.row_uid, c.work_key, c.title, c.authors, c.link, c.cites_id,
+    COALESCE(NULLIF(c.same_work_key,''), c.work_key) AS ident,
+    p.title AS cited_title, p.year AS cited_year,
+    c.base, c.page
+  FROM citations c
+  LEFT JOIN publications p ON p.cites_id = c.cites_id
+  WHERE ${ACTIVE} AND c.is_countable_independent = 1
+    AND c.is_primary_copy = 1 AND c.duplicate_of = ''
+    AND c.cites_id IS NOT NULL AND c.cites_id <> ''
+  ORDER BY c.cites_id, c.title`).map((r) => ({
+  row_uid: r.row_uid,
+  // `ident` is the identity the ledger itself uses for a work: a hand-proved
+  // same-work key when a person recorded one, otherwise the normalised title.
+  // Using anything looser here would invent links the packet does not count.
+  ident: r.ident,
+  title: r.title,
+  byline: r.authors,
+  link: r.link,
+  cites_id: r.cites_id,
+  cited_title: r.cited_title,
+  cited_year: r.cited_year,
+  // The citing work's own year, parsed by the same rule the year chart uses: the
+  // last four-digit year in Scholar's byline. Kept so a citing node's tooltip can
+  // name a date rather than leave the reader with a bare title.
+  year: (() => {
+    const m = String(r.authors || "").match(/\b(19|20)\d{2}\b/g) || [];
+    const y = m.length ? Number(m[m.length - 1]) : null;
+    return y && y >= 1990 && y <= thisYear + 1 ? y : null;
+  })(),
+  exhibit_base: r.base,
+  exhibit_page: r.page,
+}));
+
+// Nodes: one per publication that has at least one counted independent citation.
+// The eight publications with no captured citing list have no edges to draw, so
+// they are absent rather than drawn as isolated dots — the caption says so.
+function graphNodesFor(rows, arts) {
+  const degree = new Map();
+  for (const r of rows) degree.set(r.cites_id, (degree.get(r.cites_id) || 0) + 1);
+  return [...degree.entries()].map(([cites_id, n]) => {
+    const a = arts.find((x) => x.cites_id === cites_id) || {};
+    const topic = TOPICS[cites_id] || "unknown";
+    const fam = FAMILY[topic] || FAMILY.unknown;
+    return {
+      cites_id,
+      n,
+      topic,
+      family: fam.label,
+      title: a.title || rows.find((r) => r.cites_id === cites_id).cited_title,
+      venue: a.venue || "",
+      year: a.year ?? null,
+      exhibit_base: a.exhibit_base || "",
+      cites_url: a.cites_url || "",
+      records: a.records ?? null,
+      bucket_independent: a.bucket_independent ?? null,
+    };
+  });
+}
+
+const graphNodes = graphNodesFor(graphRows, articles);
+
+// Edges for the co-citation figure: a pair of publications cited together by the
+// same independent work, weighted by how many such works there are.
+const graphEdges = (() => {
+  const byWork = new Map();
+  for (const r of graphRows) {
+    if (!byWork.has(r.ident)) byWork.set(r.ident, new Set());
+    byWork.get(r.ident).add(r.cites_id);
+  }
+  const pairs = new Map();
+  for (const set of byWork.values()) {
+    if (set.size < 2) continue;
+    const ids = [...set].sort();
+    for (let i = 0; i < ids.length; i++) {
+      for (let j = i + 1; j < ids.length; j++) {
+        const k = `${ids[i]}|${ids[j]}`;
+        pairs.set(k, (pairs.get(k) || 0) + 1);
+      }
+    }
+  }
+  return [...pairs.entries()]
+    .map(([k, weight]) => {
+      const [a, b] = k.split("|");
+      return { source: a, target: b, weight };
+    })
+    .sort((x, y) => y.weight - x.weight);
+})();
+
+const graphWorks = (() => {
+  const byWork = new Map();
+  for (const r of graphRows) {
+    if (!byWork.has(r.ident)) {
+      byWork.set(r.ident, {
+        // The identity key itself, so a link can be resolved back to a node and
+        // the guard below can prove no link dangles. It is a normalised title, or
+        // a hand-proved same-work key, never a row id -- a row id would mean a
+        // different work after a re-capture.
+        ident: r.ident,
+        title: r.title,
+        byline: r.byline,
+        link: r.link,
+        year: r.year,
+        cites: [],
+        rows: [],
+      });
+    }
+    const w = byWork.get(r.ident);
+    w.cites.push(r.cites_id);
+    w.rows.push(r.row_uid);
+  }
+  return [...byWork.values()];
+})();
+
+// The bipartite figure's links, one per counted citation.
+const graphLinks = graphRows.map((r) => ({
+  work: r.ident,
+  cites_id: r.cites_id,
+  row_uid: r.row_uid,
+}));
+// is worse than no diagram, because it is read as the evidence. Checked against
+// the ledger's own bucket figure rather than against a number restated here.
+if (graphRows.length !== g.bucket_independent) {
+  throw new Error(
+    `The network figure has ${graphRows.length} counted independent citations but ` +
+      `the ledger's bucket_independent is ${g.bucket_independent}. The graph's WHERE ` +
+      `clause and bucketOf in tools/tally.js must be the same rule; fix the query ` +
+      `rather than the figure.`
+  );
+}
+{
+  const ids = new Set(graphNodes.map((n) => n.cites_id));
+  const stranded = graphRows.filter((r) => !ids.has(r.cites_id));
+  if (stranded.length) {
+    throw new Error(
+      `${stranded.length} graph citation(s) point at a publication with no node.`
+    );
+  }
+  const known = new Set(graphWorks.map((w) => w.ident));
+  const lost = graphLinks.filter((l) => !known.has(l.work));
+  if (lost.length) {
+    throw new Error(
+      `${lost.length} graph link(s) reference a citing work that has no node.`
+    );
+  }
+}
+const graph = {
+  nodes: graphNodes,
+  edges: graphEdges,
+  works: graphWorks,
+  links: graphLinks,
+  // Stated once, from the rows, so neither figure's caption restates a figure by
+  // hand and drifts. `independent_countable` is the row count and is higher by
+  // the second copies; the graph uses the counted set.
+  citations: graphRows.length,
+  distinct_works: graphWorks.length,
+  multi_cited_works: graphWorks.filter((w) => w.cites.length > 1).length,
+  publications: graphNodes.length,
+  families: Object.fromEntries(
+    Object.keys(FAMILY).map((k) => [
+      k,
+      graphNodes.filter((n) => n.topic === k).length,
+    ])
+  ),
+};
+log(
+  `Network figure: ${graph.publications} publication nodes, ` +
+    `${graph.distinct_works} distinct independent citing works, ` +
+    `${graph.links.length} links, ${graph.edges.length} co-citation edges ` +
+    `across ${graph.multi_cited_works} multi-paper citing works.`
+);
+
 // ---- unresolved items, so the dashboard does not overstate certainty ----
 const openItems = q(`SELECT
     c.status, c.attention_reason, COUNT(*) AS n
@@ -963,6 +1156,17 @@ const out = {
   // a page, with the row that stands in its place.
   preprint_copies: preprintCopies,
   open_items: openItems,
+  // The topic table itself, so the browser colours from the same list a person
+  // reviewed rather than from a second copy of the rules. `order` is the legend
+  // order; the figures number nodes by their own rule so "node 7" is stable.
+  topics: {
+    family: FAMILY,
+    order: Object.keys(FAMILY),
+    assigned: Object.keys(TOPICS).length,
+  },
+  // The two network figures. Built from the counted independent set and guarded
+  // above against the ledger's own bucket figure.
+  graph,
 };
 
 if (CHECK) {
@@ -977,7 +1181,6 @@ if (CHECK) {
   db.close();
   return;
 }
-
 fs.mkdirSync(OUT_DIR, { recursive: true });
 fs.writeFileSync(OUT_FILE, JSON.stringify(out, null, 1) + "\n", "utf8");
 db.close();

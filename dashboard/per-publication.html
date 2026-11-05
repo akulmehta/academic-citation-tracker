@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Per publication — Akul Mehta independent citation record</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<!--
+  Chapter 3: the per-publication figures. The bars carry full publication titles,
+  wrapped, because a truncated title is not enough to tell one paper from the next.
+-->
+<script src="data/citation-data.js"></script>
+<script src="vendor/d3.min.js"></script>
+<script src="js/core.js"></script>
+<script src="js/charts.js"></script>
+<script src="js/networks.js"></script>
+<script src="js/pages.js"></script>
+<script src="js/tables.js"></script>
+<script src="js/review.js"></script>
+<script src="js/boot.js"></script>
+
+<header class="masthead">
+  <div class="masthead-inner">
+    <p class="kicker">Independent citation record &middot; chapter 3</p>
+    <h1>Which publications carry the citations</h1>
+    <p class="standfirst" id="standfirst"></p>
+    <p class="sourcing" id="masthead-sourcing"></p>
+  </div>
+</header>
+
+<nav class="toc" id="toc" aria-label="Sections">
+  <div class="toc-inner"></div>
+</nav>
+
+<main>
+
+  <section id="per-work" class="chapter">
+    <p class="chapter-num">3</p>
+    <h2>Citations per publication</h2>
+    <p class="prose" id="perwork-lede"></p>
+    <figure class="figure" id="fig-lollipop">
+      <h3>Every captured publication, its records split by decision</h3>
+      <div class="chart" id="chart-lollipop"></div>
+      <div class="legend" id="legend-lollipop"></div>
+      <figcaption id="cap-lollipop"></figcaption>
+    </figure>
+    <figure class="figure" id="fig-concentration">
+      <h3>How concentrated the independent citations are</h3>
+      <div class="chart" id="chart-concentration"></div>
+      <figcaption id="cap-concentration"></figcaption>
+    </figure>
+    <p class="method-note page-back">
+      The same figures one row per publication, with corroboration and patent
+      columns, are on the <a href="articles.html">per-article table</a>.
+      <a href="index.html">Back to contents</a>
+    </p>
+  </section>
+
+</main>
+
+<footer class="colophon">
+  <p id="colophon-line"></p>
+  <p class="tiny">
+    This page is a workpaper generated from the project's own records. It is not
+    legal advice and makes no prediction about any filing outcome.
+  </p>
+</footer>
+
+</body>
+</html>
