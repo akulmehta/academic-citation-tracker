@@ -113,6 +113,25 @@ because a simple text match failed.
 Screening decides what the packet *contains*. It does not decide what the record *keeps*: every
 candidate below still gets a row with its reason (§4.5).
 
+- **Citations that are not independent.** This is the first screen, before any reading of the
+  article. A citation counts only when the citing paper and the cited paper share no author, and
+  per the applicant's standing instruction any paper naming Richard D. Cummings or Umesh R. Desai
+  is a self-citation and never independent — even a paper the applicant did not co-author.
+  **Only independent citations may be pursued for this packet.** The candidate list is seeded from
+  the record's highlighted rows (`is_highlighted = 1`), which is the record's own statement of
+  independence.
+  - **The seed is a snapshot and can go stale.** The record re-classifies rows as corroboration
+    arrives, so re-check before filing rather than trusting the snapshot. Found on `cit-000511`
+    ("Development of smart anti-glycan reagents using immunized lampreys"): the packet's candidate
+    row still read `INDEPENDENT`/highlighted, while the record had since resolved it `DEPENDENT`
+    with `confirm_state = 'external-resolved'` — its full byline ends **Cummings RD**, an author of
+    the cited GLAD paper. It was never filed, because `screen_state = 'held'` kept it out of
+    `packet.html`, but the row in `candidate` is stale and must not be promoted on its face.
+  - Judge independence from the **complete** byline, surname plus initials, and resolve an
+    abbreviated list ("… and others") from an external record that publishes the full list. A
+    truncated list is not evidence that nobody is on the paper.
+  - Reading the article is expensive. Check independence *before* downloading a PDF and before
+    drafting any prose about it, or the work is wasted on a row that can never be filed.
 - **Negative citations.** Anything noting a limitation or drawback of my work, and anything where
   the authors claim to surpass it. These weaken the petition. Flag them; do not include them.
 - **Citations already used in the original petition.** See §3.
@@ -455,7 +474,95 @@ CREATE INDEX idx_citation_status ON citation(status);
 -- Exactly one row per folder may claim to be the main row (§4.2). A second
 -- is_main would name two folders for one citing work.
 CREATE UNIQUE INDEX uq_citation_one_main ON citation(folder_uid) WHERE is_main = 1;
+
+-- One row per OCCURRENCE of a tool in a citing article (§5.3). Keyed on row_uid,
+-- not folder_uid: two rows in one folder cite two different applicant papers, and
+-- independence and tier are relative to the cited paper.
+CREATE TABLE mention (
+  id        INTEGER PRIMARY KEY AUTOINCREMENT,
+  row_uid   TEXT NOT NULL,
+  section   TEXT NOT NULL,
+  tier      TEXT NOT NULL,
+  page      TEXT NOT NULL,               -- Scholar prints "4", "S4", "11"; keep it verbatim
+  quote     TEXT,
+  use_type  TEXT,                        -- Implemented | Compared | Built upon | Verified;
+                                         -- empty when the sentence is hedged (§1.3)
+  basis     TEXT,
+  verified  INTEGER NOT NULL DEFAULT 0,
+  noted_on  TEXT,
+  CHECK (tier IN ('A','B','C','D','REF')),
+  CHECK (basis IN ('extracted text','docx note',
+                   'reference-number resolution','human reading'))
+);
+
+-- The four prose sections, one row per WORK (folder), not per citation.
+CREATE TABLE narrative (
+  folder_uid     TEXT NOT NULL,
+  objectives     TEXT,
+  importance     TEXT,
+  how_used       TEXT,
+  findings       TEXT,
+  -- Working advice about the PACKET (which tier to file at, what not to claim).
+  -- render-packet.js never reads this column; PACKET-STATUS.md §3.8 lists it.
+  -- It exists because advice is useful and the filed prose is not where it belongs.
+  preparer_note  TEXT,
+  written_by     TEXT,
+  written_on     TEXT,
+  PRIMARY KEY (folder_uid)
+);
 ```
+
+Two tables carry the same idea at different grains, and mixing them up is the trap:
+
+- **`mention`** answers *where does the tool appear* — many rows per citation, each with its own
+  tier, page and quotation. `record-mentions.js` is its only writer and refuses a mention with no
+  quote, or a headline tier weaker than any recorded mention.
+- **`narrative`** answers *what should counsel read about this work* — one row per folder, four
+  prose columns. `narrative-intake.js` is its only writer.
+
+**Read the two schemas above carefully: they are not equally strict, and that is deliberate.**
+`mention` declares its `CHECK` constraints, so a bad tier or basis cannot be written by anything.
+`narrative` declares nothing nullable-or-not, because the guarantees live in `narrative-intake.js`
+instead — `written_by` mandatory, all four columns non-empty, every paragraph naming at least one
+page, and every named page within the length of a PDF actually filed for that folder. A `CHECK`
+cannot express "this page exists in the filed PDF", so putting the rule in the one writer is the
+only place it can be enforced at all. The consequence to remember: **writing a narrative through
+any path other than `narrative-intake.js` bypasses every one of those rules silently.** The same
+applies to `mention` and `record-mentions.js` for the quote-verification rule, which no constraint
+could express either.
+
+**Three kinds of sentence live on a narrative row, and only one of them is printed.** Keep them
+apart, because a lawyer-facing document reads badly if the other two leak in:
+
+| kind | example | where it lives |
+|---|---|---|
+| what the **citing article** did, said, concluded | "the same paragraph on p.30 continues that the results were analyzed with GLAD" | the four columns → `packet.html` |
+| what the **preparer recommends about the packet** | "file this row at tier A"; "do not present this as adoption" | `preparer_note` → `PACKET-STATUS.md` §3.8 only |
+| **who wrote the prose and when** | `written_by = the preparer (draft)` | `written_by` / `written_on` → §3.7 only |
+
+The middle row is the one that was got wrong first. Drafting advice is genuinely useful, so it must
+be written down somewhere; but a sentence like "which is why the packet records this row at tier B"
+inside `how_used` reads as the applicant editorialising about his own evidence, and it argues the
+position counsel was asked to form. `render-packet.js` cannot tell the two apart, so
+`narrative-intake.js` refuses the mixture: a sentence matching its `META` test in any of the four
+columns fails the dry run and `--check` alike, with the message *move drafting advice to
+preparer_note*. The test is deliberately broad and will occasionally catch an observation worth
+keeping ("so counsel can see the authors worked with a released build") — when it does, rewrite the
+sentence to state the fact without the advice rather than relaxing the regex.
+
+That guard protects the **write**. It says nothing about the **render**: if a template later pointed
+at `preparer_note`, or an attribution banner came back, intake would still pass and the document
+would ship bookkeeping to counsel. `validate-packet.js` therefore has a matching `[prose]` check that
+reads the finished `packet.html` — the same `META` expression, read out of `narrative-intake.js` so
+the two cannot drift — plus the banner strings and a block-count equality. Both sides are covered
+because they fail on different file states.
+
+The same reasoning removed the per-paragraph attribution banner (user instruction 2026-11-07):
+provenance is true, belongs in the status report, and repeating it 56 times in the document made the
+document read like a work-in-progress. **A narrative is still a draft until the applicant adopts it**
+— that fact is now carried by `written_by` and §3.7, not by the prose. Note that a citing paper's
+*own* recommendation (its call for more accessible tools, say) belongs under *Findings / Conclusions
+/ Recommendation* and is not preparer advice; the heading refers to the article.
 
 Notes on the choices:
 
@@ -595,6 +702,26 @@ print the article's bibliographic details once and give each citation its own ro
 the reader sees four citations to one article rather than four articles. Where the work has more
 than one PDF, link the folder's files in order and label each with its `role`.
 
+**List every place a citation occurs, not only the strongest one.** A tool can be named in Methods
+on p.10 *and* in the Results on p.4, or in Methods on p.5 *and* in the Acknowledgments on p.12.
+Counsel needs to see both, and needs to see that they are different kinds of evidence, so:
+
+- the index's *Section and page* cell lists all of them, strongest tier first
+  (`Materials and Methods, p.10; Results / Figures, p.4`);
+- the per-citation *Where the citation appears* row names each one with its tier label;
+- Section II prints **one blockquote per occurrence**, each with its own section, page and tier.
+
+The rows behind this are table `mention` (§4.6), keyed on `row_uid` — not `folder_uid`, because two
+rows in one folder cite two different applicant papers and each has its own locations.
+
+**Every row's mentions must render, not just the main row's.** A citing work is presented once,
+under its main row, so a naive renderer prints only the main row's quotations and silently drops
+the evidence for the additional rows in that folder. Ten of twenty-eight mentions were invisible
+this way before `secondaryQuotesBlock()` was added to `render-packet.js`: an entry for a work that
+files four citations must show the quotation for each of the four, each introduced by its own
+`row_uid`. Count the `class="quote"` blocks in the rendered HTML against
+`SELECT COUNT(*) FROM mention` — they must agree, and a count of *articles* is not the check.
+
 **Per-citation section**
 
 > **SECTION I — BACKGROUND**
@@ -610,6 +737,30 @@ than one PDF, link the folder's files in order and label each with its `role`.
 > - **Importance to Field** — 2–3 sentences
 > - **How and Why Your Work Was Used** — 4–5 sentences
 > - **Findings / Conclusions / Recommendation** — 4–5 sentences
+
+**Do not print a "draft" banner on each narrative paragraph.** An earlier version stamped every one
+of the 56 narrative blocks (14 works × 4 sections) with *"Draft prepared by the preparer (draft) …
+Not the applicant's own wording — to be reviewed, corrected and approved."* The instruction to be
+honest about provenance was right; the way it was implemented was wrong — the same sentence 56
+times is noise, and noise teaches a reader to skip the paragraph it is attached to. Provenance now
+lives in two places that are actually read:
+
+- table `narrative`'s `written_by` / `written_on` columns, which `narrative-intake.js` requires on
+  every write and which `--list` prints;
+- one paragraph in `PACKET-STATUS.md` §3.7, naming the authorship, the date, and what the applicant
+  must do to adopt the text.
+
+What replaces the banner *inside* the prose is the page number on each sentence — the thing that
+actually lets counsel check a claim. A narrative sentence must name the page it rests on, and
+`narrative-intake.js` refuses the paragraph otherwise, so the traceability is in the text rather
+than in a disclaimer about it.
+
+Removing the banner exposed the same problem in a second form: drafting advice that had been written
+into the prose itself ("Recommendation for the packet: file this row at tier A", "Note for the
+applicant: …", "Counsel should not be handed this citation as an instance of the tool being
+adopted"). Those moved to `narrative.preparer_note`, and the `META` guard in §4.6 is what stops them
+creeping back. `PACKET-STATUS.md` §3.8 is the only place that advice is written out, and it is read
+before the packet is handed over (§5).
 
 **Screened-out appendix** — after the citation sections, list the candidates that were excluded,
 grouped by `screen_reason`, with title, senior author, venue, year and the reason. No prose
@@ -655,20 +806,28 @@ with the database without any of them failing.
 ```
 node scripts/scan-mentions.js --write     # where the tools appear (scan_tier only; never tier)
 node scripts/record-evidence.js --write   # file tier/section/page/quote, each verified in the PDF
+node scripts/record-mentions.js --write   # every occurrence, one row each (table `mention`)
+node scripts/narrative-intake.js --write  # the four prose sections (table `narrative`)
 node scripts/build-status.js --write      # PACKET-STATUS.md — open items, disagreements
 node scripts/render-packet.js --write     # packet.html + the three CSVs
 node scripts/print-packet.js              # print/packet.pdf
 node scripts/validate-packet.js --deep    # every mechanical §7 check, plus re-read the PDFs
 ```
 
-Printing comes before the final validation because the validator is what proves the PDF exists and
-is non-empty — validating first and printing second leaves the last step unchecked.
+Every writer above is **dry-run by default**, backs up the database before writing, and prints what
+it would change; `--write` is the opt-in. `--check` re-verifies what is already filed against the
+PDFs, which is the command to run when a PDF has been replaced on disk.
 
-Two of these are load-bearing. `scan-mentions.js` writes only its own `scan_tier`/`scan_note`
-columns; §1.3 forbids a script overwriting the applicant's `tier`. And `record-evidence.js` is the
-only sanctioned way to file a quotation, because it reads the PDF (§6). `build-status.js` and
+Three of these are load-bearing. `scan-mentions.js` writes only its own `scan_tier`/`scan_note`
+columns; §1.3 forbids a script overwriting the applicant's `tier`. `record-evidence.js` is the
+only sanctioned way to file a headline quotation, and `record-mentions.js` the only way to file an
+occurrence, because both read the PDF (§6). `narrative-intake.js` is the only writer of prose and
+carries the page-existence rule that no SQL constraint can express (§4.6). `build-status.js` and
 `render-packet.js` are pure projections — if either is regenerated after a manual change, it will
 silently revert the *report*, not the database, which is how a stale claim survives.
+
+Printing comes before the final validation because the validator is what proves the PDF exists and
+is non-empty — validating first and printing second leaves the last step unchecked.
 
 ---
 
@@ -749,6 +908,12 @@ worse than no packet.
 - [ ] Every `quote` is verbatim and carries a page number, and comes from the file marked
       `cited = yes`. Checked by `node scripts/record-evidence.js --check`, which re-reads each filed
       PDF; `node scripts/validate-packet.js --deep` runs it with the rest.
+- [ ] **`packet.html` prints only the article's own account** (§4.6): no draft banner, no
+      `preparer_note` text, and no sentence in a narrative block that argues about the packet.
+      Checked by the `[prose]` test in `validate-packet.js`, which scans every narrative block with
+      the same `META` expression the writer uses (read out of `narrative-intake.js`, not restated)
+      and confirms the block count equals `narrative` rows × 4. Proven to fire: injecting a banner,
+      a leaked note, and an advice sentence each produced a distinct `FAIL` on 2026-11-07.
 - [ ] No `quote` is the citing work's own title (§6).
 - [ ] Every multi-file folder has a one-line explanation (§5.2) and each date in it has a
       `date_basis`.

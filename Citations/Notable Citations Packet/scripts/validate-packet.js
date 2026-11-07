@@ -433,7 +433,65 @@ for (const r of cits) {
 }
 
 /* ------------------------------------------------------------------ */
-/* 12. --deep: re-read the PDFs and confirm every filed quote is in one */
+/* 12. prose hygiene: nothing but the article's own account is printed  */
+/* ------------------------------------------------------------------ */
+// §4.6 splits a narrative row into three kinds of sentence and prints only the
+// first. narrative-intake.js refuses advice on the way in, but that guard protects
+// writes — it says nothing about the renderer. If someone later points a template
+// at preparer_note, or reintroduces an attribution banner, the packet would ship
+// drafting bookkeeping to counsel and every other check here would still pass.
+// This is the check that can actually fail on that file state.
+{
+  const p = path.join(PKT, "packet.html");
+  if (fs.existsSync(p)) {
+    const html = fs.readFileSync(p, "utf8");
+    const flat = html.replace(/<[^>]+>/g, " ").replace(/\s+/g, " ");
+
+    for (const banner of ["Draft prepared by", "Not the applicant\u2019s own wording", "to be reviewed, corrected and approved"]) {
+      if (flat.includes(banner)) fail("prose", `packet.html prints a draft banner ("${banner}") — provenance belongs in PACKET-STATUS.md §3.7 (user instruction 2026-11-07)`);
+    }
+
+    const narr = db.prepare(`SELECT * FROM narrative`).all();
+    let leaked = 0;
+    for (const r of narr) {
+      const noteTxt = String(r.preparer_note || "").replace(/\s+/g, " ").trim();
+      if (noteTxt && flat.includes(noteTxt.slice(0, 50))) {
+        leaked++;
+        fail("prose", `${r.folder_uid}'s preparer_note text appears in packet.html — the renderer must never read that column (§4.6)`);
+      }
+    }
+
+    // The META test is defined once, in the writer; read it rather than restating it.
+    const intakeSrc = fs.readFileSync(path.join(__dirname, "narrative-intake.js"), "utf8");
+    const metaSrc = intakeSrc.match(/const META = \/(.*?)\/i;/s);
+    if (!metaSrc) {
+      fail("prose", "could not read the META guard out of narrative-intake.js — this check is blind");
+    } else {
+      const META = new RegExp(metaSrc[1], "i");
+      const HEADINGS = ["Objectives", "Importance to Field", "How and Why Your Work Was Used", "Findings / Conclusions / Recommendation"];
+      const dec = s => s.replace(/<[^>]+>/g, " ").replace(/&ldquo;|&rdquo;/g, '"').replace(/&lsquo;|&rsquo;/g, "\u2019")
+        .replace(/&amp;/g, "&").replace(/&nbsp;/g, " ").replace(/\s+/g, " ").trim();
+      const re = /<h5>([^<]*)<\/h5>([\s\S]*?)(?=<h4|<h5|<\/article)/g;
+      let m, blocks = 0, hits = 0;
+      while ((m = re.exec(html))) {
+        if (!HEADINGS.includes(m[1].trim())) continue;
+        blocks++;
+        for (const s of dec(m[2]).split(/(?<=[.!?])\s+/)) {
+          if (META.test(s)) {
+            hits++;
+            fail("prose", `a narrative block in packet.html argues about the packet rather than the article: "${s.slice(0, 90)}\u2026" — move it to preparer_note (§4.6)`);
+          }
+        }
+      }
+      const want = narr.length * HEADINGS.length;
+      if (blocks !== want) fail("prose", `found ${blocks} narrative blocks in packet.html but ${narr.length} narrative row(s) x 4 sections = ${want} — prose is missing or the markup changed shape`);
+      if (!hits && !leaked && !QUIET) note("prose", `${blocks} narrative block(s) scanned for drafting advice; ${narr.length} preparer_note(s) confirmed absent from the document`);
+    }
+  }
+}
+
+/* ------------------------------------------------------------------ */
+/* 13. --deep: re-read the PDFs and confirm every filed quote is in one */
 /* ------------------------------------------------------------------ */
 // §7 says a quotation must be verbatim text from the citing article. Everything
 // else in this file checks the record against itself; only reading the PDFs can

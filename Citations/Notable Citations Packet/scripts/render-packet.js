@@ -228,24 +228,17 @@ const NARR_COL = {
 /**
  * One narrative subsection.
  *
- * Text written by someone other than the applicant is printed as what it is — a
- * draft prepared from the manuscript, awaiting the applicant's approval. Counsel
- * must never be handed a paragraph about the applicant's own intentions that reads
- * as though the applicant wrote it, so the attribution is on the page, not only in
- * a status file.
+ * Who wrote the paragraph is recorded in the `narrative` table (`written_by`,
+ * `written_on`) and stated once in `PACKET-STATUS.md`; it is not printed beside
+ * every paragraph. The page number each statement rests on is in the prose itself,
+ * which is what a reader actually needs on the page.
  */
 function narrativeText(c, data, heading, hint) {
   const col = NARR_COL[heading];
   const n = data.narratives.get(c.folder_uid);
   const body = n && n[col];
   if (!body) return `<p class="blank">To be written by the applicant. ${esc(hint)}</p>`;
-  const by = n.written_by || "";
-  const isApplicant = /applicant/i.test(by) && !/draft|preparer|assistant/i.test(by);
-  const paras = String(body).split(/\n{2,}/).map(p => `<p>${esc(p)}</p>`).join("");
-  if (isApplicant) return paras;
-  return `<p class="draft-note">Draft prepared by ${esc(by)}${n.written_on ? ` on ${esc(n.written_on)}` : ""} from the cited article, `
-    + `with the page numbers it rests on. <strong>Not the applicant's own wording — to be reviewed, corrected and approved.</strong></p>`
-    + paras;
+  return String(body).split(/\n{2,}/).map(p => `<p>${esc(p)}</p>`).join("");
 }
 
 /**
@@ -287,6 +280,25 @@ function quotesBlock(c, byRow) {
   </div>`).join("");
 }
 
+/**
+ * A citing article often cites more than one of the applicant's papers, and each
+ * of those is its own row with its own location and quotation. The main row's
+ * quotes are Section II above; without this block the additional rows would show
+ * up in the index but their evidence would never reach counsel in the entry.
+ */
+function secondaryQuotesBlock(others, byRow) {
+  return others.map(r => {
+    const ms = (byRow.get(r.row_uid) || []).filter(m => m.quote);
+    const head = `<p class="subhead"><code>${esc(r.row_uid)}</code> — additional citation of
+                  ${esc(r.cited_paper || r.cited_tool || "another of the applicant's papers")}</p>`;
+    if (ms.length) return head + quotesBlock(r, byRow);
+    return head + (r.quote
+      ? `<div class="quote"><blockquote>&ldquo;${esc(r.quote)}&rdquo;</blockquote>` +
+        `<p class="cite-page">${esc(r.section || "")}${r.page ? `, p. ${esc(r.page)}` : ""}</p></div>`
+      : `<div class="quote"><p class="blank">No verbatim quote recorded for this row.</p></div>`);
+  }).join("");
+}
+
 function citationSection(c, w, files, data) {
   const others = w.rows.filter(r => r.row_uid !== c.row_uid);
   const fileList = files.length
@@ -309,7 +321,11 @@ function citationSection(c, w, files, data) {
     <dd>${esc(c.cited_paper || "—")}
         ${c.cited_earliest_date ? `<br><span class="sub">${esc(c.cited_earliest_date)}${c.cited_was_preprint ? " (preprint)" : ""}</span>` : ""}</dd>
     <dt>Additional citations from this citing paper</dt>
-    <dd>${others.length ? others.map(r => `<code>${esc(r.row_uid)}</code> — ${esc(r.cited_paper || r.cited_tool || "")}`).join("<br>") : "none"}</dd>
+    <dd>${others.length ? others.map(r => {
+      const wl = whereList(r, data.byRow);
+      return `<code>${esc(r.row_uid)}</code> — ${esc(r.cited_paper || r.cited_tool || "")}
+              <span class="sub">(${esc(wl.text)})</span>`;
+    }).join("<br>") : "none"}</dd>
     <dt>Citing Paper</dt>
     <dd>${esc(c.citing_title)} <span class="sub">(${esc(c.citing_article_type || "article")})</span>
         ${c.citing_earliest_date ? `<br><span class="sub">Earliest public date: ${esc(c.citing_earliest_date)}${c.citing_was_preprint ? " (preprint)" : ""}</span>` : ""}</dd>
@@ -325,6 +341,7 @@ function citationSection(c, w, files, data) {
 
   <h4>Section II — Overview of use</h4>
   ${quotesBlock(c, data.byRow)}
+  ${secondaryQuotesBlock(others, data.byRow)}
 
   ${NARRATIVE.map(([h, hint]) => `
   <h5>${esc(h)}</h5>
@@ -434,6 +451,8 @@ function render(db) {
   .same { color:var(--muted); font-style:italic; }
   .missing { color:#9a6b00; font-size:.78rem; }
   .note, .trace, .sub { font-size:.78rem; color:var(--muted); }
+  .subhead { font-size:.82rem; color:var(--muted); margin:.9rem 0 .1rem; font-weight:600; }
+  article.citation.subquote .subhead + .quote { margin-top:.1rem; }
   article.citation { border-top:1px solid var(--rule); padding-top:1rem; margin-top:1.6rem; }
   article.citation:first-of-type { border-top:none; }
   dl { display:grid; grid-template-columns:13rem 1fr; gap:.2rem .8rem; font-size:.9rem; margin:.3rem 0; }
@@ -441,7 +460,6 @@ function render(db) {
   blockquote { margin:.4rem 0 .2rem; padding:.5rem .9rem; border-left:3px solid var(--accent);
                background:#faf7f5; font-style:italic; }
   .blank { font-size:.85rem; color:#9a6b00; background:#fffaf0; border:1px dashed #e0c98a; padding:.45rem .6rem; border-radius:4px; }
-  .draft-note { font-size:.8rem; color:#3a5a78; background:#f2f7fb; border-left:3px solid #7ba3c4; padding:.4rem .6rem; margin:.2rem 0 .5rem; }
   .files-list { font-size:.85rem; } .role { color:var(--muted); font-size:.75rem; text-transform:uppercase; letter-spacing:.05em; }
   #filter { width:100%; padding:.5rem .7rem; font-size:.9rem; border:1px solid var(--rule); border-radius:5px; }
   @media print {
@@ -461,6 +479,7 @@ function render(db) {
     article.citation { orphans:3; widows:3; }
     article.citation > h3 { break-after:avoid; }
     blockquote, .blank, .files-list { break-inside:avoid; }
+    .subhead { break-after:avoid; }
     dt, dd { break-inside:avoid; }
     .title-page { break-after:page; }
     /* The index is a table; let it repeat its header on every sheet it spans. */

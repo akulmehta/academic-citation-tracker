@@ -73,6 +73,14 @@ function migrate(db) {
     db.exec(`ALTER TABLE citation ADD COLUMN scan_note TEXT`);
     db.exec(`ALTER TABLE citation ADD COLUMN scanned_on TEXT`);
   }
+  // `preparer_note` arrived after the narrative table had rows: the drafting advice
+  // ("file this row at tier A", "do not use it as evidence of adoption") had been
+  // written into `findings`, which render-packet.js prints into the lawyer's HTML.
+  // Advice belongs in a column the renderer never reads.
+  const nCols = new Set(db.prepare(`SELECT name FROM pragma_table_info('narrative')`).all().map(r => r.name));
+  if (!nCols.has("preparer_note")) {
+    db.exec(`ALTER TABLE narrative ADD COLUMN preparer_note TEXT`);
+  }
 }
 
 /**
@@ -230,6 +238,12 @@ CREATE TABLE IF NOT EXISTS narrative (
   importance   TEXT,
   how_used     TEXT,
   findings     TEXT,
+  -- Working advice to the applicant and counsel: which tier to file at, what a
+  -- folder is good for, what NOT to claim from a row. Deliberately NOT one of the
+  -- four rendered columns. render-packet.js prints only the four, so anything
+  -- written here stays out of the lawyer's document by construction rather than by
+  -- remembering to strip it. PACKET-STATUS.md lists these.
+  preparer_note TEXT,
   written_by   TEXT,
   written_on   TEXT,
   PRIMARY KEY (folder_uid)

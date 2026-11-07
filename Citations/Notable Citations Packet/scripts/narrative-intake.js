@@ -14,9 +14,19 @@
  * the packet can defend: the number a paragraph names is a page of the article.
  * A narrative that cites p.40 of a 15-page PDF is refused rather than printed.
  *
- * Attribution is mandatory. `written_by` is stored and printed above the prose by
- * render-packet.js, so a paragraph drafted here reads as a draft awaiting the
- * applicant's approval and never as the applicant's own argument.
+ * Attribution is mandatory and is recorded, not printed. `written_by` and
+ * `written_on` are stored on the row; render-packet.js deliberately does NOT
+ * print them above the prose, because a lawyer-facing document should not carry
+ * drafting bookkeeping (user instruction 2026-11-07). Provenance is reported in
+ * PACKET-STATUS.md §3.7 instead, which is where a preparer looks, and the prose
+ * itself must read as the applicant's. Until the applicant adopts a narrative it
+ * is a draft: that fact lives in the database and the status report, not on the page.
+ *
+ * Working advice must not be in the four rendered columns either. Anything that
+ * talks about the packet rather than the citing article — which tier to file at,
+ * what a folder is good for, what not to claim — belongs in `preparer_note`,
+ * which the renderer never reads. A guard rejects meta-commentary in the four
+ * columns so the advice cannot leak back in.
  *
  * Usage:
  *   node scripts/narrative-intake.js --from=narratives.json          # dry run
@@ -54,24 +64,29 @@ function backup() {
 }
 
 /** Page counts of every PDF filed for a folder, keyed on the relative path. */
-async function folderPages(folderUid) {
+async function folderPages(folderUid, notes) {
   const db = new DatabaseSync(PACKET_DB, { readOnly: true });
-  let files = db.prepare("SELECT file FROM file WHERE folder_uid=? ORDER BY file").all(folderUid).map(f => `papers/${folderUid}/${f.file}`);
+  // `file.file` already carries the papers/<folder>/ prefix (it is what the packet
+  // HTML links against), so it must not be re-prefixed here.
+  let files = db.prepare("SELECT file FROM file WHERE folder_uid=? ORDER BY file").all(folderUid).map(f => f.file);
   db.close();
   if (!files.length) {
     const r = openPacket().prepare("SELECT pdf_file FROM citation WHERE folder_uid=? AND pdf_file IS NOT NULL LIMIT 1").get(folderUid);
-    if (r) files = [r.pdf_file];
+    // `citation.pdf_file` is stored bare (filename only), unlike `file.file`.
+    if (r) files = [`papers/${folderUid}/${r.pdf_file}`];
   }
   const out = [];
   for (const rel of files) {
     if (!/\.pdf$/i.test(rel)) continue;
     const abs = path.isAbsolute(rel) ? rel : path.join(PKT, rel);
-    if (!fs.existsSync(abs)) continue;
+    if (!fs.existsSync(abs)) { notes.push(`${rel}: listed in the database but not on disk`); continue }
     try {
       const pages = await pageTexts(rel);
       out.push({ rel, count: pages.length });
-    } catch {
-      /* a file that will not parse cannot vouch for a page number; skip it */
+    } catch (e) {
+      // A file that will not parse cannot vouch for a page number, but saying
+      // nothing would let a broken PDF read as "this folder has no PDF".
+      notes.push(`${rel}: could not be parsed (${e.message})`);
     }
   }
   return out;
@@ -88,6 +103,19 @@ function citedPages(text) {
   return [...nums].sort((a, b) => a - b);
 }
 
+/**
+ * Sentences about the PACKET rather than about the citing article.
+ *
+ * The four narrative columns are printed into the lawyer's document. A sentence
+ * saying "file this row at tier A", "do not use it as evidence of adoption", or
+ * "which is why the packet records this row at tier B" is drafting advice — useful,
+ * and it belongs in `preparer_note` — but in the filed prose it reads as the
+ * applicant editorialising about his own evidence, and it argues a position counsel
+ * was asked to form. The renderer cannot tell the two apart, so the writer refuses
+ * the mixture at the door.
+ */
+const META = /\b(recommendation for the packet|for the packet:|this packet|in this packet\b|the packet (?:records|recorded|keeps|kept|says|holds|printed|is built|goes)|packet material|file this|filing this row|tier [A-D]\b|counsel should|counsel can see|counsel must|the applicant should|applicant's own earlier summary|do not use it as|preparer)\b/i;
+
 async function checkOne(entry) {
   const problems = [];
   if (!entry.folder_uid) { problems.push("entry with no folder_uid"); return problems; }
@@ -102,13 +130,21 @@ async function checkOne(entry) {
     problems.push(`${entry.folder_uid}: no written_by — unattributed prose about the applicant's work cannot be filed`);
   }
 
-  const pdfs = await folderPages(entry.folder_uid);
-  if (!pdfs.length) problems.push(`${entry.folder_uid}: no filed PDF, so no page number in the prose can be checked`);
+  const notes = [];
+  const pdfs = await folderPages(entry.folder_uid, notes);
+  if (!pdfs.length) {
+    problems.push(`${entry.folder_uid}: no filed PDF could be read, so no page number in the prose can be checked${notes.length ? ` — ${notes.join("; ")}` : ""}`);
+  }
   const maxPage = pdfs.reduce((m, p) => Math.max(m, p.count), 0);
 
   for (const col of COLS) {
     const body = entry[col];
     if (!body || !String(body).trim()) { problems.push(`${entry.folder_uid}: ${HEADINGS[col]} is empty`); continue; }
+    const meta = String(body).split(/(?<=[.!?])\s+/).filter(s => META.test(s));
+    if (meta.length) {
+      problems.push(`${entry.folder_uid}.${col}: ${meta.length} sentence(s) about the packet rather than the article`
+        + ` ("${meta[0].trim().slice(0, 70)}…") — move drafting advice to preparer_note`);
+    }
     const nums = citedPages(body);
     if (!nums.length) {
       problems.push(`${entry.folder_uid}.${col}: names no page number — every narrative sentence must be traceable to a page`);
@@ -128,7 +164,8 @@ async function main() {
     if (!rows.length) console.log("no narratives recorded");
     for (const n of rows) {
       const filled = COLS.filter(c => n[c]);
-      console.log(`${n.folder_uid}  ${filled.length}/4 sections  written_by=${n.written_by || "?"}  on ${n.written_on || "?"}`);
+      const note = n.preparer_note ? `${n.preparer_note.length}c` : "none";
+      console.log(`${n.folder_uid}  ${filled.length}/4 sections  written_by=${n.written_by || "?"}  on ${n.written_on || "?"}  preparer_note=${note}`);
     }
     console.log(`\n${rows.length} narrative(s).`);
     return;
@@ -176,12 +213,12 @@ async function main() {
   backup();
   const db = openPacket();
   const del = db.prepare("DELETE FROM narrative WHERE folder_uid=?");
-  const ins = db.prepare(`INSERT INTO narrative (folder_uid, objectives, importance, how_used, findings, written_by, written_on)
-    VALUES (?,?,?,?,?,?,?)`);
+  const ins = db.prepare(`INSERT INTO narrative (folder_uid, objectives, importance, how_used, findings, preparer_note, written_by, written_on)
+    VALUES (?,?,?,?,?,?,?,?)`);
   for (const e of spec) {
     del.run(e.folder_uid);
     ins.run(e.folder_uid, e.objectives.trim(), e.importance.trim(), e.how_used.trim(), e.findings.trim(),
-      e.written_by.trim(), e.written_on || TODAY);
+      (e.preparer_note || "").trim() || null, e.written_by.trim(), e.written_on || TODAY);
   }
   db.close();
   const n = openPacket().prepare("SELECT COUNT(*) c FROM narrative").get().c;

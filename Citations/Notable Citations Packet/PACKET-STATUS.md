@@ -144,7 +144,6 @@ applicant's note as the authority and the folder as a secondary signal, which is
 
 | row_uid | filed from | folder implies | row carries |
 |---|---|---|---|
-| `cit-000521` | `Citations/In Methods/GLAD-Wilson-2026.pdf` | tier A | tier B |
 | `cit-000542` | `Citations/In Acknowledgements/Dianne-van-der-Wal_GLAD.pdf` | tier D | tier A |
 | `cit-000416` | `Citations/In Methods/Yann-Guerardel-MAWE-cwag085.pdf` | tier A | tier C |
 
@@ -168,12 +167,6 @@ applicant's `tier`. It cannot see a figure or judge prose the way a reader can, 
 disagreement is a prompt to re-read the page, not a correction. These rows stay in the
 packet until a person says otherwise:
 
-**The tool is in a section, but a different one than recorded:**
-
-| row_uid | recorded | scanner read | where the scanner looked |
-|---|---|---|---|
-| `cit-000521` | tier B, Results / Figures p.4 | tier A | Methods p.10: . S7– S9); the former generated using the GLAD tool (59) repre- senting the relative fluorescen… |
-
 **The row's quotation is verified in the PDF, but the scanner could not find the tool's NAME:**
 
 These are cited by reference number, not by name, so no text scan can place them; the
@@ -190,7 +183,26 @@ quotation was checked against the filed PDF by `record-evidence.js --check`, and
 
 ### 3.4 A citing paper whose byline names one of the two PIs
 
-None found: no row in the packet has a byline naming Cummings or Desai.
+A surname in one of the byline sources for the rows below matches the applicant's PI or the
+former PI. Where the record has settled the row as dependent, §1.2 keeps it out of the packet
+altogether — a citation sharing an author is not independent evidence of anyone else's work.
+
+| row_uid | packet status | record status | byline source naming the PI | where the name appears |
+|---|---|---|---|---|
+| `cit-000511` | held | DEPENDENT | already DEPENDENT | the corroborating pubmed record |
+
+### 3.4b Candidate rows whose snapshot disagrees with the record
+
+Table `candidate` is a **snapshot** taken when the seed ran, and the record keeps working.
+These rows were seeded as independent and the record has since settled them as dependent:
+
+| row_uid | snapshot | record now | packet status |
+|---|---|---|---|
+| `cit-000511` | INDEPENDENT, highlighted | DEPENDENT | held |
+
+Do not file one of these, and do not fix the snapshot to make the two agree: the record is
+right and the snapshot is merely old. Re-check independence from the record immediately
+before downloading a PDF or drafting prose about any candidate (§1.2).
 
 ### 3.5 Included citations with no verbatim quotation
 
@@ -200,15 +212,74 @@ None. Every included row quotes a sentence from the citing paper.
 
 None. Every citation in `packet.html` has the article filed beside it.
 
-### 3.7 The four narrative fields are empty for every citation
+### 3.7 The narrative fields are a preparer's draft awaiting the applicant's approval
 
-§5.3 asks for a short written account per citation — objectives, importance, how the work was
-used, findings. That is the applicant's prose, not something a script should write: it is the
-part counsel reads first, and an invented sentence there is worse than a blank one.
-14 of 14 works still need it.
+The 14 narrative(s) on file are written into the `narrative` table by
+`scripts/narrative-intake.js`, which refuses a paragraph that names no page number or a
+page beyond the length of the filed PDF. Who wrote each one is recorded in that table's
+`written_by` and `written_on` columns; it is deliberately **not** printed in `packet.html`,
+which would repeat the same sentence 56 times.
 
-Write them into the `narrative` table, then re-run `scripts/render-packet.js --write`. The
-table in `packet.html` states what each field should contain.
+Recorded authorship: `the preparer (draft)`.
+Written on: 2026-11-07.
+
+**These paragraphs are not the applicant's own wording.** Every sentence is drawn from the
+cited article and carries the page it rests on, so each claim can be checked, but a
+statement about why the citing authors did what they did should read as the applicant's
+judgement before counsel relies on it. Review, correct and approve them, then have
+`narrative-intake.js` record `written_by` as the applicant so the provenance changes with
+the words. An invented sentence in this section is worse than a blank one.
+
+### 3.8 Working advice held out of the document (`preparer_note`)
+
+Each narrative row also carries a `preparer_note`: recommendations about **the packet** —
+which tier to file a folder at, what it is good for, what not to claim from it. Those are
+not observations about the citing article, so `render-packet.js` never reads the column and
+they appear nowhere in `packet.html` or the printed PDF. `narrative-intake.js` rejects a
+sentence of that kind in the four rendered columns, which is what keeps the split from
+quietly re-merging. This is the only place the advice is written down.
+
+**`cit-000416`** — Glycan-mediated interactions of infectious hypodermal and hematopoiet…
+: This folder is strong on the point that matters: both the MAWE data-processing rules and GLAD are named in the Methods paragraph that generated the binding data, and the cited review is named as the source of the array platform itself.
+
+**`cit-000516`** — A Zebrafish Galectin-1 Isoform Is Expressed in Skin and Gills and Bin…
+: Cite this folder for the density of use rather than any single sentence - MAWE as an established procedure, GLAD for analysis and GlycoGlyph for the glycan models, all inside section 4.9.5 on p.21.
+
+**`cit-000518`** — Major human schistosome species express different glycans with immuno…
+: The p.16 sentence is a clean Methods use - the tool is named, versioned, and given the analytical role - from a Nature Communications article on a species with clinical relevance. Because the version is stated, counsel can see the authors worked with a released build rather than a private script.
+
+**`cit-000521`** — Enzymatic tailoring of anionic glycans for characterizing lectin and …
+: File this row at tier A.
+
+**`cit-000542`** — Comparative phenotyping of surface markers and glycans in murine and …
+: Keep the Methods p.5 sentence as the evidence and treat the p.12 acknowledgment as corroboration of the applicant’s role, not as a second use; both statements are recorded so they can be read side by side. OPEN DECISION FOR THE APPLICANT: the headline tier for this row is Methods (tier A) on the strength of the p.5 sentence. If you consider the Acknowledgments thanks to be the more accurate characterisation of the relationship, say so, because tier D would place this article outside the packet entirely.
+
+**`cit-000544`** — Phylogenetic variations in a novel family of hyperstable apple snail …
+: The p.4 sentence is a Methods use for comparison, and the folder’s multiple dated files exist precisely to place that statement in time; point counsel at the file list rather than asking them to take the date on trust.
+
+**`cit-000594`** — AquIRE reveals the mechanisms of clinically induced RNA damage and th…
+: This is a single-sentence Methods use in a high-visibility journal, and it is best presented as evidence of routine adoption for a standard task rather than as a load-bearing methodological dependence.
+
+**`cit-000602`** — Diminished sialoside binding in novel H5N1 influenza hemagglutinin va…
+: A Methods use in a Nature Communications article on a matter of public-health urgency; present it as the applicant’s tool being used to render the glycan structures in a high-profile receptor-binding study.
+
+**`cit-000613`** — Transcriptome, glycome, and mucinome analysis reveal zinc is essentia…
+: A tier B use: the applicant’s tool is the source of the glycan structures in the figures, twice named, but not described in the Methods prose. The mentions sit in figure content rather than in the Materials and Methods text, which is why the row is recorded at tier B rather than tier A.
+
+**`cit-000619`** — Structural basis of secreted acid phosphatase polymerization in the L…
+: A Methods use in a Journal of Biological Chemistry structural study; the GlycoGlyph sentence is specific about which structure was generated, which makes it verifiable at a glance.
+
+**`cit-000621`** — LeGenD: High-throughput N-glycan profiling using explainable AI and l…
+: A tier A use in a Journal of Biological Chemistry methods paper by a group that includes a co-author of the applicant’s field; useful as evidence that tool developers in glycomics use GlycoGlyph for structure representation.
+
+**`cit-000629`** — Glycan-reactive antibodies isolated from human HIV-1 vaccine trial pa…
+: One of the strongest folders in the packet: the applicant’s MAWE protocol is the assay method behind a Nature-family-tier HIV vaccine immunology study, and GlycoGlyph supplied the structure diagrams, both named in Methods and in a figure legend.
+
+**`cit-001253`** — Intelectin-2 is a broad-spectrum antimicrobial lectin
+: Do not present this citation as an instance of the tool being adopted. Keep the row, and keep the hedge quoted. The applicant’s own earlier summary of this paper recorded the same doubt. If the applicant knows from the authors or the NCFG that the array work was in fact run on reusable arrays made by MAWE, that fact should be recorded through the decision tool with its basis, not inferred from this sentence.
+
+**`cit-001257`** — Evaluating the role of non-HIV antigens in the initiation of QA013. 2…
+: A tier A Methods use of MAWE in a Scientific Reports article from a well-known HIV vaccine laboratory, presented as the analysis method for the array data. Where other folders name the applicant’s work in a hedge or a figure legend, this one assigns the analysis to the method in a Methods sentence, which is the form of use this packet is built to collect.
 
 ## 4. Data notes a reader of the CSVs would otherwise trip over
 
@@ -255,6 +326,46 @@ They are rewritten every run and are never the basis of a claim in the packet: `
 and `quote` remain the applicant's fields, and §1.3 forbids a script overwriting them. If
 `scanned_on` is older than the newest PDF, re-run `node scripts/scan-mentions.js --write`.
 
+### 4.6 How each PDF got here, and what is still missing
+
+Every PDF in `papers/` arrived one of two ways, and the distinction matters because
+only the first is reproducible from a script.
+
+**Fetched by `discover-pdfs.js`** — 7 candidate row(s) across 6 distinct file(s), each recorded with the host it came from:
+
+| host | rows | row_uid(s) |
+|---|---:|---|
+| www.nature.com | 2 | `cit-000510`, `cit-000511` |
+| www.mdpi.com | 2 | `cit-000513`, `cit-000550` |
+| www.intechopen.com | 2 | `cit-000536`, `cit-000565` |
+| www.frontiersin.org | 1 | `cit-000520` |
+
+All of them are open-access copies resolved through OpenAlex and taken from the publisher.
+
+**Placed in the folder by the applicant** — 14 folder(s) hold a file that
+no candidate row claims as its fetch: `cit-000544`, `cit-000594`, `cit-001253`, `cit-000518`, `cit-000521`, `cit-000629`, `cit-000619`, `cit-000542`, `cit-000602`, `cit-000516`, `cit-000613`, `cit-001257`, `cit-000416`, `cit-000621`.
+These came from the `In Methods` / `In Acknowledgements` imports and were registered into table
+`file`; nothing downloaded them.
+
+**No PDF was ever retrieved from NCBI.** `discover-pdfs.js` has no E-utilities download path at
+all, so the NCBI key in `.env` is used for author corroboration, not for fetching. Any statement
+that these papers came from PubMed Central would be wrong.
+
+Discovery state of all 110 GLAD candidates, from `candidate.discover_state`:
+
+| state | rows | meaning |
+|---|---:|---|
+| `no-open-copy` | 35 | looked, nothing retrievable found |
+| `open-copy` | 30 | an open-access copy was located; the row is only `has-pdf` once the file is on disk |
+| `not-in-indexes` | 22 | not found in the open-access indexes consulted |
+| `has-pdf` | 13 | a PDF was already filed when the candidate list was seeded |
+| `paywalled` | 10 | located behind a paywall — the applicant may be able to obtain these |
+
+**Still open:** 23 row(s) sit at `open-copy` with no file on disk — a copy was
+located and never fetched. Chasing them is a decision, not a defect: a row must be independent
+(§1.2) before it is worth a download, and 17 candidate(s) are already held — check why before spending effort on a PDF for a row that
+cannot be filed.
+
 ## 5. Before handing the packet over
 
 `node scripts/validate-packet.js` checks the mechanical items in §7 and exits non-zero on any
@@ -264,8 +375,13 @@ failure. Run it after every change. What it cannot check:
   the Independent Citation Record. The record is opened read-only by `openCatalog()`, which has
   no write path, so this is a belt-and-braces check rather than the control itself.
 - **The narrative fields and the missing quotations** (§3.5, §3.7) need the applicant's
-  writing. A packet with a blank narrative is still usable; one with an invented narrative is
-  not.
+  approval. The drafted narratives are drawn from the articles and every sentence names its
+  page, but they are a preparer's wording until the applicant adopts them; a packet with a
+  blank narrative is still usable, one with an unapproved narrative is not.
+- **The open decisions written up in §3.8.** Recommendations about the packet are kept out of
+  the document itself, so they are listed there instead — including whether `cit-000542` is
+  filed as a Methods use or as an acknowledgment, which would take it out of the packet.
+  Read that section before the document is handed over.
 - **`print/packet.pdf`** must be produced from the browser's print dialog once the content is
   final (§5.4).
 - **The project mapping** (§3.1) and the **tier-vs-folder question** (§3.2) need the

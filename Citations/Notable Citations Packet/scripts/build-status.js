@@ -271,18 +271,36 @@ if (!disagreements.length && !unsupportedIncluded.length) {
 push();
 
 // 3.4 — the independence finding.
+//
+// Three columns can carry a citing paper's byline, and checking only Scholar's short
+// `authors` string misses the case that matters: `cit-000511` shows "TR McKitrick,
+// CK Goth, CS Rosenberg… - Communications …, 2020 - nature.com" (ellipsis, no PI),
+// its `full_authors` JSON is the 10-name list Scholar rendered, and it is the
+// corroborating PubMed record in `external_authors` that ends "…, Cooper MD,
+// Cummings RD". A check that reads only the first two says "None found" about the one
+// row that proves why corroboration exists.
 push("### 3.4 A citing paper whose byline names one of the two PIs");
 push();
+const PI = /\b(cummings|desai)\b/i;
 const flagged = [];
+const stale = [];
 let catErr = null;
 try {
   const cat = openCatalog();
-  const get = cat.prepare(`SELECT row_uid, status, authors, full_authors FROM citations WHERE row_uid = ?`);
+  const get = cat.prepare(`SELECT row_uid, status, authors, full_authors, external_authors,
+                                  corroboration, confirm_state, external_source
+                           FROM citations WHERE row_uid = ?`);
   for (const r of cits) {
     const c = get.get(r.row_uid);
     if (!c) continue;
-    const names = (c.authors || "") + " " + (c.full_authors || "");
-    if (/\bcummings\b/i.test(names) || /\bdesai\b/i.test(names)) flagged.push({ row: r, cat: c });
+    const where = [];
+    if (PI.test(c.authors || "")) where.push("Scholar's short byline");
+    if (PI.test(c.full_authors || "")) where.push("Scholar's full byline");
+    if (PI.test(c.external_authors || "")) where.push("the corroborating " + (c.external_source || "external") + " record");
+    if (!where.length) continue;
+    const dependent = /^dependent$/i.test(c.status || "");
+    if (r.status === "included" && dependent) stale.push({ row: r, cat: c, where });
+    flagged.push({ row: r, cat: c, where, dependent });
   }
   cat.close();
 } catch (err) {
@@ -291,21 +309,79 @@ try {
 if (catErr) {
   push("*(The record could not be read for this check: " + esc(catErr) + ".)*");
 } else if (flagged.length) {
-  push("The Independent Citation Record classifies the rows below as **independent**, yet a surname in");
-  push("the citing paper's byline matches the applicant's PI or the former PI. The packet **holds**");
-  push("them rather than presenting them. Whether that person is the same individual, and what to do");
-  push("if they are, belongs to the applicant and counsel \u2014 the packet makes no claim about it.");
+  push("A surname in one of the byline sources for the rows below matches the applicant's PI or the");
+  push("former PI. Where the record has settled the row as dependent, \u00a71.2 keeps it out of the packet");
+  push("altogether \u2014 a citation sharing an author is not independent evidence of anyone else's work.");
   push();
-  push("| row_uid | packet status | citing byline as the record has it | record status |");
-  push("|---|---|---|---|");
+  push("| row_uid | packet status | record status | byline source naming the PI | where the name appears |");
+  push("|---|---|---|---|---|");
   for (const f of flagged) {
-    push("| `" + f.row.row_uid + "` | " + esc(f.row.status) + " | "
-      + short(f.cat.full_authors || f.cat.authors, 140) + " | " + esc(f.cat.status) + " |");
+    push("| `" + f.row.row_uid + "` | " + esc(f.row.status) + " | " + esc(f.cat.status)
+      + " | " + (f.dependent ? "already DEPENDENT" : "**still called independent**")
+      + " | " + f.where.join("; ") + " |");
+  }
+  if (flagged.some(f => !f.dependent)) {
+    push("Where a row is still called independent, the name may belong to a different person with the");
+    push("same surname \u2014 Cummings and Desai are common \u2014 but independence is not judged on a maybe,");
+    push("so the row stays out until the applicant and counsel say otherwise.");
+  }
+  if (stale.length) {
+    push();
+    push("**Rows the packet still calls included while the record calls them dependent:**");
+    push(stale.map(s => "`" + s.row.row_uid + "`").join(", ")
+      + ". These must be removed from `packet.html` before the packet goes out.");
   }
 } else {
-  push("None found: no row in the packet has a byline naming Cummings or Desai.");
+  push("None found: no row in the packet has a byline naming Cummings or Desai, in Scholar's rendering");
+  push("or in the corroborating external record.");
 }
 push();
+
+// 3.4b — the candidate snapshot is a copy, and copies go stale.
+// The snapshot was taken when the seed ran; the record keeps re-classifying rows as
+// corroboration arrives. A row whose snapshot still reads INDEPENDENT while the record
+// has settled it DEPENDENT is not a live finding, and must never be promoted to
+// included on the strength of the snapshot.
+{
+  let snapStale = [];
+  let snapErr = null;
+  try {
+    const cat = openCatalog();
+    const rows = db.prepare(`SELECT row_uid, status, is_highlighted FROM candidate`).all();
+    const get = cat.prepare(`SELECT status FROM citations WHERE row_uid = ?`);
+    for (const r of rows) {
+      const c = get.get(r.row_uid);
+      if (!c) continue;
+      const snapSaysInd = /^independent$/i.test(r.status || "") || r.is_highlighted === 1;
+      if (snapSaysInd && /^dependent$/i.test(c.status)) snapStale.push({ row: r, rec: c });
+    }
+    cat.close();
+  } catch (err) { snapErr = err.message }
+  if (snapErr) {
+    push("### 3.4b Candidate rows whose snapshot disagrees with the record");
+    push();
+    push("*(The record could not be read for this check: " + esc(snapErr) + ".)*");
+    push();
+  } else if (snapStale.length) {
+    push("### 3.4b Candidate rows whose snapshot disagrees with the record");
+    push();
+    push("Table `candidate` is a **snapshot** taken when the seed ran, and the record keeps working.");
+    push("These rows were seeded as independent and the record has since settled them as dependent:");
+    push();
+    push("| row_uid | snapshot | record now | packet status |");
+    push("|---|---|---|---|");
+    for (const s of snapStale) {
+      const inPkt = cits.find(x => x.row_uid === s.row.row_uid);
+      push("| `" + s.row.row_uid + "` | INDEPENDENT, highlighted | " + esc(s.rec.status) + " | "
+        + (inPkt ? esc(inPkt.status) : "not in table `citation`") + " |");
+    }
+    push();
+    push("Do not file one of these, and do not fix the snapshot to make the two agree: the record is");
+    push("right and the snapshot is merely old. Re-check independence from the record immediately");
+    push("before downloading a PDF or drafting prose about any candidate (\u00a71.2).");
+    push();
+  }
+}
 
 // 3.5 — missing quotations.
 const noQuote = included.filter(r => !r.quote);
@@ -351,18 +427,70 @@ if (!noPdf.length) {
 push();
 
 // 3.7 — narrative.
-const narr = db.prepare(`SELECT folder_uid FROM narrative`).all().map(r => r.folder_uid);
+const narrRows = db.prepare(`SELECT * FROM narrative`).all();
+const narr = narrRows.map(r => r.folder_uid);
 const needNarr = foldersIncluded.filter(f => !narr.includes(f));
-push("### 3.7 The four narrative fields are empty for every citation");
+// Attribution lives here, once, rather than beside every paragraph in the HTML.
+const byValues = [...new Set(narrRows.map(r => r.written_by).filter(Boolean))];
+const onValues = [...new Set(narrRows.map(r => r.written_on).filter(Boolean))].sort();
+const applicantOnly = byValues.length > 0 && byValues.every(b => /applicant/i.test(b) && !/draft|preparer|assistant/i.test(b));
+
+push(applicantOnly
+  ? "### 3.7 The narrative fields"
+  : "### 3.7 The narrative fields are a preparer's draft awaiting the applicant's approval");
 push();
-push("\u00a75.3 asks for a short written account per citation \u2014 objectives, importance, how the work was");
-push("used, findings. That is the applicant's prose, not something a script should write: it is the");
-push("part counsel reads first, and an invented sentence there is worse than a blank one.");
-push(needNarr.length + " of " + foldersIncluded.length + " works still need it.");
-push();
-push("Write them into the `narrative` table, then re-run `scripts/render-packet.js --write`. The");
-push("table in `packet.html` states what each field should contain.");
-push();
+if (needNarr.length) {
+  push(`\u00a75.3 asks for a short written account per citation \u2014 objectives, importance, how the work was`);
+  push(`used, findings. ${needNarr.length} of ${foldersIncluded.length} works still have none:`);
+  push();
+  push("| folder | citing work |");
+  push("|---|---|");
+  for (const f of needNarr) {
+    const r = cits.find(x => x.folder_uid === f);
+    push("| `" + f + "` | " + short(r ? r.citing_title : "", 80) + " |");
+  }
+  push();
+}
+if (narrRows.length) {
+  push(`The ${narrRows.length} narrative(s) on file are written into the \`narrative\` table by`);
+  push("`scripts/narrative-intake.js`, which refuses a paragraph that names no page number or a");
+  push("page beyond the length of the filed PDF. Who wrote each one is recorded in that table's");
+  push("`written_by` and `written_on` columns; it is deliberately **not** printed in `packet.html`,");
+  push("which would repeat the same sentence 56 times.");
+  push();
+  push(`Recorded authorship: ${byValues.map(b => `\`${esc(b)}\``).join(", ") || "(none recorded)"}.`);
+  push(`Written on: ${onValues.join(", ") || "(no date recorded)"}.`);
+  push();
+  if (!applicantOnly) {
+    push("**These paragraphs are not the applicant's own wording.** Every sentence is drawn from the");
+    push("cited article and carries the page it rests on, so each claim can be checked, but a");
+    push("statement about why the citing authors did what they did should read as the applicant's");
+    push("judgement before counsel relies on it. Review, correct and approve them, then have");
+    push("`narrative-intake.js` record `written_by` as the applicant so the provenance changes with");
+    push("the words. An invented sentence in this section is worse than a blank one.");
+    push();
+  }
+}
+
+// 3.8 — the working advice that the renderer never prints.
+const withNote = narrRows.filter(r => r.preparer_note).sort((a, b) => a.folder_uid.localeCompare(b.folder_uid));
+if (withNote.length) {
+  push("### 3.8 Working advice held out of the document (`preparer_note`)");
+  push();
+  push("Each narrative row also carries a `preparer_note`: recommendations about **the packet** —");
+  push("which tier to file a folder at, what it is good for, what not to claim from it. Those are");
+  push("not observations about the citing article, so `render-packet.js` never reads the column and");
+  push("they appear nowhere in `packet.html` or the printed PDF. `narrative-intake.js` rejects a");
+  push("sentence of that kind in the four rendered columns, which is what keeps the split from");
+  push("quietly re-merging. This is the only place the advice is written down.");
+  push();
+  for (const r of withNote) {
+    const c = cits.find(x => x.folder_uid === r.folder_uid);
+    push("**`" + r.folder_uid + "`** — " + short(c ? c.citing_title : "", 70));
+    push(": " + esc(String(r.preparer_note).trim()));
+    push();
+  }
+}
 
 /* ---------------------------------------------------------------- */
 push("## 4. Data notes a reader of the CSVs would otherwise trip over");
@@ -428,6 +556,59 @@ note("The scanner's reading lives in its own columns",
   + "and `quote` remain the applicant's fields, and \u00a71.3 forbids a script overwriting them. If\n"
   + "`scanned_on` is older than the newest PDF, re-run `node scripts/scan-mentions.js --write`.");
 
+// 4.x — how each PDF got here. Written because "the PDFs were downloaded" is a claim that
+// has to survive being asked "by what, and from where, and what is still missing?".
+{
+  const cands = db.prepare(`SELECT * FROM candidate`).all();
+  const bySource = new Map();
+  for (const c of cands) {
+    if (!c.pdf_file) continue;
+    const s = c.pdf_source || "(no source recorded)";
+    if (!bySource.has(s)) bySource.set(s, []);
+    bySource.get(s).push(c);
+  }
+  const dl = [...bySource.entries()].sort((a, b) => b[1].length - a[1].length);
+  const dlRows = dl.reduce((n, [, v]) => n + v.length, 0);
+  const dlFiles = new Set();
+  for (const [, v] of dl) for (const c of v) dlFiles.add(c.pdf_file);
+  const imported = files.filter(f => !cands.some(c => c.pdf_file === f.file));
+  const importedFolders = [...new Set(imported.map(f => f.folder_uid))];
+  const openUnfetched = db.prepare(`SELECT COUNT(*) n FROM candidate
+    WHERE discover_state='open-copy' AND (pdf_file IS NULL OR pdf_file='')`).get().n;
+  const stateCounts = db.prepare(`SELECT discover_state, COUNT(*) n FROM candidate GROUP BY 1 ORDER BY n DESC`).all();
+
+  let body = "Every PDF in `papers/` arrived one of two ways, and the distinction matters because\n"
+    + "only the first is reproducible from a script.\n\n"
+    + "**Fetched by `discover-pdfs.js`** — " + dlRows + " candidate row(s) across " + dlFiles.size
+    + " distinct file(s), each recorded with the host it came from:\n\n"
+    + "| host | rows | row_uid(s) |\n|---|---:|---|\n"
+    + dl.map(([s, v]) => "| " + s + " | " + v.length + " | " + v.map(c => "`" + c.row_uid + "`").join(", ") + " |").join("\n")
+    + "\n\nAll of them are open-access copies resolved through OpenAlex and taken from the publisher.\n\n"
+    + "**Placed in the folder by the applicant** — " + importedFolders.length + " folder(s) hold a file that\n"
+    + "no candidate row claims as its fetch: " + importedFolders.map(x => "`" + x + "`").join(", ") + ".\n"
+    + "These came from the `In Methods` / `In Acknowledgements` imports and were registered into table\n"
+    + "`file`; nothing downloaded them.\n\n"
+    + "**No PDF was ever retrieved from NCBI.** `discover-pdfs.js` has no E-utilities download path at\n"
+    + "all, so the NCBI key in `.env` is used for author corroboration, not for fetching. Any statement\n"
+    + "that these papers came from PubMed Central would be wrong.\n\n"
+    + "Discovery state of all " + cands.length + " GLAD candidates, from `candidate.discover_state`:\n\n"
+    + "| state | rows | meaning |\n|---|---:|---|\n";
+  const MEANING = {
+    "has-pdf": "a PDF was already filed when the candidate list was seeded",
+    "open-copy": "an open-access copy was located; the row is only `has-pdf` once the file is on disk",
+    "paywalled": "located behind a paywall — the applicant may be able to obtain these",
+    "no-open-copy": "looked, nothing retrievable found",
+    "not-in-indexes": "not found in the open-access indexes consulted",
+  };
+  body += stateCounts.map(s => "| `" + s.discover_state + "` | " + s.n + " | " + (MEANING[s.discover_state] || "\u2014") + " |").join("\n");
+  body += "\n\n**Still open:** " + openUnfetched + " row(s) sit at `open-copy` with no file on disk \u2014 a copy was\n"
+    + "located and never fetched. Chasing them is a decision, not a defect: a row must be independent\n"
+    + "(\u00a71.2) before it is worth a download, and " + db.prepare(`SELECT COUNT(*) n FROM candidate WHERE screen_state='held'`).get().n
+    + " candidate(s) are already held \u2014 check why before spending effort on a PDF for a row that\n"
+    + "cannot be filed.";
+  note("How each PDF got here, and what is still missing", body);
+}
+
 /* ---------------------------------------------------------------- */
 push("## 5. Before handing the packet over");
 push();
@@ -438,8 +619,13 @@ push("- **Nothing outside this folder was written.** The validator reports what 
 push("  the Independent Citation Record. The record is opened read-only by `openCatalog()`, which has");
 push("  no write path, so this is a belt-and-braces check rather than the control itself.");
 push("- **The narrative fields and the missing quotations** (\u00a73.5, \u00a73.7) need the applicant's");
-push("  writing. A packet with a blank narrative is still usable; one with an invented narrative is");
-push("  not.");
+push("  approval. The drafted narratives are drawn from the articles and every sentence names its");
+push("  page, but they are a preparer's wording until the applicant adopts them; a packet with a");
+push("  blank narrative is still usable, one with an unapproved narrative is not.");
+push("- **The open decisions written up in \u00a73.8.** Recommendations about the packet are kept out of");
+push("  the document itself, so they are listed there instead \u2014 including whether `cit-000542` is");
+push("  filed as a Methods use or as an acknowledgment, which would take it out of the packet.");
+push("  Read that section before the document is handed over.");
 push("- **`print/packet.pdf`** must be produced from the browser's print dialog once the content is");
 push("  final (\u00a75.4).");
 push("- **The project mapping** (\u00a73.1) and the **tier-vs-folder question** (\u00a73.2) need the");
