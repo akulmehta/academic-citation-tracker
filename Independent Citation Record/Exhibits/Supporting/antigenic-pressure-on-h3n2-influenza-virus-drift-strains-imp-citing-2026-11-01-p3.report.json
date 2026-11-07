@@ -326,9 +326,15 @@
       "snippet": "Tracking the genetic diversity and spread of swine influenza viruses (SIVs) in commercial\nswine farms is central for control and to reduce the potential emergence of SIV reassortants …",
       "truncated": true,
       "link": "https://www.sciencedirect.com/science/article/pii/S037811352031052X",
-      "status": "INDEPENDENT",
-      "matched_authors": [],
-      "matched_pi": [],
+      "status": "DEPENDENT",
+      "matched_authors": [
+        "L Byrd-Leotis",
+        "R D Cummings",
+        "D A Steinhauer"
+      ],
+      "matched_pi": [
+        "R D Cummings"
+      ],
       "matched_former_pi": [],
       "authors_used": "Bakre, Abhijeet A, Jones, Les P, Kyriakis, Constantinos S, Hanson, Jarod M, Bobbitt, Davis E, Bennett, Hailey K, Todd, Kyle V, Orr-Burks, Nichole, Murray, Jackelyn, Zhang, Ming",
       "author_source": "scholar-cite-bibtex",
@@ -354,15 +360,21 @@
       "external_title": "Molecular epidemiology and glycomics of swine influenza viruses circulating in commercial swine farms in the southeastern and midwest United States.",
       "external_authors": "Bakre AA, Jones LP, Kyriakis CS, Hanson JM, Bobbitt DE, Bennett HK, Todd KV, Orr-Burks N, Murray J, Zhang M, Steinhauer DA, Byrd-Leotis L, Cummings RD, Fent J, Coffey T, Tripp RA",
       "external_similarity": 1,
-      "confirm_state": "confirmed",
-      "corroboration": "confirmed by pubmed",
+      "confirm_state": "external-resolved",
+      "corroboration": "resolved against pubmed (DEPENDENT)",
       "edition_key": "",
       "duplicate_of": "",
       "needs_attention": false,
       "attention_reason": "",
       "language_flag_captured": "",
       "status_captured": "INDEPENDENT",
-      "confirm_state_captured": "confirmed"
+      "confirm_state_captured": "confirmed",
+      "external_matched": [
+        "L Byrd-Leotis",
+        "R D Cummings",
+        "D A Steinhauer",
+        "R D Cummings"
+      ]
     },
     {
       "index": 8,

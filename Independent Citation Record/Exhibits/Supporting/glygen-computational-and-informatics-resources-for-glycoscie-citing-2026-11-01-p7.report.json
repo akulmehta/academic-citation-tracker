@@ -178,7 +178,9 @@
       "duplicate_of": "",
       "needs_attention": false,
       "attention_reason": "",
-      "language_flag_captured": ""
+      "language_flag_captured": "",
+      "status_captured": "INDEPENDENT",
+      "confirm_state_captured": "confirmed"
     },
     {
       "index": 3,
@@ -212,7 +214,9 @@
       "duplicate_of": "",
       "needs_attention": false,
       "attention_reason": "",
-      "language_flag_captured": ""
+      "language_flag_captured": "",
+      "status_captured": "INDEPENDENT",
+      "confirm_state_captured": "confirmed"
     },
     {
       "index": 4,
@@ -223,8 +227,12 @@
       "snippet": "The Data Distillery Knowledge Graph (DDKG) is a framework for semantic integration and\nquerying of biomedical data across domains. Built for the NIH Common Fund Data …",
       "truncated": true,
       "link": "https://pmc.ncbi.nlm.nih.gov/articles/PMC12363844/",
-      "status": "INDEPENDENT",
-      "matched_authors": [],
+      "status": "DEPENDENT",
+      "matched_authors": [
+        "R Mazumder",
+        "R Ranzinger",
+        "J Vora"
+      ],
       "matched_pi": [],
       "matched_former_pi": [],
       "authors_used": "Ahooyi, Taha Mohseni, Stear, Benjamin, Simmons, J Alan, Metzger, Vincent T, Kumar, Praveen, Evangelista, John Erol, Clarke, Daniel JB, Xie, Zhuorui, Kim, Heesu, Jenkins, Sherry L",
@@ -251,13 +259,20 @@
       "external_title": "The Data Distillery: A Graph Framework for Semantic Integration and Querying of Biomedical Data.",
       "external_authors": "Ahooyi TM, Stear B, Simmons JA, Metzger VT, Kumar P, Evangelista JE, Clarke DJB, Xie Z, Kim H, Jenkins SL, Maurya MR, Ramachandran S, Fahy E, Gillespie TH, Imam FT, Kokash N, Roth ME, Fullem R, Jevtic D, Mihajlovic A, Tiemeyer M, Bakker C, Schroeder AJ, Markowski J, Nedzel J, Hill DD, Terry J, Nemarich C, Boline J, Park PJ, Ardlie KG, Vora J, Mazumder R, Ranzinger R, de Bono B, Subramaniam S, Grethe JS, Yang JJ, Lambert CG, Resnick A, Milosavljevic A, Ma'ayan A, Silverstein JC, Taylor DM",
       "external_similarity": 1,
-      "confirm_state": "confirmed",
-      "corroboration": "confirmed by pubmed",
+      "confirm_state": "external-resolved",
+      "corroboration": "resolved against pubmed (DEPENDENT)",
       "edition_key": "",
       "duplicate_of": "",
       "needs_attention": false,
       "attention_reason": "",
-      "language_flag_captured": ""
+      "language_flag_captured": "",
+      "status_captured": "INDEPENDENT",
+      "confirm_state_captured": "confirmed",
+      "external_matched": [
+        "R Mazumder",
+        "R Ranzinger",
+        "J Vora"
+      ]
     },
     {
       "index": 5,
@@ -410,7 +425,9 @@
       "duplicate_of": "",
       "needs_attention": false,
       "attention_reason": "",
-      "language_flag_captured": ""
+      "language_flag_captured": "",
+      "status_captured": "INDEPENDENT",
+      "confirm_state_captured": "confirmed"
     }
   ]
 }

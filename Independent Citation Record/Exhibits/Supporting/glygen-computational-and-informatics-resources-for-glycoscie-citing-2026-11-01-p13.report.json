@@ -392,8 +392,11 @@
       "snippet": "Abstract Systems glycobiology aims to provide models and analysis tools that account for\nthe biosynthesis, regulation, and interactions with glycoconjugates. To facilitate these …",
       "truncated": true,
       "link": "https://www.beilstein-journals.org/bjoc/articles/16/215",
-      "status": "INDEPENDENT",
-      "matched_authors": [],
+      "status": "DEPENDENT",
+      "matched_authors": [
+        "K F Aoki-Kinoshita",
+        "M P Campbell"
+      ],
       "matched_pi": [],
       "matched_former_pi": [],
       "authors_used": "Kellman, Benjamin P, Zhang, Yujie, Logomasini, Emma, Meinhardt, Eric, Godinez-Macias, Karla P, Chiang, Austin WT, Sorrentino, James T, Liang, Chenguang, Bao, Bokan, Zhou, Yusen",
@@ -420,15 +423,19 @@
       "external_title": "A consensus-based and readable extension of Linear Code for Reaction Rules (LiCoRR).",
       "external_authors": "Kellman BP, Zhang Y, Logomasini E, Meinhardt E, Godinez-Macias KP, Chiang AWT, Sorrentino JT, Liang C, Bao B, Zhou Y, Akase S, Sogabe I, Kouka T, Winzeler EA, Wilson IBH, Campbell MP, Neelamegham S, Krambeck FJ, Aoki-Kinoshita KF, Lewis NE",
       "external_similarity": 1,
-      "confirm_state": "confirmed",
-      "corroboration": "confirmed by pubmed",
+      "confirm_state": "external-resolved",
+      "corroboration": "resolved against pubmed (DEPENDENT)",
       "edition_key": "",
       "duplicate_of": "",
       "needs_attention": false,
       "attention_reason": "",
       "language_flag_captured": "",
       "status_captured": "INDEPENDENT",
-      "confirm_state_captured": "confirmed"
+      "confirm_state_captured": "confirmed",
+      "external_matched": [
+        "K F Aoki-Kinoshita",
+        "M P Campbell"
+      ]
     },
     {
       "index": 9,

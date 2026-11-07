@@ -374,7 +374,7 @@ function inheritedFrom(e, secondary) {
       // this test an English row could inherit its way off the queue from a
       // citation the packet does not count at all.
       if (o.language_flag) continue;
-      if (!isSettled(o) || !o.status) continue;
+      if (!(isSettled(o) || o.confirm_state === "external-resolved") || !o.status) continue;
       return o;
     }
     return null;

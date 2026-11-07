@@ -323,5 +323,82 @@ function row(over) {
   check("idempotent: second pass too", again.changed, false);
 }
 
+{
+  // The cit-000511 case: a PubMed list in its own "Surname XY" order names the
+  // current PI last. Read as "Given Surname" the PI was invisible and the row
+  // was confirmed independent.
+  const e = row({
+    status: "INDEPENDENT",
+    confirm_state: "confirmed",
+    truncated: true,
+    corroboration: "confirmed by pubmed",
+    external_authors: "McKitrick TR, Goth CK, Rosenberg CS, Cooper MD, Cummings RD",
+  });
+  applyExternalVerdict(e, KEYS);
+  check("PubMed PI: SELF (PI)", e.status, "SELF (PI)");
+  check("PubMed PI: settled", e.confirm_state, "external-resolved");
+  check("PubMed PI: hit recorded", e.matched_pi, ["R D Cummings"]);
+}
+
+{
+  const e = row({
+    status: "INDEPENDENT",
+    confirm_state: "confirmed",
+    truncated: true,
+    corroboration: "confirmed by pubmed",
+    external_authors: "Patel NJ, Karuturi R, Desai UR, Patel BB",
+  });
+  applyExternalVerdict(e, { ...KEYS, authorKeys: toKeys("AY Mehta").keys });
+  check("PubMed former PI: SELF (FORMER PI)", e.status, "SELF (FORMER PI)");
+}
+
+{
+  const e = row({
+    status: "INDEPENDENT",
+    confirm_state: "confirmed",
+    truncated: true,
+    corroboration: "confirmed by pubmed",
+    external_authors: "Kim JH, Mehta AY, Lee SY",
+  });
+  applyExternalVerdict(e, KEYS);
+  check("PubMed shared author: DEPENDENT", e.status, "DEPENDENT");
+}
+
+{
+  // A PubMed list with no overlap stays independent; the fix must not start
+  // flagging unrelated people whose initials happen to be read differently.
+  const e = row({
+    status: "INDEPENDENT",
+    confirm_state: "confirmed",
+    truncated: true,
+    corroboration: "confirmed by pubmed",
+    external_authors: "Kim JH, Lee SY, Park MK",
+  });
+  applyExternalVerdict(e, KEYS);
+  check("PubMed no overlap: stays INDEPENDENT", e.status, "INDEPENDENT");
+}
+
+{
+  // cit-001476: decided on the published byline, 2026-11-04. The external record
+  // here is the discarded PubMed match that would otherwise move it to REVIEW.
+  const e = row({
+    status: "INDEPENDENT",
+    confirm_state: "user-decided",
+    decided_by: "Akul Mehta",
+    external_source: "pubmed",
+    external_title: "Spatial transcriptomics and N-glycoproteomics reveal breed-dependent immune responses",
+    external_similarity: 1,
+    title: "Glycoproteomics",
+    truncated: true,
+    corroboration: "user decided",
+  });
+  const before = JSON.stringify(e);
+  const r = applyExternalVerdict(e, KEYS);
+  check("user decision: no change reported", r.changed, false);
+  check("user decision: status kept", e.status, "INDEPENDENT");
+  check("user decision: confirm state kept", e.confirm_state, "user-decided");
+  check("user decision: row byte-identical", JSON.stringify(e), before);
+}
+
 console.log(`\n${pass} passed, ${fail} failed`);
 process.exitCode = fail ? 1 : 0;

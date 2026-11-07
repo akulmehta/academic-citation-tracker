@@ -33,10 +33,14 @@
       "snippet": "Abstract The Department of Medicinal Chemistry, together with the Institute for Structural\nBiology, Drug Discovery and Development, at Virginia Commonwealth University (VCU) has …",
       "truncated": true,
       "link": "https://www.sciencedirect.com/science/article/pii/S2472555223000175",
-      "status": "INDEPENDENT",
-      "matched_authors": [],
+      "status": "DEPENDENT",
+      "matched_authors": [
+        "U R Desai"
+      ],
       "matched_pi": [],
-      "matched_former_pi": [],
+      "matched_former_pi": [
+        "U R Desai"
+      ],
       "authors_used": "Kellogg, Glen E, Cen, Yana, Dukat, Malgorzata, Ellis, Keith C, Guo, Youzhong, Li, Jiong, May, Aaron E, Safo, Martin K, Zhang, Shijun, Zhang, Yan",
       "author_source": "scholar-cite-bibtex",
       "popup_sample": "@article{kellogg2023merging,\n  title={Merging cultures and disciplines to create a drug discovery ecosystem at Virginia commonwealth university: Medicinal chemistry, structural biology, molecular and behavioral pharmacology and computational chemistry},\n  author={Kellogg, Glen E and Cen, Yana and Dukat, Malgorzata and Ellis, Keith C and Guo, Youzhong and Li, Jiong and May, Aaron E and Safo, Martin",
@@ -61,15 +65,19 @@
       "external_title": "Merging cultures and disciplines to create a drug discovery ecosystem at Virginia commonwealth university: Medicinal chemistry, structural biology, molecular and behavioral pharmacology and computational chemistry.",
       "external_authors": "Kellogg GE, Cen Y, Dukat M, Ellis KC, Guo Y, Li J, May AE, Safo MK, Zhang S, Zhang Y, Desai UR",
       "external_similarity": 0.83,
-      "confirm_state": "confirmed",
-      "corroboration": "confirmed by pubmed",
+      "confirm_state": "external-resolved",
+      "corroboration": "resolved against pubmed (DEPENDENT)",
       "edition_key": "",
       "duplicate_of": "",
       "needs_attention": false,
       "attention_reason": "",
       "language_flag_captured": "",
       "status_captured": "INDEPENDENT",
-      "confirm_state_captured": "confirmed"
+      "confirm_state_captured": "confirmed",
+      "external_matched": [
+        "U R Desai",
+        "U R Desai"
+      ]
     },
     {
       "index": 1,

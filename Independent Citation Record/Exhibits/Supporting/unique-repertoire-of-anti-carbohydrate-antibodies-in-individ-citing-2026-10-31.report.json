@@ -65,7 +65,9 @@
       "duplicate_of": "",
       "needs_attention": false,
       "attention_reason": "",
-      "language_flag_captured": ""
+      "language_flag_captured": "",
+      "status_captured": "INDEPENDENT",
+      "confirm_state_captured": "confirmed"
     },
     {
       "index": 1,
@@ -136,7 +138,9 @@
       "duplicate_of": "",
       "needs_attention": false,
       "attention_reason": "",
-      "language_flag_captured": ""
+      "language_flag_captured": "",
+      "status_captured": "INDEPENDENT",
+      "confirm_state_captured": "confirmed"
     },
     {
       "index": 3,
@@ -229,9 +233,13 @@
       "snippet": "ABO blood group antigens, which are complex carbohydrate moieties, and the first human\npolymorphisms identified, are critical in transfusion medicine and transplantation. Despite …",
       "truncated": true,
       "link": "https://www.sciencedirect.com/science/article/pii/S1044532324000307",
-      "status": "INDEPENDENT",
-      "matched_authors": [],
-      "matched_pi": [],
+      "status": "DEPENDENT",
+      "matched_authors": [
+        "R D Cummings"
+      ],
+      "matched_pi": [
+        "R D Cummings"
+      ],
       "matched_former_pi": [],
       "authors_used": "Arthur, Connie M, Hollenhorst, Marie, Wu, Shang-Chuen, Jajosky, Ryan, Nakahara, Hirotomo, Jan, Hau-Ming, Zheng, Leon, Covington, Mischa, Rakoff-Nahoum, Seth, Yeung, Melissa",
       "author_source": "scholar-cite-bibtex",
@@ -257,13 +265,19 @@
       "external_title": "ABO blood groups and galectins: Implications in transfusion medicine and innate immunity.",
       "external_authors": "Arthur CM, Hollenhorst M, Wu SC, Jajosky R, Nakahara H, Jan HM, Zheng L, Covington M, Rakoff-Nahoum S, Yeung M, Lane W, Josephson C, Cummings RD, Stowell SR",
       "external_similarity": 1,
-      "confirm_state": "confirmed",
-      "corroboration": "confirmed by pubmed",
+      "confirm_state": "external-resolved",
+      "corroboration": "resolved against pubmed (DEPENDENT)",
       "edition_key": "",
       "duplicate_of": "",
       "needs_attention": false,
       "attention_reason": "",
-      "language_flag_captured": ""
+      "language_flag_captured": "",
+      "status_captured": "INDEPENDENT",
+      "confirm_state_captured": "confirmed",
+      "external_matched": [
+        "R D Cummings",
+        "R D Cummings"
+      ]
     },
     {
       "index": 6,
@@ -363,7 +377,9 @@
       "duplicate_of": "",
       "needs_attention": false,
       "attention_reason": "",
-      "language_flag_captured": ""
+      "language_flag_captured": "",
+      "status_captured": "INDEPENDENT",
+      "confirm_state_captured": "confirmed"
     },
     {
       "index": 9,

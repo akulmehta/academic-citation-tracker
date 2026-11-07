@@ -36,6 +36,9 @@
 //   node tools/reapply-corroboration.js               show what would change
 //   node tools/reapply-corroboration.js --write       apply it
 //   node tools/reapply-corroboration.js --all         include archived reports
+//   node tools/reapply-corroboration.js --only-to=DEPENDENT
+//                                                     keep only changes whose new
+//                                                     status is listed (comma-separated)
 
 const fs = require("fs");
 const os = require("os");
@@ -53,6 +56,11 @@ const ARCHIVE_DIR = path.join(EXHIBITS, "Archive");
 
 const write = process.argv.includes("--write");
 const includeAll = process.argv.includes("--all");
+const onlyTo = (process.argv.find((a) => a.startsWith("--only-to=")) || "")
+  .slice("--only-to=".length)
+  .split(",")
+  .map((s) => s.trim())
+  .filter(Boolean);
 const TODAY = new Date().toISOString().slice(0, 10);
 const BACKUP_DIR = path.join(SUPPORT_DIR, `Pre-corroboration-reapply-${TODAY}`);
 
@@ -162,24 +170,35 @@ function main() {
       if (e.confirm_state_captured === undefined) {
         e.confirm_state_captured = e.confirm_state;
       }
+      // With --only-to, a change not headed for a listed status is undone and
+      // left for a later, separate decision.
+      const snapshot = onlyTo.length ? JSON.parse(JSON.stringify(e)) : null;
       // "Was it marked" is answered by the same rule that answers "is it
       // marked", so a flip cannot be reported for a row that was never marked.
+      // Labels compare with what the report holds now, not with what the capture
+      // first wrote: status_captured is kept only to show how a row was first read.
+      const storedState = `${e.status}/${e.confirm_state}`;
       const markedBefore = tally.isHighlighted(e);
       const res = applyExternalVerdict(e, keys);
+      if (onlyTo.length && (!res.changed || !onlyTo.includes(e.status))) {
+        for (const k of Object.keys(e)) delete e[k];
+        Object.assign(e, snapshot);
+        continue;
+      }
       if (!res.changed) continue;
       // Re-derive the review reason for this row only. attention_reason is what
       // v_review buckets on and what every listing prints, so a row whose state
       // moved must not keep describing the state it had at capture.
       flagAttention([e]);
       const markedAfter = tally.isHighlighted(e);
-      const step = `${e.status_captured}/${e.confirm_state_captured} -> ${e.status}/${e.confirm_state}`;
+      const step = `${storedState} -> ${e.status}/${e.confirm_state}`;
       transitions.set(step, (transitions.get(step) || 0) + 1);
       flips.push({
         base: r.name.replace(/\.report\.json$/, ""),
         page: e.page || data.page || 1,
         row: e.index,
         title: String(e.title || "").slice(0, 66),
-        from: `${e.status_captured}/${e.confirm_state_captured}`,
+        from: storedState,
         to: `${e.status}/${e.confirm_state}`,
         markFlip: markedBefore !== markedAfter,
         markedAfter,

@@ -450,6 +450,56 @@ async function scanFile(abs, signatures) {
 
 async function main() {
   const db = openPacket();
+
+  /**
+   * --dump: print the section map and EVERY occurrence for one or all folders,
+   * writing nothing.
+   *
+   * The scan path collapses occurrences to the single best-ranked one because that
+   * is what a tier needs. Recording every appearance needs the opposite view, and
+   * re-implementing the section-boundary logic elsewhere would let the two readers
+   * disagree about which section a page is in. So the same scanFile() output is
+   * printed un-collapsed here, for a person to read and then file with
+   * record-mentions.js.
+   */
+  if (argv.includes("--dump")) {
+    const folders = (ONLY ? [ONLY] : db.prepare(`SELECT DISTINCT folder_uid FROM file`).all().map(r => r.folder_uid));
+    const sigs = titleSignatures(
+      db.prepare(`SELECT DISTINCT cited_paper FROM citation WHERE COALESCE(cited_paper,'') <> ''`).all().map(r => r.cited_paper)
+        .concat(["a glycan visualizing and drawing tool", "glycan array dashboard", "microwave assisted wet-erase", "glycan microarray"])
+    );
+    for (const folder of folders) {
+      const files = db.prepare(`SELECT * FROM file WHERE folder_uid=? AND cited=1 ORDER BY file`).all(folder);
+      const rows = db.prepare(`SELECT row_uid, cited_paper, cited_tool, tier, section, page, status
+        FROM citation WHERE folder_uid=? ORDER BY is_main DESC, row_uid`).all(folder);
+      console.log(`\n${"=".repeat(78)}\nFOLDER ${folder}`);
+      for (const r of rows) {
+        console.log(`  row ${r.row_uid} [${r.status}] tool=${r.cited_tool || "?"} tier=${r.tier || "-"} filed at ${r.section || "?"} p.${r.page || "?"}`);
+        console.log(`       cites: ${(r.cited_paper || "").slice(0, 95)}`);
+      }
+      for (const f of files) {
+        const abs = path.join(PKT, f.file);
+        if (!fs.existsSync(abs)) { console.log(`  ! missing ${f.file}`); continue; }
+        let r;
+        try { r = await scanFile(abs, sigs); } catch (e) { console.log(`  ! ${f.file}: ${e.message}`); continue; }
+        console.log(`\n  FILE ${f.file}  (${r.pageCount} pages)`);
+        // Section map: where each heading the paper printed begins.
+        const map = sectionMap(await extractPages(abs));
+        const seen = new Map();
+        for (const L of map) if (!seen.has(L.section)) seen.set(L.section, L.page);
+        console.log(`  SECTION MAP: ${[...seen.entries()].map(([s, p]) => `${s}=p.${p}`).join("; ")}`);
+        if (!r.found.length) { console.log(`  no occurrence of the applicant's tools in the extracted text`); continue; }
+        for (const h of r.found) {
+          const why = h.looksLikeReference ? "REFERENCE" : h.inTable ? "TABLE" : h.rank === "?" ? "UNRANKED" : h.rank === "REF" ? "REFLIST" : "prose";
+          console.log(`    [${why}] ${h.tools.join("+")} tier=${h.rank} ${h.section} p.${h.page}`);
+          console.log(`        ${h.quote}`);
+        }
+      }
+    }
+    db.close();
+    return;
+  }
+
   const folders = (ONLY ? [ONLY] : db.prepare(`SELECT DISTINCT folder_uid FROM file`).all().map(r => r.folder_uid));
   console.log(`scanning ${folders.length} folder(s)`);
 

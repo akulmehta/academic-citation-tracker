@@ -197,7 +197,7 @@ CREATE INDEX IF NOT EXISTS idx_citation_folder ON citation(folder_uid);
  *
  * Keyed on row_uid, not folder_uid, because independence and the cited paper are
  * per row: two rows in one folder cite two different papers of the applicant's.
- * `verified` distinguishes a quotation checked word-for-word against the PDF from
+ * verified distinguishes a quotation checked word-for-word against the PDF from
  * a scanner hit that has not been read by a person.
  */
 CREATE TABLE IF NOT EXISTS mention (
@@ -217,7 +217,7 @@ CREATE TABLE IF NOT EXISTS mention (
 CREATE INDEX IF NOT EXISTS idx_mention_row ON mention(row_uid);
 
 /**
- * The Section II prose. `written_by` says who wrote it, so a passage drafted by
+ * The Section II prose. written_by says who wrote it, so a passage drafted by
  * the preparer from the manuscript is never mistaken for the applicant's own
  * argument: a draft is labelled as one in the packet and still needs the
  * applicant's approval. narrative-intake.js is the only writer.

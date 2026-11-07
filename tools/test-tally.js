@@ -1041,6 +1041,16 @@ console.log("\nbucketOf: the published counts sum to the records");
   check("inherit: the basis is inherited too", inheritedFrom(copy, set).confirm_state, "confirmed");
   check("inherit: the parent row is named", inheritedFrom(copy, set).row_uid, "cit-000108");
   check("inherit: the standing copy inherits nothing", inheritedFrom(parent, set), null);
+  {
+    // A parent a PubMed/OpenAlex record decided (external-resolved) is settled:
+    // the record is the basis, so its same-work copy inherits the verdict.
+    // cit-001247 / cit-001239, 2026-11-07.
+    const decided = { row_uid: "cit-000900", title: PARENT, cid: "p9", status: "DEPENDENT", confirm_state: "external-resolved" };
+    const dupe = { row_uid: "cit-000901", title: PARENT, cid: "p10", status: "REVIEW", confirm_state: "unresolved" };
+    const set2 = standingSet([decided, dupe]);
+    check("inherit: an externally decided parent passes its verdict on", inheritedFrom(dupe, set2).status, "DEPENDENT");
+    check("inherit: the external basis is inherited too", inheritedFrom(dupe, set2).confirm_state, "external-resolved");
+  }
   check(
     "inherit: status is never rewritten by the view",
     [copy.status, copy.confirm_state],

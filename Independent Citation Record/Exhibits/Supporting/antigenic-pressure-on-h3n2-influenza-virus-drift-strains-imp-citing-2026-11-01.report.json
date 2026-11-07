@@ -169,7 +169,7 @@
       "language_flag": "",
       "page": 1,
       "confirm_state": "user-decided",
-      "corroboration": "decided by Akul Mehta on 2026-11-03 (rule had REVIEW/unresolved) | not indexed in PubMed or OpenAlex and the Scholar list is incomplete",
+      "corroboration": "decided by Akul Mehta on 2026-11-07: Published article PNAS, doi 10.1073/pnas.2419800122 (The Q226L mutation can convert a highly pathogenic H5 2.3.4.4e virus to bind human-type receptors). Full author list from PubMed (PMID 40232794), 11 names: Rios Carrasco M, Lin TH, Zhu X, Gabarroca Garcia A, Uslu E, Liang R, Spruit CM, Richard M, Boons GJ, Wilson IA, de Vries RP. None matches an author of the cited paper, the current PI or the former PI. Independent, on the user's reading of the journal page checked against PubMed. (rule had INDEPENDENT/user-decided) | not indexed in PubMed or OpenAlex and the Scholar list is incomplete",
       "corroboration_note": "no PubMed or OpenAlex record matched the title closely enough",
       "edition_key": "doi:10.1073:2419800122:rioscarrascomarialintinghuizhuxueyonggabarrocagarciaalbausluelifliangruonanspruitcindymrichardmathildeboonsgeertjanwilsoniana",
       "duplicate_of": "",
@@ -180,8 +180,8 @@
       "confirm_state_before_decision": "unresolved",
       "corroboration_before_decision": "not indexed in PubMed or OpenAlex and the Scholar list is incomplete",
       "decided_by": "Akul Mehta",
-      "decided_on": "2026-11-03",
-      "decided_note": ""
+      "decided_on": "2026-11-07",
+      "decided_note": "Published article PNAS, doi 10.1073/pnas.2419800122 (The Q226L mutation can convert a highly pathogenic H5 2.3.4.4e virus to bind human-type receptors). Full author list from PubMed (PMID 40232794), 11 names: Rios Carrasco M, Lin TH, Zhu X, Gabarroca Garcia A, Uslu E, Liang R, Spruit CM, Richard M, Boons GJ, Wilson IA, de Vries RP. None matches an author of the cited paper, the current PI or the former PI. Independent, on the user's reading of the journal page checked against PubMed."
     },
     {
       "index": 4,

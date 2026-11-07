@@ -1,9 +1,9 @@
 {
- "generated_at": "2026-11-05T22:46:04.985Z",
+ "generated_at": "2026-11-07T17:28:32.294Z",
  "sources": {
   "ledger": "Exhibits/Supporting/citation-ledger-2026-11-02.json",
   "catalog": "Database/citation-catalog.sqlite",
-  "catalog_built_at": "2026-11-05T21:01:50.431Z",
+  "catalog_built_at": "2026-11-07T17:28:27.701Z",
   "review_sheet": "Drafts/review-queue-2026-11-02.csv",
   "note": "Database/citation-catalog.sqlite is the primary store; the dated ledger written by tools/build-ledger.js is a derived report of the same rows, and the headline figures here are that report's global block. The two were checked against each other when this file was written and agreed. Rows are the active set (filed and not superseded). Quote row_uid to refer to a row -- it never changes. This file is generated; regenerate it rather than editing it."
  },
@@ -18,25 +18,25 @@
   "citation_records_reviewed": 1498,
   "unique_papers_citing": 1467,
   "duplicate_records": 31,
-  "independent_countable": 1078,
-  "independent_unique_papers": 1078,
+  "independent_countable": 1056,
+  "independent_unique_papers": 1056,
   "distinct_citing_papers": 1153,
-  "distinct_independent_papers": 918,
-  "distinct_independent_papers_english": 918,
+  "distinct_independent_papers": 901,
+  "distinct_independent_papers_english": 901,
   "distinct_citing_papers_english": 1106,
-  "independent_externally_confirmed": 676,
+  "independent_externally_confirmed": 654,
   "independent_scholar_list_only": 378,
   "independent_user_decided": 24,
   "independent_pending": 0,
   "non_english_independent": 45,
-  "bucket_independent": 1078,
-  "bucket_dependent": 339,
+  "bucket_independent": 1056,
+  "bucket_dependent": 361,
   "bucket_review": 0,
   "bucket_non_english": 50,
   "bucket_preprint_copy": 31,
   "bucket_pending": 0,
   "bucket_other": 0,
-  "dependent": 335,
+  "dependent": 357,
   "self_pi": 0,
   "self_former_pi": 5,
   "awaiting_review": 17,
@@ -46,13 +46,13 @@
   "decided_records": 1418,
   "unique_decided_records": 1417,
   "english_citation_records": 1448,
-  "english_independent_records": 1078,
-  "english_independent_share_pct": 74.4,
+  "english_independent_records": 1056,
+  "english_independent_share_pct": 72.9,
   "unique_english_papers": 1417,
-  "unique_english_independent": 1078,
-  "unique_english_independent_share_pct": 76.1,
-  "independent_share_of_reviewed_pct": 72,
-  "independent_share_of_decided_pct": 76,
+  "unique_english_independent": 1056,
+  "unique_english_independent_share_pct": 74.5,
+  "independent_share_of_reviewed_pct": 70.5,
+  "independent_share_of_decided_pct": 74.5,
   "scholar_cited_by": null,
   "note": "independent_countable counts rows on the exhibit pages and excludes entries flagged non-English, entries whose author list no source has settled, and (per the user's decision on 2026-11-05) entries that do not stand for their work because Google Scholar lists the same paper twice against the same cited paper. It is therefore the number of yellow marks printed on the filed exhibits, and it counts citations rather than papers. Per the guide a non-English citation needs a certified human translation and affidavit before it may be counted. independent_unique_papers is the same counted-citation basis after duplicate listings are dropped -- despite the name it is NOT a paper count; distinct_citing_papers and distinct_independent_papers are the true paper counts and are the figures to quote when stating how many papers cite this work. Per the user's decision on 2026-11-01 no certified translations are being obtained, so every non-English entry is left unhighlighted and the english_* columns are the adjusted English-only figures the guide asks for; non_english_withheld is the count of entries that look independent and corroborated but are withheld for language. secondary_copy_independent is the independent rows held back only because they do not stand for their work, named separately so they are never mistaken for unsettled author work. The english_* denominator is the English rows on the citing lists, because Google Scholar publishes no English-only total for a profile."
  },
@@ -93,20 +93,20 @@
    "records": 248,
    "unique_records": 243,
    "duplicate_records": 5,
-   "independent": 190,
-   "independent_confirmed": 97,
+   "independent": 183,
+   "independent_confirmed": 90,
    "independent_coverage": 88,
    "independent_pending": 0,
    "non_english_independent": 11,
-   "bucket_independent": 190,
-   "bucket_dependent": 42,
+   "bucket_independent": 183,
+   "bucket_dependent": 49,
    "bucket_review": 0,
    "bucket_non_english": 11,
    "bucket_preprint_copy": 5,
    "bucket_pending": 0,
    "bucket_other": 0,
-   "unique_independent": 190,
-   "dependent": 41,
+   "unique_independent": 183,
+   "dependent": 48,
    "self_pi": 0,
    "self_former_pi": 1,
    "review": 2,
@@ -114,9 +114,9 @@
    "non_english": 11,
    "non_english_withheld": 11,
    "english_records": 237,
-   "english_independent": 190,
+   "english_independent": 183,
    "coverage_pct": 100,
-   "independent_share_pct": 76.6,
+   "independent_share_pct": 73.8,
    "open_items": 11,
    "patent_rows": 0,
    "patent_independent": 0,
@@ -137,20 +137,20 @@
    "records": 110,
    "unique_records": 109,
    "duplicate_records": 1,
-   "independent": 54,
-   "independent_confirmed": 20,
+   "independent": 52,
+   "independent_confirmed": 18,
    "independent_coverage": 33,
    "independent_pending": 0,
    "non_english_independent": 3,
-   "bucket_independent": 54,
-   "bucket_dependent": 52,
+   "bucket_independent": 52,
+   "bucket_dependent": 54,
    "bucket_review": 0,
    "bucket_non_english": 3,
    "bucket_preprint_copy": 1,
    "bucket_pending": 0,
    "bucket_other": 0,
-   "unique_independent": 54,
-   "dependent": 52,
+   "unique_independent": 52,
+   "dependent": 54,
    "self_pi": 0,
    "self_former_pi": 0,
    "review": 0,
@@ -158,9 +158,9 @@
    "non_english": 3,
    "non_english_withheld": 3,
    "english_records": 107,
-   "english_independent": 54,
+   "english_independent": 52,
    "coverage_pct": 100,
-   "independent_share_pct": 49.1,
+   "independent_share_pct": 47.3,
    "open_items": 3,
    "patent_rows": 2,
    "patent_independent": 1,
@@ -269,20 +269,20 @@
    "records": 65,
    "unique_records": 64,
    "duplicate_records": 1,
-   "independent": 36,
-   "independent_confirmed": 12,
+   "independent": 35,
+   "independent_confirmed": 11,
    "independent_coverage": 23,
    "independent_pending": 0,
    "non_english_independent": 0,
-   "bucket_independent": 36,
-   "bucket_dependent": 28,
+   "bucket_independent": 35,
+   "bucket_dependent": 29,
    "bucket_review": 0,
    "bucket_non_english": 0,
    "bucket_preprint_copy": 1,
    "bucket_pending": 0,
    "bucket_other": 0,
-   "unique_independent": 36,
-   "dependent": 28,
+   "unique_independent": 35,
+   "dependent": 29,
    "self_pi": 0,
    "self_former_pi": 0,
    "review": 0,
@@ -290,9 +290,9 @@
    "non_english": 0,
    "non_english_withheld": 0,
    "english_records": 65,
-   "english_independent": 36,
+   "english_independent": 35,
    "coverage_pct": 100,
-   "independent_share_pct": 55.4,
+   "independent_share_pct": 53.8,
    "open_items": 0,
    "patent_rows": 1,
    "patent_independent": 0,
@@ -313,20 +313,20 @@
    "records": 64,
    "unique_records": 62,
    "duplicate_records": 2,
-   "independent": 45,
-   "independent_confirmed": 23,
+   "independent": 44,
+   "independent_confirmed": 22,
    "independent_coverage": 20,
    "independent_pending": 0,
    "non_english_independent": 0,
-   "bucket_independent": 45,
-   "bucket_dependent": 17,
+   "bucket_independent": 44,
+   "bucket_dependent": 18,
    "bucket_review": 0,
    "bucket_non_english": 0,
    "bucket_preprint_copy": 2,
    "bucket_pending": 0,
    "bucket_other": 0,
-   "unique_independent": 45,
-   "dependent": 17,
+   "unique_independent": 44,
+   "dependent": 18,
    "self_pi": 0,
    "self_former_pi": 0,
    "review": 0,
@@ -334,9 +334,9 @@
    "non_english": 0,
    "non_english_withheld": 0,
    "english_records": 64,
-   "english_independent": 45,
+   "english_independent": 44,
    "coverage_pct": 100,
-   "independent_share_pct": 70.3,
+   "independent_share_pct": 68.8,
    "open_items": 0,
    "patent_rows": 0,
    "patent_independent": 0,
@@ -357,20 +357,20 @@
    "records": 56,
    "unique_records": 54,
    "duplicate_records": 2,
-   "independent": 42,
-   "independent_confirmed": 38,
+   "independent": 41,
+   "independent_confirmed": 37,
    "independent_coverage": 4,
    "independent_pending": 0,
    "non_english_independent": 3,
-   "bucket_independent": 42,
-   "bucket_dependent": 9,
+   "bucket_independent": 41,
+   "bucket_dependent": 10,
    "bucket_review": 0,
    "bucket_non_english": 3,
    "bucket_preprint_copy": 2,
    "bucket_pending": 0,
    "bucket_other": 0,
-   "unique_independent": 42,
-   "dependent": 9,
+   "unique_independent": 41,
+   "dependent": 10,
    "self_pi": 0,
    "self_former_pi": 0,
    "review": 2,
@@ -378,9 +378,9 @@
    "non_english": 3,
    "non_english_withheld": 3,
    "english_records": 53,
-   "english_independent": 42,
+   "english_independent": 41,
    "coverage_pct": 100,
-   "independent_share_pct": 75,
+   "independent_share_pct": 73.2,
    "open_items": 3,
    "patent_rows": 0,
    "patent_independent": 0,
@@ -401,20 +401,20 @@
    "records": 48,
    "unique_records": 43,
    "duplicate_records": 5,
-   "independent": 37,
-   "independent_confirmed": 30,
+   "independent": 36,
+   "independent_confirmed": 29,
    "independent_coverage": 5,
    "independent_pending": 0,
    "non_english_independent": 1,
-   "bucket_independent": 37,
-   "bucket_dependent": 5,
+   "bucket_independent": 36,
+   "bucket_dependent": 6,
    "bucket_review": 0,
    "bucket_non_english": 1,
    "bucket_preprint_copy": 5,
    "bucket_pending": 0,
    "bucket_other": 0,
-   "unique_independent": 37,
-   "dependent": 5,
+   "unique_independent": 36,
+   "dependent": 6,
    "self_pi": 0,
    "self_former_pi": 0,
    "review": 4,
@@ -422,9 +422,9 @@
    "non_english": 1,
    "non_english_withheld": 1,
    "english_records": 47,
-   "english_independent": 37,
+   "english_independent": 36,
    "coverage_pct": 100,
-   "independent_share_pct": 77.1,
+   "independent_share_pct": 75,
    "open_items": 1,
    "patent_rows": 0,
    "patent_independent": 0,
@@ -445,20 +445,20 @@
    "records": 47,
    "unique_records": 47,
    "duplicate_records": 0,
-   "independent": 32,
-   "independent_confirmed": 20,
+   "independent": 31,
+   "independent_confirmed": 19,
    "independent_coverage": 11,
    "independent_pending": 0,
    "non_english_independent": 1,
-   "bucket_independent": 32,
-   "bucket_dependent": 12,
+   "bucket_independent": 31,
+   "bucket_dependent": 13,
    "bucket_review": 0,
    "bucket_non_english": 3,
    "bucket_preprint_copy": 0,
    "bucket_pending": 0,
    "bucket_other": 0,
-   "unique_independent": 32,
-   "dependent": 12,
+   "unique_independent": 31,
+   "dependent": 13,
    "self_pi": 0,
    "self_former_pi": 0,
    "review": 2,
@@ -466,9 +466,9 @@
    "non_english": 3,
    "non_english_withheld": 1,
    "english_records": 44,
-   "english_independent": 32,
+   "english_independent": 31,
    "coverage_pct": 100,
-   "independent_share_pct": 68.1,
+   "independent_share_pct": 66,
    "open_items": 3,
    "patent_rows": 0,
    "patent_independent": 0,
@@ -489,20 +489,20 @@
    "records": 46,
    "unique_records": 44,
    "duplicate_records": 2,
-   "independent": 39,
-   "independent_confirmed": 23,
+   "independent": 36,
+   "independent_confirmed": 20,
    "independent_coverage": 15,
    "independent_pending": 0,
    "non_english_independent": 2,
-   "bucket_independent": 39,
-   "bucket_dependent": 3,
+   "bucket_independent": 36,
+   "bucket_dependent": 6,
    "bucket_review": 0,
    "bucket_non_english": 2,
    "bucket_preprint_copy": 2,
    "bucket_pending": 0,
    "bucket_other": 0,
-   "unique_independent": 39,
-   "dependent": 3,
+   "unique_independent": 36,
+   "dependent": 6,
    "self_pi": 0,
    "self_former_pi": 0,
    "review": 2,
@@ -510,9 +510,9 @@
    "non_english": 2,
    "non_english_withheld": 2,
    "english_records": 44,
-   "english_independent": 39,
+   "english_independent": 36,
    "coverage_pct": 100,
-   "independent_share_pct": 84.8,
+   "independent_share_pct": 78.3,
    "open_items": 2,
    "patent_rows": 3,
    "patent_independent": 1,
@@ -533,20 +533,20 @@
    "records": 44,
    "unique_records": 44,
    "duplicate_records": 0,
-   "independent": 32,
-   "independent_confirmed": 20,
+   "independent": 31,
+   "independent_confirmed": 19,
    "independent_coverage": 11,
    "independent_pending": 0,
    "non_english_independent": 1,
-   "bucket_independent": 32,
-   "bucket_dependent": 11,
+   "bucket_independent": 31,
+   "bucket_dependent": 12,
    "bucket_review": 0,
    "bucket_non_english": 1,
    "bucket_preprint_copy": 0,
    "bucket_pending": 0,
    "bucket_other": 0,
-   "unique_independent": 32,
-   "dependent": 11,
+   "unique_independent": 31,
+   "dependent": 12,
    "self_pi": 0,
    "self_former_pi": 0,
    "review": 0,
@@ -554,9 +554,9 @@
    "non_english": 1,
    "non_english_withheld": 0,
    "english_records": 43,
-   "english_independent": 32,
+   "english_independent": 31,
    "coverage_pct": 100,
-   "independent_share_pct": 72.7,
+   "independent_share_pct": 70.5,
    "open_items": 1,
    "patent_rows": 0,
    "patent_independent": 0,
@@ -577,20 +577,20 @@
    "records": 41,
    "unique_records": 40,
    "duplicate_records": 1,
-   "independent": 31,
-   "independent_confirmed": 8,
+   "independent": 30,
+   "independent_confirmed": 7,
    "independent_coverage": 20,
    "independent_pending": 0,
    "non_english_independent": 2,
-   "bucket_independent": 31,
-   "bucket_dependent": 7,
+   "bucket_independent": 30,
+   "bucket_dependent": 8,
    "bucket_review": 0,
    "bucket_non_english": 2,
    "bucket_preprint_copy": 1,
    "bucket_pending": 0,
    "bucket_other": 0,
-   "unique_independent": 31,
-   "dependent": 7,
+   "unique_independent": 30,
+   "dependent": 8,
    "self_pi": 0,
    "self_former_pi": 0,
    "review": 0,
@@ -598,9 +598,9 @@
    "non_english": 2,
    "non_english_withheld": 2,
    "english_records": 39,
-   "english_independent": 31,
+   "english_independent": 30,
    "coverage_pct": 100,
-   "independent_share_pct": 75.6,
+   "independent_share_pct": 73.2,
    "open_items": 2,
    "patent_rows": 4,
    "patent_independent": 3,
@@ -929,20 +929,20 @@
    "records": 31,
    "unique_records": 31,
    "duplicate_records": 0,
-   "independent": 25,
-   "independent_confirmed": 19,
+   "independent": 24,
+   "independent_confirmed": 18,
    "independent_coverage": 5,
    "independent_pending": 0,
    "non_english_independent": 1,
-   "bucket_independent": 25,
-   "bucket_dependent": 5,
+   "bucket_independent": 24,
+   "bucket_dependent": 6,
    "bucket_review": 0,
    "bucket_non_english": 1,
    "bucket_preprint_copy": 0,
    "bucket_pending": 0,
    "bucket_other": 0,
-   "unique_independent": 25,
-   "dependent": 5,
+   "unique_independent": 24,
+   "dependent": 6,
    "self_pi": 0,
    "self_former_pi": 0,
    "review": 0,
@@ -950,9 +950,9 @@
    "non_english": 1,
    "non_english_withheld": 1,
    "english_records": 30,
-   "english_independent": 25,
+   "english_independent": 24,
    "coverage_pct": 100,
-   "independent_share_pct": 80.6,
+   "independent_share_pct": 77.4,
    "open_items": 1,
    "patent_rows": 0,
    "patent_independent": 0,
@@ -1061,20 +1061,20 @@
    "records": 24,
    "unique_records": 24,
    "duplicate_records": 0,
-   "independent": 16,
-   "independent_confirmed": 14,
+   "independent": 15,
+   "independent_confirmed": 13,
    "independent_coverage": 2,
    "independent_pending": 0,
    "non_english_independent": 1,
-   "bucket_independent": 16,
-   "bucket_dependent": 7,
+   "bucket_independent": 15,
+   "bucket_dependent": 8,
    "bucket_review": 0,
    "bucket_non_english": 1,
    "bucket_preprint_copy": 0,
    "bucket_pending": 0,
    "bucket_other": 0,
-   "unique_independent": 16,
-   "dependent": 7,
+   "unique_independent": 15,
+   "dependent": 8,
    "self_pi": 0,
    "self_former_pi": 0,
    "review": 0,
@@ -1082,9 +1082,9 @@
    "non_english": 1,
    "non_english_withheld": 1,
    "english_records": 23,
-   "english_independent": 16,
+   "english_independent": 15,
    "coverage_pct": 100,
-   "independent_share_pct": 66.7,
+   "independent_share_pct": 62.5,
    "open_items": 1,
    "patent_rows": 0,
    "patent_independent": 0,
@@ -1369,20 +1369,20 @@
    "records": 16,
    "unique_records": 15,
    "duplicate_records": 1,
-   "independent": 11,
-   "independent_confirmed": 8,
+   "independent": 10,
+   "independent_confirmed": 7,
    "independent_coverage": 1,
    "independent_pending": 0,
    "non_english_independent": 0,
-   "bucket_independent": 11,
-   "bucket_dependent": 4,
+   "bucket_independent": 10,
+   "bucket_dependent": 5,
    "bucket_review": 0,
    "bucket_non_english": 0,
    "bucket_preprint_copy": 1,
    "bucket_pending": 0,
    "bucket_other": 0,
-   "unique_independent": 11,
-   "dependent": 4,
+   "unique_independent": 10,
+   "dependent": 5,
    "self_pi": 0,
    "self_former_pi": 0,
    "review": 1,
@@ -1390,9 +1390,9 @@
    "non_english": 0,
    "non_english_withheld": 0,
    "english_records": 16,
-   "english_independent": 11,
+   "english_independent": 10,
    "coverage_pct": 100,
-   "independent_share_pct": 68.8,
+   "independent_share_pct": 62.5,
    "open_items": 0,
    "patent_rows": 0,
    "patent_independent": 0,
@@ -2524,42 +2524,42 @@
   {
    "year": 2019,
    "records": 55,
-   "independent": 31
+   "independent": 30
   },
   {
    "year": 2020,
    "records": 115,
-   "independent": 80
+   "independent": 73
   },
   {
    "year": 2021,
    "records": 130,
-   "independent": 100
+   "independent": 98
   },
   {
    "year": 2022,
    "records": 138,
-   "independent": 104
+   "independent": 103
   },
   {
    "year": 2023,
    "records": 151,
-   "independent": 119
+   "independent": 114
   },
   {
    "year": 2024,
    "records": 172,
-   "independent": 121
+   "independent": 118
   },
   {
    "year": 2025,
    "records": 199,
-   "independent": 158
+   "independent": 156
   },
   {
    "year": 2026,
    "records": 197,
-   "independent": 162
+   "independent": 161
   }
  ],
  "undated": {
@@ -2608,12 +2608,12 @@
   {
    "confirm_state": "confirmed",
    "author_source": "scholar+pubmed",
-   "count": 123
+   "count": 118
   },
   {
    "confirm_state": "confirmed",
    "author_source": "scholar-cite-bibtex",
-   "count": 424
+   "count": 407
   },
   {
    "confirm_state": "unverified-coverage",
@@ -2639,7 +2639,7 @@
  "corroboration_distinct": [
   {
    "confirm_state": "confirmed",
-   "count": 676
+   "count": 654
   },
   {
    "confirm_state": "unverified-coverage",
@@ -2755,9 +2755,9 @@
    "row_uid": "cit-000787",
    "title": "A consensus-based and readable extension of Linear Code for Reaction Rules (LiCoRR)",
    "byline": "BP Kellman, Y Zhang, E Logomasini… - Beilstein journal of …, 2020 - beilstein-journals.org",
-   "status": "INDEPENDENT",
-   "marked": true,
-   "confirm_state": "confirmed",
+   "status": "DEPENDENT",
+   "marked": false,
+   "confirm_state": "external-resolved",
    "language_flag": "",
    "attention_reason": "",
    "external_source": "pubmed",
@@ -3205,9 +3205,9 @@
    "row_uid": "cit-000808",
    "title": "Bioinformatics tools developed to support BioCompute Objects",
    "byline": "JA Patel, DA Dean, CH King, N Xiao, S Koc… - Database, 2021 - academic.oup.com",
-   "status": "INDEPENDENT",
-   "marked": true,
-   "confirm_state": "confirmed",
+   "status": "DEPENDENT",
+   "marked": false,
+   "confirm_state": "external-resolved",
    "language_flag": "",
    "attention_reason": "",
    "external_source": "pubmed",
@@ -4805,9 +4805,9 @@
    "row_uid": "cit-000662",
    "title": "Generating 3D models of complex carbohydrates with GLYCAM-Web",
    "byline": "OC Grant, D Wentworth, SG Holmes, R Kandel… - Nature …, 2026 - nature.com",
-   "status": "INDEPENDENT",
-   "marked": true,
-   "confirm_state": "confirmed",
+   "status": "DEPENDENT",
+   "marked": false,
+   "confirm_state": "external-resolved",
    "language_flag": "",
    "attention_reason": "",
    "external_source": "pubmed",
@@ -6755,9 +6755,9 @@
    "row_uid": "cit-000826",
    "title": "Playbook Workflow Builder: Interactive construction of bioinformatics workflows from a network of microservices",
    "byline": "DJB Clarke, JE Evangelista, Z Xie, GB Marino… - bioRxiv, 2024 - biorxiv.org",
-   "status": "INDEPENDENT",
-   "marked": true,
-   "confirm_state": "confirmed",
+   "status": "DEPENDENT",
+   "marked": false,
+   "confirm_state": "external-resolved",
    "language_flag": "",
    "attention_reason": "",
    "external_source": "pubmed",
@@ -6780,9 +6780,9 @@
    "row_uid": "cit-000740",
    "title": "Playbook workflow builder: Interactive construction of bioinformatics workflows",
    "byline": "DJB Clarke, JE Evangelista, Z Xie… - PLOS Computational …, 2025 - journals.plos.org",
-   "status": "INDEPENDENT",
-   "marked": true,
-   "confirm_state": "confirmed",
+   "status": "DEPENDENT",
+   "marked": false,
+   "confirm_state": "external-resolved",
    "language_flag": "",
    "attention_reason": "",
    "external_source": "pubmed",
@@ -7805,9 +7805,9 @@
    "row_uid": "cit-000723",
    "title": "The Data Distillery: a graph framework for semantic integration and querying of biomedical data",
    "byline": "TM Ahooyi, B Stear, JA Simmons, VT Metzger… - …, 2025 - pmc.ncbi.nlm.nih.gov",
-   "status": "INDEPENDENT",
-   "marked": true,
-   "confirm_state": "confirmed",
+   "status": "DEPENDENT",
+   "marked": false,
+   "confirm_state": "external-resolved",
    "language_flag": "",
    "attention_reason": "",
    "external_source": "pubmed",
@@ -7830,9 +7830,9 @@
    "row_uid": "cit-000676",
    "title": "The GlyCosmos Portal: a unified and comprehensive web resource for the glycosciences",
    "byline": "I Yamada, M Shiota, D Shinmachi, T Ono, S Tsuchiya… - Nature …, 2020 - nature.com",
-   "status": "INDEPENDENT",
-   "marked": true,
-   "confirm_state": "confirmed",
+   "status": "DEPENDENT",
+   "marked": false,
+   "confirm_state": "external-resolved",
    "language_flag": "",
    "attention_reason": "",
    "external_source": "pubmed",
@@ -9530,9 +9530,9 @@
    "row_uid": "cit-001327",
    "title": "Discovery of benzyl tetraphosphonate derivative as inhibitor of human factor Xia",
    "byline": "S Kar, M Mottamal, RA Al‐Horani - ChemistryOpen, 2020 - Wiley Online Library",
-   "status": "INDEPENDENT",
-   "marked": true,
-   "confirm_state": "confirmed",
+   "status": "DEPENDENT",
+   "marked": false,
+   "confirm_state": "external-resolved",
    "language_flag": "",
    "attention_reason": "",
    "external_source": "pubmed",
@@ -10180,9 +10180,9 @@
    "row_uid": "cit-001376",
    "title": "Inhibition of Cancer Stem Cells by Glycosaminoglycan Mimetics",
    "byline": "CP O'Hara - 2019 - scholarscompass.vcu.edu",
-   "status": "INDEPENDENT",
-   "marked": true,
-   "confirm_state": "confirmed",
+   "status": "DEPENDENT",
+   "marked": false,
+   "confirm_state": "external-resolved",
    "language_flag": "",
    "attention_reason": "",
    "external_source": "pubmed",
@@ -16230,9 +16230,9 @@
    "row_uid": "cit-000358",
    "title": "Merging cultures and disciplines to create a drug discovery ecosystem at Virginia commonwealth university: Medicinal chemistry, structural biology, molecular …",
    "byline": "GE Kellogg, Y Cen, M Dukat, KC Ellis, Y Guo, J Li… - SLAS Discovery, 2023 - Elsevier",
-   "status": "INDEPENDENT",
-   "marked": true,
-   "confirm_state": "confirmed",
+   "status": "DEPENDENT",
+   "marked": false,
+   "confirm_state": "external-resolved",
    "language_flag": "",
    "attention_reason": "",
    "external_source": "pubmed",
@@ -17605,9 +17605,9 @@
    "row_uid": "cit-000511",
    "title": "Development of smart anti-glycan reagents using immunized lampreys",
    "byline": "TR McKitrick, CK Goth, CS Rosenberg… - Communications …, 2020 - nature.com",
-   "status": "INDEPENDENT",
-   "marked": true,
-   "confirm_state": "confirmed",
+   "status": "DEPENDENT",
+   "marked": false,
+   "confirm_state": "external-resolved",
    "language_flag": "",
    "attention_reason": "",
    "external_source": "pubmed",
@@ -19480,9 +19480,9 @@
    "row_uid": "cit-000119",
    "title": "Merging cultures and disciplines to create a drug discovery ecosystem at Virginia commonwealth university: Medicinal chemistry, structural biology, molecular …",
    "byline": "GE Kellogg, Y Cen, M Dukat, KC Ellis, Y Guo, J Li… - SLAS Discovery, 2023 - Elsevier",
-   "status": "INDEPENDENT",
-   "marked": true,
-   "confirm_state": "confirmed",
+   "status": "DEPENDENT",
+   "marked": false,
+   "confirm_state": "external-resolved",
    "language_flag": "",
    "attention_reason": "",
    "external_source": "pubmed",
@@ -20805,9 +20805,9 @@
    "row_uid": "cit-000207",
    "title": "Molecular epidemiology and glycomics of swine influenza viruses circulating in commercial swine farms in the southeastern and midwest United States",
    "byline": "AA Bakre, LP Jones, CS Kyriakis, JM Hanson… - Veterinary …, 2020 - Elsevier",
-   "status": "INDEPENDENT",
-   "marked": true,
-   "confirm_state": "confirmed",
+   "status": "DEPENDENT",
+   "marked": false,
+   "confirm_state": "external-resolved",
    "language_flag": "",
    "attention_reason": "",
    "external_source": "pubmed",
@@ -21530,9 +21530,9 @@
    "row_uid": "cit-000055",
    "title": "Discovery of benzyl tetraphosphonate derivative as inhibitor of human factor Xia",
    "byline": "S Kar, M Mottamal, RA Al‐Horani - ChemistryOpen, 2020 - Wiley Online Library",
-   "status": "INDEPENDENT",
-   "marked": true,
-   "confirm_state": "confirmed",
+   "status": "DEPENDENT",
+   "marked": false,
+   "confirm_state": "external-resolved",
    "language_flag": "",
    "attention_reason": "",
    "external_source": "pubmed",
@@ -22655,9 +22655,9 @@
    "row_uid": "cit-000448",
    "title": "Cosmc controls B cell homing",
    "byline": "J Zeng, M Eljalby, RP Aryal, S Lehoux… - Nature …, 2020 - nature.com",
-   "status": "INDEPENDENT",
-   "marked": true,
-   "confirm_state": "confirmed",
+   "status": "DEPENDENT",
+   "marked": false,
+   "confirm_state": "external-resolved",
    "language_flag": "",
    "attention_reason": "",
    "external_source": "pubmed",
@@ -23330,9 +23330,9 @@
    "row_uid": "cit-000445",
    "title": "The C-terminal peptide of CCL21 drastically augments CCL21 activity through the dendritic cell lymph node homing receptor CCR7 by interaction with the receptor N …",
    "byline": "AS Jørgensen, EP Brandum, JM Mikkelsen… - Cellular and Molecular …, 2021 - Springer",
-   "status": "INDEPENDENT",
-   "marked": true,
-   "confirm_state": "confirmed",
+   "status": "DEPENDENT",
+   "marked": false,
+   "confirm_state": "external-resolved",
    "language_flag": "",
    "attention_reason": "",
    "external_source": "pubmed",
@@ -23505,9 +23505,9 @@
    "row_uid": "cit-000446",
    "title": "“Glyco-sulfo barcodes” regulate chemokine receptor function",
    "byline": "L Verhallen, JJ Lackman, R Wendt… - Cellular and Molecular …, 2023 - Springer",
-   "status": "INDEPENDENT",
-   "marked": true,
-   "confirm_state": "confirmed",
+   "status": "DEPENDENT",
+   "marked": false,
+   "confirm_state": "external-resolved",
    "language_flag": "",
    "attention_reason": "",
    "external_source": "pubmed",
@@ -23580,9 +23580,9 @@
    "row_uid": "cit-001520",
    "title": "ABO blood groups and galectins: Implications in transfusion medicine and innate immunity",
    "byline": "CM Arthur, M Hollenhorst, SC Wu, R Jajosky… - Seminars in …, 2024 - Elsevier",
-   "status": "INDEPENDENT",
-   "marked": true,
-   "confirm_state": "confirmed",
+   "status": "DEPENDENT",
+   "marked": false,
+   "confirm_state": "external-resolved",
    "language_flag": "",
    "attention_reason": "",
    "external_source": "pubmed",
@@ -25105,9 +25105,9 @@
    "row_uid": "cit-000022",
    "title": "Merging cultures and disciplines to create a drug discovery ecosystem at Virginia commonwealth university: Medicinal chemistry, structural biology, molecular …",
    "byline": "GE Kellogg, Y Cen, M Dukat, KC Ellis, Y Guo, J Li… - SLAS Discovery, 2023 - Elsevier",
-   "status": "INDEPENDENT",
-   "marked": true,
-   "confirm_state": "confirmed",
+   "status": "DEPENDENT",
+   "marked": false,
+   "confirm_state": "external-resolved",
    "language_flag": "",
    "attention_reason": "",
    "external_source": "pubmed",
@@ -32180,9 +32180,9 @@
    "row_uid": "cit-001441",
    "title": "Merging cultures and disciplines to create a drug discovery ecosystem at Virginia commonwealth university: Medicinal chemistry, structural biology, molecular …",
    "byline": "GE Kellogg, Y Cen, M Dukat, KC Ellis, Y Guo, J Li… - SLAS Discovery, 2023 - Elsevier",
-   "status": "INDEPENDENT",
-   "marked": true,
-   "confirm_state": "confirmed",
+   "status": "DEPENDENT",
+   "marked": false,
+   "confirm_state": "external-resolved",
    "language_flag": "",
    "attention_reason": "",
    "external_source": "pubmed",
@@ -34355,9 +34355,9 @@
    "row_uid": "cit-001085",
    "title": "The schizophrenia-associated variant in SLC39A8 alters protein glycosylation in the mouse brain",
    "byline": "RG Mealer, SE Williams, M Noel, B Yang… - Molecular …, 2022 - nature.com",
-   "status": "INDEPENDENT",
-   "marked": true,
-   "confirm_state": "confirmed",
+   "status": "DEPENDENT",
+   "marked": false,
+   "confirm_state": "external-resolved",
    "language_flag": "",
    "attention_reason": "",
    "external_source": "pubmed",
@@ -37398,7 +37398,7 @@
    "cid": "WGzpwt3CoUUJ",
    "is_copy": true,
    "duplicate_kind": "same-work",
-   "inherited_status": "INDEPENDENT",
+   "inherited_status": "DEPENDENT",
    "stands_for_row_uid": "cit-001239"
   },
   {
@@ -37446,10 +37446,10 @@
    "exhibit_base": "design-synthesis-and-investigation-of-novel-nitric-oxide-no--citing-2026-10-30",
    "exhibit_page": 2,
    "cid": "Y-rdJLO5oMcJ",
-   "is_copy": false,
+   "is_copy": true,
    "duplicate_kind": "",
-   "inherited_status": "",
-   "stands_for_row_uid": "cit-000317"
+   "inherited_status": "DEPENDENT",
+   "stands_for_row_uid": "cit-000314"
   },
   {
    "row_uid": "cit-000314",
@@ -37457,7 +37457,7 @@
    "byline": "RT Alhashimi, MS Ghatge, AK Donkor, TM Deshpande… - Biomolecules, 2022 - mdpi.com",
    "status": "DEPENDENT",
    "marked": false,
-   "confirm_state": "",
+   "confirm_state": "user-decided",
    "language_flag": "",
    "attention_reason": "",
    "external_source": "",
@@ -37471,10 +37471,10 @@
    "exhibit_base": "design-synthesis-and-investigation-of-novel-nitric-oxide-no--citing-2026-10-30",
    "exhibit_page": 2,
    "cid": "VdGKYarawEoJ",
-   "is_copy": true,
+   "is_copy": false,
    "duplicate_kind": "",
    "inherited_status": "",
-   "stands_for_row_uid": "cit-000317"
+   "stands_for_row_uid": "cit-000314"
   },
   {
    "row_uid": "cit-000312",
@@ -37905,9 +37905,9 @@
    "row_uid": "cit-001239",
    "title": "N-glycan core tri-fucosylation requires Golgi α-mannosidase III activity that impacts nematode growth and behavior",
    "byline": "J Kendler, F Wӧls, S Thapliyal, E Arcalis… - Journal of Biological …, 2024 - jbc.org",
-   "status": "INDEPENDENT",
-   "marked": true,
-   "confirm_state": "confirmed",
+   "status": "DEPENDENT",
+   "marked": false,
+   "confirm_state": "external-resolved",
    "language_flag": "",
    "attention_reason": "",
    "external_source": "pubmed",
@@ -41144,7 +41144,7 @@
    "title": "The receptor binding properties of H5Nx influenza A viruses have evolved to promiscuously bind to avian-type mucin-like O-glycans",
    "byline": "Weber, Julia, Ponse, Niels LD, Zhu, Xueyong, Carrasco, Mar{\\'\\i}a R{\\'\\i}os, Han, Alvin X, Funk, Mathis, Lin, Ting-Hui, Garc{\\'\\i}a, Alba Gabarroca, Spruit, Cindy M, Zhang, Ding",
    "link": "https://www.biorxiv.org/content/10.1101/2025.04.24.650378.abstract",
-   "reason": "Same work under a different title, proven and recorded by hand",
+   "reason": "Preprint of the published article (same work, proven and recorded by hand)",
    "duplicate_kind": "same-work",
    "patent_number": "",
    "work_type": "article",
@@ -41170,7 +41170,7 @@
    "title": "H7 influenza A viruses bind sialyl-LewisX, a potential intermediate receptor between species",
    "byline": "Spruit, Cindy M, Palme, Diana I, Li, Tiehai, R{\\'\\i}os Carrasco, Mar{\\'\\i}a, Garc{\\'\\i}a, Alba Gabarroca, Sweet, Igor R, Kuryshko, Maryna, Maliepaard, Joshua CL, Reiding, Karli R, Scheibner, David",
    "link": "https://www.biorxiv.org/content/10.1101/2023.12.15.571923.abstract",
-   "reason": "Same work under a different title, proven and recorded by hand",
+   "reason": "Preprint of the published article (same work, proven and recorded by hand)",
    "duplicate_kind": "same-work",
    "patent_number": "",
    "work_type": "article",
@@ -41222,7 +41222,7 @@
    "title": "Revealing the evolution towards complex N-glycan specificities of human H1 influenza A viruses.",
    "byline": "Canales, Angeles, Sastre, Javier, Ordu{\\~n}a, Jose M, P{\\'e}rez-Castells, Javier, Dom{\\'\\i}nguez, Gema, van der Woude, Roosmarijn, Ca{\\~n}ada, Francisco Javier, Nycholat, Corwin M, Paulson, James C, Boons, Geert-Jan",
    "link": "https://chemrxiv.org/doi/abs/10.26434/chemrxiv-2022-0lbq4",
-   "reason": "Same work under a different title, proven and recorded by hand",
+   "reason": "Preprint of the published article (same work, proven and recorded by hand)",
    "duplicate_kind": "same-work",
    "patent_number": "",
    "work_type": "article",
@@ -41248,7 +41248,7 @@
    "title": "Avian and Human Influenza Viruses Exhibit Distinct Glycoconjugate Receptor Specificities in Human Lung Cells",
    "byline": "Liang, Chieh-Yu, Huang, Iris, Han, Julianna, Manivasagam, Senthamizharasi, Plung, Jesse, Strutz, Miranda, Yu, Yolanda, Kandasamy, Matheswaran, Gourronc, Francoise A, Klingelhutz, Aloysius J",
    "link": "https://www.biorxiv.org/content/10.1101/2022.06.29.498208.abstract",
-   "reason": "Same work under a different title, proven and recorded by hand",
+   "reason": "Preprint of the published article (same work, proven and recorded by hand)",
    "duplicate_kind": "same-work",
    "patent_number": "",
    "work_type": "article",
@@ -41293,30 +41293,30 @@
    "cid": "AtoJmWJ-cHoJ"
   },
   {
-   "row_uid": "cit-000314",
+   "row_uid": "cit-000317",
    "cites_id": "11511020813745171966",
    "cited_title": "Design, Synthesis, and Investigation of Novel Nitric Oxide (NO)-Releasing Prodrugs as Drug Candidates for the Treatment of Ischemic Disorders: Insights into NO-Releasing …",
    "cited_year": "2015",
-   "title": "Design, synthesis, and antisickling investigation of a nitric oxide-releasing prodrug of 5HMF for the treatment of sickle cell disease",
-   "byline": "RT Alhashimi, MS Ghatge, AK Donkor, TM Deshpande",
-   "link": "https://www.mdpi.com/2218-273X/12/5/696",
-   "reason": "Second listing of the same work on this citing page",
+   "title": "Design, Synthesis, and Antisickling Investigation of a Nitric Oxide-Releasing Prodrug of 5HMF for the Treatment of Sickle Cell Disease",
+   "byline": "AK Donkor",
+   "link": "https://www.academia.edu/download/91976249/pdf.pdf",
+   "reason": "Author-uploaded copy of the published article",
    "duplicate_kind": "",
    "patent_number": "",
    "work_type": "article",
    "marked": false,
-   "inherited_status": "",
-   "inherited_confirm_state": "",
+   "inherited_status": "DEPENDENT",
+   "inherited_confirm_state": "user-decided",
    "status": "DEPENDENT",
-   "confirm_state": "",
-   "stands_for_row_uid": "cit-000317",
-   "stands_for_title": "Design, Synthesis, and Antisickling Investigation of a Nitric Oxide-Releasing Prodrug of 5HMF for the Treatment of Sickle Cell Disease",
-   "stands_for_link": "https://www.academia.edu/download/91976249/pdf.pdf",
+   "confirm_state": "external-resolved",
+   "stands_for_row_uid": "cit-000314",
+   "stands_for_title": "Design, synthesis, and antisickling investigation of a nitric oxide-releasing prodrug of 5HMF for the treatment of sickle cell disease",
+   "stands_for_link": "https://www.mdpi.com/2218-273X/12/5/696",
    "exhibit_base": "design-synthesis-and-investigation-of-novel-nitric-oxide-no--citing-2026-10-30",
    "exhibit_page": 2,
-   "exhibit_row": 0,
+   "exhibit_row": 3,
    "exhibit_pdf": "../Independent Citation Record/Exhibits/PDFs/Production/design-synthesis-and-investigation-of-novel-nitric-oxide-no--citing-2026-10-30-p2.pdf",
-   "cid": "VdGKYarawEoJ"
+   "cid": "Y-rdJLO5oMcJ"
   },
   {
    "row_uid": "cit-000371",
@@ -41482,7 +41482,7 @@
    "title": "Sialic acid-dependent binding and viral entry of SARS-CoV-2",
    "byline": "Nguyen, Linh, McCord, Kelli A, Bui, Duong T, Bouwman, K, Kitova, E, Hsu, Danny, Tompkins, S Mark, Boons, Geert-Jan, de Vries, Robert P, Macauley, Matthew S",
    "link": "https://assets-eu.researchsquare.com/files/rs-318912/v1_stamped.pdf",
-   "reason": "Same work under a different title, proven and recorded by hand",
+   "reason": "Preprint of the published article (same work, proven and recorded by hand)",
    "duplicate_kind": "same-work",
    "patent_number": "",
    "work_type": "article",
@@ -41820,13 +41820,13 @@
    "title": "Core Tri-fucosylation of Nematode N-glycans Requires Golgi α-mannosidase III Activity that Impacts Animal Growth and Behaviours",
    "byline": "Kendler, Jonatan, W{\\\"o}ls, Florian, Thapliyal, Saurabh, Arcalis, Elsa, Gabriel, Hanna, Kubitschek, Sascha, Malzl, Daniel, Strobl, Maria R, Palmberger, Dieter, Luber, Thomas",
    "link": "https://www.biorxiv.org/content/10.1101/2024.07.18.600072.abstract",
-   "reason": "Same work under a different title, proven and recorded by hand",
+   "reason": "Preprint of the published article (same work, proven and recorded by hand)",
    "duplicate_kind": "same-work",
    "patent_number": "",
    "work_type": "article",
    "marked": false,
-   "inherited_status": "INDEPENDENT",
-   "inherited_confirm_state": "confirmed",
+   "inherited_status": "DEPENDENT",
+   "inherited_confirm_state": "external-resolved",
    "status": "REVIEW",
    "confirm_state": "unresolved",
    "stands_for_row_uid": "cit-001239",
@@ -42015,7 +42015,7 @@
    },
    {
     "cites_id": "11657216136002863473",
-    "n": 190,
+    "n": 183,
     "topic": "glyco",
     "family": "Glycoscience",
     "title": "GlyGen: computational and informatics resources for glycoscience",
@@ -42024,11 +42024,11 @@
     "exhibit_base": "glygen-computational-and-informatics-resources-for-glycoscie-citing-2026-11-01",
     "cites_url": "https://scholar.google.com/scholar?oi=bibs&hl=en&cites=11657216136002863473",
     "records": 248,
-    "bucket_independent": 190
+    "bucket_independent": 183
    },
    {
     "cites_id": "11728333386143173456",
-    "n": 32,
+    "n": 31,
     "topic": "anti",
     "family": "Anticoagulants and thrombosis",
     "title": "Allosteric partial inhibition of monomeric proteases. Sulfated coumarins induce regulation, not just inhibition, of thrombin",
@@ -42037,7 +42037,7 @@
     "exhibit_base": "allosteric-partial-inhibition-of-monomeric-proteases-sulfate-citing-2026-10-31",
     "cites_url": "https://scholar.google.com/scholar?oi=bibs&hl=en&cites=11728333386143173456",
     "records": 47,
-    "bucket_independent": 32
+    "bucket_independent": 31
    },
    {
     "cites_id": "12579475046233103853",
@@ -42067,7 +42067,7 @@
    },
    {
     "cites_id": "12821833616671474197",
-    "n": 16,
+    "n": 15,
     "topic": "glyco",
     "family": "Glycoscience",
     "title": "Novel reversible fluorescent glycan linker for functional glycomics",
@@ -42076,7 +42076,7 @@
     "exhibit_base": "novel-reversible-fluorescent-glycan-linker-for-functional-gl-citing-2026-10-30",
     "cites_url": "https://scholar.google.com/scholar?oi=bibs&hl=en&cites=12821833616671474197",
     "records": 24,
-    "bucket_independent": 16
+    "bucket_independent": 15
    },
    {
     "cites_id": "13268313723721620254",
@@ -42119,7 +42119,7 @@
    },
    {
     "cites_id": "13760283595664836508",
-    "n": 25,
+    "n": 24,
     "topic": "anti",
     "family": "Anticoagulants and thrombosis",
     "title": "Targeting the GPIbα Binding Site of Thrombin To Simultaneously Induce Dual Anticoagulant and Antiplatelet Effects",
@@ -42128,11 +42128,11 @@
     "exhibit_base": "targeting-the-gpib-binding-site-of-thrombin-to-simultaneousl-citing-2026-10-31",
     "cites_url": "https://scholar.google.com/scholar?oi=bibs&hl=en&cites=13760283595664836508",
     "records": 31,
-    "bucket_independent": 25
+    "bucket_independent": 24
    },
    {
     "cites_id": "14331029933979420569",
-    "n": 54,
+    "n": 52,
     "topic": "anti",
     "family": "Anticoagulants and thrombosis",
     "title": "Sulfated pentagalloylglucoside is a potent, allosteric, and selective inhibitor of factor XIa",
@@ -42141,11 +42141,11 @@
     "exhibit_base": "sulfated-pentagalloylglucoside-is-a-potent-allosteric-and-se-citing-2026-11-01",
     "cites_url": "https://scholar.google.com/scholar?oi=bibs&hl=en&cites=14331029933979420569",
     "records": 110,
-    "bucket_independent": 54
+    "bucket_independent": 52
    },
    {
     "cites_id": "14910939819377951228",
-    "n": 39,
+    "n": 36,
     "topic": "both",
     "family": "Spans both programmes",
     "title": "Emerging patterns of tyrosine sulfation and O-glycosylation cross-talk and co-localization",
@@ -42154,7 +42154,7 @@
     "exhibit_base": "emerging-patterns-of-tyrosine-sulfation-and-o-glycosylation--citing-2026-10-31",
     "cites_url": "https://scholar.google.com/scholar?oi=bibs&hl=en&cites=14910939819377951228",
     "records": 46,
-    "bucket_independent": 39
+    "bucket_independent": 36
    },
    {
     "cites_id": "15061740354097007450",
@@ -42223,7 +42223,7 @@
    },
    {
     "cites_id": "16936816916736738985",
-    "n": 37,
+    "n": 36,
     "topic": "glyco",
     "family": "Glycoscience",
     "title": "Antigenic pressure on H3N2 influenza virus drift strains imposes constraints on binding to sialylated receptors but not phosphorylated glycans",
@@ -42232,11 +42232,11 @@
     "exhibit_base": "antigenic-pressure-on-h3n2-influenza-virus-drift-strains-imp-citing-2026-11-01",
     "cites_url": "https://scholar.google.com/scholar?oi=bibs&hl=en&cites=16936816916736738985",
     "records": 48,
-    "bucket_independent": 37
+    "bucket_independent": 36
    },
    {
     "cites_id": "17765626390546429538",
-    "n": 31,
+    "n": 30,
     "topic": "anti",
     "family": "Anticoagulants and thrombosis",
     "title": "Allosteric inhibition of human factor XIa: discovery of monosulfated benzofurans as a class of promising inhibitors",
@@ -42245,7 +42245,7 @@
     "exhibit_base": "allosteric-inhibition-of-human-factor-xia-discovery-of-monos-citing-2026-10-31",
     "cites_url": "https://scholar.google.com/scholar?oi=bibs&hl=en&cites=17765626390546429538",
     "records": 41,
-    "bucket_independent": 31
+    "bucket_independent": 30
    },
    {
     "cites_id": "1956444758555575516",
@@ -42314,7 +42314,7 @@
    },
    {
     "cites_id": "4082711194076959494",
-    "n": 11,
+    "n": 10,
     "topic": "glyco",
     "family": "Glycoscience",
     "title": "Recognition of highly branched N-glycans of the porcine whipworm by the immune system",
@@ -42323,11 +42323,11 @@
     "exhibit_base": "recognition-of-highly-branched-n-glycans-of-the-porcine-whip-citing-2026-11-02",
     "cites_url": "https://scholar.google.com/scholar?oi=bibs&hl=en&cites=4082711194076959494",
     "records": 16,
-    "bucket_independent": 11
+    "bucket_independent": 10
    },
    {
     "cites_id": "4631471255166879252",
-    "n": 42,
+    "n": 41,
     "topic": "both",
     "family": "Spans both programmes",
     "title": "Allosterism‐based simultaneous, dual anticoagulant and antiplatelet action: allosteric inhibitor targeting the glycoprotein Ibα‐binding and heparin‐binding site of thrombin",
@@ -42336,7 +42336,7 @@
     "exhibit_base": "allosterism-based-simultaneous-dual-anticoagulant-and-antipl-citing-2026-11-01",
     "cites_url": "https://scholar.google.com/scholar?oi=bibs&hl=en&cites=4631471255166879252",
     "records": 56,
-    "bucket_independent": 42
+    "bucket_independent": 41
    },
    {
     "cites_id": "5067819667796015751",
@@ -42366,7 +42366,7 @@
    },
    {
     "cites_id": "5446863664671350528",
-    "n": 45,
+    "n": 44,
     "topic": "glyco",
     "family": "Glycoscience",
     "title": "GLAD: GLycan Array Dashboard, a visual analytics tool for glycan microarrays",
@@ -42375,7 +42375,7 @@
     "exhibit_base": "glad-glycan-array-dashboard-a-visual-analytics-tool-for-glyc-citing-2026-11-01",
     "cites_url": "https://scholar.google.com/scholar?oi=bibs&hl=en&cites=5446863664671350528",
     "records": 64,
-    "bucket_independent": 45
+    "bucket_independent": 44
    },
    {
     "cites_id": "5710710517199553350",
@@ -42392,7 +42392,7 @@
    },
    {
     "cites_id": "5872921749676588753",
-    "n": 36,
+    "n": 35,
     "topic": "anti",
     "family": "Anticoagulants and thrombosis",
     "title": "Designing allosteric regulators of thrombin. Exosite 2 features multiple subsites that can be targeted by sulfated small molecules for inducing inhibition",
@@ -42401,11 +42401,11 @@
     "exhibit_base": "designing-allosteric-regulators-of-thrombin-exosite-2-featur-citing-2026-11-01",
     "cites_url": "https://scholar.google.com/scholar?oi=bibs&hl=en&cites=5872921749676588753",
     "records": 65,
-    "bucket_independent": 36
+    "bucket_independent": 35
    },
    {
     "cites_id": "6229834546150686384",
-    "n": 32,
+    "n": 31,
     "topic": "glyco",
     "family": "Glycoscience",
     "title": "Unique repertoire of anti-carbohydrate antibodies in individual human serum",
@@ -42414,7 +42414,7 @@
     "exhibit_base": "unique-repertoire-of-anti-carbohydrate-antibodies-in-individ-citing-2026-10-31",
     "cites_url": "https://scholar.google.com/scholar?oi=bibs&hl=en&cites=6229834546150686384",
     "records": 44,
-    "bucket_independent": 32
+    "bucket_independent": 31
    },
    {
     "cites_id": "6309677444540434342",
@@ -42491,7 +42491,7 @@
    {
     "source": "13760283595664836508",
     "target": "4631471255166879252",
-    "weight": 14
+    "weight": 13
    },
    {
     "source": "14331029933979420569",
@@ -42506,15 +42506,10 @@
    {
     "source": "11088885855065116690",
     "target": "11657216136002863473",
-    "weight": 9
+    "weight": 8
    },
    {
     "source": "13760283595664836508",
-    "target": "5872921749676588753",
-    "weight": 9
-   },
-   {
-    "source": "17765626390546429538",
     "target": "5872921749676588753",
     "weight": 8
    },
@@ -42534,12 +42529,12 @@
     "weight": 7
    },
    {
-    "source": "11728333386143173456",
+    "source": "17765626390546429538",
     "target": "5872921749676588753",
-    "weight": 6
+    "weight": 7
    },
    {
-    "source": "4631471255166879252",
+    "source": "11728333386143173456",
     "target": "5872921749676588753",
     "weight": 6
    },
@@ -42549,8 +42544,8 @@
     "weight": 5
    },
    {
-    "source": "17765626390546429538",
-    "target": "4631471255166879252",
+    "source": "4631471255166879252",
+    "target": "5872921749676588753",
     "weight": 5
    },
    {
@@ -42564,13 +42559,13 @@
     "weight": 4
    },
    {
-    "source": "13760283595664836508",
-    "target": "17765626390546429538",
+    "source": "14331029933979420569",
+    "target": "6309677444540434342",
     "weight": 4
    },
    {
-    "source": "14331029933979420569",
-    "target": "6309677444540434342",
+    "source": "17765626390546429538",
+    "target": "4631471255166879252",
     "weight": 4
    },
    {
@@ -42599,13 +42594,13 @@
     "weight": 3
    },
    {
-    "source": "11728333386143173456",
+    "source": "13760283595664836508",
     "target": "14331029933979420569",
     "weight": 3
    },
    {
     "source": "13760283595664836508",
-    "target": "14331029933979420569",
+    "target": "17765626390546429538",
     "weight": 3
    },
    {
@@ -42676,6 +42671,11 @@
    {
     "source": "11728333386143173456",
     "target": "13760283595664836508",
+    "weight": 2
+   },
+   {
+    "source": "11728333386143173456",
+    "target": "14331029933979420569",
     "weight": 2
    },
    {
@@ -43477,12 +43477,10 @@
     "link": "https://www.beilstein-journals.org/bjoc/articles/16/215",
     "year": 2020,
     "cites": [
-     "11088885855065116690",
-     "11657216136002863473"
+     "11088885855065116690"
     ],
     "rows": [
-     "cit-000623",
-     "cit-000787"
+     "cit-000623"
     ]
    },
    {
@@ -44668,19 +44666,6 @@
     ]
    },
    {
-    "ident": "t:bioinformaticstoolsdevelopedtosupportbiocomputeobjects",
-    "title": "Bioinformatics tools developed to support BioCompute Objects",
-    "byline": "JA Patel, DA Dean, CH King, N Xiao, S Koc… - Database, 2021 - academic.oup.com",
-    "link": "https://academic.oup.com/database/article-abstract/doi/10.1093/database/baab008/6204168",
-    "year": 2021,
-    "cites": [
-     "11657216136002863473"
-    ],
-    "rows": [
-     "cit-000808"
-    ]
-   },
-   {
     "ident": "t:breastmilkoligosaccharidescontainimmunomodulatoryglucuronicacidandlacdinac",
     "title": "Breast milk oligosaccharides contain immunomodulatory glucuronic acid and LacdiNAc",
     "byline": "C Jin, J Lundstrøm, E Korhonen, AS Luis… - Molecular & Cellular …, 2023 - mcponline.org",
@@ -45279,19 +45264,6 @@
     ],
     "rows": [
      "cit-000701"
-    ]
-   },
-   {
-    "ident": "t:generating3dmodelsofcomplexcarbohydrateswithglycamweb",
-    "title": "Generating 3D models of complex carbohydrates with GLYCAM-Web",
-    "byline": "OC Grant, D Wentworth, SG Holmes, R Kandel… - Nature …, 2026 - nature.com",
-    "link": "https://www.nature.com/articles/s41592-026-03033-w",
-    "year": 2026,
-    "cites": [
-     "11657216136002863473"
-    ],
-    "rows": [
-     "cit-000662"
     ]
    },
    {
@@ -46053,32 +46025,6 @@
     ]
    },
    {
-    "ident": "t:playbookworkflowbuilderinteractiveconstructionofbioinformaticsworkflowsfromanetworkofmicroservices",
-    "title": "Playbook Workflow Builder: Interactive construction of bioinformatics workflows from a network of microservices",
-    "byline": "DJB Clarke, JE Evangelista, Z Xie, GB Marino… - bioRxiv, 2024 - biorxiv.org",
-    "link": "https://www.biorxiv.org/content/10.1101/2024.06.08.598037.abstract",
-    "year": 2024,
-    "cites": [
-     "11657216136002863473"
-    ],
-    "rows": [
-     "cit-000826"
-    ]
-   },
-   {
-    "ident": "t:playbookworkflowbuilderinteractiveconstructionofbioinformaticsworkflows",
-    "title": "Playbook workflow builder: Interactive construction of bioinformatics workflows",
-    "byline": "DJB Clarke, JE Evangelista, Z Xie… - PLOS Computational …, 2025 - journals.plos.org",
-    "link": "https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1012901",
-    "year": 2025,
-    "cites": [
-     "11657216136002863473"
-    ],
-    "rows": [
-     "cit-000740"
-    ]
-   },
-   {
     "ident": "t:polarprotdbadatabaseoftransmembraneandsecretedproteinsshowingapicalbasalpolarity",
     "title": "PolarProtDb: a database of transmembrane and secreted proteins showing apical-basal polarity",
     "byline": "A Zeke, L Dobson, LI Szekeres, T Langó… - Journal of Molecular …, 2021 - Elsevier",
@@ -46479,32 +46425,6 @@
     ],
     "rows": [
      "cit-000738"
-    ]
-   },
-   {
-    "ident": "t:thedatadistilleryagraphframeworkforsemanticintegrationandqueryingofbiomedicaldata",
-    "title": "The Data Distillery: a graph framework for semantic integration and querying of biomedical data",
-    "byline": "TM Ahooyi, B Stear, JA Simmons, VT Metzger… - …, 2025 - pmc.ncbi.nlm.nih.gov",
-    "link": "https://pmc.ncbi.nlm.nih.gov/articles/PMC12363844/",
-    "year": 2025,
-    "cites": [
-     "11657216136002863473"
-    ],
-    "rows": [
-     "cit-000723"
-    ]
-   },
-   {
-    "ident": "t:theglycosmosportalaunifiedandcomprehensivewebresourcefortheglycosciences",
-    "title": "The GlyCosmos Portal: a unified and comprehensive web resource for the glycosciences",
-    "byline": "I Yamada, M Shiota, D Shinmachi, T Ono, S Tsuchiya… - Nature …, 2020 - nature.com",
-    "link": "https://www.nature.com/articles/s41592-020-0879-8",
-    "year": 2020,
-    "cites": [
-     "11657216136002863473"
-    ],
-    "rows": [
-     "cit-000676"
     ]
    },
    {
@@ -46930,21 +46850,6 @@
     ],
     "rows": [
      "cit-000083"
-    ]
-   },
-   {
-    "ident": "t:discoveryofbenzyltetraphosphonatederivativeasinhibitorofhumanfactorxia",
-    "title": "Discovery of benzyl tetraphosphonate derivative as inhibitor of human factor Xia",
-    "byline": "S Kar, M Mottamal, RA Al‐Horani - ChemistryOpen, 2020 - Wiley Online Library",
-    "link": "https://chemistry-europe.onlinelibrary.wiley.com/doi/abs/10.1002/open.202000277",
-    "year": 2020,
-    "cites": [
-     "11728333386143173456",
-     "14331029933979420569"
-    ],
-    "rows": [
-     "cit-000055",
-     "cit-001327"
     ]
    },
    {
@@ -47827,19 +47732,6 @@
     ]
    },
    {
-    "ident": "t:theschizophreniaassociatedvariantinslc39a8altersproteinglycosylationinthemousebrain",
-    "title": "The schizophrenia-associated variant in SLC39A8 alters protein glycosylation in the mouse brain",
-    "byline": "RG Mealer, SE Williams, M Noel, B Yang… - Molecular …, 2022 - nature.com",
-    "link": "https://www.nature.com/articles/s41380-022-01490-1",
-    "year": 2022,
-    "cites": [
-     "12821833616671474197"
-    ],
-    "rows": [
-     "cit-001085"
-    ]
-   },
-   {
     "ident": "t:developmentoforallyactivethrombininhibitorsforthetreatmentofthromboticdisorderdiseases",
     "title": "Development of orally active thrombin inhibitors for the treatment of thrombotic disorder diseases",
     "byline": "LW He, WC Dai, NG Li - Molecules, 2015 - pmc.ncbi.nlm.nih.gov",
@@ -48491,25 +48383,6 @@
     ]
    },
    {
-    "ident": "t:mergingculturesanddisciplinestocreateadrugdiscoveryecosystematvirginiacommonwealthuniversitymedicinalchemistrystructuralbiologymolecular",
-    "title": "Merging cultures and disciplines to create a drug discovery ecosystem at Virginia commonwealth university: Medicinal chemistry, structural biology, molecular …",
-    "byline": "GE Kellogg, Y Cen, M Dukat, KC Ellis, Y Guo, J Li… - SLAS Discovery, 2023 - Elsevier",
-    "link": "https://www.sciencedirect.com/science/article/pii/S2472555223000175",
-    "year": 2023,
-    "cites": [
-     "13760283595664836508",
-     "17765626390546429538",
-     "4631471255166879252",
-     "5872921749676588753"
-    ],
-    "rows": [
-     "cit-001441",
-     "cit-000022",
-     "cit-000119",
-     "cit-000358"
-    ]
-   },
-   {
     "ident": "t:moleculardynamicssimulationsofhumanthrombinindifferentstructuralcontextsevidenceforanaptamerguidedcooperationbetweenthetwoexosites",
     "title": "Molecular dynamics simulations of human α-thrombin in different structural contexts: evidence for an aptamer-guided cooperation between the two exosites",
     "byline": "R Troisi, N Balasco, L Vitagliano… - Journal of Biomolecular …, 2021 - Taylor & Francis",
@@ -49041,19 +48914,6 @@
     ]
    },
    {
-    "ident": "t:inhibitionofcancerstemcellsbyglycosaminoglycanmimetics",
-    "title": "Inhibition of Cancer Stem Cells by Glycosaminoglycan Mimetics",
-    "byline": "CP O'Hara - 2019 - scholarscompass.vcu.edu",
-    "link": "https://scholarscompass.vcu.edu/etd/5989/",
-    "year": 2019,
-    "cites": [
-     "14331029933979420569"
-    ],
-    "rows": [
-     "cit-001376"
-    ]
-   },
-   {
     "ident": "t:inhibitionoffactorxiactivityasapromisingantithromboticstrategy",
     "title": "Inhibition of Factor XI activity as a promising antithrombotic strategy",
     "byline": "Z Chen, D Seiffert, B Hawes - Drug discovery today, 2014 - Elsevier",
@@ -49464,19 +49324,6 @@
     ]
    },
    {
-    "ident": "t:cosmccontrolsbcellhoming",
-    "title": "Cosmc controls B cell homing",
-    "byline": "J Zeng, M Eljalby, RP Aryal, S Lehoux… - Nature …, 2020 - nature.com",
-    "link": "https://www.nature.com/articles/s41467-020-17765-6",
-    "year": 2020,
-    "cites": [
-     "14910939819377951228"
-    ],
-    "rows": [
-     "cit-000448"
-    ]
-   },
-   {
     "ident": "t:developmentandbiologicalapplicationsofsulfurtriazoleexchangesutexchemistry",
     "title": "Development and biological applications of sulfur–triazole exchange (SuTEx) chemistry",
     "byline": "AL Borne, JW Brulet, K Yuan, KL Hsu - RSC chemical biology, 2021 - pubs.rsc.org",
@@ -49782,19 +49629,6 @@
     ]
    },
    {
-    "ident": "t:thecterminalpeptideofccl21drasticallyaugmentsccl21activitythroughthedendriticcelllymphnodehomingreceptorccr7byinteractionwiththereceptorn",
-    "title": "The C-terminal peptide of CCL21 drastically augments CCL21 activity through the dendritic cell lymph node homing receptor CCR7 by interaction with the receptor N …",
-    "byline": "AS Jørgensen, EP Brandum, JM Mikkelsen… - Cellular and Molecular …, 2021 - Springer",
-    "link": "https://link.springer.com/article/10.1007/s00018-021-03930-7",
-    "year": 2021,
-    "cites": [
-     "14910939819377951228"
-    ],
-    "rows": [
-     "cit-000445"
-    ]
-   },
-   {
     "ident": "t:thekeyroleofmetaladductsinthedifferentiationofphosphopeptidefromsulfopeptidesequencesbyhighresolutionmassspectrometry",
     "title": "The key role of metal adducts in the differentiation of phosphopeptide from sulfopeptide sequences by high-resolution mass spectrometry",
     "byline": "S Piovesana, AL Capriotti, C Cavaliere… - Analytical …, 2022 - ACS Publications",
@@ -49870,19 +49704,6 @@
     ],
     "rows": [
      "cit-000476"
-    ]
-   },
-   {
-    "ident": "t:glycosulfobarcodesregulatechemokinereceptorfunction",
-    "title": "“Glyco-sulfo barcodes” regulate chemokine receptor function",
-    "byline": "L Verhallen, JJ Lackman, R Wendt… - Cellular and Molecular …, 2023 - Springer",
-    "link": "https://link.springer.com/article/10.1007/s00018-023-04697-9",
-    "year": 2023,
-    "cites": [
-     "14910939819377951228"
-    ],
-    "rows": [
-     "cit-000446"
     ]
    },
    {
@@ -51007,19 +50828,6 @@
     ],
     "rows": [
      "cit-000194"
-    ]
-   },
-   {
-    "ident": "t:molecularepidemiologyandglycomicsofswineinfluenzavirusescirculatingincommercialswinefarmsinthesoutheasternandmidwestunitedstates",
-    "title": "Molecular epidemiology and glycomics of swine influenza viruses circulating in commercial swine farms in the southeastern and midwest United States",
-    "byline": "AA Bakre, LP Jones, CS Kyriakis, JM Hanson… - Veterinary …, 2020 - Elsevier",
-    "link": "https://www.sciencedirect.com/science/article/pii/S037811352031052X",
-    "year": 2020,
-    "cites": [
-     "16936816916736738985"
-    ],
-    "rows": [
-     "cit-000207"
     ]
    },
    {
@@ -52470,19 +52278,6 @@
     ]
    },
    {
-    "ident": "sw:cit-001239",
-    "title": "N-glycan core tri-fucosylation requires Golgi α-mannosidase III activity that impacts nematode growth and behavior",
-    "byline": "J Kendler, F Wӧls, S Thapliyal, E Arcalis… - Journal of Biological …, 2024 - jbc.org",
-    "link": "https://www.jbc.org/article/S0021-9258(24)02446-3/fulltext",
-    "year": 2024,
-    "cites": [
-     "4082711194076959494"
-    ],
-    "rows": [
-     "cit-001239"
-    ]
-   },
-   {
     "ident": "t:nglycoproteomicprofilingofthehookwormancylostomaceylanicumrevealsheterogeneityandphosphorylcholinemodifiedglycansinlarvalandadultparasites",
     "title": "N-glycoproteomic profiling of the hookworm Ancylostoma ceylanicum reveals heterogeneity and phosphorylcholine-modified glycans in larval and adult parasites.",
     "byline": "CL Paraggio, V Chang, KE Mahoney, N Chung… - bioRxiv, 2026 - biorxiv.org",
@@ -53223,19 +53018,6 @@
     ],
     "rows": [
      "cit-000542"
-    ]
-   },
-   {
-    "ident": "t:developmentofsmartantiglycanreagentsusingimmunizedlampreys",
-    "title": "Development of smart anti-glycan reagents using immunized lampreys",
-    "byline": "TR McKitrick, CK Goth, CS Rosenberg… - Communications …, 2020 - nature.com",
-    "link": "https://www.nature.com/articles/s42003-020-0819-2",
-    "year": 2020,
-    "cites": [
-     "5446863664671350528"
-    ],
-    "rows": [
-     "cit-000511"
     ]
    },
    {
@@ -54030,19 +53812,6 @@
     ],
     "rows": [
      "cit-001554"
-    ]
-   },
-   {
-    "ident": "t:abobloodgroupsandgalectinsimplicationsintransfusionmedicineandinnateimmunity",
-    "title": "ABO blood groups and galectins: Implications in transfusion medicine and innate immunity",
-    "byline": "CM Arthur, M Hollenhorst, SC Wu, R Jajosky… - Seminars in …, 2024 - Elsevier",
-    "link": "https://www.sciencedirect.com/science/article/pii/S1044532324000307",
-    "year": 2024,
-    "cites": [
-     "6229834546150686384"
-    ],
-    "rows": [
-     "cit-001520"
     ]
    },
    {
@@ -55782,11 +55551,6 @@
     "row_uid": "cit-000846"
    },
    {
-    "work": "t:aconsensusbasedandreadableextensionoflinearcodeforreactionruleslicorr",
-    "cites_id": "11657216136002863473",
-    "row_uid": "cit-000787"
-   },
-   {
     "work": "t:ageneticallyencodedmagneticresonanceimagingreporterenablessensitivedetectionandtrackingofspontaneousmetastasesindeeptissues",
     "cites_id": "11657216136002863473",
     "row_uid": "cit-000742"
@@ -55860,11 +55624,6 @@
     "work": "t:bioinformaticsstudyoflectinsnewclassificationandpredictioningenomes",
     "cites_id": "11657216136002863473",
     "row_uid": "cit-000837"
-   },
-   {
-    "work": "t:bioinformaticstoolsdevelopedtosupportbiocomputeobjects",
-    "cites_id": "11657216136002863473",
-    "row_uid": "cit-000808"
    },
    {
     "work": "t:breastmilkoligosaccharidescontainimmunomodulatoryglucuronicacidandlacdinac",
@@ -56095,11 +55854,6 @@
     "work": "t:genesetcartassemblingaugmentingcombiningvisualizingandanalyzinggenesets",
     "cites_id": "11657216136002863473",
     "row_uid": "cit-000701"
-   },
-   {
-    "work": "t:generating3dmodelsofcomplexcarbohydrateswithglycamweb",
-    "cites_id": "11657216136002863473",
-    "row_uid": "cit-000662"
    },
    {
     "work": "t:geneticsofglycosylationinmammaliandevelopmentanddisease",
@@ -56407,16 +56161,6 @@
     "row_uid": "cit-000667"
    },
    {
-    "work": "t:playbookworkflowbuilderinteractiveconstructionofbioinformaticsworkflowsfromanetworkofmicroservices",
-    "cites_id": "11657216136002863473",
-    "row_uid": "cit-000826"
-   },
-   {
-    "work": "t:playbookworkflowbuilderinteractiveconstructionofbioinformaticsworkflows",
-    "cites_id": "11657216136002863473",
-    "row_uid": "cit-000740"
-   },
-   {
     "work": "t:polarprotdbadatabaseoftransmembraneandsecretedproteinsshowingapicalbasalpolarity",
     "cites_id": "11657216136002863473",
     "row_uid": "cit-000807"
@@ -56582,16 +56326,6 @@
     "row_uid": "cit-000738"
    },
    {
-    "work": "t:thedatadistilleryagraphframeworkforsemanticintegrationandqueryingofbiomedicaldata",
-    "cites_id": "11657216136002863473",
-    "row_uid": "cit-000723"
-   },
-   {
-    "work": "t:theglycosmosportalaunifiedandcomprehensivewebresourcefortheglycosciences",
-    "cites_id": "11657216136002863473",
-    "row_uid": "cit-000676"
-   },
-   {
     "work": "t:theglycopaserprototypeasarealtimenglycopeptideidentificationtoolbasedonthepaserparallelcomputingplatform",
     "cites_id": "11657216136002863473",
     "row_uid": "cit-000757"
@@ -56745,11 +56479,6 @@
     "work": "t:computationalstrategiesforselectiveinhibitionoffalcipain2",
     "cites_id": "11728333386143173456",
     "row_uid": "cit-000083"
-   },
-   {
-    "work": "t:discoveryofbenzyltetraphosphonatederivativeasinhibitorofhumanfactorxia",
-    "cites_id": "11728333386143173456",
-    "row_uid": "cit-000055"
    },
    {
     "work": "t:discoveryofnovelnacylpyrazolesaspotentandselectivethrombininhibitors",
@@ -57097,11 +56826,6 @@
     "row_uid": "cit-001092"
    },
    {
-    "work": "t:theschizophreniaassociatedvariantinslc39a8altersproteinglycosylationinthemousebrain",
-    "cites_id": "12821833616671474197",
-    "row_uid": "cit-001085"
-   },
-   {
     "work": "t:allostericinhibitionofthrombinenzymaticactivitywithultrasmallgoldnanoparticles",
     "cites_id": "13268313723721620254",
     "row_uid": "cit-001276"
@@ -57362,11 +57086,6 @@
     "row_uid": "cit-001450"
    },
    {
-    "work": "t:mergingculturesanddisciplinestocreateadrugdiscoveryecosystematvirginiacommonwealthuniversitymedicinalchemistrystructuralbiologymolecular",
-    "cites_id": "13760283595664836508",
-    "row_uid": "cit-001441"
-   },
-   {
     "work": "t:moleculardynamicssimulationsofhumanthrombinindifferentstructuralcontextsevidenceforanaptamerguidedcooperationbetweenthetwoexosites",
     "cites_id": "13760283595664836508",
     "row_uid": "cit-001434"
@@ -57497,11 +57216,6 @@
     "row_uid": "cit-001290"
    },
    {
-    "work": "t:discoveryofbenzyltetraphosphonatederivativeasinhibitorofhumanfactorxia",
-    "cites_id": "14331029933979420569",
-    "row_uid": "cit-001327"
-   },
-   {
     "work": "t:effortstototalsynthesisofphilinopsideeconvergentsynthesisofthesulfatedlanostanetypetetraglycoside",
     "cites_id": "14331029933979420569",
     "row_uid": "cit-001366"
@@ -57575,11 +57289,6 @@
     "work": "t:identifyingnewclottingfactorxiainhibitorsinvirtualhighthroughputscreensusingpcagasvmmodelsandsignature",
     "cites_id": "14331029933979420569",
     "row_uid": "cit-001369"
-   },
-   {
-    "work": "t:inhibitionofcancerstemcellsbyglycosaminoglycanmimetics",
-    "cites_id": "14331029933979420569",
-    "row_uid": "cit-001376"
    },
    {
     "work": "t:inhibitionoffactorxiactivityasapromisingantithromboticstrategy",
@@ -57742,11 +57451,6 @@
     "row_uid": "cit-000451"
    },
    {
-    "work": "t:cosmccontrolsbcellhoming",
-    "cites_id": "14910939819377951228",
-    "row_uid": "cit-000448"
-   },
-   {
     "work": "t:developmentandbiologicalapplicationsofsulfurtriazoleexchangesutexchemistry",
     "cites_id": "14910939819377951228",
     "row_uid": "cit-000443"
@@ -57862,11 +57566,6 @@
     "row_uid": "cit-000459"
    },
    {
-    "work": "t:thecterminalpeptideofccl21drasticallyaugmentsccl21activitythroughthedendriticcelllymphnodehomingreceptorccr7byinteractionwiththereceptorn",
-    "cites_id": "14910939819377951228",
-    "row_uid": "cit-000445"
-   },
-   {
     "work": "t:thekeyroleofmetaladductsinthedifferentiationofphosphopeptidefromsulfopeptidesequencesbyhighresolutionmassspectrometry",
     "cites_id": "14910939819377951228",
     "row_uid": "cit-000462"
@@ -57895,11 +57594,6 @@
     "work": "t:coatofmanycolorsspecificityofgalnactransferasefamilyofisoenzymes",
     "cites_id": "14910939819377951228",
     "row_uid": "cit-000476"
-   },
-   {
-    "work": "t:glycosulfobarcodesregulatechemokinereceptorfunction",
-    "cites_id": "14910939819377951228",
-    "row_uid": "cit-000446"
    },
    {
     "work": "t:absoluteaffinitiesfromquantitativeshotgunglycomicsusingconcentrationindependentcoinnativemassspectrometry",
@@ -58372,11 +58066,6 @@
     "row_uid": "cit-000194"
    },
    {
-    "work": "t:molecularepidemiologyandglycomicsofswineinfluenzavirusescirculatingincommercialswinefarmsinthesoutheasternandmidwestunitedstates",
-    "cites_id": "16936816916736738985",
-    "row_uid": "cit-000207"
-   },
-   {
     "work": "t:mucinmediatedandinterferondrivendefensemechanismsagainstinfluenzavirusinfectioninhumanairwayepithelium",
     "cites_id": "16936816916736738985",
     "row_uid": "cit-000223"
@@ -58485,11 +58174,6 @@
     "work": "t:inhibitionofthrombinbyfunctionalizedc60nanoparticlesrevealedviainvitroassaysandinsilicostudies",
     "cites_id": "17765626390546429538",
     "row_uid": "cit-000024"
-   },
-   {
-    "work": "t:mergingculturesanddisciplinestocreateadrugdiscoveryecosystematvirginiacommonwealthuniversitymedicinalchemistrystructuralbiologymolecular",
-    "cites_id": "17765626390546429538",
-    "row_uid": "cit-000022"
    },
    {
     "work": "t:microwaveassistedintramoleculardehydrogenativedehydrodielsalderapproachtosubstitutedbenzofusedheterocycles",
@@ -59042,11 +58726,6 @@
     "row_uid": "cit-001242"
    },
    {
-    "work": "sw:cit-001239",
-    "cites_id": "4082711194076959494",
-    "row_uid": "cit-001239"
-   },
-   {
     "work": "t:nglycoproteomicprofilingofthehookwormancylostomaceylanicumrevealsheterogeneityandphosphorylcholinemodifiedglycansinlarvalandadultparasites",
     "cites_id": "4082711194076959494",
     "row_uid": "cit-001243"
@@ -59180,11 +58859,6 @@
     "work": "t:ligninanunderutilizedrenewableandvaluablematerialforfoodindustry",
     "cites_id": "4631471255166879252",
     "row_uid": "cit-000095"
-   },
-   {
-    "work": "t:mergingculturesanddisciplinestocreateadrugdiscoveryecosystematvirginiacommonwealthuniversitymedicinalchemistrystructuralbiologymolecular",
-    "cites_id": "4631471255166879252",
-    "row_uid": "cit-000119"
    },
    {
     "work": "t:migfilinsupportshemostasisandthrombosisthroughregulatingplateletaiib3outsideinsignaling",
@@ -59485,11 +59159,6 @@
     "work": "t:decodingglycansdecipheringthesugarysecretstobecoherentontheimplication",
     "cites_id": "5446863664671350528",
     "row_uid": "cit-000546"
-   },
-   {
-    "work": "t:developmentofsmartantiglycanreagentsusingimmunizedlampreys",
-    "cites_id": "5446863664671350528",
-    "row_uid": "cit-000511"
    },
    {
     "work": "t:enzymatictailoringofanionicglycansforcharacterizinglectinandantibodyspecificitiesinamicroarrayformat",
@@ -59837,11 +59506,6 @@
     "row_uid": "cit-000327"
    },
    {
-    "work": "t:mergingculturesanddisciplinestocreateadrugdiscoveryecosystematvirginiacommonwealthuniversitymedicinalchemistrystructuralbiologymolecular",
-    "cites_id": "5872921749676588753",
-    "row_uid": "cit-000358"
-   },
-   {
     "work": "t:novelfuro23dpyrimidinonesasdirectthrombininhibitorsdesignsynthesisandbiologicalevaluation",
     "cites_id": "5872921749676588753",
     "row_uid": "cit-000338"
@@ -59915,11 +59579,6 @@
     "work": "t:areviewofglycoconjugatevaccinesthecurrentstateofthetechnologyconsiderationsforthefutureandthegoldstandardcarrierproteincrm197",
     "cites_id": "6229834546150686384",
     "row_uid": "cit-001554"
-   },
-   {
-    "work": "t:abobloodgroupsandgalectinsimplicationsintransfusionmedicineandinnateimmunity",
-    "cites_id": "6229834546150686384",
-    "row_uid": "cit-001520"
    },
    {
     "work": "t:applicationoftheantibodyinducingactivityofglycosphingolipidstohumandiseases",
@@ -60597,9 +60256,9 @@
     "row_uid": "cit-000248"
    }
   ],
-  "citations": 1078,
-  "distinct_works": 918,
-  "multi_cited_works": 100,
+  "citations": 1056,
+  "distinct_works": 901,
+  "multi_cited_works": 97,
   "publications": 40,
   "families": {
    "glyco": 24,

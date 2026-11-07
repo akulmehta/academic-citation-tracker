@@ -91,7 +91,9 @@
       "duplicate_of": "",
       "needs_attention": false,
       "attention_reason": "",
-      "language_flag_captured": ""
+      "language_flag_captured": "",
+      "status_captured": "INDEPENDENT",
+      "confirm_state_captured": "confirmed"
     },
     {
       "index": 2,
@@ -211,8 +213,10 @@
       "snippet": "The inhibition of factor XIa (FXIa) is a trending paradigm for the development of new\ngenerations of anticoagulants without a substantial risk of bleeding. In this report, we present …",
       "truncated": false,
       "link": "https://chemistry-europe.onlinelibrary.wiley.com/doi/abs/10.1002/open.202000277",
-      "status": "INDEPENDENT",
-      "matched_authors": [],
+      "status": "DEPENDENT",
+      "matched_authors": [
+        "R A Al-Horani"
+      ],
       "matched_pi": [],
       "matched_former_pi": [],
       "authors_used": "S Kar, M Mottamal, RA Al‐Horani",
@@ -229,13 +233,18 @@
         "Mottamal M",
         "Al-Horani RA"
       ],
-      "confirm_state": "confirmed",
-      "corroboration": "confirmed by pubmed",
+      "confirm_state": "external-resolved",
+      "corroboration": "resolved against pubmed (DEPENDENT)",
       "edition_key": "doi:10.1002:202000277:skarmmottamalraalhorani",
       "duplicate_of": "",
       "needs_attention": false,
       "attention_reason": "",
-      "language_flag_captured": ""
+      "language_flag_captured": "",
+      "status_captured": "INDEPENDENT",
+      "confirm_state_captured": "confirmed",
+      "external_matched": [
+        "R A Al-Horani"
+      ]
     },
     {
       "index": 6,

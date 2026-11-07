@@ -290,9 +290,13 @@
       "snippet": "Studies on the expression of cellular glycans are limited by a lack of sensitive tools that can\ndiscriminate specific structural features. Here we describe the development of a robust …",
       "truncated": true,
       "link": "https://www.nature.com/articles/s42003-020-0819-2",
-      "status": "INDEPENDENT",
-      "matched_authors": [],
-      "matched_pi": [],
+      "status": "DEPENDENT",
+      "matched_authors": [
+        "R D Cummings"
+      ],
+      "matched_pi": [
+        "R D Cummings"
+      ],
       "matched_former_pi": [],
       "authors_used": "McKitrick, Tanya R, Goth, Christoffer K, Rosenberg, Charles S, Nakahara, Hirotomo, Heimburg-Molinaro, Jamie, McQuillan, Alyssa M, Falco, Rosalia, Rivers, Nicholas J, Herrin, Brantley R, Cooper, Max D",
       "author_source": "scholar-cite-bibtex",
@@ -318,15 +322,19 @@
       "external_title": "Development of smart anti-glycan reagents using immunized lampreys.",
       "external_authors": "McKitrick TR, Goth CK, Rosenberg CS, Nakahara H, Heimburg-Molinaro J, McQuillan AM, Falco R, Rivers NJ, Herrin BR, Cooper MD, Cummings RD",
       "external_similarity": 1,
-      "confirm_state": "confirmed",
-      "corroboration": "confirmed by pubmed",
+      "confirm_state": "external-resolved",
+      "corroboration": "resolved against pubmed (DEPENDENT)",
       "edition_key": "",
       "duplicate_of": "",
       "needs_attention": false,
       "attention_reason": "",
       "language_flag_captured": "",
       "status_captured": "INDEPENDENT",
-      "confirm_state_captured": "confirmed"
+      "confirm_state_captured": "confirmed",
+      "external_matched": [
+        "R D Cummings",
+        "R D Cummings"
+      ]
     },
     {
       "index": 8,

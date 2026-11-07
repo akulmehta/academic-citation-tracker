@@ -788,15 +788,18 @@ const copyRows = q(`SELECT
 // family is a stronger claim than a host-name guess, and the reason shown should
 // be the one that actually decided it.
 function copyReason(r) {
+  const url = String(r.link || "");
+  const host = (re) => re.test(url);
+  const preprintServer = /biorxiv|medrxiv|chemrxiv|researchsquare/.test(url);
   if (r.duplicate_kind === "same-work") {
-    return "Same work under a different title, proven and recorded by hand";
+    return preprintServer
+      ? "Preprint of the published article (same work, proven and recorded by hand)"
+      : "Same work under a different title, proven and recorded by hand";
   }
   if (r.patent_number) {
     return "Another document in the same patent family (same title, different number)";
   }
-  const url = String(r.link || "");
-  const host = (re) => re.test(url);
-  if (/biorxiv|medrxiv|chemrxiv|researchsquare/.test(url)) {
+  if (preprintServer) {
     return "Preprint of the published article";
   }
   if (/academia\.edu|researchgate/.test(url)) {

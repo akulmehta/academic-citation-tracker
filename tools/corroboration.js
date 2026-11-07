@@ -46,7 +46,7 @@
 // list contradicts is decided, not left open.
 
 const { titleSimilarity, titleMatchIsCredible } = require("./crosscheck");
-const { evaluateEntry } = require("./name-match.js");
+const { evaluateEntry, fromVancouver } = require("./name-match.js");
 
 // Scholar's own byline, as the row was read from the page. Used to restore a
 // row whose author list was overwritten by a record that turned out not to be
@@ -64,11 +64,16 @@ function scholarByline(entry) {
 
 // Overlap of the external author list against the cited paper and the two PIs,
 // using the same surname-plus-initials matcher as the Scholar-side decision.
+// PubMed lists are "Surname XY"; OpenAlex lists were already put in natural
+// order by toDisplayName. The source is recorded on the entry, so it decides the
+// format -- the order is not guessed from the name.
 function externalOverlap(entry, keys) {
+  const fromPubMed = entry.external_source === "pubmed";
   const names = String(entry.external_authors || "")
     .split(",")
     .map((s) => s.trim())
-    .filter(Boolean);
+    .filter(Boolean)
+    .map((s) => (fromPubMed ? fromVancouver(s) : s));
   return evaluateEntry(
     { authors: entry.external_authors, full_authors: names, truncated: false },
     keys,
@@ -79,6 +84,11 @@ function externalOverlap(entry, keys) {
 // returns { changed, notes }. `entry` is a plain report entry.
 function applyExternalVerdict(entry, keys) {
   const notes = [];
+  // A row a person decided is that person's classification, and no external
+  // record overrides it. Without this the R1 branch below could turn a row
+  // decided from the published byline back into REVIEW and remove its mark
+  // (found 2026-11-07 on cit-001476).
+  if (entry.confirm_state === "user-decided") return { changed: false, notes };
   const before = JSON.stringify([
     entry.status,
     entry.confirm_state,

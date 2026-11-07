@@ -93,7 +93,9 @@
       "duplicate_of": "",
       "needs_attention": false,
       "attention_reason": "",
-      "language_flag_captured": ""
+      "language_flag_captured": "",
+      "status_captured": "INDEPENDENT",
+      "confirm_state_captured": "confirmed"
     },
     {
       "index": 1,
@@ -104,8 +106,11 @@
       "snippet": "The Playbook Workflow Builder (PWB) is a web-based platform to dynamically construct and\nexecute bioinformatics workflows by utilizing a growing network of input datasets …",
       "truncated": true,
       "link": "https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1012901",
-      "status": "INDEPENDENT",
-      "matched_authors": [],
+      "status": "DEPENDENT",
+      "matched_authors": [
+        "R Mazumder",
+        "J K Vora"
+      ],
       "matched_pi": [],
       "matched_former_pi": [],
       "authors_used": "Clarke, Daniel JB, Evangelista, John Erol, Xie, Zhuorui, Marino, Giacomo B, Byrd, Anna I, Maurya, Mano R, Srinivasan, Sumana, Yu, Keyang, Petrosyan, Varduhi, Roth, Matthew E",
@@ -132,13 +137,19 @@
       "external_title": "Playbook workflow builder: Interactive construction of bioinformatics workflows.",
       "external_authors": "Clarke DJB, Evangelista JE, Xie Z, Marino GB, Byrd AI, Maurya MR, Srinivasan S, Yu K, Petrosyan V, Roth ME, Milinkov M, King CH, Vora JK, Keeney J, Nemarich C, Khan W, Lachmann A, Ahmed N, Agris A, Pan J, Ramachandran S, Fahy E, Esquivel E, Mihajlovic A, Jevtic B, Milinovic V, Kim S, McNeely P, Wang T, Wenger E, Brown MA, Sickler A, Zhu Y, Jenkins SL, Blood PD, Taylor DM, Resnick AC, Mazumder R, Milosavljevic A, Subramaniam S, Ma'ayan A",
       "external_similarity": 1,
-      "confirm_state": "confirmed",
-      "corroboration": "confirmed by pubmed",
+      "confirm_state": "external-resolved",
+      "corroboration": "resolved against pubmed (DEPENDENT)",
       "edition_key": "doi:10.1371:1012901:clarkedanieljbevangelistajohnerolxiezhuoruimarinogiacomobbyrdannaimauryamanorsrinivasansumanayukeyangpetrosyanvarduhirothmatthewe",
       "duplicate_of": "",
       "needs_attention": false,
       "attention_reason": "",
-      "language_flag_captured": ""
+      "language_flag_captured": "",
+      "status_captured": "INDEPENDENT",
+      "confirm_state_captured": "confirmed",
+      "external_matched": [
+        "R Mazumder",
+        "J K Vora"
+      ]
     },
     {
       "index": 2,
@@ -183,7 +194,9 @@
       "duplicate_of": "",
       "attention_reason": "non-latin script - not highlighted; a certified human translation is required before it can count",
       "needs_attention": true,
-      "language_flag_captured": "non-latin script"
+      "language_flag_captured": "non-latin script",
+      "status_captured": "INDEPENDENT",
+      "confirm_state_captured": "confirmed"
     },
     {
       "index": 3,
@@ -305,7 +318,9 @@
       "duplicate_of": "",
       "needs_attention": false,
       "attention_reason": "",
-      "language_flag_captured": ""
+      "language_flag_captured": "",
+      "status_captured": "INDEPENDENT",
+      "confirm_state_captured": "confirmed"
     },
     {
       "index": 6,
@@ -346,7 +361,9 @@
       "duplicate_of": "",
       "needs_attention": false,
       "attention_reason": "",
-      "language_flag_captured": ""
+      "language_flag_captured": "",
+      "status_captured": "INDEPENDENT",
+      "confirm_state_captured": "confirmed"
     },
     {
       "index": 7,
@@ -388,7 +405,9 @@
       "duplicate_of": "",
       "needs_attention": false,
       "attention_reason": "",
-      "language_flag_captured": ""
+      "language_flag_captured": "",
+      "status_captured": "INDEPENDENT",
+      "confirm_state_captured": "confirmed"
     },
     {
       "index": 8,
@@ -433,7 +452,9 @@
       "duplicate_of": "",
       "needs_attention": false,
       "attention_reason": "",
-      "language_flag_captured": ""
+      "language_flag_captured": "",
+      "status_captured": "INDEPENDENT",
+      "confirm_state_captured": "confirmed"
     },
     {
       "index": 9,
@@ -478,7 +499,9 @@
       "duplicate_of": "",
       "needs_attention": false,
       "attention_reason": "",
-      "language_flag_captured": ""
+      "language_flag_captured": "",
+      "status_captured": "INDEPENDENT",
+      "confirm_state_captured": "confirmed"
     }
   ]
 }

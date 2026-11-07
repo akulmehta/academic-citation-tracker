@@ -144,10 +144,15 @@
       "snippet": "The work detailed in this thesis is the result of over a years' worth of rewarding and yet\nexhausting research trying to better understand the basic pharmacology of some promising …",
       "truncated": false,
       "link": "https://scholarscompass.vcu.edu/etd/5989/",
-      "status": "INDEPENDENT",
-      "matched_authors": [],
+      "status": "DEPENDENT",
+      "matched_authors": [
+        "R A Al-Horani",
+        "U R Desai"
+      ],
       "matched_pi": [],
-      "matched_former_pi": [],
+      "matched_former_pi": [
+        "U R Desai"
+      ],
       "authors_used": "CP O'Hara",
       "author_source": "scholar+pubmed",
       "language_flag": "",
@@ -166,15 +171,20 @@
         "Desai UR",
         "Patel BB"
       ],
-      "confirm_state": "confirmed",
-      "corroboration": "confirmed by pubmed",
+      "confirm_state": "external-resolved",
+      "corroboration": "resolved against pubmed (DEPENDENT)",
       "edition_key": "",
       "duplicate_of": "",
       "needs_attention": false,
       "attention_reason": "",
       "language_flag_captured": "",
       "status_captured": "INDEPENDENT",
-      "confirm_state_captured": "confirmed"
+      "confirm_state_captured": "confirmed",
+      "external_matched": [
+        "R A Al-Horani",
+        "U R Desai",
+        "U R Desai"
+      ]
     },
     {
       "index": 5,

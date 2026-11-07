@@ -1,0 +1,23 @@
+[
+  {
+    "row_uid": "cit-000542",
+    "mentions": [
+      {
+        "section": "Materials and Methods",
+        "tier": "A",
+        "page": "5",
+        "quote": "Glycan Array Dashboard (version 3.1) was used to analyze and visualize the glycan array data",
+        "use_type": "Implemented",
+        "basis": "extracted text"
+      },
+      {
+        "section": "Acknowledgments",
+        "tier": "D",
+        "page": "12",
+        "quote": "We also thank Akul Mehta (Harvard University) for valuable discussions and help with the glycan tool Glycan Array Dashboard and Consortium for Functional Glycomics (CFG) names",
+        "use_type": null,
+        "basis": "extracted text"
+      }
+    ]
+  }
+]

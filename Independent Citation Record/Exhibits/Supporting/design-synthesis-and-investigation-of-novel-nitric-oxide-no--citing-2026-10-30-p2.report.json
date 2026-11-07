@@ -50,7 +50,14 @@
       "page": 2,
       "needs_attention": false,
       "attention_reason": "",
-      "language_flag_captured": ""
+      "language_flag_captured": "",
+      "status_before_decision": "DEPENDENT",
+      "corroboration_before_decision": "",
+      "confirm_state": "user-decided",
+      "decided_by": "Akul Mehta",
+      "decided_on": "2026-11-07",
+      "decided_note": "Published article (MDPI Biomolecules 2022, doi 10.3390/biom12050696). Its author list names TM Deshpande and MS Ghatge, both co-authors of the cited paper, so the verdict is dependent. Recorded so the published article stands for the work; the academia.edu upload cit-000317 is a repository copy of it and inherits this verdict.",
+      "corroboration": "decided by Akul Mehta on 2026-11-07: Published article (MDPI Biomolecules 2022, doi 10.3390/biom12050696). Its author list names TM Deshpande and MS Ghatge, both co-authors of the cited paper, so the verdict is dependent. Recorded so the published article stands for the work; the academia.edu upload cit-000317 is a repository copy of it and inherits this verdict. (rule had DEPENDENT/undefined)"
     },
     {
       "index": 1,

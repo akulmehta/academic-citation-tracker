@@ -330,7 +330,11 @@ async function main() {
   }
 }
 
-main().catch((err) => {
-  console.error(`Audit failed: ${err && err.stack ? err.stack : err}`);
-  process.exitCode = 1;
-});
+module.exports = { rowsFromSavedHtml };
+
+if (require.main === module) {
+  main().catch((err) => {
+    console.error(`Audit failed: ${err && err.stack ? err.stack : err}`);
+    process.exitCode = 1;
+  });
+}

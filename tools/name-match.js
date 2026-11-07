@@ -118,6 +118,17 @@ function toKeys(value) {
   return { keys, missingInitials: keys.filter((k) => !k.inits.length) };
 }
 
+// PubMed writes each author as "Surname Initials" with no comma ("Cummings RD").
+// parseOne reads a comma-less name as "Given Surname", so it would take "RD" as
+// the surname and never match the PI. Only the source knows which order it
+// uses, so a caller holding a PubMed list converts it here before matching.
+function fromVancouver(name) {
+  const s = normalizeSpace(name).trim();
+  const m = s.match(/^(.*\S)\s+([A-Z]{1,3})$/);
+  if (!m) return s;
+  return `${m[2].split("").join(" ")} ${m[1]}`;
+}
+
 // Check one target group against the parsed citing authors.
 function checkGroup(targets, people) {
   let status = "NONE";
@@ -191,6 +202,7 @@ module.exports = {
   compareInits,
   matchKey,
   toKeys,
+  fromVancouver,
   checkGroup,
   evaluateEntry,
 };

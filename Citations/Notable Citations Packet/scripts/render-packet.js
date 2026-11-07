@@ -54,6 +54,15 @@ function read(db) {
     if (!byFolder.has(f.folder_uid)) byFolder.set(f.folder_uid, []);
     byFolder.get(f.folder_uid).push(f);
   }
+  // Every recorded appearance, strongest tier first, so a Methods use and an
+  // Acknowledgements thanks both reach counsel instead of only the best one.
+  const mentions = db.prepare(`SELECT * FROM mention ORDER BY row_uid, INSTR('ABCD', tier), CAST(page AS INTEGER)`).all();
+  const byRow = new Map();
+  for (const m of mentions) {
+    if (!byRow.has(m.row_uid)) byRow.set(m.row_uid, []);
+    byRow.get(m.row_uid).push(m);
+  }
+  const narratives = new Map(db.prepare("SELECT * FROM narrative").all().map(n => [n.folder_uid, n]));
   const included = citations.filter(c => c.status === "included");
   const screened = citations.filter(c => c.status !== "included");
 
@@ -71,7 +80,26 @@ function read(db) {
     if (!w.main) w.main = w.rows[0];
     w.files = byFolder.get(w.folder) || [];
   }
-  return { citations, files, byFolder, included, screened, works: [...works.values()] };
+  return { citations, files, byFolder, included, screened, works: [...works.values()], byRow, narratives };
+}
+
+/**
+ * Every place one row's tool appears, as "Methods p.5; Acknowledgments p.12".
+ *
+ * Falls back to the row's own single section/page when no mention rows exist, so
+ * a row nobody has re-read still prints what the database holds rather than
+ * nothing. The fallback is marked with a dagger so the two are not confused.
+ */
+function whereList(c, byRow) {
+  const ms = byRow.get(c.row_uid) || [];
+  if (!ms.length) {
+    const one = `${c.section || "—"}${c.page ? `, p.${c.page}` : ""}`;
+    return { text: `${one} †`, many: false, mentions: [] };
+  }
+  if (ms.length === 1) {
+    return { text: `${ms[0].section}, p.${ms[0].page}`, many: false, mentions: ms };
+  }
+  return { text: ms.map(m => `${m.section} p.${m.page}`).join("; "), many: true, mentions: ms };
 }
 
 /* ------------------------------------------------------------------ */
@@ -152,7 +180,7 @@ function indexSection(data) {
         <td>${esc(c.cited_earliest_date || "—")}${c.cited_was_preprint ? ' <span class="tag">preprint</span>' : ""}</td>
         <td>${esc(c.citing_published_date || c.citing_year || "—")}${c.citing_earliest_date && c.citing_earliest_date !== (c.citing_published_date || c.citing_year) ? `<br><span class="sub">earliest public: ${esc(c.citing_earliest_date)}</span>` : ""}</td>
         <td>${esc(c.cited_tool || "—")}</td>
-        <td>${esc(c.section || "—")}${c.page ? `, p.&nbsp;${esc(c.page)}` : ""}</td>
+        <td>${esc(whereList(c, data.byRow).text)}</td>
         <td>${esc(c.citing_senior_author || "—")}</td>
         <td>${esc(c.citing_article_type || "—")}</td>
         <td class="files">${links}</td>
@@ -173,6 +201,9 @@ function indexSection(data) {
   <p class="note">One numbered row is one citation. Where a single citing article cites more than
      one of the applicant's papers, it is numbered once and the additional citations are listed
      beneath it as “as above”, each with its own <code>row_uid</code>.</p>
+  <p class="note">A citation that appears in more than one place in the article lists every place,
+     strongest first. A dagger (&dagger;) marks a row whose locations have not yet been re-read
+     page by page, so only the single best-known location is shown.</p>
 </section>`;
 }
 
@@ -186,7 +217,77 @@ const NARRATIVE = [
   ["Findings / Conclusions / Recommendation", "4–5 sentences on what they concluded."],
 ];
 
-function citationSection(c, w, files) {
+/** Which narrative column answers which heading. */
+const NARR_COL = {
+  "Objectives": "objectives",
+  "Importance to Field": "importance",
+  "How and Why Your Work Was Used": "how_used",
+  "Findings / Conclusions / Recommendation": "findings",
+};
+
+/**
+ * One narrative subsection.
+ *
+ * Text written by someone other than the applicant is printed as what it is — a
+ * draft prepared from the manuscript, awaiting the applicant's approval. Counsel
+ * must never be handed a paragraph about the applicant's own intentions that reads
+ * as though the applicant wrote it, so the attribution is on the page, not only in
+ * a status file.
+ */
+function narrativeText(c, data, heading, hint) {
+  const col = NARR_COL[heading];
+  const n = data.narratives.get(c.folder_uid);
+  const body = n && n[col];
+  if (!body) return `<p class="blank">To be written by the applicant. ${esc(hint)}</p>`;
+  const by = n.written_by || "";
+  const isApplicant = /applicant/i.test(by) && !/draft|preparer|assistant/i.test(by);
+  const paras = String(body).split(/\n{2,}/).map(p => `<p>${esc(p)}</p>`).join("");
+  if (isApplicant) return paras;
+  return `<p class="draft-note">Draft prepared by ${esc(by)}${n.written_on ? ` on ${esc(n.written_on)}` : ""} from the cited article, `
+    + `with the page numbers it rests on. <strong>Not the applicant's own wording — to be reviewed, corrected and approved.</strong></p>`
+    + paras;
+}
+
+/**
+ * The "Where the citation appears" cell: every location, each labelled with the
+ * tier it earns, so a Methods use and an Acknowledgements thanks are not blurred
+ * into whichever one is strongest.
+ */
+function whereDetail(c, byRow) {
+  const ms = byRow.get(c.row_uid) || [];
+  if (!ms.length) {
+    return `${esc(c.section || "—")}${c.page ? `, page ${esc(c.page)}` : ""} — ${esc(TIER_LABEL[c.tier] || c.tier || "")}` +
+      ` <span class="sub">(single recorded location; not yet re-read page by page)</span>`;
+  }
+  return ms.map(m =>
+    `<strong>${esc(m.section)}</strong>, page ${esc(m.page)} — ${esc(TIER_LABEL[m.tier] || m.tier)}` +
+    `${m.use_type ? ` · ${esc(m.use_type)}` : ""}`
+  ).join("<br>");
+}
+
+/**
+ * Section II. Every recorded appearance gets its own blockquote, because the
+ * quotation is what makes the location believable and counsel may want the
+ * Acknowledgements thanks as well as the Methods sentence.
+ */
+function quotesBlock(c, byRow) {
+  const ms = (byRow.get(c.row_uid) || []).filter(m => m.quote);
+  if (!ms.length) {
+    // Nothing recorded per-occurrence: fall back to the single quote the row holds.
+    return c.quote
+      ? `<div class="quote"><blockquote>&ldquo;${esc(c.quote)}&rdquo;</blockquote>` +
+        `<p class="cite-page">${esc(c.section || "")}${c.page ? `, p. ${esc(c.page)}` : ""}</p></div>`
+      : `<div class="quote"><p class="blank">No verbatim quote recorded. A quotation has to be taken from the PDF and
+          checked word for word before it goes to counsel — see <code>PACKET-STATUS.md</code>.</p></div>`;
+  }
+  return ms.map(m => `
+  <div class="quote">
+    <blockquote>&ldquo;${esc(m.quote)}&rdquo;</blockquote>
+    <p class="cite-page">${esc(m.section)}, p.&nbsp;${esc(m.page)} — ${esc(TIER_LABEL[m.tier] || m.tier)}</p>
+  </div>`).join("");
+}
+
+function citationSection(c, w, files, data) {
   const others = w.rows.filter(r => r.row_uid !== c.row_uid);
   const fileList = files.length
     ? `<ul class="files-list">${files.map(f => `<li><a href="${href(f.file)}">${esc(f.file.split("/").pop())}</a>` +
@@ -219,20 +320,15 @@ function citationSection(c, w, files) {
     <dt>Citing Article Type</dt>
     <dd>${esc(c.citing_article_type || "—")}</dd>
     <dt>Where the citation appears</dt>
-    <dd>${esc(c.section || "—")}${c.page ? `, page ${esc(c.page)}` : ""} — ${esc(TIER_LABEL[c.tier] || c.tier || "")}</dd>
+    <dd>${whereDetail(c, data.byRow)}</dd>
   </dl>
 
   <h4>Section II — Overview of use</h4>
-  <div class="quote">${c.quote
-    ? `<blockquote>&ldquo;${esc(c.quote)}&rdquo;</blockquote><p class="cite-page">${esc(c.section || "")}${c.page ? `, p. ${esc(c.page)}` : ""}</p>`
-    : `<p class="blank">No verbatim quote recorded. A quotation has to be taken from the PDF and
-        checked word for word before it goes to counsel — see <code>PACKET-STATUS.md</code>.</p>`}</div>
+  ${quotesBlock(c, data.byRow)}
 
   ${NARRATIVE.map(([h, hint]) => `
   <h5>${esc(h)}</h5>
-  ${c.narrative && c.narrative[h]
-    ? `<p>${esc(c.narrative[h])}</p>`
-    : `<p class="blank">To be written by the applicant. ${esc(hint)}</p>`}`).join("")}
+  ${narrativeText(c, data, h, hint)}`).join("")}
 
   <h4>Files</h4>
   ${fileList}
@@ -260,13 +356,13 @@ should be confirmed or corrected by the applicant before the packet is relied on
 <section class="project" id="project-${proj}">
   <h2>Project ${proj} — ${esc(PROJECTS[proj])}</h2>
   <p class="projcount">${mains.length} citing article(s), ${mains.reduce((s, w) => s + w.rows.length, 0)} citation(s).</p>
-  ${mains.map(w => citationSection(w.main, w, w.files)).join("")}
+  ${mains.map(w => citationSection(w.main, w, w.files, data)).join("")}
 </section>`);
   }
   const orphans = data.works.filter(w => !PROJECTS[w.main.project]);
   if (orphans.length) {
     out.push(`<section class="project"><h2>Project not assigned</h2>
-      ${orphans.map(w => citationSection(w.main, w, w.files)).join("")}</section>`);
+      ${orphans.map(w => citationSection(w.main, w, w.files, data)).join("")}</section>`);
   }
   return out.join("\n");
 }
@@ -345,6 +441,7 @@ function render(db) {
   blockquote { margin:.4rem 0 .2rem; padding:.5rem .9rem; border-left:3px solid var(--accent);
                background:#faf7f5; font-style:italic; }
   .blank { font-size:.85rem; color:#9a6b00; background:#fffaf0; border:1px dashed #e0c98a; padding:.45rem .6rem; border-radius:4px; }
+  .draft-note { font-size:.8rem; color:#3a5a78; background:#f2f7fb; border-left:3px solid #7ba3c4; padding:.4rem .6rem; margin:.2rem 0 .5rem; }
   .files-list { font-size:.85rem; } .role { color:var(--muted); font-size:.75rem; text-transform:uppercase; letter-spacing:.05em; }
   #filter { width:100%; padding:.5rem .7rem; font-size:.9rem; border:1px solid var(--rule); border-radius:5px; }
   @media print {

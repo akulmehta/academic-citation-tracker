@@ -8,6 +8,7 @@ const {
   parseAuthorList,
   toKeys,
   evaluateEntry,
+  fromVancouver,
 } = require("./name-match");
 
 let passed = 0;
@@ -292,6 +293,20 @@ check(
     ["Mehta, Akul", "Jin, X", "Desai, Umesh R"].map(toDisplayName).join(", ")
   ),
   []
+);
+
+console.log("fromVancouver (PubMed Surname XY -> natural order)");
+check("surname then initials", parseOne(fromVancouver("Cummings RD")), {
+  display: "R D Cummings",
+  surname: "cummings",
+  inits: ["r", "d"],
+});
+check("hyphenated surname", parseOne(fromVancouver("Heimburg-Molinaro J")).surname, "heimburg-molinaro");
+check("a name with no initials is left alone", fromVancouver("Cummings"), "Cummings");
+check(
+  "the PI is then matched",
+  decide({ authors: "", full_authors: ["McKitrick TR", "Cummings RD"].map(fromVancouver), truncated: false }),
+  "SELF (PI)"
 );
 
 console.log(
