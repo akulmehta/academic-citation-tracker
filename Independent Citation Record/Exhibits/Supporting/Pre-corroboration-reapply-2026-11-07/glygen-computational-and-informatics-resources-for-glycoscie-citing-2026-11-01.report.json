@@ -207,8 +207,10 @@
       "snippet": "We present online three-dimensional (3D) structure-prediction tools at GLYCAM-Web (www.\nglycam. org) that can be used for generating experimentally consistent 3D structures of …",
       "truncated": true,
       "link": "https://www.nature.com/articles/s41592-026-03033-w",
-      "status": "INDEPENDENT",
-      "matched_authors": [],
+      "status": "DEPENDENT",
+      "matched_authors": [
+        "R J Woods"
+      ],
       "matched_pi": [],
       "matched_former_pi": [],
       "authors_used": "Grant, Oliver C, Wentworth, Daniel, Holmes, Samuel G, Kandel, Rajan, Sehnal, David, Wang, Xiaocong, Xiao, Yao, Sheppard, Preston, Grelsson, Tobias, Coulter, Andrew",
@@ -235,13 +237,18 @@
       "external_title": "Generating 3D models of complex carbohydrates with GLYCAM-Web.",
       "external_authors": "Grant OC, Wentworth D, Holmes SG, Kandel R, Sehnal D, Wang X, Xiao Y, Sheppard P, Grelsson T, Coulter A, Miller G, Singh A, Nagarajan M, Foley BL, Woods RJ",
       "external_similarity": 1,
-      "confirm_state": "confirmed",
-      "corroboration": "confirmed by pubmed",
+      "confirm_state": "external-resolved",
+      "corroboration": "resolved against pubmed (DEPENDENT)",
       "edition_key": "",
       "duplicate_of": "",
       "needs_attention": false,
       "attention_reason": "",
-      "language_flag_captured": ""
+      "language_flag_captured": "",
+      "status_captured": "INDEPENDENT",
+      "confirm_state_captured": "confirmed",
+      "external_matched": [
+        "R J Woods"
+      ]
     },
     {
       "index": 4,
@@ -329,7 +336,9 @@
       "duplicate_of": "",
       "needs_attention": false,
       "attention_reason": "",
-      "language_flag_captured": ""
+      "language_flag_captured": "",
+      "status_captured": "INDEPENDENT",
+      "confirm_state_captured": "confirmed"
     },
     {
       "index": 6,
@@ -370,7 +379,9 @@
       "duplicate_of": "",
       "needs_attention": false,
       "attention_reason": "",
-      "language_flag_captured": ""
+      "language_flag_captured": "",
+      "status_captured": "INDEPENDENT",
+      "confirm_state_captured": "confirmed"
     },
     {
       "index": 7,
@@ -489,7 +500,9 @@
       "duplicate_of": "",
       "needs_attention": false,
       "attention_reason": "",
-      "language_flag_captured": ""
+      "language_flag_captured": "",
+      "status_captured": "INDEPENDENT",
+      "confirm_state_captured": "confirmed"
     },
     {
       "index": 9,

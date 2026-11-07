@@ -267,7 +267,7 @@
         "Cristina C. Clement"
       ],
       "confirm_state": "confirmed",
-      "corroboration": "resolved against openalex",
+      "corroboration": "confirmed by openalex",
       "attention_reason": "",
       "needs_attention": false,
       "language_flag_captured": "",
@@ -295,7 +295,7 @@
       "external_url": "https://pubmed.ncbi.nlm.nih.gov/42958950/",
       "external_title": "Gerodontology Journal: A Scientometric Analysis of Research Trends, Citation and Evolution (2007-2025).",
       "external_authors": "Rissi J, Tissiani LS, Dondoni PD, Rodrigues-Junior SA",
-      "external_similarity": 0.1,
+      "external_similarity": 0,
       "full_authors": [],
       "confirm_state": "unverified-coverage",
       "corroboration": "not indexed in PubMed or OpenAlex; Scholar list is complete",
@@ -305,7 +305,7 @@
       "status_captured": "INDEPENDENT",
       "confirm_state_captured": "confirmed",
       "external_match_credible": 0,
-      "corroboration_note": "stored pubmed match rejected 2026-11-02: the title overlap is too thin to be the same work (was similarity 1)"
+      "corroboration_note": "stored pubmed match rejected 2026-11-02: the title overlap is too thin to be the same work (was similarity 0.1)"
     },
     {
       "index": 8,

@@ -46,7 +46,7 @@
       "language_flag": "",
       "page": 5,
       "confirm_state": "confirmed",
-      "corroboration": "resolved against openalex",
+      "corroboration": "confirmed by openalex",
       "corroboration_note": "no PubMed or OpenAlex record matched the title closely enough",
       "edition_key": "",
       "duplicate_of": "",
@@ -260,7 +260,9 @@
       "duplicate_of": "",
       "attention_reason": "possible non-English (von, mit, ist, der) - not highlighted; a certified human translation is required before it can count",
       "needs_attention": true,
-      "language_flag_captured": "possible non-English (von, mit, ist, der)"
+      "language_flag_captured": "possible non-English (von, mit, ist, der)",
+      "status_captured": "INDEPENDENT",
+      "confirm_state_captured": "confirmed"
     },
     {
       "index": 5,
@@ -298,7 +300,9 @@
       "duplicate_of": "",
       "needs_attention": false,
       "attention_reason": "",
-      "language_flag_captured": ""
+      "language_flag_captured": "",
+      "status_captured": "INDEPENDENT",
+      "confirm_state_captured": "confirmed"
     },
     {
       "index": 6,
@@ -331,7 +335,9 @@
       "duplicate_of": "",
       "needs_attention": false,
       "attention_reason": "",
-      "language_flag_captured": ""
+      "language_flag_captured": "",
+      "status_captured": "INDEPENDENT",
+      "confirm_state_captured": "confirmed"
     },
     {
       "index": 7,

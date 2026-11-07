@@ -45,7 +45,7 @@
       "language_flag": "",
       "page": 4,
       "confirm_state": "confirmed",
-      "corroboration": "resolved against openalex",
+      "corroboration": "confirmed by openalex",
       "corroboration_note": "no PubMed or OpenAlex record matched the title closely enough",
       "edition_key": "",
       "duplicate_of": "",
@@ -163,7 +163,7 @@
         "He Y"
       ],
       "confirm_state": "confirmed",
-      "corroboration": "resolved against pubmed",
+      "corroboration": "confirmed by pubmed",
       "edition_key": "",
       "duplicate_of": "",
       "attention_reason": "",

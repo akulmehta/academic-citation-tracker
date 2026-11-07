@@ -87,7 +87,7 @@
         "Jun Li"
       ],
       "confirm_state": "confirmed",
-      "corroboration": "resolved against openalex",
+      "corroboration": "confirmed by openalex",
       "edition_key": "doi:10.1016:148751:yzhanglwuxliuxchenjli",
       "duplicate_of": "",
       "attention_reason": "",
@@ -236,7 +236,7 @@
         "Liu WB"
       ],
       "confirm_state": "confirmed",
-      "corroboration": "resolved against pubmed",
+      "corroboration": "confirmed by pubmed",
       "edition_key": "",
       "duplicate_of": "",
       "attention_reason": "",

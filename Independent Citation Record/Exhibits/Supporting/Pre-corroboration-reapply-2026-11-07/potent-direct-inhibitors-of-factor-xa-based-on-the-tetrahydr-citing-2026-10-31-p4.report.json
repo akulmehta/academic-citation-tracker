@@ -1,0 +1,105 @@
+{
+  "cited_title": "Potent direct inhibitors of factor Xa based on the tetrahydroisoquinoline scaffold",
+  "cited_authors": "Rami A Al-Horani, Akul Y Mehta, Umesh R Desai",
+  "cited_venue": "European journal of medicinal chemistry",
+  "paper_url": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=dNLaKGAAAAAJ&citation_for_view=dNLaKGAAAAAJ:2osOgNQ5qMEC",
+  "cites_url": "https://scholar.google.com/scholar?start=30&hl=en&as_sdt=40000005&sciodt=0,22&cites=5710710517199553350&scipsc=",
+  "author_keys": [
+    "Rami A Al-Horani",
+    "Akul Y Mehta",
+    "Umesh R Desai"
+  ],
+  "pi_keys": [
+    "RD Cummings"
+  ],
+  "former_keys": [
+    "UR Desai"
+  ],
+  "crosscheck": "PubMed then OpenAlex, no identifying email supplied, no API key",
+  "snapshot": "2026-10-31 19:29:12",
+  "page_header": "",
+  "end_reason": "last-page-of-results (2 row(s) on page)",
+  "page": 4,
+  "entries": [
+    {
+      "index": 0,
+      "cid": "T7jE05WUFhMJ",
+      "title": "Peptide Nucleic Acids (PNA) as a versatile tool for modulation of biological systems with visible light",
+      "rawTitle": "Peptide Nucleic Acids (PNA) as a versatile tool for modulation of biological systems with visible light",
+      "authors": "T Bantle - 2021 - publikationen.bibliothek.kit.edu",
+      "snippet": "Das Hauptziel dieser Arbeit war die Kombination neuartiger photoschaltbarer Moleküle, die\nmöglicherweise im Bereich des sichtbaren Lichts operieren, mit PNA (Peptidonukleinsäuren …",
+      "truncated": false,
+      "link": "https://publikationen.bibliothek.kit.edu/1000133797",
+      "status": "INDEPENDENT",
+      "matched_authors": [],
+      "matched_pi": [],
+      "matched_former_pi": [],
+      "authors_used": "T Bantle",
+      "author_source": "scholar+openalex",
+      "language_flag": "",
+      "page": 4,
+      "pubmed_near_miss": {
+        "pmid": "33017148",
+        "title": "Thermoreversible Control of Nucleic Acid Structure and Function with Glyoxal Caging.",
+        "similarity": 0.13
+      },
+      "external_source": "openalex",
+      "external_url": "https://doi.org/10.5445/ir/1000133797",
+      "external_title": "Peptide Nucleic Acids (PNA) as a versatile tool for modulation of biological systems with visible light",
+      "external_authors": "Bantle, Tobias",
+      "external_similarity": 1,
+      "full_authors": [
+        "Bantle, Tobias"
+      ],
+      "confirm_state": "confirmed",
+      "corroboration": "confirmed by openalex",
+      "edition_key": "",
+      "duplicate_of": "",
+      "attention_reason": "possible non-English (des, mit) - not highlighted; a certified human translation is required before it can count",
+      "needs_attention": true,
+      "language_flag_captured": "possible non-English (des, mit)",
+      "status_captured": "INDEPENDENT",
+      "confirm_state_captured": "confirmed"
+    },
+    {
+      "index": 1,
+      "cid": "PWqLNQRBqP0J",
+      "title": "[CITATION] 4-(4-氨基苯基)-3-吗啉酮的合成",
+      "rawTitle": "[CITATION] 4-(4-氨基苯基)-3-吗啉酮的合成",
+      "authors": "贾云灿， 李雁武， 刘凯， 袁建勇 - 光谱实验室, 2013",
+      "snippet": "",
+      "truncated": false,
+      "link": "",
+      "status": "INDEPENDENT",
+      "matched_authors": [],
+      "matched_pi": [],
+      "matched_former_pi": [],
+      "authors_used": "贾云灿， 李雁武， 刘凯， 袁建勇 - 光谱实验室, 2013",
+      "author_source": "scholar-list",
+      "language_flag": "non-latin script (title)",
+      "page": 4,
+      "pubmed_near_miss": {
+        "pmid": "42963949",
+        "title": "EVLncRNAs 4.0: an updated database of experimentally validated functional long non-coding RNAs with evidence-grounded AI access.",
+        "similarity": 0.33
+      },
+      "external_source": "openalex",
+      "external_url": "https://openalex.org/W2465076380",
+      "external_title": "Table 4-3, Citation tracking databases",
+      "external_authors": "Rose Relevo",
+      "external_similarity": 0.5,
+      "full_authors": [],
+      "confirm_state": "unverified-coverage",
+      "corroboration": "not indexed in PubMed or OpenAlex; Scholar list is complete",
+      "edition_key": "",
+      "duplicate_of": "",
+      "attention_reason": "highlighted on Scholar's list alone - not indexed in PubMed or OpenAlex, worth a spot-check",
+      "needs_attention": true,
+      "language_flag_captured": "non-latin script",
+      "status_captured": "INDEPENDENT",
+      "confirm_state_captured": "confirmed",
+      "external_match_credible": 0,
+      "corroboration_note": "stored openalex match rejected 2026-11-02: the title overlap is too thin to be the same work (was similarity 1)"
+    }
+  ]
+}

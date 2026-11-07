@@ -271,7 +271,7 @@
       "status_captured": "INDEPENDENT",
       "confirm_state_captured": "confirmed",
       "external_match_credible": 0,
-      "corroboration_note": "stored pubmed match rejected 2026-11-02: the title overlap is too thin to be the same work (was similarity 1)"
+      "corroboration_note": "stored pubmed match rejected 2026-11-02: the title overlap is too thin to be the same work (was similarity 0.17)"
     },
     {
       "index": 7,
@@ -333,7 +333,7 @@
         "similarity": 0.13
       },
       "confirm_state": "confirmed",
-      "corroboration": "resolved against openalex",
+      "corroboration": "confirmed by openalex",
       "corroboration_note": "no PubMed or OpenAlex record matched the title closely enough",
       "edition_key": "",
       "duplicate_of": "",

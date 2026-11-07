@@ -183,8 +183,10 @@
       "snippet": "The endogenous chemokines CCL19 and CCL21 signal via their common receptor CCR7.\nCCL21 is the main lymph node homing chemokine, but a weak chemo-attractant compared …",
       "truncated": true,
       "link": "https://link.springer.com/article/10.1007/s00018-021-03930-7",
-      "status": "INDEPENDENT",
-      "matched_authors": [],
+      "status": "DEPENDENT",
+      "matched_authors": [
+        "C K Goth"
+      ],
       "matched_pi": [],
       "matched_former_pi": [],
       "authors_used": "J{\\o}rgensen, Astrid Sissel, Brandum, Emma Probst, Mikkelsen, Jeppe Malthe, Orfin, Klaudia A, Boilesen, Ditte Rahb{\\ae}k, Egerod, Kristoffer Lihme, Moussouras, Natasha A, Vilhardt, Frederik, Kalinski, Pawel, Basse, Per",
@@ -211,15 +213,18 @@
       "external_title": "The C-terminal peptide of CCL21 drastically augments CCL21 activity through the dendritic cell lymph node homing receptor CCR7 by interaction with the receptor N-terminus.",
       "external_authors": "Jørgensen AS, Brandum EP, Mikkelsen JM, Orfin KA, Boilesen DR, Egerod KL, Moussouras NA, Vilhardt F, Kalinski P, Basse P, Chen YH, Yang Z, Dwinell MB, Volkman BF, Veldkamp CT, Holst PJ, Lahl K, Goth CK, Rosenkilde MM, Hjortø GM",
       "external_similarity": 0.94,
-      "confirm_state": "confirmed",
-      "corroboration": "confirmed by pubmed",
+      "confirm_state": "external-resolved",
+      "corroboration": "resolved against pubmed (DEPENDENT)",
       "edition_key": "doi:10.1007:s00018-021-03930-7:jorgensenastridsisselbrandumemmaprobstmikkelsenjeppemaltheorfinklaudiaaboilesenditterahbaekegerodkristofferlihmemoussourasnatashaavilhardtfrederikkalinskipawelbasseper",
       "duplicate_of": "",
       "needs_attention": false,
       "attention_reason": "",
       "language_flag_captured": "",
       "status_captured": "INDEPENDENT",
-      "confirm_state_captured": "confirmed"
+      "confirm_state_captured": "confirmed",
+      "external_matched": [
+        "C K Goth"
+      ]
     },
     {
       "index": 5,
@@ -230,8 +235,10 @@
       "snippet": "Chemokine ligands and receptors regulate the directional migration of leukocytes. Post-\ntranslational modifications of chemokine receptors including O-glycosylation and tyrosine …",
       "truncated": true,
       "link": "https://link.springer.com/article/10.1007/s00018-023-04697-9",
-      "status": "INDEPENDENT",
-      "matched_authors": [],
+      "status": "DEPENDENT",
+      "matched_authors": [
+        "C K Goth"
+      ],
       "matched_pi": [],
       "matched_former_pi": [],
       "authors_used": "Verhallen, Lisa, Lackman, Jarkko J, Wendt, Rikke, Gustavsson, Martin, Yang, Zhang, Narimatsu, Yoshiki, S{\\o}rensen, Daniel M, Lafferty, Kato Mac, Gouwy, Mieke, Marques, Pedro E",
@@ -258,15 +265,18 @@
       "external_title": "\"Glyco-sulfo barcodes\" regulate chemokine receptor function.",
       "external_authors": "Verhallen L, Lackman JJ, Wendt R, Gustavsson M, Yang Z, Narimatsu Y, Sørensen DM, Lafferty KM, Gouwy M, Marques PE, Hjortø GM, Rosenkilde MM, Proost P, Goth CK",
       "external_similarity": 1,
-      "confirm_state": "confirmed",
-      "corroboration": "confirmed by pubmed",
+      "confirm_state": "external-resolved",
+      "corroboration": "resolved against pubmed (DEPENDENT)",
       "edition_key": "doi:10.1007:s00018-023-04697-9:verhallenlisalackmanjarkkojwendtrikkegustavssonmartinyangzhangnarimatsuyoshikisorensendanielmlaffertykatomacgouwymiekemarquespedroe",
       "duplicate_of": "",
       "needs_attention": false,
       "attention_reason": "",
       "language_flag_captured": "",
       "status_captured": "INDEPENDENT",
-      "confirm_state_captured": "confirmed"
+      "confirm_state_captured": "confirmed",
+      "external_matched": [
+        "C K Goth"
+      ]
     },
     {
       "index": 6,
@@ -335,9 +345,13 @@
       "snippet": "The molecular mechanisms regulating lymphocyte homing into lymph nodes are only partly\nunderstood. Here, we report that B cell-specific deletion of the X-linked gene, Cosmc, and …",
       "truncated": true,
       "link": "https://www.nature.com/articles/s41467-020-17765-6",
-      "status": "INDEPENDENT",
-      "matched_authors": [],
-      "matched_pi": [],
+      "status": "DEPENDENT",
+      "matched_authors": [
+        "R D Cummings"
+      ],
+      "matched_pi": [
+        "R D Cummings"
+      ],
       "matched_former_pi": [],
       "authors_used": "Zeng, Junwei, Eljalby, Mahmoud, Aryal, Rajindra P, Lehoux, Sylvain, Stavenhagen, Kathrin, Kudelka, Matthew R, Wang, Yingchun, Wang, Jianmei, Ju, Tongzhong, von Andrian, Ulrich H",
       "author_source": "scholar-cite-bibtex",
@@ -363,15 +377,19 @@
       "external_title": "Cosmc controls B cell homing.",
       "external_authors": "Zeng J, Eljalby M, Aryal RP, Lehoux S, Stavenhagen K, Kudelka MR, Wang Y, Wang J, Ju T, von Andrian UH, Cummings RD",
       "external_similarity": 1,
-      "confirm_state": "confirmed",
-      "corroboration": "confirmed by pubmed",
+      "confirm_state": "external-resolved",
+      "corroboration": "resolved against pubmed (DEPENDENT)",
       "edition_key": "",
       "duplicate_of": "",
       "needs_attention": false,
       "attention_reason": "",
       "language_flag_captured": "",
       "status_captured": "INDEPENDENT",
-      "confirm_state_captured": "confirmed"
+      "confirm_state_captured": "confirmed",
+      "external_matched": [
+        "R D Cummings",
+        "R D Cummings"
+      ]
     },
     {
       "index": 8,

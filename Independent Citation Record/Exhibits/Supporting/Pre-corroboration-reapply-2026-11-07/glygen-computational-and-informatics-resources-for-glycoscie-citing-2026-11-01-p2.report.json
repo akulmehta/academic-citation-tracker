@@ -353,8 +353,10 @@
       "snippet": "To the Editor—We present the GlyCosmos Glycoscience Portal (https://glycosmos. org), an\nintegrated web resource for accessing glycoscience data derived from a variety of disparate …",
       "truncated": true,
       "link": "https://www.nature.com/articles/s41592-020-0879-8",
-      "status": "INDEPENDENT",
-      "matched_authors": [],
+      "status": "DEPENDENT",
+      "matched_authors": [
+        "K F Aoki-Kinoshita"
+      ],
       "matched_pi": [],
       "matched_former_pi": [],
       "authors_used": "Yamada, Issaku, Shiota, Masaaki, Shinmachi, Daisuke, Ono, Tamiko, Tsuchiya, Shinichiro, Hosoda, Masae, Fujita, Akihiro, Aoki, Nobuyuki P, Watanabe, Yu, Fujita, Noriaki",
@@ -381,15 +383,18 @@
       "external_title": "The GlyCosmos Portal: a unified and comprehensive web resource for the glycosciences.",
       "external_authors": "Yamada I, Shiota M, Shinmachi D, Ono T, Tsuchiya S, Hosoda M, Fujita A, Aoki NP, Watanabe Y, Fujita N, Angata K, Kaji H, Narimatsu H, Okuda S, Aoki-Kinoshita KF",
       "external_similarity": 1,
-      "confirm_state": "confirmed",
-      "corroboration": "confirmed by pubmed",
+      "confirm_state": "external-resolved",
+      "corroboration": "resolved against pubmed (DEPENDENT)",
       "edition_key": "",
       "duplicate_of": "",
       "needs_attention": false,
       "attention_reason": "",
       "language_flag_captured": "",
       "status_captured": "INDEPENDENT",
-      "confirm_state_captured": "confirmed"
+      "confirm_state_captured": "confirmed",
+      "external_matched": [
+        "K F Aoki-Kinoshita"
+      ]
     },
     {
       "index": 8,

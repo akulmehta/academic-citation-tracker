@@ -73,7 +73,7 @@
         "similarity": 0.17
       },
       "confirm_state": "confirmed",
-      "corroboration": "resolved against openalex",
+      "corroboration": "confirmed by openalex",
       "corroboration_note": "no PubMed or OpenAlex record matched the title closely enough",
       "edition_key": "",
       "duplicate_of": "",
@@ -160,7 +160,7 @@
       "language_flag": "",
       "page": 1,
       "confirm_state": "confirmed",
-      "corroboration": "resolved against openalex",
+      "corroboration": "confirmed by openalex",
       "corroboration_note": "no PubMed or OpenAlex record matched the title closely enough",
       "edition_key": "doi:10.1007:s11696-024-03785-9:safisherzamanfazilsadiasaeedlaibashahhumairaarshadmuhammadalobaidhussahmrehmanfoziashariffaizaselvarajchandraboseorakzaiabdulhamid",
       "duplicate_of": "",

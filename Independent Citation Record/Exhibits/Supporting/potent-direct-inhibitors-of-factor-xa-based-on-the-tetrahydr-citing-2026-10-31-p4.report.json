@@ -87,7 +87,7 @@
       "external_url": "https://openalex.org/W2465076380",
       "external_title": "Table 4-3, Citation tracking databases",
       "external_authors": "Rose Relevo",
-      "external_similarity": 0.5,
+      "external_similarity": 0.33,
       "full_authors": [],
       "confirm_state": "unverified-coverage",
       "corroboration": "not indexed in PubMed or OpenAlex; Scholar list is complete",
@@ -99,7 +99,7 @@
       "status_captured": "INDEPENDENT",
       "confirm_state_captured": "confirmed",
       "external_match_credible": 0,
-      "corroboration_note": "stored openalex match rejected 2026-11-02: the title overlap is too thin to be the same work (was similarity 1)"
+      "corroboration_note": "stored openalex match rejected 2026-11-02: the title overlap is too thin to be the same work (was similarity 0.5)"
     }
   ]
 }

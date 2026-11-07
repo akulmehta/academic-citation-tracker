@@ -1,9 +1,9 @@
 {
- "generated_at": "2026-11-07T17:28:32.294Z",
+ "generated_at": "2026-11-07T17:37:36.886Z",
  "sources": {
   "ledger": "Exhibits/Supporting/citation-ledger-2026-11-02.json",
   "catalog": "Database/citation-catalog.sqlite",
-  "catalog_built_at": "2026-11-07T17:28:27.701Z",
+  "catalog_built_at": "2026-11-07T17:37:22.787Z",
   "review_sheet": "Drafts/review-queue-2026-11-02.csv",
   "note": "Database/citation-catalog.sqlite is the primary store; the dated ledger written by tools/build-ledger.js is a derived report of the same rows, and the headline figures here are that report's global block. The two were checked against each other when this file was written and agreed. Rows are the active set (filed and not superseded). Quote row_uid to refer to a row -- it never changes. This file is generated; regenerate it rather than editing it."
  },
@@ -56,29 +56,7 @@
   "scholar_cited_by": null,
   "note": "independent_countable counts rows on the exhibit pages and excludes entries flagged non-English, entries whose author list no source has settled, and (per the user's decision on 2026-11-05) entries that do not stand for their work because Google Scholar lists the same paper twice against the same cited paper. It is therefore the number of yellow marks printed on the filed exhibits, and it counts citations rather than papers. Per the guide a non-English citation needs a certified human translation and affidavit before it may be counted. independent_unique_papers is the same counted-citation basis after duplicate listings are dropped -- despite the name it is NOT a paper count; distinct_citing_papers and distinct_independent_papers are the true paper counts and are the figures to quote when stating how many papers cite this work. Per the user's decision on 2026-11-01 no certified translations are being obtained, so every non-English entry is left unhighlighted and the english_* columns are the adjusted English-only figures the guide asks for; non_english_withheld is the count of entries that look independent and corroborated but are withheld for language. secondary_copy_independent is the independent rows held back only because they do not stand for their work, named separately so they are never mistaken for unsettled author work. The english_* denominator is the English rows on the citing lists, because Google Scholar publishes no English-only total for a profile."
  },
- "metric_history": [
-  {
-   "snapshot_date": "2026-10-29",
-   "cited_by_all": 1495,
-   "cited_by_since_2021": 1010,
-   "basis": "Profile metrics table, read from the saved profile HTML",
-   "source": "Exhibits/Supporting/akul-mehta-google-scholar-2026-10-29.html"
-  },
-  {
-   "snapshot_date": "2026-10-31",
-   "cited_by_all": 1496,
-   "cited_by_since_2021": 1011,
-   "basis": "Profile metrics table in the re-saved profile HTML, and independently the sum of the 48 per-publication counts in the re-fetched publication list. The two agree, and match the 1496 total the user reported.",
-   "source": "Exhibits/Supporting/akul-mehta-google-scholar-2026-10-31.html"
-  },
-  {
-   "snapshot_date": "2026-11-02",
-   "cited_by_all": 1498,
-   "cited_by_since_2021": 1013,
-   "basis": "Read from the expanded profile page during the 2026-11-02 re-capture. The per-article counts on that same page sum to 1498, agreeing with the header. The row Scholar heads 'Citations' is the cited-by total - an earlier reading of it as 'Cited by' is why a parser returned nothing.",
-   "source": "Exhibits/Supporting/akul-mehta-google-scholar-2026-11-02.html"
-  }
- ],
+ "metric_history": [],
  "articles": [
   {
    "cites_id": "11657216136002863473",
