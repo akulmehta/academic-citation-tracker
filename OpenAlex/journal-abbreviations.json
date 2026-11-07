@@ -1,0 +1,345 @@
+{
+  "file": true,
+  "retrieved_on": "2026-11-06",
+  "note": "NLM (PubMed-compliant) journal abbreviations, read from the \"source\" field of a PubMed esummary record reached through each journal's own DOI. Keyed by the journal name as Google Scholar prints it.",
+  "entries": {
+    "glycobiology": {
+      "venue_as_printed": "Glycobiology",
+      "nlm_abbreviation": "Glycobiology",
+      "nlm_full_journal_name": "Glycobiology",
+      "nlm_unique_id": "9104124",
+      "lookup": "pubmed-doi",
+      "doi": "10.1093/glycob/cwz080",
+      "pmid": "31616925",
+      "name_matches": true
+    },
+    "journal of medicinal chemistry": {
+      "venue_as_printed": "Journal of medicinal chemistry",
+      "nlm_abbreviation": "J Med Chem",
+      "nlm_full_journal_name": "Journal of medicinal chemistry",
+      "nlm_unique_id": "9716531",
+      "lookup": "pubmed-doi",
+      "doi": "10.1021/jm301338q",
+      "pmid": "23316863",
+      "name_matches": true
+    },
+    "bioinformatics": {
+      "venue_as_printed": "Bioinformatics",
+      "nlm_abbreviation": "Bioinformatics",
+      "nlm_full_journal_name": "Bioinformatics (Oxford, England)",
+      "nlm_unique_id": "9808944",
+      "lookup": "pubmed-doi",
+      "doi": "10.1093/bioinformatics/btaa190",
+      "pmid": "32170934",
+      "name_matches": true
+    },
+    "journal of thrombosis and haemostasis": {
+      "venue_as_printed": "Journal of Thrombosis and Haemostasis",
+      "nlm_abbreviation": "J Thromb Haemost",
+      "nlm_full_journal_name": "Journal of thrombosis and haemostasis : JTH",
+      "nlm_unique_id": "101170508",
+      "lookup": "pubmed-doi",
+      "doi": "10.1111/jth.13254",
+      "pmid": "26748875",
+      "name_matches": true
+    },
+    "journal of virology": {
+      "venue_as_printed": "Journal of virology",
+      "nlm_abbreviation": "J Virol",
+      "nlm_full_journal_name": "Journal of virology",
+      "nlm_unique_id": "0113724",
+      "lookup": "pubmed-doi",
+      "doi": "10.1128/jvi.01178-19",
+      "pmid": "31484755",
+      "name_matches": true
+    },
+    "scientific reports": {
+      "venue_as_printed": "Scientific Reports",
+      "nlm_abbreviation": "Sci Rep",
+      "nlm_full_journal_name": "Scientific reports",
+      "nlm_unique_id": "101563288",
+      "lookup": "pubmed-doi",
+      "doi": "10.1038/srep24043",
+      "pmid": "27053426",
+      "name_matches": true
+    },
+    "current opinion in structural biology": {
+      "venue_as_printed": "Current Opinion in Structural Biology",
+      "nlm_abbreviation": "Curr Opin Struct Biol",
+      "nlm_full_journal_name": "Current opinion in structural biology",
+      "nlm_unique_id": "9107784",
+      "lookup": "pubmed-doi",
+      "doi": "10.1016/j.sbi.2019.12.002",
+      "pmid": "31927217",
+      "name_matches": true
+    },
+    "science advances": {
+      "venue_as_printed": "Science Advances",
+      "nlm_abbreviation": "Sci Adv",
+      "nlm_full_journal_name": "Science advances",
+      "nlm_unique_id": "101653440",
+      "lookup": "pubmed-doi",
+      "doi": "10.1126/sciadv.abf6834",
+      "pmid": "34108208",
+      "name_matches": true
+    },
+    "biochemistry": {
+      "venue_as_printed": "Biochemistry",
+      "nlm_abbreviation": "Biochemistry",
+      "nlm_full_journal_name": "Biochemistry",
+      "nlm_unique_id": "0370623",
+      "lookup": "pubmed-doi",
+      "doi": "10.1021/bi2004526",
+      "pmid": "21736375",
+      "name_matches": true
+    },
+    "journal of biological chemistry": {
+      "venue_as_printed": "Journal of Biological Chemistry",
+      "nlm_abbreviation": "J Biol Chem",
+      "nlm_full_journal_name": "The Journal of biological chemistry",
+      "nlm_unique_id": "2985121R",
+      "lookup": "pubmed-doi",
+      "doi": "10.1016/j.jbc.2022.102591",
+      "pmid": "36244450",
+      "name_matches": true
+    },
+    "cellular and molecular life sciences": {
+      "venue_as_printed": "Cellular and Molecular Life Sciences",
+      "nlm_abbreviation": "Cell Mol Life Sci",
+      "nlm_full_journal_name": "Cellular and molecular life sciences : CMLS",
+      "nlm_unique_id": "9705402",
+      "lookup": "pubmed-doi",
+      "doi": "10.1007/s00018-021-03863-1",
+      "pmid": "34089345",
+      "name_matches": true
+    },
+    "expert opinion on therapeutic patents": {
+      "venue_as_printed": "Expert opinion on therapeutic patents",
+      "nlm_abbreviation": "Expert Opin Ther Pat",
+      "nlm_full_journal_name": "Expert opinion on therapeutic patents",
+      "nlm_unique_id": "9516419",
+      "lookup": "pubmed-doi",
+      "doi": "10.1517/13543776.2014.845169",
+      "pmid": "24099091",
+      "name_matches": true
+    },
+    "molecular cellular proteomics": {
+      "venue_as_printed": "Molecular & Cellular Proteomics",
+      "nlm_abbreviation": "Mol Cell Proteomics",
+      "nlm_full_journal_name": "Molecular & cellular proteomics : MCP",
+      "nlm_unique_id": "101125647",
+      "lookup": "pubmed-doi",
+      "doi": "10.1016/j.mcpro.2024.100844",
+      "pmid": "39307422",
+      "name_matches": true
+    },
+    "european journal of medicinal chemistry": {
+      "venue_as_printed": "European journal of medicinal chemistry",
+      "nlm_abbreviation": "Eur J Med Chem",
+      "nlm_full_journal_name": "European journal of medicinal chemistry",
+      "nlm_unique_id": "0420510",
+      "lookup": "pubmed-doi",
+      "doi": "10.1016/j.ejmech.2012.06.032",
+      "pmid": "22770607",
+      "name_matches": true
+    },
+    "cell chemical biology": {
+      "venue_as_printed": "Cell Chemical Biology",
+      "nlm_abbreviation": "Cell Chem Biol",
+      "nlm_full_journal_name": "Cell chemical biology",
+      "nlm_unique_id": "101676030",
+      "lookup": "pubmed-doi",
+      "doi": "10.1016/j.chembiol.2023.06.013",
+      "pmid": "37463583",
+      "name_matches": true
+    },
+    "bioconjugate chemistry": {
+      "venue_as_printed": "Bioconjugate chemistry",
+      "nlm_abbreviation": "Bioconjug Chem",
+      "nlm_full_journal_name": "Bioconjugate chemistry",
+      "nlm_unique_id": "9010319",
+      "lookup": "pubmed-doi",
+      "doi": "10.1021/acs.bioconjchem.9b00613",
+      "pmid": "31600064",
+      "name_matches": true
+    },
+    "cells": {
+      "venue_as_printed": "Cells",
+      "nlm_abbreviation": "Cells",
+      "nlm_full_journal_name": "Cells",
+      "nlm_unique_id": "101600052",
+      "lookup": "pubmed-doi",
+      "doi": "10.3390/cells12020327",
+      "pmid": "36672263",
+      "name_matches": true
+    },
+    "chemical science": {
+      "venue_as_printed": "Chemical Science",
+      "nlm_abbreviation": "Chem Sci",
+      "nlm_full_journal_name": "Chemical science",
+      "nlm_unique_id": "101545951",
+      "lookup": "pubmed-doi",
+      "doi": "10.1039/d3sc00260h",
+      "pmid": "37006675",
+      "name_matches": true
+    },
+    "beilstein journal of organic chemistry": {
+      "venue_as_printed": "Beilstein Journal of Organic Chemistry",
+      "nlm_abbreviation": "Beilstein J Org Chem",
+      "nlm_full_journal_name": "Beilstein journal of organic chemistry",
+      "nlm_unique_id": "101250746",
+      "lookup": "pubmed-doi",
+      "doi": "10.3762/bjoc.16.187",
+      "pmid": "32983270",
+      "name_matches": true
+    },
+    "frontiers in immunology": {
+      "venue_as_printed": "Frontiers in Immunology",
+      "nlm_abbreviation": "Front Immunol",
+      "nlm_full_journal_name": "Frontiers in immunology",
+      "nlm_unique_id": "101560960",
+      "lookup": "pubmed-doi",
+      "doi": "10.3389/fimmu.2022.915890",
+      "pmid": "35812455",
+      "name_matches": true
+    },
+    "acs chemical biology": {
+      "venue_as_printed": "ACS chemical biology",
+      "nlm_abbreviation": "ACS Chem Biol",
+      "nlm_full_journal_name": "ACS chemical biology",
+      "nlm_unique_id": "101282906",
+      "lookup": "pubmed-doi",
+      "doi": "10.1021/acschembio.5b00071",
+      "pmid": "25742429",
+      "name_matches": true
+    },
+    "proceedings of the national academy of sciences": {
+      "venue_as_printed": "Proceedings of the National Academy of Sciences",
+      "nlm_abbreviation": "Proc Natl Acad Sci U S A",
+      "nlm_full_journal_name": "Proceedings of the National Academy of Sciences of the United States of America",
+      "nlm_unique_id": "7505876",
+      "lookup": "pubmed-doi",
+      "doi": "10.1073/pnas.2323045122",
+      "pmid": "40146857",
+      "name_matches": true
+    },
+    "analytical and bioanalytical chemistry": {
+      "venue_as_printed": "Analytical and bioanalytical chemistry",
+      "nlm_abbreviation": "Anal Bioanal Chem",
+      "nlm_full_journal_name": "Analytical and bioanalytical chemistry",
+      "nlm_unique_id": "101134327",
+      "lookup": "pubmed-doi",
+      "doi": "10.1007/s00216-016-0055-2",
+      "pmid": "27888308",
+      "name_matches": true
+    },
+    "acs central science": {
+      "venue_as_printed": "ACS Central Science",
+      "nlm_abbreviation": "ACS Cent Sci",
+      "nlm_full_journal_name": "ACS central science",
+      "nlm_unique_id": "101660035",
+      "lookup": "pubmed-doi",
+      "doi": "10.1021/acscentsci.4c02124",
+      "pmid": "40454341",
+      "name_matches": true
+    },
+    "medchemcomm": {
+      "venue_as_printed": "MedChemComm",
+      "nlm_abbreviation": "Medchemcomm",
+      "nlm_full_journal_name": "MedChemComm",
+      "nlm_unique_id": "101531525",
+      "lookup": "pubmed-doi",
+      "doi": "10.1039/c9md00291j",
+      "pmid": "32206236",
+      "name_matches": true
+    },
+    "biochemical and biophysical research communications": {
+      "venue_as_printed": "Biochemical and biophysical research communications",
+      "nlm_abbreviation": "Biochem Biophys Res Commun",
+      "nlm_full_journal_name": "Biochemical and biophysical research communications",
+      "nlm_unique_id": "0372516",
+      "lookup": "pubmed-doi",
+      "doi": "10.1016/j.bbrc.2014.09.003",
+      "pmid": "25201728",
+      "name_matches": true
+    },
+    "database": {
+      "venue_as_printed": "Database",
+      "nlm_abbreviation": "Database (Oxford)",
+      "nlm_full_journal_name": "Database : the journal of biological databases and curation",
+      "nlm_unique_id": "101517697",
+      "lookup": "pubmed-doi",
+      "doi": "10.1093/database/baae073",
+      "pmid": "39137905",
+      "name_matches": true
+    },
+    "acs chemical neuroscience": {
+      "venue_as_printed": "ACS Chemical Neuroscience",
+      "nlm_abbreviation": "ACS Chem Neurosci",
+      "nlm_full_journal_name": "ACS chemical neuroscience",
+      "nlm_unique_id": "101525337",
+      "lookup": "pubmed-doi",
+      "doi": "10.1021/acschemneuro.4c00399",
+      "pmid": "39401784",
+      "name_matches": true
+    },
+    "transfusion": {
+      "venue_as_printed": "Transfusion",
+      "nlm_abbreviation": "Transfusion",
+      "nlm_full_journal_name": "Transfusion",
+      "nlm_unique_id": "0417360",
+      "lookup": "pubmed-doi",
+      "doi": "10.1111/trf.70027",
+      "pmid": "41347867",
+      "name_matches": true
+    },
+    "trends in biotechnology": {
+      "venue_as_printed": "Trends in Biotechnology",
+      "nlm_abbreviation": "Trends Biotechnol",
+      "nlm_full_journal_name": "Trends in biotechnology",
+      "nlm_unique_id": "8310903",
+      "lookup": "pubmed-doi",
+      "doi": "10.1016/j.tibtech.2026.06.019",
+      "pmid": "42457473",
+      "name_matches": true
+    },
+    "peptide libraries": {
+      "venue_as_printed": "Peptide Libraries: Methods and Protocols",
+      "nlm_abbreviation": "Methods Mol Biol",
+      "nlm_full_journal_name": "Methods in molecular biology (Clifton, N.J.)",
+      "nlm_unique_id": "9214969",
+      "lookup": "pubmed-doi",
+      "doi": "10.1007/978-1-0716-4578-9_12",
+      "pmid": "40663330",
+      "name_matches": false
+    },
+    "us patent 9 758 459": {
+      "venue_as_printed": "US Patent 9,758,459",
+      "nlm_abbreviation": null,
+      "lookup": "none",
+      "doi": null,
+      "note": "no DOI on any work in this venue"
+    },
+    "us patent 20 160 115 280": {
+      "venue_as_printed": "US Patent 20,160,115,280",
+      "nlm_abbreviation": null,
+      "lookup": "none",
+      "doi": null,
+      "note": "no DOI on any work in this venue"
+    },
+    "us patent wo2015148622 a1": {
+      "venue_as_printed": "US Patent WO2015148622 A1",
+      "nlm_abbreviation": null,
+      "lookup": "none",
+      "doi": null,
+      "note": "no DOI on any work in this venue"
+    },
+    "virginia commonwealth university": {
+      "venue_as_printed": "Virginia Commonwealth University",
+      "nlm_abbreviation": null,
+      "lookup": "pubmed-doi",
+      "doi": "10.25772/9fkf-gp77",
+      "note": "no PubMed record for this DOI"
+    }
+  }
+}

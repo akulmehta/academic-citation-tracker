@@ -1,0 +1,1548 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Citation impact against the field — OpenAlex</title>
+<!--
+  Standalone workpaper. Reads OpenAlex/field-comparison.js, which
+  tools/build-field-comparison.js writes, and borrows the dashboard's stylesheet
+  so the two read as one document.
+
+  It deliberately does NOT live in dashboard/ and is not wired into that
+  dashboard's contents bar: the citation packet is Google Scholar based and
+  frozen, everything here is OpenAlex, and keeping the pages apart is what stops
+  a field percentile from being read as a packet figure. Wiring it in would also
+  renumber later chapters, which is a change to make only once the design is
+  agreed.
+
+  Every number on this page is OpenAlex's own count against OpenAlex's own
+  counts. Scholar appears only in the scale panel, where the two are held apart.
+-->
+<link rel="stylesheet" href="../dashboard/styles.css">
+<style>
+  .scalebox {
+    border: 2px solid var(--review);
+    border-left-width: 6px;
+    border-radius: 4px;
+    background: #fdf7ef;
+    padding: .9rem 1.1rem;
+    max-width: 46rem;
+    margin: 0 0 1.6rem;
+    font-size: .92rem;
+  }
+  .scalebox b { color: #8a5416; }
+  /* A row matched on a title prefix rather than the whole title: flagged in the
+     page's own stylesheet, since dashboard/styles.css is not this page's to edit. */
+  td.inferred { font-style: italic; text-decoration: underline dotted var(--review); text-underline-offset: 3px; }
+  /* A publication on the record that OpenAlex holds no work for: no id, no count,
+     no percentile. Marked faintly rather than italic, since italic here already
+     means "matched on a prefix" and the two states must not read alike. */
+  td.absent { color: var(--ink-faint); }
+  .bar-label { font-size: 11px; fill: var(--ink-soft); }
+  /* A percentile annotation now sits where its own bar ends, which means a bar
+     near the 99th percentile has the text drawn over it. paint-order puts the
+     white stroke beneath the glyphs, so the halo is invisible on the white page
+     and only appears where the text crosses a fill. */
+  .bar-label { paint-order: stroke fill; stroke: #fff; stroke-width: 3px; stroke-linejoin: round; }
+  /* In the ladders and the FWCI chart the annotation now prints ABOVE its bar, so it
+     never crosses a fill and the halo above is not needed -- and on a coloured bar a
+     white outline is exactly what draws the eye. This modifier removes it for those
+     charts only; the side labels in the programme and age charts still sit beside
+     their bars and keep the halo. */
+  .bar-label--over { paint-order: normal; stroke: none; }
+  .bar-title { font-size: 11px; fill: var(--ink); }
+  .axis text { font-size: 10.5px; fill: var(--ink-faint); }
+  .axis line, .axis path { stroke: var(--rule); }
+  .refline { stroke: var(--ink); stroke-width: 1.5; }
+  .reflabel { font-size: 10.5px; fill: var(--ink); font-weight: 600; }
+  .gridline { stroke: var(--rule-soft); }
+  /* Each field class sets fill for the SVG bars and background-color for the
+     legend swatch, which is a span rather than a shape. */
+  .field-glyco { fill: var(--accent); background-color: var(--accent); }
+  .field-anti  { fill: #b3452f; background-color: #b3452f; }
+  .field-both  { fill: var(--patent); background-color: var(--patent); }
+  .field-other { fill: var(--ink-faint); background-color: var(--ink-faint); }
+  /* The Publication column prints the whole title (never truncated), so it wraps
+     rather than being clipped, and the venue sits under it in the citation form a
+     reviewer reads: journal abbreviated and italic, year bold. */
+  td.ttl {
+    max-width: 34rem;
+    white-space: normal;
+    overflow-wrap: anywhere;
+    line-height: 1.35;
+  }
+  td.ttl i { font-style: italic; }
+  td.ttl b { font-weight: 600; }
+  /* The exact OQL, printed verbatim in the methods table. It wraps, because a query
+     that ran off the sheet would be no more reproducible than one paraphrased. */
+  pre.oql {
+    margin: 0;
+    font-family: ui-monospace, "Cascadia Mono", Consolas, monospace;
+    font-size: .8rem;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+    background: var(--rule-soft);
+    border-left: 2px solid var(--rule);
+    padding: .35rem .5rem;
+  }
+  #tbl-method-inputs p.sub { margin: .4rem 0 0; font-size: .8rem; color: var(--ink-soft); }
+  .nowrap { white-space: nowrap; }
+  /* The methods section is prose in a numbered sequence, so it needs the measure
+     the dashboard gives .prose and room between steps; without it the list runs to
+     the full width of the wide figure and each step becomes a single long line. */
+  .method-steps {
+    max-width: 46rem;
+    margin: 0 0 1.4rem;
+    padding-left: 1.4rem;
+    font-size: .9rem;
+    line-height: 1.55;
+  }
+  .method-steps li { margin: 0 0 .7rem; }
+  .method-steps li b { font-weight: 600; }
+  .method-steps code { white-space: nowrap; }
+  #tbl-method-inputs td.ttl { max-width: 30rem; }
+  /* The publication table needs 10 columns and the cohorts table 11, so neither
+     can shrink to a narrow window. Without a scrolling container the table
+     widens the whole document instead: the page scrolls sideways, the masthead
+     stops spanning the sheet, and the last columns are only reachable by
+     scrolling past the content. Scrolling belongs to the table, not the page. */
+  .table-scroll { overflow-x: auto; }
+  @media print {
+    .page-back { display: none !important; }
+    .scalebox { background: #fff; }
+    .figure { break-inside: avoid; }
+    /* A scrollbar is a screen affordance; on paper the table is either on the
+       sheet or it is not. */
+    .table-scroll { overflow-x: visible; }
+    /* Five of the publication table's headings are two-word labels that refuse to
+       shrink, and at Letter content width they held the table 30 px past the edge
+       of the sheet. Chrome clips whatever hangs past the page and warns about
+       nothing, so let the headings wrap over two lines rather than lose a column
+       of figures, and tighten the cell padding the way the dashboard's own wide
+       appendices do. Measured: 731 px of table against 701 px of sheet before. */
+    .table-scroll thead th { white-space: normal; }
+    .table-scroll th, .table-scroll td { padding: .14rem .2rem; }
+  }
+</style>
+</head>
+<body>
+
+<script src="../dashboard/vendor/d3.min.js"></script>
+<script src="field-comparison.js"></script>
+
+<header class="masthead">
+  <div class="masthead-inner">
+    <p class="kicker">OpenAlex &middot; field comparison</p>
+    <h1>Where the citation record sits in its own field</h1>
+    <p class="standfirst" id="standfirst"></p>
+    <p class="sourcing" id="sourcing"></p>
+  </div>
+</header>
+
+<main>
+
+<section class="chapter">
+  <h2>Read this before any figure below</h2>
+  <div class="scalebox" id="scalebox"></div>
+  <div class="figure-band" id="band-head"></div>
+</section>
+
+<section class="chapter">
+  <h2>Field-weighted impact</h2>
+  <p class="prose" id="fwci-lede"></p>
+  <figure class="figure">
+    <h3>The fifteen highest field-weighted impacts</h3>
+    <div class="chart" id="chart-fwci"></div>
+    <div class="legend" id="legend-fwci"></div>
+    <figcaption id="cap-fwci"></figcaption>
+  </figure>
+  <figure class="figure">
+    <h3>The two programmes, kept apart</h3>
+    <div class="chart" id="chart-programme"></div>
+    <figcaption id="cap-programme"></figcaption>
+  </figure>
+</section>
+
+<section class="chapter">
+  <h2>Percentile inside the field cohort</h2>
+  <p class="prose" id="pct-lede"></p>
+  <figure class="figure">
+    <h3>Glycoscience publications, ranked inside the glycoscience cohort</h3>
+    <div class="chart" id="chart-ladder-glyco"></div>
+    <div class="legend" id="legend-ladder-glyco"></div>
+    <figcaption id="cap-ladder-glyco"></figcaption>
+  </figure>
+  <figure class="figure">
+    <h3>Anticoagulation publications, ranked inside the anticoagulation cohort</h3>
+    <div class="chart" id="chart-ladder-anti"></div>
+    <div class="legend" id="legend-ladder-anti"></div>
+    <figcaption id="cap-ladder-anti"></figcaption>
+  </figure>
+  <figure class="figure">
+    <h3>Publications in both programmes, ranked inside each</h3>
+    <div class="chart" id="chart-ladder-both"></div>
+    <div class="legend" id="legend-ladder-both"></div>
+    <figcaption id="cap-ladder-both"></figcaption>
+  </figure>
+  <figure class="figure">
+    <h3>Glycoscience cohort: publications above the 90th percentile</h3>
+    <div class="chart" id="chart-ladder-glyco-p90"></div>
+    <div class="legend" id="legend-ladder-glyco-p90"></div>
+    <figcaption id="cap-ladder-glyco-p90"></figcaption>
+  </figure>
+  <figure class="figure">
+    <h3>Anticoagulation cohort: publications above the 90th percentile</h3>
+    <div class="chart" id="chart-ladder-anti-p90"></div>
+    <div class="legend" id="legend-ladder-anti-p90"></div>
+    <figcaption id="cap-ladder-anti-p90"></figcaption>
+  </figure>
+  <figure class="figure">
+    <h3>Percentile of each publication&rsquo;s field-weighted impact</h3>
+    <div class="chart" id="chart-fwci-pct"></div>
+    <div class="legend" id="legend-fwci-pct"></div>
+    <figcaption id="cap-fwci-pct"></figcaption>
+  </figure>
+  <figure class="figure">
+    <h3>Why the percentile is taken within the paper's own year</h3>
+    <div class="chart" id="chart-age"></div>
+    <div class="legend" id="legend-age"></div>
+    <figcaption id="cap-age"></figcaption>
+  </figure>
+</section>
+
+<section class="chapter">
+  <h2>The cohorts</h2>
+  <p class="prose">
+    Each cohort is one OQL export, and the file itself is the cohort: the export carries no
+    topic column and no identifier, so cohorts are never merged. A percentile is only quoted
+    against a cohort that measures the paper&rsquo;s own programme.
+  </p>
+  <figure class="figure figure-wide">
+    <div class="table-scroll" id="tbl-cohorts"></div>
+    <figcaption id="cap-cohorts"></figcaption>
+  </figure>
+</section>
+
+<section class="chapter">
+  <h2>Every publication</h2>
+  <p class="prose" id="table-lede"></p>
+  <figure class="figure figure-wide">
+    <div class="table-scroll" id="tbl-papers"></div>
+    <figcaption>
+      OpenAlex id leads each row, since every count in this table is OpenAlex&rsquo;s.
+      Under each title sits the venue: the journal in its NLM (PubMed-compliant) abbreviation
+      in italics, then the year Google Scholar gives the paper in bold. Five rows have no
+      journal abbreviation to print — three patents, a dissertation and a book chapter — and
+      carry the venue text exactly as Scholar wrote it.
+      &ldquo;&mdash;&rdquo; under a percentile means the cohort holds no paper of that
+      publication year, so the question has no answer rather than a zero one. A row with
+      no OpenAlex id at all is a publication on the record that OpenAlex does not hold;
+      it has no count, impact figure or percentile to report.
+    </figcaption>
+  </figure>
+  <figure class="figure figure-wide">
+    <h3>The independent citations that cannot be ranked, and why</h3>
+    <div class="table-scroll" id="tbl-unrankable"></div>
+    <figcaption id="cap-unrankable"></figcaption>
+  </figure>
+</section>
+
+<section class="chapter">
+  <h2>How this analysis was performed</h2>
+  <p class="prose">
+    Written so that a reader holding the two CSV exports can reproduce every figure above
+    without holding this page&rsquo;s code. Each step names the rule and the number it
+    produced, and the things that were deliberately <em>not</em> done are listed at the end
+    with the reason.
+  </p>
+  <figure class="figure figure-wide">
+    <h3>Inputs</h3>
+    <div class="table-scroll" id="tbl-method-inputs"></div>
+  </figure>
+  <h3>Steps</h3>
+  <ol class="method-steps" id="method-steps"></ol>
+  <h3>What this analysis deliberately does not do</h3>
+  <ul class="method-steps" id="method-nots"></ul>
+  <p class="method-note" id="method-repro"></p>
+</section>
+
+</main>
+
+<footer class="colophon">
+  <p id="colophon-line"></p>
+  <p class="tiny">
+    Workpaper generated from OpenAlex records. It is not legal advice and makes no
+    prediction about any filing outcome.
+  </p>
+</footer>
+
+<script>
+(function () {
+  "use strict";
+
+  const D = window.FIELD_COMPARISON;
+  if (!D) {
+    document.body.insertAdjacentHTML("afterbegin",
+      `<div style="padding:1.5rem;max-width:44rem;margin:2rem auto;border:2px solid #b3452f;border-radius:4px">
+         <b>field-comparison.js could not be loaded.</b>
+         <p>Run <code>node tools/build-field-comparison.js</code> from the project root, then reload.</p>
+       </div>`);
+    return;
+  }
+
+  const fmt = (n) => (n == null ? "—" : Number(n).toLocaleString("en-US"));
+  const pc = (n) => (n == null ? "—" : n.toFixed(1) + "%");
+  const el = (id) => document.getElementById(id);
+  const esc = (s) => String(s == null ? "" : s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+  // Ordinal suffix. A number shown with decimals always takes "th" (92.9th);
+  // only a whole number can be 1st / 2nd / 3rd. The suffix must be read off the
+  // digits actually printed, so a whole-number display rounds first: a percentile
+  // of 92.9 prints as 93 and has to be 93rd, not 92th.
+  function ordinal(n, digits) {
+    if (n == null) return "—";
+    const d = digits == null ? 0 : digits;
+    if (d > 0) return n.toFixed(d) + "th";
+    const r = Math.round(n);
+    const m10 = Math.abs(r) % 10, m100 = Math.abs(r) % 100;
+    const suf = (m10 === 1 && m100 !== 11) ? "st" : (m10 === 2 && m100 !== 12) ? "nd"
+      : (m10 === 3 && m100 !== 13) ? "rd" : "th";
+    return r + suf;
+  }
+
+  const FIELD_LABEL = { glyco: "Glycoscience", anti: "Anticoagulation", both: "Both programmes", other: "Neither programme", unassigned: "Not classified" };
+  // A cohort's field says which literature the cohort MEASURES, which is not the
+  // same question as which programme a given paper belongs to.
+  const COHORT_FIELD_LABEL = { glyco: "Glycoscience cohort", anti: "Anticoagulation cohort", broad: "Broad keyword cohort" };
+
+  // Width of the widest string as it would render in class `cls`. A character
+  // count is not enough for these titles — they are dense with enzyme and gene
+  // names, so a fixed character budget is wrong by enough to clip. Copied from
+  // the dashboard's helper (dashboard/js/core.js) rather than imported: this
+  // page loads only d3 and its own data file, and pulling in core.js would drag
+  // the dashboard's navigation and data loading along with it.
+  function measureTextWidths(strings, cls) {
+    const NS = "http://www.w3.org/2000/svg";
+    const svg = document.createElementNS(NS, "svg");
+    svg.setAttribute("aria-hidden", "true");
+    svg.style.position = "absolute";
+    svg.style.left = "-10000px";
+    svg.style.top = "0";
+    svg.style.width = "1px";
+    svg.style.height = "1px";
+    svg.style.overflow = "hidden";
+    const g = svg.appendChild(document.createElementNS(NS, "g"));
+    g.setAttribute("class", cls);
+    document.body.appendChild(svg);
+    let widest = 0;
+    try {
+      for (const s of strings) {
+        const t = document.createElementNS(NS, "text");
+        t.setAttribute("class", cls);
+        t.textContent = String(s == null ? "" : s);
+        g.appendChild(t);
+        const w = typeof t.getComputedTextLength === "function" ? t.getComputedTextLength() : String(s || "").length * 6;
+        if (w > widest) widest = w;
+        g.removeChild(t);
+      }
+    } finally {
+      svg.remove();
+    }
+    return widest;
+  }
+
+  // Word-wrap into at most `maxLines` lines each fitting `maxPx`. Cut text is
+  // folded into the last line with an ellipsis, because dropping a tail silently
+  // would hide part of a source title while an ellipsis says plainly that there
+  // is more. A word longer than the column overflows rather than being
+  // hyphenated, since inventing a hyphenation would alter the title.
+  function wrapToWidth(s, maxPx, maxLines, cls) {
+    const t = String(s || "").trim();
+    const fits = (str) => measureTextWidths([str], cls) <= maxPx;
+    if (fits(t)) return { lines: [t], truncated: false };
+    const lines = [];
+    let cur = "";
+    for (const w of t.split(/\s+/)) {
+      const next = cur ? `${cur} ${w}` : w;
+      if (cur && !fits(next)) { lines.push(cur); cur = w; } else { cur = next; }
+    }
+    if (cur) lines.push(cur);
+    if (lines.length <= maxLines) return { lines, truncated: false };
+    const kept = lines.slice(0, maxLines - 1);
+    let rest = lines.slice(maxLines - 1).join(" ");
+    while (rest.length > 1 && !fits(`${rest}…`)) rest = rest.slice(0, -1);
+    kept.push(`${rest.trim()}…`);
+    return { lines: kept, truncated: true };
+  }
+  const papers = D.articles.filter((a) => a.matched);
+  const exactCohorts = D.cohorts.filter((c) => c.exact);
+
+  // A paper's headline percentile: the exact-field cohort that measures its own
+  // programme and holds its own publication year. A dual-programme paper has a
+  // legitimate ranking in BOTH cohorts, so the table takes the LOWER of the two
+  // rather than the flattering one — the "both programmes" ladder above is where
+  // a reader sees each cohort's answer side by side.
+  function bestRank(a) {
+    let best = null;
+    for (const c of exactCohorts) {
+      const r = a.ranks[c.id];
+      if (!r || r.excluded) continue;
+      if (r.same_year) {
+        const cand = { cohort: c, same: r.same_year, pooled: r.pooled, fwci: r.fwci_same_year };
+        if (!best || cand.same.pct < best.same.pct) best = cand;
+      }
+    }
+    if (best) return best;
+    for (const c of exactCohorts) {
+      const r = a.ranks[c.id];
+      if (r && !r.excluded && r.pooled) return { cohort: c, same: null, pooled: r.pooled, fwci: null };
+    }
+    return null;
+  }
+
+  // ---------------------------------------------------------------- masthead
+  el("standfirst").textContent =
+    `Where each of the ${fmt(papers.length)} publications matched in OpenAlex sits in the ` +
+    `citation distribution of its own field, measured OpenAlex against OpenAlex. Two ` +
+    `exact-field cohorts are in use — glycoscience and anticoagulation — because the two ` +
+    `programmes are ranked apart at the applicant's instruction, and each paper is ` +
+    `measured only against the cohort that measures its own programme. The field-weighted ` +
+    `impact below needs no cohort at all and is already adjusted for the paper's age; the ` +
+    `percentiles beside it are taken within each paper's own publication year, because a ` +
+    `glycoscience cohort's median falls from ` +
+    `${fmt(cohortMedian(exactCohorts[0] || D.cohorts[0], (exactCohorts[0] || D.cohorts[0]).year_min))} ` +
+    `citations in ${esc(exactCohorts[0] ? exactCohorts[0].year_min : "")} to ` +
+    `${fmt(cohortMedian(exactCohorts[0] || D.cohorts[0], (exactCohorts[0] || D.cohorts[0]).year_max))} ` +
+    `in ${esc(exactCohorts[0] ? exactCohorts[0].year_max : "")} and pooling years would move the answer.`;
+
+  function cohortMedian(c, year) {
+    const y = c.by_year[String(year)];
+    return y && y.length ? y[Math.floor(y.length / 2)] : null;
+  }
+
+  el("sourcing").innerHTML =
+    `Source: <a href="${esc(D.author_url)}" target="_blank" rel="noopener noreferrer">${esc(D.author_url)}</a>` +
+    ` · OpenAlex retrieved ${esc(D.generated_at)} · packet Scholar snapshot ${esc(D.packet_snapshot_date)}` +
+    ` · figures from <code>OpenAlex/field-comparison.json</code>`;
+
+  el("scalebox").innerHTML =
+    `<b>Two different scales, deliberately never mixed.</b> ` + esc(D.scale_warning) +
+    ` The packet's <b>${fmt(D.scale.packet_independent_countable)}</b> counted independent ` +
+    `citations and <b>${fmt(D.scale.packet_distinct_independent_papers)}</b> distinct ` +
+    `independent papers are Google Scholar figures and are unchanged by this page.`;
+
+  headBand();
+  function headBand() {
+    const items = [
+      { label: "Publications matched", value: `${papers.length} of ${D.coverage.scholar_articles}`, sub: `OpenAlex holds ${D.coverage.openalex_works} works on the record` },
+      { label: "Median FWCI", value: (D.fwci.distribution.median || 0).toFixed(2), sub: `across the ${fmt(D.fwci.articles_with_value)} matched articles; ${fmt(D.fwci.above_1)} above 1.00` },
+      { label: "Highest FWCI", value: (D.fwci.distribution.max || 0).toFixed(2), sub: `${fmt(D.fwci.at_or_above_3)} articles at or above 3.00` },
+      { label: "Rankable today", value: pc(D.coverage.rankable_pct), sub: `${fmt(D.coverage.independent_rankable)} of ${fmt(D.coverage.independent_citations_total)} independent citations` },
+    ];
+    const t = el("band-head");
+    t.innerHTML = "";
+    for (const it of items) {
+      const card = div("stat");
+      card.appendChild(span("stat-label", it.label));
+      card.appendChild(span("stat-value", it.value));
+      card.appendChild(span("sub", it.sub));
+      t.appendChild(card);
+    }
+  }
+
+  // ------------------------------------------------------------- FWCI chart
+  el("fwci-lede").textContent =
+    `OpenAlex publishes field-weighted citation impact on ${fmt(D.fwci.record_fwci_count)} of the ` +
+    `${fmt(D.fwci.record_works_total)} works on its record, and the ` +
+    `${fmt(D.fwci.record_no_fwci.length)} without one all carry zero citations, so every cited ` +
+    `work has a figure. Of those, ${fmt(D.fwci.works_with_value)} also matched a title in the ` +
+    `packet; the chart below draws the fifteen highest of those and the publication table ` +
+    `further down carries all ${fmt(D.fwci.works_with_value)} that have one. The ${fmt(D.fwci.articles_with_value)} of ` +
+    `${fmt(D.fwci.articles_total)} articles that carry a value are the basis of the median and ` +
+    `maximum quoted at the top of this page. Taken over all ${fmt(D.fwci.record_article_distribution.n)} ` +
+    `articles on the OpenAlex record regardless of matching, the median is ` +
+    `${D.fwci.record_article_distribution.median.toFixed(2)} and the maximum ` +
+    `${D.fwci.record_article_distribution.max.toFixed(2)}; the matched subset runs ` +
+    `slightly higher (median ${D.fwci.distribution.median.toFixed(2)}) because the three ` +
+    `unmatched works are uncited. Quote whichever basis names its denominator.`;
+
+  // The FWCI chart draws the top 15 papers by field-weighted impact. Unlike the
+  // percentile ladders, where every rankable row answers a different question, this
+  // chart orders one quantity end to end, so the head of the list is the point and
+  // the tail is a long flat run of papers close to the expectation line. The caption
+  // names what was left out and where to find it. Declared above the call, since a
+  // `const` below it would still be in its temporal dead zone when the body runs.
+  const FWCI_TOP = 15;
+  drawFwci();
+  function drawFwci() {
+    const ranked = papers.filter((a) => a.fwci != null).sort((a, b) => b.fwci - a.fwci);
+    const rows = ranked.slice(0, FWCI_TOP);
+    const skipped = ranked.length - rows.length;
+
+    // Full titles wrapped exactly as the percentile ladders do it: measured in the
+    // real rendered font, three lines with a fourth allowed rather than cut, and the
+    // label column tightened afterwards to the widest line that actually came out.
+    const MAXLINES = 3;
+    const W = Math.max(560, el("chart-fwci").clientWidth || 860);
+    const maxLabelW = Math.max(150, Math.min(Math.round(W * 0.5), 400));
+    const wrapTitle = (t, reservePx) => {
+      const first = wrapToWidth(t, maxLabelW - 20 - reservePx, MAXLINES, "bar-title");
+      return first.truncated ? wrapToWidth(t, maxLabelW - 20 - reservePx, MAXLINES + 1, "bar-title").lines : first.lines;
+    };
+    // The year rides on the last line, so its width has to come out of the wrap
+    // budget before wrapping, not after: adding it afterwards would push the last
+    // line past the column that was sized for the title alone.
+    const yearReserve = Math.ceil(measureTextWidths([" (2019)"], "bar-title"));
+    const labels = rows.map((d) => wrapTitle(d.scholar_title, yearReserve));
+    const labelW = Math.min(maxLabelW, Math.ceil(measureTextWidths(labels.flat(), "bar-title")) + yearReserve + 20);
+    const LINE_H = 14;
+    const PAD = 10;
+    // The value prints above its bar rather than beside it, so each row reserves a
+    // clear lane over the bar and the rows sit further apart than they did when the
+    // text shared the bar's own row.
+    const ABOVE = 16;
+    const BAR_H = 13;
+    const rowMid = [];
+    let stack = 0;
+    labels.forEach((ls) => {
+      const block = Math.max(ls.length * LINE_H, BAR_H);
+      rowMid.push(stack + ABOVE + block / 2);
+      stack += ABOVE + block + PAD;
+    });
+    const innerH = stack;
+    const m = { top: 28, right: 20, bottom: 34, left: labelW };
+    const width = W;
+    const height = innerH + m.top + m.bottom;
+    const inner = width - m.left - m.right;
+
+    const svg = d3.select("#chart-fwci").append("svg")
+      .attr("viewBox", `0 0 ${width} ${height}`)
+      .attr("width", width).attr("height", height)
+      .attr("role", "img")
+      .attr("aria-label", `Field-weighted citation impact for the top ${FWCI_TOP} publications`);
+    const g = svg.append("g").attr("transform", `translate(${m.left},${m.top})`);
+
+    const x = d3.scaleLinear().domain([0, d3.max(rows, (r) => r.fwci) * 1.06]).range([0, inner]);
+
+    g.selectAll(".gridline").data(x.ticks(8)).join("line")
+      .attr("class", "gridline").attr("x1", x).attr("x2", x)
+      .attr("y1", -8).attr("y2", innerH);
+
+    const band = g.selectAll(".row").data(rows).join("g")
+      .attr("transform", (d, i) => `translate(0,${rowMid[i]})`);
+
+    band.append("text").attr("class", "bar-title").attr("x", -10).attr("y", 0)
+      .attr("text-anchor", "end")
+      .each(function (d, i) {
+        // Same dy convention as the percentile ladders: a one-line title sits on
+        // the bar's middle while a taller stack straddles it. The year rides on the
+        // last line so it never competes with the title for width.
+        const lines = labels[i].slice();
+        lines[lines.length - 1] = `${lines[lines.length - 1]} (${d.oa_year ?? "n.d."})`;
+        const t = d3.select(this);
+        t.append("tspan").attr("x", -10)
+          .attr("dy", lines.length > 1 ? `${0.32 - (lines.length - 1) * 0.575}em` : "0.32em")
+          .text(lines[0]);
+        for (let k = 1; k < lines.length; k++) {
+          t.append("tspan").attr("x", -10).attr("dy", "1.15em").text(lines[k]);
+        }
+      })
+      .append("title").text((d) => `${d.scholar_title}\nOpenAlex ${fmt(d.oa_cites)} citations · FWCI ${d.fwci.toFixed(2)} · ${d.primary_topic_name || ""}`);
+
+    band.append("rect")
+      .attr("x", 0).attr("y", -BAR_H / 2).attr("height", BAR_H)
+      .attr("width", (d) => Math.max(1.5, x(d.fwci)))
+      .attr("class", (d) => `field-${d.field}`)
+      .append("title")
+      .text((d) => `FWCI ${d.fwci.toFixed(2)} — ${FIELD_LABEL[d.field] || d.field}`);
+
+    // The value prints above its bar, left-aligned with the bar's start, so a long
+    // annotation can never be pushed off the sheet by a bar running near the axis
+    // limit and no halo is needed to hold it off the fill.
+    const noteOf = (d) => d.fwci.toFixed(2);
+    band.append("text").attr("class", "bar-label bar-label--over")
+      .attr("x", 0)
+      .attr("y", -BAR_H / 2 - 5)
+      .attr("text-anchor", "start")
+      .text(noteOf);
+
+    g.append("line").attr("class", "refline").attr("x1", x(1)).attr("x2", x(1))
+      .attr("y1", -8).attr("y2", innerH);
+    g.append("text").attr("class", "reflabel").attr("x", x(1)).attr("y", -13)
+      .attr("text-anchor", "middle").text("field expectation = 1.00");
+
+    const ax = g.append("g").attr("class", "axis").attr("transform", `translate(0,${innerH})`)
+      .call(d3.axisBottom(x).ticks(8).tickSize(3));
+    ax.append("text").attr("class", "bar-label").attr("x", inner).attr("y", 28)
+      .attr("text-anchor", "end").text("field-weighted citation impact");
+
+    // Counts follow the rows actually drawn: a legend reading "Glycoscience (24)"
+    // above a chart holding eight of them would read as missing bars.
+    legend("legend-fwci", ["glyco", "anti", "both", "other"]
+      .filter((f) => rows.some((a) => a.field === f))
+      .map((f) => ({
+        cls: `field-${f}`, label: `${FIELD_LABEL[f]} (${rows.filter((a) => a.field === f).length})`,
+      })));
+
+    el("cap-fwci").innerHTML =
+      `The <b>${rows.length}</b> highest field-weighted impacts of the ${fmt(ranked.length)} ` +
+      `publications that carry an FWCI, in rank order with titles in full; the ` +
+      `${fmt(skipped)} ranked below them are not drawn, and every ` +
+      `publication&rsquo;s value is in the publication table further down this page. A bar of length 1.00 ` +
+      `means the paper attracted exactly the number of citations a comparable paper would: same ` +
+      `publication year, same work type, same OpenAlex subfield. Longer is better, and ` +
+      `because the expectation is already adjusted for age, a 2025 paper and a 2011 paper are ` +
+      `comparable on this axis without any matching. This is the measure that answers a ` +
+      `comparison across publication years.`;
+  }
+
+  drawProgramme();
+  function drawProgramme() {
+    const keys = ["anti", "both", "glyco", "other"].filter((k) => D.programmes[k] && D.programmes[k].papers > 0);
+    const m = { top: 16, right: 24, bottom: 40, left: 150 };
+    const width = Math.min(760, Math.max(560, document.querySelector("main").clientWidth - 60));
+    const rowH = 34;
+    const height = m.top + m.bottom + keys.length * rowH;
+    const inner = width - m.left - m.right;
+    const svg = d3.select("#chart-programme").append("svg")
+      .attr("viewBox", `0 0 ${width} ${height}`).attr("width", width).attr("height", height)
+      .attr("role", "img").attr("aria-label", "Mean field-weighted impact by programme");
+    const g = svg.append("g").attr("transform", `translate(${m.left},${m.top})`);
+    const x = d3.scaleLinear().domain([0, d3.max(keys, (k) => D.programmes[k].max_fwci || 0) * 1.05]).range([0, inner]);
+
+    const r = g.selectAll(".r").data(keys).join("g").attr("transform", (d, i) => `translate(0,${i * rowH})`);
+    r.append("text").attr("class", "bar-title").attr("x", -10).attr("y", rowH / 2 + 4).attr("text-anchor", "end")
+      .text((k) => `${FIELD_LABEL[k]} (${D.programmes[k].papers})`);
+    r.append("rect").attr("x", 0).attr("y", 6).attr("height", rowH - 16)
+      .attr("width", (k) => Math.max(1.5, x(D.programmes[k].mean_fwci || 0)))
+      .attr("class", (k) => `field-${k}`);
+    r.append("text").attr("class", "bar-label").attr("x", (k) => x(D.programmes[k].mean_fwci || 0) + 6)
+      .attr("y", rowH / 2 + 4).text((k) => `mean ${(D.programmes[k].mean_fwci || 0).toFixed(2)}  ·  peak ${(D.programmes[k].max_fwci || 0).toFixed(2)}`);
+
+    g.append("line").attr("class", "refline").attr("x1", x(1)).attr("x2", x(1)).attr("y1", -4).attr("y2", keys.length * rowH);
+    g.append("text").attr("class", "reflabel").attr("x", x(1)).attr("y", -6).attr("text-anchor", "middle").text("1.00");
+    g.append("g").attr("class", "axis").attr("transform", `translate(0,${keys.length * rowH})`).call(d3.axisBottom(x).ticks(6).tickSize(3));
+
+    const a = D.programmes.anti, gl = D.programmes.glyco;
+    el("cap-programme").innerHTML =
+      `The anticoagulation papers average <b>${(a.mean_fwci || 0).toFixed(2)}</b> times the ` +
+      `expectation for their year and field; the glycoscience papers average ` +
+      `<b>${(gl.mean_fwci || 0).toFixed(2)}</b>. That gap is the reason the two are ranked ` +
+      `against separate cohorts: pooling them would report one number where the record ` +
+      `actually holds two literatures, and the RFE asks for the comparison close to the ` +
+      `field. Anticoagulation rows are ranked against anticoagulation-like cohorts and ` +
+      `never against a glycan cohort.`;
+  }
+
+  // --------------------------------------------------------- percentile view
+
+  // One chart per programme, at the user's request. A single merged ladder would
+  // put a 99th-percentile thrombosis paper and a 99th-percentile glycoscience
+  // paper on the same axis as though the two distributions were the same
+  // distribution, which is precisely the comparison the RFE objects to.
+  const exactByField = {};
+  for (const c of exactCohorts) (exactByField[c.field] = exactByField[c.field] || []).push(c);
+
+  // Rows for one programme. A 'both' paper is ranked inside every cohort that will
+  // take it, so the reader sees the same paper's position in each literature rather
+  // than one number chosen by whichever cohort was listed first.
+  function ladderRows(field) {
+    const cohorts = field === "both" ? exactCohorts : exactByField[field] || [];
+    const out = [];
+    for (const a of papers) {
+      if (a.field !== field) continue;
+      for (const c of cohorts) {
+        const r = a.ranks[c.id];
+        if (r && !r.excluded && r.same_year) out.push({ a, r: { cohort: c, same: r.same_year } });
+      }
+    }
+    return out.sort((p, q) => q.r.same.pct - p.r.same.pct);
+  }
+
+  // Rows for one cohort, whatever programme the paper is credited to. Used by the
+  // above-90th-percentile charts: the question there is "which of my papers sit in
+  // the top decile of THIS literature", so a dual-programme paper belongs in the
+  // glycoscience chart whenever its glycoscience ranking says so, even though it is
+  // not labelled a glycoscience paper. ladderRows() above cannot answer that because
+  // it filters on the paper's own programme first.
+  function cohortRows(cohort) {
+    const out = [];
+    for (const a of papers) {
+      const r = a.ranks[cohort.id];
+      if (r && !r.excluded && r.same_year) out.push({ a, r: { cohort, same: r.same_year } });
+    }
+    return out.sort((p, q) => q.r.same.pct - p.r.same.pct);
+  }
+
+  el("pct-lede").innerHTML =
+    `A percentile here is the share of the cohort at or below the paper&rsquo;s OpenAlex ` +
+    `citation count, taken inside the cohort restricted to the paper&rsquo;s own publication ` +
+    `year — the only defensible comparison when a cohort&rsquo;s median falls so steeply with ` +
+    `age. The three citation ladders below are deliberately separate by programme: a 99th ` +
+    `percentile in the anticoagulation literature and a 99th percentile in the glycoscience ` +
+    `literature are not the same claim, and plotting them on one axis would imply they were. ` +
+    `The two charts that follow them hold only the publications sitting above the 90th ` +
+    `percentile of a cohort, one chart per literature. The next chart ranks field-weighted ` +
+    `impact instead of raw counts and does put both literatures on one axis, which is ` +
+    `defensible only because each of its bars is already a position inside its own cohort and ` +
+    `year. ` +
+    `<b>${pc(D.coverage.rankable_pct)}</b> of the ` +
+    `${fmt(D.coverage.independent_citations_total)} independent citations in the packet can be ` +
+    `ranked against a cohort that measures their own programme and holds their own year.` +
+    (D.coverage.rankable_pct < 100
+      ? ` The ${fmt(D.coverage.independent_citations_total - D.coverage.independent_rankable)} that ` +
+        `cannot are named in a table under &ldquo;Every publication&rdquo; below, with the ` +
+        `reason for each.`
+      : ``);
+
+  drawLadder();
+  function drawLadder() {
+    for (const field of ["glyco", "anti", "both"]) drawOneLadder(field);
+    // The same layout drawn again over the top decile only, one chart per
+    // literature, at the user's request. Glycoscience is printed first because the
+    // glycoscience cohort is the field the packet's work is chiefly measured in.
+    for (const c of exactCohorts) drawOneLadder(c.field, { p90: true, cohort: c });
+    drawFwciPct();
+  }
+
+  // One FWCI percentile ladder, at the user's instruction, holding both literatures.
+  // That is defensible here in a way a merged CITATION ladder is not: each bar is
+  // already the percentile computed inside its own cohort and its own publication
+  // year, so the axis is a position within the paper's own literature rather than a
+  // count two literatures would share. The bar is coloured by the cohort it was ranked
+  // in, and the caption says which two literatures are on the axis.
+  function drawFwciPct() {
+    el("chart-fwci-pct").innerHTML = "";
+    const all = [];
+    for (const a of papers) {
+      if (a.fwci == null) continue;
+      for (const c of exactCohorts) {
+        const r = a.ranks[c.id];
+        if (r && !r.excluded && r.fwci_same_year) all.push({ a, r: { cohort: c, same: r.fwci_same_year }, fwci: a.fwci });
+      }
+    }
+    const rows = all.slice().sort((p, q) => q.r.same.pct - p.r.same.pct);
+
+    if (!rows.length) {
+      el("chart-fwci-pct").innerHTML =
+        `<p class="prose">No publication has a same-year FWCI comparator in its cohort.</p>`;
+      el("legend-fwci-pct").innerHTML = "";
+      el("cap-fwci-pct").textContent = "";
+      return;
+    }
+
+    const MAXLINES = 3;
+    const W = Math.max(560, el("chart-fwci-pct").clientWidth || 860);
+    const maxLabelW = Math.max(150, Math.min(Math.round(W * 0.5), 400));
+    const wrapTitle = (t, px) => {
+      const first = wrapToWidth(t, px, MAXLINES, "bar-title");
+      return first.truncated ? wrapToWidth(t, px, MAXLINES + 1, "bar-title").lines : first.lines;
+    };
+    const labels = rows.map((d) => wrapTitle(d.a.scholar_title, maxLabelW - 20));
+    const labelW = Math.min(maxLabelW, Math.ceil(measureTextWidths(labels.flat(), "bar-title")) + 20);
+
+    const LINE_H = 14;
+    const PAD = 10;
+    const ABOVE = 18;
+    const BAR_H = 13;
+    const rowMid = [];
+    let stack = 0;
+    labels.forEach((ls) => {
+      const block = Math.max(ls.length * LINE_H, BAR_H);
+      rowMid.push(stack + ABOVE + block / 2);
+      stack += ABOVE + block + PAD;
+    });
+    const innerH = stack;
+    const m = { top: 40, right: 20, bottom: 34, left: labelW };
+    const width = W;
+    const height = innerH + m.top + m.bottom;
+    const svg = d3.select("#chart-fwci-pct").append("svg")
+      .attr("viewBox", `0 0 ${width} ${height}`).attr("width", width).attr("height", height)
+      .attr("role", "img")
+      .attr("aria-label", "Percentile of each publication's field-weighted citation impact within its publication-year cohort");
+    const g = svg.append("g").attr("transform", `translate(${m.left},${m.top})`);
+    const inner = width - m.left - m.right;
+    const x = d3.scaleLinear().domain([0, 100]).range([0, inner]);
+
+    for (const [i, p] of [50, 90, 95, 99].entries()) {
+      g.append("line").attr("class", "gridline")
+        .attr("x1", x(p)).attr("x2", x(p)).attr("y1", -8).attr("y2", innerH);
+      g.append("text").attr("class", "bar-label bar-label--over").attr("x", x(p))
+        .attr("y", i % 2 ? -26 : -11)
+        .attr("text-anchor", "middle").text(`p${p}`);
+    }
+
+    const band = g.selectAll(".r").data(rows).join("g").attr("transform", (d, i) => `translate(0,${rowMid[i]})`);
+    band.append("text").attr("class", "bar-title").attr("x", -10).attr("y", 0).attr("text-anchor", "end")
+      .each(function (d, i) {
+        const lines = labels[i];
+        const t = d3.select(this);
+        t.append("tspan").attr("x", -10)
+          .attr("dy", lines.length > 1 ? `${0.32 - (lines.length - 1) * 0.575}em` : "0.32em")
+          .text(lines[0]);
+        for (let k = 1; k < lines.length; k++) {
+          t.append("tspan").attr("x", -10).attr("dy", "1.15em").text(lines[k]);
+        }
+      })
+      .append("title").text((d) => `${d.a.scholar_title}\nFWCI ${d.fwci.toFixed(2)} in ${d.r.same.year}`);
+    band.append("rect").attr("x", 0).attr("y", -BAR_H / 2).attr("height", BAR_H)
+      .attr("width", (d) => Math.max(2, x(d.r.same.pct)))
+      .attr("class", (d) => `field-${d.r.cohort.field}`)
+      .append("title").text((d) => `${ordinal(d.r.same.pct, 1)} percentile of FWCI ${d.fwci.toFixed(2)} against ${fmt(d.r.same.cohort_n)} ${d.r.same.year} papers in ${d.r.cohort.label}`);
+    const noteOf = (d) => `${ordinal(d.r.same.pct)} · FWCI ${d.fwci.toFixed(2)} · n=${fmt(d.r.same.cohort_n)}`;
+    band.append("text").attr("class", "bar-label bar-label--over")
+      .attr("x", 0)
+      .attr("y", -BAR_H / 2 - 5)
+      .attr("text-anchor", "start")
+      .text(noteOf);
+
+    g.append("g").attr("class", "axis").attr("transform", `translate(0,${innerH})`)
+      .call(d3.axisBottom(x).ticks(5).tickFormat((d) => ordinal(d)).tickSize(3));
+
+    const cohortsShown = [...new Map(rows.map((d) => [d.r.cohort.id, d.r.cohort])).values()];
+    legend("legend-fwci-pct", cohortsShown.map((c) => ({
+      cls: `field-${c.field}`, label: c.label.split("(")[0].trim(),
+    })));
+
+    el("cap-fwci-pct").innerHTML =
+      `The same percentile question asked of the field-weighted impact instead of the raw ` +
+      `citation count: each bar is the share of cohort papers of the same publication year ` +
+      `whose FWCI is at or below this paper&rsquo;s. ` +
+      `All ${rows.length} rankable publications appear, ${cohortsShown.length === 2 ? `in both literatures` : `in the ${COHORT_FIELD_LABEL[cohortsShown[0].field] || cohortsShown[0].field}`}, ` +
+      `and a dual-programme paper is drawn once per cohort. Both literatures share this axis ` +
+      `because the axis is a position within the paper&rsquo;s OWN cohort and year, not a count ` +
+      `the two literatures would have in common; the colour names which cohort each percentile ` +
+      `was taken in. ` +
+      cohortsShown.map((c) =>
+        `In the ${COHORT_FIELD_LABEL[c.field] || c.field}, FWCI p50 / p90 / p99 sit at ${c.fwci.overall.median.toFixed(2)} / ` +
+        `${c.fwci.overall.p90.toFixed(2)} / ${c.fwci.overall.p99.toFixed(2)}`
+      ).join("; ") +
+      `. Where a paper&rsquo;s position differs between this chart and the citation ladders above, ` +
+      `the reason is age: FWCI divides by what a paper of that year and field would attract, so a ` +
+      `recent paper that has had little time to be cited can rank far higher here than on a raw ` +
+      `count.`;
+  }
+
+  // Draws one ladder. `field` selects the programme for the three programme charts;
+  // the two above-90th-percentile charts pass `opts.p90` with an explicit cohort
+  // instead, because their cut is a position inside one literature rather than a
+  // programme label.
+  function drawOneLadder(field, opts = {}) {
+    const key = opts.p90 ? `${field}-p90` : field;
+    const chartId = `chart-ladder-${key}`;
+    // "both programmes publications" reads badly, so the caption and the empty
+    // state use an adjective form for the dual-programme chart.
+    const progName = field === "both" ? "dual-programme" : FIELD_LABEL[field].toLowerCase();
+    // The container is cleared first, so a re-draw replaces the figure instead of
+    // stacking a second one under it.
+    el(chartId).innerHTML = "";
+    const all = opts.p90 ? cohortRows(opts.cohort).filter((d) => d.r.same.pct > 90) : ladderRows(field);
+    // Every rankable row is drawn. Titles used to be cut to 56 characters and the
+    // list capped at 14, but a truncated title is not enough to tell one paper
+    // from the next, and with the titles now whole the cap would hide whole
+    // publications — the largest programme has only two dozen rankable rows.
+    const rows = all;
+
+    if (!rows.length) {
+      el(chartId).innerHTML =
+        `<p class="prose">No ${progName} publication has a same-year ` +
+        `comparator in its cohort.</p>`;
+      el(`legend-ladder-${key}`).innerHTML = "";
+      el(`cap-ladder-${key}`).textContent = "";
+      return;
+    }
+
+    // Titles wrap over up to three lines at the real rendered width (same budget
+    // as the dashboard's per-publication chart). The one title in this record that
+    // will not fit in three is allowed a fourth rather than be cut, since it is
+    // source text and every other row stays at three or fewer.
+    const MAXLINES = 3;
+    const wrapTitle = (t, px) => {
+      const first = wrapToWidth(t, px, MAXLINES, "bar-title");
+      return first.truncated ? wrapToWidth(t, px, MAXLINES + 1, "bar-title").lines : first.lines;
+    };
+    // Wrap against the widest label column the layout allows, then tighten the
+    // column to the widest line that actually came out: wrapping first and
+    // shrinking after means every line still fits by construction, and the bars
+    // get the space back when the titles are short.
+    const W = Math.max(560, el(chartId).clientWidth || 860);
+    const maxLabelW = Math.max(150, Math.min(Math.round(W * 0.5), 400));
+    const labels = rows.map((d) => wrapTitle(d.a.scholar_title, maxLabelW - 20));
+    const labelW = Math.min(maxLabelW, Math.ceil(measureTextWidths(labels.flat(), "bar-title")) + 20);
+
+    // A row is as tall as its own label; a uniform height sized for a three-line
+    // title would leave most rows empty, since the median title needs two. The bar
+    // keeps one thickness and sits centred in the row — a bar that grew with its
+    // label would read as a second, meaningless quantity.
+    const LINE_H = 14;
+    const PAD = 10;
+    // The annotation prints above its bar rather than beside it, so each row reserves
+    // a clear lane over the bar and the rows sit further apart than they did when the
+    // text shared the bar's own row. Spacing rows out is what makes a long annotation
+    // readable without a halo, and it means a bar at the 100th percentile loses
+    // nothing -- the text was never competing with the bar for width.
+    const ABOVE = 18;
+    const BAR_H = 13;
+    const rowMid = [];
+    let stack = 0;
+    labels.forEach((ls) => {
+      const block = Math.max(ls.length * LINE_H, BAR_H);
+      rowMid.push(stack + ABOVE + block / 2);
+      stack += ABOVE + block + PAD;
+    });
+    const innerH = stack;
+    const m = { top: 40, right: 20, bottom: 34, left: labelW };
+    const width = W;
+    const height = innerH + m.top + m.bottom;
+    const svg = d3.select(`#${chartId}`).append("svg")
+      .attr("viewBox", `0 0 ${width} ${height}`).attr("width", width).attr("height", height)
+      .attr("role", "img")
+      .attr("aria-label", `Percentile of each ${FIELD_LABEL[field]} publication${opts.p90 ? " above the 90th percentile" : ""} within its publication-year cohort`);
+    const g = svg.append("g").attr("transform", `translate(${m.left},${m.top})`);
+    const inner = width - m.left - m.right;
+    const x = d3.scaleLinear().domain([0, 100]).range([0, inner]);
+
+    for (const [i, p] of [50, 90, 95, 99].entries()) {
+      g.append("line").attr("class", "gridline")
+        .attr("x1", x(p)).attr("x2", x(p)).attr("y1", -8).attr("y2", innerH);
+      // The p95 and p99 marks sit only ~18px apart on a track this wide, so their
+      // labels are staggered onto two rows rather than overprinted on one.
+      g.append("text").attr("class", "bar-label").attr("x", x(p))
+        .attr("y", i % 2 ? -26 : -11)
+        .attr("text-anchor", "middle").text(`p${p}`);
+    }
+
+    const band = g.selectAll(".r").data(rows).join("g").attr("transform", (d, i) => `translate(0,${rowMid[i]})`);
+    band.append("text").attr("class", "bar-title").attr("x", -10).attr("y", 0).attr("text-anchor", "end")
+      .each(function (d, i) {
+        // The dy lives on the first tspan rather than the text element, so a
+        // one-line title sits on the bar's middle while a taller stack straddles it.
+        const lines = labels[i];
+        const t = d3.select(this);
+        t.append("tspan").attr("x", -10)
+          .attr("dy", lines.length > 1 ? `${0.32 - (lines.length - 1) * 0.575}em` : "0.32em")
+          .text(lines[0]);
+        for (let k = 1; k < lines.length; k++) {
+          t.append("tspan").attr("x", -10).attr("dy", "1.15em").text(lines[k]);
+        }
+      })
+      .append("title").text((d) => `${d.a.scholar_title}\nOpenAlex ${fmt(d.a.oa_cites)} citations in ${d.r.same.year}`);
+    // The bar is coloured by the COHORT it was ranked in, not by the paper's own
+    // label. On the "both programmes" chart one paper is drawn once per cohort, and
+    // colouring by the paper would hide which distribution each bar came from.
+    band.append("rect").attr("x", 0).attr("y", -BAR_H / 2).attr("height", BAR_H)
+      .attr("width", (d) => Math.max(2, x(d.r.same.pct)))
+      .attr("class", (d) => `field-${d.r.cohort.field}`)
+      .append("title").text((d) => `${ordinal(d.r.same.pct, 1)} percentile of ${fmt(d.r.same.cohort_n)} ${d.r.same.year} papers in ${d.r.cohort.label}`);
+    // The annotation prints above its bar, left-aligned with the bar's start. It used
+    // to sit at the bar's end and flip inside the fill when it ran out of room, which
+    // is why it needed a white outline; above the bar it needs neither the room nor
+    // the outline, and a long label ("100th · 182 cites · n=1,234") can no longer be
+    // clipped by the right edge of the sheet.
+    const noteOf = (d) => `${ordinal(d.r.same.pct)} · ${fmt(d.a.oa_cites)} cites · n=${fmt(d.r.same.cohort_n)}`;
+    band.append("text").attr("class", "bar-label bar-label--over")
+      .attr("x", 0)
+      .attr("y", -BAR_H / 2 - 5)
+      .attr("text-anchor", "start")
+      .text(noteOf);
+
+    g.append("g").attr("class", "axis").attr("transform", `translate(0,${innerH})`)
+      .call(d3.axisBottom(x).ticks(5).tickFormat((d) => ordinal(d)).tickSize(3));
+
+    const cohortsShown = [...new Map(rows.map((d) => [d.r.cohort.id, d.r.cohort])).values()];
+    legend(`legend-ladder-${key}`, cohortsShown.map((c) => ({
+      cls: `field-${c.field}`, label: c.label.split("(")[0].trim(),
+    })));
+
+    el(`cap-ladder-${key}`).innerHTML = opts.p90
+      ? p90Caption(all, cohortsShown[0])
+      : (
+      `All ${all.length} rankable ${progName} ` +
+      `publication${all.length === 1 ? "" : "s"}, ranked against the cohort papers of the ` +
+      `same publication year — that number is the <i>n</i> printed on each row. ` +
+      `Titles print in full, wrapping over up to four lines where a title needs them. ` +
+      // Name the cohort in each clause. On the dual-programme chart two cohorts
+      // appear in one caption, and two identical "Whole-cohort p50 …" sentences
+      // with no subject cannot be told apart.
+      cohortsShown.map((c) =>
+        `In the ${COHORT_FIELD_LABEL[c.field] || c.field}, p50 / p90 / p95 / p99 sit at ${fmt(c.overall.median)} / ${fmt(c.overall.p90)} / ` +
+        `${fmt(c.overall.p95)} / ${fmt(c.overall.p99)} citations across ${fmt(c.usable_rows)} papers`
+      ).join(" ") +
+      (field === "both"
+        ? ` A publication credited to both programmes is drawn once per cohort, because ` +
+          `independence and standing are relative to the literature being measured.`
+        : ``)
+    );
+  }
+
+  // Caption for the above-90th-percentile charts. It has to do more work than the
+  // programme captions: it names the cut, the denominator behind each bar, how many
+  // of the paper's own citations that decile holds, and the fact that a dual-
+  // programme paper appears in both charts at two different positions.
+  function p90Caption(rows, c) {
+    const rankable = cohortRows(c);
+    const cites = rows.reduce((s, d) => s + (d.a.independent || 0), 0);
+    const total = rankable.reduce((s, d) => s + (d.a.independent || 0), 0);
+    const dual = rows.filter((d) => d.a.field === "both");
+    const other = exactCohorts.find((x) => x.id !== c.id);
+    const otherName = other ? (COHORT_FIELD_LABEL[other.field] || other.field) : null;
+    const years = [...new Set(rows.map((d) => d.r.same.year))].sort();
+    return (
+      `<b>${rows.length}</b> of the ${fmt(rankable.length)} publications that can be ranked in ` +
+      `the ${COHORT_FIELD_LABEL[c.field] || c.field} sit <b>above the 90th percentile</b> of ` +
+      `their own publication year&rsquo;s cohort — the cut is strictly greater than p90, and no ` +
+      `publication falls exactly on it. Each bar is that paper&rsquo;s percentile inside the ` +
+      `cohort restricted to its own year, so the <i>n</i> printed on the row is the number of ` +
+      `cohort papers in that year, not the size of the whole cohort. Together these ` +
+      `${rows.length} publications carry <b>${fmt(cites)}</b> of the ` +
+      `${fmt(total)} independent citations that are rankable in this cohort. ` +
+      `Publication years run ${years[0]}&ndash;${years[years.length - 1]}. ` +
+      `In the whole ${COHORT_FIELD_LABEL[c.field] || c.field}, p50 / p90 / p95 / p99 sit at ` +
+      `${fmt(c.overall.median)} / ${fmt(c.overall.p90)} / ${fmt(c.overall.p95)} / ` +
+      `${fmt(c.overall.p99)} citations across ${fmt(c.usable_rows)} papers. ` +
+      (dual.length
+        ? `${dual.length} ${dual.length === 1 ? "publication is" : "publications are"} credited to ` +
+          `both programmes and so also ${dual.length === 1 ? "appears" : "appear"} in the other ` +
+          `ladder charts; where a paper sits in ` +
+          `the top decile here and not in the ${otherName}, or the reverse, that is a real ` +
+          `difference between the two literatures rather than a discrepancy to reconcile. `
+        : ``) +
+      `A position above p90 is a statement about citation count within one literature and one ` +
+      `year; it is not a claim about the paper&rsquo;s standing anywhere else.`
+    );
+  }
+
+  drawAge();
+  function drawAge() {
+    // One line per exact cohort, so the age effect is visible for both literatures
+    // rather than only the one the ladder happened to use.
+    const cs = exactCohorts.length ? exactCohorts : D.cohorts;
+    const years = [...new Set(cs.flatMap((c) => Object.keys(c.by_year).map(Number)))].sort((a, b) => a - b);
+    const m = { top: 20, right: 26, bottom: 42, left: 62 };
+    const width = Math.min(760, Math.max(560, document.querySelector("main").clientWidth - 60));
+    const height = 250;
+    const inner = width - m.left - m.right;
+    const svg = d3.select("#chart-age").append("svg")
+      .attr("viewBox", `0 0 ${width} ${height}`).attr("width", width).attr("height", height)
+      .attr("role", "img").attr("aria-label", "Cohort median citations by year");
+    const g = svg.append("g").attr("transform", `translate(${m.left},${m.top})`);
+    const x = d3.scaleLinear().domain([years[0], years[years.length - 1]]).range([0, inner]);
+    const medOf = (c, y) => { const a = c.by_year[y]; return a && a.length ? a[Math.floor(a.length / 2)] : null; };
+    const allMed = cs.flatMap((c) => years.map((yr) => medOf(c, yr))).filter((v) => v != null);
+    const y = d3.scaleLinear().domain([0, (d3.max(allMed) || 1) * 1.25]).range([height - m.top - m.bottom, 0]);
+
+    cs.forEach((c, ci) => {
+      // Colours mirror the .field-* rules above, which is the only place the
+      // palette is defined; a stroke cannot use those classes, so the values are
+      // restated here and must be kept in step with them. Keyed off the cohort's
+      // own field rather than its position, so reordering the manifest cannot
+      // quietly repaint one literature in the other's colour.
+      const col = c.field === "anti" ? "#b3452f" : "var(--accent)";
+      const pts = years.map((yr) => [yr, medOf(c, yr)]).filter((p) => p[1] != null);
+      g.selectAll(`.dot${ci}`).data(pts).join("circle")
+        .attr("cx", (d) => x(d[0])).attr("cy", (d) => y(d[1])).attr("r", 3.5)
+        .attr("fill", col).attr("fill-opacity", 0.85)
+        .append("title").text((d) => `${d[0]}: median ${d[1]} citations across ${fmt(c.by_year[d[0]].length)} papers (${c.label})`);
+      g.append("path").attr("fill", "none").attr("stroke", col).attr("stroke-width", 1.5)
+        .attr("d", d3.line().x((d) => x(d[0])).y((d) => y(d[1]))(pts));
+    });
+
+    g.append("g").attr("class", "axis").attr("transform", `translate(0,${height - m.top - m.bottom})`)
+      .call(d3.axisBottom(x).ticks(years.length).tickFormat(d3.format("d")).tickSize(3));
+    g.append("g").attr("class", "axis").call(d3.axisLeft(y).ticks(5).tickSize(3));
+    g.append("text").attr("class", "bar-label").attr("x", inner).attr("y", y(0) + 34)
+      .attr("text-anchor", "end").text("median citations in that year's cohort");
+
+    legend("legend-age", cs.map((c) => ({
+      cls: `field-${c.field === "anti" ? "anti" : c.field === "glyco" ? "glyco" : "other"}`,
+      label: `${c.label.split("(")[0].trim()} (${c.year_min}–${c.year_max})`,
+    })));
+
+    el("cap-age").textContent =
+      cs.map((c) => {
+        const first = medOf(c, c.year_min), last = medOf(c, c.year_max);
+        return `${c.label.split("(")[0].trim()}: ${first} citations median for ${c.year_min} papers ` +
+          `against ${last} for ${c.year_max}`;
+      }).join("; ") +
+      ` — simply because a paper published last year has had almost no time to be cited. ` +
+      `Ranking a recent paper against a pooled distribution therefore rewards age rather than ` +
+      `impact, which is why every percentile on this page is taken within the paper's own year ` +
+      `and why the field-weighted measure above, which corrects for age by construction, leads.`;
+  }
+
+  // ---------------------------------------------------------------- tables
+  el("table-lede").textContent =
+    `All ${fmt(D.articles.length)} publications on the record: the ${fmt(papers.length)} matched ` +
+    `to the OpenAlex record, plus the ` +
+    `${fmt(D.coverage.scholar_articles - papers.length)} Scholar titles OpenAlex does not ` +
+    `hold. Percentile columns are blank where no cohort measuring that publication's ` +
+    `programme holds a paper of its year. A publication serving both programmes has a ` +
+    `ranking in each cohort, and the table prints the more modest of the two — the ` +
+    `"both programmes" chart above is where both answers appear side by side. The ` +
+    `"Ranked in" column names the cohort a row's percentiles came from. Click any heading to ` +
+    `sort by it, click again to reverse, and a third time to return to the order above; a row ` +
+    `with no value in a column stays at the end either way, since a blank percentile means the ` +
+    `question has no answer rather than a poor one.`;
+
+  // The default ordering, kept so a third click on a header can restore it. A
+  // reader who has sorted by year and then wants the packet's own view back should
+  // not have to reload the page.
+  //
+  // The table holds all 48 publications on the record, not just the 45 OpenAlex
+  // matched: the heading is "Every publication" and the lede promises the three
+  // unmatched titles, so leaving them out meant a reader could not see a publication
+  // anywhere on the page. They carry no OpenAlex id, count or percentile, and the
+  // default sort treats a missing count as the bottom, so they sit at the foot.
+  const PAPERS_DEFAULT = D.articles.slice().sort((a, b) => (b.oa_cites || 0) - (a.oa_cites || 0));
+  // bestRank() is called for every row on every re-render, and it walks the cohort
+  // list each time, so its answer is memoised once per paper. Sorting re-renders the
+  // whole body on each click.
+  // Keyed by the row object, never by openalex_id: the Scholar titles OpenAlex does
+  // not hold have no id at all, and a Map would collapse all three onto one key and
+  // hand them each other's rank. Object identity is the only key that is unique here.
+  const RANK_OF = new Map(PAPERS_DEFAULT.map((a) => [a, bestRank(a)]));
+  const pctOf = (a, which) => {
+    const b = RANK_OF.get(a);
+    return b && b[which] ? b[which].pct : null;
+  };
+
+  // Every column sorts, because the question a reader brings to this table is not
+  // knowable in advance — "which of my oldest papers did best?" and "show me the
+  // glycoscience rows by FWCI" both need a different key. `sortValue` returns a real
+  // number or null for the numeric columns, so a percentile sorts by its value and
+  // not by its printed form ("100th" would sort under "11th" as text).
+  // The Publication column carries the whole title (never truncated) with the
+  // journal beneath it in its NLM abbreviation, italicised, and the year bold. That
+  // is how a citation is read in this literature, and it is why the separate Year
+  // column is gone: the year now sits where a reader looks for it, beside the title.
+  // The abbreviation is what the registry publishes, not something derived here; the
+  // five rows whose venue is a patent, a university or a book series have no journal
+  // abbreviation and print the venue Google Scholar gave them.
+  //
+  // The year printed is Scholar's, not OpenAlex's: the citation on this row is the
+  // packet's, and five rows disagree between the two sources. Where they do, the row
+  // carries a tooltip naming both, since same-year matching runs on the OpenAlex year.
+  function venueNameParts(a) {
+    return {
+      journal: a.venue_abbr || a.venue_journal || "",
+      year: a.scholar_year != null ? String(a.scholar_year) : "",
+    };
+  }
+  const PAPER_COLS = [
+    { label: "OpenAlex id", text: (a) => a.openalex_id },
+    { label: "Publication", text: (a) => `${a.scholar_title} ${venueNameParts(a).journal} ${venueNameParts(a).year}` },
+    { label: "Programme", text: (a) => FIELD_LABEL[a.field] || a.field },
+    { label: "Citations", num: true, val: (a) => (a.oa_cites == null ? null : Number(a.oa_cites)) },
+    { label: "FWCI", num: true, val: (a) => (a.fwci == null ? null : Number(a.fwci)) },
+    { label: "Same-year pct", num: true, val: (a) => pctOf(a, "same") },
+    { label: "FWCI pct", num: true, val: (a) => pctOf(a, "fwci") },
+    { label: "Pooled pct", num: true, val: (a) => pctOf(a, "pooled") },
+    { label: "Ranked in", text: (a) => { const b = RANK_OF.get(a); return b ? (COHORT_FIELD_LABEL[b.cohort.field] || b.cohort.field) : ""; } },
+    { label: "Primary topic", text: (a) => a.primary_topic_name || "" },
+  ];
+
+  buildTable("tbl-papers", PAPERS_DEFAULT, null, true);
+  function buildTable(targetId, rows, activeCol, showArrow) {
+    // The container is reused across sorts, so clear it rather than appending a
+    // second table under the first.
+    const host = el(targetId);
+    host.innerHTML = "";
+    const t = document.createElement("table");
+    const thead = t.appendChild(document.createElement("thead"));
+    const hr = thead.appendChild(document.createElement("tr"));
+    PAPER_COLS.forEach((c, i) => {
+      const th = hr.appendChild(document.createElement("th"));
+      th.scope = "col";
+      th.textContent = c.label;
+      if (c.num) th.className = "num";
+      th.classList.add("sortable");
+      // A th is not a tab stop on its own, so a keyboard reader could not reach the
+      // sort at all; without this the keydown handler below is unreachable.
+      th.tabIndex = 0;
+      th.dataset.col = String(i);
+      // A screen reader needs the direction, not just the arrow glyph.
+      th.setAttribute("aria-sort", activeCol === i ? (showArrow === "asc" ? "ascending" : "descending") : "none");
+      th.title = `Sort by ${c.label.toLowerCase()}`;
+      if (activeCol === i && showArrow) {
+        const s = document.createElement("span");
+        s.className = "dir";
+        s.textContent = showArrow === "asc" ? " ▲" : " ▼";
+        th.appendChild(s);
+      }
+    });
+    const tb = t.appendChild(document.createElement("tbody"));
+    for (const a of rows) {
+      const tr = tb.appendChild(document.createElement("tr"));
+      cell(tr, a.openalex_id, "nowrap");
+      // A Scholar publication OpenAlex does not hold: it belongs in a table headed
+      // "Every publication", but it has no OpenAlex record to report figures from, so
+      // the row says so rather than presenting a row of dashes as if they were zeros.
+      if (!a.matched) {
+        tr.children[0].className = "nowrap absent";
+        tr.children[0].title = "OpenAlex holds no work with this title, so no count, FWCI or percentile exists for it. It carries no independent citations in the packet.";
+      }
+      // A prefix match is a weaker claim than an exact one, so say so on the row
+      // rather than letting it look identical to a title-for-title hit.
+      if (a.match_basis && a.match_basis !== "exact") {
+        const w = (a.match_basis.split(":")[1] || "").replace("w", " words");
+        tr.children[0].title = `Matched on a leading ${w} of the title, because Google Scholar truncates this title with an ellipsis. Check it by eye.`;
+        tr.children[0].className = "nowrap inferred";
+      }
+      // The whole title, then the venue on its own line: journal abbreviated and
+      // italic, year bold. Nothing here is cut -- the column is wide and the point of
+      // the table is that a reader can tell one paper from the next.
+      const tdT = tr.appendChild(document.createElement("td"));
+      tdT.className = "ttl";
+      const ttl = document.createElement("span");
+      ttl.className = "ttl-text";
+      ttl.textContent = a.scholar_title;
+      tdT.appendChild(ttl);
+      const vn = venueNameParts(a);
+      if (vn.journal || vn.year) {
+        tdT.appendChild(document.createElement("br"));
+        if (vn.journal) {
+          const j = document.createElement("i");
+          j.textContent = vn.journal;
+          tdT.appendChild(j);
+        }
+        if (vn.journal && vn.year) tdT.appendChild(document.createTextNode(" "));
+        if (vn.year) {
+          const y = document.createElement("b");
+          y.textContent = vn.year;
+          tdT.appendChild(y);
+        }
+      }
+      // The year a row prints is Scholar's, since that is the citation being read.
+      // Where OpenAlex disagrees, the row says so here -- the tooltip used to live on
+      // the Year column, and that column is gone.
+      tdT.title = a.year_disagreement
+        ? `Scholar dates this ${a.year_disagreement.scholar}; OpenAlex dates it ${a.oa_year}. Same-year matching uses the OpenAlex year.`
+        : (a.venue_abbr ? `Journal abbreviation from the NLM registry (PubMed). Full title: ${a.venue_journal}.` : "");
+      cell(tr, FIELD_LABEL[a.field] || a.field);
+      cell(tr, fmt(a.oa_cites), "num");
+      cell(tr, a.fwci == null ? "—" : a.fwci.toFixed(2), "num");
+      const b = RANK_OF.get(a);
+      const bc = cell(tr, b && b.same ? ordinal(b.same.pct) : "—", "num");
+      if (b && b.same) bc.title = `n=${fmt(b.same.cohort_n)} cohort papers in ${b.same.year}, cohort ${b.cohort.label}`;
+      // The FWCI percentile is a second, better-normalised axis: OpenAlex's own
+      // expectation already corrects for publication year, work type and subfield,
+      // so this
+      // ranks the paper's impact ratio rather than its raw citation count.
+      const fc = cell(tr, b && b.fwci ? ordinal(b.fwci.pct) : "—", "num");
+      if (b && b.fwci) fc.title = `FWCI ${a.fwci == null ? "—" : a.fwci.toFixed(2)} against the ${fmt(b.fwci.cohort_n)} ${b.fwci.year} papers in ${b.cohort.label}`;
+      cell(tr, b && b.pooled ? ordinal(b.pooled.pct) : "—", "num");
+      // A "both programmes" paper can be ranked in either cohort, so name the one
+      // the numbers above came from; the choice is the reader's to audit.
+      cell(tr, b ? (COHORT_FIELD_LABEL[b.cohort.field] || b.cohort.field) : "—");
+      cell(tr, a.primary_topic_name || "—");
+    }
+    host.appendChild(t);
+  }
+
+  // One click sorts, the next reverses, the third returns to the packet's own
+  // ordering. Numeric columns open descending because a count or a percentile is
+  // read best with the largest first; text columns open A→Z.
+  //
+  // A row with no value in the column is always parked at the end, in BOTH
+  // directions. Sorting it as though it were a zero would put "no cohort holds
+  // this year" at the top of an ascending percentile sort, where a reader would
+  // take it for the worst-scoring paper rather than the unanswerable one.
+  function sortPapers(colIndex, dir) {
+    const c = PAPER_COLS[colIndex];
+    const get = c.val || c.text;
+    const at = new Map(PAPERS_DEFAULT.map((a, i) => [a, i]));
+    return PAPERS_DEFAULT.slice().sort((a, b) => {
+      const av = get(a);
+      const bv = get(b);
+      const an = av == null || av === "";
+      const bn = bv == null || bv === "";
+      if (an && bn) return at.get(a) - at.get(b);
+      if (an) return 1;
+      if (bn) return -1;
+      let d;
+      if (typeof av === "number" && typeof bv === "number") d = av - bv;
+      else d = String(av).localeCompare(String(bv), "en", { numeric: true, sensitivity: "base" });
+      // Ties fall back to the default order so the result is the same every time;
+      // an unstable tie order makes a sorted table look non-deterministic when a
+      // reader compares it against a screenshot or a printed copy.
+      if (d === 0) return at.get(a) - at.get(b);
+      return dir === "asc" ? d : -d;
+    });
+  }
+
+  (function wirePaperSort() {
+    const host = el("tbl-papers");
+    let col = null;
+    let dir = null;
+    const paint = () => buildTable("tbl-papers", col == null ? PAPERS_DEFAULT : sortPapers(col, dir), col, dir);
+    host.addEventListener("click", (ev) => {
+      const th = ev.target.closest("th.sortable");
+      if (!th || !host.contains(th)) return;
+      apply(Number(th.dataset.col));
+    });
+    host.addEventListener("keydown", (ev) => {
+      if (ev.key !== "Enter" && ev.key !== " ") return;
+      const th = ev.target.closest("th.sortable");
+      if (!th || !host.contains(th)) return;
+      ev.preventDefault();
+      apply(Number(th.dataset.col));
+    });
+    function apply(i) {
+      const numeric = !!PAPER_COLS[i].num;
+      if (col !== i) {
+        col = i;
+        dir = numeric ? "desc" : "asc";
+      } else if (dir === (numeric ? "desc" : "asc")) {
+        dir = "asc" === dir ? "desc" : "asc";
+      } else {
+        // third click: back to the default ordering
+        col = null;
+        dir = null;
+      }
+      paint();
+      const again = host.querySelector(`th[data-col="${i}"]`);
+      if (again) again.focus();
+    }
+  })();
+
+  const ct = document.createElement("table");
+  const chead = ["Cohort", "Field", "Rows used", "Years", "p50", "p90", "p95", "p99", "FWCI p50", "FWCI p90", "FWCI p99"];
+  const ch = ct.appendChild(document.createElement("thead")).appendChild(document.createElement("tr"));
+  for (const h of chead) {
+    const th = ch.appendChild(document.createElement("th"));
+    th.textContent = h;
+    if (/p\d|Rows|share|Years/.test(h)) th.className = "num";
+  }
+  const ctb = ct.appendChild(document.createElement("tbody"));
+  for (const c of D.cohorts) {
+    const tr = ctb.appendChild(document.createElement("tr"));
+    const cn = cell(tr, c.label, "ttl");
+    cn.title = `Source file ${c.file}\nOQL: ${c.oql}\nReported at export: ${fmt(c.reported_works)} works\nParsed ${fmt(c.parsed_records)} records, ${fmt(c.blank_title_rows)} with no title`;
+    cell(tr, c.exact ? `${COHORT_FIELD_LABEL[c.field] || c.field} (exact)` : `${COHORT_FIELD_LABEL[c.field] || c.field} (broad keyword)`);
+    cell(tr, fmt(c.usable_rows), "num");
+    cell(tr, `${c.year_min}–${c.year_max}`, "num");
+    for (const k of ["median", "p90", "p95", "p99"]) cell(tr, fmt(c.overall[k]), "num");
+    // The cohort's own FWCI distribution, so a reader can see what "average" is in
+    // the literature being measured. Blank for the broad keyword export, which the
+    // user exported before the FWCI column existed.
+    if (c.fwci) for (const k of ["median", "p90", "p99"]) cell(tr, c.fwci.overall[k].toFixed(2), "num");
+    else for (const k of ["median", "p90", "p99"]) cell(tr, "—", "num");
+  }
+  el("tbl-cohorts").appendChild(ct);
+  el("cap-cohorts").innerHTML =
+    `The two exact cohorts span ${D.coverage.exact_cohort_year_span[0]}&ndash;` +
+    `${D.coverage.exact_cohort_year_span[1]}, which is why ` +
+    `<b>${pc(D.coverage.rankable_pct)}</b> of the packet&rsquo;s ` +
+    `${fmt(D.coverage.independent_citations_total)} independent citations can now be ranked; ` +
+    `the ${fmt(D.coverage.independent_before_2020)} of them that predate 2020 ` +
+    `(${pc(D.coverage.before_2020_pct)}) are inside that span rather than outside it. ` +
+    `Rows used is the count after dropping records with no title; the tooltip on each ` +
+    `cohort name carries the OQL that produced it and the count OpenAlex reported at export ` +
+    `time.`;
+  // The coverage promise made at the top of the percentile section: every
+  // independent citation that cannot be ranked is named, with its cause. A single
+  // "98.0%" would let a reader assume the missing 2% was random, when in fact each
+  // row is unrankable for a specific reason and only some reasons have a fix.
+  const causes = Object.entries(D.coverage.unrankable_by_cause || {});
+  const ut = document.createElement("table");
+  const uhead = ["OpenAlex id", "Publication", "Year", "Independent citations", "Primary topic", "Why it cannot be ranked"];
+  const uh = ut.appendChild(document.createElement("thead")).appendChild(document.createElement("tr"));
+  for (const h of uhead) {
+    const th = uh.appendChild(document.createElement("th"));
+    th.textContent = h;
+    if (/^Year|citations/.test(h)) th.className = "num";
+  }
+  const utb = ut.appendChild(document.createElement("tbody"));
+  let unrankedTotal = 0;
+  for (const [cause, blk] of causes.sort((a, b) => b[1].independent - a[1].independent)) {
+    for (const r of blk.rows.slice().sort((a, b) => b.independent - a.independent)) {
+      unrankedTotal += r.independent || 0;
+      const tr = utb.appendChild(document.createElement("tr"));
+      cell(tr, r.openalex_id || "—", "nowrap");
+      const td = cell(tr, r.scholar_title || "—", "ttl");
+      if (r.scholar_title) td.title = r.scholar_title;
+      cell(tr, String(r.year ?? "—"), "num");
+      cell(tr, fmt(r.independent), "num");
+      cell(tr, `${r.topic_name || "—"}${r.topic ? ` (${r.topic})` : ""}`);
+      // The cause string from the builder is a machine label with a parenthetical
+      // field code; on the page it reads as a sentence fragment, so the field is
+      // named in the reader's own vocabulary.
+      const why = cell(tr, cause.replace(/\s*\(([^)]*)\)\s*$/, (m, f) => ` (${COHORT_FIELD_LABEL[f] || FIELD_LABEL[f] || f})`));
+      why.title = `Builder cause code: ${cause}`;
+    }
+  }
+  el("tbl-unrankable").appendChild(ut);
+  el("cap-unrankable").innerHTML =
+    `${fmt(unrankedTotal)} of the packet&rsquo;s ${fmt(D.coverage.independent_citations_total)} ` +
+    `independent citations (<b>${pc(100 - D.coverage.rankable_pct)}</b>) sit on papers no cohort ` +
+    `can rank. Their primary topics fall outside both programmes, so no exported cohort measures ` +
+    `their field; adding a broader cohort would raise the coverage percentage by comparing them ` +
+    `against literature the applicant does not work in, which is the substitution the RFE rejects. ` +
+    `The percentage is therefore reported as it is rather than improved.`;
+
+  // ------------------------------------------------------------------ methods
+  // A reader of an evidence exhibit should be able to reproduce a figure from the
+  // source exports alone. Every claim below is read out of D, so none of it can go
+  // stale against a rebuild; where a number is quoted it is the same number the
+  // tables above print.
+  const exactSpan = D.coverage.exact_cohort_year_span;
+  const matchBases = D.articles.reduce((m, a) => {
+    const k = a.match_basis || "none";
+    m[k] = (m[k] || 0) + 1;
+    return m;
+  }, {});
+  const prefixBases = Object.entries(matchBases).filter(([k]) => k.startsWith("prefix:"));
+  const nExactMatch = matchBases.exact || 0;
+  const nPrefixMatch = prefixBases.reduce((s, [, n]) => s + n, 0);
+  const nUnmatched = (matchBases.none || 0);
+  const yd = D.articles.filter((a) => a.year_disagreement).length;
+  const prog = D.programmes;
+
+  const mi = document.createElement("table");
+  const mih = mi.appendChild(document.createElement("thead")).appendChild(document.createElement("tr"));
+  for (const h of ["Input", "What it supplied", "As taken"]) {
+    const th = mih.appendChild(document.createElement("th"));
+    th.textContent = h;
+  }
+  const mitb = mi.appendChild(document.createElement("tbody"));
+  function mrow(what, gave, taken) {
+    const tr = mitb.appendChild(document.createElement("tr"));
+    cell(tr, what);
+    cell(tr, gave);
+    cell(tr, taken);
+    return tr;
+  }
+  mrow(
+    `OpenAlex author ${D.author_id}`,
+    "The applicant's own works with OpenAlex's citation count, FWCI, publication year, type, DOI and primary topic.",
+    `Fetched from the OpenAlex API at build time; ${fmt(D.coverage.openalex_works)} works returned. Nothing is cached on disk, so a rebuild re-reads the live record.`
+  );
+  mrow(
+    "The citation packet's publication list",
+    `The ${fmt(D.coverage.scholar_articles)} publications on the record and each one's independent-citation count, exactly as the packet files them.`,
+    `Read from the dashboard's own dataset. Frozen at the Google Scholar snapshot of ${D.packet_snapshot_date}; this page never writes to it.`
+  );
+  for (const c of D.cohorts) {
+    const tr = mitb.appendChild(document.createElement("tr"));
+    const w = cell(tr, `OpenAlex/${c.file}`);
+    const g = cell(tr, "");
+    // The query is printed verbatim, in a code block, not paraphrased: this is the
+    // exact text that produced the denominator every percentile on this page uses,
+    // and a reader re-running the export needs the wording rather than a summary of
+    // it. OQL is written by hand in the OpenAlex query tool, so the string below is
+    // what was typed, carried through the manifest.
+    const pre = g.appendChild(document.createElement("pre"));
+    pre.className = "oql";
+    pre.textContent = c.oql;
+    const small = g.appendChild(document.createElement("p"));
+    small.className = "sub";
+    small.textContent = `${c.exact ? "Exact-field cohort; counts toward coverage." : "Broad keyword cohort; never the exact-field answer."} FWCI column ${c.has_fwci ? "present" : "absent"}.`;
+    const t = cell(tr, "");
+    const p2 = t.appendChild(document.createElement("p"));
+    p2.textContent = `${fmt(c.parsed_records)} records parsed against ${fmt(c.reported_works)} reported at export` +
+      (c.count_matches_report
+        ? ` — agreement`
+        : ` (${c.count_delta > 0 ? "+" : ""}${fmt(c.count_delta)}; the file has moved since the export was taken, reported rather than corrected)`) +
+      `, ${fmt(c.blank_title_rows)} dropped for carrying no title, ${fmt(c.usable_rows)} used. Span ${c.year_min}–${c.year_max}.`;
+  }
+  mrow(
+    "OpenAlex/cohort-manifest.json",
+    "Which field each export measures and whether it is an exact-field cohort.",
+    "The only link between a file and a field, since the exports themselves carry no topic column."
+  );
+  mrow(
+    "tools/topics.js",
+    "The human-reviewed mapping from an OpenAlex primary topic to the glycoscience or anticoagulation programme.",
+    "The same table the dashboard's network figures use, so a paper is not in one programme here and another there."
+  );
+  mrow(
+    "OpenAlex/journal-abbreviations.json",
+    "The NLM (PubMed-compliant) abbreviation of each journal the record was published in — the form a citation is read in.",
+    `Retrieved ${D.venues.retrieved_on || "n/a"} from the <code>source</code> field of a PubMed esummary record, reached through a DOI published for a work in that journal, one look-up per journal rather than per paper. Cached on disk so a rebuild does not re-ask NCBI. <b>${fmt(D.venues.rows_abbreviated)}</b> of the ${fmt(D.venues.rows_total)} rows print an abbreviation; ${fmt(D.venues.rows_no_abbreviation)} have no registry abbreviation at all (three patents, a dissertation) and ${fmt(D.venues.rows_name_mismatch)} was refused because the registry's journal is not the venue Scholar named (a book's title, where the registry holds the series). Those ${fmt(D.venues.rows_no_abbreviation + D.venues.rows_name_mismatch)} print Scholar's own venue text.`
+  );
+  el("tbl-method-inputs").appendChild(mi);
+
+  // A broad keyword cohort may be registered again one day (the manifest explains how),
+  // so the steps below branch on its presence rather than assuming either way. Today
+  // there is none, and the wording says so plainly instead of printing a zero.
+  const broad = D.cohorts.find((c) => !c.exact);
+  const STEPS = [
+    `<b>Take the publication list from the packet, not from OpenAlex.</b> The ${fmt(D.coverage.scholar_articles)} publications and their independent-citation counts come from the record as filed, so the comparison is anchored to the evidence rather than to whichever works OpenAlex currently attributes to the author.`,
+    `<b>Fetch the author's OpenAlex record.</b> OpenAlex's own <code>cited_by_count</code> and <code>fwci</code> are used for every count on this page. OpenAlex holds ${fmt(D.coverage.openalex_works)} works against the packet's ${fmt(D.coverage.scholar_articles)} publications, so the two records are not the same list and are never treated as one.`,
+    `<b>Match the two records on title.</b> Titles are lower-cased and stripped to alphanumerics, then compared whole. ${fmt(nExactMatch)} matched exactly and ${fmt(nPrefixMatch)} on a leading ${prefixBases.length ? prefixBases.map(([k]) => k.split(":")[1].replace("w", "-word")).join(" or ") : "long"} prefix, which is needed only because Google Scholar truncates long titles with an ellipsis; a prefix match is accepted only when it is at least eight words and identifies exactly one work, and it is marked on its row in the table above. ${fmt(nUnmatched)} Scholar titles found no OpenAlex work; they appear in the publication table with no count or percentile, and all three carry no independent citations in the packet. Each OpenAlex work can be claimed once, so two publications cannot collide onto one record.`,
+    `The reverse direction is published too: ${fmt(D.works_not_matched_to_scholar.length)} OpenAlex works were claimed by no Scholar title. All of them carry zero citations, so none of them can change a percentile.`,
+    `Where Scholar and OpenAlex disagree on the year of publication — ${fmt(yd)} publications do — the OpenAlex year is used on both sides of the comparison, because the cohort's year is OpenAlex's too. Mixing a Scholar year against an OpenAlex cohort would compare a paper with the wrong year's literature.`,
+    `<b>Assign each publication to a programme.</b> Its OpenAlex primary topic is looked up in the reviewed table: ${fmt(prog.glyco.papers)} glycoscience, ${fmt(prog.anti.papers)} anticoagulation, ${fmt(prog.both.papers)} serving both, ${fmt(prog.other.papers)} in neither, and ${fmt(prog.unassigned.papers)} whose topic is not in the table at all. A paper absent from the table is ranked against nothing rather than guessed at; all ${fmt(prog.unassigned.papers)} carry ${fmt(prog.unassigned.independent)} independent citations between them, so nothing is lost.`,
+    `<b>Build each cohort from one export file.</b> The exports carry no topic column and no identifier, so the file <em>is</em> the cohort and files are never concatenated: merging them would put the same work in two denominators. Rows with no title are dropped (${exactCohorts.map((c) => `${fmt(c.blank_title_rows)} in the ${COHORT_FIELD_LABEL[c.field] || c.field}`).join("; ")}); no row was dropped for an unreadable citation count.`,
+    `<b>Rank a paper only inside a cohort that measures its own field.</b> A glycoscience paper is never ranked in the anticoagulation cohort or the reverse, since that is the substitution the RFE asks against. ${broad ? "The broad keyword export ranks anything but is labelled broad everywhere it appears and never contributes to coverage." : "No broad keyword cohort is registered, so every percentile on this page is taken inside a named topic; a keyword cohort was retired on 2026-11-06 because it measured no field and ranked nothing."}`,
+    `<b>Compute the percentile as the share of the cohort at or below the paper's count.</b> Ties are shared, which is the conservative choice: a paper is not credited with passing a cohort member that has the same count. Two versions are computed — within the cohort restricted to the paper's own OpenAlex publication year, and against the whole cohort — because a citation count is inseparable from how long the paper has had to collect it.`,
+    `<b>Compute a second percentile on FWCI.</b> FWCI is OpenAlex's published ratio of citations received in a work's first four years to the citations expected for a work of that publication year, of that work type, in that OpenAlex subfield, so ranking it compares papers of different ages on one scale. OpenAlex assigns the subfield from the work's own text rather than from its journal, and applies no adjustment for an author's position on the paper. Both sides of that ranking are OpenAlex's own FWCI values; nothing here computes or approximates it. That percentile is drawn as its own ladder above, with both literatures on one axis, because each bar is already a position inside its own cohort and year.`,
+    `<b>Do not exclude pandemic-related work.</b> Rows whose title or author string names SARS-CoV, COVID, coronavirus, spike protein, remdesivir or the pandemic were counted so the question could be answered: ${exactCohorts.map((c) => `${fmt(c.pandemic_rows)} of ${fmt(c.usable_rows)} rows (${pc(c.pandemic_share_rows_pct)}) carrying ${pc(c.pandemic_share_citations_pct)} of citations in the ${COHORT_FIELD_LABEL[c.field] || c.field}`).join("; ")}. At that scale the exclusion changes nothing a reviewer would act on, so every cohort on this page is whole and every percentile is stated once. An earlier build carried each distribution twice and offered a toggle; it was retired on 2026-11-06 because a figure whose value depends on which button is pressed is not a figure that can be quoted in a filing.`,
+    `<b>Take the less flattering answer when a paper belongs to both programmes.</b> A dual-programme publication has a legitimate ranking in each cohort, so the summary table prints the lower of the two and the "both programmes" chart shows each side by side.`,
+    `<b>State the coverage, and name what it excludes.</b> A paper is rankable only when a cohort measuring its field holds works from its own year, which the two exact cohorts make possible across ${exactSpan[0]}–${exactSpan[1]}. That covers ${fmt(D.coverage.independent_rankable)} of the packet's ${fmt(D.coverage.independent_citations_total)} independent citations, ${pc(D.coverage.rankable_pct)}; the ${fmt(D.coverage.independent_citations_total - D.coverage.independent_rankable)} not covered sit on papers whose topics fall outside both programmes and are listed individually above.`,
+    `<b>Keep the two citation systems apart.</b> Google Scholar, which the packet is built from, reports ${fmt(D.scale.scholar_citations_all_articles)} citations for this body of work where OpenAlex reports ${fmt(D.scale.openalex_citations_matched)}, about ${fmt(D.scale.scholar_over_openalex_pct)}% higher. Neither side is scaled to the other. Every percentile on this page is OpenAlex against OpenAlex and must never be quoted as a percentile of the packet's figures.`,
+    `<b>Take each journal's abbreviation from the registry, not from a rule.</b> The publication table prints the venue under the title in the NLM (PubMed-compliant) short form. That form is read from the <code>source</code> field of a PubMed esummary record, reached by searching each journal's own DOI, one look-up per journal (${fmt(D.venues.distinct_venues)} of them) rather than one per paper, and cached in <code>OpenAlex/journal-abbreviations.json</code>. An abbreviation is applied only where the registry's journal name and the venue Google Scholar printed are the same journal; where they are not, or where the registry has nothing to offer — three patents and a dissertation — the row prints Scholar's own venue text. No abbreviation is ever guessed from a name.`,
+  ];
+  const msteps = el("method-steps");
+  for (const s of STEPS) {
+    const li = msteps.appendChild(document.createElement("li"));
+    li.innerHTML = s;
+  }
+
+  const NOTS = [
+    "Cohort files are never merged or concatenated, and no cohort is widened to make a coverage percentage look better.",
+    "A paper is never ranked against a cohort that measures a different field, however large that cohort is.",
+    "No cohort row is ever filtered out of a percentile. Pandemic-related work stays in every distribution, and that exclusion was counted, considered and declined in the steps above rather than applied quietly.",
+    "Scholar counts are never converted into OpenAlex percentiles, and neither count system is scaled to the other.",
+    "A title match is never guessed. A prefix shorter than eight words, or one that several works share, leaves the row unmatched.",
+    `A missing FWCI is never read as zero. OpenAlex omits it for ${fmt(D.fwci.works_without_value)} of the ${fmt(D.fwci.works_total)} works on the record, all of them uncited, and those works are left out of the FWCI distribution rather than dragging its median down.`,
+    "Nothing outside OpenAlex/ is written. The dashboard, the exhibits and the citation database are read-only to this analysis, and no figure here has moved one there.",
+  ];
+  const mn = el("method-nots");
+  for (const s of NOTS) {
+    const li = mn.appendChild(document.createElement("li"));
+    li.innerHTML = s;
+  }
+
+  el("method-repro").innerHTML =
+    `Reproduce with <code>node tools/build-field-comparison.js</code> from the project root. It reads the cohort exports named above plus ` +
+    `<code>OpenAlex/cohort-manifest.json</code>, <code>tools/topics.js</code> and the dashboard&rsquo;s publication list, calls the OpenAlex API once for the ` +
+    `author record (an <code>OPENALEX_API_KEY</code> in <code>.env</code> is sent as a bearer header), and writes ` +
+    `<code>OpenAlex/field-comparison.json</code> and <code>OpenAlex/field-comparison.js</code>. Journal abbreviations are only fetched when the build is run ` +
+    `as <code>node tools/build-field-comparison.js --fetch-abbrevs</code>, which writes <code>OpenAlex/journal-abbreviations.json</code>; an ordinary build reads ` +
+    `that cache and contacts nothing but OpenAlex. This page reads the generated data file as a global variable so that it ` +
+    `opens directly from disk with no server and no network access. The sorted cohort arrays that every percentile is computed against are published inside ` +
+    `the JSON, so any figure on this page can be recomputed from the artifact without re-reading the CSVs. The citation packet&rsquo;s own figures are on the ` +
+    `<a href="../dashboard/index.html">dashboard</a> and are unaffected by anything here.`;
+
+  el("colophon-line").textContent =    `Generated ${D.generated_at} from OpenAlex author ${D.author_id} and the cohort exports ` +
+    `named in OpenAlex/cohort-manifest.json. Packet figures quoted from the Scholar snapshot ` +
+    `of ${D.packet_snapshot_date}.`;
+
+  // ------------------------------------------------------------------ utils
+  function div(cls) { const d = document.createElement("div"); d.className = cls; return d; }
+  function span(cls, text) { const s = document.createElement("span"); s.className = cls; s.textContent = text; return s; }
+  function cell(tr, text, cls) {
+    const td = tr.appendChild(document.createElement("td"));
+    td.textContent = text == null ? "—" : String(text);
+    if (cls) td.className = cls;
+    return td;
+  }
+  function legend(target, items) {
+    const t = el(target);
+    t.innerHTML = "";
+    for (const it of items) {
+      const k = document.createElement("span");
+      k.className = "key";
+      const sw = document.createElement("span");
+      sw.className = "swatch " + it.cls;
+      k.appendChild(sw);
+      k.appendChild(document.createTextNode(it.label));
+      t.appendChild(k);
+    }
+  }
+})();
+</script>
+
+</body>
+</html>
