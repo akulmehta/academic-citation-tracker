@@ -13,7 +13,7 @@
 const fs = require("fs");
 const path = require("path");
 const { execFileSync } = require("child_process");
-const { PKT, REPO, PAPERS, openPacket, openCatalog } = require("./lib.js");
+const { PKT, REPO, openPacket, openCatalog, headlineTier, originalApplicationUids, folderRoots, STORAGE_ROOTS, ROOT_PENDING, ROOT_SCREENED } = require("./lib.js");
 
 const QUIET = process.argv.includes("--quiet");
 const DEEP = process.argv.includes("--deep");
@@ -110,6 +110,16 @@ const held = cits.filter(r => r.status === "held");
   const pf = read("packet-files.csv");
   if (pf) {
     if (pf.rows.length !== files.length) fail("csv", `packet-files.csv has ${pf.rows.length} rows but table file has ${files.length}`);
+    // §4.4: the export is table `file`, whose own columns are the point — a file
+    // row without its path cannot say which storage root the PDF lives in.
+    const want = ["folder_uid","file","source_pdf","role","shows_date","date_basis","cited","bytes"];
+    if (pf.header.join(",") !== want.join(",")) {
+      fail("csv", `packet-files.csv has the wrong header: expected ${want.join(", ")} (table file's own columns, §4.4), got ${pf.header.join(", ")}`);
+    } else {
+      const csvPaths = new Set(pf.rows.map(r => r[1]));
+      const missing = files.filter(f => !csvPaths.has(f.file));
+      if (missing.length) fail("csv", `${missing.length} file row(s) not in packet-files.csv by path: ${missing.slice(0, 4).map(f => f.file).join(", ")}`);
+    }
   }
 }
 
@@ -133,14 +143,23 @@ if (held.length) {
 /* ------------------------------------------------------------------ */
 /* 4. PDF naming, presence, magic bytes, byte counts                    */
 /* ------------------------------------------------------------------ */
-// §5.1: NN-role-Surname[-date].pdf, the citing senior author's surname in the name.
+// §5.1: NN-role-Surname[-date].pdf, the citing senior author's surname in the
+// name, and the folder sitting in the root its status implies — `papers/` for a
+// citation in the packet, `pending-papers/` for one awaiting the applicant's
+// decision, `screened-papers/` for one decided against.
 const NAME_RE = /^\d{2}-[a-z][a-z-]+-.+\.pdf$/;
+const ROOTS = STORAGE_ROOTS;
 {
+  const roots = folderRoots(db);
   const listed = new Set(files.map(f => f.file));
   for (const f of files) {
     const base = path.basename(f.file);
     if (!NAME_RE.test(base)) fail("pdf-name", `${f.file} does not look like NN-role-Surname[-date].pdf`);
-    if (!f.file.startsWith("papers/")) fail("pdf-name", `${f.file} is not under papers/`);
+    const root = f.file.split("/")[0];
+    if (!ROOTS.includes(root)) fail("pdf-name", `${f.file} is not under ${ROOTS.join(", ")}`);
+    else if (roots.has(f.folder_uid) && root !== roots.get(f.folder_uid)) {
+      fail("pdf-root", `${f.file} sits in ${root}/ but its rows put the folder in ${roots.get(f.folder_uid)}/ — run node scripts/relocate-pdfs.js --write`);
+    }
     const abs = path.join(PKT, f.file);
     if (!fs.existsSync(abs)) { fail("pdf-file", `${f.file} is listed but does not exist on disk`); continue; }
     const buf = fs.readFileSync(abs);
@@ -155,11 +174,14 @@ const NAME_RE = /^\d{2}-[a-z][a-z-]+-.+\.pdf$/;
       if (!hit) fail("pdf-name", `${f.file} does not contain the citing senior author's surname (${names.join(" / ")})`);
     }
   }
-  // Nothing loose in papers/, and every folder on disk is a folder_uid.
-  if (fs.existsSync(PAPERS)) {
-    for (const e of fs.readdirSync(PAPERS, { withFileTypes: true })) {
-      if (e.isFile()) fail("pdf-loose", `${e.name} sits loose in papers/ — §5.1 wants one sub-folder per citing work`);
-      else if (!cits.some(c => c.folder_uid === e.name)) fail("pdf-folder", `papers/${e.name}/ is not the folder_uid of any citation row`);
+  // Nothing loose in a storage root, and every folder on disk is a folder_uid.
+  for (const root of ROOTS) {
+    const abs = path.join(PKT, root);
+    if (!fs.existsSync(abs)) continue;
+    for (const e of fs.readdirSync(abs, { withFileTypes: true })) {
+      if (e.isFile()) fail("pdf-loose", `${e.name} sits loose in ${root}/ — §5.1 wants one sub-folder per citing work`);
+      else if (!cits.some(c => c.folder_uid === e.name)) fail("pdf-folder", `${root}/${e.name}/ is not the folder_uid of any citation row`);
+      else if (roots.get(e.name) !== root) fail("pdf-root", `${root}/${e.name}/ is in the wrong root; its rows say ${roots.get(e.name)}/`);
     }
   }
   for (const f of files) if (!byUid.has(f.folder_uid)) fail("pdf-folder", `file ${f.file} names folder_uid ${f.folder_uid}, which is not a citation row`);
@@ -169,13 +191,15 @@ const NAME_RE = /^\d{2}-[a-z][a-z-]+-.+\.pdf$/;
   }
   // §5.1: a citation in the packet has its PDF in the folder. A row counsel is
   // told to read but cannot open is worse than a row that is simply absent, so
-  // this fails even when the row's own pdf_file column is empty.
+  // this fails even when the row's own pdf_file column is empty. Only `papers/`
+  // counts: a held work's PDF is filed under `pending-papers/` until the
+  // applicant confirms it, and it is listed in PACKET-STATUS.md instead.
   for (const folder of new Set(included.map(r => r.folder_uid))) {
     if (!files.some(f => f.folder_uid === folder)) {
       fail("pdf-missing", `folder ${folder} is in the packet but holds no PDF — counsel cannot check what the packet asserts about it`);
     }
   }
-  if (!failures.some(f => f[0].startsWith("pdf-")) && !QUIET) note("pdf", `${files.length} file(s) checked: name, presence, %PDF magic, byte count, surname`);
+  if (!failures.some(f => f[0].startsWith("pdf-")) && !QUIET) note("pdf", `${files.length} file(s) checked: name, root, presence, %PDF magic, byte count, surname`);
 }
 
 /* ------------------------------------------------------------------ */
@@ -261,7 +285,14 @@ for (const r of cits) {
       // Nothing may resolve outside the packet folder.
       if (!abs.startsWith(PKT + path.sep)) { fail("link", `href escapes the packet folder: ${h}`); bad++; continue; }
       if (!fs.existsSync(abs)) { fail("link", `href target missing: ${h}`); bad++; continue; }
-      if (clean.startsWith("papers/") && !listed.has(clean)) { fail("link", `${h} is linked but not listed in packet-files.csv`); bad++; }
+      if (ROOTS.includes(clean.split("/")[0]) && !listed.has(clean)) { fail("link", `${h} is linked but not listed in packet-files.csv`); bad++; }
+      // Only confirmed evidence may be linked from the lawyer's packet. A PDF
+      // still awaiting a decision lives under `pending-papers/` and belongs on
+      // the review page; a screened-out one must not be linked anywhere.
+      if (clean.startsWith(ROOT_PENDING + "/") || clean.startsWith(ROOT_SCREENED + "/")) {
+        fail("link", `packet.html links ${h}, which is not in the packet — pending work belongs on potential_notable_citations.html and screened-out work nowhere`);
+        bad++;
+      }
     }
     // Every INCLUDED work's folder must appear in the HTML. A held folder is an
     // open item for the applicant, not evidence for counsel, so it is listed in
@@ -269,9 +300,19 @@ for (const r of cits) {
     const folders = new Set(included.map(c => c.folder_uid));
     const absent = [...folders].filter(f => !html.includes(f));
     if (absent.length) fail("link", `${absent.length} included folder(s) never appear in packet.html: ${absent.slice(0, 8).join(", ")}`);
-    const heldWithFiles = new Set(files.filter(f => !folders.has(f.folder_uid)).map(f => f.folder_uid));
-    if (heldWithFiles.size && !QUIET) {
-      note("link", `${heldWithFiles.size} folder(s) hold a PDF but no included row, so they are open items in PACKET-STATUS.md rather than in the lawyer HTML: ${[...heldWithFiles].join(", ")}`);
+    const otherWithFiles = new Map();
+    for (const f of files) {
+      if (folders.has(f.folder_uid)) continue;
+      otherWithFiles.set(f.folder_uid, f.file.split("/")[0]);
+    }
+    if (otherWithFiles.size && !QUIET) {
+      const byRoot = new Map();
+      for (const [folder, root] of otherWithFiles) {
+        if (!byRoot.has(root)) byRoot.set(root, []);
+        byRoot.get(root).push(folder);
+      }
+      note("link", [...byRoot.entries()].map(([root, list]) =>
+        `${list.length} folder(s) hold a PDF but no included row, so they live under ${root}/ and not in the lawyer HTML: ${list.join(", ")}`).join("; "));
     }
     if (!bad && !QUIET) note("link", `${hrefs.length} href(s) checked; all resolve inside the packet folder`);
   }
@@ -347,11 +388,29 @@ for (const r of included) {
     if (/In Methods/i.test(s)) return "A";
     return null;
   };
+  // A folder is one citing WORK, and a work is filed at the strongest tier any of
+  // its citations earns (lib.headlineTier). Comparing the folder against a single
+  // row therefore raises a mismatch that is not one: the Guérardel article sits in
+  // "In Methods" because it runs GLAD, MAWE and the review there, while its
+  // separate citation of the oligomannose-isomer paper is honestly a Discussion use.
+  const byFolder = new Map();
+  for (const r of cits) {
+    if (r.status !== "included") continue;
+    if (!byFolder.has(r.folder_uid)) byFolder.set(r.folder_uid, []);
+    byFolder.get(r.folder_uid).push(r);
+  }
   for (const r of cits) {
     const f = folderTier(r.source_pdf);
     if (!f || !r.tier) continue;
     if (f === r.tier) continue;
     const from = folderLabel(r.source_pdf);
+    // The applicant's own decision settles the disagreement, and it is a decision
+    // of record (tier_decided_on / tier_decided_note), not a silence.
+    if (r.tier_decision) continue;
+    // Same for a folder whose label matches the tier the WORK stands at: the row's
+    // own weaker tier is a fact about one citation, not a filing error.
+    const head = headlineTier(byFolder.get(r.folder_uid));
+    if (head && f === head) continue;
     // §1.1 says an Acknowledgements mention is not a use of the tool at all, and
     // the applicant filed this PDF there. But the same applicant's note can also
     // record a Methods sentence — van der Wal does exactly that. Where the row's
@@ -363,7 +422,7 @@ for (const r of included) {
     if (f === "D" && !supports) {
       fail("tier-folder", msg + ` — §1.1: an Acknowledgements mention is not a use, and the row holds no Methods section or quotation to say otherwise`);
     } else if (f === "D") {
-      warn("tier-folder", msg + ` — the applicant filed it as Acknowledgements, yet the row's own note records a Methods sentence; §3.2 of PACKET-STATUS.md asks for a decision`);
+      warn("tier-folder", msg + ` — the applicant filed it as Acknowledgements, yet the row's own note records a Methods sentence; record the call with scripts/record-tier-decision.js`);
     } else {
       warn("tier-folder", msg);
     }
@@ -383,8 +442,7 @@ function folderLabel(p) {
   cat.close();
   const missing = cits.filter(r => !have.has(r.row_uid));
   if (missing.length) fail("catalog", `${missing.length} row_uid(s) do not resolve in Database/citation-catalog.sqlite: ${missing.map(r => r.row_uid).join(", ")}`);
-  else if (!QUIET) note("catalog", `all ${cits.length} row_uid(s) resolve in the record (opened read-only)`);
-}
+  else if (!QUIET) note("catalog", `all ${cits.length} row_uid(s) resolve in the record (opened read-only)`);}
 
 /* ------------------------------------------------------------------ */
 /* 10. Index/section pairing, projects, timeline sets                   */
@@ -486,6 +544,88 @@ for (const r of cits) {
       const want = narr.length * HEADINGS.length;
       if (blocks !== want) fail("prose", `found ${blocks} narrative blocks in packet.html but ${narr.length} narrative row(s) x 4 sections = ${want} — prose is missing or the markup changed shape`);
       if (!hits && !leaked && !QUIET) note("prose", `${blocks} narrative block(s) scanned for drafting advice; ${narr.length} preparer_note(s) confirmed absent from the document`);
+    }
+  }
+}
+
+/* ------------------------------------------------------------------ */
+/* 12b. The potential page stays separate from the packet (§5.6)        */
+/* ------------------------------------------------------------------ */
+// packet.html is what counsel receives and holds only confirmed citations. The
+// review page holds candidates. The failure worth guarding against is the quiet
+// one: a candidate leaking into the packet, or a packet row being re-offered as
+// though nobody had decided it. Both are checked against the database and the
+// record, not against prose on the page.
+{
+  const POT = path.join(PKT, "potential_notable_citations.html");
+  const packetHtml = fs.existsSync(path.join(PKT, "packet.html"))
+    ? fs.readFileSync(path.join(PKT, "packet.html"), "utf8") : "";
+  const includedUids = new Set(included.map(r => r.row_uid));
+  if (!fs.existsSync(POT)) {
+    warn("potential", "potential_notable_citations.html is missing — run scripts/build-potential.js --write so unfiled independent citations are not simply invisible");
+  } else {
+    const pot = fs.readFileSync(POT, "utf8");
+    const potUids = [...new Set([...pot.matchAll(/<td class="uid">(cit-\d{6})<\/td>/g)].map(m => m[1]))];
+    if (!potUids.length) {
+      fail("potential", "no candidate rows parsed from potential_notable_citations.html — the markup changed shape and this check has gone blind");
+    } else {
+      // 1. Separation. Neither document may reference the other.
+      if (/potential_notable/i.test(packetHtml)) fail("potential", "packet.html links or mentions potential_notable_citations.html — candidates must not appear in the document counsel receives");
+      if (/<a[^>]+packet\.html/i.test(pot)) fail("potential", "the potential page links packet.html — keep the two documents unlinked so a candidate cannot borrow the packet's authority");
+
+      // 2. Nothing already decided appears as a candidate.
+      const leaked = potUids.filter(u => includedUids.has(u));
+      if (leaked.length) fail("potential", `${leaked.length} confirmed packet row(s) listed as candidates: ${leaked.slice(0, 6).join(", ")}`);
+      const orig = originalApplicationUids();
+      if (orig === null) fail("potential", "Original-Application-Citations.md is unreadable, so already-filed articles cannot be excluded from the potential page");
+      else {
+        const repeat = potUids.filter(u => orig.has(u));
+        if (repeat.length) fail("potential", `${repeat.length} article(s) already used in the original application listed as candidates (§3): ${repeat.slice(0, 6).join(", ")}`);
+      }
+
+      // 3. Independence comes from the record, not the queued snapshot. This is the
+      //    screen's whole purpose, so a stale candidate on the page is a defect.
+      const cat = openCatalog();
+      const catRows = new Map(cat.prepare(
+        "SELECT row_uid, status, is_countable_independent, is_non_english, is_primary_copy, superseded_at FROM citations WHERE row_uid IN (" + potUids.map(() => "?").join(",") + ")")
+        .all(...potUids).map(r => [r.row_uid, r]));
+      cat.close();
+      const missing = potUids.filter(u => !catRows.has(u));
+      if (missing.length) fail("potential", `${missing.length} candidate uid(s) do not resolve in the citation record: ${missing.slice(0, 6).join(", ")}`);
+      const notIndep = potUids.filter(u => { const c = catRows.get(u); return c && (c.status !== "INDEPENDENT" || c.is_countable_independent !== 1); });
+      if (notIndep.length) fail("potential", `${notIndep.length} candidate(s) are not independent on the record — a shared author or a PI on the citing paper disqualifies them (§1.2): ${notIndep.slice(0, 6).join(", ")}`);
+      const flagged = potUids.filter(u => { const c = catRows.get(u); return c && (c.is_non_english || c.is_primary_copy === 0 || c.superseded_at); });
+      if (flagged.length) fail("potential", `${flagged.length} candidate(s) are non-English, a copy that does not stand, or superseded: ${flagged.slice(0, 6).join(", ")}`);
+
+      // 4. No tier is claimed for an unread article.
+      const tierClaims = pot.match(/\btier\s+[ABCD]\b/gi);
+      if (tierClaims) fail("potential", `the potential page states a tier (${[...new Set(tierClaims)].join(", ")}) — a tier is a claim about where a sentence sits, and no candidate has been read (§5.6)`);
+
+      // 5. The printed screen must add up, or the page misrepresents the corpus.
+      const screenBlock = pot.match(/<table class="screen">([\s\S]*?)<\/table>/);
+      if (!screenBlock) fail("potential", "the screen table is missing from potential_notable_citations.html — the page no longer shows how the list was derived");
+      else {
+        const terms = [...screenBlock[1].matchAll(/class="n">(?:<strong>)?(&minus;)?(-?\d+)/g)]
+          .map(m => (m[1] ? -1 : 1) * Number(m[2]));
+        if (terms.length < 2) fail("potential", "the screen table has no numbers to add up");
+        else {
+          const listed = terms.pop();
+          const running = terms.reduce((a, b) => a + b, 0);
+          if (running !== listed) fail("potential", `the screen arithmetic does not close: ${running} != ${listed} listed`);
+          if (listed !== potUids.length) fail("potential", `the screen table says ${listed} candidates but the table lists ${potUids.length}`);
+        }
+      }
+
+      // 6. PDF links on the page must resolve, like every other link in the
+      // folder, and a page awaiting a decision may only point at
+      // `pending-papers/` — a screened-out PDF must not be linked from anywhere.
+      const potPdf = [...pot.matchAll(/href="((?:papers|pending-papers|screened-papers)\/[^"]+)"/g)].map(m => m[1]);
+      const badPdf = potPdf.filter(h => !fs.existsSync(path.join(PKT, decodeURIComponent(h))));
+      if (badPdf.length) fail("potential", `candidate PDF link(s) do not resolve: ${badPdf.slice(0, 4).join(", ")}`);
+      const screened = potPdf.filter(h => h.startsWith(ROOT_SCREENED + "/"));
+      if (screened.length) fail("potential", `the review page links ${screened.length} screened-out PDF(s) (§4.5): ${screened.slice(0, 4).join(", ")}`);
+
+      if (!QUIET) note("potential", `${potUids.length} candidate row(s) on the review page; all independent on the record, none in the packet or the original application, no tier claimed`);
     }
   }
 }

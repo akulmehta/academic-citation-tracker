@@ -103,6 +103,27 @@ So the ranking, from strongest to weakest:
 The folder a PDF sits in records where its citation was found, so the tier can start from the
 folder — but confirm it against the article text before relying on it (§2).
 
+**A citing work is filed at the strongest tier any of its citations earns** (applicant instruction,
+2026-11-08: *always choose the higher tier*). One article often cites several of the applicant's
+works, and the tiers can differ: it may use GLAD in Materials and Methods while mentioning a paper
+only in its Discussion. Ranking the work at its weakest citation would hide the strongest evidence.
+Each row keeps its own tier and its own location; the higher tier is the headline the work is filed
+under.
+
+Where that reading disagrees with the folder the PDF was filed in, record the decision rather than
+editing the tier and leaving the gap unexplained:
+
+```
+node scripts/record-tier-decision.js --row=cit-000542 --tier=A \
+  --note="the citing article runs the tool in Materials and Methods p.5" --write --reprint
+```
+
+`tier_decision` is a separate column so the applicant's reading stays visible next to the value the
+importer inferred, and `--revert` takes it off again. `headlineTier()` in `scripts/lib.js` is the one
+place the rule is computed; `validate-packet.js` skips its tier-vs-folder check on any row carrying a
+recorded decision. Never overwrite `tier` to match a decision, and never move a PDF between folders to
+make the two agree — the folder records where the file was found.
+
 Journals head the Methods section in many different ways — `Methods`, `Materials and methods`,
 `Material and Methods` (singular), `4 | MATERIALS AND METHODS`, `Experimental procedures`, and
 letterspaced forms such as `2 | M E T H O D S`. Do not conclude a paper has no Methods section
@@ -322,7 +343,7 @@ Exported as `packet.csv`, one row per citation (§4.1).
 | `is_main` | `yes` / `no` (§4.2). |
 | `additional_row_uids` | Other rows for the same citing article, semicolon-separated. Empty when the article has one row. |
 | `status` | `included` / `screened-out` / `held`. Every candidate considered gets a row, including the ones that do not make the packet (§1.2). `held` is a candidate awaiting something — a full text, a translation, a question for counsel. |
-| `screen_reason` | Required when `status = screened-out`: `already filed` / `negative citation` / `non-English` / `passing mention` / `acknowledgement only` / `out of scope`. Empty otherwise. |
+| `screen_reason` | Required when `status = screened-out`: `already filed` / `negative citation` / `non-English` / `not independent` / `passing mention` / `acknowledgement only` / `out of scope`. Empty otherwise. `not independent` is §1.2 applied at intake: the byline of the citing paper shares an author with the cited paper, or names a PI. That is a finding, not a question, so such a row is screened out and never held (§4.5). |
 | `screen_date` | Date the row was screened, so a decision can be revisited on its own terms rather than by memory. |
 | `cites_id` | The Scholar id of *my cited paper* for this row. |
 | `cited_tool` | Which of my works is cited: `GLAD`, `GlycoGlyph`, `MAWE`, or more than one, semicolon-separated. |
@@ -367,7 +388,7 @@ characters, so do not pack several paths into one cell of `citation`. Give each 
 | Column | Contents |
 |---|---|
 | `folder_uid` | Joins to `packet.csv`. |
-| `file` | Packet-local path, e.g. `papers/cit-000544/01-preprint-2023-04-29.pdf`. |
+| `file` | Packet-local path including its storage root, e.g. `papers/cit-000544/01-preprint-2023-04-29.pdf` or `pending-papers/cit-000510/01-article-Kiesling-2025.pdf`. The root is not decoration: it says whether the work is in the packet (§5.1). |
 | `source_pdf` | The master copy it was copied from. |
 | `role` | `article` / `preprint` / `webpage` / `cover-page` / `patent-front` / `supplement` / `thesis-front` — what the file is. |
 | `shows_date` | The date this file exists to evidence, if any. |
@@ -595,17 +616,23 @@ Citations/Notable Citations Packet/
   notable-citations.sqlite  ← the source of truth (§4)
   PACKET-STATUS.md      ← this effort's own progress log and open items (§0)
   package.json          ← the packet's own dependency list (§2)
-  papers/
+  papers/               ← PDFs of works IN the packet (counsel's evidence folder)
     cit-000544/         ← one folder per citing work, named by its main row_uid
       01-preprint-Heras-2023-04-29.pdf
       02-biorxiv-page-Heras-2023-04-29.pdf
       03-article-Heras-2024.pdf
     cit-000106/
       01-article-Wilson-2026.pdf
+  pending-papers/       ← PDFs of works awaiting a decision (`held`) — same layout
+  screened-papers/      ← PDFs of works decided against — kept, never filed
   vendor/d3.min.js      ← copied from dashboard/vendor/d3.min.js
   print/packet.pdf      ← the printed form
   node_modules/         ← pdfjs-dist; git-ignored repo-wide by .gitignore
 ```
+
+`potential_notable_citations.html` (§5.6) also lives in this folder, because it links into
+`papers/` and `pending-papers/` by relative path, but it is **not** part of what counsel receives. Say
+so when the folder is handed over, or copy the packet's own files out first.
 
 ### 5.1 One folder per citing work, named by its main `row_uid`
 
@@ -614,8 +641,30 @@ packet must survive being zipped and opened on another machine; a relative link 
 folder breaks the moment the folder travels alone, and a `file:///` absolute link breaks for anyone
 but me.
 
-- **One folder per citing article, not per row and not per PDF.** Name it after the main row:
-  `papers/cit-000544/`. The uid is permanent, survives a re-capture, and is unique, whereas a
+**Three storage roots, chosen by the row's status.** A folder lives under one of `papers/`,
+`pending-papers/` or `screened-papers/`, and which one is derived from `citation.status` for the rows
+that name the folder — never remembered per caller:
+
+| `status` of the folder's strongest row | root | why |
+|---|---|---|
+| `included` | `papers/` | counsel's evidence folder: everything printed with `packet.html` |
+| `held` | `pending-papers/` | awaiting a decision that only a person can make |
+| `screened-out` | `screened-papers/` | decided against; §4.5 keeps the record, nothing files it |
+
+`included` beats `held` beats `screened-out`, because one PDF can serve several rows of one citing
+work and the folder is evidence if any row in it is evidence. The rule lives in `ROOT_FOR_STATUS` /
+`folderRoots()` / `storageDir()` in `scripts/lib.js`; `node scripts/relocate-pdfs.js` is the only
+thing that moves a folder between roots (dry-run by default, DB backup, `--revert`).
+
+Why the separation: a PDF for a citation nobody had decided used to sit beside the evidence, so the
+evidence folder quietly held files for works the lawyer's document never mentions, and nothing
+downstream could tell the two apart. So `packet.html` may link only `papers/`; the review page may
+link `papers/` and `pending-papers/` but never `screened-papers/`. A validator check enforces both,
+and one check fails if a folder sits in a root its status does not imply.
+
+- **One folder per citing article, not per row and not per PDF.** Name it after the main row and put
+  it in the root its status implies: `papers/cit-000544/`, or `pending-papers/cit-000544/` while a row
+  is `held`. The uid is permanent, survives a re-capture, and is unique, whereas a
   senior-author surname is not (two 2026 papers can share one) and a filename is not stable.
 - **A citing work with several PDFs keeps them together in that one folder.** Heras is the case
   that forces this: three files — the April 2023 preprint, its bioRxiv page, and the 2024 journal
@@ -804,6 +853,12 @@ The scripts have a dependency order, and running them out of order produces repo
 with the database without any of them failing.
 
 ```
+node scripts/discover-pdfs.js --seed      # queue candidates from the record (§5.6)
+node scripts/discover-pdfs.js --resolve   # OpenAlex: DOI + open-access link
+node scripts/discover-pdfs.js --fetch     # download open copies -> pending-papers/
+node scripts/promote-candidates.js --write # queue -> table citation (screened if not independent)
+node scripts/screen-dependents.js         # re-read every non-included row against the record
+node scripts/relocate-pdfs.js --write     # move each folder to the root its status implies (§5.1)
 node scripts/scan-mentions.js --write     # where the tools appear (scan_tier only; never tier)
 node scripts/record-evidence.js --write   # file tier/section/page/quote, each verified in the PDF
 node scripts/record-mentions.js --write   # every occurrence, one row each (table `mention`)
@@ -811,8 +866,14 @@ node scripts/narrative-intake.js --write  # the four prose sections (table `narr
 node scripts/build-status.js --write      # PACKET-STATUS.md — open items, disagreements
 node scripts/render-packet.js --write     # packet.html + the three CSVs
 node scripts/print-packet.js              # print/packet.pdf
+node scripts/build-potential.js --write   # potential_notable_citations.html (§5.6), separate page
 node scripts/validate-packet.js --deep    # every mechanical §7 check, plus re-read the PDFs
 ```
+
+`screen-dependents.js` and `relocate-pdfs.js` run as a pair whenever a status changes: the first
+removes a row the record shows is not independent (§1.2), the second moves whatever PDF it left behind
+out of counsel's `papers/` folder. Screening first matters — relocating first would move a folder to a
+root the screen was about to change again.
 
 Every writer above is **dry-run by default**, backs up the database before writing, and prints what
 it would change; `--write` is the opt-in. `--check` re-verifies what is already filed against the
@@ -828,6 +889,41 @@ silently revert the *report*, not the database, which is how a stale claim survi
 
 Printing comes before the final validation because the validator is what proves the PDF exists and
 is non-empty — validating first and printing second leaves the last step unchecked.
+
+### 5.6 Potential citations go on their own page, never in `packet.html`
+
+`packet.html` is the document counsel receives, and it contains **only the citations the applicant
+has confirmed**. Independent citations that are not in the packet belong on
+`potential_notable_citations.html`, generated separately:
+
+```
+node scripts/build-potential.js --write   # potential_notable_citations.html
+```
+
+The two documents answer different questions and must never be merged, cross-linked, or printed
+together. A reviewer who opens the packet should not find rows in it that nobody decided on, and a
+page of candidates should not acquire the authority of filed evidence.
+
+**Only independent citations may be fetched or listed** (applicant instruction, 2026-11-07). A citing
+paper that shares an author with the cited work, or that names Richard D. Cummings or the former PI
+Umesh R. Desai, is a self-citation; spending a download on one wastes the request and, worse, puts a
+non-independent paper in front of counsel as a candidate. Independence is read from the citation
+record's `status` and `is_countable_independent` on the active, standing row — **not** from the
+packet's `candidate` snapshot, which is taken when the queue is seeded and goes stale when a byline is
+later corroborated. `cit-000511` is the worked example: its snapshot says INDEPENDENT, the record says
+DEPENDENT because the citing paper's full byline ends with `Cummings RD`.
+
+The screen itself is `potentialIndependent()` in `scripts/lib.js`, shared with
+`PACKET-STATUS.md` §4, so the page and the status report cannot disagree about what "potential" means.
+It excludes, in order: superseded rows, non-independent rows, copies that do not stand for their work,
+rows not listed in English, rows already confirmed in the packet, and rows already used in the original
+application (§3). Every row removed is counted, so the page prints arithmetic that adds up.
+
+**Claim no tier on that page.** A tier is a claim about where a sentence sits in an article, and a
+candidate has not been read. The page records access instead — `open-copy`, `paywalled`,
+`no-open-copy`, `not-in-indexes` — and those are findings about *access*, not about whether the paper
+exists: a throttled or failed look-up must never read as "not indexed". Transferring a candidate means
+running the pipeline on its `row_uid`, not copying a row across.
 
 ---
 
@@ -889,15 +985,17 @@ worse than no packet.
 - [ ] `packet.csv`, `screened-out.csv` and `packet-files.csv` were exported from the database, not
       written by hand, and the three CSVs together account for every row in table `citation`.
 - [ ] Every screened-out row has a `screen_reason`, and every `held` row appears as an open item in
-      `PACKET-STATUS.md`.
-- [ ] Every PDF under `papers/` is named `NN-role-Surname[-date].pdf` with the citing senior
-      author's surname in it (§5.1), and every such file is listed in `packet-files.csv`.
-- [ ] Every `file` in `packet-files.csv` exists under `papers/`, starts with `%PDF`, and its
+      `PACKET-STATUS.md`. A row the record shows shares an author with the cited work is screened out
+      with `not independent` (§4.3), not held — `node scripts/screen-dependents.js` re-checks this.
+- [ ] Every PDF in the three storage roots is named `NN-role-Surname[-date].pdf` with the citing
+      senior author's surname in it (§5.1), and every such file is listed in `packet-files.csv`.
+- [ ] Every `file` in `packet-files.csv` exists at the path it records, starts with `%PDF`, and its
       `bytes` matches the file on disk.
 - [ ] Every `folder_uid` in table `file` exists in table `citation`, and every `citation` row with
       `status = included` and a PDF has at least one `file` row.
-- [ ] Every `folder_uid` is a main row's uid, every folder contains at least one PDF, and no PDF
-      sits loose in `papers/`.
+- [ ] Every `folder_uid` is a main row's uid, every folder contains at least one PDF, no PDF sits
+      loose in a storage root, and every folder sits in the root its status implies (§5.1) —
+      `node scripts/relocate-pdfs.js` prints the moves still owed.
 - [ ] Every `row_uid` in `additional_row_uids` belongs to the same citing article as its
       `folder_uid` — never to a different work.
 - [ ] Every folder appears in `packet.html`, and every link in `packet.html` points at a file
@@ -924,6 +1022,11 @@ worse than no packet.
       An already-filed article belongs in `screened-out.csv` with `in_original_petition = yes`.
 - [ ] Every `row_uid` in the database resolves in the citation record (query it read-only).
 - [ ] Each index row links to a per-citation section, and each section appears in the index.
+- [ ] Every tier that differs from the folder it came from has a `tier_decision` recorded by
+      `record-tier-decision.js` (§1.1), rather than a silently edited `tier`.
+- [ ] `potential_notable_citations.html` (§5.6) is **not** linked from `packet.html`, is not printed
+      with it, lists no row that is in the packet or in the original application, and claims no tier.
+      Every row on it is independent on the record, not merely on the queued snapshot.
 - [ ] Every `project` value is 1–4 and every section sits under the right project.
 - [ ] `print/packet.pdf` exists, is non-empty, and opens.
 - [ ] The generated HTML was not hand-edited after generation.

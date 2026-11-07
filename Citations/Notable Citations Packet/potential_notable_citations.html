@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Potential notable citations — GLAD: GLycan Array Dashboard, a visual analytics tool for glycan microarrays</title>
+<style>
+  :root { --ink:#1b1b1b; --muted:#666; --rule:#d8d8d8; --accent:#7a1f1f; }
+  * { box-sizing: border-box; }
+  body { margin:0; background:#fff; color:var(--ink);
+         font:16px/1.55 "Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif; }
+  main { max-width: 64rem; margin:0 auto; padding:2.5rem 1.5rem 5rem; }
+  h1 { font-size:1.9rem; line-height:1.2; margin:.2rem 0 .4rem; }
+  h2 { font-size:1.2rem; margin:2.2rem 0 .5rem; padding-bottom:.3rem; border-bottom:2px solid var(--accent); }
+  p { margin:.5rem 0; }
+  a { color:var(--accent); }
+  code { font-family:"SFMono-Regular",Consolas,monospace; font-size:.85em; background:#f3f3f3; padding:.05em .3em; border-radius:3px; }
+  .kicker { font-size:.75rem; letter-spacing:.14em; text-transform:uppercase; color:var(--muted); }
+  .notice { border:1px solid #c9a227; background:#fdf7e3; padding:.9rem 1.1rem; margin:1.2rem 0; }
+  .notice strong { color:#7a5c00; }
+  .cited { background:#f6f1ec; border-left:3px solid #b08968; padding:.7rem 1rem; margin:1.2rem 0; font-size:.92rem; }
+  table { border-collapse:collapse; width:100%; font-size:.8rem; margin-top:.8rem; }
+  th, td { border-bottom:1px solid var(--rule); padding:.4rem .35rem; vertical-align:top; text-align:left; }
+  thead th { border-bottom:2px solid var(--ink); font-size:.7rem; text-transform:uppercase; letter-spacing:.04em; }
+  .uid { font-family:"SFMono-Regular",Consolas,monospace; font-size:.74rem; white-space:nowrap; }
+  .title { min-width:16rem; }
+  .byline { color:var(--muted); font-size:.74rem; margin-top:.15rem; }
+  .sub { color:var(--muted); font-size:.7rem; }
+  .src, .disc { font-size:.74rem; }
+  .pdf { white-space:nowrap; }
+  .none { color:var(--muted); font-style:italic; font-size:.72rem; }
+  .pick { white-space:nowrap; font-size:.72rem; color:var(--muted); }
+  .pill { display:inline-block; padding:.05rem .4rem; border-radius:9px; font-size:.68rem; white-space:nowrap; }
+  .pill.ok { background:#e3f0e4; color:#26562a; }
+  .pill.warn { background:#f6ecd9; color:#7a5c00; }
+  .pill.bad { background:#f7e0e0; color:#7a1f1f; }
+  .screen { font-size:.8rem; color:var(--muted); }
+  .screen td { border:none; padding:.12rem .35rem; }
+  .screen td.n { font-variant-numeric:tabular-nums; color:var(--ink); }
+  .foot { margin-top:2rem; font-size:.75rem; color:var(--muted); border-top:1px solid var(--rule); padding-top:.8rem; }
+  @media print {
+    .pick, thead th.pick { display:none; }
+    main { padding:0; }
+    a { color:inherit; text-decoration:none; }
+  }
+</style>
+</head>
+<body>
+<main>
+<header>
+  <p class="kicker">Review page — not part of the packet</p>
+  <h1>Potential notable citations</h1>
+  <div class="notice">
+    <strong>This page is for the applicant&rsquo;s review, not for counsel.</strong>
+    <code>packet.html</code> holds only the citations confirmed for the filing; nothing on this
+    page is in it. Tick a row, or send the <code>row_uid</code>s, and the pipeline
+    (<code>discover-pdfs.js</code> &rarr; <code>file-pdf.js</code> &rarr; <code>scan-mentions.js</code>
+    &rarr; <code>record-evidence.js</code>) reads the full text, finds the section and page, and
+    files it at the tier the text supports. Until that reading exists, no tier is claimed here.
+  </div>
+  <div class="cited">
+    <strong>Cited work:</strong> GLAD: GLycan Array Dashboard, a visual analytics tool for glycan microarrays (2019)<br>
+    <span class="sub">AY Mehta, RD Cummings</span>
+  </div>
+  <p>35 independent citations of this work are not in the packet and were not used in
+     the original application. Each is a real, independently authored citation of the applicant&rsquo;s
+     tool; what is not yet known is where in each article the citation sits, which is what decides
+     its tier.</p>
+  <table class="screen">
+    <tr><td>Citing works the record lists for this paper</td><td class="n">64</td></tr>
+    <tr><td>less not independent (shares an author with the cited work, or names a PI)</td><td class="n">&minus;18</td></tr>
+    <tr><td>less copies that do not stand for their work (preprint / repository twin)</td><td class="n">&minus;2</td></tr>
+    <tr><td>less not listed in English</td><td class="n">&minus;0</td></tr>
+    <tr><td>less already confirmed in the packet</td><td class="n">&minus;7</td></tr>
+    <tr><td>less already used in the original application</td><td class="n">&minus;2</td></tr>
+    <tr><td><strong>listed here for review</strong></td><td class="n"><strong>35</strong></td></tr>
+  </table>
+</header>
+
+<h2>The 35 candidates</h2>
+<table>
+  <thead><tr>
+    <th>row_uid</th><th>Citing paper</th><th>Senior author</th><th>Year</th><th>Venue</th>
+    <th>Where it is</th><th>Open copy</th><th>PDF on file</th><th class="pick">Decision</th>
+  </tr></thead>
+  <tbody>
+    <tr>
+      <td class="uid">cit-000507</td>
+      <td class="title">Recent advances in glycoinformatic platforms for glycomics and glycoproteomics
+        <div class="byline">JL Abrahams, G Taherzadeh, G Jarvas… - Current opinion in …, 2020 - Elsevier</div></td>
+      <td>Campbell</td>
+      <td>2020</td>
+      <td>Current opinion in</td>
+      <td class="src"><a href="https://www.sciencedirect.com/science/article/pii/S0959440X19301356">www.sciencedirect.com</a></td>
+      <td class="disc"><span class="pill warn">No open copy</span><div class="sub">OpenAlex has the work (10.1016/j.sbi.2019.11.009), no open-access PDF location</div></td>
+      <td class="pdf"><span class="none">not retrieved</span></td>
+      <td class="pick"><label><input type="checkbox"> include</label></td>
+    </tr>
+    <tr>
+      <td class="uid">cit-000508</td>
+      <td class="title">Big-data glycomics: tools to connect glycan biosynthesis to extracellular communication
+        <div class="byline">BP Kellman, NE Lewis - Trends in biochemical sciences, 2021 - cell.com</div></td>
+      <td>Lewis</td>
+      <td>2021</td>
+      <td>Trends in biochemical sciences</td>
+      <td class="src"><a href="https://www.cell.com/trends/biochemical-sciences/abstract/S0968-0004(20)30266-8">www.cell.com</a></td>
+      <td class="disc"><span class="pill warn">Paywalled</span><div class="sub">OpenAlex offered a PDF but the host answered 403</div></td>
+      <td class="pdf"><span class="none">not retrieved</span></td>
+      <td class="pick"><label><input type="checkbox"> include</label></td>
+    </tr>
+    <tr>
+      <td class="uid">cit-000510</td>
+      <td class="title">2019–2020 H1N1 clade A5a. 1 viruses have better in vitro fitness compared with the co-circulating A5a. 2 clade
+        <div class="byline">NJ Swanson, P Marinho, A Dziedzic, A Jedlicka… - Scientific reports, 2023 - nature.com</div></td>
+      <td>Pekosz</td>
+      <td>2023</td>
+      <td>Scientific reports</td>
+      <td class="src"><a href="https://www.nature.com/articles/s41598-023-37122-z">www.nature.com</a></td>
+      <td class="disc"><span class="pill ok">Open copy found</span><div class="sub">downloaded from www.nature.com</div></td>
+      <td class="pdf"><a href="pending-papers/cit-000510/01-article-Pekosz-2023.pdf">PDF</a></td>
+      <td class="pick"><label><input type="checkbox"> include</label></td>
+    </tr>
+    <tr>
+      <td class="uid">cit-000512</td>
+      <td class="title">Worldwide glycoscience informatics infrastructure: the GlySpace Alliance
+        <div class="byline">F Lisacek, M Tiemeyer, R Mazumder… - JACS Au, 2023 - ACS Publications</div></td>
+      <td>Aoki-Kinoshita</td>
+      <td>—</td>
+      <td>—</td>
+      <td class="src"><a href="https://pubs.acs.org/jaaucr/article-abstract/3/1/4/1253251">pubs.acs.org</a></td>
+      <td class="disc"><span class="pill warn">Paywalled</span><div class="sub">OpenAlex offered a PDF but the host answered 403</div></td>
+      <td class="pdf"><span class="none">not retrieved</span></td>
+      <td class="pick"><label><input type="checkbox"> include</label></td>
+    </tr>
+    <tr>
+      <td class="uid">cit-000513</td>
+      <td class="title">Databases and bioinformatic tools for glycobiology and glycoproteomics
+        <div class="byline">X Li, Z Xu, X Hong, Y Zhang, X Zou - International Journal of Molecular …, 2020 - mdpi.com</div></td>
+      <td>Zou</td>
+      <td>2020</td>
+      <td>International Journal of Molecular</td>
+      <td class="src"><a href="https://www.mdpi.com/1422-0067/21/18/6727">www.mdpi.com</a></td>
+      <td class="disc"><span class="pill ok">Open copy found</span><div class="sub">downloaded from www.mdpi.com</div></td>
+      <td class="pdf"><a href="pending-papers/cit-000513/01-article-Zou-2020.pdf">PDF</a></td>
+      <td class="pick"><label><input type="checkbox"> include</label></td>
+    </tr>
+    <tr>
+      <td class="uid">cit-000514</td>
+      <td class="title">Mass spectrometric and glycan microarray–based characterization of the filarial nematode Brugia malayi glycome reveals anionic and zwitterionic glycan antigens
+        <div class="byline">LMC Petralia, A van Diepen, LA Lokker… - Molecular &amp; Cellular …, 2022 - mcponline.org</div></td>
+      <td>Hokke</td>
+      <td>2022</td>
+      <td>Molecular &amp; Cellular</td>
+      <td class="src"><a href="https://www.mcponline.org/article/S1535-9476(22)00009-3/fulltext">www.mcponline.org</a></td>
+      <td class="disc"><span class="pill warn">Paywalled</span><div class="sub">OpenAlex offered a PDF but the host answered 403</div></td>
+      <td class="pdf"><span class="none">not retrieved</span></td>
+      <td class="pick"><label><input type="checkbox"> include</label></td>
+    </tr>
+    <tr>
+      <td class="uid">cit-000520</td>
+      <td class="title">A “proto” type galectin expressed in striped bass (Morone saxatilis) tissues is released to epidermal mucus and binds to bacterial and mucus glycans
+        <div class="byline">DE Henrikson, H Ahmed, S Tasumi… - Frontiers in Cellular …, 2025 - frontiersin.org</div></td>
+      <td>Vasta</td>
+      <td>2025</td>
+      <td>Frontiers in Cellular</td>
+      <td class="src"><a href="https://www.frontiersin.org/journals/cellular-and-infection-microbiology/articles/10.3389/fcimb.2025.1572734/full">www.frontiersin.org</a><div class="sub">10.3389/fcimb.2025.1572734/full</div></td>
+      <td class="disc"><span class="pill ok">Open copy found</span><div class="sub">downloaded from www.frontiersin.org</div></td>
+      <td class="pdf"><a href="pending-papers/cit-000520/01-article-Vasta-2025.pdf">PDF</a></td>
+      <td class="pick"><label><input type="checkbox"> include</label></td>
+    </tr>
+    <tr>
+      <td class="uid">cit-000524</td>
+      <td class="title">Structural database for lectins and the UniLectin web platform
+        <div class="byline">F Bonnardel, S Perez, F Lisacek, A Imberty - Lectin Purification and …, 2020 - Springer</div></td>
+      <td>Imberty</td>
+      <td>2020</td>
+      <td>Lectin Purification and</td>
+      <td class="src"><a href="https://link.springer.com/protocol/10.1007/978-1-0716-0430-4_1">link.springer.com</a><div class="sub">10.1007/978-1-0716-0430-4_1</div></td>
+      <td class="disc"><span class="pill warn">No open copy</span><div class="sub">OpenAlex has the work (10.1007/978-1-0716-0430-4_1), no open-access PDF location</div></td>
+      <td class="pdf"><span class="none">not retrieved</span></td>
+      <td class="pick"><label><input type="checkbox"> include</label></td>
+    </tr>
+    <tr>
+      <td class="uid">cit-000525</td>
+      <td class="title">Combined analysis of multiple glycan-array datasets: new explorations of protein-glycan interactions
+        <div class="byline">Z Klamer, B Haab - Analytical chemistry, 2021 - pmc.ncbi.nlm.nih.gov</div></td>
+      <td>—</td>
+      <td>2021</td>
+      <td>Analytical chemistry</td>
+      <td class="src"><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC8862541/">pmc.ncbi.nlm.nih.gov</a></td>
+      <td class="disc"><span class="pill warn">No open copy</span><div class="sub">OpenAlex has the work (10.1021/acs.analchem.1c01739), no open-access PDF location</div></td>
+      <td class="pdf"><span class="none">not retrieved</span></td>
+      <td class="pick"><label><input type="checkbox"> include</label></td>
+    </tr>
+    <tr>
+      <td class="uid">cit-000526</td>
+      <td class="title">Rise of systems glycobiology and personalized glycomedicine: why and how to integrate glycomics with multiomics science?
+        <div class="byline">T Kunej - OMICS: A Journal of Integrative Biology, 2019 - journals.sagepub.com</div></td>
+      <td>Kunej</td>
+      <td>2019</td>
+      <td>OMICS: A Journal of Integrative Biology</td>
+      <td class="src"><a href="https://journals.sagepub.com/doi/abs/10.1089/omi.2019.0149">journals.sagepub.com</a><div class="sub">10.1089/omi.2019.0149</div></td>
+      <td class="disc"><span class="pill warn">No open copy</span><div class="sub">OpenAlex has the work (10.1089/omi.2019.0149), no open-access PDF location</div></td>
+      <td class="pdf"><span class="none">not retrieved</span></td>
+      <td class="pick"><label><input type="checkbox"> include</label></td>
+    </tr>
+    <tr>
+      <td class="uid">cit-000531</td>
+      <td class="title">Clade-defining mutations in human H1N1 hemagglutinin protein from 2021-2023 have opposing effects on in vitro fitness and antigenic drift
+        <div class="byline">NJ Swanson, J Girish, M Yunker, H Liu, J Norton… - bioRxiv, 2024 - biorxiv.org</div></td>
+      <td>Pekosz</td>
+      <td>2024</td>
+      <td>bioRxiv</td>
+      <td class="src"><a href="https://www.biorxiv.org/content/10.1101/2024.05.18.594815.abstract">www.biorxiv.org</a><div class="sub">10.1101/2024.05.18.594815.abstract</div></td>
+      <td class="disc"><span class="pill warn">No open copy</span><div class="sub">OpenAlex has the work (10.1101/2024.05.18.594815), no open-access PDF location</div></td>
+      <td class="pdf"><span class="none">not retrieved</span></td>
+      <td class="pick"><label><input type="checkbox"> include</label></td>
+    </tr>
+    <tr>
+      <td class="uid">cit-000532</td>
+      <td class="title">Unraveling cross-reactivity of anti-glycan IgG responses in filarial nematode infections
+        <div class="byline">LMC Petralia, A van Diepen, DL Nguyen… - Frontiers in …, 2023 - frontiersin.org</div></td>
+      <td>Hokke</td>
+      <td>2023</td>
+      <td>Frontiers in</td>
+      <td class="src"><a href="https://www.frontiersin.org/journals/immunology/articles/10.3389/fimmu.2023.1102344/full">www.frontiersin.org</a><div class="sub">10.3389/fimmu.2023.1102344/full</div></td>
+      <td class="disc"><span class="pill warn">No open copy</span><div class="sub">OpenAlex has the work (10.3389/fimmu.2023.1102344), no open-access PDF location</div></td>
+      <td class="pdf"><span class="none">not retrieved</span></td>
+      <td class="pick"><label><input type="checkbox"> include</label></td>
+    </tr>
+    <tr>
+      <td class="uid">cit-000536</td>
+      <td class="title">Metabolite multiprobiotic formulas for microbial health
+        <div class="byline">MV Lakhtin, VM Lakhtin, VA Aleshkin… - Oral health by using …, 2019 - intechopen.com</div></td>
+      <td>Afanasiev</td>
+      <td>2019</td>
+      <td>Oral health by using</td>
+      <td class="src"><a href="https://www.intechopen.com/chapters/67420">www.intechopen.com</a></td>
+      <td class="disc"><span class="pill ok">Open copy found</span><div class="sub">downloaded from www.intechopen.com</div></td>
+      <td class="pdf"><a href="pending-papers/cit-000536/01-article-Afanasiev-2019.pdf">PDF</a></td>
+      <td class="pick"><label><input type="checkbox"> include</label></td>
+    </tr>
+    <tr>
+      <td class="uid">cit-000538</td>
+      <td class="title">Lectin fingerprinting distinguishes antibody neutralization in SARS-CoV-2
+        <div class="byline">MG Wuo, AE Dugan, M Halim, BM Hauser… - ACS Central …, 2023 - pmc.ncbi.nlm.nih.gov</div></td>
+      <td>Kiessling</td>
+      <td>2023</td>
+      <td>ACS Central</td>
+      <td class="src"><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC10214521/">pmc.ncbi.nlm.nih.gov</a></td>
+      <td class="disc"><span class="pill warn">Paywalled</span><div class="sub">OpenAlex offered a PDF but the host answered 403</div></td>
+      <td class="pdf"><span class="none">not retrieved</span></td>
+      <td class="pick"><label><input type="checkbox"> include</label></td>
+    </tr>
+    <tr>
+      <td class="uid">cit-000541</td>
+      <td class="title">An automated fast healthcare interoperability resources-based 12-lead electrocardiogram mobile alert system for suspected acute coronary syndrome
+        <div class="byline">S Hur, J Lee, T Kim, JS Choi, M Kang… - Yonsei medical …, 2020 - pmc.ncbi.nlm.nih.gov</div></td>
+      <td>Cha</td>
+      <td>2020</td>
+      <td>Yonsei medical</td>
+      <td class="src"><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC7214107/">pmc.ncbi.nlm.nih.gov</a></td>
+      <td class="disc"><span class="pill warn">Paywalled</span><div class="sub">host returned text/html, not a PDF body</div></td>
+      <td class="pdf"><span class="none">not retrieved</span></td>
+      <td class="pick"><label><input type="checkbox"> include</label></td>
+    </tr>
+    <tr>
+      <td class="uid">cit-000543</td>
+      <td class="title">CarbArrayART: a new software tool for carbohydrate microarray data storage, processing, presentation, and reporting
+        <div class="byline">Y Akune, S Arpinar, LM Silva, AS Palma… - …, 2022 - academic.oup.com</div></td>
+      <td>Feizi</td>
+      <td>2022</td>
+      <td>—</td>
+      <td class="src"><a href="https://academic.oup.com/glycob/article-abstract/32/7/552/6555547">academic.oup.com</a></td>
+      <td class="disc"><span class="pill warn">Paywalled</span><div class="sub">OpenAlex offered a PDF but the host answered 403</div></td>
+      <td class="pdf"><span class="none">not retrieved</span></td>
+      <td class="pick"><label><input type="checkbox"> include</label></td>
+    </tr>
+    <tr>
+      <td class="uid">cit-000546</td>
+      <td class="title">Decoding glycans: deciphering the sugary secrets to be coherent on the implication
+        <div class="byline">S Sharma, S Shekhar, B Sharma, P Jain - RSC advances, 2020 - pubs.rsc.org</div></td>
+      <td>—</td>
+      <td>2020</td>
+      <td>RSC advances</td>
+      <td class="src"><a href="https://pubs.rsc.org/ra/article-abstract/10/56/34099/702166">pubs.rsc.org</a></td>
+      <td class="disc"><span class="pill warn">No open copy</span><div class="sub">OpenAlex has the work (10.1039/d0ra04471g), no open-access PDF location</div></td>
+      <td class="pdf"><span class="none">not retrieved</span></td>
+      <td class="pick"><label><input type="checkbox"> include</label></td>
+    </tr>
+    <tr>
+      <td class="uid">cit-000547</td>
+      <td class="title">Visual data mining: A comparative analysis of selected datasets
+        <div class="byline">U Mgboh, B Ogbuokiri, G Obaido, K Aruleba - International Conference on …, 2020 - Springer</div></td>
+      <td>Aruleba</td>
+      <td>2020</td>
+      <td>International Conference on</td>
+      <td class="src"><a href="https://link.springer.com/chapter/10.1007/978-3-030-71187-0_35">link.springer.com</a><div class="sub">10.1007/978-3-030-71187-0_35</div></td>
+      <td class="disc"><span class="pill warn">No open copy</span><div class="sub">OpenAlex has the work (10.1007/978-3-030-71187-0_35), no open-access PDF location</div></td>
+      <td class="pdf"><span class="none">not retrieved</span></td>
+      <td class="pick"><label><input type="checkbox"> include</label></td>
+    </tr>
+    <tr>
+      <td class="uid">cit-000548</td>
+      <td class="title">CBMcarb-DB: interface of the three-dimensional landscape of carbohydrate-binding modules
+        <div class="byline">DO Ribeiro, F Bonnardel, AS Palma, ALM Carvalho… - 2024 - books.rsc.org</div></td>
+      <td>Perez</td>
+      <td>—</td>
+      <td>—</td>
+      <td class="src"><a href="https://books.rsc.org/books/edited-volume/2205/chapter/8051227">books.rsc.org</a></td>
+      <td class="disc"><span class="pill warn">Paywalled</span><div class="sub">OpenAlex offered a PDF but the host answered 403</div></td>
+      <td class="pdf"><span class="none">not retrieved</span></td>
+      <td class="pick"><label><input type="checkbox"> include</label></td>
+    </tr>
+    <tr>
+      <td class="uid">cit-000549</td>
+      <td class="title">CHARACTERIZATION OF IN VITRO FITNESS AND ANTIGENIC DRIFT DIFFERENCES BETWEEN CIRCULATING H1N1 INFLUENZA CLADES
+        <div class="byline">N Swanson - 2024 - jscholarship.library.jhu.edu</div></td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+      <td class="src"><a href="https://jscholarship.library.jhu.edu/items/0dbcacaf-9e37-49c3-8a95-a3f55b8ae645">jscholarship.library.jhu.edu</a></td>
+      <td class="disc"><span class="pill warn">Not in OpenAlex</span><div class="sub">no OpenAlex record by title</div></td>
+      <td class="pdf"><span class="none">not retrieved</span></td>
+      <td class="pick"><label><input type="checkbox"> include</label></td>
+    </tr>
+    <tr>
+      <td class="uid">cit-000550</td>
+      <td class="title">A bioinformatics view of glycan–virus interactions
+        <div class="byline">P Le Mercier, J Mariethoz, J Lascano-Maillard… - Viruses, 2019 - mdpi.com</div></td>
+      <td>Lisacek</td>
+      <td>2019</td>
+      <td>Maillard… - Viruses</td>
+      <td class="src"><a href="https://www.mdpi.com/1999-4915/11/4/374">www.mdpi.com</a></td>
+      <td class="disc"><span class="pill ok">Open copy found</span><div class="sub">downloaded from www.mdpi.com</div></td>
+      <td class="pdf"><a href="pending-papers/cit-000550/01-article-Lisacek-2019.pdf">PDF</a></td>
+      <td class="pick"><label><input type="checkbox"> include</label></td>
+    </tr>
+    <tr>
+      <td class="uid">cit-000552</td>
+      <td class="title">[CITATION] METABOLITE MULTIPRO/SYNBIOTICS: APPROACHES FOR CONSTRUCTING
+        <div class="byline">MV Lakhtin, VM Lakhtin… - News of …, 2019 - Publishing House «Education and …</div></td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+      <td class="src">—</td>
+      <td class="disc"><span class="pill warn">Not in OpenAlex</span><div class="sub">no OpenAlex record by title</div></td>
+      <td class="pdf"><span class="none">not retrieved</span></td>
+      <td class="pick"><label><input type="checkbox"> include</label></td>
+    </tr>
+    <tr>
+      <td class="uid">cit-000553</td>
+      <td class="title">A Visual Dashboard of Thai Weaving Pattern Image Gallery
+        <div class="byline">P Visutsak, N Thathai, S Jangkorn… - Procedia Computer …, 2022 - Elsevier</div></td>
+      <td>Bunyakiat</td>
+      <td>2022</td>
+      <td>Procedia Computer</td>
+      <td class="src"><a href="https://www.sciencedirect.com/science/article/pii/S1877050922005026">www.sciencedirect.com</a></td>
+      <td class="disc"><span class="pill warn">Paywalled</span><div class="sub">OpenAlex offered a PDF but the host answered 403</div></td>
+      <td class="pdf"><span class="none">not retrieved</span></td>
+      <td class="pick"><label><input type="checkbox"> include</label></td>
+    </tr>
+    <tr>
+      <td class="uid">cit-000554</td>
+      <td class="title">Glycobioinformatics in deciphering the mammalian glycocode: Recent advances
+        <div class="byline">AK Datta, N Sukhija - Glycome: The Hidden Code in …, 2021 - dattaconsultinggroup.com</div></td>
+      <td>Sukhija</td>
+      <td>2021</td>
+      <td>Glycome: The Hidden Code in</td>
+      <td class="src"><a href="https://www.dattaconsultinggroup.com/akdsite/assets/publications/glycocodearticle.pdf">www.dattaconsultinggroup.com</a></td>
+      <td class="disc"><span class="pill warn">Not in OpenAlex</span><div class="sub">no OpenAlex record by title</div></td>
+      <td class="pdf"><span class="none">not retrieved</span></td>
+      <td class="pick"><label><input type="checkbox"> include</label></td>
+    </tr>
+    <tr>
+      <td class="uid">cit-000555</td>
+      <td class="title">Ad ancing helminth gl comics: structural specificit and immunogenicit of schistosomal and filarial gl cans
+        <div class="byline">LMC Petralia - scholarlypublications …</div></td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+      <td class="src"><a href="https://scholarlypublications.universiteitleiden.nl/access/item%3A4212215/download">scholarlypublications.universiteitleiden.nl</a></td>
+      <td class="disc"><span class="pill warn">Not in OpenAlex</span><div class="sub">no OpenAlex record by title</div></td>
+      <td class="pdf"><span class="none">not retrieved</span></td>
+      <td class="pick"><label><input type="checkbox"> include</label></td>
+    </tr>
+    <tr>
+      <td class="uid">cit-000556</td>
+      <td class="title">Phenotyping murine and human platelet-derived extracellular vesicles gives implications for future in vivo biodistribution and clearance studies
+        <div class="byline">O An, F Reusswig, V Krenzlin, C Deppermann - rpthjournal.org</div></td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+      <td class="src"><a href="https://www.rpthjournal.org/cms/10.1016/j.rpth.2026.103414/attachment/5e1ef181-290b-47ad-a0b6-2820746565cf/mmc1.pdf">www.rpthjournal.org</a><div class="sub">10.1016/j.rpth.2026.103414/attachment/5e1ef181-290b-47ad-a0b6-2820746565cf/mmc1.pdf</div></td>
+      <td class="disc"><span class="pill warn">Not in OpenAlex</span><div class="sub">no OpenAlex record by DOI (10.1016/j.rpth.2026.103414) or by title</div></td>
+      <td class="pdf"><span class="none">not retrieved</span></td>
+      <td class="pick"><label><input type="checkbox"> include</label></td>
+    </tr>
+    <tr>
+      <td class="uid">cit-000559</td>
+      <td class="title">Glycan Microarray Data Analysis: From Raw Data to Public Database Integration
+        <div class="byline">WTWMB You - creative-proteomics.com</div></td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+      <td class="src"><a href="https://www.creative-proteomics.com/resource/glycan-microarray-analysis-and-database-integration.htm">www.creative-proteomics.com</a></td>
+      <td class="disc"><span class="pill warn">Not in OpenAlex</span><div class="sub">no OpenAlex record by title</div></td>
+      <td class="pdf"><span class="none">not retrieved</span></td>
+      <td class="pick"><label><input type="checkbox"> include</label></td>
+    </tr>
+    <tr>
+      <td class="uid">cit-000560</td>
+      <td class="title">CarbArrayART-An update on the software tool for carbohydrate microarray data, storage, processing, presentation and reporting
+        <div class="byline">Y Akune, S Arpinar, LM Silva, AS Palma, Y Liu… - 2022 - spiral.imperial.ac.uk</div></td>
+      <td>Feizi</td>
+      <td>—</td>
+      <td>—</td>
+      <td class="src"><a href="https://spiral.imperial.ac.uk/entities/publication/6ebd01fb-2687-4761-a614-c85c1a192b24">spiral.imperial.ac.uk</a></td>
+      <td class="disc"><span class="pill warn">Not in OpenAlex</span><div class="sub">no OpenAlex record by title</div></td>
+      <td class="pdf"><span class="none">not retrieved</span></td>
+      <td class="pick"><label><input type="checkbox"> include</label></td>
+    </tr>
+    <tr>
+      <td class="uid">cit-000561</td>
+      <td class="title">Carbohydrate Microarray Technology
+        <div class="byline">GJ Gerwig - The Art of Carbohydrate Analysis, 2021 - Springer</div></td>
+      <td>Willats</td>
+      <td>2021</td>
+      <td>The Art of Carbohydrate Analysis</td>
+      <td class="src"><a href="https://link.springer.com/chapter/10.1007/978-3-030-77791-3_10">link.springer.com</a><div class="sub">10.1007/978-3-030-77791-3_10</div></td>
+      <td class="disc"><span class="pill warn">No open copy</span><div class="sub">OpenAlex has the work (10.1007/978-3-030-77791-3_10), no open-access PDF location</div></td>
+      <td class="pdf"><span class="none">not retrieved</span></td>
+      <td class="pick"><label><input type="checkbox"> include</label></td>
+    </tr>
+    <tr>
+      <td class="uid">cit-000562</td>
+      <td class="title">CarbArrayART
+        <div class="byline">Y Akune, S Arpinar, LM Silva, AS Palma… - 2022 - run.unl.pt</div></td>
+      <td>Feizi</td>
+      <td>—</td>
+      <td>—</td>
+      <td class="src"><a href="https://run.unl.pt/entities/publication/48e256d4-d5a1-4fde-a8a0-ec184408ff34">run.unl.pt</a></td>
+      <td class="disc"><span class="pill warn">Paywalled</span><div class="sub">OpenAlex offered a PDF but the host answered 403</div></td>
+      <td class="pdf"><span class="none">not retrieved</span></td>
+      <td class="pick"><label><input type="checkbox"> include</label></td>
+    </tr>
+    <tr>
+      <td class="uid">cit-000563</td>
+      <td class="title">Involvement of N-glycans in binding of Photorhabdus
+        <div class="byline">H Bakker, W Römer, K Aktories, G Schmidt - 2021 - academia.edu</div></td>
+      <td>Schmidt</td>
+      <td>—</td>
+      <td>—</td>
+      <td class="src"><a href="https://www.academia.edu/download/106476898/cmi.pdf">www.academia.edu</a></td>
+      <td class="disc"><span class="pill warn">No open copy</span><div class="sub">OpenAlex has the work (10.1111/cmi.13326), no open-access PDF location</div></td>
+      <td class="pdf"><span class="none">not retrieved</span></td>
+      <td class="pick"><label><input type="checkbox"> include</label></td>
+    </tr>
+    <tr>
+      <td class="uid">cit-000564</td>
+      <td class="title">Structure-function analysis of the photorhabdus Tc toxin complex
+        <div class="byline">PN Ng'ang'a - 2020 - freidok.uni-freiburg.de</div></td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+      <td class="src"><a href="https://freidok.uni-freiburg.de/files/166648/Qf-K5JUjPFmyT68-/Peter+NjengaThesis.pdf">freidok.uni-freiburg.de</a></td>
+      <td class="disc"><span class="pill warn">Not in OpenAlex</span><div class="sub">no OpenAlex record by title</div></td>
+      <td class="pdf"><span class="none">not retrieved</span></td>
+      <td class="pick"><label><input type="checkbox"> include</label></td>
+    </tr>
+    <tr>
+      <td class="uid">cit-000565</td>
+      <td class="title">Metabolite Multiprobiotic
+        <div class="byline">VA Aleshkin, SS Afanasiev - Oral Health by Using Probiotic …, 2019 - books.google.com</div></td>
+      <td>Afanasiev</td>
+      <td>2019</td>
+      <td>Oral Health by Using Probiotic</td>
+      <td class="src"><a href="https://books.google.com/books?hl=en&amp;lr=&amp;id=jGiTEQAAQBAJ&amp;oi=fnd&amp;pg=PA71&amp;ots=uH3IOUCcDj&amp;sig=BfNqav-_QtYA6fpWtFBSSGOSDf0">books.google.com</a></td>
+      <td class="disc"><span class="pill ok">Open copy found</span><div class="sub">downloaded from www.intechopen.com Stored once under cit-000536.</div></td>
+      <td class="pdf"><a href="pending-papers/cit-000536/01-article-Afanasiev-2019.pdf">PDF</a> <span class="sub">(same work as another row)</span></td>
+      <td class="pick"><label><input type="checkbox"> include</label></td>
+    </tr>
+    <tr>
+      <td class="uid">cit-000566</td>
+      <td class="title">SugarArray: A User-centred-designed Platform for the Analysis of Lectin and Glycan Microarrays.
+        <div class="byline">A Sucre, R Pazos, NC Reichardt, A Garín-Muga - HEALTHINF, 2020 - scitepress.org</div></td>
+      <td>—</td>
+      <td>2020</td>
+      <td>Muga - HEALTHINF</td>
+      <td class="src"><a href="https://www.scitepress.org/PublishedPapers/2020/89601/89601.pdf">www.scitepress.org</a></td>
+      <td class="disc"><span class="pill warn">No open copy</span><div class="sub">OpenAlex has the work (10.5220/0008960100002513), no open-access PDF location</div></td>
+      <td class="pdf"><span class="none">not retrieved</span></td>
+      <td class="pick"><label><input type="checkbox"> include</label></td>
+    </tr>
+    <tr>
+      <td class="uid">cit-000567</td>
+      <td class="title">[CITATION] Glycoinformatics resources integrated through the GlySpace Alliance
+        <div class="byline">F Lisacek, KF Aoki-Kinoshita, JK Vora, R Mazumder… - 2021 - Elsevier</div></td>
+      <td>Tiemeyer</td>
+      <td>—</td>
+      <td>—</td>
+      <td class="src">—<div class="sub">10.1016/b978-0-12-819475-1.00107-3</div></td>
+      <td class="disc"><span class="pill warn">No open copy</span><div class="sub">OpenAlex has the work (10.1016/b978-0-12-819475-1.00107-3), no open-access PDF location</div></td>
+      <td class="pdf"><span class="none">not retrieved</span></td>
+      <td class="pick"><label><input type="checkbox"> include</label></td>
+    </tr>
+  </tbody>
+</table>
+
+<h2>Notes on the list</h2>
+<p><strong>&ldquo;Open copy&rdquo; is a statement about access, not about the paper.</strong>
+   <em>Open copy found</em> means a downloadable version exists and, where the PDF column has a
+   link, it is already in this folder. <em>Paywalled</em> means the article is real and the
+   publisher gates the file &mdash; an access the applicant&rsquo;s own subscription or an
+   interlibrary loan can settle. <em>No open copy</em> and <em>Not in OpenAlex</em> mean the
+   look-up completed and found nothing downloadable; they are not findings that the paper does
+   not exist, and a publisher page or a library copy can still supply the text.</p>
+<p><strong>Independence was re-checked against the citation record, not the queued snapshot.</strong>
+   The record reads the complete author list of both papers. A citing paper that shares an author
+   with the cited work, or that names Richard D. Cummings or the former PI Umesh R. Desai, is a
+   self-citation and was removed at the first screen above.</p>
+<p><strong>Tiers are deliberately absent.</strong> A tier is a claim about where a sentence sits in
+   an article, and no article on this page has been read page by page. Filing one here would put a
+   number behind a guess.</p>
+
+<p class="foot">Generated 2026-11-07 by <code>scripts/build-potential.js</code> from
+   <code>Database/citation-catalog.sqlite</code> (read-only) and
+   <code>notable-citations.sqlite</code>. Not linked from <code>packet.html</code> and not printed
+   with it. Independence screen: <code>status = INDEPENDENT</code> and
+   <code>is_countable_independent = 1</code> on the active, standing, English row.</p>
+</main>
+</body>
+</html>

@@ -15,9 +15,11 @@ decision that only a person can make.
 |---|---:|
 | Citations in the packet (in `packet.html`) | 23 |
 | Works those citations are filed as (§5.1 folders) | 14 |
-| PDFs filed under `papers/` | 22 |
-| Held — open items, listed below | 38 |
-| Screened out — decided, kept for the record (§4.5) | 0 |
+| PDFs filed under `papers/` (in the packet) | 16 |
+| PDFs under `pending-papers/` (awaiting a decision) | 5 |
+| PDFs under `screened-papers/` (kept, not filed) | 1 |
+| Held — open items, listed below | 37 |
+| Screened out — decided, kept for the record (§4.5) | 1 |
 | **Rows in table `citation`** | **61** |
 
 `packet.csv` holds the 23 included rows. `screened-out.csv` holds the other 38,
@@ -26,7 +28,7 @@ work was screened and on what grounds. A screened-out row is not missing work: i
 record of what was looked at and rejected, with the reason beside it. A held row is open, and
 every held row appears in §2 below.
 
-## 2. Held rows — 38 open items
+## 2. Held rows — 37 open items
 
 
 ### 2.1 `read` — 2 row(s)
@@ -46,7 +48,7 @@ The PDF is filed. Nobody has read it yet.
 |---|---|---|---|---|---|
 | `cit-000565` | GLAD | 2019 | Afanasiev | Metabolite Multiprobiotic | [open](https://books.google.com/books?hl=en&lr=&id=jGiTEQAAQBAJ&oi=fnd&pg=PA71&ots=uH3IOUCcDj&sig=BfNqav-_QtYA6fpWtFBSSGOSDf0) |
 
-### 2.3 `unsupported` — 4 row(s)
+### 2.3 `unsupported` — 3 row(s)
 
 The PDF is filed, but the extracted text does not support a use in any section — the mentions sit in the reference list, in a table, or under a heading the paper did not print. Either re-read the page and record what it says, or screen the row out.
 
@@ -54,7 +56,6 @@ The PDF is filed, but the extracted text does not support a use in any section �
 |---|---|---|---|---|---|
 | `cit-000536` | GLAD | 2019 | Afanasiev | Metabolite multiprobiotic formulas for microbial health | [open](https://www.intechopen.com/chapters/67420) |
 | `cit-000550` | GLAD | 2019 | Lisacek | A bioinformatics view of glycan–virus interactions | [open](https://www.mdpi.com/1999-4915/11/4/374) |
-| `cit-000511` | GLAD | 2020 | Cummings | Development of smart anti-glycan reagents using immunized lampreys | [open](https://www.nature.com/articles/s42003-020-0819-2) |
 | `cit-000513` | GLAD | 2020 | Zou | Databases and bioinformatic tools for glycobiology and glycoproteomics | [open](https://www.mdpi.com/1422-0067/21/18/6727) |
 
 ### 2.4 `paywalled` — 9 row(s)
@@ -136,29 +137,24 @@ If a number is wrong, the single place to change it is `toolForCitedPaper` /
 
 ### 3.2 Rows whose tier disagrees with the folder the applicant filed them in
 
-§1.1 ranks a citation by where the citing paper mentions the tool, and the applicant's own
-folders record that reading — `In Methods`, `In Results and Figures`, `In Acknowledgements`.
-These rows carry a tier that does not match the folder they came from. The importer takes the
-applicant's note as the authority and the folder as a secondary signal, which is usually right
-— but where the gap could matter to counsel, it is here:
+None outstanding. The gaps between a row's tier and the folder it came from are closed by a
+recorded applicant decision, listed below.
+**Closed by a recorded applicant decision.** On 2026-11-08 the applicant set the rule that a
+citing work is filed at the **strongest** tier any of its citations earns, so a paper whose
+PDF was filed in a lower-tier folder can still stand at tier A. These rows are the gaps that
+rule closed; each was written by `scripts/record-tier-decision.js`, which is the only tool
+that records one, and `--revert` takes it off again:
 
-| row_uid | filed from | folder implies | row carries |
-|---|---|---|---|
-| `cit-000542` | `Citations/In Acknowledgements/Dianne-van-der-Wal_GLAD.pdf` | tier D | tier A |
-| `cit-000416` | `Citations/In Methods/Yann-Guerardel-MAWE-cwag085.pdf` | tier A | tier C |
+| row_uid | filed from | folder implies | filed at | decided |
+|---|---|---|---|---|
+| `cit-000542` | `Citations/In Acknowledgements/Dianne-van-der-Wal_GLAD.pdf` | tier D | **tier A** | 2026-11-07 |
 
-`cit-000521` is the ordinary case: the applicant filed it under `In Methods` but recorded the
-use as tier B (Results). The scanner finds GLAD in a Results figure caption *and* in Methods
-on p.10, so both readings have something behind them and §3.3 lists it again.
-
-`cit-000542` is the case worth a decision. The applicant's note records **both** a Methods
-sentence — *"Glycan Array Dashboard (version 3.1) was used to analyze and visualize the
-glycan array data."* — **and** an Acknowledgments line thanking the applicant by name, which
-is presumably why the PDF was filed under `In Acknowledgements`. The same note records that
-the analysis used a **lectin array, not a glycan microarray**. The row sits in the packet at
-tier A on the strength of the Methods sentence. That is a defensible reading, but it is a
-reading, and counsel should know the paper also thanks the applicant personally. Decide
-whether to keep it, demote it, or hand it over with both quotations and let counsel weigh it.
+`cit-000542` is the one counsel should see both sides of. The applicant's note records **both**
+a Methods sentence — *"Glycan Array Dashboard (version 3.1) was used to analyze and
+visualize the glycan array data."* — **and** an Acknowledgments line thanking the applicant
+by name, which is why the PDF was filed under `In Acknowledgements`. The applicant read the
+article and confirmed the Methods use, so the row is filed at tier A; the acknowledgment is
+still printed in the entry so nothing is hidden from counsel.
 
 ### 3.3 Included rows where the article text reads differently than the note
 
@@ -189,7 +185,7 @@ altogether — a citation sharing an author is not independent evidence of anyon
 
 | row_uid | packet status | record status | byline source naming the PI | where the name appears |
 |---|---|---|---|---|
-| `cit-000511` | held | DEPENDENT | already DEPENDENT | the corroborating pubmed record |
+| `cit-000511` | screened-out | DEPENDENT | already DEPENDENT | the corroborating pubmed record |
 
 ### 3.4b Candidate rows whose snapshot disagrees with the record
 
@@ -198,11 +194,24 @@ These rows were seeded as independent and the record has since settled them as d
 
 | row_uid | snapshot | record now | packet status |
 |---|---|---|---|
-| `cit-000511` | INDEPENDENT, highlighted | DEPENDENT | held |
+| `cit-000511` | INDEPENDENT, highlighted | DEPENDENT | screened-out |
 
 Do not file one of these, and do not fix the snapshot to make the two agree: the record is
 right and the snapshot is merely old. Re-check independence from the record immediately
 before downloading a PDF or drafting prose about any candidate (§1.2).
+
+### 3.4c An included citation the record does not count
+
+These rows are **in** `packet.html`, but the Independent Citation Record does not count
+them as a standing independent citation. That is not automatically wrong — the packet and
+the record answer different questions, and a copy Scholar lists twice can still be the copy
+the applicant wants filed — but it is a discrepancy, and one counsel should hear about from
+us. The record is not changed by this report; if a row should be corrected there, that is a
+decision for the applicant through the record's own `tools/apply-decision.js`.
+
+| row_uid | folder | tier | what the record says |
+|---|---|---|---|
+| `cit-000551` | `cit-000518` | A | not countable; a copy that does not stand for its work |
 
 ### 3.5 Included citations with no verbatim quotation
 
@@ -281,9 +290,33 @@ quietly re-merging. This is the only place the advice is written down.
 **`cit-001257`** — Evaluating the role of non-HIV antigens in the initiation of QA013. 2…
 : A tier A Methods use of MAWE in a Scientific Reports article from a well-known HIV vaccine laboratory, presented as the analysis method for the array data. Where other folders name the applicant’s work in a hedge or a figure legend, this one assigns the analysis to the method in a Methods sentence, which is the form of use this packet is built to collect.
 
-## 4. Data notes a reader of the CSVs would otherwise trip over
+## 4. Potential citations not in the packet
 
-### 4.1 A row whose cited paper is not one of the four tools
+[`potential_notable_citations.html`](./potential_notable_citations.html) lists **35** independent citations of “GLAD: GLycan Array Dashboard, a visual analytics tool for glycan micr…” (2019) that are **not** in `packet.html`. It is a review page for the
+applicant: it is not linked from the packet, not printed with it, and nothing on it is
+evidence until a person has read the article and filed it.
+
+| | count |
+|---|---:|
+| Citing works the record lists for that paper | 64 |
+| less not independent (shared author, or a PI on the citing paper) | 18 |
+| less copies that do not stand for their work | 2 |
+| less not listed in English | 0 |
+| less already confirmed in the packet | 7 |
+| less already used in the original application (§3) | 2 |
+| **listed for review** | **35** |
+
+6 of them already have a PDF on file, held under `pending-papers/` until a
+decision is made. The rest sit at
+`no-open-copy`, `paywalled`, or `not-in-indexes` — findings about access, not about
+whether the paper exists. **No tier is claimed for any of them:** a tier is a claim about
+where a sentence sits in an article, and none of these articles has been read page by page.
+To bring one in, name its `row_uid` and run `discover-pdfs.js` → `file-pdf.js` →
+`scan-mentions.js` → `record-evidence.js`, then re-render the packet.
+
+## 5. Data notes a reader of the CSVs would otherwise trip over
+
+### 5.1 A row whose cited paper is not one of the four tools
 
 | row_uid | cited paper |
 |---|---|
@@ -293,7 +326,7 @@ The tier and project columns are **blank** on this row on purpose. Its `cited_pa
 different work, so a tier recorded for GLAD or MAWE would describe a paper this row does not
 cite. Borrowing the value from a sibling row in the same folder is what §5 forbids.
 
-### 4.2 One work, two titles
+### 5.2 One work, two titles
 
 `cit-000544` and `cit-000518` hold two rows with **different citing
 titles**. That is not an error: Google Scholar lists the work twice, once under its preprint
@@ -301,7 +334,7 @@ title and once under its journal title, and the folder exists precisely to show 
 The identity rests on the applicant's note and the DOI chain, not on the title, and
 `validate-packet.js` accepts it only because the folder files both a preprint and an article.
 
-### 4.3 Two different dates, in two different columns
+### 5.3 Two different dates, in two different columns
 
 - `cited_earliest_date` is the date of **the applicant's cited paper** (§4.6).
 - `citing_earliest_date` is the earliest public date of **the citing paper** — the timeline
@@ -312,24 +345,25 @@ these. It was imported into the first column, which meant a row citing GLAD (201
 "29 Apr 2023" under *Cited Paper(s)*. `scripts/fix-row-scoped-fields.js` separated them; it is
 re-runnable, dry-run by default, and refuses to write if the invariant fails.
 
-### 4.4 A byline year is not a publication date
+### 5.4 A byline year is not a publication date
 
 `cited_earliest_date` comes from the record's `publications.year`, which is what Google Scholar
 prints beside the applicant's paper. It is not a verified date, and for a chapter or a reference
 work it can be the date of the parent volume. Where a precise date matters, use the `file`
 table's `shows_date` and `date_basis`, which record what a filed PDF itself prints.
 
-### 4.5 The scanner's reading lives in its own columns
+### 5.5 The scanner's reading lives in its own columns
 
 `scan_tier`, `scan_note` and `scanned_on` record what the location scanner read on its last run.
 They are rewritten every run and are never the basis of a claim in the packet: `tier`, `section`
 and `quote` remain the applicant's fields, and §1.3 forbids a script overwriting them. If
 `scanned_on` is older than the newest PDF, re-run `node scripts/scan-mentions.js --write`.
 
-### 4.6 How each PDF got here, and what is still missing
+### 5.6 How each PDF got here, and what is still missing
 
-Every PDF in `papers/` arrived one of two ways, and the distinction matters because
-only the first is reproducible from a script.
+Every PDF in the storage roots (`papers/`, `pending-papers/`, `screened-papers/`) arrived
+one of two ways, and the distinction matters because only the first is reproducible from a
+script.
 
 **Fetched by `discover-pdfs.js`** — 7 candidate row(s) across 6 distinct file(s), each recorded with the host it came from:
 
@@ -363,10 +397,10 @@ Discovery state of all 110 GLAD candidates, from `candidate.discover_state`:
 
 **Still open:** 23 row(s) sit at `open-copy` with no file on disk — a copy was
 located and never fetched. Chasing them is a decision, not a defect: a row must be independent
-(§1.2) before it is worth a download, and 17 candidate(s) are already held — check why before spending effort on a PDF for a row that
+(§1.2) before it is worth a download, and 16 candidate(s) are already held — check why before spending effort on a PDF for a row that
 cannot be filed.
 
-## 5. Before handing the packet over
+## 6. Before handing the packet over
 
 `node scripts/validate-packet.js` checks the mechanical items in §7 and exits non-zero on any
 failure. Run it after every change. What it cannot check:
@@ -378,14 +412,16 @@ failure. Run it after every change. What it cannot check:
   approval. The drafted narratives are drawn from the articles and every sentence names its
   page, but they are a preparer's wording until the applicant adopts them; a packet with a
   blank narrative is still usable, one with an unapproved narrative is not.
-- **The open decisions written up in §3.8.** Recommendations about the packet are kept out of
-  the document itself, so they are listed there instead — including whether `cit-000542` is
-  filed as a Methods use or as an acknowledgment, which would take it out of the packet.
-  Read that section before the document is handed over.
+- **The working advice written up in §3.8.** Recommendations about the packet are kept out of
+  the document itself, so they are listed there instead. Read that section before the document
+  is handed over.
 - **`print/packet.pdf`** must be produced from the browser's print dialog once the content is
   final (§5.4).
-- **The project mapping** (§3.1) and the **tier-vs-folder question** (§3.2) need the
-  applicant's decision.
+- **The project mapping** (§3.1) needs the applicant's decision. The **tier-vs-folder**
+  question (§3.2) is closed: a citing work is filed at the strongest tier any of its
+  citations earns, and the two rows where that differs from the folder carry a recorded
+  `tier_decision`.
 - **Whether a held row is worth chasing at all.** §2 lists what is missing, not what it would
-  prove. That judgement is the applicant's.
+  prove. That judgement is the applicant's. §4 lists the independent citations that are not
+  in the packet at all; picking from that list is the applicant's too.
 

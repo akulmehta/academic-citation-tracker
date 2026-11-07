@@ -20,7 +20,7 @@
 const fs = require("fs");
 const path = require("path");
 const { pathToFileURL } = require("url");
-const { PKT, REPO, PACKET_DB, PDF_ROOT, openPacket } = require("./lib.js");
+const { PKT, REPO, PACKET_DB, PDF_ROOT, openPacket, folderRoots, storageDir } = require("./lib.js");
 
 const argv = process.argv.slice(2);
 const DRY = !argv.includes("--write");
@@ -86,7 +86,10 @@ async function main() {
   if (!buf.subarray(0, 4).equals(PDF_MAGIC)) { console.error(`refusing: ${abs} does not start with %PDF`); process.exitCode = 1; return; }
 
   const name = targetName(rows, main.citing_senior_author, main.citing_year);
-  const relOut = `papers/${FOLDER}/${name}`;
+  // The folder's status decides which storage root it goes into (§5.1): a work
+  // nobody has confirmed yet is not counsel's evidence and does not belong in
+  // `papers/`. `lib.folderRoots` holds that rule; this only applies it.
+  const relOut = `${storageDir(folderRoots(db), FOLDER)}/${name}`;
   console.log(`folder  ${FOLDER}  (${rows.length} row(s), main ${main.row_uid})`);
   console.log(`source  ${path.relative(PDF_ROOT, abs)}  ${(buf.length / 1024 / 1024).toFixed(1)} MB`);
   console.log(`target  ${relOut}`);

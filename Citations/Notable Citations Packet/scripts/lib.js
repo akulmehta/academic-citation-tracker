@@ -17,7 +17,27 @@ const SUMMARY_MD = path.join(REPO, "Citations", "Citation-summary.md");
 const PDF_ROOT = path.join(REPO, "Citations");
 
 const PACKET_DB = path.join(PKT, "notable-citations.sqlite");
-const PAPERS = path.join(PKT, "papers");
+// Three sibling folders hold the PDFs, and which one a work lives in is decided
+// by the row's status (§5.1) — never remembered by a caller.
+//
+// `papers/` is counsel's evidence folder: everything the validator checks against
+// packet.html, and everything printed with it. Before these folders existed, a
+// PDF for a citation nobody had decided yet was filed in the same place, so the
+// evidence folder quietly held files for works the lawyer's document never
+// mentions — and nothing downstream could tell the two apart.
+//
+//   papers/           a work in the packet (`included`)
+//   pending-papers/   a work awaiting a decision (`held`)
+//   screened-papers/  a work decided against (`screened-out`), kept per §4.5
+//
+// The relative names are what the database stores and what an HTML href uses; the
+// absolute constants are for the filesystem.
+const ROOT_PAPERS = "papers";
+const ROOT_PENDING = "pending-papers";
+const ROOT_SCREENED = "screened-papers";
+const PAPERS = path.join(PKT, ROOT_PAPERS);
+const PENDING_PAPERS = path.join(PKT, ROOT_PENDING);
+const SCREENED_PAPERS = path.join(PKT, ROOT_SCREENED);
 
 /** Open the record's catalog store. Read-only by construction, with no way to opt out. */
 function openCatalog() {
@@ -81,6 +101,150 @@ function migrate(db) {
   if (!nCols.has("preparer_note")) {
     db.exec(`ALTER TABLE narrative ADD COLUMN preparer_note TEXT`);
   }
+  // A row's `tier` is the strongest tier that ONE citation earns. Two different
+  // things can then make a folder and its rows look out of step, and neither is an
+  // error the validator should keep raising:
+  //   (a) a folder holds several citations of one article and only some are Methods
+  //       uses (cit-000416: the oligomannose paper is a Discussion citation, but the
+  //       same article uses GLAD, MAWE and the review in Methods). The WORK stands
+  //       at its strongest tier; the weaker sibling row is still honestly C.
+  //   (b) the applicant filed a PDF in one folder but, on re-reading, the tool is
+  //       used in Methods (cit-000542, van der Wal: filed "In Acknowledgements" yet
+  //       the Glycan Array Dashboard is run in Materials and Methods p.5).
+  // `tier_decision` records the applicant's call so the folder-vs-tier check stops
+  // warning and the decision is on the record rather than re-litigated each run.
+  if (!have.has("tier_decision")) {
+    db.exec(`ALTER TABLE citation ADD COLUMN tier_decision TEXT`);
+    db.exec(`ALTER TABLE citation ADD COLUMN tier_decided_on TEXT`);
+    db.exec(`ALTER TABLE citation ADD COLUMN tier_decided_note TEXT`);
+  }
+}
+
+/**
+ * The tier a citing WORK (folder) is presented at: the strongest tier among the
+ * citations filed in that folder, honouring any recorded applicant decision.
+ *
+ * Per the applicant's instruction on 2026-11-08, a paper that uses one of the
+ * tools in Materials and Methods is a tier-A use of that tool even if the same
+ * paper also cites another of the applicant's works only in passing. Ranking the
+ * work at its weakest citation would hide the strongest evidence. The individual
+ * rows keep their own tiers; this is only the headline the work is filed under.
+ *
+ * `rows` are citation rows sharing one folder_uid. Returns null when none carries
+ * a tier (so a caller can fall back rather than print a blank).
+ */
+const TIER_RANK = { A: 0, B: 1, C: 2, D: 3, REF: 4 };
+function headlineTier(rows) {
+  let best = null;
+  for (const r of rows || []) {
+    const t = (r.tier_decision || r.tier || "").trim();
+    if (!(t in TIER_RANK)) continue;
+    if (best === null || TIER_RANK[t] < TIER_RANK[best]) best = t;
+  }
+  return best;
+}
+
+/**
+ * The row_uids already used in the original application, read from the list the
+ * record renders for that folder. §3 forbids re-submitting one as new evidence, so
+ * every screen for a new candidate has to consult it. The file is a generated
+ * markdown table; the uids in it are the answer, and restating them here would let
+ * the two lists drift apart.
+ *
+ * Returns null when the file is missing — a caller must refuse rather than guess,
+ * because "no exclusions" is the most expensive thing this list can silently become.
+ */
+function originalApplicationUids() {
+  const f = path.join(PKT, "..", "Notable Citations in Original Application",
+    "Original-Application-Citations.md");
+  if (!fs.existsSync(f)) return null;
+  return new Set([...fs.readFileSync(f, "utf8").matchAll(/cit-\d{6}/g)].map(m => m[0]));
+}
+
+/**
+ * Independent citations of one cited work that are candidates for the packet but
+ * are not in it — the screen behind potential_notable_citations.html.
+ *
+ * The catalog, not the packet's `candidate` snapshot, decides independence: the
+ * snapshot is taken when the queue is seeded and goes stale when a byline is later
+ * corroborated. A row must also be the copy that stands for its work, be listed in
+ * English, not already be confirmed in the packet, and not already have been used
+ * in the original application.
+ *
+ * Returns { rows, screen } where `screen` accounts for every row removed, so a
+ * document can print arithmetic that adds up instead of a bare total.
+ */
+function potentialIndependent(cat, db, citesId) {
+  const all = cat.prepare(`
+    SELECT row_uid, title, authors, link, doi, work_type, status, confirm_state,
+           is_countable_independent, is_non_english, is_primary_copy, superseded_at,
+           external_source, external_url
+    FROM citations WHERE cites_id = ? ORDER BY row_uid`).all(citesId);
+  const included = new Set(db.prepare(
+    "SELECT row_uid FROM citation WHERE status = 'included'").all().map(r => r.row_uid));
+  const orig = originalApplicationUids();
+  if (orig === null) {
+    throw new Error("Original-Application-Citations.md is missing — cannot exclude citations already filed.");
+  }
+  const screen = { total: all.length, superseded: 0, dependent: 0, notStanding: 0, nonEnglish: 0, inPacket: 0, origApp: 0 };
+  const rows = [];
+  for (const r of all) {
+    if (r.superseded_at) { screen.superseded++; continue; }
+    if (r.status !== "INDEPENDENT") { screen.dependent++; continue; }
+    if (r.is_countable_independent !== 1 || r.is_primary_copy === 0) { screen.notStanding++; continue; }
+    if (r.is_non_english) { screen.nonEnglish++; continue; }
+    if (included.has(r.row_uid)) { screen.inPacket++; continue; }
+    if (orig.has(r.row_uid)) { screen.origApp++; continue; }
+    rows.push(r);
+  }
+  return { rows, screen, origAppUids: orig };
+}
+
+/**
+ * Which root a citing work's PDFs live in, derived from the status of the
+ * citation rows that name it.
+ *
+ * The rule is the packet's own: a work belongs in counsel's evidence folder only
+ * while some row for it is confirmed. `papers/` therefore holds the PDFs of works
+ * the lawyer's document cites and nothing else; a work awaiting a decision sits in
+ * `pending-papers/`, and a work decided against sits in `screened-papers/` (§4.5
+ * keeps the record of what was screened, so its PDF is retained, just not filed).
+ *
+ * Returns one of the three relative root names. An unknown folder is `papers` — a
+ * brand-new row has no status yet and the importer creates the folder as it writes.
+ */
+const ROOT_FOR_STATUS = {
+  included: ROOT_PAPERS,
+  held: ROOT_PENDING,
+  "screened-out": ROOT_SCREENED,
+};
+
+/** Map of folder_uid -> the root that folder's files belong under. */
+function folderRoots(db) {
+  const best = new Map();
+  // `included` beats `held` beats `screened-out`: a folder is evidence if any row
+  // in it is evidence, because one PDF can serve several rows of one citing work.
+  const RANK = { included: 0, held: 1, "screened-out": 2 };
+  for (const r of db.prepare(`SELECT folder_uid, status FROM citation`).all()) {
+    const cur = best.get(r.folder_uid);
+    if (cur === undefined || (RANK[r.status] ?? 9) < (RANK[cur] ?? 9)) best.set(r.folder_uid, r.status);
+  }
+  const out = new Map();
+  for (const [folder, status] of best) out.set(folder, ROOT_FOR_STATUS[status] || ROOT_PAPERS);
+  return out;
+}
+
+/** The relative directory a folder's PDFs live in, e.g. `pending-papers/cit-000510`. */
+function storageDir(roots, folderUid) {
+  return `${roots.get(folderUid) || ROOT_PAPERS}/${folderUid}`;
+}
+
+/** The three relative roots, in filing order. */
+const STORAGE_ROOTS = [ROOT_PAPERS, ROOT_PENDING, ROOT_SCREENED];
+
+/** Absolute path of a stored file, from its packet-relative path. */
+function absFile(rel) {
+  return path.join(PKT, rel);
 }
 
 /**
@@ -467,4 +631,4 @@ function projectForCitedPaper(title) {
   return null;
 }
 
-module.exports = { PKT, REPO, CATALOG, SUMMARY_MD, PDF_ROOT, PACKET_DB, PAPERS, openCatalog, openPacket, SCHEMA, surnameSlug, surnameOf, seniorAuthor, readEnv, rel, authorKeys, sharesAuthor, toolForCitedPaper, projectForCitedPaper };
+module.exports = { PKT, REPO, CATALOG, SUMMARY_MD, PDF_ROOT, PACKET_DB, PAPERS, PENDING_PAPERS, SCREENED_PAPERS, ROOT_PAPERS, ROOT_PENDING, ROOT_SCREENED, STORAGE_ROOTS, openCatalog, openPacket, SCHEMA, surnameSlug, surnameOf, seniorAuthor, readEnv, rel, authorKeys, sharesAuthor, toolForCitedPaper, projectForCitedPaper, TIER_RANK, headlineTier, originalApplicationUids, potentialIndependent, ROOT_FOR_STATUS, folderRoots, storageDir, absFile };

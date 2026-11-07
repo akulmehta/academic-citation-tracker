@@ -37,7 +37,7 @@
 const fs = require("fs");
 const path = require("path");
 const { DatabaseSync } = require("node:sqlite");
-const { PKT, PACKET_DB, openPacket } = require("./lib.js");
+const { PKT, PACKET_DB, openPacket, folderRoots, storageDir } = require("./lib.js");
 const { pageTexts } = require("./pdfverify.js");
 
 const DRY = !process.argv.includes("--write");
@@ -66,14 +66,18 @@ function backup() {
 /** Page counts of every PDF filed for a folder, keyed on the relative path. */
 async function folderPages(folderUid, notes) {
   const db = new DatabaseSync(PACKET_DB, { readOnly: true });
-  // `file.file` already carries the papers/<folder>/ prefix (it is what the packet
-  // HTML links against), so it must not be re-prefixed here.
+  // `file.file` already carries its storage root (`papers/…`, `pending-papers/…`)
+  // because it is what the packet HTML links against, so it must not be
+  // re-prefixed here.
   let files = db.prepare("SELECT file FROM file WHERE folder_uid=? ORDER BY file").all(folderUid).map(f => f.file);
   db.close();
   if (!files.length) {
-    const r = openPacket().prepare("SELECT pdf_file FROM citation WHERE folder_uid=? AND pdf_file IS NOT NULL LIMIT 1").get(folderUid);
-    // `citation.pdf_file` is stored bare (filename only), unlike `file.file`.
-    if (r) files = [`papers/${folderUid}/${r.pdf_file}`];
+    const pdb = openPacket();
+    const r = pdb.prepare("SELECT pdf_file FROM citation WHERE folder_uid=? AND pdf_file IS NOT NULL LIMIT 1").get(folderUid);
+    // `citation.pdf_file` is stored bare (filename only), unlike `file.file`, so
+    // the storage root has to come from the folder's status (§5.1).
+    if (r) files = [`${storageDir(folderRoots(pdb), folderUid)}/${r.pdf_file}`];
+    pdb.close();
   }
   const out = [];
   for (const rel of files) {

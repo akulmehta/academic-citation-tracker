@@ -22,7 +22,7 @@
  */
 const fs = require("fs");
 const path = require("path");
-const { openPacket, PACKET_DB } = require("./lib.js");
+const { openPacket, PACKET_DB, folderRoots, storageDir } = require("./lib.js");
 const { verifyQuote, expandPages } = require("./pdfverify.js");
 
 const DRY = !process.argv.includes("--write");
@@ -49,7 +49,9 @@ function pdfForRow(db, rowUid) {
   if (r.pdf_file) return { rel: r.pdf_file, row: r };
   const f = db.prepare("SELECT folder_uid, file FROM file WHERE folder_uid=? ORDER BY file LIMIT 1").get(r.folder_uid);
   if (!f) return { err: `row ${rowUid} has no PDF in the packet` };
-  return { rel: `papers/${f.folder_uid}/${f.file}`, row: r };
+  // The stored path already carries its root, and a bare `file` value does not,
+  // so ask `folderRoots` where the folder sits rather than assuming `papers/`.
+  return { rel: `${storageDir(folderRoots(db), r.folder_uid)}/${f.file}`, row: r };
 }
 
 async function main() {

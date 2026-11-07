@@ -20,7 +20,7 @@
  */
 const fs = require("fs");
 const path = require("path");
-const { PKT, openPacket, openCatalog } = require("./lib.js");
+const { PKT, openPacket, openCatalog, potentialIndependent } = require("./lib.js");
 
 const DRY = !process.argv.includes("--write");
 const OUT = path.join(PKT, "PACKET-STATUS.md");
@@ -35,6 +35,11 @@ const short = (s, n) => {
 const db = openPacket();
 const cits = db.prepare(`SELECT * FROM citation`).all();
 const files = db.prepare(`SELECT * FROM file`).all();
+const filesByRoot = new Map();
+for (const f of files) {
+  const root = f.file.split("/")[0];
+  filesByRoot.set(root, (filesByRoot.get(root) || 0) + 1);
+}
 const cands = db.prepare(`SELECT * FROM candidate`).all();
 const candBy = new Map(cands.map(c => [c.row_uid, c]));
 const included = cits.filter(r => r.status === "included");
@@ -64,7 +69,9 @@ push("| | count |");
 push("|---|---:|");
 push("| Citations in the packet (in `packet.html`) | " + included.length + " |");
 push("| Works those citations are filed as (\u00a75.1 folders) | " + foldersIncluded.length + " |");
-push("| PDFs filed under `papers/` | " + files.length + " |");
+push("| PDFs filed under `papers/` (in the packet) | " + (filesByRoot.get("papers") || 0) + " |");
+push("| PDFs under `pending-papers/` (awaiting a decision) | " + (filesByRoot.get("pending-papers") || 0) + " |");
+push("| PDFs under `screened-papers/` (kept, not filed) | " + (filesByRoot.get("screened-papers") || 0) + " |");
 push("| Held \u2014 open items, listed below | " + held.length + " |");
 push("| Screened out \u2014 decided, kept for the record (\u00a74.5) | " + screened.length + " |");
 push("| **Rows in table `citation`** | **" + cits.length + "** |");
@@ -173,11 +180,15 @@ const folderTier = p => {
   if (/In Methods/i.test(s)) return "A";
   return null;
 };
-const misplaced = cits.filter(r => r.tier && folderTier(r.source_pdf) && folderTier(r.source_pdf) !== r.tier);
+const misplaced = cits.filter(r => r.tier && folderTier(r.source_pdf) && folderTier(r.source_pdf) !== r.tier && !r.tier_decision);
+const decided = cits.filter(r => r.tier_decision && folderTier(r.source_pdf) && folderTier(r.source_pdf) !== r.tier_decision);
 push("### 3.2 Rows whose tier disagrees with the folder the applicant filed them in");
 push();
-if (!misplaced.length) {
+if (!misplaced.length && !decided.length) {
   push("None. Every filed PDF sits in the folder that matches its tier.");
+} else if (!misplaced.length) {
+  push("None outstanding. The gaps between a row's tier and the folder it came from are closed by a");
+  push("recorded applicant decision, listed below.");
 } else {
   push("\u00a71.1 ranks a citation by where the citing paper mentions the tool, and the applicant's own");
   push("folders record that reading \u2014 `In Methods`, `In Results and Figures`, `In Acknowledgements`.");
@@ -195,15 +206,27 @@ if (!misplaced.length) {
   push("`cit-000521` is the ordinary case: the applicant filed it under `In Methods` but recorded the");
   push("use as tier B (Results). The scanner finds GLAD in a Results figure caption *and* in Methods");
   push("on p.10, so both readings have something behind them and \u00a73.3 lists it again.");
+}
+if (decided.length) {
+  push("**Closed by a recorded applicant decision.** On 2026-11-08 the applicant set the rule that a");
+  push("citing work is filed at the **strongest** tier any of its citations earns, so a paper whose");
+  push("PDF was filed in a lower-tier folder can still stand at tier A. These rows are the gaps that");
+  push("rule closed; each was written by `scripts/record-tier-decision.js`, which is the only tool");
+  push("that records one, and `--revert` takes it off again:");
   push();
-  push("`cit-000542` is the case worth a decision. The applicant's note records **both** a Methods");
-  push("sentence \u2014 *\"Glycan Array Dashboard (version 3.1) was used to analyze and visualize the");
-  push("glycan array data.\"* \u2014 **and** an Acknowledgments line thanking the applicant by name, which");
-  push("is presumably why the PDF was filed under `In Acknowledgements`. The same note records that");
-  push("the analysis used a **lectin array, not a glycan microarray**. The row sits in the packet at");
-  push("tier A on the strength of the Methods sentence. That is a defensible reading, but it is a");
-  push("reading, and counsel should know the paper also thanks the applicant personally. Decide");
-  push("whether to keep it, demote it, or hand it over with both quotations and let counsel weigh it.");
+  push("| row_uid | filed from | folder implies | filed at | decided |");
+  push("|---|---|---|---|---|");
+  for (const r of decided) {
+    push("| `" + r.row_uid + "` | `" + esc(r.source_pdf) + "` | tier " + folderTier(r.source_pdf)
+      + " | **tier " + esc(r.tier_decision) + "** | " + esc(r.tier_decided_on) + " |");
+  }
+  push();
+  push("`cit-000542` is the one counsel should see both sides of. The applicant's note records **both**");
+  push("a Methods sentence \u2014 *\"Glycan Array Dashboard (version 3.1) was used to analyze and");
+  push("visualize the glycan array data.\"* \u2014 **and** an Acknowledgments line thanking the applicant");
+  push("by name, which is why the PDF was filed under `In Acknowledgements`. The applicant read the");
+  push("article and confirmed the Methods use, so the row is filed at tier A; the acknowledgment is");
+  push("still printed in the entry so nothing is hidden from counsel.");
 }
 push();
 
@@ -383,6 +406,59 @@ push();
   }
 }
 
+// 3.4c — an INCLUDED row the record does not count. The other sections in this
+// chapter look at rows that are not in the packet; this one looks the other way,
+// because a filed row is evidence and a filed row the record refuses to count is
+// a discrepancy counsel should hear about from us, not discover. The record is
+// read-only here: the fix, if any, is the applicant's, through `apply-decision.js`
+// in the record's own tooling.
+{
+  let notCounted = [];
+  let ncErr = null;
+  try {
+    const cat = openCatalog();
+    const uids = included.map(r => r.row_uid);
+    const get = new Map((uids.length
+      ? cat.prepare(`SELECT row_uid, status, is_countable_independent, is_primary_copy, is_non_english, superseded_at, inherited_status
+                     FROM citations WHERE row_uid IN (${uids.map(() => "?").join(",")})`).all(...uids)
+      : []).map(r => [r.row_uid, r]));
+    cat.close();
+    for (const r of included) {
+      const c = get.get(r.row_uid);
+      if (!c) { notCounted.push({ r, flags: ["no active row in the record"] }); continue; }
+      const flags = [];
+      if (c.status !== "INDEPENDENT") flags.push("record status " + c.status);
+      if (c.is_countable_independent !== 1) flags.push("not countable");
+      if (c.is_primary_copy === 0) flags.push("a copy that does not stand for its work");
+      if (c.is_non_english) flags.push("not listed in English");
+      if (c.superseded_at) flags.push("superseded " + c.superseded_at);
+      if (flags.length) notCounted.push({ r, flags });
+    }
+  } catch (err) { ncErr = err.message }
+  push("### 3.4c An included citation the record does not count");
+  push();
+  if (ncErr) {
+    push("*(The record could not be read for this check: " + esc(ncErr) + ".)*");
+  } else if (!notCounted.length) {
+    push("None. Every row in `packet.html` is an independent, countable, standing citation on the record.");
+  } else {
+    push("These rows are **in** `packet.html`, but the Independent Citation Record does not count");
+    push("them as a standing independent citation. That is not automatically wrong — the packet and");
+    push("the record answer different questions, and a copy Scholar lists twice can still be the copy");
+    push("the applicant wants filed — but it is a discrepancy, and one counsel should hear about from");
+    push("us. The record is not changed by this report; if a row should be corrected there, that is a");
+    push("decision for the applicant through the record's own `tools/apply-decision.js`.");
+    push();
+    push("| row_uid | folder | tier | what the record says |");
+    push("|---|---|---|---|");
+    for (const { r, flags } of notCounted) {
+      push("| `" + r.row_uid + "` | `" + r.folder_uid + "` | " + (esc(r.tier) || "\u2014") + " | "
+        + esc(flags.join("; ")) + " |");
+    }
+  }
+  push();
+}
+
 // 3.5 — missing quotations.
 const noQuote = included.filter(r => !r.quote);
 push("### 3.5 Included citations with no verbatim quotation");
@@ -493,10 +569,55 @@ if (withNote.length) {
 }
 
 /* ---------------------------------------------------------------- */
-push("## 4. Data notes a reader of the CSVs would otherwise trip over");
+push("## 4. Potential citations not in the packet");
+push();
+// Built from lib.potentialIndependent — the same screen the review page uses — so
+// the two documents cannot disagree about what "potential" means.
+try {
+  const catS = openCatalog();
+  const pubs = catS.prepare("SELECT cites_id, title, year FROM publications").all()
+    .filter(p => /GLAD/i.test(p.title));
+  if (pubs.length === 1) {
+    const { rows: pot, screen } = potentialIndependent(catS, db, pubs[0].cites_id);
+    const potPdf = pot.filter(r => candBy.get(r.row_uid) && candBy.get(r.row_uid).pdf_file);
+    push("[`potential_notable_citations.html`](./potential_notable_citations.html) lists **"
+      + pot.length + "** independent citations of \u201c" + short(pubs[0].title, 70) + "\u201d ("
+      + (pubs[0].year || "\u2014") + ") that are **not** in `packet.html`. It is a review page for the");
+    push("applicant: it is not linked from the packet, not printed with it, and nothing on it is");
+    push("evidence until a person has read the article and filed it.");
+    push();
+    push("| | count |");
+    push("|---|---:|");
+    push("| Citing works the record lists for that paper | " + screen.total + " |");
+    push("| less not independent (shared author, or a PI on the citing paper) | " + screen.dependent + " |");
+    push("| less copies that do not stand for their work | " + screen.notStanding + " |");
+    push("| less not listed in English | " + screen.nonEnglish + " |");
+    push("| less already confirmed in the packet | " + screen.inPacket + " |");
+    push("| less already used in the original application (\u00a73) | " + screen.origApp + " |");
+    push("| **listed for review** | **" + pot.length + "** |");
+    push();
+    push(potPdf.length + " of them already have a PDF on file, held under `pending-papers/` until a");
+    push("decision is made. The rest sit at");
+    push("`no-open-copy`, `paywalled`, or `not-in-indexes` \u2014 findings about access, not about");
+    push("whether the paper exists. **No tier is claimed for any of them:** a tier is a claim about");
+    push("where a sentence sits in an article, and none of these articles has been read page by page.");
+    push("To bring one in, name its `row_uid` and run `discover-pdfs.js` \u2192 `file-pdf.js` \u2192");
+    push("`scan-mentions.js` \u2192 `record-evidence.js`, then re-render the packet.");
+    catS.close();
+  } else {
+    push("_Not generated: the record's publication list does not resolve \u201cGLAD\u201d to exactly one_");
+    push("_cited work, so the screen would have to guess which paper it was screening._");
+  }
+} catch (e) {
+  push("_Not generated: " + esc(e.message) + "_");
+}
+push();
+
+/* ---------------------------------------------------------------- */
+push("## 5. Data notes a reader of the CSVs would otherwise trip over");
 push();
 let nn = 0;
-const note = (title, body) => { nn++; push("### 4." + nn + " " + title); push(); push(body); push(); };
+const note = (title, body) => { nn++; push("### 5." + nn + " " + title); push(); push(body); push(); };
 
 const noTool = cits.filter(r => !r.cited_tool);
 if (noTool.length) {
@@ -577,8 +698,9 @@ note("The scanner's reading lives in its own columns",
     WHERE discover_state='open-copy' AND (pdf_file IS NULL OR pdf_file='')`).get().n;
   const stateCounts = db.prepare(`SELECT discover_state, COUNT(*) n FROM candidate GROUP BY 1 ORDER BY n DESC`).all();
 
-  let body = "Every PDF in `papers/` arrived one of two ways, and the distinction matters because\n"
-    + "only the first is reproducible from a script.\n\n"
+  let body = "Every PDF in the storage roots (`papers/`, `pending-papers/`, `screened-papers/`) arrived\n"
+    + "one of two ways, and the distinction matters because only the first is reproducible from a\n"
+    + "script.\n\n"
     + "**Fetched by `discover-pdfs.js`** — " + dlRows + " candidate row(s) across " + dlFiles.size
     + " distinct file(s), each recorded with the host it came from:\n\n"
     + "| host | rows | row_uid(s) |\n|---|---:|---|\n"
@@ -610,7 +732,7 @@ note("The scanner's reading lives in its own columns",
 }
 
 /* ---------------------------------------------------------------- */
-push("## 5. Before handing the packet over");
+push("## 6. Before handing the packet over");
 push();
 push("`node scripts/validate-packet.js` checks the mechanical items in \u00a77 and exits non-zero on any");
 push("failure. Run it after every change. What it cannot check:");
@@ -622,16 +744,18 @@ push("- **The narrative fields and the missing quotations** (\u00a73.5, \u00a73.
 push("  approval. The drafted narratives are drawn from the articles and every sentence names its");
 push("  page, but they are a preparer's wording until the applicant adopts them; a packet with a");
 push("  blank narrative is still usable, one with an unapproved narrative is not.");
-push("- **The open decisions written up in \u00a73.8.** Recommendations about the packet are kept out of");
-push("  the document itself, so they are listed there instead \u2014 including whether `cit-000542` is");
-push("  filed as a Methods use or as an acknowledgment, which would take it out of the packet.");
-push("  Read that section before the document is handed over.");
+push("- **The working advice written up in \u00a73.8.** Recommendations about the packet are kept out of");
+push("  the document itself, so they are listed there instead. Read that section before the document");
+push("  is handed over.");
 push("- **`print/packet.pdf`** must be produced from the browser's print dialog once the content is");
 push("  final (\u00a75.4).");
-push("- **The project mapping** (\u00a73.1) and the **tier-vs-folder question** (\u00a73.2) need the");
-push("  applicant's decision.");
+push("- **The project mapping** (\u00a73.1) needs the applicant's decision. The **tier-vs-folder**");
+push("  question (\u00a73.2) is closed: a citing work is filed at the strongest tier any of its");
+push("  citations earns, and the two rows where that differs from the folder carry a recorded");
+push("  `tier_decision`.");
 push("- **Whether a held row is worth chasing at all.** \u00a72 lists what is missing, not what it would");
-push("  prove. That judgement is the applicant's.");
+push("  prove. That judgement is the applicant's. \u00a74 lists the independent citations that are not");
+push("  in the packet at all; picking from that list is the applicant's too.");
 push();
 
 const text = L.join("\n") + "\n";

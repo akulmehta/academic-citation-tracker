@@ -3,7 +3,9 @@
 // The instructions require a record of everything screened, not only of what was
 // selected (§4.5), so a candidate that has been looked at stops being queue state
 // and becomes a citation row. It arrives as `held` — undecided — because a tier
-// needs the PDF text, which scan-mentions.js supplies.
+// needs the PDF text, which scan-mentions.js supplies. A candidate the record's
+// own byline shows shares an author with the cited work is screened out at intake
+// instead: §1.2 already decided that disqualifies it.
 //
 // Read-only against the Independent Citation Record. The candidate table already
 // carries the bibliographic fields the record published; this copies them across.
@@ -39,29 +41,33 @@ function main() {
   // later turns out to cite two of the applicant's publications, apply-decision
   // folds the second row under this one the same way the importer did.
   let promoted = 0;
+  let dependents = 0;
   const overlaps = [];
   for (const c of cands) {
     const pub = pubs.get(c.cites_id);
     const nonEnglish = c.is_non_english || /non-?english/i.test(c.language_flag || "");
 
-    // The record decides independence and this packet does not overrule it. But a
-    // citation whose byline names an author of the cited work is not something the
-    // packet can hand to counsel as a notable independent citation either, so it is
-    // HELD for the applicant's decision rather than included. The record is not
-    // touched. Found on cit-000511: Scholar's list is truncated at ten names and
-    // hides the eleventh, but the record's own corroborating PubMed byline for that
-    // paper reads "… Cooper MD, Cummings RD", and Cummings co-authored the cited
-    // GLAD paper.
+    // A citation whose byline names an author of the cited work is not a
+    // notable independent citation at all, so it is screened out here rather
+    // than held: §1.2 already decided that a shared author disqualifies a
+    // paper, so there is nothing left for a person to choose. The record is
+    // not touched — it may classify the row differently, and §4.5 keeps the
+    // reason and the row. Found on cit-000511: Scholar's list is truncated at
+    // ten names and hides the eleventh, but the record's own corroborating
+    // PubMed byline for that paper reads "… Cooper MD, Cummings RD", and
+    // Cummings co-authored the cited GLAD paper.
     // candidate.authors holds the fullest byline the record published: the
     // corroborating external list when there is one, else Scholar's list.
-    if (!nonEnglish && pub && sharesAuthor(pub.authors, c.authors)) {
+    const shares = !nonEnglish && pub && sharesAuthor(pub.authors, c.authors);
+    if (shares) {
+      dependents++;
       overlaps.push(`${c.row_uid} — byline shares an author with "${(pub.title || "").slice(0, 48)}"`);
     }
-    const status = nonEnglish ? "screened-out" : "held";
-    const reason = nonEnglish ? "non-English" : null;
+    const status = nonEnglish ? "screened-out" : shares ? "screened-out" : "held";
+    const reason = nonEnglish ? "non-English" : shares ? "not independent" : null;
     if (!DRY) {
       ins.run(
-        c.row_uid, c.row_uid, null, status, reason, null, 1, null,
+        c.row_uid, c.row_uid, null, status, reason, status === "screened-out" ? new Date().toISOString().slice(0, 10) : null, 1, null,
         c.cites_id,
         // The tool the citation is to, from the record's own cited publication.
         pub ? toolLabel(pub.title) : null,
@@ -75,16 +81,17 @@ function main() {
         c.pdf_file, c.pdf_url ? `downloaded from ${c.pdf_source}` : null,
         c.exhibit_base ? `${c.exhibit_base}.pdf` : null,
         `Promoted from the discovery queue on ${new Date().toISOString().slice(0, 10)}; discover_state=${c.discover_state}.`
+          + (shares ? ` Screened out at intake: the byline names an author of the cited work (§1.2), so it is not an independent citation.` : "")
       );
     }
     if (!DRY) db.prepare(`UPDATE candidate SET packet_row_uid=? WHERE row_uid=?`).run(c.row_uid, c.row_uid);
     promoted++;
   }
-  console.log(`${DRY ? "[dry] would promote" : "promoted"}: ${promoted} | ${promoted - cands.filter(c => c.is_non_english).length} awaiting a scan`);
+  console.log(`${DRY ? "[dry] would promote" : "promoted"}: ${promoted} | ${promoted - dependents - cands.filter(c => c.is_non_english).length} awaiting a scan`);
   if (overlaps.length) {
-    console.log(`\n${overlaps.length} candidate(s) name an author of the cited paper. The record classifies these as`);
-    console.log("independent, and this packet does not overrule that, but neither does it present them as");
-    console.log("notable independent citations. They are HELD for the applicant's decision:");
+    console.log(`\n${overlaps.length} candidate(s) name an author of the cited paper. §1.2 disqualifies a`);
+    console.log("citation that shares an author, so they are screened out, not held — there is nothing");
+    console.log("for a person to choose about them. The row and its reason are kept (§4.5):");
     for (const o of overlaps) console.log("  ", o);
     console.log("   The Independent Citation Record was not modified. Record the decision there through");
     console.log("   that record's own tooling if the classification should change.");

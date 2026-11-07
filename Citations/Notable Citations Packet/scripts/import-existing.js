@@ -8,13 +8,14 @@
  *   - Database/citation-catalog.sqlite (READ ONLY)
  *       -> citing title/authors/venue/link/doi, PI work cited, exhibit reference
  *   - the PDF files on disk
- *       -> the bytes that get copied into papers/
+ *       -> the bytes that get copied into the storage root the row's status
+ *          implies (§5.1): `papers/`, `pending-papers/` or `screened-papers/`
  *
  * Writes only inside Citations/Notable Citations Packet/.
  */
 const fs = require("fs");
 const path = require("path");
-const { openCatalog, openPacket, SUMMARY_MD, PDF_ROOT, PAPERS, PKT, surnameSlug, seniorAuthor, toolForCitedPaper, projectForCitedPaper } = require("./lib");
+const { openCatalog, openPacket, SUMMARY_MD, PDF_ROOT, PKT, ROOT_FOR_STATUS, surnameSlug, seniorAuthor, toolForCitedPaper, projectForCitedPaper } = require("./lib");
 
 const DRY = process.argv.includes("--dry");
 
@@ -276,6 +277,12 @@ function main() {
     const tier = tierFrom(e.note, path.basename(path.dirname(e.pdfs[0]?.abs || "")));
     const wasPreprint = /preprint/i.test(e.earliest || "") ? 1 : 0;
 
+    // Work out where this row sits BEFORE copying files: the status decides
+    // which storage root the folder belongs in (§5.1).
+    const alreadyFiled = group.some(r => origUids.has(r.uid)) ? 1 : 0;
+    const status = alreadyFiled ? "screened-out" : (tier ? "included" : "held");
+    const screenReason = alreadyFiled ? "already filed" : (tier ? null : "passing mention");
+
     // Files for this work, ordered so the folder lists a timeline oldest-first.
     const pdfs = e.pdfs.map(p => ({ ...p, role: roleFor(p.name) }))
       .sort((a, b) => (ROLE_RANK[a.role] ?? 9) - (ROLE_RANK[b.role] ?? 9) || a.name.localeCompare(b.name));
@@ -291,7 +298,9 @@ function main() {
       // very timeline the folder exists to show.
       const yearTag = role === "article" ? articleYear : (preprintYear || articleYear);
       const fname = packetFileName(i, role, senior, d || yearTag);
-      const relOut = `papers/${folderUid}/${fname}`;
+      // Which root the folder belongs in is the row's status (§5.1), decided
+      // above before any file is copied.
+      const relOut = `${ROOT_FOR_STATUS[status]}/${fname}`;
       const absOut = path.join(PKT, relOut);
       let bytes = null;
       const exists = fs.existsSync(p.abs);
@@ -312,14 +321,10 @@ function main() {
     // preprint or repository page is the timeline evidence, not the citation.
     const primary = files.find(f => f.role === "article") || files.find(f => f.cited) || files[0] || null;
 
-    const alreadyFiled = group.some(r => origUids.has(r.uid)) ? 1 : 0;
     const notes = [];
     if (group.length > 1) notes.push(`${group.length} catalog rows for this citing work (${group.map(r => r.uid).join(", ")}).`);
     if (!catRow) notes.push("No active catalog row matched; bibliographic fields come from the docx only.");
     if (e.note) notes.push(`Docx note: ${e.note}`);
-
-    const status = alreadyFiled ? "screened-out" : (tier ? "included" : "held");
-    const screenReason = alreadyFiled ? "already filed" : (tier ? null : "passing mention");
 
     for (const r of group) {
       const isMain = r.uid === folderUid ? 1 : 0;

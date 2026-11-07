@@ -8,7 +8,7 @@
 // Stages (run in order, each is resumable):
 //   --seed               copy the cited-by rows into `candidate`
 //   --resolve            ask OpenAlex for a DOI / open-access link
-//   --fetch              download the open copies into papers/<row_uid>/
+//   --fetch              download the open copies into pending-papers/<row_uid>/
 //   --status             print the queue
 //
 // A row that cannot be resolved is recorded as `no-open-copy` or
@@ -18,7 +18,7 @@
 
 const fs = require("fs");
 const path = require("path");
-const { PKT, PAPERS, openCatalog, openPacket, readEnv, surnameOf, seniorAuthor, surnameSlug } = require("./lib");
+const { PKT, ROOT_PENDING, openCatalog, openPacket, readEnv, surnameOf, seniorAuthor, surnameSlug } = require("./lib");
 const { get, getJson, sleep } = require("./http");
 
 const stripMarker = require(path.join(PKT, "..", "..", "tools", "scholar-marker.js")).stripScholarMarker;
@@ -343,7 +343,11 @@ async function fetchPdfs(db) {
         blocked++;
       } else {
         const fname = `01-article-${surnameSlug(senior)}${r.year ? `-${r.year}` : ""}.pdf`;
-        const rel = `papers/${r.row_uid}/${fname}`;
+        // A file fetched here has not been confirmed by the applicant, so it
+        // lands in the pending root, not in counsel's `papers/` folder. When a
+        // row is later confirmed, `relocate-pdfs.js` moves the folder to
+        // `papers/`; the path stored here is the one the DB keeps until then.
+        const rel = `${ROOT_PENDING}/${r.row_uid}/${fname}`;
         const abs = path.join(PKT, rel);
         if (!DRY) {
           fs.mkdirSync(path.dirname(abs), { recursive: true });

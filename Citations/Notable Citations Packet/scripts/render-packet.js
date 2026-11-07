@@ -544,16 +544,20 @@ function exportCsv(db) {
     "citing_venue","citing_year","citing_earliest_date","citing_was_preprint","citing_published_date","citing_article_type","citing_url","project","tier",
     "section","page","exhibit_page","quote","use_type","in_original_petition","negative","language","evidence_basis",
     "pdf_file","source_pdf","exhibit_pdf","notes"];
+  // Table `file` has its own columns (§4.4). Writing it with the citation header
+  // produced a CSV where every cell but `folder_uid` and `source_pdf` was blank
+  // and the `file` path — the one thing the export exists to carry, and the thing
+  // that says which storage root a PDF lives in — was missing entirely.
+  const fCols = ["folder_uid","file","source_pdf","role","shows_date","date_basis","cited","bytes"];
   const all = db.prepare(`SELECT * FROM citation ORDER BY COALESCE(n,999), folder_uid`).all();
   const written = [];
-  const write = (name, rows) => {
-    if (!DRY) fs.writeFileSync(path.join(PKT, name), toCsv(cCols, rows), "utf8");
+  const write = (name, rows, cols) => {
+    if (!DRY) fs.writeFileSync(path.join(PKT, name), toCsv(cols, rows), "utf8");
     written.push([name, rows.length]);
   };
-  write("packet.csv", all.filter(r => r.status === "included"));
-  write("screened-out.csv", all.filter(r => r.status !== "included"));
-  const fCols = ["folder_uid","file","source_pdf","role","shows_date","date_basis","cited","bytes"];
-  write("packet-files.csv", db.prepare(`SELECT * FROM file ORDER BY folder_uid, file`).all());
+  write("packet.csv", all.filter(r => r.status === "included"), cCols);
+  write("screened-out.csv", all.filter(r => r.status !== "included"), cCols);
+  write("packet-files.csv", db.prepare(`SELECT * FROM file ORDER BY folder_uid, file`).all(), fCols);
   const total = written.reduce((s, [, n]) => s + n, 0);
   console.log(`CSV: ${written.map(([n, k]) => `${n} (${k})`).join(", ")} | ${total} rows vs ${all.length + db.prepare("SELECT COUNT(*) c FROM file").get().c} table rows`);
 }
