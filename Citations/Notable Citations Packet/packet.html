@@ -1,0 +1,1097 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Notable Citations — Akul Mehta</title>
+<script src="vendor/d3.min.js"></script>
+<style>
+  :root { --ink:#1b1b1b; --muted:#666; --rule:#d8d8d8; --accent:#7a1f1f; --paper:#fff; }
+  * { box-sizing: border-box; }
+  body { margin:0; background:var(--paper); color:var(--ink);
+         font:16px/1.55 "Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif; }
+  main { max-width: 60rem; margin: 0 auto; padding: 2.5rem 1.5rem 6rem; }
+  h1 { font-size:2.1rem; line-height:1.2; margin:.2rem 0 .4rem; }
+  h2 { font-size:1.4rem; margin:2.6rem 0 .6rem; padding-bottom:.3rem; border-bottom:2px solid var(--accent); }
+  h3 { font-size:1.08rem; margin:1.8rem 0 .3rem; }
+  h4 { font-size:.78rem; letter-spacing:.09em; text-transform:uppercase; color:var(--accent); margin:1.4rem 0 .4rem; }
+  h5 { font-size:.95rem; margin:1.1rem 0 .2rem; }
+  p { margin:.4rem 0; }
+  a { color:var(--accent); }
+  code { font-family:"SFMono-Regular",Consolas,monospace; font-size:.85em; background:#f3f3f3; padding:.05em .3em; border-radius:3px; }
+  .title-page { border-bottom:1px solid var(--rule); padding-bottom:1.4rem; }
+  .kicker { font-size:.75rem; letter-spacing:.14em; text-transform:uppercase; color:var(--muted); }
+  .lede { font-size:1.05rem; }
+  .grid3 { display:grid; grid-template-columns:repeat(auto-fit,minmax(15rem,1fr)); gap:1.2rem; margin-top:1rem; }
+  .bar-row { display:grid; grid-template-columns:1fr 5rem 2rem; align-items:center; gap:.4rem; font-size:.82rem; }
+  .bar-track { background:#eee; height:.7rem; border-radius:2px; overflow:hidden; }
+  .bar-fill { display:block; height:100%; background:var(--accent); opacity:.75; }
+  .bar-num { text-align:right; font-variant-numeric:tabular-nums; }
+  .unit { font-size:.75rem; color:var(--muted); }
+  table { border-collapse:collapse; width:100%; font-size:.82rem; }
+  .index th, .index td { border-bottom:1px solid var(--rule); padding:.4rem .35rem; vertical-align:top; text-align:left; }
+  .index thead th { border-bottom:2px solid var(--ink); font-size:.72rem; text-transform:uppercase; letter-spacing:.04em; }
+  .index tr.sub td { background:#fbf9f7; }
+  .index tr.lead td.title { font-weight:600; }
+  .small th, .small td { border-bottom:1px solid var(--rule); padding:.3rem; text-align:left; vertical-align:top; font-size:.8rem; }
+  .uid, .num { font-family:"SFMono-Regular",Consolas,monospace; font-size:.76rem; white-space:nowrap; color:var(--muted); }
+  .tag { font-size:.66rem; text-transform:uppercase; letter-spacing:.05em; background:#efe7e2; color:#5a3a2a; border-radius:3px; padding:.05em .35em; }
+  .same { color:var(--muted); font-style:italic; }
+  .missing { color:#9a6b00; font-size:.78rem; }
+  .note, .trace, .sub { font-size:.78rem; color:var(--muted); }
+  article.citation { border-top:1px solid var(--rule); padding-top:1rem; margin-top:1.6rem; }
+  article.citation:first-of-type { border-top:none; }
+  dl { display:grid; grid-template-columns:13rem 1fr; gap:.2rem .8rem; font-size:.9rem; margin:.3rem 0; }
+  dt { font-weight:600; } dd { margin:0; }
+  blockquote { margin:.4rem 0 .2rem; padding:.5rem .9rem; border-left:3px solid var(--accent);
+               background:#faf7f5; font-style:italic; }
+  .blank { font-size:.85rem; color:#9a6b00; background:#fffaf0; border:1px dashed #e0c98a; padding:.45rem .6rem; border-radius:4px; }
+  .files-list { font-size:.85rem; } .role { color:var(--muted); font-size:.75rem; text-transform:uppercase; letter-spacing:.05em; }
+  #filter { width:100%; padding:.5rem .7rem; font-size:.9rem; border:1px solid var(--rule); border-radius:5px; }
+  @media print {
+    body { font-size:11pt; } main { max-width:none; padding:0; }
+    #filter { display:none; } a { color:inherit; text-decoration:none; }
+    h2 { break-after:avoid; }
+    /*
+     * "break-inside:avoid" on article.citation looked right and printed badly:
+     * most entries are taller than a sheet once the quotation and file list are
+     * included, and when a block cannot fit, Chromium breaks it anyway — after
+     * whatever happens to fit, leaving the remainder alone on a fresh sheet.
+     * Fourteen of the first thirty-five pages held nothing but a file list.
+     *
+     * So avoid breaks on the small things that must not be split (a quotation, a
+     * definition row, a heading and what follows it) and let the entry itself flow.
+     */
+    article.citation { orphans:3; widows:3; }
+    article.citation > h3 { break-after:avoid; }
+    blockquote, .blank, .files-list { break-inside:avoid; }
+    dt, dd { break-inside:avoid; }
+    .title-page { break-after:page; }
+    /* The index is a table; let it repeat its header on every sheet it spans. */
+    thead { display:table-header-group; }
+    tr { break-inside:avoid; }
+  }
+</style>
+</head>
+<body>
+<main>
+<div class="title-page">
+  <p class="kicker">Evidence packet — notable citations</p>
+  <h1>Citations to the applicant's publications</h1>
+  <p class="lede"><strong>Akul Mehta</strong> — prepared for counsel in connection with the
+     response to the Request for Evidence.</p>
+  <p class="note">Generated 2026-11-07 from <code>notable-citations.sqlite</code> in this folder.
+     23 citations · 14 citing articles ·
+     22 PDFs. Independence of each citing paper was established in the
+     Independent Citation Record; this packet does not restate that analysis.</p>
+</div>
+
+<section id="summary">
+  <h2>Summary</h2>
+  <p class="lede">23 citations to the applicant's own publications, from
+     14 distinct citing articles, are documented in this packet. Each is placed at the
+     section of the citing paper where the reference actually appears.</p>
+  <div class="grid3">
+    <div><h3>By tier</h3>
+    <div class="bars">
+      <div class="bar-row"><span class="bar-label">A</span>
+        <span class="bar-track"><span class="bar-fill" style="width:100%"></span></span>
+        <span class="bar-num">20</span></div>
+      <div class="bar-row"><span class="bar-label">B</span>
+        <span class="bar-track"><span class="bar-fill" style="width:10%"></span></span>
+        <span class="bar-num">2</span></div>
+      <div class="bar-row"><span class="bar-label">C</span>
+        <span class="bar-track"><span class="bar-fill" style="width:5%"></span></span>
+        <span class="bar-num">1</span></div>
+    </div>
+    <p class="unit">Tier A: the tool is the method performed, in Materials and Methods.</p></div>
+    <div><h3>By applicant tool</h3>
+    <div class="bars">
+      <div class="bar-row"><span class="bar-label">GLAD</span>
+        <span class="bar-track"><span class="bar-fill" style="width:100%"></span></span>
+        <span class="bar-num">8</span></div>
+      <div class="bar-row"><span class="bar-label">GlycoGlyph</span>
+        <span class="bar-track"><span class="bar-fill" style="width:88%"></span></span>
+        <span class="bar-num">7</span></div>
+      <div class="bar-row"><span class="bar-label">MAWE</span>
+        <span class="bar-track"><span class="bar-fill" style="width:88%"></span></span>
+        <span class="bar-num">7</span></div>
+      <div class="bar-row"><span class="bar-label">(unset)</span>
+        <span class="bar-track"><span class="bar-fill" style="width:13%"></span></span>
+        <span class="bar-num">1</span></div>
+    </div>
+    <p class="unit">One citing article may use more than one of the applicant's tools.</p></div>
+    <div><h3>By research project</h3>
+    <div class="bars">
+      <div class="bar-row"><span class="bar-label">Developing Bioinformatics Tools to Capture and Analyze Glycomics and Glycan Microarray Data</span>
+        <span class="bar-track"><span class="bar-fill" style="width:100%"></span></span>
+        <span class="bar-num">15</span></div>
+      <div class="bar-row"><span class="bar-label">Advancing Glycan Research with Microarray Innovations</span>
+        <span class="bar-track"><span class="bar-fill" style="width:47%"></span></span>
+        <span class="bar-num">7</span></div>
+      <div class="bar-row"><span class="bar-label">(unset)</span>
+        <span class="bar-track"><span class="bar-fill" style="width:7%"></span></span>
+        <span class="bar-num">1</span></div>
+    </div>
+    <p class="unit">Project titles are quoted verbatim from the Research Background Inquiry Form. Which project a given paper belongs to was proposed by the preparer and is not taken from the Form — see the note at each project heading.</p></div>
+  </div>
+  <h3>Screened out</h3>
+  <p>38 candidate citations were examined and are <em>not</em> argued in this
+     packet. They are listed in the appendix with the reason, so the screening is on the record:</p>
+  <ul><li>(unset) — 38</li></ul>
+  <h3>PDFs</h3>
+  <p>23 of the 23 included citations have a PDF of the citing
+     paper in this packet. Open items, including any citation still awaiting a PDF, are listed in
+     <code>PACKET-STATUS.md</code>.</p>
+</section>
+
+<section id="index">
+  <h2>Index of citations</h2>
+  <p><input id="filter" type="search" placeholder="Filter by row_uid, title, senior author or tool" aria-label="Filter index"></p>
+  <table class="index" id="index-table">
+    <thead><tr>
+      <th>#</th><th>row_uid</th><th>Citing paper</th><th>Earliest date of cited paper</th>
+      <th>Citing paper published</th><th>Applicant's tool</th><th>Section &amp; page</th>
+      <th>Senior author</th><th>Article type</th><th>PDF in packet</th>
+    </tr></thead>
+    <tbody>
+      <tr class="lead" data-search="cit-000544 Phylogenetic variations in a novel family of hyperstable apple snail egg proteins: insights into structural stability and functional trends Heras GLAD">
+        <td class="num">1</td>
+        <td class="uid">cit-000544</td>
+        <td class="title"><a href="#c-cit-000544">Phylogenetic variations in a novel family of hyperstable apple snail egg proteins: insights into structural stability and functional trends</a> <span class="tag">2 citations</span></td>
+        <td>2019</td>
+        <td>29 Apr 2023 (bioRxiv preprint); 2024 (journal article, accepted 8 Jul 2024)<br><span class="sub">earliest public: 29 Apr 2023 (preprint)</span></td>
+        <td>GLAD</td>
+        <td>Materials and Methods, p.&nbsp;4</td>
+        <td>Heras</td>
+        <td>article</td>
+        <td class="files"><a href="papers/cit-000544/01-preprint-Heras-2023-04-29.pdf">preprint</a> · <a href="papers/cit-000544/02-webpage-Heras-2023.pdf">webpage</a> · <a href="papers/cit-000544/03-article-Heras-2024.pdf">article</a></td>
+      </tr>
+      <tr class="sub" data-search="cit-000558 Stability and functional evolution of a novel family of hyperstable apple snail egg proteins Heras GLAD">
+        <td class="num"></td>
+        <td class="uid">cit-000558</td>
+        <td class="title"><span class="same">as above</span></td>
+        <td>2019</td>
+        <td>29 Apr 2023 (bioRxiv preprint); 2024 (journal article, accepted 8 Jul 2024)<br><span class="sub">earliest public: 29 Apr 2023 (preprint)</span></td>
+        <td>GLAD</td>
+        <td>Materials and Methods, p.&nbsp;4</td>
+        <td>Heras</td>
+        <td>article</td>
+        <td class="files"><a href="papers/cit-000544/01-preprint-Heras-2023-04-29.pdf">preprint</a> · <a href="papers/cit-000544/02-webpage-Heras-2023.pdf">webpage</a> · <a href="papers/cit-000544/03-article-Heras-2024.pdf">article</a></td>
+      </tr>
+      <tr class="lead" data-search="cit-000621 LeGenD: High-throughput N-glycan profiling using explainable AI and lectin profiling Lewis GlycoGlyph">
+        <td class="num">3</td>
+        <td class="uid">cit-000621</td>
+        <td class="title"><a href="#c-cit-000621">LeGenD: High-throughput N-glycan profiling using explainable AI and lectin profiling</a></td>
+        <td>2020</td>
+        <td>4 Jun 2026<br><span class="sub">earliest public: 30 Mar 2024 (preprint)</span></td>
+        <td>GlycoGlyph</td>
+        <td>Materials and Methods, p.&nbsp;12</td>
+        <td>Lewis</td>
+        <td>article</td>
+        <td class="files"><a href="papers/cit-000621/01-article-Lewis-2026.pdf">article</a></td>
+      </tr>
+      <tr class="lead" data-search="cit-000594 AquIRE reveals the mechanisms of clinically induced RNA damage and the conservation and dynamics of glycoRNAs Knight GlycoGlyph">
+        <td class="num">4</td>
+        <td class="uid">cit-000594</td>
+        <td class="title"><a href="#c-cit-000594">AquIRE reveals the mechanisms of clinically induced RNA damage and the conservation and dynamics of glycoRNAs</a></td>
+        <td>2020</td>
+        <td>2026 (accepted 18 Jan 2026)<br><span class="sub">earliest public: 1 Apr 2025 (preprint)</span></td>
+        <td>GlycoGlyph</td>
+        <td>Materials and Methods, p.&nbsp;5</td>
+        <td>Knight</td>
+        <td>article</td>
+        <td class="files"><a href="papers/cit-000594/01-article-Knight-2026.pdf">article</a></td>
+      </tr>
+      <tr class="lead" data-search="cit-001253 Intelectin-2 is a broad-spectrum antimicrobial lectin Kiessling MAWE">
+        <td class="num">5</td>
+        <td class="uid">cit-001253</td>
+        <td class="title"><a href="#c-cit-001253">Intelectin-2 is a broad-spectrum antimicrobial lectin</a></td>
+        <td>2024</td>
+        <td>2026 (accepted 20 Nov 2025)<br><span class="sub">earliest public: 26 Apr 2025</span></td>
+        <td>MAWE</td>
+        <td>Materials and Methods, p.&nbsp;15</td>
+        <td>Kiessling</td>
+        <td>article</td>
+        <td class="files"><a href="papers/cit-001253/01-article-Kiessling-2026.pdf">article</a></td>
+      </tr>
+      <tr class="lead" data-search="cit-000518 Major human schistosome species express different glycans with immunological and diagnostic implications Hokke GLAD">
+        <td class="num">6</td>
+        <td class="uid">cit-000518</td>
+        <td class="title"><a href="#c-cit-000518">Major human schistosome species express different glycans with immunological and diagnostic implications</a> <span class="tag">2 citations</span></td>
+        <td>2019</td>
+        <td>2026 (accepted 3 Mar 2026)<br><span class="sub">earliest public: 11 Jul 2025</span></td>
+        <td>GLAD</td>
+        <td>Materials and Methods, p.&nbsp;16</td>
+        <td>Hokke</td>
+        <td>article</td>
+        <td class="files"><a href="papers/cit-000518/01-article-Hokke-2026.pdf">article</a></td>
+      </tr>
+      <tr class="sub" data-search="cit-000551 Major human schistosome species express different glycans with immunological and diagnostic implications. Hokke GLAD">
+        <td class="num"></td>
+        <td class="uid">cit-000551</td>
+        <td class="title"><span class="same">as above</span></td>
+        <td>2019</td>
+        <td>2026 (accepted 3 Mar 2026)<br><span class="sub">earliest public: 11 Jul 2025</span></td>
+        <td>GLAD</td>
+        <td>Materials and Methods, p.&nbsp;16</td>
+        <td>Hokke</td>
+        <td>article</td>
+        <td class="files"><a href="papers/cit-000518/01-article-Hokke-2026.pdf">article</a></td>
+      </tr>
+      <tr class="lead" data-search="cit-000521 Enzymatic tailoring of anionic glycans for characterizing lectin and antibody specificities in a microarray format Wilson GLAD">
+        <td class="num">8</td>
+        <td class="uid">cit-000521</td>
+        <td class="title"><a href="#c-cit-000521">Enzymatic tailoring of anionic glycans for characterizing lectin and antibody specificities in a microarray format</a></td>
+        <td>2019</td>
+        <td>5 Nov 2025<br><span class="sub">earliest public: 25 Jul 2025</span></td>
+        <td>GLAD</td>
+        <td>Results / Figures, p.&nbsp;4</td>
+        <td>Wilson</td>
+        <td>article</td>
+        <td class="files"><a href="papers/cit-000521/01-article-Wilson-2025.pdf">article</a></td>
+      </tr>
+      <tr class="lead" data-search="cit-000629 Glycan-reactive antibodies isolated from human HIV-1 vaccine trial participants show broad pathogen cross-reactivity Georgiev GlycoGlyph">
+        <td class="num">9</td>
+        <td class="uid">cit-000629</td>
+        <td class="title"><a href="#c-cit-000629">Glycan-reactive antibodies isolated from human HIV-1 vaccine trial participants show broad pathogen cross-reactivity</a> <span class="tag">2 citations</span></td>
+        <td>2020</td>
+        <td>10 Nov 2025<br><span class="sub">earliest public: 31 Jul 2025</span></td>
+        <td>GlycoGlyph</td>
+        <td>Materials and Methods, p.&nbsp;20</td>
+        <td>Georgiev</td>
+        <td>article</td>
+        <td class="files"><a href="papers/cit-000629/01-article-Georgiev-2025.pdf">article</a></td>
+      </tr>
+      <tr class="sub" data-search="cit-001261 Glycan-reactive antibodies isolated from human HIV-1 vaccine trial participants show broad pathogen cross-reactivity Georgiev MAWE">
+        <td class="num"></td>
+        <td class="uid">cit-001261</td>
+        <td class="title"><span class="same">as above</span></td>
+        <td>2024</td>
+        <td>10 Nov 2025<br><span class="sub">earliest public: 31 Jul 2025</span></td>
+        <td>MAWE</td>
+        <td>Materials and Methods, p.&nbsp;20</td>
+        <td>Georgiev</td>
+        <td>article</td>
+        <td class="files"><a href="papers/cit-000629/01-article-Georgiev-2025.pdf">article</a></td>
+      </tr>
+      <tr class="lead" data-search="cit-000619 Structural basis of secreted acid phosphatase polymerization in the Leishmania parasite Grossman-Haham GlycoGlyph">
+        <td class="num">11</td>
+        <td class="uid">cit-000619</td>
+        <td class="title"><a href="#c-cit-000619">Structural basis of secreted acid phosphatase polymerization in the Leishmania parasite</a></td>
+        <td>2020</td>
+        <td>2026 (accepted 13 Apr 2026)<br><span class="sub">earliest public: 23 Nov 2025</span></td>
+        <td>GlycoGlyph</td>
+        <td>Materials and Methods, p.&nbsp;14</td>
+        <td>Grossman-Haham</td>
+        <td>article</td>
+        <td class="files"><a href="papers/cit-000619/01-article-GrossmanHaham-2026.pdf">article</a></td>
+      </tr>
+      <tr class="lead" data-search="cit-000542 Comparative phenotyping of surface markers and glycans in murine and human platelet-derived extracellular vesicles van der Wal GLAD">
+        <td class="num">12</td>
+        <td class="uid">cit-000542</td>
+        <td class="title"><a href="#c-cit-000542">Comparative phenotyping of surface markers and glycans in murine and human platelet-derived extracellular vesicles</a></td>
+        <td>2019</td>
+        <td>2026 (accepted 13 Feb 2026)<br><span class="sub">earliest public: 3 Dec 2025</span></td>
+        <td>GLAD</td>
+        <td>Materials and Methods, p.&nbsp;5</td>
+        <td>van der Wal</td>
+        <td>article</td>
+        <td class="files"><a href="papers/cit-000542/01-article-VanDerWal-2026.pdf">article</a></td>
+      </tr>
+      <tr class="lead" data-search="cit-000602 Diminished sialoside binding in novel H5N1 influenza hemagglutinin variants identified in a human patient Subramaniam GlycoGlyph">
+        <td class="num">13</td>
+        <td class="uid">cit-000602</td>
+        <td class="title"><a href="#c-cit-000602">Diminished sialoside binding in novel H5N1 influenza hemagglutinin variants identified in a human patient</a></td>
+        <td>2020</td>
+        <td>2026 (accepted 1 Sep 2026)<br><span class="sub">earliest public: 19 Jan 2026</span></td>
+        <td>GlycoGlyph</td>
+        <td>Materials and Methods, p.&nbsp;11</td>
+        <td>Subramaniam</td>
+        <td>article</td>
+        <td class="files"><a href="papers/cit-000602/01-article-Subramaniam-2026.pdf">article</a></td>
+      </tr>
+      <tr class="lead" data-search="cit-000516 A Zebrafish Galectin-1 Isoform Is Expressed in Skin and Gills and Binds to Bacteria, Bacterial Adhesin Receptors, and Epidermal Mucus Glycans Vasta GLAD">
+        <td class="num">14</td>
+        <td class="uid">cit-000516</td>
+        <td class="title"><a href="#c-cit-000516">A Zebrafish Galectin-1 Isoform Is Expressed in Skin and Gills and Binds to Bacteria, Bacterial Adhesin Receptors, and Epidermal Mucus Glycans</a> <span class="tag">4 citations</span></td>
+        <td>2019</td>
+        <td>25 Apr 2026<br><span class="sub">earliest public: 31 Jan 2026</span></td>
+        <td>GLAD</td>
+        <td>Materials and Methods, p.&nbsp;21</td>
+        <td>Vasta</td>
+        <td>article</td>
+        <td class="files"><a href="papers/cit-000516/01-article-Vasta-2026.pdf">article</a></td>
+      </tr>
+      <tr class="sub" data-search="cit-000603 A Zebrafish Galectin-1 Isoform Is Expressed in Skin and Gills and Binds to Bacteria, Bacterial Adhesin Receptors, and Epidermal Mucus Glycans Vasta GlycoGlyph">
+        <td class="num"></td>
+        <td class="uid">cit-000603</td>
+        <td class="title"><span class="same">as above</span></td>
+        <td>2020</td>
+        <td>25 Apr 2026<br><span class="sub">earliest public: 31 Jan 2026</span></td>
+        <td>GlycoGlyph</td>
+        <td>Materials and Methods, p.&nbsp;21</td>
+        <td>Vasta</td>
+        <td>article</td>
+        <td class="files"><a href="papers/cit-000516/01-article-Vasta-2026.pdf">article</a></td>
+      </tr>
+      <tr class="sub" data-search="cit-000976 A Zebrafish Galectin-1 Isoform Is Expressed in Skin and Gills and Binds to Bacteria, Bacterial Adhesin Receptors, and Epidermal Mucus Glycans Vasta MAWE">
+        <td class="num"></td>
+        <td class="uid">cit-000976</td>
+        <td class="title"><span class="same">as above</span></td>
+        <td>2024</td>
+        <td>25 Apr 2026<br><span class="sub">earliest public: 31 Jan 2026</span></td>
+        <td>MAWE</td>
+        <td>Materials and Methods, p.&nbsp;21</td>
+        <td>Vasta</td>
+        <td>article</td>
+        <td class="files"><a href="papers/cit-000516/01-article-Vasta-2026.pdf">article</a></td>
+      </tr>
+      <tr class="sub" data-search="cit-001252 A Zebrafish Galectin-1 Isoform Is Expressed in Skin and Gills and Binds to Bacteria, Bacterial Adhesin Receptors, and Epidermal Mucus Glycans Vasta MAWE">
+        <td class="num"></td>
+        <td class="uid">cit-001252</td>
+        <td class="title"><span class="same">as above</span></td>
+        <td>2024</td>
+        <td>25 Apr 2026<br><span class="sub">earliest public: 31 Jan 2026</span></td>
+        <td>MAWE</td>
+        <td>Materials and Methods, p.&nbsp;21</td>
+        <td>Vasta</td>
+        <td>article</td>
+        <td class="files"><a href="papers/cit-000516/01-article-Vasta-2026.pdf">article</a></td>
+      </tr>
+      <tr class="lead" data-search="cit-000613 Transcriptome, glycome, and mucinome analysis reveal zinc is essential for the composition of mucus in the human goblet cell model HT-29-MTX Maares GlycoGlyph">
+        <td class="num">18</td>
+        <td class="uid">cit-000613</td>
+        <td class="title"><a href="#c-cit-000613">Transcriptome, glycome, and mucinome analysis reveal zinc is essential for the composition of mucus in the human goblet cell model HT-29-MTX</a></td>
+        <td>2020</td>
+        <td>2026 (accepted 6 Aug 2026)<br><span class="sub">earliest public: 30 Apr 2026</span></td>
+        <td>GlycoGlyph</td>
+        <td>Results / Figures, p.&nbsp;4</td>
+        <td>Maares</td>
+        <td>article</td>
+        <td class="files"><a href="papers/cit-000613/01-article-Maares-2026.pdf">article</a></td>
+      </tr>
+      <tr class="lead" data-search="cit-001257 Evaluating the role of non-HIV antigens in the initiation of QA013. 2 HIV bnAb lineage Overbaugh MAWE">
+        <td class="num">19</td>
+        <td class="uid">cit-001257</td>
+        <td class="title"><a href="#c-cit-001257">Evaluating the role of non-HIV antigens in the initiation of QA013. 2 HIV bnAb lineage</a></td>
+        <td>2024</td>
+        <td>2026 (accepted 5 Oct 2026; Article in Press)<br><span class="sub">earliest public: 19 May 2026</span></td>
+        <td>MAWE</td>
+        <td>Materials and Methods, p.&nbsp;10</td>
+        <td>Overbaugh</td>
+        <td>article</td>
+        <td class="files"><a href="papers/cit-001257/01-article-Overbaugh-2026.pdf">article</a></td>
+      </tr>
+      <tr class="lead" data-search="cit-000416 Glycan-mediated interactions of infectious hypodermal and hematopoietic necrosis virus (IHHNV) with host tissues in Pacific whiteleg shrimp (Penaeus vannamei) Guérardel null">
+        <td class="num">20</td>
+        <td class="uid">cit-000416</td>
+        <td class="title"><a href="#c-cit-000416">Glycan-mediated interactions of infectious hypodermal and hematopoietic necrosis virus (IHHNV) with host tissues in Pacific whiteleg shrimp (Penaeus vannamei)</a> <span class="tag">4 citations</span></td>
+        <td>2021</td>
+        <td>2026 (advance article; exact date not in the PDF)<br><span class="sub">earliest public: Not shown in PDF</span></td>
+        <td>—</td>
+        <td>Discussion, p.&nbsp;19</td>
+        <td>Guérardel</td>
+        <td>article</td>
+        <td class="files"><a href="papers/cit-000416/01-article-Guerardel-2026.pdf">article</a></td>
+      </tr>
+      <tr class="sub" data-search="cit-000540 Glycan-mediated interactions of infectious hypodermal and hematopoietic necrosis virus (IHHNV) with host tissues in Pacific whiteleg shrimp (Penaeus vannamei) Guérardel GLAD">
+        <td class="num"></td>
+        <td class="uid">cit-000540</td>
+        <td class="title"><span class="same">as above</span></td>
+        <td>2019</td>
+        <td>2026 (advance article; exact date not in the PDF)<br><span class="sub">earliest public: Not shown in PDF</span></td>
+        <td>GLAD</td>
+        <td>Materials and Methods, p.&nbsp;30</td>
+        <td>Guérardel</td>
+        <td>article</td>
+        <td class="files"><a href="papers/cit-000416/01-article-Guerardel-2026.pdf">article</a></td>
+      </tr>
+      <tr class="sub" data-search="cit-000987 Glycan-mediated interactions of infectious hypodermal and hematopoietic necrosis virus (IHHNV) with host tissues in Pacific whiteleg shrimp (Penaeus vannamei) Guérardel MAWE">
+        <td class="num"></td>
+        <td class="uid">cit-000987</td>
+        <td class="title"><span class="same">as above</span></td>
+        <td>2024</td>
+        <td>2026 (advance article; exact date not in the PDF)<br><span class="sub">earliest public: Not shown in PDF</span></td>
+        <td>MAWE</td>
+        <td>Materials and Methods, p.&nbsp;29</td>
+        <td>Guérardel</td>
+        <td>article</td>
+        <td class="files"><a href="papers/cit-000416/01-article-Guerardel-2026.pdf">article</a></td>
+      </tr>
+      <tr class="sub" data-search="cit-001259 Glycan-mediated interactions of infectious hypodermal and hematopoietic necrosis virus (IHHNV) with host tissues in Pacific whiteleg shrimp (Penaeus vannamei) Guérardel MAWE">
+        <td class="num"></td>
+        <td class="uid">cit-001259</td>
+        <td class="title"><span class="same">as above</span></td>
+        <td>2024</td>
+        <td>2026 (advance article; exact date not in the PDF)<br><span class="sub">earliest public: Not shown in PDF</span></td>
+        <td>MAWE</td>
+        <td>Materials and Methods, p.&nbsp;30</td>
+        <td>Guérardel</td>
+        <td>article</td>
+        <td class="files"><a href="papers/cit-000416/01-article-Guerardel-2026.pdf">article</a></td>
+      </tr></tbody>
+  </table>
+  <p class="note">One numbered row is one citation. Where a single citing article cites more than
+     one of the applicant's papers, it is numbered once and the additional citations are listed
+     beneath it as “as above”, each with its own <code>row_uid</code>.</p>
+</section>
+
+<p class="blank" id="project-note">The project titles below are quoted verbatim from the Research
+Background Inquiry Form. <strong>The grouping of individual papers under those titles was proposed
+by the preparer</strong> — the Form does not list which publication belongs to which project — and
+should be confirmed or corrected by the applicant before the packet is relied on.</p>
+
+<section class="project" id="project-2">
+  <h2>Project 2 — Developing Bioinformatics Tools to Capture and Analyze Glycomics and Glycan Microarray Data</h2>
+  <p class="projcount">11 citing article(s), 17 citation(s).</p>
+  
+<article class="citation" id="c-cit-000544">
+  <h3>Phylogenetic variations in a novel family of hyperstable apple snail egg proteins: insights into structural stability and functional trends</h3>
+  <p class="byline">Maria Y Pasquevich, Marcos S Dreon, Maria E Diupotex-Chong, Horacio Heras<br>
+     <span class="venue">, 2024</span>
+      · <a href="https://journals.biologists.com/jeb/article-abstract/227/15/jeb247277/361643">journals.biologists.com</a></p>
+
+  <h4>Section I — Background</h4>
+  <dl>
+    <dt>Cited Paper(s)</dt>
+    <dd>GLAD: GLycan Array Dashboard, a visual analytics tool for glycan microarrays
+        <br><span class="sub">2019</span></dd>
+    <dt>Additional citations from this citing paper</dt>
+    <dd><code>cit-000558</code> — GLAD: GLycan Array Dashboard, a visual analytics tool for glycan microarrays</dd>
+    <dt>Citing Paper</dt>
+    <dd>Phylogenetic variations in a novel family of hyperstable apple snail egg proteins: insights into structural stability and functional trends <span class="sub">(article)</span>
+        <br><span class="sub">Earliest public date: 29 Apr 2023 (preprint) (preprint)</span></dd>
+    <dt>Project Number</dt>
+    <dd>2 — Developing Bioinformatics Tools to Capture and Analyze Glycomics and Glycan Microarray Data</dd>
+    <dt>Citing Authors' Institutions</dt>
+    <dd><span class="blank">Not recorded — confirm from the PDF's affiliation block.</span></dd>
+    <dt>Citing Article Type</dt>
+    <dd>article</dd>
+    <dt>Where the citation appears</dt>
+    <dd>Materials and Methods, page 4 — Tier A — the tool is used in the Methods as the method performed</dd>
+  </dl>
+
+  <h4>Section II — Overview of use</h4>
+  <div class="quote"><blockquote>&ldquo;The results of glycan specificity for PpaPV1 were compared with those of PsSC (Ituarte et al., 2018) and PdPV1 (Brola et al., 2020) using the Glycan Array Dashboard (glycotoolkit.com/GLAD/) (Mehta and Cummings, 2019)&rdquo;</blockquote><p class="cite-page">Materials and Methods, p. 4</p></div>
+
+  
+  <h5>Objectives</h5>
+  <p class="blank">To be written by the applicant. 3–4 sentences on what the citing authors set out to do.</p>
+  <h5>Importance to Field</h5>
+  <p class="blank">To be written by the applicant. 2–3 sentences on why that mattered.</p>
+  <h5>How and Why Your Work Was Used</h5>
+  <p class="blank">To be written by the applicant. 4–5 sentences on the role the applicant's tool played.</p>
+  <h5>Findings / Conclusions / Recommendation</h5>
+  <p class="blank">To be written by the applicant. 4–5 sentences on what they concluded.</p>
+
+  <h4>Files</h4>
+  <ul class="files-list"><li><a href="papers/cit-000544/01-preprint-Heras-2023-04-29.pdf">01-preprint-Heras-2023-04-29.pdf</a> <span class="role">preprint</span> — dated 2023-04-29 (Citation-summary.docx (earliest-date line))</li><li><a href="papers/cit-000544/02-webpage-Heras-2023.pdf">02-webpage-Heras-2023.pdf</a> <span class="role">webpage</span> — dated 2023-04-29 (bioRxiv page printed in this PDF: &quot;Posted April 29, 2023.&quot;)</li><li><a href="papers/cit-000544/03-article-Heras-2024.pdf">03-article-Heras-2024.pdf</a> <span class="role">article</span> — dated 2024-01-18 (Article page 1 printed in this PDF: &quot;Received 18 January 2024; Accepted 8 July 2024&quot; (the submission date, which is the earliest journal-side date; publication followed the 25 Apr 2024 filing))</li></ul>
+  <p class="trace"><code>cit-000544</code> · additional rows cit-000558
+      · Scholar exhibit <em>glad-glycan-array-dashboard-a-visual-analytics-tool-for-glyc-citing-2026-11-01.pdf</em> (Independent Citation Record, not enclosed here)</p>
+</article>
+<article class="citation" id="c-cit-000621">
+  <h3>LeGenD: High-throughput N-glycan profiling using explainable AI and lectin profiling</h3>
+  <p class="byline">Haining Li, Angelo G Peralta, Sanne Schoffelen, Anders Holmgaard Hansen, Johnny Arnsdorf, Song-Min Schinn, Jonathan Skidmore, Biswa Choudhury, Frances Rocamora, Mousumi Paulchakrabarti<br>
+     <span class="venue">Journal of Biological Chemistry, 2026</span>
+      · <a href="https://www.jbc.org/article/S0021-9258(26)02106-X/fulltext">www.jbc.org</a></p>
+
+  <h4>Section I — Background</h4>
+  <dl>
+    <dt>Cited Paper(s)</dt>
+    <dd>GlycoGlyph: a glycan visualizing, drawing and naming application
+        <br><span class="sub">2020</span></dd>
+    <dt>Additional citations from this citing paper</dt>
+    <dd>none</dd>
+    <dt>Citing Paper</dt>
+    <dd>LeGenD: High-throughput N-glycan profiling using explainable AI and lectin profiling <span class="sub">(article)</span>
+        <br><span class="sub">Earliest public date: 30 Mar 2024 (preprint) (preprint)</span></dd>
+    <dt>Project Number</dt>
+    <dd>2 — Developing Bioinformatics Tools to Capture and Analyze Glycomics and Glycan Microarray Data</dd>
+    <dt>Citing Authors' Institutions</dt>
+    <dd><span class="blank">Not recorded — confirm from the PDF's affiliation block.</span></dd>
+    <dt>Citing Article Type</dt>
+    <dd>article</dd>
+    <dt>Where the citation appears</dt>
+    <dd>Materials and Methods, page 12 — Tier A — the tool is used in the Methods as the method performed</dd>
+  </dl>
+
+  <h4>Section II — Overview of use</h4>
+  <div class="quote"><blockquote>&ldquo;. The glycan structures were drawn using GlycoGlyph (112) (https://glycotoolkit.com/Tools/GlycoGlyph/)&rdquo;</blockquote><p class="cite-page">Materials and Methods, p. 12</p></div>
+
+  
+  <h5>Objectives</h5>
+  <p class="blank">To be written by the applicant. 3–4 sentences on what the citing authors set out to do.</p>
+  <h5>Importance to Field</h5>
+  <p class="blank">To be written by the applicant. 2–3 sentences on why that mattered.</p>
+  <h5>How and Why Your Work Was Used</h5>
+  <p class="blank">To be written by the applicant. 4–5 sentences on the role the applicant's tool played.</p>
+  <h5>Findings / Conclusions / Recommendation</h5>
+  <p class="blank">To be written by the applicant. 4–5 sentences on what they concluded.</p>
+
+  <h4>Files</h4>
+  <ul class="files-list"><li><a href="papers/cit-000621/01-article-Lewis-2026.pdf">01-article-Lewis-2026.pdf</a> <span class="role">article</span></li></ul>
+  <p class="trace"><code>cit-000621</code>
+      · Scholar exhibit <em>glycoglyph-a-glycan-visualizing-drawing-and-naming-applicati-citing-2026-11-01.pdf</em> (Independent Citation Record, not enclosed here)</p>
+</article>
+<article class="citation" id="c-cit-000594">
+  <h3>AquIRE reveals the mechanisms of clinically induced RNA damage and the conservation and dynamics of glycoRNAs</h3>
+  <p class="byline">Zijian Zhang, Zornitsa Vasileva Kotopanova, Kexin Dang, Xiangxu Kong, Nicole Simms, Tin Wai Yuen, Lan Lam, Lauren Forbes Beadle, Emma Hilton, Taqdees Qureshi<br>
+     <span class="venue">Nucleic Acids Research, 2026</span>
+      · <a href="https://academic.oup.com/nar/article-abstract/54/4/gkag080/8462606">academic.oup.com</a></p>
+
+  <h4>Section I — Background</h4>
+  <dl>
+    <dt>Cited Paper(s)</dt>
+    <dd>GlycoGlyph: a glycan visualizing, drawing and naming application
+        <br><span class="sub">2020</span></dd>
+    <dt>Additional citations from this citing paper</dt>
+    <dd>none</dd>
+    <dt>Citing Paper</dt>
+    <dd>AquIRE reveals the mechanisms of clinically induced RNA damage and the conservation and dynamics of glycoRNAs <span class="sub">(article)</span>
+        <br><span class="sub">Earliest public date: 1 Apr 2025 (preprint) (preprint)</span></dd>
+    <dt>Project Number</dt>
+    <dd>2 — Developing Bioinformatics Tools to Capture and Analyze Glycomics and Glycan Microarray Data</dd>
+    <dt>Citing Authors' Institutions</dt>
+    <dd><span class="blank">Not recorded — confirm from the PDF's affiliation block.</span></dd>
+    <dt>Citing Article Type</dt>
+    <dd>article</dd>
+    <dt>Where the citation appears</dt>
+    <dd>Materials and Methods, page 5 — Tier A — the tool is used in the Methods as the method performed</dd>
+  </dl>
+
+  <h4>Section II — Overview of use</h4>
+  <div class="quote"><blockquote>&ldquo;Glycans were drawn using GlycoGlyph.&rdquo;</blockquote><p class="cite-page">Materials and Methods, p. 5</p></div>
+
+  
+  <h5>Objectives</h5>
+  <p class="blank">To be written by the applicant. 3–4 sentences on what the citing authors set out to do.</p>
+  <h5>Importance to Field</h5>
+  <p class="blank">To be written by the applicant. 2–3 sentences on why that mattered.</p>
+  <h5>How and Why Your Work Was Used</h5>
+  <p class="blank">To be written by the applicant. 4–5 sentences on the role the applicant's tool played.</p>
+  <h5>Findings / Conclusions / Recommendation</h5>
+  <p class="blank">To be written by the applicant. 4–5 sentences on what they concluded.</p>
+
+  <h4>Files</h4>
+  <ul class="files-list"><li><a href="papers/cit-000594/01-article-Knight-2026.pdf">01-article-Knight-2026.pdf</a> <span class="role">article</span></li></ul>
+  <p class="trace"><code>cit-000594</code>
+      · Scholar exhibit <em>glycoglyph-a-glycan-visualizing-drawing-and-naming-applicati-citing-2026-11-01.pdf</em> (Independent Citation Record, not enclosed here)</p>
+</article>
+<article class="citation" id="c-cit-000518">
+  <h3>Major human schistosome species express different glycans with immunological and diagnostic implications</h3>
+  <p class="byline">Laudine MC Petralia, Angela van Diepen, Tao Zhang, Anna O Kildemoes, Tom Veldhuizen, D Linh Nguyen, Cornelis H Smit, Peter G Kremsner, Manfred Wuhrer, Jeremy M Foster<br>
+     <span class="venue">Nature Communications, 2026</span>
+      · <a href="https://www.nature.com/articles/s41467-026-70850-0">www.nature.com</a></p>
+
+  <h4>Section I — Background</h4>
+  <dl>
+    <dt>Cited Paper(s)</dt>
+    <dd>GLAD: GLycan Array Dashboard, a visual analytics tool for glycan microarrays
+        <br><span class="sub">2019</span></dd>
+    <dt>Additional citations from this citing paper</dt>
+    <dd><code>cit-000551</code> — GLAD: GLycan Array Dashboard, a visual analytics tool for glycan microarrays</dd>
+    <dt>Citing Paper</dt>
+    <dd>Major human schistosome species express different glycans with immunological and diagnostic implications <span class="sub">(article)</span>
+        <br><span class="sub">Earliest public date: 11 Jul 2025</span></dd>
+    <dt>Project Number</dt>
+    <dd>2 — Developing Bioinformatics Tools to Capture and Analyze Glycomics and Glycan Microarray Data</dd>
+    <dt>Citing Authors' Institutions</dt>
+    <dd><span class="blank">Not recorded — confirm from the PDF's affiliation block.</span></dd>
+    <dt>Citing Article Type</dt>
+    <dd>article</dd>
+    <dt>Where the citation appears</dt>
+    <dd>Materials and Methods, page 16 — Tier A — the tool is used in the Methods as the method performed</dd>
+  </dl>
+
+  <h4>Section II — Overview of use</h4>
+  <div class="quote"><blockquote>&ldquo;. Finally, GLycan Array Dashboard (GLAD) 93&rdquo;</blockquote><p class="cite-page">Materials and Methods, p. 16</p></div>
+
+  
+  <h5>Objectives</h5>
+  <p class="blank">To be written by the applicant. 3–4 sentences on what the citing authors set out to do.</p>
+  <h5>Importance to Field</h5>
+  <p class="blank">To be written by the applicant. 2–3 sentences on why that mattered.</p>
+  <h5>How and Why Your Work Was Used</h5>
+  <p class="blank">To be written by the applicant. 4–5 sentences on the role the applicant's tool played.</p>
+  <h5>Findings / Conclusions / Recommendation</h5>
+  <p class="blank">To be written by the applicant. 4–5 sentences on what they concluded.</p>
+
+  <h4>Files</h4>
+  <ul class="files-list"><li><a href="papers/cit-000518/01-article-Hokke-2026.pdf">01-article-Hokke-2026.pdf</a> <span class="role">article</span></li></ul>
+  <p class="trace"><code>cit-000518</code> · additional rows cit-000551
+      · Scholar exhibit <em>glad-glycan-array-dashboard-a-visual-analytics-tool-for-glyc-citing-2026-11-01.pdf</em> (Independent Citation Record, not enclosed here)</p>
+</article>
+<article class="citation" id="c-cit-000521">
+  <h3>Enzymatic tailoring of anionic glycans for characterizing lectin and antibody specificities in a microarray format</h3>
+  <p class="byline">Nuschy L, Wilson IBH<br>
+     <span class="venue">Journal of Biological Chemistry, 2025</span>
+      · <a href="https://www.jbc.org/article/S0021-9258(25)02767-X/fulltext">www.jbc.org</a></p>
+
+  <h4>Section I — Background</h4>
+  <dl>
+    <dt>Cited Paper(s)</dt>
+    <dd>GLAD: GLycan Array Dashboard, a visual analytics tool for glycan microarrays
+        <br><span class="sub">2019</span></dd>
+    <dt>Additional citations from this citing paper</dt>
+    <dd>none</dd>
+    <dt>Citing Paper</dt>
+    <dd>Enzymatic tailoring of anionic glycans for characterizing lectin and antibody specificities in a microarray format <span class="sub">(article)</span>
+        <br><span class="sub">Earliest public date: 25 Jul 2025</span></dd>
+    <dt>Project Number</dt>
+    <dd>2 — Developing Bioinformatics Tools to Capture and Analyze Glycomics and Glycan Microarray Data</dd>
+    <dt>Citing Authors' Institutions</dt>
+    <dd><span class="blank">Not recorded — confirm from the PDF's affiliation block.</span></dd>
+    <dt>Citing Article Type</dt>
+    <dd>article</dd>
+    <dt>Where the citation appears</dt>
+    <dd>Results / Figures, page 4 — Tier B — the tool is used in the Results or Figures</dd>
+  </dl>
+
+  <h4>Section II — Overview of use</h4>
+  <div class="quote"><blockquote>&ldquo;The heat map was generated using the GLAD tool and represents the relative fluorescent units (RFU) normalized to 70,000 as the maximum value&rdquo;</blockquote><p class="cite-page">Results / Figures, p. 4</p></div>
+
+  
+  <h5>Objectives</h5>
+  <p class="blank">To be written by the applicant. 3–4 sentences on what the citing authors set out to do.</p>
+  <h5>Importance to Field</h5>
+  <p class="blank">To be written by the applicant. 2–3 sentences on why that mattered.</p>
+  <h5>How and Why Your Work Was Used</h5>
+  <p class="blank">To be written by the applicant. 4–5 sentences on the role the applicant's tool played.</p>
+  <h5>Findings / Conclusions / Recommendation</h5>
+  <p class="blank">To be written by the applicant. 4–5 sentences on what they concluded.</p>
+
+  <h4>Files</h4>
+  <ul class="files-list"><li><a href="papers/cit-000521/01-article-Wilson-2025.pdf">01-article-Wilson-2025.pdf</a> <span class="role">article</span></li></ul>
+  <p class="trace"><code>cit-000521</code>
+      · Scholar exhibit <em>glad-glycan-array-dashboard-a-visual-analytics-tool-for-glyc-citing-2026-11-01.pdf</em> (Independent Citation Record, not enclosed here)</p>
+</article>
+<article class="citation" id="c-cit-000629">
+  <h3>Glycan-reactive antibodies isolated from human HIV-1 vaccine trial participants show broad pathogen cross-reactivity</h3>
+  <p class="byline">Parker J. Jamieson, Xiaoying Shen, Alexandra A. Abu-Shmais, Perry T. Wasdin, Katarzyna Janowska, Robert J. Edwards, Garrett Scapellato, Maurice Bukenya, Lindsay E. Bass, Simone I. Richardson, Nelia P. Manamela, Shuying Liu, Maggie Barr, Lindsey Adams, Cristina Paola Velez-Castro, Caitlin McCarthy, Caroline A. Alexander, Rebecca A. Gillespie, Jessica Mimms, Naveenchandra Suryadevara, Ty A. Sornberger, Seth J. Zost, Robert Parks, Shelby Flaherty, Alexis K. Janke, Bethany N. Howard, Yukthi P. Suresh, Ruth M. Ruprecht, James E. Crowe, Robert H. Carnahan, Justin R. Bailey, Masaru Kanekiyo, Daniel Lingwood, Barton F. Haynes, Penny L. Moore, Rachel H. Bonami, Georgia D. Tomaras, Priyamvada Archarya, David C. Montefiori, Spyros A. Kalams, Shan Lu, Ivelin S. Georgiev<br>
+     <span class="venue">, 2025</span>
+      · <a href="https://journals.asm.org/doi/abs/10.1128/jvi.01256-25">journals.asm.org</a></p>
+
+  <h4>Section I — Background</h4>
+  <dl>
+    <dt>Cited Paper(s)</dt>
+    <dd>GlycoGlyph: a glycan visualizing, drawing and naming application
+        <br><span class="sub">2020</span></dd>
+    <dt>Additional citations from this citing paper</dt>
+    <dd><code>cit-001261</code> — Reusable glycan microarrays using a microwave assisted wet-erase (MAWE) process</dd>
+    <dt>Citing Paper</dt>
+    <dd>Glycan-reactive antibodies isolated from human HIV-1 vaccine trial participants show broad pathogen cross-reactivity <span class="sub">(article)</span>
+        <br><span class="sub">Earliest public date: 31 Jul 2025</span></dd>
+    <dt>Project Number</dt>
+    <dd>2 — Developing Bioinformatics Tools to Capture and Analyze Glycomics and Glycan Microarray Data</dd>
+    <dt>Citing Authors' Institutions</dt>
+    <dd><span class="blank">Not recorded — confirm from the PDF's affiliation block.</span></dd>
+    <dt>Citing Article Type</dt>
+    <dd>article</dd>
+    <dt>Where the citation appears</dt>
+    <dd>Materials and Methods, page 20 — Tier A — the tool is used in the Methods as the method performed</dd>
+  </dl>
+
+  <h4>Section II — Overview of use</h4>
+  <div class="quote"><blockquote>&ldquo;Figures of glycan structures were gathered using GlycoGlyph&rdquo;</blockquote><p class="cite-page">Materials and Methods, p. 20</p></div>
+
+  
+  <h5>Objectives</h5>
+  <p class="blank">To be written by the applicant. 3–4 sentences on what the citing authors set out to do.</p>
+  <h5>Importance to Field</h5>
+  <p class="blank">To be written by the applicant. 2–3 sentences on why that mattered.</p>
+  <h5>How and Why Your Work Was Used</h5>
+  <p class="blank">To be written by the applicant. 4–5 sentences on the role the applicant's tool played.</p>
+  <h5>Findings / Conclusions / Recommendation</h5>
+  <p class="blank">To be written by the applicant. 4–5 sentences on what they concluded.</p>
+
+  <h4>Files</h4>
+  <ul class="files-list"><li><a href="papers/cit-000629/01-article-Georgiev-2025.pdf">01-article-Georgiev-2025.pdf</a> <span class="role">article</span></li></ul>
+  <p class="trace"><code>cit-000629</code> · additional rows cit-001261
+      · Scholar exhibit <em>glycoglyph-a-glycan-visualizing-drawing-and-naming-applicati-citing-2026-11-01.pdf</em> (Independent Citation Record, not enclosed here)</p>
+</article>
+<article class="citation" id="c-cit-000619">
+  <h3>Structural basis of secreted acid phosphatase polymerization in the Leishmania parasite</h3>
+  <p class="byline">Priyanka Bose, Irit Dahan, Alexander Upcher, Ran Zalk, Iris Grossman-Haham<br>
+     <span class="venue">Protein Science, 2026</span>
+      · <a href="https://onlinelibrary.wiley.com/doi/abs/10.1002/pro.70591">onlinelibrary.wiley.com</a></p>
+
+  <h4>Section I — Background</h4>
+  <dl>
+    <dt>Cited Paper(s)</dt>
+    <dd>GlycoGlyph: a glycan visualizing, drawing and naming application
+        <br><span class="sub">2020</span></dd>
+    <dt>Additional citations from this citing paper</dt>
+    <dd>none</dd>
+    <dt>Citing Paper</dt>
+    <dd>Structural basis of secreted acid phosphatase polymerization in the Leishmania parasite <span class="sub">(article)</span>
+        <br><span class="sub">Earliest public date: 23 Nov 2025</span></dd>
+    <dt>Project Number</dt>
+    <dd>2 — Developing Bioinformatics Tools to Capture and Analyze Glycomics and Glycan Microarray Data</dd>
+    <dt>Citing Authors' Institutions</dt>
+    <dd><span class="blank">Not recorded — confirm from the PDF's affiliation block.</span></dd>
+    <dt>Citing Article Type</dt>
+    <dd>article</dd>
+    <dt>Where the citation appears</dt>
+    <dd>Materials and Methods, page 14 — Tier A — the tool is used in the Methods as the method performed</dd>
+  </dl>
+
+  <h4>Section II — Overview of use</h4>
+  <div class="quote"><blockquote>&ldquo;ing two N-acetylglucosamine (GlcNac) units and a mannose (Man) was generated in GlycoGlyph (Mehta &amp; Cummings, 2020).&rdquo;</blockquote><p class="cite-page">Materials and Methods, p. 14</p></div>
+
+  
+  <h5>Objectives</h5>
+  <p class="blank">To be written by the applicant. 3–4 sentences on what the citing authors set out to do.</p>
+  <h5>Importance to Field</h5>
+  <p class="blank">To be written by the applicant. 2–3 sentences on why that mattered.</p>
+  <h5>How and Why Your Work Was Used</h5>
+  <p class="blank">To be written by the applicant. 4–5 sentences on the role the applicant's tool played.</p>
+  <h5>Findings / Conclusions / Recommendation</h5>
+  <p class="blank">To be written by the applicant. 4–5 sentences on what they concluded.</p>
+
+  <h4>Files</h4>
+  <ul class="files-list"><li><a href="papers/cit-000619/01-article-GrossmanHaham-2026.pdf">01-article-GrossmanHaham-2026.pdf</a> <span class="role">article</span></li></ul>
+  <p class="trace"><code>cit-000619</code>
+      · Scholar exhibit <em>glycoglyph-a-glycan-visualizing-drawing-and-naming-applicati-citing-2026-11-01.pdf</em> (Independent Citation Record, not enclosed here)</p>
+</article>
+<article class="citation" id="c-cit-000542">
+  <h3>Comparative phenotyping of surface markers and glycans in murine and human platelet-derived extracellular vesicles</h3>
+  <p class="byline">Olga An, Friedrich Reusswig, Viola Krenzlin, Carsten Deppermann, Dianne E van der Wal<br>
+     <span class="venue">, 2026</span>
+      · <a href="https://www.sciencedirect.com/science/article/pii/S2475037926000725">www.sciencedirect.com</a></p>
+
+  <h4>Section I — Background</h4>
+  <dl>
+    <dt>Cited Paper(s)</dt>
+    <dd>GLAD: GLycan Array Dashboard, a visual analytics tool for glycan microarrays
+        <br><span class="sub">2019</span></dd>
+    <dt>Additional citations from this citing paper</dt>
+    <dd>none</dd>
+    <dt>Citing Paper</dt>
+    <dd>Comparative phenotyping of surface markers and glycans in murine and human platelet-derived extracellular vesicles <span class="sub">(article)</span>
+        <br><span class="sub">Earliest public date: 3 Dec 2025</span></dd>
+    <dt>Project Number</dt>
+    <dd>2 — Developing Bioinformatics Tools to Capture and Analyze Glycomics and Glycan Microarray Data</dd>
+    <dt>Citing Authors' Institutions</dt>
+    <dd><span class="blank">Not recorded — confirm from the PDF's affiliation block.</span></dd>
+    <dt>Citing Article Type</dt>
+    <dd>article</dd>
+    <dt>Where the citation appears</dt>
+    <dd>Materials and Methods, page 5 — Tier A — the tool is used in the Methods as the method performed</dd>
+  </dl>
+
+  <h4>Section II — Overview of use</h4>
+  <div class="quote"><blockquote>&ldquo;Glycan Array Dashboard (version 3.1) was used to analyze and visualize the glycan array data.&rdquo;</blockquote><p class="cite-page">Materials and Methods, p. 5</p></div>
+
+  
+  <h5>Objectives</h5>
+  <p class="blank">To be written by the applicant. 3–4 sentences on what the citing authors set out to do.</p>
+  <h5>Importance to Field</h5>
+  <p class="blank">To be written by the applicant. 2–3 sentences on why that mattered.</p>
+  <h5>How and Why Your Work Was Used</h5>
+  <p class="blank">To be written by the applicant. 4–5 sentences on the role the applicant's tool played.</p>
+  <h5>Findings / Conclusions / Recommendation</h5>
+  <p class="blank">To be written by the applicant. 4–5 sentences on what they concluded.</p>
+
+  <h4>Files</h4>
+  <ul class="files-list"><li><a href="papers/cit-000542/01-article-VanDerWal-2026.pdf">01-article-VanDerWal-2026.pdf</a> <span class="role">article</span></li></ul>
+  <p class="trace"><code>cit-000542</code>
+      · Scholar exhibit <em>glad-glycan-array-dashboard-a-visual-analytics-tool-for-glyc-citing-2026-11-01.pdf</em> (Independent Citation Record, not enclosed here)</p>
+</article>
+<article class="citation" id="c-cit-000602">
+  <h3>Diminished sialoside binding in novel H5N1 influenza hemagglutinin variants identified in a human patient</h3>
+  <p class="byline">John H Ni, Saeid Malek Zadeh, Alison M Berezuk, Ryan Lynam, Peter Axerio-Cilies, Xing Zhu, Katharine S Tuttle, Gethin Rh Owen, Maria Tokuyama, Sriram Subramaniam<br>
+     <span class="venue">Nature Communications, 2026</span>
+      · <a href="https://www.nature.com/articles/s41467-026-77829-x">www.nature.com</a></p>
+
+  <h4>Section I — Background</h4>
+  <dl>
+    <dt>Cited Paper(s)</dt>
+    <dd>GlycoGlyph: a glycan visualizing, drawing and naming application
+        <br><span class="sub">2020</span></dd>
+    <dt>Additional citations from this citing paper</dt>
+    <dd>none</dd>
+    <dt>Citing Paper</dt>
+    <dd>Diminished sialoside binding in novel H5N1 influenza hemagglutinin variants identified in a human patient <span class="sub">(article)</span>
+        <br><span class="sub">Earliest public date: 19 Jan 2026</span></dd>
+    <dt>Project Number</dt>
+    <dd>2 — Developing Bioinformatics Tools to Capture and Analyze Glycomics and Glycan Microarray Data</dd>
+    <dt>Citing Authors' Institutions</dt>
+    <dd><span class="blank">Not recorded — confirm from the PDF's affiliation block.</span></dd>
+    <dt>Citing Article Type</dt>
+    <dd>article</dd>
+    <dt>Where the citation appears</dt>
+    <dd>Materials and Methods, page 11 — Tier A — the tool is used in the Methods as the method performed</dd>
+  </dl>
+
+  <h4>Section II — Overview of use</h4>
+  <div class="quote"><blockquote>&ldquo;. 3 and 4 and produced on GlycoGlyph with adjustments on Inkscape for Fig.&rdquo;</blockquote><p class="cite-page">Materials and Methods, p. 11</p></div>
+
+  
+  <h5>Objectives</h5>
+  <p class="blank">To be written by the applicant. 3–4 sentences on what the citing authors set out to do.</p>
+  <h5>Importance to Field</h5>
+  <p class="blank">To be written by the applicant. 2–3 sentences on why that mattered.</p>
+  <h5>How and Why Your Work Was Used</h5>
+  <p class="blank">To be written by the applicant. 4–5 sentences on the role the applicant's tool played.</p>
+  <h5>Findings / Conclusions / Recommendation</h5>
+  <p class="blank">To be written by the applicant. 4–5 sentences on what they concluded.</p>
+
+  <h4>Files</h4>
+  <ul class="files-list"><li><a href="papers/cit-000602/01-article-Subramaniam-2026.pdf">01-article-Subramaniam-2026.pdf</a> <span class="role">article</span></li></ul>
+  <p class="trace"><code>cit-000602</code>
+      · Scholar exhibit <em>glycoglyph-a-glycan-visualizing-drawing-and-naming-applicati-citing-2026-11-01.pdf</em> (Independent Citation Record, not enclosed here)</p>
+</article>
+<article class="citation" id="c-cit-000516">
+  <h3>A Zebrafish Galectin-1 Isoform Is Expressed in Skin and Gills and Binds to Bacteria, Bacterial Adhesin Receptors, and Epidermal Mucus Glycans</h3>
+  <p class="byline">Chiguang Feng, Kelsey Abernathy, Sheng Wang, Guanghui Zong, Nilli Zmora, Allison Shupp, Muddassar Iqbal, Lai-Xi Wang, Gerardo R Vasta<br>
+     <span class="venue">International Journal of Molecular Sciences, 2026</span>
+      · <a href="https://www.mdpi.com/1422-0067/27/9/3827">www.mdpi.com</a></p>
+
+  <h4>Section I — Background</h4>
+  <dl>
+    <dt>Cited Paper(s)</dt>
+    <dd>GLAD: GLycan Array Dashboard, a visual analytics tool for glycan microarrays
+        <br><span class="sub">2019</span></dd>
+    <dt>Additional citations from this citing paper</dt>
+    <dd><code>cit-000603</code> — GlycoGlyph: a glycan visualizing, drawing and naming application<br><code>cit-000976</code> — Insights into glycobiology and the protein-glycan interactome using glycan microarray technologies<br><code>cit-001252</code> — Reusable glycan microarrays using a microwave assisted wet-erase (MAWE) process</dd>
+    <dt>Citing Paper</dt>
+    <dd>A Zebrafish Galectin-1 Isoform Is Expressed in Skin and Gills and Binds to Bacteria, Bacterial Adhesin Receptors, and Epidermal Mucus Glycans <span class="sub">(article)</span>
+        <br><span class="sub">Earliest public date: 31 Jan 2026</span></dd>
+    <dt>Project Number</dt>
+    <dd>2 — Developing Bioinformatics Tools to Capture and Analyze Glycomics and Glycan Microarray Data</dd>
+    <dt>Citing Authors' Institutions</dt>
+    <dd><span class="blank">Not recorded — confirm from the PDF's affiliation block.</span></dd>
+    <dt>Citing Article Type</dt>
+    <dd>article</dd>
+    <dt>Where the citation appears</dt>
+    <dd>Materials and Methods, page 21 — Tier A — the tool is used in the Methods as the method performed</dd>
+  </dl>
+
+  <h4>Section II — Overview of use</h4>
+  <div class="quote"><blockquote>&ldquo;. (accessed on 25 November 2025) The results were analyzed by the GLycan Array Dashboard (GLAD) platform [ 128 ], and the glycan models were constructed using GlycoGlyph [129].&rdquo;</blockquote><p class="cite-page">Materials and Methods, p. 21</p></div>
+
+  
+  <h5>Objectives</h5>
+  <p class="blank">To be written by the applicant. 3–4 sentences on what the citing authors set out to do.</p>
+  <h5>Importance to Field</h5>
+  <p class="blank">To be written by the applicant. 2–3 sentences on why that mattered.</p>
+  <h5>How and Why Your Work Was Used</h5>
+  <p class="blank">To be written by the applicant. 4–5 sentences on the role the applicant's tool played.</p>
+  <h5>Findings / Conclusions / Recommendation</h5>
+  <p class="blank">To be written by the applicant. 4–5 sentences on what they concluded.</p>
+
+  <h4>Files</h4>
+  <ul class="files-list"><li><a href="papers/cit-000516/01-article-Vasta-2026.pdf">01-article-Vasta-2026.pdf</a> <span class="role">article</span></li></ul>
+  <p class="trace"><code>cit-000516</code> · additional rows cit-000603;cit-000976;cit-001252
+      · Scholar exhibit <em>glad-glycan-array-dashboard-a-visual-analytics-tool-for-glyc-citing-2026-11-01.pdf</em> (Independent Citation Record, not enclosed here)</p>
+</article>
+<article class="citation" id="c-cit-000613">
+  <h3>Transcriptome, glycome, and mucinome analysis reveal zinc is essential for the composition of mucus in the human goblet cell model HT-29-MTX</h3>
+  <p class="byline">Christoph Sch&quot;ussler, Nara Chung, Renaud Leonard, Heike Sprenger, Tari R&quot;odel, Keira E Mahoney, Susanne Thomsen, Esther Ocket, Claudia Matthaeus, Jordan Denis<br>
+     <span class="venue">, 2026</span>
+      · <a href="https://www.nature.com/articles/s41598-026-66227-4">www.nature.com</a></p>
+
+  <h4>Section I — Background</h4>
+  <dl>
+    <dt>Cited Paper(s)</dt>
+    <dd>GlycoGlyph: a glycan visualizing, drawing and naming application
+        <br><span class="sub">2020</span></dd>
+    <dt>Additional citations from this citing paper</dt>
+    <dd>none</dd>
+    <dt>Citing Paper</dt>
+    <dd>Transcriptome, glycome, and mucinome analysis reveal zinc is essential for the composition of mucus in the human goblet cell model HT-29-MTX <span class="sub">(article)</span>
+        <br><span class="sub">Earliest public date: 30 Apr 2026</span></dd>
+    <dt>Project Number</dt>
+    <dd>2 — Developing Bioinformatics Tools to Capture and Analyze Glycomics and Glycan Microarray Data</dd>
+    <dt>Citing Authors' Institutions</dt>
+    <dd><span class="blank">Not recorded — confirm from the PDF's affiliation block.</span></dd>
+    <dt>Citing Article Type</dt>
+    <dd>article</dd>
+    <dt>Where the citation appears</dt>
+    <dd>Results / Figures, page 4 — Tier B — the tool is used in the Results or Figures</dd>
+  </dl>
+
+  <h4>Section II — Overview of use</h4>
+  <div class="quote"><blockquote>&ldquo;. Glycan structures were drawn with GlycoGlyph14.&rdquo;</blockquote><p class="cite-page">Results / Figures, p. 4</p></div>
+
+  
+  <h5>Objectives</h5>
+  <p class="blank">To be written by the applicant. 3–4 sentences on what the citing authors set out to do.</p>
+  <h5>Importance to Field</h5>
+  <p class="blank">To be written by the applicant. 2–3 sentences on why that mattered.</p>
+  <h5>How and Why Your Work Was Used</h5>
+  <p class="blank">To be written by the applicant. 4–5 sentences on the role the applicant's tool played.</p>
+  <h5>Findings / Conclusions / Recommendation</h5>
+  <p class="blank">To be written by the applicant. 4–5 sentences on what they concluded.</p>
+
+  <h4>Files</h4>
+  <ul class="files-list"><li><a href="papers/cit-000613/01-article-Maares-2026.pdf">01-article-Maares-2026.pdf</a> <span class="role">article</span></li></ul>
+  <p class="trace"><code>cit-000613</code>
+      · Scholar exhibit <em>glycoglyph-a-glycan-visualizing-drawing-and-naming-applicati-citing-2026-11-01.pdf</em> (Independent Citation Record, not enclosed here)</p>
+</article>
+</section>
+
+<section class="project" id="project-3">
+  <h2>Project 3 — Advancing Glycan Research with Microarray Innovations</h2>
+  <p class="projcount">2 citing article(s), 2 citation(s).</p>
+  
+<article class="citation" id="c-cit-001253">
+  <h3>Intelectin-2 is a broad-spectrum antimicrobial lectin</h3>
+  <p class="byline">Amanda E Dugan, Deepsing Syangtan, Eric B Nonnecke, Rajeev S Chorghade, Amanda L Peiffer, Jenny J Yao, Jessica Ille-Bunn, Dallis Sergio, Gleb Pishchany, Catherine Dhennezel<br>
+     <span class="venue">, 2026</span>
+      · <a href="https://www.nature.com/articles/s41467-025-67099-4">www.nature.com</a></p>
+
+  <h4>Section I — Background</h4>
+  <dl>
+    <dt>Cited Paper(s)</dt>
+    <dd>Reusable glycan microarrays using a microwave assisted wet-erase (MAWE) process
+        <br><span class="sub">2024</span></dd>
+    <dt>Additional citations from this citing paper</dt>
+    <dd>none</dd>
+    <dt>Citing Paper</dt>
+    <dd>Intelectin-2 is a broad-spectrum antimicrobial lectin <span class="sub">(article)</span>
+        <br><span class="sub">Earliest public date: 26 Apr 2025</span></dd>
+    <dt>Project Number</dt>
+    <dd>3 — Advancing Glycan Research with Microarray Innovations</dd>
+    <dt>Citing Authors' Institutions</dt>
+    <dd><span class="blank">Not recorded — confirm from the PDF's affiliation block.</span></dd>
+    <dt>Citing Article Type</dt>
+    <dd>article</dd>
+    <dt>Where the citation appears</dt>
+    <dd>Materials and Methods, page 15 — Tier A — the tool is used in the Methods as the method performed</dd>
+  </dl>
+
+  <h4>Section II — Overview of use</h4>
+  <div class="quote"><blockquote>&ldquo;the core facility also changed protocols and began regenerating and reusing slides; the long-term effects on fluorescence intensity are unclear&rdquo;</blockquote><p class="cite-page">Materials and Methods, p. 15</p></div>
+
+  
+  <h5>Objectives</h5>
+  <p class="blank">To be written by the applicant. 3–4 sentences on what the citing authors set out to do.</p>
+  <h5>Importance to Field</h5>
+  <p class="blank">To be written by the applicant. 2–3 sentences on why that mattered.</p>
+  <h5>How and Why Your Work Was Used</h5>
+  <p class="blank">To be written by the applicant. 4–5 sentences on the role the applicant's tool played.</p>
+  <h5>Findings / Conclusions / Recommendation</h5>
+  <p class="blank">To be written by the applicant. 4–5 sentences on what they concluded.</p>
+
+  <h4>Files</h4>
+  <ul class="files-list"><li><a href="papers/cit-001253/01-article-Kiessling-2026.pdf">01-article-Kiessling-2026.pdf</a> <span class="role">article</span></li></ul>
+  <p class="trace"><code>cit-001253</code>
+      · Scholar exhibit <em>reusable-glycan-microarrays-using-a-microwave-assisted-wet-e-citing-2026-10-30.pdf</em> (Independent Citation Record, not enclosed here)</p>
+</article>
+<article class="citation" id="c-cit-001257">
+  <h3>Evaluating the role of non-HIV antigens in the initiation of QA013. 2 HIV bnAb lineage</h3>
+  <p class="byline">Delphine M Depierreux, Kevin Sung, Lindsay A Bergan, Mackenzie Shipley, Yuzheng Zhang, Frederick A Matsen IV, Paul D Lampe, Julie Overbaugh<br>
+     <span class="venue">Scientific Reports, 2026</span>
+      · <a href="https://www.nature.com/articles/s41598-026-75071-5">www.nature.com</a></p>
+
+  <h4>Section I — Background</h4>
+  <dl>
+    <dt>Cited Paper(s)</dt>
+    <dd>Reusable glycan microarrays using a microwave assisted wet-erase (MAWE) process
+        <br><span class="sub">2024</span></dd>
+    <dt>Additional citations from this citing paper</dt>
+    <dd>none</dd>
+    <dt>Citing Paper</dt>
+    <dd>Evaluating the role of non-HIV antigens in the initiation of QA013. 2 HIV bnAb lineage <span class="sub">(article)</span>
+        <br><span class="sub">Earliest public date: 19 May 2026</span></dd>
+    <dt>Project Number</dt>
+    <dd>3 — Advancing Glycan Research with Microarray Innovations</dd>
+    <dt>Citing Authors' Institutions</dt>
+    <dd><span class="blank">Not recorded — confirm from the PDF's affiliation block.</span></dd>
+    <dt>Citing Article Type</dt>
+    <dd>article</dd>
+    <dt>Where the citation appears</dt>
+    <dd>Materials and Methods, page 10 — Tier A — the tool is used in the Methods as the method performed</dd>
+  </dl>
+
+  <h4>Section II — Overview of use</h4>
+  <div class="quote"><blockquote>&ldquo;Data were analyzed using the MAWE method as described previously&rdquo;</blockquote><p class="cite-page">Materials and Methods, p. 10</p></div>
+
+  
+  <h5>Objectives</h5>
+  <p class="blank">To be written by the applicant. 3–4 sentences on what the citing authors set out to do.</p>
+  <h5>Importance to Field</h5>
+  <p class="blank">To be written by the applicant. 2–3 sentences on why that mattered.</p>
+  <h5>How and Why Your Work Was Used</h5>
+  <p class="blank">To be written by the applicant. 4–5 sentences on the role the applicant's tool played.</p>
+  <h5>Findings / Conclusions / Recommendation</h5>
+  <p class="blank">To be written by the applicant. 4–5 sentences on what they concluded.</p>
+
+  <h4>Files</h4>
+  <ul class="files-list"><li><a href="papers/cit-001257/01-article-Overbaugh-2026.pdf">01-article-Overbaugh-2026.pdf</a> <span class="role">article</span></li></ul>
+  <p class="trace"><code>cit-001257</code>
+      · Scholar exhibit <em>reusable-glycan-microarrays-using-a-microwave-assisted-wet-e-citing-2026-10-30.pdf</em> (Independent Citation Record, not enclosed here)</p>
+</article>
+</section>
+<section class="project"><h2>Project not assigned</h2>
+      
+<article class="citation" id="c-cit-000416">
+  <h3>Glycan-mediated interactions of infectious hypodermal and hematopoietic necrosis virus (IHHNV) with host tissues in Pacific whiteleg shrimp (Penaeus vannamei)</h3>
+  <p class="byline">Chanyarak Sombutkayasith, Atthaboon Watthammawut, Orawan Thongsum, Jeanne Delafontaine, Supawich Boonkua, Monsicha Somrit, Hiroto Hirayama, Somluk Asuvapongpatana, Clement Delannoy, Coralie Bompard<br>
+     <span class="venue">Glycobiology, 2026</span>
+      · <a href="https://academic.oup.com/glycob/advance-article-abstract/doi/10.1093/glycob/cwag085/8845458">academic.oup.com</a></p>
+
+  <h4>Section I — Background</h4>
+  <dl>
+    <dt>Cited Paper(s)</dt>
+    <dd>Differential recognition of oligomannose isomers by glycan-binding proteins involved in innate and adaptive immunity
+        <br><span class="sub">2021</span></dd>
+    <dt>Additional citations from this citing paper</dt>
+    <dd><code>cit-000540</code> — GLAD: GLycan Array Dashboard, a visual analytics tool for glycan microarrays<br><code>cit-000987</code> — Insights into glycobiology and the protein-glycan interactome using glycan microarray technologies<br><code>cit-001259</code> — Reusable glycan microarrays using a microwave assisted wet-erase (MAWE) process</dd>
+    <dt>Citing Paper</dt>
+    <dd>Glycan-mediated interactions of infectious hypodermal and hematopoietic necrosis virus (IHHNV) with host tissues in Pacific whiteleg shrimp (Penaeus vannamei) <span class="sub">(article)</span>
+        <br><span class="sub">Earliest public date: Not shown in PDF</span></dd>
+    <dt>Project Number</dt>
+    <dd><span class="blank">Not assigned — this row cites a paper other than the four tools, so no project applies. Confirm with the applicant.</span></dd>
+    <dt>Citing Authors' Institutions</dt>
+    <dd><span class="blank">Not recorded — confirm from the PDF's affiliation block.</span></dd>
+    <dt>Citing Article Type</dt>
+    <dd>article</dd>
+    <dt>Where the citation appears</dt>
+    <dd>Discussion, page 19 — Tier C — cited in a high-reputation publication</dd>
+  </dl>
+
+  <h4>Section II — Overview of use</h4>
+  <div class="quote"><blockquote>&ldquo;receptors known to bind to oligomannosylated N-glycans exhibit, in fact, unique, and sometimes very restricted, specificities toward oligomannose motifs (Gao et al. 2021)&rdquo;</blockquote><p class="cite-page">Discussion, p. 19</p></div>
+
+  
+  <h5>Objectives</h5>
+  <p class="blank">To be written by the applicant. 3–4 sentences on what the citing authors set out to do.</p>
+  <h5>Importance to Field</h5>
+  <p class="blank">To be written by the applicant. 2–3 sentences on why that mattered.</p>
+  <h5>How and Why Your Work Was Used</h5>
+  <p class="blank">To be written by the applicant. 4–5 sentences on the role the applicant's tool played.</p>
+  <h5>Findings / Conclusions / Recommendation</h5>
+  <p class="blank">To be written by the applicant. 4–5 sentences on what they concluded.</p>
+
+  <h4>Files</h4>
+  <ul class="files-list"><li><a href="papers/cit-000416/01-article-Guerardel-2026.pdf">01-article-Guerardel-2026.pdf</a> <span class="role">article</span></li></ul>
+  <p class="trace"><code>cit-000416</code> · additional rows cit-000540;cit-000987;cit-001259
+      · Scholar exhibit <em>differential-recognition-of-oligomannose-isomers-by-glycan-b-citing-2026-10-29.pdf</em> (Independent Citation Record, not enclosed here)</p>
+</article></section>
+
+<section id="screened">
+  <h2>Appendix — candidates screened out</h2>
+  <p>These citations were examined and are not argued in the packet. They are listed so the
+     screening is on the record.</p>
+  <h3>(unset) (0)</h3>
+    <table class="small"><thead><tr><th>row_uid</th><th>Title</th><th>Senior author</th><th>Venue</th><th>Year</th></tr></thead>
+    <tbody></tbody></table>
+</section>
+</main>
+<script>
+(function () {
+  var input = document.getElementById("filter");
+  if (!input) return;
+  input.addEventListener("input", function () {
+    var q = input.value.trim().toLowerCase();
+    document.querySelectorAll("#index-table tbody tr").forEach(function (tr) {
+      tr.style.display = !q || (tr.dataset.search || "").toLowerCase().indexOf(q) !== -1 ? "" : "none";
+    });
+  });
+})();
+</script>
+</body>
+</html>
