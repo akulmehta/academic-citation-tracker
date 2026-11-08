@@ -1,0 +1,32 @@
+[
+  {
+    "row_uid": "cit-000248",
+    "mentions": [
+      {
+        "section": "Results",
+        "tier": "B",
+        "page": "3",
+        "quote": "fact, there are previous works that report that specific O-glycan expression modulates protein interactions 39,41 .",
+        "use_type": null,
+        "basis": "reference-number resolution",
+        "verified": 0,
+        "note": "cited as bare number jointly with 39: 39,41"
+      }
+    ]
+  },
+  {
+    "row_uid": "cit-000263",
+    "mentions": [
+      {
+        "section": "Results",
+        "tier": "B",
+        "page": "4",
+        "quote": "IgM, IgA) (Goth et al., 2023).",
+        "use_type": null,
+        "basis": "reference-number resolution",
+        "verified": 0,
+        "note": "author-year citation on surname + year alone: (Goth et al., 2023) — read it before relying on it"
+      }
+    ]
+  }
+]
