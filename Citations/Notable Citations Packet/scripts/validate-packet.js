@@ -13,7 +13,7 @@
 const fs = require("fs");
 const path = require("path");
 const { execFileSync } = require("child_process");
-const { PKT, REPO, openPacket, openCatalog, headlineTier, originalApplicationUids, folderRoots, STORAGE_ROOTS, ROOT_PENDING, ROOT_SCREENED, toolForCitedPaper, surnameSlug } = require("./lib.js");
+const { PKT, REPO, openPacket, openCatalog, headlineTier, originalApplicationUids, folderRoots, STORAGE_ROOTS, ROOT_PENDING, ROOT_SCREENED, toolForCitedPaper, surnameSlug, potentialIndependent } = require("./lib.js");
 
 const QUIET = process.argv.includes("--quiet");
 const DEEP = process.argv.includes("--deep");
@@ -584,27 +584,40 @@ for (const r of cits) {
     failAny("potential", `${strays.length} superseded per-work review page(s) still in the folder — `
       + `the single generalized page covers every queued work: ${strays.join(", ")}`);
   }
-  // Every cited work the candidate queue holds must be LISTED on the page. A work
-  // whose citations were dropped would leave them invisible rather than failing, so
-  // the requirement is per work, not merely per file.
+  // Every citation the screen would offer must actually be LISTED on the page. A
+  // work whose citations were dropped would leave them invisible rather than
+  // failing. This is checked row by row, not per work: on 2026-11-08 the last held
+  // MAWE row was screened out, MAWE legitimately had nothing left to offer, and a
+  // per-work requirement read that as a page defect. A work with no candidates is
+  // a finished work, not a missing one -- what must never happen is a row the
+  // screen returned and the page omitted.
   {
     const queued = db.prepare(`SELECT DISTINCT cites_id FROM candidate
       WHERE cites_id IS NOT NULL AND cites_id <> ''`).all().map(r => String(r.cites_id));
     if (pageNames.includes("potential_notable_citations.html") && queued.length) {
       const potText = fs.readFileSync(path.join(PKT, "potential_notable_citations.html"), "utf8");
-      const listed = [...new Set([...potText.matchAll(/cit-\d{6}/g)].map(m => m[0]))];
-      if (listed.length) {
-        const catQ = openCatalog();
-        const byUid = new Map(catQ.prepare(
-          `SELECT row_uid, cites_id FROM citations WHERE row_uid IN (${listed.map(() => "?").join(",")})`)
-          .all(...listed).map(r => [r.row_uid, String(r.cites_id)]));
-        catQ.close();
-        const covered = new Set(byUid.values());
-        const missingWork = queued.filter(id => !covered.has(id));
-        if (missingWork.length) {
-          failAny("potential", `${missingWork.length} queued cited work(s) have no citation listed on `
-            + `potential_notable_citations.html — run build-potential.js --write: ${missingWork.slice(0, 3).join("; ")}`);
+      const onPage = new Set([...potText.matchAll(/cit-\d{6}/g)].map(m => m[0]));
+      const catQ = openCatalog();
+      const dropped = [];
+      let offered = 0;
+      for (const id of queued) {
+        let res;
+        try {
+          res = potentialIndependent(catQ, db, id);
+        } catch (e) {
+          failAny("potential", `${id}: the independence screen could not run — ${e.message}`);
+          continue;
         }
+        offered += res.rows.length;
+        for (const r of res.rows) if (!onPage.has(r.row_uid)) dropped.push(r.row_uid);
+      }
+      catQ.close();
+      if (dropped.length) {
+        failAny("potential", `${dropped.length} citation(s) the screen offers are missing from `
+          + `potential_notable_citations.html — run build-potential.js --write: ${dropped.slice(0, 5).join("; ")}`);
+      } else if (offered === 0) {
+        failAny("potential", `the screen offers 0 citations for all ${queued.length} queued work(s) — `
+          + `an empty review page is not a page, it is a pipeline that stopped working`);
       }
     }
   }
