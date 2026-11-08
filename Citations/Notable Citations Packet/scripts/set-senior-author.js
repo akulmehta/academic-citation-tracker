@@ -28,6 +28,7 @@ const FIXES = {
   "cit-000555": ["Petralia", "Sole author on the repository record: Petralia, L.M.C."],
   "cit-000564": ["Ng'ang'a", "Sole author on the title page: Peter Njenga Ng'ang'a, Freiburg dissertation, July 2020"],
   "cit-000566": ["Garín-Muga", "Last author on p.1: Aurora Sucre, Raquel Pazos, Niels-Christian Reichardt, Alba Garín-Muga"],
+  "cit-000636": ["Baud", "Last and corresponding author on p.1 of the retrieved article: Rajas M. Rao, Manuel Dauchez, Stéphanie Baud (stephanie.baud@univ-reims.fr)"],
 };
 
 function main() {
