@@ -492,7 +492,6 @@ function rowHtml(r) {
       <td class="pdf">${pdfCell}</td>
       <td class="tier">${r.entries.map(c => workCell(c, tierCell(c), multi)).join("")}</td>
       <td class="cite">${r.entries.map(c => workCell(c, citationCell(c), multi)).join("")}</td>
-      <td class="pick"><label><input type="checkbox"> include</label></td>
     </tr>`;
 }
 
@@ -598,7 +597,6 @@ const CSS = `
   .src, .disc { font-size:.74rem; }
   .pdf { white-space:nowrap; }
   .none { color:var(--muted); font-style:italic; font-size:.72rem; }
-  .pick { white-space:nowrap; font-size:.72rem; color:var(--muted); }
   /* A folded row holds one block per cited work in the "My work", Tier and Citation
      columns. The rule between blocks is what makes the three columns read as
      aligned pairs rather than as a list of unrelated notes. */
@@ -650,7 +648,6 @@ const CSS = `
   tr.excluded { display:none; }
 
   @media print {
-    .pick, thead th.pick { display:none; }
     main { padding:0; max-width:none; }
     a { color:inherit; text-decoration:none; }
     /* A printed exhibit is the whole screen, whatever was filtered on screen. */
@@ -814,6 +811,22 @@ function notesHtml(rows, cites) {
    under a heading the citing paper printed, in prose, not a table cell and not the reference list.
    The colour only says how the citation was found, not that it is weaker.</p>
 
+<h2>How a candidate becomes part of the packet</h2>
+<p><strong>This page is read-only, deliberately.</strong> There is no checkbox and no button, because a
+   tick on a screen belongs to nobody: it is lost on reload, it cannot be inspected by anyone else, and
+   nothing downstream could tell whether you meant it. A decision is recorded in
+   <code>notable-citations.sqlite</code> instead, and the way to make one is to tell the assistant the
+   <code>row_uid</code> you want filed. It then runs
+   <code>scripts/record-evidence.js</code>, which <strong>refuses</strong> unless you give it a sentence
+   quoted verbatim from the citing article and it can find that exact sentence in the PDF on file &mdash;
+   so a filed quotation is checked against the document rather than written from memory. The row&rsquo;s
+   <code>status</code> becomes <code>included</code>, its folder moves into <code>papers/</code>, and
+   <code>packet.html</code> is re-rendered so the entry and its detail section appear together. A row
+   decided against is <code>screened-out</code> with the reason recorded, and stays in
+   <code>screened-out.csv</code> so it is not reconsidered from scratch later.</p>
+<p>What the page is for, then, is the reading: filter to a work or a tier, open the PDF from the
+   &ldquo;PDF on file&rdquo; column, judge the sentence, and quote it back.</p>
+
 <h2>Report on each citation</h2>
 <p>The same structure as <code>packet.html</code>, one block per citation, so a row above can be
    judged on its background and its quotation together. A block is a review note, not evidence:
@@ -931,7 +944,6 @@ ${filterHtml(rows, cites)}
   <thead><tr>
     <th>row_uid</th><th>My work</th><th>Citing paper</th><th>Senior author</th><th>Year</th><th>Venue</th>
     <th>Where it is</th><th>Open copy</th><th>PDF on file</th><th>Tier</th><th>Citation</th>
-    <th class="pick">Decision</th>
   </tr></thead>
   <tbody id="cand-body">
 ${body}
