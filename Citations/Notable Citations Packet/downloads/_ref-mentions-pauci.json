@@ -1,0 +1,122 @@
+[
+  {
+    "row_uid": "cit-001490",
+    "mentions": [
+      {
+        "section": "Introduction",
+        "tier": "C",
+        "page": "2",
+        "quote": "types, including colorectal [22], renal [23], lung [23],",
+        "use_type": null,
+        "basis": "reference-number resolution",
+        "verified": 0,
+        "note": "cited as bracketed: [23]"
+      },
+      {
+        "section": "Introduction",
+        "tier": "C",
+        "page": "2",
+        "quote": "contributing to immune suppression [19, 23, 26].",
+        "use_type": null,
+        "basis": "reference-number resolution",
+        "verified": 0,
+        "note": "cited as bracketed jointly with 19, 26: [19, 23, 26]"
+      },
+      {
+        "section": "Results",
+        "tier": "B",
+        "page": "14",
+        "quote": "Age (average, min-max) 39 years (21-61)",
+        "use_type": null,
+        "basis": "reference-number resolution",
+        "verified": 0,
+        "note": "cited as bracketed jointly with 21, 22, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61: (21-61)"
+      }
+    ]
+  },
+  {
+    "row_uid": "cit-001496",
+    "mentions": [
+      {
+        "section": "Discussion",
+        "tier": "C",
+        "page": "13",
+        "quote": "tumorigenic cell surface alteration are mannosides [ 53 ].",
+        "use_type": null,
+        "basis": "reference-number resolution",
+        "verified": 0,
+        "note": "cited as bracketed: [ 53 ]"
+      }
+    ]
+  },
+  {
+    "row_uid": "cit-001497",
+    "mentions": [
+      {
+        "section": "Discussion",
+        "tier": "C",
+        "page": "11",
+        "quote": "several late-stage/advanced cancer types [35–40].",
+        "use_type": null,
+        "basis": "reference-number resolution",
+        "verified": 0,
+        "note": "cited as bracketed jointly with 35, 36, 37, 38, 39: [35–40]"
+      }
+    ]
+  },
+  {
+    "row_uid": "cit-001498",
+    "mentions": [
+      {
+        "section": "Introduction",
+        "tier": "C",
+        "page": "2",
+        "quote": "glycans in several late-stage/advanced cancer types [ 17 –22 ].",
+        "use_type": null,
+        "basis": "reference-number resolution",
+        "verified": 0,
+        "note": "cited as bracketed jointly with 17, 18, 19, 20, 21: [ 17 –22 ]"
+      },
+      {
+        "section": "Results",
+        "tier": "B",
+        "page": "10",
+        "quote": "Bisecting GlcNAc N-glycans (structures: 22, 32,",
+        "use_type": null,
+        "basis": "reference-number resolution",
+        "verified": 0,
+        "note": "cited as bare number jointly with 32: 22, 32"
+      },
+      {
+        "section": "Discussion",
+        "tier": "C",
+        "page": "17",
+        "quote": "have also been shown to be rich in oligomannosidic N-glycans of proteins [17 – 20, 22 ].",
+        "use_type": null,
+        "basis": "reference-number resolution",
+        "verified": 0,
+        "note": "cited as bracketed jointly with 17, 18, 19, 20: [17 – 20, 22 ]"
+      },
+      {
+        "section": "Discussion",
+        "tier": "C",
+        "page": "17",
+        "quote": "human cancers [19 ,22 ].",
+        "use_type": null,
+        "basis": "reference-number resolution",
+        "verified": 0,
+        "note": "cited as bracketed jointly with 19: [19 ,22 ]"
+      },
+      {
+        "section": "Discussion",
+        "tier": "C",
+        "page": "17",
+        "quote": "cancerous cells [17 , 18, 20– 22 ], it is arguable that cancer cells have higher levels of protein",
+        "use_type": null,
+        "basis": "reference-number resolution",
+        "verified": 0,
+        "note": "cited as bracketed jointly with 17, 18, 20, 21: [17 , 18, 20– 22 ]"
+      }
+    ]
+  }
+]
