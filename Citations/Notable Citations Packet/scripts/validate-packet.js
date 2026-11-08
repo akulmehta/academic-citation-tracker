@@ -553,7 +553,10 @@ for (const r of cits) {
 /* ------------------------------------------------------------------ */
 // packet.html is what counsel receives and holds only confirmed citations. The
 // review pages hold candidates — one page per cited work, since the screen table
-// each page prints is arithmetic about one cited paper. The failure worth guarding
+// each work prints its own arithmetic; ONE page lists every queued work, and the
+// "My work" column says which paper a citation is for. A citing article that cites
+// two of the applicant's works is one row carrying two citations, so a row is not a
+// citation and the checks below count uids, not rows. The failure worth guarding
 // against is the quiet one: a candidate leaking into the packet, or a packet row
 // being re-offered as though nobody had decided it. Both are checked against the
 // database and the record, not against prose on the page.
@@ -566,39 +569,66 @@ for (const r of cits) {
     .filter(f => /^potential_notable_citations(-[A-Za-z0-9]+)?\.html$/.test(f))
     .sort();
   if (!pageNames.length) {
-    warn("potential", "no potential_notable_citations*.html exists — run scripts/build-potential.js --all --write so unfiled independent citations are not simply invisible");
+    warn("potential", "no potential_notable_citations*.html exists — run scripts/build-potential.js --write so unfiled independent citations are not simply invisible");
   }
-  // Every cited work the candidate queue holds must have a page. A work whose
-  // page was dropped would leave its candidates invisible rather than failing.
+  // The page is generalised, so a per-work page left in the folder is not an extra
+  // convenience but a second document claiming to be the review list — and whoever
+  // read it would be working from a list the pipeline no longer maintains.
+  const strays = pageNames.filter(n => n !== "potential_notable_citations.html");
+  if (strays.length) {
+    failAny("potential", `${strays.length} superseded per-work review page(s) still in the folder — `
+      + `the single generalized page covers every queued work: ${strays.join(", ")}`);
+  }
+  // Every cited work the candidate queue holds must be LISTED on the page. A work
+  // whose citations were dropped would leave them invisible rather than failing, so
+  // the requirement is per work, not merely per file.
   {
     const queued = db.prepare(`SELECT DISTINCT cites_id FROM candidate
       WHERE cites_id IS NOT NULL AND cites_id <> ''`).all().map(r => String(r.cites_id));
-    const catQ = openCatalog();
-    const missingPage = [];
-    for (const id of queued) {
-      const pub = catQ.prepare("SELECT title FROM publications WHERE cites_id = ?").get(id);
-      if (!pub) continue;
-      const tool = toolForCitedPaper(pub.title);
-      const want = (!tool || tool === "GLAD")
-        ? "potential_notable_citations.html"
-        : `potential_notable_citations-${tool.replace(/[^A-Za-z0-9]/g, "")}.html`;
-      if (!pageNames.includes(want)) missingPage.push(`${pub.title.slice(0, 40)} -> ${want}`);
-    }
-    catQ.close();
-    if (missingPage.length) {
-      failAny("potential", `${missingPage.length} queued cited work(s) have no review page — run `
-        + `build-potential.js --all --write: ${missingPage.slice(0, 3).join("; ")}`);
+    if (pageNames.includes("potential_notable_citations.html") && queued.length) {
+      const potText = fs.readFileSync(path.join(PKT, "potential_notable_citations.html"), "utf8");
+      const listed = [...new Set([...potText.matchAll(/cit-\d{6}/g)].map(m => m[0]))];
+      if (listed.length) {
+        const catQ = openCatalog();
+        const byUid = new Map(catQ.prepare(
+          `SELECT row_uid, cites_id FROM citations WHERE row_uid IN (${listed.map(() => "?").join(",")})`)
+          .all(...listed).map(r => [r.row_uid, String(r.cites_id)]));
+        catQ.close();
+        const covered = new Set(byUid.values());
+        const missingWork = queued.filter(id => !covered.has(id));
+        if (missingWork.length) {
+          failAny("potential", `${missingWork.length} queued cited work(s) have no citation listed on `
+            + `potential_notable_citations.html — run build-potential.js --write: ${missingWork.slice(0, 3).join("; ")}`);
+        }
+      }
     }
   }
   for (const name of pageNames) {
     const POT = path.join(PKT, name);
-    // Prefix every finding with the page it came from, now that several pages
-    // run through the same checks. Shadowing `fail` keeps the body below
-    // unchanged; `failAny` above is the unprefixed original.
+    // Prefix every finding with the page it came from, so a finding names the file
+    // to fix. Shadowing `fail` keeps the body below unchanged; `failAny` above is
+    // the unprefixed original.
     const fail = (c, d) => failAny(c, `${name}: ${d}`);
     {
       const pot = fs.readFileSync(POT, "utf8");
-      const potUids = [...new Set([...pot.matchAll(/<td class="uid">(cit-\d{6})<\/td>/g)].map(m => m[1]))];
+      // Uids come from the uid CELL of each candidate row, which is the only place
+      // a uid is asserted as a listing. The cell holds the row's first uid and a
+      // `uid2` div per further citation folded onto the same article, so all of
+      // them are read out of it. Matching the whole document instead would pick up
+      // the uids in the per-citation reports below the table and in the notes.
+      const tbody = pot.match(/<tbody id="cand-body">([\s\S]*?)<\/tbody>/);
+      const rowChunks = tbody ? tbody[1].split(/<tr\b/).slice(1) : [];
+      const potUidSet = [];
+      for (const raw of rowChunks) {
+        const close = raw.indexOf("</tr>");
+        const tr = close >= 0 ? raw.slice(0, close) : raw;
+        const cell = tr.match(/<td class="uid">([\s\S]*?)<\/td>/);
+        if (!cell) continue;
+        for (const m of cell[1].matchAll(/cit-\d{6}/g)) {
+          if (!potUidSet.includes(m[0])) potUidSet.push(m[0]);
+        }
+      }
+      const potUids = potUidSet;
       if (!potUids.length) {
         fail("potential", "no candidate rows parsed — the markup changed shape and this check has gone blind");
       } else {
@@ -652,31 +682,75 @@ for (const r of cits) {
         if (!mentionsBy.has(m.row_uid)) mentionsBy.set(m.row_uid, []);
         mentionsBy.get(m.row_uid).push(m);
       }
+      const uidOf = t => (t.match(/cit-\d{6}/) || [])[0];
       const invented = [];
       let shownTiers = 0;
+      // Pills live in the Tier and Citation cells, once per cited work, so the same
+      // uid legitimately carries the same pill twice in one row. Deduplicate.
+      const seenPill = new Set();
+      const claimPill = (uid, tier, resolved) => {
+        const key = `${uid}|${tier}|${resolved ? 1 : 0}`;
+        if (seenPill.has(key)) return;
+        seenPill.add(key);
+        shownTiers++;
+        if (!resolved) {
+          const r = rowsWithScan.get(uid);
+          if (!r || !r.scan_tier || !rowsWithPdf.has(uid)) invented.push(`${uid} Tier ${tier}`);
+          else if (r.scan_tier !== tier) invented.push(`${uid} shows Tier ${tier} but the scan read ${r.scan_tier}`);
+          return;
+        }
+        // A resolved tier comes from the mention table, not from scan_tier, and it
+        // is only honest if a mention with that tier and a non-text basis is really
+        // recorded for the row. Otherwise the page invented it.
+        const m = (mentionsBy.get(uid) || []).find(x => x.tier === tier && x.basis !== "extracted text");
+        if (!m) invented.push(`${uid} Tier ${tier} resolved with no such recorded mention`);
+      };
+      /**
+       * Slice a row into its `workcell` blocks, each paired with the uid it names.
+       *
+       * Boundaries are found by position, not by a lookahead for the closing tag:
+       * a workcell's own `</div>` is followed by `</td>` for the LAST block in a
+       * cell, and a regex that only stops at the next workcell lets that block run
+       * into the next cell — which attributed one citation's tier to its row-mate.
+       * Each block therefore ends at whichever comes first: the next workcell, or
+       * the `</td>` that closes the cell it sits in.
+       */
+      function workcells(tr) {
+        const opens = [...tr.matchAll(/<div class="workcell" data-uid="(cit-\d{6})"[^>]*>/g)];
+        return opens.map((m, i) => {
+          const next = i + 1 < opens.length ? opens[i + 1].index : tr.length;
+          const tdEnd = tr.indexOf("</td>", m.index);
+          const end = tdEnd >= 0 && tdEnd < next ? tdEnd : next;
+          return { uid: m[1], body: tr.slice(m.index + m[0].length, end), start: m.index, end };
+        });
+      }
       for (const raw of pot.split(/<tr\b/).slice(1)) {
         // Cut at the row's own close. Without it the LAST row's chunk runs to the
         // end of the document and picks up a pill from the per-article reports
         // below the table, which would pair a candidate with a claim it never made.
         const close = raw.indexOf("</tr>");
         const tr = close >= 0 ? raw.slice(0, close) : raw;
-        const uidMatch = tr.match(/<td class="uid">(cit-\d{6})<\/td>/);
-        if (!uidMatch) continue;                       // header row, or a table that is not the list
-        const uid = uidMatch[1];
-        const scanPill = tr.match(/<span class="pill [^"]*">Tier ([ABCD])<\/span>/);
-        const resPill = tr.match(/<span class="pill [^"]*">Tier ([ABCD]) &mdash; resolved<\/span>/);
-        if (scanPill) {
+        if (!/<td class="uid">/.test(tr)) continue;    // header row, or a table that is not the list
+        // Attributed pills: each `workcell` names the uid it speaks for.
+        const cells = workcells(tr);
+        for (const { uid, body } of cells) {
+          const res = body.match(/<span class="pill [^"]*">Tier ([ABCD]) &mdash; resolved<\/span>/);
+          if (res) { claimPill(uid, res[1], true); continue; }
+          const plain = body.match(/<span class="pill [^"]*">Tier ([ABCD])<\/span>/);
+          if (plain) claimPill(uid, plain[1], false);
+        }
+        // A pill that is NOT inside a uid-bearing workcell belongs to no citation.
+        // Without this branch a pill appended anywhere in the row — or a future
+        // markup change that drops the attribute — would pass unattributed.
+        let attributed = "";
+        let at = 0;
+        for (const c of cells) { attributed += tr.slice(at, c.start); at = c.end; }
+        attributed += tr.slice(at);
+        const orphan = attributed.match(/<span class="pill [^"]*">Tier ([ABCD])( &mdash; resolved)?<\/span>/);
+        if (orphan) {
+          const uid = uidOf(tr);
           shownTiers++;
-          const r = rowsWithScan.get(uid);
-          if (!r || !r.scan_tier || !rowsWithPdf.has(uid)) invented.push(`${uid} Tier ${scanPill[1]}`);
-          else if (r.scan_tier !== scanPill[1]) invented.push(`${uid} shows Tier ${scanPill[1]} but the scan read ${r.scan_tier}`);
-        } else if (resPill) {
-          // A resolved tier comes from the mention table, not from scan_tier, and it
-          // is only honest if a mention with that tier and a non-text basis is really
-          // recorded for the row. Otherwise the page invented it.
-          shownTiers++;
-          const m = (mentionsBy.get(uid) || []).find(x => x.tier === resPill[1] && x.basis !== "extracted text");
-          if (!m) invented.push(`${uid} Tier ${resPill[1]} resolved with no such recorded mention`);
+          invented.push(`${uid || "a row"} Tier ${orphan[1]}${orphan[2] ? " resolved" : ""} with no workcell naming the citation it describes`);
         }
       }
       if (invented.length) {
@@ -697,18 +771,27 @@ for (const r of cits) {
       const noRel = ext.filter(m => /target=/.test(m[0]) && !/rel="[^"]*noopener/.test(m[0])).map(m => m[1]);
       if (noRel.length) fail("potential", `${noRel.length} external link(s) omit rel="noopener", letting the opened page reach back at this one: ${noRel.slice(0, 4).join(", ")}`);
 
-      // 5. The printed screen must add up, or the page misrepresents the corpus.
-      const screenBlock = pot.match(/<table class="screen">([\s\S]*?)<\/table>/);
-      if (!screenBlock) fail("potential", "the screen table is missing from potential_notable_citations.html — the page no longer shows how the list was derived");
-      else {
-        const terms = [...screenBlock[1].matchAll(/class="n">(?:<strong>)?(&minus;)?(-?\d+)/g)]
-          .map(m => (m[1] ? -1 : 1) * Number(m[2]));
-        if (terms.length < 2) fail("potential", "the screen table has no numbers to add up");
-        else {
+      // 5. The printed screens must add up, or the page misrepresents the corpus.
+      //    One table per cited work now, so each closes on its own AND the sum of
+      //    the per-work "listed" figures equals the citations in the table. It does
+      //    NOT equal the row count: a folded row carries one citation per work, so
+      //    the page deliberately prints 92 citations and 91 rows.
+      const screenBlocks = [...pot.matchAll(/<table class="screen">([\s\S]*?)<\/table>/g)];
+      if (!screenBlocks.length) {
+        fail("potential", "no screen table on potential_notable_citations.html — the page no longer shows how the list was derived");
+      } else {
+        let sumListed = 0;
+        for (const [i, block] of screenBlocks.entries()) {
+          const terms = [...block[1].matchAll(/class="n">(?:<strong>)?(&minus;)?(-?\d+)/g)]
+            .map(m => (m[1] ? -1 : 1) * Number(m[2]));
+          if (terms.length < 2) { fail("potential", `screen table ${i + 1} has no numbers to add up`); continue; }
           const listed = terms.pop();
           const running = terms.reduce((a, b) => a + b, 0);
-          if (running !== listed) fail("potential", `the screen arithmetic does not close: ${running} != ${listed} listed`);
-          if (listed !== potUids.length) fail("potential", `the screen table says ${listed} candidates but the table lists ${potUids.length}`);
+          if (running !== listed) fail("potential", `screen table ${i + 1} does not close: ${running} != ${listed} listed`);
+          sumListed += listed;
+        }
+        if (sumListed !== potUids.length) {
+          fail("potential", `the screen tables total ${sumListed} listed citations but the table lists ${potUids.length}`);
         }
       }
 
@@ -721,7 +804,7 @@ for (const r of cits) {
       const screened = potPdf.filter(h => h.startsWith(ROOT_SCREENED + "/"));
       if (screened.length) fail("potential", `the review page links ${screened.length} screened-out PDF(s) (§4.5): ${screened.slice(0, 4).join(", ")}`);
 
-      if (!QUIET) note("potential", `${name}: ${potUids.length} candidate row(s); all independent on the record, none in the packet or the original application; ${shownTiers} tier(s) shown, each backed by a scan of a PDF on file or a resolved mention`);
+      if (!QUIET) note("potential", `${name}: ${potUids.length} candidate citation(s); all independent on the record, none in the packet or the original application; ${shownTiers} tier(s) shown, each backed by a scan of a PDF on file or a resolved mention`);
     }
     }
   }

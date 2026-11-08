@@ -339,86 +339,27 @@ quietly re-merging. This is the only place the advice is written down.
 
 ## 4. Potential citations not in the packet
 
-### 4.1 GLAD — “GLAD: GLycan Array Dashboard, a visual analytics tool for glycan micr…” (2019)
+[`potential_notable_citations.html`](./potential_notable_citations.html) lists **92**
+independent citations of the works in the candidate queue that are **not** in `packet.html`.
+They appear as **91 rows**
+because 1 citation sits on a row already held by
+another of my works. One article that cites two of them is one row with two judgements
+in it, one per work, so the row says where GLAD sits and where GlycoGlyph sits separately.
 
-[`potential_notable_citations.html`](./potential_notable_citations.html) lists **34** independent citations of that work that are
-**not** in `packet.html`. It is a review page for the applicant: it is not linked from the
-packet, not printed with it, and nothing on it is evidence until a person has read the
-article and filed it.
+It is a review page for the applicant: it is not linked from the packet, not printed
+with it, and nothing on it is evidence until a person has read the article and filed it.
 
-| | count |
-|---|---:|
-| Citing works the record lists for that paper | 64 |
-| less rows retired by a later re-capture | 0 |
-| less not independent (shared author, or a PI on the citing paper) | 18 |
-| less copies that do not stand for their work | 2 |
-| less not listed in English | 0 |
-| less already confirmed in the packet | 7 |
-| less already used in the original application (§3) | 2 |
-| less decided against by the applicant | 1 |
-| **listed for review** | **34** |
+| my work | citing works the record lists | less retired | less not independent | less copies | less not English | less in packet | less in original app. | less decided | listed | PDF on file |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| **GLAD** — GLAD: GLycan Array Dashboard, a visual analyt… (2019) | 64 | 0 | 18 | 2 | 0 | 7 | 2 | 1 | **34** | 16 |
+| **GlycoGlyph** — GlycoGlyph: a glycan visualizing, drawing and… (2020) | 78 | 0 | 9 | 4 | 0 | 7 | 3 | 0 | **55** | 15 |
+| **MAWE** — Reusable glycan microarrays using a microwave… (2024) | 15 | 0 | 6 | 1 | 0 | 5 | 0 | 0 | **3** | 0 |
+| **all works** | | | | | | | | | **92** | 31 |
 
-16 of them already have a PDF on file, held under `pending-papers/` until a
-decision is made. The rest sit at
-`no-open-copy`, `paywalled`, or `not-in-indexes` — findings about access, not about
-whether the paper exists. **A tier appears only for an article that has actually been read:**
-a plain tier is a named mention under a heading the citing paper printed, and a tier marked
-“resolved” is a citation the paper credited by reference number or by author–year
-without naming the tool. The rest claim nothing, because a tier is a claim about where a
-sentence sits and their articles have not been read page by page.
-To bring one in, name its `row_uid` and run `discover-pdfs.js` → `file-pdf.js` →
-`scan-mentions.js` → `record-evidence.js`, then re-render the packet.
+Each work's own arithmetic is printed on the review page beside its name; the row above
+is the same screen, not a second tally.
 
-### 4.2 GlycoGlyph — “GlycoGlyph: a glycan visualizing, drawing and naming application” (2020)
-
-[`potential_notable_citations-GlycoGlyph.html`](./potential_notable_citations-GlycoGlyph.html) lists **55** independent citations of that work that are
-**not** in `packet.html`. It is a review page for the applicant: it is not linked from the
-packet, not printed with it, and nothing on it is evidence until a person has read the
-article and filed it.
-
-| | count |
-|---|---:|
-| Citing works the record lists for that paper | 78 |
-| less rows retired by a later re-capture | 0 |
-| less not independent (shared author, or a PI on the citing paper) | 9 |
-| less copies that do not stand for their work | 4 |
-| less not listed in English | 0 |
-| less already confirmed in the packet | 7 |
-| less already used in the original application (§3) | 3 |
-| less decided against by the applicant | 0 |
-| **listed for review** | **55** |
-
-15 of them already have a PDF on file, held under `pending-papers/` until a
-decision is made. The rest sit at
-`no-open-copy`, `paywalled`, or `not-in-indexes` — findings about access, not about
-whether the paper exists. **A tier appears only for an article that has actually been read:**
-a plain tier is a named mention under a heading the citing paper printed, and a tier marked
-“resolved” is a citation the paper credited by reference number or by author–year
-without naming the tool. The rest claim nothing, because a tier is a claim about where a
-sentence sits and their articles have not been read page by page.
-To bring one in, name its `row_uid` and run `discover-pdfs.js` → `file-pdf.js` →
-`scan-mentions.js` → `record-evidence.js`, then re-render the packet.
-
-### 4.3 MAWE — “Reusable glycan microarrays using a microwave assisted wet-erase (MAW…” (2024)
-
-[`potential_notable_citations-MAWE.html`](./potential_notable_citations-MAWE.html) lists **3** independent citations of that work that are
-**not** in `packet.html`. It is a review page for the applicant: it is not linked from the
-packet, not printed with it, and nothing on it is evidence until a person has read the
-article and filed it.
-
-| | count |
-|---|---:|
-| Citing works the record lists for that paper | 15 |
-| less rows retired by a later re-capture | 0 |
-| less not independent (shared author, or a PI on the citing paper) | 6 |
-| less copies that do not stand for their work | 1 |
-| less not listed in English | 0 |
-| less already confirmed in the packet | 5 |
-| less already used in the original application (§3) | 0 |
-| less decided against by the applicant | 0 |
-| **listed for review** | **3** |
-
-0 of them already have a PDF on file, held under `pending-papers/` until a
+31 citations already have a PDF on file, held under `pending-papers/` until a
 decision is made. The rest sit at
 `no-open-copy`, `paywalled`, or `not-in-indexes` — findings about access, not about
 whether the paper exists. **A tier appears only for an article that has actually been read:**

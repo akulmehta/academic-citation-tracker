@@ -571,11 +571,13 @@ if (withNote.length) {
 /* ---------------------------------------------------------------- */
 push("## 4. Potential citations not in the packet");
 push();
-// Built from lib.potentialIndependent — the same screen the review pages use — so
-// the two documents cannot disagree about what "potential" means. One subsection
-// per cited work the candidate queue holds, mirroring the one-page-per-work rule
-// in build-potential.js: the screen is arithmetic about ONE cited paper, so a
-// single combined table would misrepresent every work in it.
+// Built from lib.potentialIndependent — the same screen the review page uses — so
+// the two documents cannot disagree about what "potential" means. ONE page lists
+// every cited work the candidate queue holds, with a "My work" column saying which
+// of the applicant's papers each citation is for, and one screen table per work so
+// the arithmetic still belongs to a single paper. A citing article that cites more
+// than one work is a single row carrying more than one citation, so the citation
+// count and the row count are printed separately and are not the same number.
 try {
   const catS = openCatalog();
   const queuedIds = [...new Set(db.prepare(
@@ -592,45 +594,68 @@ try {
     push("_Not generated: the candidate queue holds no cited work, so there is nothing this");
     push("_document can list. Run `discover-pdfs.js --seed --cites=\u2026` for the work you want to work on._");
   }
-  let anySub = 0;
+  // Per work: the screen, plus how many rows its citations occupy once folded.
+  const perWork = [];
+  const foldKeys = new Set();
   for (const pub of works) {
-    anySub++;
-    const tool = toolForCitedPaper(pub.title) || "Other";
-    const page = tool === "GLAD" ? "potential_notable_citations.html"
-      : `potential_notable_citations-${tool.replace(/[^A-Za-z0-9]/g, "")}.html`;
     const { rows: pot, screen } = potentialIndependent(catS, db, pub.cites_id);
-    const potPdf = pot.filter(r => candBy.get(r.row_uid) && candBy.get(r.row_uid).pdf_file);
-    push(`### 4.${anySub} ${tool} — \u201c${short(pub.title, 70)}\u201d (${pub.year || "\u2014"})`);
-    push();
-    push(`[\`${page}\`](./${page}) lists **${pot.length}** independent citations of that work that are`);
-    push("**not** in `packet.html`. It is a review page for the applicant: it is not linked from the");
-    push("packet, not printed with it, and nothing on it is evidence until a person has read the");
-    push("article and filed it.");
-    push();
-    push("| | count |");
-    push("|---|---:|");
-    push("| Citing works the record lists for that paper | " + screen.total + " |");
-    push("| less rows retired by a later re-capture | " + screen.superseded + " |");
-    push("| less not independent (shared author, or a PI on the citing paper) | " + screen.dependent + " |");
-    push("| less copies that do not stand for their work | " + screen.notStanding + " |");
-    push("| less not listed in English | " + screen.nonEnglish + " |");
-    push("| less already confirmed in the packet | " + screen.inPacket + " |");
-    push("| less already used in the original application (\u00a73) | " + screen.origApp + " |");
-    push("| less decided against by the applicant | " + screen.decided + " |");
-    push("| **listed for review** | **" + pot.length + "** |");
-    push();
-    push(potPdf.length + " of them already have a PDF on file, held under `pending-papers/` until a");
-    push("decision is made. The rest sit at");
-    push("`no-open-copy`, `paywalled`, or `not-in-indexes` \u2014 findings about access, not about");
-    push("whether the paper exists. **A tier appears only for an article that has actually been read:**");
-    push("a plain tier is a named mention under a heading the citing paper printed, and a tier marked");
-    push("\u201cresolved\u201d is a citation the paper credited by reference number or by author\u2013year");
-    push("without naming the tool. The rest claim nothing, because a tier is a claim about where a");
-    push("sentence sits and their articles have not been read page by page.");
-    push("To bring one in, name its `row_uid` and run `discover-pdfs.js` \u2192 `file-pdf.js` \u2192");
-    push("`scan-mentions.js` \u2192 `record-evidence.js`, then re-render the packet.");
-    push();
+    const uids = pot.map(r => r.row_uid);
+    let keys = uids.map(u => "NO-KEY:" + u);
+    if (uids.length) {
+      const kRows = catS.prepare(`SELECT row_uid, COALESCE(NULLIF(same_work_key,''), work_key) AS k
+        FROM citations WHERE row_uid IN (${uids.map(() => "?").join(",")})`).all(...uids);
+      const kOf = new Map(kRows.map(r => [r.row_uid, r.k || ""]));
+      keys = uids.map(u => kOf.get(u) || "NO-KEY:" + u);
+    }
+    for (const k of keys) foldKeys.add(k);
+    const withPdf = pot.filter(r => { const c = candBy.get(r.row_uid); return c && c.pdf_file; }).length;
+    perWork.push({ pub, screen, nCit: pot.length, withPdf });
   }
+  const totalCit = perWork.reduce((a, w) => a + w.nCit, 0);
+  const totalPdf = perWork.reduce((a, w) => a + w.withPdf, 0);
+  const nRows = foldKeys.size;
+  // A work can lose a citation to a row another work already claimed, so the sum of
+  // the per-work figures can exceed the row count. Say which, rather than let a
+  // reader do the subtraction and suspect a mistake.
+  const foldedAway = totalCit - nRows;
+  push(`[\`potential_notable_citations.html\`](./potential_notable_citations.html) lists **${totalCit}**`);
+  push(`independent citations of the works in the candidate queue that are **not** in \`packet.html\`.`);
+  push(`They appear as **${nRows} rows**`);
+  if (foldedAway > 0) {
+    push(`because ${foldedAway} citation${foldedAway === 1 ? " sits" : "s sit"} on a row already held by`);
+    push(`another of my works. One article that cites two of them is one row with two judgements`);
+    push("in it, one per work, so the row says where GLAD sits and where GlycoGlyph sits separately.");
+  } else {
+    push("\u2014 no citing article in the queue cites more than one of my works today, so a row and a");
+    push("citation are the same thing. The page prints both figures either way.");
+  }
+  push();
+  push("It is a review page for the applicant: it is not linked from the packet, not printed");
+  push("with it, and nothing on it is evidence until a person has read the article and filed it.");
+  push();
+  push("| my work | citing works the record lists | less retired | less not independent | less copies | less not English | less in packet | less in original app. | less decided | listed | PDF on file |");
+  push("|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|");
+  for (const w of perWork) {
+    const tool = toolForCitedPaper(w.pub.title) || "Other";
+    const s = w.screen;
+    push(`| **${tool}** \u2014 ${short(w.pub.title, 46)} (${w.pub.year || "\u2014"}) | ${s.total} | ${s.superseded} | ${s.dependent} | ${s.notStanding} | ${s.nonEnglish} | ${s.inPacket} | ${s.origApp} | ${s.decided} | **${w.nCit}** | ${w.withPdf} |`);
+  }
+  push(`| **all works** | | | | | | | | | **${totalCit}** | ${totalPdf} |`);
+  push();
+  push("Each work's own arithmetic is printed on the review page beside its name; the row above");
+  push("is the same screen, not a second tally.");
+  push();
+  push(totalPdf + " citations already have a PDF on file, held under `pending-papers/` until a");
+  push("decision is made. The rest sit at");
+  push("`no-open-copy`, `paywalled`, or `not-in-indexes` \u2014 findings about access, not about");
+  push("whether the paper exists. **A tier appears only for an article that has actually been read:**");
+  push("a plain tier is a named mention under a heading the citing paper printed, and a tier marked");
+  push("\u201cresolved\u201d is a citation the paper credited by reference number or by author\u2013year");
+  push("without naming the tool. The rest claim nothing, because a tier is a claim about where a");
+  push("sentence sits and their articles have not been read page by page.");
+  push("To bring one in, name its `row_uid` and run `discover-pdfs.js` \u2192 `file-pdf.js` \u2192");
+  push("`scan-mentions.js` \u2192 `record-evidence.js`, then re-render the packet.");
+  push();
   catS.close();
 } catch (e) {
   push("_Not generated: " + esc(e.message) + "_");

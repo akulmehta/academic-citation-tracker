@@ -1035,7 +1035,7 @@ silently revert the *report*, not the database, which is how a stale claim survi
 Printing comes before the final validation because the validator is what proves the PDF exists and
 is non-empty — validating first and printing second leaves the last step unchecked.
 
-### 5.6 Potential citations go on their own page, never in `packet.html`
+### 5.6 Potential citations go on their one page, never in `packet.html`
 
 `packet.html` is the document counsel receives, and it contains **only the citations the applicant
 has confirmed**. Independent citations that are not in the packet belong on
@@ -1044,6 +1044,29 @@ has confirmed**. Independent citations that are not in the packet belong on
 ```
 node scripts/build-potential.js --write   # potential_notable_citations.html
 ```
+
+**One page lists every queued work** (applicant instruction, 2026-11-08). It used to be one page per
+cited work — `potential_notable_citations-GlycoGlyph.html`, `-MAWE.html` — which made the applicant
+open a file per paper to see the whole pile. The page now carries a **My work** column naming which of
+the applicant's works each citation is for, and a citing article that cites **more than one** of them
+occupies **one row** holding one judgement block per work, so the row says where GLAD sits and where
+GlycoGlyph sits without duplicating the article. `validate-packet.js` fails if a per-work page is left
+in the folder: a second document claiming to be the review list is not a convenience.
+
+That fold means **a row is not a citation**, and the page prints both figures and names them — 92
+citations appearing as 91 rows. Every downstream check counts uids, not rows: the uid cell holds the
+row's first uid plus a `.uid2` line per further citation, and each tier pill sits in a
+`<div class="workcell" data-uid="…">` so §12b can still say *which* citation a pill describes. A pill
+in a row that no workcell claims is a failure, not an orphan to ignore. The screen tables stay **one
+per cited work** — the arithmetic belongs to a single paper — and the sum of their `listed` figures
+must equal the citations in the table.
+
+The table is searchable and filterable by column: free-text search, Tier, Open copy, PDF on file,
+Year, **My work**, and **Works cited by it** (how many of the applicant's works one article cites),
+with a `showing N of M` count and a reset. Filters read the row's `data-*` attributes rather than the
+rendered prose, so rewording a label for a reader cannot silently change what a filter matches. The
+filter bar is hidden by `@media print` — a printed exhibit is the whole screen, whatever was filtered
+on screen.
 
 The two documents answer different questions and must never be merged, cross-linked, or printed
 together. A reviewer who opens the packet should not find rows in it that nobody decided on, and a
@@ -1077,8 +1100,10 @@ assessed. Access is still recorded alongside — `open-copy`, `paywalled`, `no-o
 throttled or failed look-up must never read as "not indexed". Transferring a candidate means
 running the pipeline on its `row_uid`, not copying a row across.
 
-Each candidate carries its own report block at the foot of the page, the same shape the packet
-uses, so the applicant can read the citation and its location without opening the PDF. Every
+Each **citation** carries its own report block at the foot of the page — not each row — because a
+report answers a question about one citation, and the `full report` links in a folded row point at
+different blocks. The shape is the one the packet uses, so the applicant can read the citation and its
+location without opening the PDF. Every
 external link on that page opens in a new tab with `rel="noopener"` — the page is read *beside* the
 packet, and a link that replaces it loses the list; §12b check 4b enforces it.
 

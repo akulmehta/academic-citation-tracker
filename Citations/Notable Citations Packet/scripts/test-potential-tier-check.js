@@ -31,7 +31,7 @@ const PAGES = fs.readdirSync(PKT_DIR)
   .sort()
   .map(f => path.join(PKT_DIR, f));
 if (!PAGES.length) {
-  console.log("FAIL no potential_notable_citations*.html found — run build-potential.js --all --write");
+  console.log("FAIL no potential_notable_citations.html found — run build-potential.js --write");
   process.exit(1);
 }
 const VALIDATOR = path.join(__dirname, "validate-packet.js");
