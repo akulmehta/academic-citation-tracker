@@ -111,7 +111,7 @@
     Citation columns carry what that reading found; where it is not, they say so and claim nothing.
   </div>
   <div class="cited">
-    <strong>My works covered — 4</strong>
+    <strong>My works covered — 5</strong>
     <ol>
       <li><strong>GLAD</strong> — GLAD: GLycan Array Dashboard, a visual analytics tool for glycan microarrays (2019):
         30 citations listed</li>
@@ -121,15 +121,17 @@
         1 citation listed</li>
       <li><strong>GlyGen: computational and…</strong> — GlyGen: computational and informatics resources for glycoscience (2020):
         146 citations listed</li>
+      <li><strong>Sulfated pentagalloylglucoside is…</strong> — Sulfated pentagalloylglucoside is a potent, allosteric, and selective inhibitor of factor XIa (2013):
+        34 citations listed</li>
     </ol>
   </div>
-  <p>204 independent citations of these works are not in the packet and were not used in the
+  <p>238 independent citations of these works are not in the packet and were not used in the
      original application. Each is a real, independently authored citation. They appear as
-     <strong>197 rows</strong> below, because 7 articles cite
+     <strong>231 rows</strong> below, because 7 articles cite
      more than one of my works and is shown once, with a separate tier and quotation for each work it
-     cites. 39 citations have been read and the sentence that cites the
+     cites. 40 citations have been read and the sentence that cites the
      tool is recorded; 24 have been read and the tool does not appear anywhere the
-     article ranks as a section; 141 have no PDF yet, so where the citation sits is still
+     article ranks as a section; 174 have no PDF yet, so where the citation sits is still
      unknown &mdash; and that is what decides a tier.</p>
   <p class="sub">The screen below counts <em>citations</em>, not articles: independence and tier are
      both judgements about one citing paper against one cited work, so a paper that cites two of my
@@ -182,10 +184,22 @@
     <tr><td>less already decided against on review (kept in <code>screened-out.csv</code>)</td><td class="n">&minus;37</td></tr>
     <tr><td><strong>listed here for review</strong></td><td class="n"><strong>146</strong></td></tr>
   </table>
+
+  <h3 class="scrk">Sulfated pentagalloylglucoside is a potent, allosteric, and selective inhibitor of factor XIa (2013)</h3>
+  <table class="screen">
+    <tr><td>Citing works the record lists for this paper</td><td class="n">110</td></tr>
+    <tr><td>less not independent (shares an author with the cited work, or names a PI)</td><td class="n">&minus;54</td></tr>
+    <tr><td>less copies that do not stand for their work (preprint / repository twin)</td><td class="n">&minus;4</td></tr>
+    <tr><td>less not listed in English</td><td class="n">&minus;0</td></tr>
+    <tr><td>less already confirmed in the packet</td><td class="n">&minus;0</td></tr>
+    <tr><td>less already used in the original application</td><td class="n">&minus;2</td></tr>
+    <tr><td>less already decided against on review (kept in <code>screened-out.csv</code>)</td><td class="n">&minus;16</td></tr>
+    <tr><td><strong>listed here for review</strong></td><td class="n"><strong>34</strong></td></tr>
+  </table>
 </header>
 
-<h2>The 197 candidates</h2>
-<p>63 of the 204 citations have a PDF on file and have
+<h2>The 231 candidates</h2>
+<p>64 of the 238 citations have a PDF on file and have
    been read by the scanner; those carry a tier and the sentence it rests on. The rest have no tier
    because nothing has been read, which is a statement about the file, not about the paper.</p>
 
@@ -194,17 +208,17 @@
     <label for="f-q">Search (title, author, venue, quote, uid, doi, my work)</label>
     <input type="search" id="f-q" placeholder="e.g. glycan array, Heras, cit-000544, MAWE" autocomplete="off">
   </div>
-  <div class="fld"><label for="f-work">My work</label><select id="f-work"><option value="">any</option><option value="GLAD">GLAD</option><option value="GlycoGlyph">GlycoGlyph</option><option value="MAWE">MAWE</option><option value="GlyGen: computational and…">GlyGen: computational and…</option></select></div>
+  <div class="fld"><label for="f-work">My work</label><select id="f-work"><option value="">any</option><option value="GLAD">GLAD</option><option value="GlycoGlyph">GlycoGlyph</option><option value="MAWE">MAWE</option><option value="GlyGen: computational and…">GlyGen: computational and…</option><option value="Sulfated pentagalloylglucoside is…">Sulfated pentagalloylglucoside is…</option></select></div>
   <div class="fld"><label for="f-works">Works cited by it</label><select id="f-works"><option value="">any</option><option value="1">one work only</option><option value="2">two or more works</option></select></div>
   <div class="fld"><label for="f-tier">Tier</label><select id="f-tier"><option value="">any</option><option value="A">Tier A</option><option value="B">Tier B</option><option value="C">Tier C</option><option value="D">Tier D</option><option value="resolved">any tier, found by reference</option><option value="untiered">read, no tier</option><option value="unread">not read</option></select></div>
   <div class="fld"><label for="f-disc">Open copy</label><select id="f-disc"><option value="">any</option><option value="has-pdf">PDF on file</option><option value="open-copy">Open copy found</option><option value="paywalled">Paywalled</option><option value="no-open-copy">No open copy</option><option value="not-in-indexes">Not in OpenAlex</option><option value="not-queued">Not yet looked up</option></select></div>
   <div class="fld"><label for="f-pdf">PDF on file</label><select id="f-pdf"><option value="">any</option><option value="1">yes</option><option value="0">no</option></select></div>
-  <div class="fld"><label for="f-year">Year</label><select id="f-year"><option value="">any</option><option value="2026">2026</option><option value="2025">2025</option><option value="2024">2024</option><option value="2023">2023</option><option value="2022">2022</option><option value="2021">2021</option><option value="2020">2020</option><option value="2019">2019</option><option value="2010">2010</option></select></div>
+  <div class="fld"><label for="f-year">Year</label><select id="f-year"><option value="">any</option><option value="2026">2026</option><option value="2025">2025</option><option value="2024">2024</option><option value="2023">2023</option><option value="2022">2022</option><option value="2021">2021</option><option value="2020">2020</option><option value="2019">2019</option><option value="2018">2018</option><option value="2017">2017</option><option value="2016">2016</option><option value="2015">2015</option><option value="2014">2014</option><option value="2013">2013</option><option value="2010">2010</option></select></div>
   <div class="spacer"></div>
   <div class="fld"><label>&nbsp;</label><button type="button" id="f-reset">Reset</button></div>
   <div class="fld"><label>&nbsp;</label><span id="shown"></span></div>
 </div>
-<p id="no-hits">No row matches those filters. Reset to see all 197.</p>
+<p id="no-hits">No row matches those filters. Reset to see all 231.</p>
 
 <table id="cand">
   <thead><tr>
@@ -3168,6 +3182,516 @@
       <td class="cite"><div class="workcell" data-uid="cit-001254" data-work="MAWE"><span class="none">no PDF, so nothing has been quoted</span></div></td>
       <td class="pick"><label><input type="checkbox"> include</label></td>
     </tr>
+    <tr data-uid="cit-001284" data-uids="cit-001284" data-tier="none" data-disc="no-open-copy" data-pdf="0" data-year="2021" data-work="Sulfated pentagalloylglucoside is…" data-works="1" data-text="cit-001284 · factor xi deficiency · mdmd lewandowska, mdjm connors - hematology/oncology clinics of …, 2021 - elsevier · raffán-sanabria · hematology/oncology clinics of · sulfated pentagalloylglucoside is… ·  · 10.1055/s-0038-1646162">
+      <td class="uid">cit-001284</td>
+      <td class="work"><div class="workcell" data-uid="cit-001284" data-work="Sulfated pentagalloylglucoside is…"><span class="wname">Sulfated pentagalloylglucoside is…</span><div class="sub">2013</div></div></td>
+      <td class="title">Factor XI deficiency
+        <div class="byline">MDMD Lewandowska, MDJM Connors - Hematology/oncology clinics of …, 2021 - Elsevier</div></td>
+      <td>Raffán-Sanabria</td>
+      <td>2021</td>
+      <td>Hematology/oncology clinics of</td>
+      <td class="src"><a href="https://www.sciencedirect.com/science/article/pii/S0889858821000915" target="_blank" rel="noopener noreferrer">www.sciencedirect.com</a><div class="sub"><a href="https://doi.org/10.1055/s-0038-1646162" target="_blank" rel="noopener noreferrer">10.1055/s-0038-1646162</a></div></td>
+      <td class="disc"><span class="pill warn">No open copy</span><div class="sub">OpenAlex has the work (10.1055/s-0038-1646162), no open-access PDF location</div></td>
+      <td class="pdf"><span class="none">not retrieved</span></td>
+      <td class="tier"><div class="workcell" data-uid="cit-001284" data-work="Sulfated pentagalloylglucoside is…"><span class="none">not read</span></div></td>
+      <td class="cite"><div class="workcell" data-uid="cit-001284" data-work="Sulfated pentagalloylglucoside is…"><span class="none">no PDF, so nothing has been quoted</span></div></td>
+      <td class="pick"><label><input type="checkbox"> include</label></td>
+    </tr>
+    <tr data-uid="cit-001286" data-uids="cit-001286" data-tier="none" data-disc="no-open-copy" data-pdf="0" data-year="2024" data-work="Sulfated pentagalloylglucoside is…" data-works="1" data-text="cit-001286 · identification and anticoagulant mechanisms of novel factor xia inhibitory peptides by virtual screening of a in silico generated deep-sea peptide database · y ouyang, y yue, n wu, j wang, l geng… - food research …, 2024 - elsevier · zhang · food research · sulfated pentagalloylglucoside is… ·  · 10.1016/j.foodres.2024.115308">
+      <td class="uid">cit-001286</td>
+      <td class="work"><div class="workcell" data-uid="cit-001286" data-work="Sulfated pentagalloylglucoside is…"><span class="wname">Sulfated pentagalloylglucoside is…</span><div class="sub">2013</div></div></td>
+      <td class="title">Identification and anticoagulant mechanisms of novel factor XIa inhibitory peptides by virtual screening of a in silico generated deep-sea peptide database
+        <div class="byline">Y Ouyang, Y Yue, N Wu, J Wang, L Geng… - Food Research …, 2024 - Elsevier</div></td>
+      <td>Zhang</td>
+      <td>2024</td>
+      <td>Food Research</td>
+      <td class="src"><a href="https://www.sciencedirect.com/science/article/pii/S0963996924013784" target="_blank" rel="noopener noreferrer">www.sciencedirect.com</a><div class="sub"><a href="https://doi.org/10.1016/j.foodres.2024.115308" target="_blank" rel="noopener noreferrer">10.1016/j.foodres.2024.115308</a></div></td>
+      <td class="disc"><span class="pill warn">No open copy</span><div class="sub">OpenAlex has the work (10.1016/j.foodres.2024.115308), no open-access PDF location</div></td>
+      <td class="pdf"><span class="none">not retrieved</span></td>
+      <td class="tier"><div class="workcell" data-uid="cit-001286" data-work="Sulfated pentagalloylglucoside is…"><span class="none">not read</span></div></td>
+      <td class="cite"><div class="workcell" data-uid="cit-001286" data-work="Sulfated pentagalloylglucoside is…"><span class="none">no PDF, so nothing has been quoted</span></div></td>
+      <td class="pick"><label><input type="checkbox"> include</label></td>
+    </tr>
+    <tr data-uid="cit-001290" data-uids="cit-001290" data-tier="none" data-disc="no-open-copy" data-pdf="0" data-year="2015" data-work="Sulfated pentagalloylglucoside is…" data-works="1" data-text="cit-001290 · discovery of an intrinsic tenase complex inhibitor: pure nonasaccharide from fucosylated glycosaminoglycan · l zhao, m wu, c xiao, l yang, l zhou, n gao… - proceedings of the …, 2015 - pnas.org · zhao · proceedings of the · sulfated pentagalloylglucoside is… ·  · 10.1073/pnas.1504229112">
+      <td class="uid">cit-001290</td>
+      <td class="work"><div class="workcell" data-uid="cit-001290" data-work="Sulfated pentagalloylglucoside is…"><span class="wname">Sulfated pentagalloylglucoside is…</span><div class="sub">2013</div></div></td>
+      <td class="title">Discovery of an intrinsic tenase complex inhibitor: Pure nonasaccharide from fucosylated glycosaminoglycan
+        <div class="byline">L Zhao, M Wu, C Xiao, L Yang, L Zhou, N Gao… - Proceedings of the …, 2015 - pnas.org</div></td>
+      <td>Zhao</td>
+      <td>2015</td>
+      <td>Proceedings of the</td>
+      <td class="src"><a href="https://www.pnas.org/doi/abs/10.1073/pnas.1504229112" target="_blank" rel="noopener noreferrer">www.pnas.org</a><div class="sub"><a href="https://doi.org/10.1073/pnas.1504229112" target="_blank" rel="noopener noreferrer">10.1073/pnas.1504229112</a></div></td>
+      <td class="disc"><span class="pill warn">No open copy</span><div class="sub">OpenAlex has the work (10.1073/pnas.1504229112), no open-access PDF location</div></td>
+      <td class="pdf"><span class="none">not retrieved</span></td>
+      <td class="tier"><div class="workcell" data-uid="cit-001290" data-work="Sulfated pentagalloylglucoside is…"><span class="none">not read</span></div></td>
+      <td class="cite"><div class="workcell" data-uid="cit-001290" data-work="Sulfated pentagalloylglucoside is…"><span class="none">no PDF, so nothing has been quoted</span></div></td>
+      <td class="pick"><label><input type="checkbox"> include</label></td>
+    </tr>
+    <tr data-uid="cit-001296" data-uids="cit-001296" data-tier="none" data-disc="no-open-copy" data-pdf="0" data-year="2019" data-work="Sulfated pentagalloylglucoside is…" data-works="1" data-text="cit-001296 · advances in antithrombotic therapy · ji weitz, nc chan - arteriosclerosis, thrombosis, and vascular …, 2019 - ahajournals.org · chan · arteriosclerosis, thrombosis, and vascular · sulfated pentagalloylglucoside is… ·  · 10.1161/atvbaha.118.310960">
+      <td class="uid">cit-001296</td>
+      <td class="work"><div class="workcell" data-uid="cit-001296" data-work="Sulfated pentagalloylglucoside is…"><span class="wname">Sulfated pentagalloylglucoside is…</span><div class="sub">2013</div></div></td>
+      <td class="title">Advances in antithrombotic therapy
+        <div class="byline">JI Weitz, NC Chan - Arteriosclerosis, Thrombosis, and Vascular …, 2019 - ahajournals.org</div></td>
+      <td>Chan</td>
+      <td>2019</td>
+      <td>Arteriosclerosis, Thrombosis, and Vascular</td>
+      <td class="src"><a href="https://www.ahajournals.org/doi/abs/10.1161/ATVBAHA.118.310960" target="_blank" rel="noopener noreferrer">www.ahajournals.org</a><div class="sub"><a href="https://doi.org/10.1161/atvbaha.118.310960" target="_blank" rel="noopener noreferrer">10.1161/atvbaha.118.310960</a></div></td>
+      <td class="disc"><span class="pill warn">No open copy</span><div class="sub">OpenAlex has the work (10.1161/atvbaha.118.310960), no open-access PDF location</div></td>
+      <td class="pdf"><span class="none">not retrieved</span></td>
+      <td class="tier"><div class="workcell" data-uid="cit-001296" data-work="Sulfated pentagalloylglucoside is…"><span class="none">not read</span></div></td>
+      <td class="cite"><div class="workcell" data-uid="cit-001296" data-work="Sulfated pentagalloylglucoside is…"><span class="none">no PDF, so nothing has been quoted</span></div></td>
+      <td class="pick"><label><input type="checkbox"> include</label></td>
+    </tr>
+    <tr data-uid="cit-001303" data-uids="cit-001303" data-tier="B-resolved" data-disc="has-pdf" data-pdf="1" data-year="2022" data-work="Sulfated pentagalloylglucoside is…" data-works="1" data-text="cit-001303 · physicochemical properties and anticoagulant activity of purified heteropolysaccharides from laminaria japonica · t li, h ma, h li, h tang, j huang, s wei, q yuan… - molecules, 2022 - mdpi.com · liu · molecules · sulfated pentagalloylglucoside is… ·  · 10.3390/molecules27093027">
+      <td class="uid">cit-001303</td>
+      <td class="work"><div class="workcell" data-uid="cit-001303" data-work="Sulfated pentagalloylglucoside is…"><span class="wname">Sulfated pentagalloylglucoside is…</span><div class="sub">2013</div></div></td>
+      <td class="title">Physicochemical Properties and Anticoagulant Activity of Purified Heteropolysaccharides from Laminaria japonica
+        <div class="byline">T Li, H Ma, H Li, H Tang, J Huang, S Wei, Q Yuan… - Molecules, 2022 - mdpi.com</div></td>
+      <td>Liu</td>
+      <td>2022</td>
+      <td>Molecules</td>
+      <td class="src"><a href="https://www.mdpi.com/1420-3049/27/9/3027" target="_blank" rel="noopener noreferrer">www.mdpi.com</a><div class="sub"><a href="https://doi.org/10.3390/molecules27093027" target="_blank" rel="noopener noreferrer">10.3390/molecules27093027</a></div></td>
+      <td class="disc"><span class="pill ok">PDF on file</span><div class="sub">downloaded from www.mdpi.com</div></td>
+      <td class="pdf"><a href="pending-papers/cit-001303/01-article-Liu-2022.pdf">PDF</a></td>
+      <td class="tier"><div class="workcell" data-uid="cit-001303" data-work="Sulfated pentagalloylglucoside is…"><span class="pill ok resolved">Tier B &mdash; resolved</span><div class="sub">Results, p. 7, named by its reference number or author-year citation</div></div></td>
+      <td class="cite"><div class="workcell" data-uid="cit-001303" data-work="Sulfated pentagalloylglucoside is…"><span class="q">&ldquo;used in screening anticoagulant active ingredients [36].&rdquo;</span><div class="sub">Results, p. 7 · resolved 2026-11-08 · <a href="#rep-cit-001303">full report</a></div></div></td>
+      <td class="pick"><label><input type="checkbox"> include</label></td>
+    </tr>
+    <tr data-uid="cit-001305" data-uids="cit-001305" data-tier="none" data-disc="paywalled" data-pdf="0" data-year="2014" data-work="Sulfated pentagalloylglucoside is…" data-works="1" data-text="cit-001305 · fasxiator, a novel factor xi a inhibitor from snake venom, and its site‐specific mutagenesis to improve potency and selectivity · w chen, lpd carvalho, my chan… - … of thrombosis and …, 2015 - wiley online library · kang ·  · sulfated pentagalloylglucoside is… ·  · 10.1111/jth.12797">
+      <td class="uid">cit-001305</td>
+      <td class="work"><div class="workcell" data-uid="cit-001305" data-work="Sulfated pentagalloylglucoside is…"><span class="wname">Sulfated pentagalloylglucoside is…</span><div class="sub">2013</div></div></td>
+      <td class="title">Fasxiator, a novel factor XI a inhibitor from snake venom, and its site‐specific mutagenesis to improve potency and selectivity
+        <div class="byline">W Chen, LPD Carvalho, MY Chan… - … of Thrombosis and …, 2015 - Wiley Online Library</div></td>
+      <td>Kang</td>
+      <td>2014</td>
+      <td>—</td>
+      <td class="src"><a href="https://onlinelibrary.wiley.com/doi/abs/10.1111/jth.12797" target="_blank" rel="noopener noreferrer">onlinelibrary.wiley.com</a><div class="sub"><a href="https://doi.org/10.1111/jth.12797" target="_blank" rel="noopener noreferrer">10.1111/jth.12797</a></div></td>
+      <td class="disc"><span class="pill warn">Paywalled</span><div class="sub">OpenAlex offered a PDF but the host answered 403</div></td>
+      <td class="pdf"><span class="none">not retrieved</span></td>
+      <td class="tier"><div class="workcell" data-uid="cit-001305" data-work="Sulfated pentagalloylglucoside is…"><span class="none">not read</span></div></td>
+      <td class="cite"><div class="workcell" data-uid="cit-001305" data-work="Sulfated pentagalloylglucoside is…"><span class="none">no PDF, so nothing has been quoted</span></div></td>
+      <td class="pick"><label><input type="checkbox"> include</label></td>
+    </tr>
+    <tr data-uid="cit-001309" data-uids="cit-001309" data-tier="none" data-disc="no-open-copy" data-pdf="0" data-year="2021" data-work="Sulfated pentagalloylglucoside is…" data-works="1" data-text="cit-001309 · five distinct fucan sulfates from sea cucumber pattalus mollis: purification, structural characterization and anticoagulant activities · y ma, n gao, z zuo, s li, w zheng, x shi, q liu… - international journal of …, 2021 - elsevier · zhao · international journal of · sulfated pentagalloylglucoside is… ·  · 10.1016/j.ijbiomac.2021.07.049">
+      <td class="uid">cit-001309</td>
+      <td class="work"><div class="workcell" data-uid="cit-001309" data-work="Sulfated pentagalloylglucoside is…"><span class="wname">Sulfated pentagalloylglucoside is…</span><div class="sub">2013</div></div></td>
+      <td class="title">Five distinct fucan sulfates from sea cucumber Pattalus mollis: Purification, structural characterization and anticoagulant activities
+        <div class="byline">Y Ma, N Gao, Z Zuo, S Li, W Zheng, X Shi, Q Liu… - International journal of …, 2021 - Elsevier</div></td>
+      <td>Zhao</td>
+      <td>2021</td>
+      <td>International journal of</td>
+      <td class="src"><a href="https://www.sciencedirect.com/science/article/pii/S0141813021014847" target="_blank" rel="noopener noreferrer">www.sciencedirect.com</a><div class="sub"><a href="https://doi.org/10.1016/j.ijbiomac.2021.07.049" target="_blank" rel="noopener noreferrer">10.1016/j.ijbiomac.2021.07.049</a></div></td>
+      <td class="disc"><span class="pill warn">No open copy</span><div class="sub">OpenAlex has the work (10.1016/j.ijbiomac.2021.07.049), no open-access PDF location</div></td>
+      <td class="pdf"><span class="none">not retrieved</span></td>
+      <td class="tier"><div class="workcell" data-uid="cit-001309" data-work="Sulfated pentagalloylglucoside is…"><span class="none">not read</span></div></td>
+      <td class="cite"><div class="workcell" data-uid="cit-001309" data-work="Sulfated pentagalloylglucoside is…"><span class="none">no PDF, so nothing has been quoted</span></div></td>
+      <td class="pick"><label><input type="checkbox"> include</label></td>
+    </tr>
+    <tr data-uid="cit-001310" data-uids="cit-001310" data-tier="none" data-disc="paywalled" data-pdf="0" data-year="2025" data-work="Sulfated pentagalloylglucoside is…" data-works="1" data-text="cit-001310 · the discovery of a novel anticoagulant mechanism: factor xi activation inhibitors · k ellsworth, p nizner, a ogawa, a hruza… - acs pharmacology &amp; …, 2025 - acs publications · tata ·  · sulfated pentagalloylglucoside is… ·  · 10.1021/acsptsci.5c00265">
+      <td class="uid">cit-001310</td>
+      <td class="work"><div class="workcell" data-uid="cit-001310" data-work="Sulfated pentagalloylglucoside is…"><span class="wname">Sulfated pentagalloylglucoside is…</span><div class="sub">2013</div></div></td>
+      <td class="title">The discovery of a novel anticoagulant mechanism: factor XI activation inhibitors
+        <div class="byline">K Ellsworth, P Nizner, A Ogawa, A Hruza… - ACS Pharmacology &amp; …, 2025 - ACS Publications</div></td>
+      <td>Tata</td>
+      <td>2025</td>
+      <td>—</td>
+      <td class="src"><a href="https://pubs.acs.org/aptsfn/article-abstract/8/9/3090/3761803" target="_blank" rel="noopener noreferrer">pubs.acs.org</a><div class="sub"><a href="https://doi.org/10.1021/acsptsci.5c00265" target="_blank" rel="noopener noreferrer">10.1021/acsptsci.5c00265</a></div></td>
+      <td class="disc"><span class="pill warn">Paywalled</span><div class="sub">OpenAlex offered a PDF but the host answered 403</div></td>
+      <td class="pdf"><span class="none">not retrieved</span></td>
+      <td class="tier"><div class="workcell" data-uid="cit-001310" data-work="Sulfated pentagalloylglucoside is…"><span class="none">not read</span></div></td>
+      <td class="cite"><div class="workcell" data-uid="cit-001310" data-work="Sulfated pentagalloylglucoside is…"><span class="none">no PDF, so nothing has been quoted</span></div></td>
+      <td class="pick"><label><input type="checkbox"> include</label></td>
+    </tr>
+    <tr data-uid="cit-001311" data-uids="cit-001311" data-tier="none" data-disc="no-open-copy" data-pdf="0" data-year="2018" data-work="Sulfated pentagalloylglucoside is…" data-works="1" data-text="cit-001311 · precise structures of fucosylated glycosaminoglycan and its oligosaccharides as novel intrinsic factor xase inhibitors · f shang, n gao, r yin, l lin, c xiao, l zhou… - european journal of …, 2018 - elsevier · zhao · european journal of · sulfated pentagalloylglucoside is… ·  · 10.1016/j.ejmech.2018.02.047">
+      <td class="uid">cit-001311</td>
+      <td class="work"><div class="workcell" data-uid="cit-001311" data-work="Sulfated pentagalloylglucoside is…"><span class="wname">Sulfated pentagalloylglucoside is…</span><div class="sub">2013</div></div></td>
+      <td class="title">Precise structures of fucosylated glycosaminoglycan and its oligosaccharides as novel intrinsic factor Xase inhibitors
+        <div class="byline">F Shang, N Gao, R Yin, L Lin, C Xiao, L Zhou… - European Journal of …, 2018 - Elsevier</div></td>
+      <td>Zhao</td>
+      <td>2018</td>
+      <td>European Journal of</td>
+      <td class="src"><a href="https://www.sciencedirect.com/science/article/pii/S0223523418301776" target="_blank" rel="noopener noreferrer">www.sciencedirect.com</a><div class="sub"><a href="https://doi.org/10.1016/j.ejmech.2018.02.047" target="_blank" rel="noopener noreferrer">10.1016/j.ejmech.2018.02.047</a></div></td>
+      <td class="disc"><span class="pill warn">No open copy</span><div class="sub">OpenAlex has the work (10.1016/j.ejmech.2018.02.047), no open-access PDF location</div></td>
+      <td class="pdf"><span class="none">not retrieved</span></td>
+      <td class="tier"><div class="workcell" data-uid="cit-001311" data-work="Sulfated pentagalloylglucoside is…"><span class="none">not read</span></div></td>
+      <td class="cite"><div class="workcell" data-uid="cit-001311" data-work="Sulfated pentagalloylglucoside is…"><span class="none">no PDF, so nothing has been quoted</span></div></td>
+      <td class="pick"><label><input type="checkbox"> include</label></td>
+    </tr>
+    <tr data-uid="cit-001312" data-uids="cit-001312" data-tier="none" data-disc="paywalled" data-pdf="0" data-year="2022" data-work="Sulfated pentagalloylglucoside is…" data-works="1" data-text="cit-001312 · expedient synthesis of a library of heparan sulfate‐like “head‐to‐tail” linked multimers for structure and activity relationship studies · j zhang, l liang, w yang, s ramadan… - angewandte …, 2022 - wiley online library · huang ·  · sulfated pentagalloylglucoside is… ·  · 10.1002/ange.202209730">
+      <td class="uid">cit-001312</td>
+      <td class="work"><div class="workcell" data-uid="cit-001312" data-work="Sulfated pentagalloylglucoside is…"><span class="wname">Sulfated pentagalloylglucoside is…</span><div class="sub">2013</div></div></td>
+      <td class="title">Expedient Synthesis of a Library of Heparan Sulfate‐Like “Head‐to‐Tail” Linked Multimers for Structure and Activity Relationship Studies
+        <div class="byline">J Zhang, L Liang, W Yang, S Ramadan… - Angewandte …, 2022 - Wiley Online Library</div></td>
+      <td>Huang</td>
+      <td>2022</td>
+      <td>—</td>
+      <td class="src"><a href="https://onlinelibrary.wiley.com/doi/abs/10.1002/ange.202209730" target="_blank" rel="noopener noreferrer">onlinelibrary.wiley.com</a><div class="sub"><a href="https://doi.org/10.1002/ange.202209730" target="_blank" rel="noopener noreferrer">10.1002/ange.202209730</a></div></td>
+      <td class="disc"><span class="pill warn">Paywalled</span><div class="sub">OpenAlex offered a PDF but the host answered 403</div></td>
+      <td class="pdf"><span class="none">not retrieved</span></td>
+      <td class="tier"><div class="workcell" data-uid="cit-001312" data-work="Sulfated pentagalloylglucoside is…"><span class="none">not read</span></div></td>
+      <td class="cite"><div class="workcell" data-uid="cit-001312" data-work="Sulfated pentagalloylglucoside is…"><span class="none">no PDF, so nothing has been quoted</span></div></td>
+      <td class="pick"><label><input type="checkbox"> include</label></td>
+    </tr>
+    <tr data-uid="cit-001315" data-uids="cit-001315" data-tier="none" data-disc="no-open-copy" data-pdf="0" data-year="2019" data-work="Sulfated pentagalloylglucoside is…" data-works="1" data-text="cit-001315 · precise structures and anti-intrinsic tenase complex activity of three fucosylated glycosaminoglycans and their fragments · y cai, w yang, x li, l zhou, z wang, l lin… - carbohydrate …, 2019 - elsevier · zhao · carbohydrate · sulfated pentagalloylglucoside is… ·  · 10.1016/j.carbpol.2019.115146">
+      <td class="uid">cit-001315</td>
+      <td class="work"><div class="workcell" data-uid="cit-001315" data-work="Sulfated pentagalloylglucoside is…"><span class="wname">Sulfated pentagalloylglucoside is…</span><div class="sub">2013</div></div></td>
+      <td class="title">Precise structures and anti-intrinsic tenase complex activity of three fucosylated glycosaminoglycans and their fragments
+        <div class="byline">Y Cai, W Yang, X Li, L Zhou, Z Wang, L Lin… - Carbohydrate …, 2019 - Elsevier</div></td>
+      <td>Zhao</td>
+      <td>2019</td>
+      <td>Carbohydrate</td>
+      <td class="src"><a href="https://www.sciencedirect.com/science/article/pii/S0144861719308136" target="_blank" rel="noopener noreferrer">www.sciencedirect.com</a><div class="sub"><a href="https://doi.org/10.1016/j.carbpol.2019.115146" target="_blank" rel="noopener noreferrer">10.1016/j.carbpol.2019.115146</a></div></td>
+      <td class="disc"><span class="pill warn">No open copy</span><div class="sub">OpenAlex has the work (10.1016/j.carbpol.2019.115146), no open-access PDF location</div></td>
+      <td class="pdf"><span class="none">not retrieved</span></td>
+      <td class="tier"><div class="workcell" data-uid="cit-001315" data-work="Sulfated pentagalloylglucoside is…"><span class="none">not read</span></div></td>
+      <td class="cite"><div class="workcell" data-uid="cit-001315" data-work="Sulfated pentagalloylglucoside is…"><span class="none">no PDF, so nothing has been quoted</span></div></td>
+      <td class="pick"><label><input type="checkbox"> include</label></td>
+    </tr>
+    <tr data-uid="cit-001323" data-uids="cit-001323" data-tier="none" data-disc="no-open-copy" data-pdf="0" data-year="2026" data-work="Sulfated pentagalloylglucoside is…" data-works="1" data-text="cit-001323 · alphafold3 assisted screening strategy identifying novel coagulation factor xia inhibitory peptides from deep-sea mussel gigantidas platifrons · y ouyang, y yue, q suo, h chen, j wang, n wu… - bioresource …, 2026 - elsevier · zhang · bioresource · sulfated pentagalloylglucoside is… ·  · 10.1016/j.biortech.2026.135497">
+      <td class="uid">cit-001323</td>
+      <td class="work"><div class="workcell" data-uid="cit-001323" data-work="Sulfated pentagalloylglucoside is…"><span class="wname">Sulfated pentagalloylglucoside is…</span><div class="sub">2013</div></div></td>
+      <td class="title">AlphaFold3 assisted screening strategy identifying novel coagulation factor XIa inhibitory peptides from deep-sea mussel Gigantidas platifrons
+        <div class="byline">Y Ouyang, Y Yue, Q Suo, H Chen, J Wang, N Wu… - Bioresource …, 2026 - Elsevier</div></td>
+      <td>Zhang</td>
+      <td>2026</td>
+      <td>Bioresource</td>
+      <td class="src"><a href="https://www.sciencedirect.com/science/article/pii/S0960852426015798" target="_blank" rel="noopener noreferrer">www.sciencedirect.com</a><div class="sub"><a href="https://doi.org/10.1016/j.biortech.2026.135497" target="_blank" rel="noopener noreferrer">10.1016/j.biortech.2026.135497</a></div></td>
+      <td class="disc"><span class="pill warn">No open copy</span><div class="sub">OpenAlex has the work (10.1016/j.biortech.2026.135497), no open-access PDF location</div></td>
+      <td class="pdf"><span class="none">not retrieved</span></td>
+      <td class="tier"><div class="workcell" data-uid="cit-001323" data-work="Sulfated pentagalloylglucoside is…"><span class="none">not read</span></div></td>
+      <td class="cite"><div class="workcell" data-uid="cit-001323" data-work="Sulfated pentagalloylglucoside is…"><span class="none">no PDF, so nothing has been quoted</span></div></td>
+      <td class="pick"><label><input type="checkbox"> include</label></td>
+    </tr>
+    <tr data-uid="cit-001325" data-uids="cit-001325" data-tier="none" data-disc="no-open-copy" data-pdf="0" data-year="2026" data-work="Sulfated pentagalloylglucoside is…" data-works="1" data-text="cit-001325 · discovery of novel fxia inhibitory peptides from deep-sea gigantidas platifrons hydrolysates: ai-guided screening, anticoagulant activity, and mechanistic insights · y ouyang, h chen, j wang, n wu, l geng… - journal of agricultural …, 2026 - acs publications · yue ·  · sulfated pentagalloylglucoside is… ·  · 10.1021/acs.jafc.6c04005">
+      <td class="uid">cit-001325</td>
+      <td class="work"><div class="workcell" data-uid="cit-001325" data-work="Sulfated pentagalloylglucoside is…"><span class="wname">Sulfated pentagalloylglucoside is…</span><div class="sub">2013</div></div></td>
+      <td class="title">Discovery of Novel FXIa Inhibitory Peptides from Deep-Sea Gigantidas platifrons Hydrolysates: AI-Guided Screening, Anticoagulant Activity, and Mechanistic Insights
+        <div class="byline">Y Ouyang, H Chen, J Wang, N Wu, L Geng… - Journal of Agricultural …, 2026 - ACS Publications</div></td>
+      <td>Yue</td>
+      <td>2026</td>
+      <td>—</td>
+      <td class="src"><a href="https://pubs.acs.org/jafcau/article/74/25/19936/5165424" target="_blank" rel="noopener noreferrer">pubs.acs.org</a><div class="sub"><a href="https://doi.org/10.1021/acs.jafc.6c04005" target="_blank" rel="noopener noreferrer">10.1021/acs.jafc.6c04005</a></div></td>
+      <td class="disc"><span class="pill warn">No open copy</span><div class="sub">OpenAlex has the work (10.1021/acs.jafc.6c04005), no open-access PDF location</div></td>
+      <td class="pdf"><span class="none">not retrieved</span></td>
+      <td class="tier"><div class="workcell" data-uid="cit-001325" data-work="Sulfated pentagalloylglucoside is…"><span class="none">not read</span></div></td>
+      <td class="cite"><div class="workcell" data-uid="cit-001325" data-work="Sulfated pentagalloylglucoside is…"><span class="none">no PDF, so nothing has been quoted</span></div></td>
+      <td class="pick"><label><input type="checkbox"> include</label></td>
+    </tr>
+    <tr data-uid="cit-001332" data-uids="cit-001332" data-tier="none" data-disc="no-open-copy" data-pdf="0" data-year="2026" data-work="Sulfated pentagalloylglucoside is…" data-works="1" data-text="cit-001332 · peptidomic characterization and evaluation of in vitro and in vivo anticoagulant activities of proteinase k hydrolysates from the deep-sea cold seep clam archivesica · y ouyang, y yue, h chen, j wang, n wu, l geng… - food bioscience, 2026 - elsevier · zhang · food bioscience · sulfated pentagalloylglucoside is… ·  · 10.1016/j.fbio.2026.109007">
+      <td class="uid">cit-001332</td>
+      <td class="work"><div class="workcell" data-uid="cit-001332" data-work="Sulfated pentagalloylglucoside is…"><span class="wname">Sulfated pentagalloylglucoside is…</span><div class="sub">2013</div></div></td>
+      <td class="title">Peptidomic characterization and evaluation of in vitro and in vivo anticoagulant activities of proteinase K hydrolysates from the deep-sea cold seep clam Archivesica <span class="sub">[title as Scholar shows it continues]</span>
+        <div class="byline">Y Ouyang, Y Yue, H Chen, J Wang, N Wu, L Geng… - Food Bioscience, 2026 - Elsevier</div></td>
+      <td>Zhang</td>
+      <td>2026</td>
+      <td>Food Bioscience</td>
+      <td class="src"><a href="https://www.sciencedirect.com/science/article/pii/S2212429226007790" target="_blank" rel="noopener noreferrer">www.sciencedirect.com</a><div class="sub"><a href="https://doi.org/10.1016/j.fbio.2026.109007" target="_blank" rel="noopener noreferrer">10.1016/j.fbio.2026.109007</a></div></td>
+      <td class="disc"><span class="pill warn">No open copy</span><div class="sub">OpenAlex has the work (10.1016/j.fbio.2026.109007), no open-access PDF location</div></td>
+      <td class="pdf"><span class="none">not retrieved</span></td>
+      <td class="tier"><div class="workcell" data-uid="cit-001332" data-work="Sulfated pentagalloylglucoside is…"><span class="none">not read</span></div></td>
+      <td class="cite"><div class="workcell" data-uid="cit-001332" data-work="Sulfated pentagalloylglucoside is…"><span class="none">no PDF, so nothing has been quoted</span></div></td>
+      <td class="pick"><label><input type="checkbox"> include</label></td>
+    </tr>
+    <tr data-uid="cit-001336" data-uids="cit-001336" data-tier="none" data-disc="no-open-copy" data-pdf="0" data-year="2018" data-work="Sulfated pentagalloylglucoside is…" data-works="1" data-text="cit-001336 · modulating the degree of fucosylation of fucosylated chondroitin sulfate enhances heparin cofactor ii-dependent thrombin inhibition · l xu, n gao, c xiao, l lin, sw purcell, m wu… - european journal of …, 2018 - elsevier · zhao · european journal of · sulfated pentagalloylglucoside is… ·  · 10.1016/j.ejmech.2018.05.024">
+      <td class="uid">cit-001336</td>
+      <td class="work"><div class="workcell" data-uid="cit-001336" data-work="Sulfated pentagalloylglucoside is…"><span class="wname">Sulfated pentagalloylglucoside is…</span><div class="sub">2013</div></div></td>
+      <td class="title">Modulating the degree of fucosylation of fucosylated chondroitin sulfate enhances heparin cofactor II-dependent thrombin inhibition
+        <div class="byline">L Xu, N Gao, C Xiao, L Lin, SW Purcell, M Wu… - European Journal of …, 2018 - Elsevier</div></td>
+      <td>Zhao</td>
+      <td>2018</td>
+      <td>European Journal of</td>
+      <td class="src"><a href="https://www.sciencedirect.com/science/article/pii/S0223523418304288" target="_blank" rel="noopener noreferrer">www.sciencedirect.com</a><div class="sub"><a href="https://doi.org/10.1016/j.ejmech.2018.05.024" target="_blank" rel="noopener noreferrer">10.1016/j.ejmech.2018.05.024</a></div></td>
+      <td class="disc"><span class="pill warn">No open copy</span><div class="sub">OpenAlex has the work (10.1016/j.ejmech.2018.05.024), no open-access PDF location</div></td>
+      <td class="pdf"><span class="none">not retrieved</span></td>
+      <td class="tier"><div class="workcell" data-uid="cit-001336" data-work="Sulfated pentagalloylglucoside is…"><span class="none">not read</span></div></td>
+      <td class="cite"><div class="workcell" data-uid="cit-001336" data-work="Sulfated pentagalloylglucoside is…"><span class="none">no PDF, so nothing has been quoted</span></div></td>
+      <td class="pick"><label><input type="checkbox"> include</label></td>
+    </tr>
+    <tr data-uid="cit-001338" data-uids="cit-001338" data-tier="none" data-disc="no-open-copy" data-pdf="0" data-year="2014" data-work="Sulfated pentagalloylglucoside is…" data-works="1" data-text="cit-001338 · phenylimidazoles as potent and selective inhibitors of coagulation factor xia with in vivo antithrombotic activity · jj hangeland, tj friends, ka rossi… - journal of medicinal …, 2014 - acs publications · quan ·  · sulfated pentagalloylglucoside is… ·  · 10.1021/jm5010607">
+      <td class="uid">cit-001338</td>
+      <td class="work"><div class="workcell" data-uid="cit-001338" data-work="Sulfated pentagalloylglucoside is…"><span class="wname">Sulfated pentagalloylglucoside is…</span><div class="sub">2013</div></div></td>
+      <td class="title">Phenylimidazoles as potent and selective inhibitors of coagulation factor XIa with in vivo antithrombotic activity
+        <div class="byline">JJ Hangeland, TJ Friends, KA Rossi… - Journal of Medicinal …, 2014 - ACS Publications</div></td>
+      <td>Quan</td>
+      <td>2014</td>
+      <td>—</td>
+      <td class="src"><a href="https://pubs.acs.org/doi/abs/10.1021/jm5010607" target="_blank" rel="noopener noreferrer">pubs.acs.org</a><div class="sub"><a href="https://doi.org/10.1021/jm5010607" target="_blank" rel="noopener noreferrer">10.1021/jm5010607</a></div></td>
+      <td class="disc"><span class="pill warn">No open copy</span><div class="sub">OpenAlex has the work (10.1021/jm5010607), no open-access PDF location</div></td>
+      <td class="pdf"><span class="none">not retrieved</span></td>
+      <td class="tier"><div class="workcell" data-uid="cit-001338" data-work="Sulfated pentagalloylglucoside is…"><span class="none">not read</span></div></td>
+      <td class="cite"><div class="workcell" data-uid="cit-001338" data-work="Sulfated pentagalloylglucoside is…"><span class="none">no PDF, so nothing has been quoted</span></div></td>
+      <td class="pick"><label><input type="checkbox"> include</label></td>
+    </tr>
+    <tr data-uid="cit-001342" data-uids="cit-001342" data-tier="none" data-disc="not-in-indexes" data-pdf="0" data-year="" data-work="Sulfated pentagalloylglucoside is…" data-works="1" data-text="cit-001342 · macrocycles with aromatic p2′ groups as factor xia inhibitors · jr corte, i de lucca, t fang, w yang, y wang… - us patent …, 2017 - google patents ·  ·  · sulfated pentagalloylglucoside is… ·  · ">
+      <td class="uid">cit-001342</td>
+      <td class="work"><div class="workcell" data-uid="cit-001342" data-work="Sulfated pentagalloylglucoside is…"><span class="wname">Sulfated pentagalloylglucoside is…</span><div class="sub">2013</div></div></td>
+      <td class="title">Macrocycles with aromatic P2′ groups as factor xia inhibitors
+        <div class="byline">JR Corte, I De Lucca, T Fang, W Yang, Y Wang… - US Patent …, 2017 - Google Patents</div></td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+      <td class="src"><a href="https://patents.google.com/patent/US9777001B2/en" target="_blank" rel="noopener noreferrer">patents.google.com</a></td>
+      <td class="disc"><span class="pill warn">Not in OpenAlex</span><div class="sub">no OpenAlex record by title</div></td>
+      <td class="pdf"><span class="none">not retrieved</span></td>
+      <td class="tier"><div class="workcell" data-uid="cit-001342" data-work="Sulfated pentagalloylglucoside is…"><span class="none">not read</span></div></td>
+      <td class="cite"><div class="workcell" data-uid="cit-001342" data-work="Sulfated pentagalloylglucoside is…"><span class="none">no PDF, so nothing has been quoted</span></div></td>
+      <td class="pick"><label><input type="checkbox"> include</label></td>
+    </tr>
+    <tr data-uid="cit-001365" data-uids="cit-001365" data-tier="none" data-disc="paywalled" data-pdf="0" data-year="2024" data-work="Sulfated pentagalloylglucoside is…" data-works="1" data-text="cit-001365 · enantiomeric separation of thiourea derivatives of naringenin on amylose and cellulose polymeric chromatographic chiral columns · i ali, r nabti, n belboukhari, k sekkoum, mea zaid… - chirality, 2024 - wiley online library · demir ·  · sulfated pentagalloylglucoside is… ·  · 10.1002/chir.23659">
+      <td class="uid">cit-001365</td>
+      <td class="work"><div class="workcell" data-uid="cit-001365" data-work="Sulfated pentagalloylglucoside is…"><span class="wname">Sulfated pentagalloylglucoside is…</span><div class="sub">2013</div></div></td>
+      <td class="title">Enantiomeric separation of thiourea derivatives of naringenin on amylose and cellulose polymeric chromatographic chiral columns
+        <div class="byline">I Ali, R Nabti, N Belboukhari, K Sekkoum, MEA Zaid… - Chirality, 2024 - Wiley Online Library</div></td>
+      <td>Demir</td>
+      <td>2024</td>
+      <td>—</td>
+      <td class="src"><a href="https://onlinelibrary.wiley.com/doi/abs/10.1002/chir.23659" target="_blank" rel="noopener noreferrer">onlinelibrary.wiley.com</a><div class="sub"><a href="https://doi.org/10.1002/chir.23659" target="_blank" rel="noopener noreferrer">10.1002/chir.23659</a></div></td>
+      <td class="disc"><span class="pill warn">Paywalled</span><div class="sub">OpenAlex offered a PDF but the host answered 403</div></td>
+      <td class="pdf"><span class="none">not retrieved</span></td>
+      <td class="tier"><div class="workcell" data-uid="cit-001365" data-work="Sulfated pentagalloylglucoside is…"><span class="none">not read</span></div></td>
+      <td class="cite"><div class="workcell" data-uid="cit-001365" data-work="Sulfated pentagalloylglucoside is…"><span class="none">no PDF, so nothing has been quoted</span></div></td>
+      <td class="pick"><label><input type="checkbox"> include</label></td>
+    </tr>
+    <tr data-uid="cit-001366" data-uids="cit-001366" data-tier="none" data-disc="no-open-copy" data-pdf="0" data-year="2016" data-work="Sulfated pentagalloylglucoside is…" data-works="1" data-text="cit-001366 · efforts to total synthesis of philinopside e: convergent synthesis of the sulfated lanostane-type tetraglycoside · s bai, z wu, q huang, l zhang, p chen, c wang… - rsc advances, 2016 - pubs.rsc.org · li · rsc advances · sulfated pentagalloylglucoside is… ·  · 10.1039/c5ra25845f">
+      <td class="uid">cit-001366</td>
+      <td class="work"><div class="workcell" data-uid="cit-001366" data-work="Sulfated pentagalloylglucoside is…"><span class="wname">Sulfated pentagalloylglucoside is…</span><div class="sub">2013</div></div></td>
+      <td class="title">Efforts to total synthesis of philinopside E: convergent synthesis of the sulfated lanostane-type tetraglycoside
+        <div class="byline">S Bai, Z Wu, Q Huang, L Zhang, P Chen, C Wang… - RSC Advances, 2016 - pubs.rsc.org</div></td>
+      <td>Li</td>
+      <td>2016</td>
+      <td>RSC Advances</td>
+      <td class="src"><a href="https://pubs.rsc.org/ra/article-abstract/6/7/5442/501613" target="_blank" rel="noopener noreferrer">pubs.rsc.org</a><div class="sub"><a href="https://doi.org/10.1039/c5ra25845f" target="_blank" rel="noopener noreferrer">10.1039/c5ra25845f</a></div></td>
+      <td class="disc"><span class="pill warn">No open copy</span><div class="sub">OpenAlex has the work (10.1039/c5ra25845f), no open-access PDF location</div></td>
+      <td class="pdf"><span class="none">not retrieved</span></td>
+      <td class="tier"><div class="workcell" data-uid="cit-001366" data-work="Sulfated pentagalloylglucoside is…"><span class="none">not read</span></div></td>
+      <td class="cite"><div class="workcell" data-uid="cit-001366" data-work="Sulfated pentagalloylglucoside is…"><span class="none">no PDF, so nothing has been quoted</span></div></td>
+      <td class="pick"><label><input type="checkbox"> include</label></td>
+    </tr>
+    <tr data-uid="cit-001368" data-uids="cit-001368" data-tier="none" data-disc="no-open-copy" data-pdf="0" data-year="2020" data-work="Sulfated pentagalloylglucoside is…" data-works="1" data-text="cit-001368 · orally bioavailable amine-linked macrocyclic inhibitors of factor xia · t fang, jr corte, pj gilligan, y jeon, h osuna… - bioorganic &amp; medicinal …, 2020 - elsevier · lam · bioorganic &amp; medicinal · sulfated pentagalloylglucoside is… ·  · 10.1016/j.bmcl.2020.126949">
+      <td class="uid">cit-001368</td>
+      <td class="work"><div class="workcell" data-uid="cit-001368" data-work="Sulfated pentagalloylglucoside is…"><span class="wname">Sulfated pentagalloylglucoside is…</span><div class="sub">2013</div></div></td>
+      <td class="title">Orally bioavailable amine-linked macrocyclic inhibitors of factor XIa
+        <div class="byline">T Fang, JR Corte, PJ Gilligan, Y Jeon, H Osuna… - Bioorganic &amp; Medicinal …, 2020 - Elsevier</div></td>
+      <td>Lam</td>
+      <td>2020</td>
+      <td>Bioorganic &amp; Medicinal</td>
+      <td class="src"><a href="https://www.sciencedirect.com/science/article/pii/S0960894X20300020" target="_blank" rel="noopener noreferrer">www.sciencedirect.com</a><div class="sub"><a href="https://doi.org/10.1016/j.bmcl.2020.126949" target="_blank" rel="noopener noreferrer">10.1016/j.bmcl.2020.126949</a></div></td>
+      <td class="disc"><span class="pill warn">No open copy</span><div class="sub">OpenAlex has the work (10.1016/j.bmcl.2020.126949), no open-access PDF location</div></td>
+      <td class="pdf"><span class="none">not retrieved</span></td>
+      <td class="tier"><div class="workcell" data-uid="cit-001368" data-work="Sulfated pentagalloylglucoside is…"><span class="none">not read</span></div></td>
+      <td class="cite"><div class="workcell" data-uid="cit-001368" data-work="Sulfated pentagalloylglucoside is…"><span class="none">no PDF, so nothing has been quoted</span></div></td>
+      <td class="pick"><label><input type="checkbox"> include</label></td>
+    </tr>
+    <tr data-uid="cit-001369" data-uids="cit-001369" data-tier="none" data-disc="no-open-copy" data-pdf="0" data-year="2018" data-work="Sulfated pentagalloylglucoside is…" data-works="1" data-text="cit-001369 · identifying new clotting factor xia inhibitors in virtual high‐throughput screens using pca‐ga‐svm models and signature · jj chen, ln schmucker, dp visco jr - biotechnology progress, 2018 - wiley online library ·  ·  · sulfated pentagalloylglucoside is… ·  · 10.1002/btpr.2693">
+      <td class="uid">cit-001369</td>
+      <td class="work"><div class="workcell" data-uid="cit-001369" data-work="Sulfated pentagalloylglucoside is…"><span class="wname">Sulfated pentagalloylglucoside is…</span><div class="sub">2013</div></div></td>
+      <td class="title">Identifying new clotting factor XIa inhibitors in virtual high‐throughput screens using PCA‐GA‐SVM models and signature
+        <div class="byline">JJ Chen, LN Schmucker, DP Visco Jr - Biotechnology Progress, 2018 - Wiley Online Library</div></td>
+      <td>—</td>
+      <td>2018</td>
+      <td>—</td>
+      <td class="src"><a href="https://aiche.onlinelibrary.wiley.com/doi/abs/10.1002/btpr.2693" target="_blank" rel="noopener noreferrer">aiche.onlinelibrary.wiley.com</a><div class="sub"><a href="https://doi.org/10.1002/btpr.2693" target="_blank" rel="noopener noreferrer">10.1002/btpr.2693</a></div></td>
+      <td class="disc"><span class="pill warn">No open copy</span><div class="sub">OpenAlex has the work (10.1002/btpr.2693), no open-access PDF location</div></td>
+      <td class="pdf"><span class="none">not retrieved</span></td>
+      <td class="tier"><div class="workcell" data-uid="cit-001369" data-work="Sulfated pentagalloylglucoside is…"><span class="none">not read</span></div></td>
+      <td class="cite"><div class="workcell" data-uid="cit-001369" data-work="Sulfated pentagalloylglucoside is…"><span class="none">no PDF, so nothing has been quoted</span></div></td>
+      <td class="pick"><label><input type="checkbox"> include</label></td>
+    </tr>
+    <tr data-uid="cit-001370" data-uids="cit-001370" data-tier="none" data-disc="paywalled" data-pdf="0" data-year="2014" data-work="Sulfated pentagalloylglucoside is…" data-works="1" data-text="cit-001370 · thiocarbamate-linked polysulfonate–peptide conjugates as selective hepatocyte growth factor receptor binders · s besret, j vicogne, f dahmani, v fafeur… - bioconjugate …, 2014 - pmc.ncbi.nlm.nih.gov · melnyk · bioconjugate · sulfated pentagalloylglucoside is… ·  · 10.1021/bc500137j">
+      <td class="uid">cit-001370</td>
+      <td class="work"><div class="workcell" data-uid="cit-001370" data-work="Sulfated pentagalloylglucoside is…"><span class="wname">Sulfated pentagalloylglucoside is…</span><div class="sub">2013</div></div></td>
+      <td class="title">Thiocarbamate-Linked Polysulfonate–Peptide Conjugates As Selective Hepatocyte Growth Factor Receptor Binders
+        <div class="byline">S Besret, J Vicogne, F Dahmani, V Fafeur… - Bioconjugate …, 2014 - pmc.ncbi.nlm.nih.gov</div></td>
+      <td>Melnyk</td>
+      <td>2014</td>
+      <td>Bioconjugate</td>
+      <td class="src"><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC4064695/" target="_blank" rel="noopener noreferrer">pmc.ncbi.nlm.nih.gov</a><div class="sub"><a href="https://doi.org/10.1021/bc500137j" target="_blank" rel="noopener noreferrer">10.1021/bc500137j</a></div></td>
+      <td class="disc"><span class="pill warn">Paywalled</span><div class="sub">OpenAlex offered a PDF but the host answered 403</div></td>
+      <td class="pdf"><span class="none">not retrieved</span></td>
+      <td class="tier"><div class="workcell" data-uid="cit-001370" data-work="Sulfated pentagalloylglucoside is…"><span class="none">not read</span></div></td>
+      <td class="cite"><div class="workcell" data-uid="cit-001370" data-work="Sulfated pentagalloylglucoside is…"><span class="none">no PDF, so nothing has been quoted</span></div></td>
+      <td class="pick"><label><input type="checkbox"> include</label></td>
+    </tr>
+    <tr data-uid="cit-001371" data-uids="cit-001371" data-tier="none" data-disc="not-in-indexes" data-pdf="0" data-year="" data-work="Sulfated pentagalloylglucoside is…" data-works="1" data-text="cit-001371 · assessing drug development proporties of antithrombotic and anti-cancer agents · ei abdelfadiel - 2023 - scholarscompass.vcu.edu ·  ·  · sulfated pentagalloylglucoside is… ·  · ">
+      <td class="uid">cit-001371</td>
+      <td class="work"><div class="workcell" data-uid="cit-001371" data-work="Sulfated pentagalloylglucoside is…"><span class="wname">Sulfated pentagalloylglucoside is…</span><div class="sub">2013</div></div></td>
+      <td class="title">ASSESSING DRUG DEVELOPMENT PROPORTIES OF ANTITHROMBOTIC AND ANTI-CANCER AGENTS
+        <div class="byline">EI Abdelfadiel - 2023 - scholarscompass.vcu.edu</div></td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+      <td class="src"><a href="https://scholarscompass.vcu.edu/etd/7203/?gathStatIcon=true/" target="_blank" rel="noopener noreferrer">scholarscompass.vcu.edu</a></td>
+      <td class="disc"><span class="pill warn">Not in OpenAlex</span><div class="sub">no OpenAlex record by title</div></td>
+      <td class="pdf"><span class="none">not retrieved</span></td>
+      <td class="tier"><div class="workcell" data-uid="cit-001371" data-work="Sulfated pentagalloylglucoside is…"><span class="none">not read</span></div></td>
+      <td class="cite"><div class="workcell" data-uid="cit-001371" data-work="Sulfated pentagalloylglucoside is…"><span class="none">no PDF, so nothing has been quoted</span></div></td>
+      <td class="pick"><label><input type="checkbox"> include</label></td>
+    </tr>
+    <tr data-uid="cit-001372" data-uids="cit-001372" data-tier="none" data-disc="not-in-indexes" data-pdf="0" data-year="" data-work="Sulfated pentagalloylglucoside is…" data-works="1" data-text="cit-001372 · polycationic inhibitors to target prothrombotic nucleic acids in vitro and in mouse models · s vappala - 2023 - open.library.ubc.ca ·  ·  · sulfated pentagalloylglucoside is… ·  · ">
+      <td class="uid">cit-001372</td>
+      <td class="work"><div class="workcell" data-uid="cit-001372" data-work="Sulfated pentagalloylglucoside is…"><span class="wname">Sulfated pentagalloylglucoside is…</span><div class="sub">2013</div></div></td>
+      <td class="title">Polycationic inhibitors to target prothrombotic nucleic acids in vitro and in mouse models
+        <div class="byline">S Vappala - 2023 - open.library.ubc.ca</div></td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+      <td class="src"><a href="https://open.library.ubc.ca/soa/cIRcle/collections/ubctheses/24/items/1.0423028" target="_blank" rel="noopener noreferrer">open.library.ubc.ca</a></td>
+      <td class="disc"><span class="pill warn">Not in OpenAlex</span><div class="sub">no OpenAlex record by title</div></td>
+      <td class="pdf"><span class="none">not retrieved</span></td>
+      <td class="tier"><div class="workcell" data-uid="cit-001372" data-work="Sulfated pentagalloylglucoside is…"><span class="none">not read</span></div></td>
+      <td class="cite"><div class="workcell" data-uid="cit-001372" data-work="Sulfated pentagalloylglucoside is…"><span class="none">no PDF, so nothing has been quoted</span></div></td>
+      <td class="pick"><label><input type="checkbox"> include</label></td>
+    </tr>
+    <tr data-uid="cit-001373" data-uids="cit-001373" data-tier="none" data-disc="no-open-copy" data-pdf="0" data-year="2015" data-work="Sulfated pentagalloylglucoside is…" data-works="1" data-text="cit-001373 · medically-induced hemophilia c to treat thrombosis · ah schmaier - thrombosis research, 2015 - thrombosisresearch.com · schmaier · thrombosis research · sulfated pentagalloylglucoside is… ·  · 10.1016/j.thromres.2015.05.013">
+      <td class="uid">cit-001373</td>
+      <td class="work"><div class="workcell" data-uid="cit-001373" data-work="Sulfated pentagalloylglucoside is…"><span class="wname">Sulfated pentagalloylglucoside is…</span><div class="sub">2013</div></div></td>
+      <td class="title">Medically-induced hemophilia C to treat thrombosis
+        <div class="byline">AH Schmaier - Thrombosis Research, 2015 - thrombosisresearch.com</div></td>
+      <td>Schmaier</td>
+      <td>2015</td>
+      <td>Thrombosis Research</td>
+      <td class="src"><a href="https://www.thrombosisresearch.com/article/S0049-3848(15)00240-6/abstract" target="_blank" rel="noopener noreferrer">www.thrombosisresearch.com</a><div class="sub"><a href="https://doi.org/10.1016/j.thromres.2015.05.013" target="_blank" rel="noopener noreferrer">10.1016/j.thromres.2015.05.013</a></div></td>
+      <td class="disc"><span class="pill warn">No open copy</span><div class="sub">OpenAlex has the work (10.1016/j.thromres.2015.05.013), no open-access PDF location</div></td>
+      <td class="pdf"><span class="none">not retrieved</span></td>
+      <td class="tier"><div class="workcell" data-uid="cit-001373" data-work="Sulfated pentagalloylglucoside is…"><span class="none">not read</span></div></td>
+      <td class="cite"><div class="workcell" data-uid="cit-001373" data-work="Sulfated pentagalloylglucoside is…"><span class="none">no PDF, so nothing has been quoted</span></div></td>
+      <td class="pick"><label><input type="checkbox"> include</label></td>
+    </tr>
+    <tr data-uid="cit-001375" data-uids="cit-001375" data-tier="none" data-disc="no-open-copy" data-pdf="0" data-year="2020" data-work="Sulfated pentagalloylglucoside is…" data-works="1" data-text="cit-001375 · characterizing glycosaminoglycan and glycosaminoglycan-oligo interactions with cancer stem cells and their regulators · r navaz gangji - 2020 - scholarscompass.vcu.edu ·  ·  · sulfated pentagalloylglucoside is… ·  · 10.25772/yfh9-pc36">
+      <td class="uid">cit-001375</td>
+      <td class="work"><div class="workcell" data-uid="cit-001375" data-work="Sulfated pentagalloylglucoside is…"><span class="wname">Sulfated pentagalloylglucoside is…</span><div class="sub">2013</div></div></td>
+      <td class="title">CHARACTERIZING GLYCOSAMINOGLYCAN AND GLYCOSAMINOGLYCAN-OLIGO INTERACTIONS WITH CANCER STEM CELLS AND THEIR REGULATORS
+        <div class="byline">R Navaz Gangji - 2020 - scholarscompass.vcu.edu</div></td>
+      <td>—</td>
+      <td>2020</td>
+      <td>—</td>
+      <td class="src"><a href="https://scholarscompass.vcu.edu/etd/6185/" target="_blank" rel="noopener noreferrer">scholarscompass.vcu.edu</a><div class="sub"><a href="https://doi.org/10.25772/yfh9-pc36" target="_blank" rel="noopener noreferrer">10.25772/yfh9-pc36</a></div></td>
+      <td class="disc"><span class="pill warn">No open copy</span><div class="sub">OpenAlex has the work (10.25772/yfh9-pc36), no open-access PDF location</div></td>
+      <td class="pdf"><span class="none">not retrieved</span></td>
+      <td class="tier"><div class="workcell" data-uid="cit-001375" data-work="Sulfated pentagalloylglucoside is…"><span class="none">not read</span></div></td>
+      <td class="cite"><div class="workcell" data-uid="cit-001375" data-work="Sulfated pentagalloylglucoside is…"><span class="none">no PDF, so nothing has been quoted</span></div></td>
+      <td class="pick"><label><input type="checkbox"> include</label></td>
+    </tr>
+    <tr data-uid="cit-001379" data-uids="cit-001379" data-tier="none" data-disc="not-in-indexes" data-pdf="0" data-year="" data-work="Sulfated pentagalloylglucoside is…" data-works="1" data-text="cit-001379 · data mining/machine learning techniques for drug discovery: computational and experimental pipeline development · jjf chen - 2018 - rave.ohiolink.edu ·  ·  · sulfated pentagalloylglucoside is… ·  · ">
+      <td class="uid">cit-001379</td>
+      <td class="work"><div class="workcell" data-uid="cit-001379" data-work="Sulfated pentagalloylglucoside is…"><span class="wname">Sulfated pentagalloylglucoside is…</span><div class="sub">2013</div></div></td>
+      <td class="title">Data Mining/Machine Learning Techniques for Drug Discovery: Computational and Experimental Pipeline Development
+        <div class="byline">JJF Chen - 2018 - rave.ohiolink.edu</div></td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+      <td class="src"><a href="https://rave.ohiolink.edu/etdc/view?acc_num=akron1524661027035591" target="_blank" rel="noopener noreferrer">rave.ohiolink.edu</a></td>
+      <td class="disc"><span class="pill warn">Not in OpenAlex</span><div class="sub">no OpenAlex record by title</div></td>
+      <td class="pdf"><span class="none">not retrieved</span></td>
+      <td class="tier"><div class="workcell" data-uid="cit-001379" data-work="Sulfated pentagalloylglucoside is…"><span class="none">not read</span></div></td>
+      <td class="cite"><div class="workcell" data-uid="cit-001379" data-work="Sulfated pentagalloylglucoside is…"><span class="none">no PDF, so nothing has been quoted</span></div></td>
+      <td class="pick"><label><input type="checkbox"> include</label></td>
+    </tr>
+    <tr data-uid="cit-001381" data-uids="cit-001381" data-tier="none" data-disc="no-open-copy" data-pdf="0" data-year="2017" data-work="Sulfated pentagalloylglucoside is…" data-works="1" data-text="cit-001381 · study of molecular interactions of glycosaminoglycans and glycosaminoglycan mimetics with their protein targets · dk afosah - 2017 - scholarscompass.vcu.edu ·  ·  · sulfated pentagalloylglucoside is… ·  · 10.25772/dw2f-b659">
+      <td class="uid">cit-001381</td>
+      <td class="work"><div class="workcell" data-uid="cit-001381" data-work="Sulfated pentagalloylglucoside is…"><span class="wname">Sulfated pentagalloylglucoside is…</span><div class="sub">2013</div></div></td>
+      <td class="title">Study of Molecular Interactions of Glycosaminoglycans and Glycosaminoglycan Mimetics with Their Protein Targets
+        <div class="byline">DK Afosah - 2017 - scholarscompass.vcu.edu</div></td>
+      <td>—</td>
+      <td>2017</td>
+      <td>—</td>
+      <td class="src"><a href="https://scholarscompass.vcu.edu/etd/4968/" target="_blank" rel="noopener noreferrer">scholarscompass.vcu.edu</a><div class="sub"><a href="https://doi.org/10.25772/dw2f-b659" target="_blank" rel="noopener noreferrer">10.25772/dw2f-b659</a></div></td>
+      <td class="disc"><span class="pill warn">No open copy</span><div class="sub">OpenAlex has the work (10.25772/dw2f-b659), no open-access PDF location</div></td>
+      <td class="pdf"><span class="none">not retrieved</span></td>
+      <td class="tier"><div class="workcell" data-uid="cit-001381" data-work="Sulfated pentagalloylglucoside is…"><span class="none">not read</span></div></td>
+      <td class="cite"><div class="workcell" data-uid="cit-001381" data-work="Sulfated pentagalloylglucoside is…"><span class="none">no PDF, so nothing has been quoted</span></div></td>
+      <td class="pick"><label><input type="checkbox"> include</label></td>
+    </tr>
+    <tr data-uid="cit-001382" data-uids="cit-001382" data-tier="none" data-disc="no-open-copy" data-pdf="0" data-year="2018" data-work="Sulfated pentagalloylglucoside is…" data-works="1" data-text="cit-001382 · atvb named lecture review · xi factor - 2017 - academia.edu ·  ·  · sulfated pentagalloylglucoside is… ·  · 10.1161/atvbaha.118.310970">
+      <td class="uid">cit-001382</td>
+      <td class="work"><div class="workcell" data-uid="cit-001382" data-work="Sulfated pentagalloylglucoside is…"><span class="wname">Sulfated pentagalloylglucoside is…</span><div class="sub">2013</div></div></td>
+      <td class="title">ATVB Named Lecture Review
+        <div class="byline">XI Factor - 2017 - academia.edu</div></td>
+      <td>—</td>
+      <td>2018</td>
+      <td>—</td>
+      <td class="src"><a href="https://www.academia.edu/download/93444176/ATVBAHA.117.pdf" target="_blank" rel="noopener noreferrer">www.academia.edu</a><div class="sub"><a href="https://doi.org/10.1161/atvbaha.118.310970" target="_blank" rel="noopener noreferrer">10.1161/atvbaha.118.310970</a></div></td>
+      <td class="disc"><span class="pill warn">No open copy</span><div class="sub">OpenAlex has the work (10.1161/atvbaha.118.310970), no open-access PDF location</div></td>
+      <td class="pdf"><span class="none">not retrieved</span></td>
+      <td class="tier"><div class="workcell" data-uid="cit-001382" data-work="Sulfated pentagalloylglucoside is…"><span class="none">not read</span></div></td>
+      <td class="cite"><div class="workcell" data-uid="cit-001382" data-work="Sulfated pentagalloylglucoside is…"><span class="none">no PDF, so nothing has been quoted</span></div></td>
+      <td class="pick"><label><input type="checkbox"> include</label></td>
+    </tr>
+    <tr data-uid="cit-001383" data-uids="cit-001383" data-tier="none" data-disc="no-open-copy" data-pdf="0" data-year="2016" data-work="Sulfated pentagalloylglucoside is…" data-works="1" data-text="cit-001383 · [book] probing allosteric, partial inhibition of thrombin using novel anticoagulants · ss verespy iii - 2016 - search.proquest.com ·  ·  · sulfated pentagalloylglucoside is… ·  · 10.25772/2e1m-ck22">
+      <td class="uid">cit-001383</td>
+      <td class="work"><div class="workcell" data-uid="cit-001383" data-work="Sulfated pentagalloylglucoside is…"><span class="wname">Sulfated pentagalloylglucoside is…</span><div class="sub">2013</div></div></td>
+      <td class="title">[BOOK] Probing allosteric, partial inhibition of thrombin using novel anticoagulants
+        <div class="byline">SS Verespy III - 2016 - search.proquest.com</div></td>
+      <td>—</td>
+      <td>2016</td>
+      <td>—</td>
+      <td class="src"><a href="https://search.proquest.com/openview/197f86fac0d2accd9f82fc809da0fdaa/1?pq-origsite=gscholar&amp;cbl=18750&amp;diss=y" target="_blank" rel="noopener noreferrer">search.proquest.com</a><div class="sub"><a href="https://doi.org/10.25772/2e1m-ck22" target="_blank" rel="noopener noreferrer">10.25772/2e1m-ck22</a></div></td>
+      <td class="disc"><span class="pill warn">No open copy</span><div class="sub">OpenAlex has the work (10.25772/2e1m-ck22), no open-access PDF location</div></td>
+      <td class="pdf"><span class="none">not retrieved</span></td>
+      <td class="tier"><div class="workcell" data-uid="cit-001383" data-work="Sulfated pentagalloylglucoside is…"><span class="none">not read</span></div></td>
+      <td class="cite"><div class="workcell" data-uid="cit-001383" data-work="Sulfated pentagalloylglucoside is…"><span class="none">no PDF, so nothing has been quoted</span></div></td>
+      <td class="pick"><label><input type="checkbox"> include</label></td>
+    </tr>
+    <tr data-uid="cit-001384" data-uids="cit-001384" data-tier="none" data-disc="no-open-copy" data-pdf="0" data-year="2014" data-work="Sulfated pentagalloylglucoside is…" data-works="1" data-text="cit-001384 · [book] studies on rationally designed, allosteric, coagulation inhibitors · r boothello - 2014 - search.proquest.com ·  ·  · sulfated pentagalloylglucoside is… ·  · 10.25772/ypz2-bv95">
+      <td class="uid">cit-001384</td>
+      <td class="work"><div class="workcell" data-uid="cit-001384" data-work="Sulfated pentagalloylglucoside is…"><span class="wname">Sulfated pentagalloylglucoside is…</span><div class="sub">2013</div></div></td>
+      <td class="title">[BOOK] Studies on rationally designed, allosteric, coagulation inhibitors
+        <div class="byline">R Boothello - 2014 - search.proquest.com</div></td>
+      <td>—</td>
+      <td>2014</td>
+      <td>—</td>
+      <td class="src"><a href="https://search.proquest.com/openview/1e39143b98382b38c71074a9313f8722/1?pq-origsite=gscholar&amp;cbl=18750" target="_blank" rel="noopener noreferrer">search.proquest.com</a><div class="sub"><a href="https://doi.org/10.25772/ypz2-bv95" target="_blank" rel="noopener noreferrer">10.25772/ypz2-bv95</a></div></td>
+      <td class="disc"><span class="pill warn">No open copy</span><div class="sub">OpenAlex has the work (10.25772/ypz2-bv95), no open-access PDF location</div></td>
+      <td class="pdf"><span class="none">not retrieved</span></td>
+      <td class="tier"><div class="workcell" data-uid="cit-001384" data-work="Sulfated pentagalloylglucoside is…"><span class="none">not read</span></div></td>
+      <td class="cite"><div class="workcell" data-uid="cit-001384" data-work="Sulfated pentagalloylglucoside is…"><span class="none">no PDF, so nothing has been quoted</span></div></td>
+      <td class="pick"><label><input type="checkbox"> include</label></td>
+    </tr>
+    <tr data-uid="cit-001386" data-uids="cit-001386" data-tier="none" data-disc="no-open-copy" data-pdf="0" data-year="2013" data-work="Sulfated pentagalloylglucoside is…" data-works="1" data-text="cit-001386 · newer oral anticoagulants · de joseph - the coagulation consult: a case-based guide, 2013 - springer · sankar · the coagulation consult: a case-based guide · sulfated pentagalloylglucoside is… ·  · 10.1007/978-1-4614-9560-4_16">
+      <td class="uid">cit-001386</td>
+      <td class="work"><div class="workcell" data-uid="cit-001386" data-work="Sulfated pentagalloylglucoside is…"><span class="wname">Sulfated pentagalloylglucoside is…</span><div class="sub">2013</div></div></td>
+      <td class="title">Newer Oral Anticoagulants
+        <div class="byline">DE Joseph - The Coagulation Consult: A Case-Based Guide, 2013 - Springer</div></td>
+      <td>Sankar</td>
+      <td>2013</td>
+      <td>The Coagulation Consult: A Case-Based Guide</td>
+      <td class="src"><a href="https://link.springer.com/chapter/10.1007/978-1-4614-9560-4_16" target="_blank" rel="noopener noreferrer">link.springer.com</a><div class="sub"><a href="https://doi.org/10.1007/978-1-4614-9560-4_16" target="_blank" rel="noopener noreferrer">10.1007/978-1-4614-9560-4_16</a></div></td>
+      <td class="disc"><span class="pill warn">No open copy</span><div class="sub">OpenAlex has the work (10.1007/978-1-4614-9560-4_16), no open-access PDF location</div></td>
+      <td class="pdf"><span class="none">not retrieved</span></td>
+      <td class="tier"><div class="workcell" data-uid="cit-001386" data-work="Sulfated pentagalloylglucoside is…"><span class="none">not read</span></div></td>
+      <td class="cite"><div class="workcell" data-uid="cit-001386" data-work="Sulfated pentagalloylglucoside is…"><span class="none">no PDF, so nothing has been quoted</span></div></td>
+      <td class="pick"><label><input type="checkbox"> include</label></td>
+    </tr>
+    <tr data-uid="cit-001389" data-uids="cit-001389" data-tier="none" data-disc="not-in-indexes" data-pdf="0" data-year="2015" data-work="Sulfated pentagalloylglucoside is…" data-works="1" data-text="cit-001389 · new perspectives for antithrombotic therapy—coagulation factor xi as a target · j treliński - hematology in clinical practice, 2015 - journals.viamedica.pl ·  · hematology in clinical practice · sulfated pentagalloylglucoside is… ·  · ">
+      <td class="uid">cit-001389</td>
+      <td class="work"><div class="workcell" data-uid="cit-001389" data-work="Sulfated pentagalloylglucoside is…"><span class="wname">Sulfated pentagalloylglucoside is…</span><div class="sub">2013</div></div></td>
+      <td class="title">New perspectives for antithrombotic therapy—coagulation factor XI as a target
+        <div class="byline">J Treliński - Hematology in Clinical Practice, 2015 - journals.viamedica.pl</div></td>
+      <td>—</td>
+      <td>2015</td>
+      <td>Hematology in Clinical Practice</td>
+      <td class="src"><a href="https://journals.viamedica.pl/hematology_in_clinical_practice/article/view/44302" target="_blank" rel="noopener noreferrer">journals.viamedica.pl</a></td>
+      <td class="disc"><span class="pill warn">Not in OpenAlex</span><div class="sub">no OpenAlex record by title</div></td>
+      <td class="pdf"><span class="none">not retrieved</span></td>
+      <td class="tier"><div class="workcell" data-uid="cit-001389" data-work="Sulfated pentagalloylglucoside is…"><span class="none">not read</span></div></td>
+      <td class="cite"><div class="workcell" data-uid="cit-001389" data-work="Sulfated pentagalloylglucoside is…"><span class="none">no PDF, so nothing has been quoted</span></div></td>
+      <td class="pick"><label><input type="checkbox"> include</label></td>
+    </tr>
+    <tr data-uid="cit-001391" data-uids="cit-001391" data-tier="none" data-disc="no-open-copy" data-pdf="0" data-year="2016" data-work="Sulfated pentagalloylglucoside is…" data-works="1" data-text="cit-001391 · [citation] advances in anticoagulants · ml quan, pw glunz, jm smallheer - 2017 - elsevier ·  ·  · sulfated pentagalloylglucoside is… ·  · 10.1016/b978-0-12-409547-2.12433-3">
+      <td class="uid">cit-001391</td>
+      <td class="work"><div class="workcell" data-uid="cit-001391" data-work="Sulfated pentagalloylglucoside is…"><span class="wname">Sulfated pentagalloylglucoside is…</span><div class="sub">2013</div></div></td>
+      <td class="title">[CITATION] Advances in Anticoagulants
+        <div class="byline">ML Quan, PW Glunz, JM Smallheer - 2017 - Elsevier</div></td>
+      <td>—</td>
+      <td>2016</td>
+      <td>—</td>
+      <td class="src">—<div class="sub"><a href="https://doi.org/10.1016/b978-0-12-409547-2.12433-3" target="_blank" rel="noopener noreferrer">10.1016/b978-0-12-409547-2.12433-3</a></div></td>
+      <td class="disc"><span class="pill warn">No open copy</span><div class="sub">OpenAlex has the work (10.1016/b978-0-12-409547-2.12433-3), no open-access PDF location</div></td>
+      <td class="pdf"><span class="none">not retrieved</span></td>
+      <td class="tier"><div class="workcell" data-uid="cit-001391" data-work="Sulfated pentagalloylglucoside is…"><span class="none">not read</span></div></td>
+      <td class="cite"><div class="workcell" data-uid="cit-001391" data-work="Sulfated pentagalloylglucoside is…"><span class="none">no PDF, so nothing has been quoted</span></div></td>
+      <td class="pick"><label><input type="checkbox"> include</label></td>
+    </tr>
   </tbody>
 </table>
 
@@ -3176,7 +3700,7 @@
 
 <h2>Notes on the list</h2>
 <p><strong>One row is one citing article; the &ldquo;My work&rdquo; column says which of my papers it
-   cites.</strong> 204 citations appear as 197 rows. An article that cites two of my works is
+   cites.</strong> 238 citations appear as 231 rows. An article that cites two of my works is
    one row with two blocks in the &ldquo;My work&rdquo;, Tier and Citation columns, and each block is
    judged on its own: a tier for GLAD in that article says nothing about where GlycoGlyph sits in it,
    and one work can be filed while the other is not. The row leads with every
@@ -4917,6 +5441,33 @@
   <h4>Files</h4>
   <ul class="files-list"><li><a href="pending-papers/cit-000742/01-article-Ronald-2023.pdf">PDF</a> <span class="sub">same work as another row</span></li></ul>
   <p class="trace"><code>cit-000845</code> &middot; review note only — not part of
+     <code>packet.html</code> and not evidence until the row is confirmed and the packet re-rendered</p>
+</article>
+
+<article class="report" id="rep-cit-001303">
+  <h3>Physicochemical Properties and Anticoagulant Activity of Purified Heteropolysaccharides from Laminaria japonica</h3>
+  <p class="byline">Tingting Li, Haiqiong Ma, Hong Li, Hao Tang, Jinwen Huang, Shiying Wei, Qingxia Yuan, Xiaohuo Shi, Chenghai Gao, Shunli Mi, Longyan Zhao, Shengping Zhong, Yonghong Liu<br>
+     <span class="venue">Molecules, 2022</span> &middot; <a href="https://www.mdpi.com/1420-3049/27/9/3027" target="_blank" rel="noopener noreferrer">www.mdpi.com</a> &middot; <a href="https://doi.org/10.3390/molecules27093027" target="_blank" rel="noopener noreferrer">10.3390/molecules27093027</a></p>
+  <dl>
+    <dt>My work cited</dt>
+    <dd>Sulfated pentagalloylglucoside is a potent, allosteric, and selective inhibitor of factor XIa (2013) <span class="sub">[Sulfated pentagalloylglucoside is…]</span></dd>
+    <dt>row_uid</dt>
+    <dd><code>cit-001303</code></dd>
+    <dt>Where the citation appears</dt>
+    <dd><span class="pill ok resolved">Tier B &mdash; resolved</span> <strong>Results</strong>, page 7 — Tier B — the tool is used in the Results or Figures, and the citing paper names no tool there: the citation was found by its reference number or author-year citation.</dd>
+    <dt>Citing authors&rsquo; institutions</dt>
+    <dd><span class="none">Not recorded — confirm from the PDF&rsquo;s affiliation block.</span></dd>
+    <dt>Article type</dt>
+    <dd>article</dd>
+    <dt>Independence</dt>
+    <dd>Re-checked against the citation record: complete author lists of both papers, no shared
+        author, neither PI named on the citing paper; basis on the record: confirmed.</dd>
+  </dl>
+  <h4>What the text says</h4>
+  <blockquote>&ldquo;used in screening anticoagulant active ingredients [36].&rdquo;</blockquote><p class="cite-page">Results, p.&nbsp;7 &middot; resolved 2026-11-08 &middot; the marker as printed: reference number or author-year citation</p>
+  <h4>Files</h4>
+  <ul class="files-list"><li><a href="pending-papers/cit-001303/01-article-Liu-2022.pdf">01-article-Liu-2022.pdf</a> <span class="sub">article</span></li></ul>
+  <p class="trace"><code>cit-001303</code> &middot; review note only — not part of
      <code>packet.html</code> and not evidence until the row is confirmed and the packet re-rendered</p>
 </article>
 
@@ -8727,13 +9278,904 @@
      <code>packet.html</code> and not evidence until the row is confirmed and the packet re-rendered</p>
 </article>
 
+<article class="report" id="rep-cit-001284">
+  <h3>Factor XI deficiency</h3>
+  <p class="byline">Londoño L, Llinás A, Raffán-Sanabria F<br>
+     <span class="venue">Hematology/oncology clinics of …, 2021</span> &middot; <a href="https://www.sciencedirect.com/science/article/pii/S0889858821000915" target="_blank" rel="noopener noreferrer">www.sciencedirect.com</a> &middot; <a href="https://doi.org/10.1055/s-0038-1646162" target="_blank" rel="noopener noreferrer">10.1055/s-0038-1646162</a></p>
+  <dl>
+    <dt>My work cited</dt>
+    <dd>Sulfated pentagalloylglucoside is a potent, allosteric, and selective inhibitor of factor XIa (2013) <span class="sub">[Sulfated pentagalloylglucoside is…]</span></dd>
+    <dt>row_uid</dt>
+    <dd><code>cit-001284</code></dd>
+    <dt>Where the citation appears</dt>
+    <dd><span class="none">not read — no PDF on file, so no claim about where the citation sits</span></dd>
+    <dt>Citing authors&rsquo; institutions</dt>
+    <dd><span class="none">Not recorded — confirm from the PDF&rsquo;s affiliation block.</span></dd>
+    <dt>Article type</dt>
+    <dd>article</dd>
+    <dt>Independence</dt>
+    <dd>Re-checked against the citation record: complete author lists of both papers, no shared
+        author, neither PI named on the citing paper; basis on the record: unverified-coverage.</dd>
+  </dl>
+  <h4>What the text says</h4>
+  <p class="none">No verbatim sentence recorded.</p>
+  <h4>Files</h4>
+  <p class="none">No PDF on file. No open copy — OpenAlex has the work (10.1055/s-0038-1646162), no open-access PDF location.</p>
+  <p class="trace"><code>cit-001284</code> &middot; review note only — not part of
+     <code>packet.html</code> and not evidence until the row is confirmed and the packet re-rendered</p>
+</article>
+
+<article class="report" id="rep-cit-001286">
+  <h3>Identification and anticoagulant mechanisms of novel factor XIa inhibitory peptides by virtual screening of a in silico generated deep-sea peptide database</h3>
+  <p class="byline">Ouyang Y, Yue Y, Wu N, Wang J, Geng L, Zhang Q<br>
+     <span class="venue">Food Research …, 2024</span> &middot; <a href="https://www.sciencedirect.com/science/article/pii/S0963996924013784" target="_blank" rel="noopener noreferrer">www.sciencedirect.com</a> &middot; <a href="https://doi.org/10.1016/j.foodres.2024.115308" target="_blank" rel="noopener noreferrer">10.1016/j.foodres.2024.115308</a></p>
+  <dl>
+    <dt>My work cited</dt>
+    <dd>Sulfated pentagalloylglucoside is a potent, allosteric, and selective inhibitor of factor XIa (2013) <span class="sub">[Sulfated pentagalloylglucoside is…]</span></dd>
+    <dt>row_uid</dt>
+    <dd><code>cit-001286</code></dd>
+    <dt>Where the citation appears</dt>
+    <dd><span class="none">not read — no PDF on file, so no claim about where the citation sits</span></dd>
+    <dt>Citing authors&rsquo; institutions</dt>
+    <dd><span class="none">Not recorded — confirm from the PDF&rsquo;s affiliation block.</span></dd>
+    <dt>Article type</dt>
+    <dd>article</dd>
+    <dt>Independence</dt>
+    <dd>Re-checked against the citation record: complete author lists of both papers, no shared
+        author, neither PI named on the citing paper; basis on the record: confirmed.</dd>
+  </dl>
+  <h4>What the text says</h4>
+  <p class="none">No verbatim sentence recorded.</p>
+  <h4>Files</h4>
+  <p class="none">No PDF on file. No open copy — OpenAlex has the work (10.1016/j.foodres.2024.115308), no open-access PDF location.</p>
+  <p class="trace"><code>cit-001286</code> &middot; review note only — not part of
+     <code>packet.html</code> and not evidence until the row is confirmed and the packet re-rendered</p>
+</article>
+
+<article class="report" id="rep-cit-001290">
+  <h3>Discovery of an intrinsic tenase complex inhibitor: Pure nonasaccharide from fucosylated glycosaminoglycan</h3>
+  <p class="byline">Longyan Zhao, Mingyi Wu, Chuang Xiao, Lian Yang, Lutan Zhou, Na Gao, Zi Li, Jun Chen, Jianchao Chen, Jikai Liu, Hongbo Qin, Jinhua Zhao<br>
+     <span class="venue">Proceedings of the …, 2015</span> &middot; <a href="https://www.pnas.org/doi/abs/10.1073/pnas.1504229112" target="_blank" rel="noopener noreferrer">www.pnas.org</a> &middot; <a href="https://doi.org/10.1073/pnas.1504229112" target="_blank" rel="noopener noreferrer">10.1073/pnas.1504229112</a></p>
+  <dl>
+    <dt>My work cited</dt>
+    <dd>Sulfated pentagalloylglucoside is a potent, allosteric, and selective inhibitor of factor XIa (2013) <span class="sub">[Sulfated pentagalloylglucoside is…]</span></dd>
+    <dt>row_uid</dt>
+    <dd><code>cit-001290</code></dd>
+    <dt>Where the citation appears</dt>
+    <dd><span class="none">not read — no PDF on file, so no claim about where the citation sits</span></dd>
+    <dt>Citing authors&rsquo; institutions</dt>
+    <dd><span class="none">Not recorded — confirm from the PDF&rsquo;s affiliation block.</span></dd>
+    <dt>Article type</dt>
+    <dd>article</dd>
+    <dt>Independence</dt>
+    <dd>Re-checked against the citation record: complete author lists of both papers, no shared
+        author, neither PI named on the citing paper; basis on the record: confirmed.</dd>
+  </dl>
+  <h4>What the text says</h4>
+  <p class="none">No verbatim sentence recorded.</p>
+  <h4>Files</h4>
+  <p class="none">No PDF on file. No open copy — OpenAlex has the work (10.1073/pnas.1504229112), no open-access PDF location.</p>
+  <p class="trace"><code>cit-001290</code> &middot; review note only — not part of
+     <code>packet.html</code> and not evidence until the row is confirmed and the packet re-rendered</p>
+</article>
+
+<article class="report" id="rep-cit-001296">
+  <h3>Advances in antithrombotic therapy</h3>
+  <p class="byline">Weitz, Jeffrey I; Chan, Noel C<br>
+     <span class="venue">Arteriosclerosis, Thrombosis, and Vascular …, 2019</span> &middot; <a href="https://www.ahajournals.org/doi/abs/10.1161/ATVBAHA.118.310960" target="_blank" rel="noopener noreferrer">www.ahajournals.org</a> &middot; <a href="https://doi.org/10.1161/atvbaha.118.310960" target="_blank" rel="noopener noreferrer">10.1161/atvbaha.118.310960</a></p>
+  <dl>
+    <dt>My work cited</dt>
+    <dd>Sulfated pentagalloylglucoside is a potent, allosteric, and selective inhibitor of factor XIa (2013) <span class="sub">[Sulfated pentagalloylglucoside is…]</span></dd>
+    <dt>row_uid</dt>
+    <dd><code>cit-001296</code></dd>
+    <dt>Where the citation appears</dt>
+    <dd><span class="none">not read — no PDF on file, so no claim about where the citation sits</span></dd>
+    <dt>Citing authors&rsquo; institutions</dt>
+    <dd><span class="none">Not recorded — confirm from the PDF&rsquo;s affiliation block.</span></dd>
+    <dt>Article type</dt>
+    <dd>article</dd>
+    <dt>Independence</dt>
+    <dd>Re-checked against the citation record: complete author lists of both papers, no shared
+        author, neither PI named on the citing paper; basis on the record: unverified-coverage.</dd>
+  </dl>
+  <h4>What the text says</h4>
+  <p class="none">No verbatim sentence recorded.</p>
+  <h4>Files</h4>
+  <p class="none">No PDF on file. No open copy — OpenAlex has the work (10.1161/atvbaha.118.310960), no open-access PDF location.</p>
+  <p class="trace"><code>cit-001296</code> &middot; review note only — not part of
+     <code>packet.html</code> and not evidence until the row is confirmed and the packet re-rendered</p>
+</article>
+
+<article class="report" id="rep-cit-001305">
+  <h3>Fasxiator, a novel factor XI a inhibitor from snake venom, and its site‐specific mutagenesis to improve potency and selectivity</h3>
+  <p class="byline">Chen, W; Carvalho, LPD; Chan, MY; Kini, RM; Kang, TS<br>
+     <span class="venue">, 2014</span> &middot; <a href="https://onlinelibrary.wiley.com/doi/abs/10.1111/jth.12797" target="_blank" rel="noopener noreferrer">onlinelibrary.wiley.com</a> &middot; <a href="https://doi.org/10.1111/jth.12797" target="_blank" rel="noopener noreferrer">10.1111/jth.12797</a></p>
+  <dl>
+    <dt>My work cited</dt>
+    <dd>Sulfated pentagalloylglucoside is a potent, allosteric, and selective inhibitor of factor XIa (2013) <span class="sub">[Sulfated pentagalloylglucoside is…]</span></dd>
+    <dt>row_uid</dt>
+    <dd><code>cit-001305</code></dd>
+    <dt>Where the citation appears</dt>
+    <dd><span class="none">not read — no PDF on file, so no claim about where the citation sits</span></dd>
+    <dt>Citing authors&rsquo; institutions</dt>
+    <dd><span class="none">Not recorded — confirm from the PDF&rsquo;s affiliation block.</span></dd>
+    <dt>Article type</dt>
+    <dd>article</dd>
+    <dt>Independence</dt>
+    <dd>Re-checked against the citation record: complete author lists of both papers, no shared
+        author, neither PI named on the citing paper; basis on the record: unverified-coverage.</dd>
+  </dl>
+  <h4>What the text says</h4>
+  <p class="none">No verbatim sentence recorded.</p>
+  <h4>Files</h4>
+  <p class="none">No PDF on file. Paywalled — OpenAlex offered a PDF but the host answered 403.</p>
+  <p class="trace"><code>cit-001305</code> &middot; review note only — not part of
+     <code>packet.html</code> and not evidence until the row is confirmed and the packet re-rendered</p>
+</article>
+
+<article class="report" id="rep-cit-001309">
+  <h3>Five distinct fucan sulfates from sea cucumber Pattalus mollis: Purification, structural characterization and anticoagulant activities</h3>
+  <p class="byline">Ma Y, Gao N, Zuo Z, Li S, Zheng W, Shi X, Liu Q, Ma T, Yin R, Li X, Zhao J<br>
+     <span class="venue">International journal of …, 2021</span> &middot; <a href="https://www.sciencedirect.com/science/article/pii/S0141813021014847" target="_blank" rel="noopener noreferrer">www.sciencedirect.com</a> &middot; <a href="https://doi.org/10.1016/j.ijbiomac.2021.07.049" target="_blank" rel="noopener noreferrer">10.1016/j.ijbiomac.2021.07.049</a></p>
+  <dl>
+    <dt>My work cited</dt>
+    <dd>Sulfated pentagalloylglucoside is a potent, allosteric, and selective inhibitor of factor XIa (2013) <span class="sub">[Sulfated pentagalloylglucoside is…]</span></dd>
+    <dt>row_uid</dt>
+    <dd><code>cit-001309</code></dd>
+    <dt>Where the citation appears</dt>
+    <dd><span class="none">not read — no PDF on file, so no claim about where the citation sits</span></dd>
+    <dt>Citing authors&rsquo; institutions</dt>
+    <dd><span class="none">Not recorded — confirm from the PDF&rsquo;s affiliation block.</span></dd>
+    <dt>Article type</dt>
+    <dd>article</dd>
+    <dt>Independence</dt>
+    <dd>Re-checked against the citation record: complete author lists of both papers, no shared
+        author, neither PI named on the citing paper; basis on the record: confirmed.</dd>
+  </dl>
+  <h4>What the text says</h4>
+  <p class="none">No verbatim sentence recorded.</p>
+  <h4>Files</h4>
+  <p class="none">No PDF on file. No open copy — OpenAlex has the work (10.1016/j.ijbiomac.2021.07.049), no open-access PDF location.</p>
+  <p class="trace"><code>cit-001309</code> &middot; review note only — not part of
+     <code>packet.html</code> and not evidence until the row is confirmed and the packet re-rendered</p>
+</article>
+
+<article class="report" id="rep-cit-001310">
+  <h3>The discovery of a novel anticoagulant mechanism: factor XI activation inhibitors</h3>
+  <p class="byline">Ellsworth K, Nizner P, Ogawa A, Hruza A, Wei L, Yang D, Lombardo M, Sonatore L, Barbieri CM, Wickham A, Chamberlin C, Nickbarg E, Richards M, Sauvagnat B, Ziebell M, Ho T, Ali A, Hicks J, Sheth P, Tata J<br>
+     <span class="venue">, 2025</span> &middot; <a href="https://pubs.acs.org/aptsfn/article-abstract/8/9/3090/3761803" target="_blank" rel="noopener noreferrer">pubs.acs.org</a> &middot; <a href="https://doi.org/10.1021/acsptsci.5c00265" target="_blank" rel="noopener noreferrer">10.1021/acsptsci.5c00265</a></p>
+  <dl>
+    <dt>My work cited</dt>
+    <dd>Sulfated pentagalloylglucoside is a potent, allosteric, and selective inhibitor of factor XIa (2013) <span class="sub">[Sulfated pentagalloylglucoside is…]</span></dd>
+    <dt>row_uid</dt>
+    <dd><code>cit-001310</code></dd>
+    <dt>Where the citation appears</dt>
+    <dd><span class="none">not read — no PDF on file, so no claim about where the citation sits</span></dd>
+    <dt>Citing authors&rsquo; institutions</dt>
+    <dd><span class="none">Not recorded — confirm from the PDF&rsquo;s affiliation block.</span></dd>
+    <dt>Article type</dt>
+    <dd>article</dd>
+    <dt>Independence</dt>
+    <dd>Re-checked against the citation record: complete author lists of both papers, no shared
+        author, neither PI named on the citing paper; basis on the record: confirmed.</dd>
+  </dl>
+  <h4>What the text says</h4>
+  <p class="none">No verbatim sentence recorded.</p>
+  <h4>Files</h4>
+  <p class="none">No PDF on file. Paywalled — OpenAlex offered a PDF but the host answered 403.</p>
+  <p class="trace"><code>cit-001310</code> &middot; review note only — not part of
+     <code>packet.html</code> and not evidence until the row is confirmed and the packet re-rendered</p>
+</article>
+
+<article class="report" id="rep-cit-001311">
+  <h3>Precise structures of fucosylated glycosaminoglycan and its oligosaccharides as novel intrinsic factor Xase inhibitors</h3>
+  <p class="byline">Shang, Feineng; Gao, Na; Yin, Ronghua; Lin, Lisha; Xiao, Chuang; Zhou, Lutan; Li, Zi; Purcell, Steven W; Wu, Mingyi; Zhao, Jinhua<br>
+     <span class="venue">European Journal of …, 2018</span> &middot; <a href="https://www.sciencedirect.com/science/article/pii/S0223523418301776" target="_blank" rel="noopener noreferrer">www.sciencedirect.com</a> &middot; <a href="https://doi.org/10.1016/j.ejmech.2018.02.047" target="_blank" rel="noopener noreferrer">10.1016/j.ejmech.2018.02.047</a></p>
+  <dl>
+    <dt>My work cited</dt>
+    <dd>Sulfated pentagalloylglucoside is a potent, allosteric, and selective inhibitor of factor XIa (2013) <span class="sub">[Sulfated pentagalloylglucoside is…]</span></dd>
+    <dt>row_uid</dt>
+    <dd><code>cit-001311</code></dd>
+    <dt>Where the citation appears</dt>
+    <dd><span class="none">not read — no PDF on file, so no claim about where the citation sits</span></dd>
+    <dt>Citing authors&rsquo; institutions</dt>
+    <dd><span class="none">Not recorded — confirm from the PDF&rsquo;s affiliation block.</span></dd>
+    <dt>Article type</dt>
+    <dd>article</dd>
+    <dt>Independence</dt>
+    <dd>Re-checked against the citation record: complete author lists of both papers, no shared
+        author, neither PI named on the citing paper; basis on the record: unverified-coverage.</dd>
+  </dl>
+  <h4>What the text says</h4>
+  <p class="none">No verbatim sentence recorded.</p>
+  <h4>Files</h4>
+  <p class="none">No PDF on file. No open copy — OpenAlex has the work (10.1016/j.ejmech.2018.02.047), no open-access PDF location.</p>
+  <p class="trace"><code>cit-001311</code> &middot; review note only — not part of
+     <code>packet.html</code> and not evidence until the row is confirmed and the packet re-rendered</p>
+</article>
+
+<article class="report" id="rep-cit-001312">
+  <h3>Expedient Synthesis of a Library of Heparan Sulfate‐Like “Head‐to‐Tail” Linked Multimers for Structure and Activity Relationship Studies</h3>
+  <p class="byline">Zhang J, Liang L, Yang W, Ramadan S, Baryal K, Huo CX, Bernard JJ, Liu J, Hsieh-Wilson L, Zhang F, Linhardt RJ, Huang X<br>
+     <span class="venue">, 2022</span> &middot; <a href="https://onlinelibrary.wiley.com/doi/abs/10.1002/ange.202209730" target="_blank" rel="noopener noreferrer">onlinelibrary.wiley.com</a> &middot; <a href="https://doi.org/10.1002/ange.202209730" target="_blank" rel="noopener noreferrer">10.1002/ange.202209730</a></p>
+  <dl>
+    <dt>My work cited</dt>
+    <dd>Sulfated pentagalloylglucoside is a potent, allosteric, and selective inhibitor of factor XIa (2013) <span class="sub">[Sulfated pentagalloylglucoside is…]</span></dd>
+    <dt>row_uid</dt>
+    <dd><code>cit-001312</code></dd>
+    <dt>Where the citation appears</dt>
+    <dd><span class="none">not read — no PDF on file, so no claim about where the citation sits</span></dd>
+    <dt>Citing authors&rsquo; institutions</dt>
+    <dd><span class="none">Not recorded — confirm from the PDF&rsquo;s affiliation block.</span></dd>
+    <dt>Article type</dt>
+    <dd>article</dd>
+    <dt>Independence</dt>
+    <dd>Re-checked against the citation record: complete author lists of both papers, no shared
+        author, neither PI named on the citing paper; basis on the record: confirmed.</dd>
+  </dl>
+  <h4>What the text says</h4>
+  <p class="none">No verbatim sentence recorded.</p>
+  <h4>Files</h4>
+  <p class="none">No PDF on file. Paywalled — OpenAlex offered a PDF but the host answered 403.</p>
+  <p class="trace"><code>cit-001312</code> &middot; review note only — not part of
+     <code>packet.html</code> and not evidence until the row is confirmed and the packet re-rendered</p>
+</article>
+
+<article class="report" id="rep-cit-001315">
+  <h3>Precise structures and anti-intrinsic tenase complex activity of three fucosylated glycosaminoglycans and their fragments</h3>
+  <p class="byline">Cai Y, Yang W, Li X, Zhou L, Wang Z, Lin L, Chen D, Zhao L, Li Z, Liu S, Yin R, Zuo Z, Gao N, Zhao J<br>
+     <span class="venue">Carbohydrate …, 2019</span> &middot; <a href="https://www.sciencedirect.com/science/article/pii/S0144861719308136" target="_blank" rel="noopener noreferrer">www.sciencedirect.com</a> &middot; <a href="https://doi.org/10.1016/j.carbpol.2019.115146" target="_blank" rel="noopener noreferrer">10.1016/j.carbpol.2019.115146</a></p>
+  <dl>
+    <dt>My work cited</dt>
+    <dd>Sulfated pentagalloylglucoside is a potent, allosteric, and selective inhibitor of factor XIa (2013) <span class="sub">[Sulfated pentagalloylglucoside is…]</span></dd>
+    <dt>row_uid</dt>
+    <dd><code>cit-001315</code></dd>
+    <dt>Where the citation appears</dt>
+    <dd><span class="none">not read — no PDF on file, so no claim about where the citation sits</span></dd>
+    <dt>Citing authors&rsquo; institutions</dt>
+    <dd><span class="none">Not recorded — confirm from the PDF&rsquo;s affiliation block.</span></dd>
+    <dt>Article type</dt>
+    <dd>article</dd>
+    <dt>Independence</dt>
+    <dd>Re-checked against the citation record: complete author lists of both papers, no shared
+        author, neither PI named on the citing paper; basis on the record: confirmed.</dd>
+  </dl>
+  <h4>What the text says</h4>
+  <p class="none">No verbatim sentence recorded.</p>
+  <h4>Files</h4>
+  <p class="none">No PDF on file. No open copy — OpenAlex has the work (10.1016/j.carbpol.2019.115146), no open-access PDF location.</p>
+  <p class="trace"><code>cit-001315</code> &middot; review note only — not part of
+     <code>packet.html</code> and not evidence until the row is confirmed and the packet re-rendered</p>
+</article>
+
+<article class="report" id="rep-cit-001323">
+  <h3>AlphaFold3 assisted screening strategy identifying novel coagulation factor XIa inhibitory peptides from deep-sea mussel Gigantidas platifrons</h3>
+  <p class="byline">Ouyang Y, Yue Y, Suo Q, Chen H, Wang J, Wu N, Geng L, Zhang Q<br>
+     <span class="venue">Bioresource …, 2026</span> &middot; <a href="https://www.sciencedirect.com/science/article/pii/S0960852426015798" target="_blank" rel="noopener noreferrer">www.sciencedirect.com</a> &middot; <a href="https://doi.org/10.1016/j.biortech.2026.135497" target="_blank" rel="noopener noreferrer">10.1016/j.biortech.2026.135497</a></p>
+  <dl>
+    <dt>My work cited</dt>
+    <dd>Sulfated pentagalloylglucoside is a potent, allosteric, and selective inhibitor of factor XIa (2013) <span class="sub">[Sulfated pentagalloylglucoside is…]</span></dd>
+    <dt>row_uid</dt>
+    <dd><code>cit-001323</code></dd>
+    <dt>Where the citation appears</dt>
+    <dd><span class="none">not read — no PDF on file, so no claim about where the citation sits</span></dd>
+    <dt>Citing authors&rsquo; institutions</dt>
+    <dd><span class="none">Not recorded — confirm from the PDF&rsquo;s affiliation block.</span></dd>
+    <dt>Article type</dt>
+    <dd>article</dd>
+    <dt>Independence</dt>
+    <dd>Re-checked against the citation record: complete author lists of both papers, no shared
+        author, neither PI named on the citing paper; basis on the record: confirmed.</dd>
+  </dl>
+  <h4>What the text says</h4>
+  <p class="none">No verbatim sentence recorded.</p>
+  <h4>Files</h4>
+  <p class="none">No PDF on file. No open copy — OpenAlex has the work (10.1016/j.biortech.2026.135497), no open-access PDF location.</p>
+  <p class="trace"><code>cit-001323</code> &middot; review note only — not part of
+     <code>packet.html</code> and not evidence until the row is confirmed and the packet re-rendered</p>
+</article>
+
+<article class="report" id="rep-cit-001325">
+  <h3>Discovery of Novel FXIa Inhibitory Peptides from Deep-Sea Gigantidas platifrons Hydrolysates: AI-Guided Screening, Anticoagulant Activity, and Mechanistic Insights</h3>
+  <p class="byline">Ouyang, Yuhong; Chen, Hao; Wang, Jing; Wu, Ning; Geng, Lihua; Zhang, Quanbin; Yue, Yang<br>
+     <span class="venue">, 2026</span> &middot; <a href="https://pubs.acs.org/jafcau/article/74/25/19936/5165424" target="_blank" rel="noopener noreferrer">pubs.acs.org</a> &middot; <a href="https://doi.org/10.1021/acs.jafc.6c04005" target="_blank" rel="noopener noreferrer">10.1021/acs.jafc.6c04005</a></p>
+  <dl>
+    <dt>My work cited</dt>
+    <dd>Sulfated pentagalloylglucoside is a potent, allosteric, and selective inhibitor of factor XIa (2013) <span class="sub">[Sulfated pentagalloylglucoside is…]</span></dd>
+    <dt>row_uid</dt>
+    <dd><code>cit-001325</code></dd>
+    <dt>Where the citation appears</dt>
+    <dd><span class="none">not read — no PDF on file, so no claim about where the citation sits</span></dd>
+    <dt>Citing authors&rsquo; institutions</dt>
+    <dd><span class="none">Not recorded — confirm from the PDF&rsquo;s affiliation block.</span></dd>
+    <dt>Article type</dt>
+    <dd>article</dd>
+    <dt>Independence</dt>
+    <dd>Re-checked against the citation record: complete author lists of both papers, no shared
+        author, neither PI named on the citing paper; basis on the record: unverified-coverage.</dd>
+  </dl>
+  <h4>What the text says</h4>
+  <p class="none">No verbatim sentence recorded.</p>
+  <h4>Files</h4>
+  <p class="none">No PDF on file. No open copy — OpenAlex has the work (10.1021/acs.jafc.6c04005), no open-access PDF location.</p>
+  <p class="trace"><code>cit-001325</code> &middot; review note only — not part of
+     <code>packet.html</code> and not evidence until the row is confirmed and the packet re-rendered</p>
+</article>
+
+<article class="report" id="rep-cit-001332">
+  <h3>Peptidomic characterization and evaluation of in vitro and in vivo anticoagulant activities of proteinase K hydrolysates from the deep-sea cold seep clam Archivesica</h3>
+  <p class="byline">Ouyang, Yuhong; Yue, Yang; Chen, Hao; Wang, Jing; Wu, Ning; Geng, Lihua; Zhang, Quanbin<br>
+     <span class="venue">Food Bioscience, 2026</span> &middot; <a href="https://www.sciencedirect.com/science/article/pii/S2212429226007790" target="_blank" rel="noopener noreferrer">www.sciencedirect.com</a> &middot; <a href="https://doi.org/10.1016/j.fbio.2026.109007" target="_blank" rel="noopener noreferrer">10.1016/j.fbio.2026.109007</a></p>
+  <dl>
+    <dt>My work cited</dt>
+    <dd>Sulfated pentagalloylglucoside is a potent, allosteric, and selective inhibitor of factor XIa (2013) <span class="sub">[Sulfated pentagalloylglucoside is…]</span></dd>
+    <dt>row_uid</dt>
+    <dd><code>cit-001332</code></dd>
+    <dt>Where the citation appears</dt>
+    <dd><span class="none">not read — no PDF on file, so no claim about where the citation sits</span></dd>
+    <dt>Citing authors&rsquo; institutions</dt>
+    <dd><span class="none">Not recorded — confirm from the PDF&rsquo;s affiliation block.</span></dd>
+    <dt>Article type</dt>
+    <dd>article</dd>
+    <dt>Independence</dt>
+    <dd>Re-checked against the citation record: complete author lists of both papers, no shared
+        author, neither PI named on the citing paper; basis on the record: unverified-coverage.</dd>
+  </dl>
+  <h4>What the text says</h4>
+  <p class="none">No verbatim sentence recorded.</p>
+  <h4>Files</h4>
+  <p class="none">No PDF on file. No open copy — OpenAlex has the work (10.1016/j.fbio.2026.109007), no open-access PDF location.</p>
+  <p class="trace"><code>cit-001332</code> &middot; review note only — not part of
+     <code>packet.html</code> and not evidence until the row is confirmed and the packet re-rendered</p>
+</article>
+
+<article class="report" id="rep-cit-001336">
+  <h3>Modulating the degree of fucosylation of fucosylated chondroitin sulfate enhances heparin cofactor II-dependent thrombin inhibition</h3>
+  <p class="byline">Xu, Li; Gao, Na; Xiao, Chuang; Lin, Lisha; Purcell, Steven W; Wu, Mingyi; Zhao, Jinhua<br>
+     <span class="venue">European Journal of …, 2018</span> &middot; <a href="https://www.sciencedirect.com/science/article/pii/S0223523418304288" target="_blank" rel="noopener noreferrer">www.sciencedirect.com</a> &middot; <a href="https://doi.org/10.1016/j.ejmech.2018.05.024" target="_blank" rel="noopener noreferrer">10.1016/j.ejmech.2018.05.024</a></p>
+  <dl>
+    <dt>My work cited</dt>
+    <dd>Sulfated pentagalloylglucoside is a potent, allosteric, and selective inhibitor of factor XIa (2013) <span class="sub">[Sulfated pentagalloylglucoside is…]</span></dd>
+    <dt>row_uid</dt>
+    <dd><code>cit-001336</code></dd>
+    <dt>Where the citation appears</dt>
+    <dd><span class="none">not read — no PDF on file, so no claim about where the citation sits</span></dd>
+    <dt>Citing authors&rsquo; institutions</dt>
+    <dd><span class="none">Not recorded — confirm from the PDF&rsquo;s affiliation block.</span></dd>
+    <dt>Article type</dt>
+    <dd>article</dd>
+    <dt>Independence</dt>
+    <dd>Re-checked against the citation record: complete author lists of both papers, no shared
+        author, neither PI named on the citing paper; basis on the record: unverified-coverage.</dd>
+  </dl>
+  <h4>What the text says</h4>
+  <p class="none">No verbatim sentence recorded.</p>
+  <h4>Files</h4>
+  <p class="none">No PDF on file. No open copy — OpenAlex has the work (10.1016/j.ejmech.2018.05.024), no open-access PDF location.</p>
+  <p class="trace"><code>cit-001336</code> &middot; review note only — not part of
+     <code>packet.html</code> and not evidence until the row is confirmed and the packet re-rendered</p>
+</article>
+
+<article class="report" id="rep-cit-001338">
+  <h3>Phenylimidazoles as potent and selective inhibitors of coagulation factor XIa with in vivo antithrombotic activity</h3>
+  <p class="byline">Jon J. Hangeland, Todd J. Friends, Karen A. Rossi, Joanne M. Smallheer, Cailan Wang, Zhong Sun, James R. Corte, Tianan Fang, Pancras C. Wong, Alan R. Rendina, Frank A. Barbera, Jeffrey M. Bozarth, Joseph M. Luettgen, Carol A. Watson, Ge Zhang, Anzhi Wei, Vidhyashankar Ramamurthy, Paul E. Morin, Gregory S. Bisacchi, Srinath Subramaniam, Piramanayagam Arunachalam, Arvind Mathur, Dietmar A. Seiffert, Ruth R. Wexler, Mimi L. Quan<br>
+     <span class="venue">, 2014</span> &middot; <a href="https://pubs.acs.org/doi/abs/10.1021/jm5010607" target="_blank" rel="noopener noreferrer">pubs.acs.org</a> &middot; <a href="https://doi.org/10.1021/jm5010607" target="_blank" rel="noopener noreferrer">10.1021/jm5010607</a></p>
+  <dl>
+    <dt>My work cited</dt>
+    <dd>Sulfated pentagalloylglucoside is a potent, allosteric, and selective inhibitor of factor XIa (2013) <span class="sub">[Sulfated pentagalloylglucoside is…]</span></dd>
+    <dt>row_uid</dt>
+    <dd><code>cit-001338</code></dd>
+    <dt>Where the citation appears</dt>
+    <dd><span class="none">not read — no PDF on file, so no claim about where the citation sits</span></dd>
+    <dt>Citing authors&rsquo; institutions</dt>
+    <dd><span class="none">Not recorded — confirm from the PDF&rsquo;s affiliation block.</span></dd>
+    <dt>Article type</dt>
+    <dd>article</dd>
+    <dt>Independence</dt>
+    <dd>Re-checked against the citation record: complete author lists of both papers, no shared
+        author, neither PI named on the citing paper; basis on the record: confirmed.</dd>
+  </dl>
+  <h4>What the text says</h4>
+  <p class="none">No verbatim sentence recorded.</p>
+  <h4>Files</h4>
+  <p class="none">No PDF on file. No open copy — OpenAlex has the work (10.1021/jm5010607), no open-access PDF location.</p>
+  <p class="trace"><code>cit-001338</code> &middot; review note only — not part of
+     <code>packet.html</code> and not evidence until the row is confirmed and the packet re-rendered</p>
+</article>
+
+<article class="report" id="rep-cit-001342">
+  <h3>Macrocycles with aromatic P2′ groups as factor xia inhibitors</h3>
+  <p class="byline">Corte, James R, De Lucca, Indawati, Fang, Tianan, Yang, Wu, Wang, Yufeng, Dilger, Andrew K, Pabbisetty, Kumar Balashanmuga, Ewing, William R, Zhu, Yeheng, Wexler, Ruth R<br>
+     <span class="venue"></span> &middot; <a href="https://patents.google.com/patent/US9777001B2/en" target="_blank" rel="noopener noreferrer">patents.google.com</a></p>
+  <dl>
+    <dt>My work cited</dt>
+    <dd>Sulfated pentagalloylglucoside is a potent, allosteric, and selective inhibitor of factor XIa (2013) <span class="sub">[Sulfated pentagalloylglucoside is…]</span></dd>
+    <dt>row_uid</dt>
+    <dd><code>cit-001342</code></dd>
+    <dt>Where the citation appears</dt>
+    <dd><span class="none">not read — no PDF on file, so no claim about where the citation sits</span></dd>
+    <dt>Citing authors&rsquo; institutions</dt>
+    <dd><span class="none">Not recorded — confirm from the PDF&rsquo;s affiliation block.</span></dd>
+    <dt>Article type</dt>
+    <dd>patent</dd>
+    <dt>Independence</dt>
+    <dd>Re-checked against the citation record: complete author lists of both papers, no shared
+        author, neither PI named on the citing paper; basis on the record: user-decided.</dd>
+  </dl>
+  <h4>What the text says</h4>
+  <p class="none">No verbatim sentence recorded.</p>
+  <h4>Files</h4>
+  <p class="none">No PDF on file. Not in OpenAlex — no OpenAlex record by title.</p>
+  <p class="trace"><code>cit-001342</code> &middot; review note only — not part of
+     <code>packet.html</code> and not evidence until the row is confirmed and the packet re-rendered</p>
+</article>
+
+<article class="report" id="rep-cit-001365">
+  <h3>Enantiomeric separation of thiourea derivatives of naringenin on amylose and cellulose polymeric chromatographic chiral columns</h3>
+  <p class="byline">Ali I, Nabti R, Belboukhari N, Sekkoum K, Zaid MEA, Kraim K, ALOthman ZA, Locatelli M, Demir E<br>
+     <span class="venue">, 2024</span> &middot; <a href="https://onlinelibrary.wiley.com/doi/abs/10.1002/chir.23659" target="_blank" rel="noopener noreferrer">onlinelibrary.wiley.com</a> &middot; <a href="https://doi.org/10.1002/chir.23659" target="_blank" rel="noopener noreferrer">10.1002/chir.23659</a></p>
+  <dl>
+    <dt>My work cited</dt>
+    <dd>Sulfated pentagalloylglucoside is a potent, allosteric, and selective inhibitor of factor XIa (2013) <span class="sub">[Sulfated pentagalloylglucoside is…]</span></dd>
+    <dt>row_uid</dt>
+    <dd><code>cit-001365</code></dd>
+    <dt>Where the citation appears</dt>
+    <dd><span class="none">not read — no PDF on file, so no claim about where the citation sits</span></dd>
+    <dt>Citing authors&rsquo; institutions</dt>
+    <dd><span class="none">Not recorded — confirm from the PDF&rsquo;s affiliation block.</span></dd>
+    <dt>Article type</dt>
+    <dd>article</dd>
+    <dt>Independence</dt>
+    <dd>Re-checked against the citation record: complete author lists of both papers, no shared
+        author, neither PI named on the citing paper; basis on the record: confirmed.</dd>
+  </dl>
+  <h4>What the text says</h4>
+  <p class="none">No verbatim sentence recorded.</p>
+  <h4>Files</h4>
+  <p class="none">No PDF on file. Paywalled — OpenAlex offered a PDF but the host answered 403.</p>
+  <p class="trace"><code>cit-001365</code> &middot; review note only — not part of
+     <code>packet.html</code> and not evidence until the row is confirmed and the packet re-rendered</p>
+</article>
+
+<article class="report" id="rep-cit-001366">
+  <h3>Efforts to total synthesis of philinopside E: convergent synthesis of the sulfated lanostane-type tetraglycoside</h3>
+  <p class="byline">Bai, Shujin; Wu, Zhiyong; Huang, Qingyun; Zhang, Li; Chen, Pengwei; Wang, Cong; Zhang, Xiuli; Wang, Peng; Li, Ming<br>
+     <span class="venue">RSC Advances, 2016</span> &middot; <a href="https://pubs.rsc.org/ra/article-abstract/6/7/5442/501613" target="_blank" rel="noopener noreferrer">pubs.rsc.org</a> &middot; <a href="https://doi.org/10.1039/c5ra25845f" target="_blank" rel="noopener noreferrer">10.1039/c5ra25845f</a></p>
+  <dl>
+    <dt>My work cited</dt>
+    <dd>Sulfated pentagalloylglucoside is a potent, allosteric, and selective inhibitor of factor XIa (2013) <span class="sub">[Sulfated pentagalloylglucoside is…]</span></dd>
+    <dt>row_uid</dt>
+    <dd><code>cit-001366</code></dd>
+    <dt>Where the citation appears</dt>
+    <dd><span class="none">not read — no PDF on file, so no claim about where the citation sits</span></dd>
+    <dt>Citing authors&rsquo; institutions</dt>
+    <dd><span class="none">Not recorded — confirm from the PDF&rsquo;s affiliation block.</span></dd>
+    <dt>Article type</dt>
+    <dd>article</dd>
+    <dt>Independence</dt>
+    <dd>Re-checked against the citation record: complete author lists of both papers, no shared
+        author, neither PI named on the citing paper; basis on the record: unverified-coverage.</dd>
+  </dl>
+  <h4>What the text says</h4>
+  <p class="none">No verbatim sentence recorded.</p>
+  <h4>Files</h4>
+  <p class="none">No PDF on file. No open copy — OpenAlex has the work (10.1039/c5ra25845f), no open-access PDF location.</p>
+  <p class="trace"><code>cit-001366</code> &middot; review note only — not part of
+     <code>packet.html</code> and not evidence until the row is confirmed and the packet re-rendered</p>
+</article>
+
+<article class="report" id="rep-cit-001368">
+  <h3>Orally bioavailable amine-linked macrocyclic inhibitors of factor XIa</h3>
+  <p class="byline">Fang T, Corte JR, Gilligan PJ, Jeon Y, Osuna H, Rossi KA, Myers JE Jr, Sheriff S, Lou Z, Zheng JJ, Harper TW, Bozarth JM, Wu Y, Luettgen JM, Seiffert DA, Wexler RR, Lam PYS<br>
+     <span class="venue">Bioorganic &amp; Medicinal …, 2020</span> &middot; <a href="https://www.sciencedirect.com/science/article/pii/S0960894X20300020" target="_blank" rel="noopener noreferrer">www.sciencedirect.com</a> &middot; <a href="https://doi.org/10.1016/j.bmcl.2020.126949" target="_blank" rel="noopener noreferrer">10.1016/j.bmcl.2020.126949</a></p>
+  <dl>
+    <dt>My work cited</dt>
+    <dd>Sulfated pentagalloylglucoside is a potent, allosteric, and selective inhibitor of factor XIa (2013) <span class="sub">[Sulfated pentagalloylglucoside is…]</span></dd>
+    <dt>row_uid</dt>
+    <dd><code>cit-001368</code></dd>
+    <dt>Where the citation appears</dt>
+    <dd><span class="none">not read — no PDF on file, so no claim about where the citation sits</span></dd>
+    <dt>Citing authors&rsquo; institutions</dt>
+    <dd><span class="none">Not recorded — confirm from the PDF&rsquo;s affiliation block.</span></dd>
+    <dt>Article type</dt>
+    <dd>article</dd>
+    <dt>Independence</dt>
+    <dd>Re-checked against the citation record: complete author lists of both papers, no shared
+        author, neither PI named on the citing paper; basis on the record: confirmed.</dd>
+  </dl>
+  <h4>What the text says</h4>
+  <p class="none">No verbatim sentence recorded.</p>
+  <h4>Files</h4>
+  <p class="none">No PDF on file. No open copy — OpenAlex has the work (10.1016/j.bmcl.2020.126949), no open-access PDF location.</p>
+  <p class="trace"><code>cit-001368</code> &middot; review note only — not part of
+     <code>packet.html</code> and not evidence until the row is confirmed and the packet re-rendered</p>
+</article>
+
+<article class="report" id="rep-cit-001369">
+  <h3>Identifying new clotting factor XIa inhibitors in virtual high‐throughput screens using PCA‐GA‐SVM models and signature</h3>
+  <p class="byline">JJ Chen, LN Schmucker, DP Visco Jr<br>
+     <span class="venue">, 2018</span> &middot; <a href="https://aiche.onlinelibrary.wiley.com/doi/abs/10.1002/btpr.2693" target="_blank" rel="noopener noreferrer">aiche.onlinelibrary.wiley.com</a> &middot; <a href="https://doi.org/10.1002/btpr.2693" target="_blank" rel="noopener noreferrer">10.1002/btpr.2693</a></p>
+  <dl>
+    <dt>My work cited</dt>
+    <dd>Sulfated pentagalloylglucoside is a potent, allosteric, and selective inhibitor of factor XIa (2013) <span class="sub">[Sulfated pentagalloylglucoside is…]</span></dd>
+    <dt>row_uid</dt>
+    <dd><code>cit-001369</code></dd>
+    <dt>Where the citation appears</dt>
+    <dd><span class="none">not read — no PDF on file, so no claim about where the citation sits</span></dd>
+    <dt>Citing authors&rsquo; institutions</dt>
+    <dd><span class="none">Not recorded — confirm from the PDF&rsquo;s affiliation block.</span></dd>
+    <dt>Article type</dt>
+    <dd>article</dd>
+    <dt>Independence</dt>
+    <dd>Re-checked against the citation record: complete author lists of both papers, no shared
+        author, neither PI named on the citing paper; basis on the record: unverified-coverage.</dd>
+  </dl>
+  <h4>What the text says</h4>
+  <p class="none">No verbatim sentence recorded.</p>
+  <h4>Files</h4>
+  <p class="none">No PDF on file. No open copy — OpenAlex has the work (10.1002/btpr.2693), no open-access PDF location.</p>
+  <p class="trace"><code>cit-001369</code> &middot; review note only — not part of
+     <code>packet.html</code> and not evidence until the row is confirmed and the packet re-rendered</p>
+</article>
+
+<article class="report" id="rep-cit-001370">
+  <h3>Thiocarbamate-Linked Polysulfonate–Peptide Conjugates As Selective Hepatocyte Growth Factor Receptor Binders</h3>
+  <p class="byline">Besret S, Vicogne J, Dahmani F, Fafeur V, Desmet R, Drobecq H, Romieu A, Melnyk P, Melnyk O<br>
+     <span class="venue">Bioconjugate …, 2014</span> &middot; <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC4064695/" target="_blank" rel="noopener noreferrer">pmc.ncbi.nlm.nih.gov</a> &middot; <a href="https://doi.org/10.1021/bc500137j" target="_blank" rel="noopener noreferrer">10.1021/bc500137j</a></p>
+  <dl>
+    <dt>My work cited</dt>
+    <dd>Sulfated pentagalloylglucoside is a potent, allosteric, and selective inhibitor of factor XIa (2013) <span class="sub">[Sulfated pentagalloylglucoside is…]</span></dd>
+    <dt>row_uid</dt>
+    <dd><code>cit-001370</code></dd>
+    <dt>Where the citation appears</dt>
+    <dd><span class="none">not read — no PDF on file, so no claim about where the citation sits</span></dd>
+    <dt>Citing authors&rsquo; institutions</dt>
+    <dd><span class="none">Not recorded — confirm from the PDF&rsquo;s affiliation block.</span></dd>
+    <dt>Article type</dt>
+    <dd>article</dd>
+    <dt>Independence</dt>
+    <dd>Re-checked against the citation record: complete author lists of both papers, no shared
+        author, neither PI named on the citing paper; basis on the record: confirmed.</dd>
+  </dl>
+  <h4>What the text says</h4>
+  <p class="none">No verbatim sentence recorded.</p>
+  <h4>Files</h4>
+  <p class="none">No PDF on file. Paywalled — OpenAlex offered a PDF but the host answered 403.</p>
+  <p class="trace"><code>cit-001370</code> &middot; review note only — not part of
+     <code>packet.html</code> and not evidence until the row is confirmed and the packet re-rendered</p>
+</article>
+
+<article class="report" id="rep-cit-001371">
+  <h3>ASSESSING DRUG DEVELOPMENT PROPORTIES OF ANTITHROMBOTIC AND ANTI-CANCER AGENTS</h3>
+  <p class="byline">EI Abdelfadiel<br>
+     <span class="venue"></span> &middot; <a href="https://scholarscompass.vcu.edu/etd/7203/?gathStatIcon=true/" target="_blank" rel="noopener noreferrer">scholarscompass.vcu.edu</a></p>
+  <dl>
+    <dt>My work cited</dt>
+    <dd>Sulfated pentagalloylglucoside is a potent, allosteric, and selective inhibitor of factor XIa (2013) <span class="sub">[Sulfated pentagalloylglucoside is…]</span></dd>
+    <dt>row_uid</dt>
+    <dd><code>cit-001371</code></dd>
+    <dt>Where the citation appears</dt>
+    <dd><span class="none">not read — no PDF on file, so no claim about where the citation sits</span></dd>
+    <dt>Citing authors&rsquo; institutions</dt>
+    <dd><span class="none">Not recorded — confirm from the PDF&rsquo;s affiliation block.</span></dd>
+    <dt>Article type</dt>
+    <dd>article</dd>
+    <dt>Independence</dt>
+    <dd>Re-checked against the citation record: complete author lists of both papers, no shared
+        author, neither PI named on the citing paper; basis on the record: unverified-coverage.</dd>
+  </dl>
+  <h4>What the text says</h4>
+  <p class="none">No verbatim sentence recorded.</p>
+  <h4>Files</h4>
+  <p class="none">No PDF on file. Not in OpenAlex — no OpenAlex record by title.</p>
+  <p class="trace"><code>cit-001371</code> &middot; review note only — not part of
+     <code>packet.html</code> and not evidence until the row is confirmed and the packet re-rendered</p>
+</article>
+
+<article class="report" id="rep-cit-001372">
+  <h3>Polycationic inhibitors to target prothrombotic nucleic acids in vitro and in mouse models</h3>
+  <p class="byline">S Vappala<br>
+     <span class="venue"></span> &middot; <a href="https://open.library.ubc.ca/soa/cIRcle/collections/ubctheses/24/items/1.0423028" target="_blank" rel="noopener noreferrer">open.library.ubc.ca</a></p>
+  <dl>
+    <dt>My work cited</dt>
+    <dd>Sulfated pentagalloylglucoside is a potent, allosteric, and selective inhibitor of factor XIa (2013) <span class="sub">[Sulfated pentagalloylglucoside is…]</span></dd>
+    <dt>row_uid</dt>
+    <dd><code>cit-001372</code></dd>
+    <dt>Where the citation appears</dt>
+    <dd><span class="none">not read — no PDF on file, so no claim about where the citation sits</span></dd>
+    <dt>Citing authors&rsquo; institutions</dt>
+    <dd><span class="none">Not recorded — confirm from the PDF&rsquo;s affiliation block.</span></dd>
+    <dt>Article type</dt>
+    <dd>article</dd>
+    <dt>Independence</dt>
+    <dd>Re-checked against the citation record: complete author lists of both papers, no shared
+        author, neither PI named on the citing paper; basis on the record: unverified-coverage.</dd>
+  </dl>
+  <h4>What the text says</h4>
+  <p class="none">No verbatim sentence recorded.</p>
+  <h4>Files</h4>
+  <p class="none">No PDF on file. Not in OpenAlex — no OpenAlex record by title.</p>
+  <p class="trace"><code>cit-001372</code> &middot; review note only — not part of
+     <code>packet.html</code> and not evidence until the row is confirmed and the packet re-rendered</p>
+</article>
+
+<article class="report" id="rep-cit-001373">
+  <h3>Medically-induced hemophilia C to treat thrombosis</h3>
+  <p class="byline">Schmaier AH<br>
+     <span class="venue">Thrombosis Research, 2015</span> &middot; <a href="https://www.thrombosisresearch.com/article/S0049-3848(15)00240-6/abstract" target="_blank" rel="noopener noreferrer">www.thrombosisresearch.com</a> &middot; <a href="https://doi.org/10.1016/j.thromres.2015.05.013" target="_blank" rel="noopener noreferrer">10.1016/j.thromres.2015.05.013</a></p>
+  <dl>
+    <dt>My work cited</dt>
+    <dd>Sulfated pentagalloylglucoside is a potent, allosteric, and selective inhibitor of factor XIa (2013) <span class="sub">[Sulfated pentagalloylglucoside is…]</span></dd>
+    <dt>row_uid</dt>
+    <dd><code>cit-001373</code></dd>
+    <dt>Where the citation appears</dt>
+    <dd><span class="none">not read — no PDF on file, so no claim about where the citation sits</span></dd>
+    <dt>Citing authors&rsquo; institutions</dt>
+    <dd><span class="none">Not recorded — confirm from the PDF&rsquo;s affiliation block.</span></dd>
+    <dt>Article type</dt>
+    <dd>article</dd>
+    <dt>Independence</dt>
+    <dd>Re-checked against the citation record: complete author lists of both papers, no shared
+        author, neither PI named on the citing paper; basis on the record: confirmed.</dd>
+  </dl>
+  <h4>What the text says</h4>
+  <p class="none">No verbatim sentence recorded.</p>
+  <h4>Files</h4>
+  <p class="none">No PDF on file. No open copy — OpenAlex has the work (10.1016/j.thromres.2015.05.013), no open-access PDF location.</p>
+  <p class="trace"><code>cit-001373</code> &middot; review note only — not part of
+     <code>packet.html</code> and not evidence until the row is confirmed and the packet re-rendered</p>
+</article>
+
+<article class="report" id="rep-cit-001375">
+  <h3>CHARACTERIZING GLYCOSAMINOGLYCAN AND GLYCOSAMINOGLYCAN-OLIGO INTERACTIONS WITH CANCER STEM CELLS AND THEIR REGULATORS</h3>
+  <p class="byline">R Navaz Gangji<br>
+     <span class="venue">, 2020</span> &middot; <a href="https://scholarscompass.vcu.edu/etd/6185/" target="_blank" rel="noopener noreferrer">scholarscompass.vcu.edu</a> &middot; <a href="https://doi.org/10.25772/yfh9-pc36" target="_blank" rel="noopener noreferrer">10.25772/yfh9-pc36</a></p>
+  <dl>
+    <dt>My work cited</dt>
+    <dd>Sulfated pentagalloylglucoside is a potent, allosteric, and selective inhibitor of factor XIa (2013) <span class="sub">[Sulfated pentagalloylglucoside is…]</span></dd>
+    <dt>row_uid</dt>
+    <dd><code>cit-001375</code></dd>
+    <dt>Where the citation appears</dt>
+    <dd><span class="none">not read — no PDF on file, so no claim about where the citation sits</span></dd>
+    <dt>Citing authors&rsquo; institutions</dt>
+    <dd><span class="none">Not recorded — confirm from the PDF&rsquo;s affiliation block.</span></dd>
+    <dt>Article type</dt>
+    <dd>article</dd>
+    <dt>Independence</dt>
+    <dd>Re-checked against the citation record: complete author lists of both papers, no shared
+        author, neither PI named on the citing paper; basis on the record: unverified-coverage.</dd>
+  </dl>
+  <h4>What the text says</h4>
+  <p class="none">No verbatim sentence recorded.</p>
+  <h4>Files</h4>
+  <p class="none">No PDF on file. No open copy — OpenAlex has the work (10.25772/yfh9-pc36), no open-access PDF location.</p>
+  <p class="trace"><code>cit-001375</code> &middot; review note only — not part of
+     <code>packet.html</code> and not evidence until the row is confirmed and the packet re-rendered</p>
+</article>
+
+<article class="report" id="rep-cit-001379">
+  <h3>Data Mining/Machine Learning Techniques for Drug Discovery: Computational and Experimental Pipeline Development</h3>
+  <p class="byline">JJF Chen<br>
+     <span class="venue"></span> &middot; <a href="https://rave.ohiolink.edu/etdc/view?acc_num=akron1524661027035591" target="_blank" rel="noopener noreferrer">rave.ohiolink.edu</a></p>
+  <dl>
+    <dt>My work cited</dt>
+    <dd>Sulfated pentagalloylglucoside is a potent, allosteric, and selective inhibitor of factor XIa (2013) <span class="sub">[Sulfated pentagalloylglucoside is…]</span></dd>
+    <dt>row_uid</dt>
+    <dd><code>cit-001379</code></dd>
+    <dt>Where the citation appears</dt>
+    <dd><span class="none">not read — no PDF on file, so no claim about where the citation sits</span></dd>
+    <dt>Citing authors&rsquo; institutions</dt>
+    <dd><span class="none">Not recorded — confirm from the PDF&rsquo;s affiliation block.</span></dd>
+    <dt>Article type</dt>
+    <dd>article</dd>
+    <dt>Independence</dt>
+    <dd>Re-checked against the citation record: complete author lists of both papers, no shared
+        author, neither PI named on the citing paper; basis on the record: unverified-coverage.</dd>
+  </dl>
+  <h4>What the text says</h4>
+  <p class="none">No verbatim sentence recorded.</p>
+  <h4>Files</h4>
+  <p class="none">No PDF on file. Not in OpenAlex — no OpenAlex record by title.</p>
+  <p class="trace"><code>cit-001379</code> &middot; review note only — not part of
+     <code>packet.html</code> and not evidence until the row is confirmed and the packet re-rendered</p>
+</article>
+
+<article class="report" id="rep-cit-001381">
+  <h3>Study of Molecular Interactions of Glycosaminoglycans and Glycosaminoglycan Mimetics with Their Protein Targets</h3>
+  <p class="byline">DK Afosah<br>
+     <span class="venue">, 2017</span> &middot; <a href="https://scholarscompass.vcu.edu/etd/4968/" target="_blank" rel="noopener noreferrer">scholarscompass.vcu.edu</a> &middot; <a href="https://doi.org/10.25772/dw2f-b659" target="_blank" rel="noopener noreferrer">10.25772/dw2f-b659</a></p>
+  <dl>
+    <dt>My work cited</dt>
+    <dd>Sulfated pentagalloylglucoside is a potent, allosteric, and selective inhibitor of factor XIa (2013) <span class="sub">[Sulfated pentagalloylglucoside is…]</span></dd>
+    <dt>row_uid</dt>
+    <dd><code>cit-001381</code></dd>
+    <dt>Where the citation appears</dt>
+    <dd><span class="none">not read — no PDF on file, so no claim about where the citation sits</span></dd>
+    <dt>Citing authors&rsquo; institutions</dt>
+    <dd><span class="none">Not recorded — confirm from the PDF&rsquo;s affiliation block.</span></dd>
+    <dt>Article type</dt>
+    <dd>article</dd>
+    <dt>Independence</dt>
+    <dd>Re-checked against the citation record: complete author lists of both papers, no shared
+        author, neither PI named on the citing paper; basis on the record: unverified-coverage.</dd>
+  </dl>
+  <h4>What the text says</h4>
+  <p class="none">No verbatim sentence recorded.</p>
+  <h4>Files</h4>
+  <p class="none">No PDF on file. No open copy — OpenAlex has the work (10.25772/dw2f-b659), no open-access PDF location.</p>
+  <p class="trace"><code>cit-001381</code> &middot; review note only — not part of
+     <code>packet.html</code> and not evidence until the row is confirmed and the packet re-rendered</p>
+</article>
+
+<article class="report" id="rep-cit-001382">
+  <h3>ATVB Named Lecture Review</h3>
+  <p class="byline">XI Factor<br>
+     <span class="venue">, 2018</span> &middot; <a href="https://www.academia.edu/download/93444176/ATVBAHA.117.pdf" target="_blank" rel="noopener noreferrer">www.academia.edu</a> &middot; <a href="https://doi.org/10.1161/atvbaha.118.310970" target="_blank" rel="noopener noreferrer">10.1161/atvbaha.118.310970</a></p>
+  <dl>
+    <dt>My work cited</dt>
+    <dd>Sulfated pentagalloylglucoside is a potent, allosteric, and selective inhibitor of factor XIa (2013) <span class="sub">[Sulfated pentagalloylglucoside is…]</span></dd>
+    <dt>row_uid</dt>
+    <dd><code>cit-001382</code></dd>
+    <dt>Where the citation appears</dt>
+    <dd><span class="none">not read — no PDF on file, so no claim about where the citation sits</span></dd>
+    <dt>Citing authors&rsquo; institutions</dt>
+    <dd><span class="none">Not recorded — confirm from the PDF&rsquo;s affiliation block.</span></dd>
+    <dt>Article type</dt>
+    <dd>article</dd>
+    <dt>Independence</dt>
+    <dd>Re-checked against the citation record: complete author lists of both papers, no shared
+        author, neither PI named on the citing paper; basis on the record: unverified-coverage.</dd>
+  </dl>
+  <h4>What the text says</h4>
+  <p class="none">No verbatim sentence recorded.</p>
+  <h4>Files</h4>
+  <p class="none">No PDF on file. No open copy — OpenAlex has the work (10.1161/atvbaha.118.310970), no open-access PDF location.</p>
+  <p class="trace"><code>cit-001382</code> &middot; review note only — not part of
+     <code>packet.html</code> and not evidence until the row is confirmed and the packet re-rendered</p>
+</article>
+
+<article class="report" id="rep-cit-001383">
+  <h3>[BOOK] Probing allosteric, partial inhibition of thrombin using novel anticoagulants</h3>
+  <p class="byline">SS Verespy III<br>
+     <span class="venue">, 2016</span> &middot; <a href="https://search.proquest.com/openview/197f86fac0d2accd9f82fc809da0fdaa/1?pq-origsite=gscholar&amp;cbl=18750&amp;diss=y" target="_blank" rel="noopener noreferrer">search.proquest.com</a> &middot; <a href="https://doi.org/10.25772/2e1m-ck22" target="_blank" rel="noopener noreferrer">10.25772/2e1m-ck22</a></p>
+  <dl>
+    <dt>My work cited</dt>
+    <dd>Sulfated pentagalloylglucoside is a potent, allosteric, and selective inhibitor of factor XIa (2013) <span class="sub">[Sulfated pentagalloylglucoside is…]</span></dd>
+    <dt>row_uid</dt>
+    <dd><code>cit-001383</code></dd>
+    <dt>Where the citation appears</dt>
+    <dd><span class="none">not read — no PDF on file, so no claim about where the citation sits</span></dd>
+    <dt>Citing authors&rsquo; institutions</dt>
+    <dd><span class="none">Not recorded — confirm from the PDF&rsquo;s affiliation block.</span></dd>
+    <dt>Article type</dt>
+    <dd>article</dd>
+    <dt>Independence</dt>
+    <dd>Re-checked against the citation record: complete author lists of both papers, no shared
+        author, neither PI named on the citing paper; basis on the record: unverified-coverage.</dd>
+  </dl>
+  <h4>What the text says</h4>
+  <p class="none">No verbatim sentence recorded.</p>
+  <h4>Files</h4>
+  <p class="none">No PDF on file. No open copy — OpenAlex has the work (10.25772/2e1m-ck22), no open-access PDF location.</p>
+  <p class="trace"><code>cit-001383</code> &middot; review note only — not part of
+     <code>packet.html</code> and not evidence until the row is confirmed and the packet re-rendered</p>
+</article>
+
+<article class="report" id="rep-cit-001384">
+  <h3>[BOOK] Studies on rationally designed, allosteric, coagulation inhibitors</h3>
+  <p class="byline">R Boothello<br>
+     <span class="venue">, 2014</span> &middot; <a href="https://search.proquest.com/openview/1e39143b98382b38c71074a9313f8722/1?pq-origsite=gscholar&amp;cbl=18750" target="_blank" rel="noopener noreferrer">search.proquest.com</a> &middot; <a href="https://doi.org/10.25772/ypz2-bv95" target="_blank" rel="noopener noreferrer">10.25772/ypz2-bv95</a></p>
+  <dl>
+    <dt>My work cited</dt>
+    <dd>Sulfated pentagalloylglucoside is a potent, allosteric, and selective inhibitor of factor XIa (2013) <span class="sub">[Sulfated pentagalloylglucoside is…]</span></dd>
+    <dt>row_uid</dt>
+    <dd><code>cit-001384</code></dd>
+    <dt>Where the citation appears</dt>
+    <dd><span class="none">not read — no PDF on file, so no claim about where the citation sits</span></dd>
+    <dt>Citing authors&rsquo; institutions</dt>
+    <dd><span class="none">Not recorded — confirm from the PDF&rsquo;s affiliation block.</span></dd>
+    <dt>Article type</dt>
+    <dd>article</dd>
+    <dt>Independence</dt>
+    <dd>Re-checked against the citation record: complete author lists of both papers, no shared
+        author, neither PI named on the citing paper; basis on the record: unverified-coverage.</dd>
+  </dl>
+  <h4>What the text says</h4>
+  <p class="none">No verbatim sentence recorded.</p>
+  <h4>Files</h4>
+  <p class="none">No PDF on file. No open copy — OpenAlex has the work (10.25772/ypz2-bv95), no open-access PDF location.</p>
+  <p class="trace"><code>cit-001384</code> &middot; review note only — not part of
+     <code>packet.html</code> and not evidence until the row is confirmed and the packet re-rendered</p>
+</article>
+
+<article class="report" id="rep-cit-001386">
+  <h3>Newer Oral Anticoagulants</h3>
+  <p class="byline">Ramesh R, Ranganathan LN, Raguraman S, Jayakumar K, Rajamanoharan B, Loganathan VK, Hazeena P, Shanmugam S, Avadhani D, Sankar K<br>
+     <span class="venue">The Coagulation Consult: A Case-Based Guide, 2013</span> &middot; <a href="https://link.springer.com/chapter/10.1007/978-1-4614-9560-4_16" target="_blank" rel="noopener noreferrer">link.springer.com</a> &middot; <a href="https://doi.org/10.1007/978-1-4614-9560-4_16" target="_blank" rel="noopener noreferrer">10.1007/978-1-4614-9560-4_16</a></p>
+  <dl>
+    <dt>My work cited</dt>
+    <dd>Sulfated pentagalloylglucoside is a potent, allosteric, and selective inhibitor of factor XIa (2013) <span class="sub">[Sulfated pentagalloylglucoside is…]</span></dd>
+    <dt>row_uid</dt>
+    <dd><code>cit-001386</code></dd>
+    <dt>Where the citation appears</dt>
+    <dd><span class="none">not read — no PDF on file, so no claim about where the citation sits</span></dd>
+    <dt>Citing authors&rsquo; institutions</dt>
+    <dd><span class="none">Not recorded — confirm from the PDF&rsquo;s affiliation block.</span></dd>
+    <dt>Article type</dt>
+    <dd>article</dd>
+    <dt>Independence</dt>
+    <dd>Re-checked against the citation record: complete author lists of both papers, no shared
+        author, neither PI named on the citing paper; basis on the record: unverified-coverage.</dd>
+  </dl>
+  <h4>What the text says</h4>
+  <p class="none">No verbatim sentence recorded.</p>
+  <h4>Files</h4>
+  <p class="none">No PDF on file. No open copy — OpenAlex has the work (10.1007/978-1-4614-9560-4_16), no open-access PDF location.</p>
+  <p class="trace"><code>cit-001386</code> &middot; review note only — not part of
+     <code>packet.html</code> and not evidence until the row is confirmed and the packet re-rendered</p>
+</article>
+
+<article class="report" id="rep-cit-001389">
+  <h3>New perspectives for antithrombotic therapy—coagulation factor XI as a target</h3>
+  <p class="byline">J Treliński<br>
+     <span class="venue">Hematology in Clinical Practice, 2015</span> &middot; <a href="https://journals.viamedica.pl/hematology_in_clinical_practice/article/view/44302" target="_blank" rel="noopener noreferrer">journals.viamedica.pl</a></p>
+  <dl>
+    <dt>My work cited</dt>
+    <dd>Sulfated pentagalloylglucoside is a potent, allosteric, and selective inhibitor of factor XIa (2013) <span class="sub">[Sulfated pentagalloylglucoside is…]</span></dd>
+    <dt>row_uid</dt>
+    <dd><code>cit-001389</code></dd>
+    <dt>Where the citation appears</dt>
+    <dd><span class="none">not read — no PDF on file, so no claim about where the citation sits</span></dd>
+    <dt>Citing authors&rsquo; institutions</dt>
+    <dd><span class="none">Not recorded — confirm from the PDF&rsquo;s affiliation block.</span></dd>
+    <dt>Article type</dt>
+    <dd>article</dd>
+    <dt>Independence</dt>
+    <dd>Re-checked against the citation record: complete author lists of both papers, no shared
+        author, neither PI named on the citing paper; basis on the record: unverified-coverage.</dd>
+  </dl>
+  <h4>What the text says</h4>
+  <p class="none">No verbatim sentence recorded.</p>
+  <h4>Files</h4>
+  <p class="none">No PDF on file. Not in OpenAlex — no OpenAlex record by title.</p>
+  <p class="trace"><code>cit-001389</code> &middot; review note only — not part of
+     <code>packet.html</code> and not evidence until the row is confirmed and the packet re-rendered</p>
+</article>
+
+<article class="report" id="rep-cit-001391">
+  <h3>[CITATION] Advances in Anticoagulants</h3>
+  <p class="byline">ML Quan, PW Glunz, JM Smallheer<br>
+     <span class="venue">, 2016</span> &middot; <a href="https://doi.org/10.1016/b978-0-12-409547-2.12433-3" target="_blank" rel="noopener noreferrer">10.1016/b978-0-12-409547-2.12433-3</a></p>
+  <dl>
+    <dt>My work cited</dt>
+    <dd>Sulfated pentagalloylglucoside is a potent, allosteric, and selective inhibitor of factor XIa (2013) <span class="sub">[Sulfated pentagalloylglucoside is…]</span></dd>
+    <dt>row_uid</dt>
+    <dd><code>cit-001391</code></dd>
+    <dt>Where the citation appears</dt>
+    <dd><span class="none">not read — no PDF on file, so no claim about where the citation sits</span></dd>
+    <dt>Citing authors&rsquo; institutions</dt>
+    <dd><span class="none">Not recorded — confirm from the PDF&rsquo;s affiliation block.</span></dd>
+    <dt>Article type</dt>
+    <dd>article</dd>
+    <dt>Independence</dt>
+    <dd>Re-checked against the citation record: complete author lists of both papers, no shared
+        author, neither PI named on the citing paper; basis on the record: unverified-coverage.</dd>
+  </dl>
+  <h4>What the text says</h4>
+  <p class="none">No verbatim sentence recorded.</p>
+  <h4>Files</h4>
+  <p class="none">No PDF on file. No open copy — OpenAlex has the work (10.1016/b978-0-12-409547-2.12433-3), no open-access PDF location.</p>
+  <p class="trace"><code>cit-001391</code> &middot; review note only — not part of
+     <code>packet.html</code> and not evidence until the row is confirmed and the packet re-rendered</p>
+</article>
+
 <p class="foot">Generated 2026-11-08 by <code>scripts/build-potential.js</code> from
    <code>Database/citation-catalog.sqlite</code> (read-only) and
    <code>notable-citations.sqlite</code>. Not linked from <code>packet.html</code> and not printed
    with it. Independence screen: <code>status = INDEPENDENT</code> and
    <code>is_countable_independent = 1</code> on the active, standing, English row.
-   204 citations of 4 of my works, shown as
-   197 rows; 63 of the 204 read by <code>scan-mentions.js</code> on or
+   238 citations of 5 of my works, shown as
+   231 rows; 64 of the 238 read by <code>scan-mentions.js</code> on or
    before 2026-11-08.</p>
 </main>
 <script>

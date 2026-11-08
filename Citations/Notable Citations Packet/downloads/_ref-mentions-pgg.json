@@ -1,0 +1,42 @@
+[
+  {
+    "row_uid": "cit-001287",
+    "mentions": [
+      {
+        "section": "Introduction",
+        "tier": "C",
+        "page": "3",
+        "quote": "the active site (42–44) or induce allosteric modulation (45, 46), or",
+        "use_type": null,
+        "basis": "reference-number resolution",
+        "verified": 0,
+        "note": "cited as bracketed jointly with 46: (45, 46)"
+      }
+    ]
+  },
+  {
+    "row_uid": "cit-001303",
+    "mentions": [
+      {
+        "section": "Results",
+        "tier": "B",
+        "page": "7",
+        "quote": "used in screening anticoagulant active ingredients [36].",
+        "use_type": null,
+        "basis": "reference-number resolution",
+        "verified": 0,
+        "note": "cited as bracketed: [36]"
+      },
+      {
+        "section": "Results",
+        "tier": "B",
+        "page": "7",
+        "quote": "anticoagulant active ingredients [ 36 ].",
+        "use_type": null,
+        "basis": "reference-number resolution",
+        "verified": 0,
+        "note": "cited as bracketed: [ 36 ]"
+      }
+    ]
+  }
+]
