@@ -110,8 +110,17 @@ function pdfProof(ev) {
 }
 
 const groups = new Map();
+// A row already screened-out carries the reason a person wrote for it. Re-running
+// the report over a work must not overwrite that with bulk prose: on 2026-11-08 a
+// GLAD re-sweep replaced two concise thesis reasons with the evidence sentence.
+const alreadyScreened = rows.filter(r => /^SECONDARY/.test(r.verdict) && r.status !== "held");
+if (alreadyScreened.length) {
+  console.log(`\n${alreadyScreened.length} row(s) already screened-out, left alone (their reason stands): ` +
+    alreadyScreened.map(r => r.uid).join(" "));
+}
 for (const r of rows) {
   if (!/^SECONDARY/.test(r.verdict)) continue;
+  if (r.status !== "held") continue;
   const routes = secondaryRoutes(r.ev);
   // Two routes, or the article itself. One route is not proof (§1.2).
   if (routes.length < 2 && !pdfProof(r.ev)) continue;
@@ -136,5 +145,5 @@ for (const [routes, uids] of [...groups.entries()].sort((a, b) => b[1].length - 
   }
 }
 console.log(`\n${total} of ${rows.length} rows carry proof strong enough to screen${APPLY ? " (applied)" : " — re-run with --apply"}.`);
-const thin = rows.filter(r => /^SECONDARY/.test(r.verdict) && secondaryRoutes(r.ev).length < 2 && !pdfProof(r.ev));
+const thin = rows.filter(r => r.status === "held" && /^SECONDARY/.test(r.verdict) && secondaryRoutes(r.ev).length < 2 && !pdfProof(r.ev));
 if (thin.length) console.log(`${thin.length} row(s) labelled SECONDARY on one route only, left held: ${thin.map(r => r.uid).join(" ")}`);
