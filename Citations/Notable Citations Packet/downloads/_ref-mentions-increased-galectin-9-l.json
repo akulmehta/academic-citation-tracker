@@ -1,0 +1,87 @@
+[
+  {
+    "row_uid": "cit-000951",
+    "mentions": [
+      {
+        "section": "Discussion",
+        "tier": "C",
+        "page": "9",
+        "quote": "greater treatment burden, and longer disease duration [30 ,41 – 45 ].",
+        "use_type": null,
+        "basis": "reference-number resolution",
+        "verified": 0,
+        "note": "cited as bracketed jointly with 30, 41, 42, 43, 44: [30 ,41 – 45 ]"
+      }
+    ]
+  },
+  {
+    "row_uid": "cit-000957",
+    "mentions": [
+      {
+        "section": "Discussion",
+        "tier": "C",
+        "page": "18",
+        "quote": "synoviocytic cells of these patients led to a decrease in the production of IL-6 [ 96 ].",
+        "use_type": null,
+        "basis": "reference-number resolution",
+        "verified": 0,
+        "note": "cited as bracketed: [ 96 ]"
+      }
+    ]
+  },
+  {
+    "row_uid": "cit-000959",
+    "mentions": [
+      {
+        "section": "Discussion",
+        "tier": "C",
+        "page": "13",
+        "quote": "rheumatoid arthritis [45] and also shown to be a target",
+        "use_type": null,
+        "basis": "reference-number resolution",
+        "verified": 0,
+        "note": "cited as bracketed: [45]"
+      }
+    ]
+  },
+  {
+    "row_uid": "cit-000961",
+    "mentions": [
+      {
+        "section": "Discussion",
+        "tier": "C",
+        "page": "12",
+        "quote": "nificant role in inflammation in RA [ 53 ], and prognostic factors may be correlated with",
+        "use_type": null,
+        "basis": "reference-number resolution",
+        "verified": 0,
+        "note": "cited as bracketed: [ 53 ]"
+      },
+      {
+        "section": "Discussion",
+        "tier": "C",
+        "page": "12",
+        "quote": "75, and 74, respectively) are similar to the enrolled patient number in our study [ 45 – 53 ].",
+        "use_type": null,
+        "basis": "reference-number resolution",
+        "verified": 0,
+        "note": "cited as bracketed jointly with 45, 46, 47, 48, 49, 50, 51, 52: [ 45 – 53 ]"
+      }
+    ]
+  },
+  {
+    "row_uid": "cit-000962",
+    "mentions": [
+      {
+        "section": "Discussion",
+        "tier": "C",
+        "page": "8",
+        "quote": "synovial fibroblasts, suggesting a potential therapeutic target [ 18,19 ].",
+        "use_type": null,
+        "basis": "reference-number resolution",
+        "verified": 0,
+        "note": "cited as bracketed jointly with 18: [ 18,19 ]"
+      }
+    ]
+  }
+]
