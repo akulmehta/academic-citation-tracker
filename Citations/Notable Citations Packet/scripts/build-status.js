@@ -589,18 +589,23 @@ try {
     push("| | count |");
     push("|---|---:|");
     push("| Citing works the record lists for that paper | " + screen.total + " |");
+    push("| less rows retired by a later re-capture | " + screen.superseded + " |");
     push("| less not independent (shared author, or a PI on the citing paper) | " + screen.dependent + " |");
     push("| less copies that do not stand for their work | " + screen.notStanding + " |");
     push("| less not listed in English | " + screen.nonEnglish + " |");
     push("| less already confirmed in the packet | " + screen.inPacket + " |");
     push("| less already used in the original application (\u00a73) | " + screen.origApp + " |");
+    push("| less decided against by the applicant | " + screen.decided + " |");
     push("| **listed for review** | **" + pot.length + "** |");
     push();
     push(potPdf.length + " of them already have a PDF on file, held under `pending-papers/` until a");
     push("decision is made. The rest sit at");
     push("`no-open-copy`, `paywalled`, or `not-in-indexes` \u2014 findings about access, not about");
-    push("whether the paper exists. **No tier is claimed for any of them:** a tier is a claim about");
-    push("where a sentence sits in an article, and none of these articles has been read page by page.");
+    push("whether the paper exists. **A tier appears only for an article that has actually been read:**");
+    push("a plain tier is a named mention under a heading the citing paper printed, and a tier marked");
+    push("\u201cresolved\u201d is a citation the paper credited by reference number or by author\u2013year");
+    push("without naming the tool. The rest claim nothing, because a tier is a claim about where a");
+    push("sentence sits and their articles have not been read page by page.");
     push("To bring one in, name its `row_uid` and run `discover-pdfs.js` \u2192 `file-pdf.js` \u2192");
     push("`scan-mentions.js` \u2192 `record-evidence.js`, then re-render the packet.");
     catS.close();
@@ -676,6 +681,66 @@ note("The scanner's reading lives in its own columns",
   + "They are rewritten every run and are never the basis of a claim in the packet: `tier`, `section`\n"
   + "and `quote` remain the applicant's fields, and \u00a71.3 forbids a script overwriting them. If\n"
   + "`scanned_on` is older than the newest PDF, re-run `node scripts/scan-mentions.js --write`.");
+
+// A citation that names no tool is invisible to that scanner by construction, so the
+// count of them has to be stated somewhere \u2014 otherwise "the scan found nothing" reads as
+// "the paper never cites the work", which is the opposite of what it means.
+{
+  const byBasis = db.prepare(`SELECT basis, COUNT(*) n, COUNT(DISTINCT row_uid) rows FROM mention
+    GROUP BY basis ORDER BY n DESC`).all();
+  const resolved = byBasis.filter(b => b.basis !== "extracted text");
+  // Distinct rows, not the sum of per-basis distinct counts: a row can carry a
+  // resolved mention and a scanned one, and adding the columns would double it.
+  const rRows = db.prepare(`SELECT COUNT(DISTINCT row_uid) n FROM mention
+    WHERE basis <> 'extracted text'`).get().n;
+  const rMentions = resolved.reduce((n, b) => n + b.n, 0);
+  push("### How a citation that never names the tool is found");
+  push();
+  push("A citing author who used GLAD or MAWE often writes neither name in the body. Two shapes cause");
+  push("that, and both were found in the stored PDFs rather than imagined:");
+  push();
+  push("- **Numbered** \u2014 \u201cfollowing established procedures [125\u2013127]\u201d, or a bare superscript");
+  push("  typeset tight against a word. In the Kiessling article the *only* in-text mark for MAWE is a");
+  push("  superscript `69` after the word \u201cunclear\u201d, and the string \u201cMAWE\u201d appears nowhere");
+  push("  outside the reference list.");
+  push("- **Author\u2013year** \u2014 \u201c(Mehta et al. 2024)\u201d, where there is no number to resolve at all.");
+  push("  Six filed PDFs have no numbered bibliography whatsoever.");
+  push();
+  push("`scripts/scan-refs.js` resolves both. It identifies which bibliography entry is the");
+  push("applicant\u2019s paper \u2014 title plus year plus first author, two signals required, never a guess");
+  push("\u2014 and then reports every place that number, or that surname-and-year, is credited, with the");
+  push("section the citing paper printed and the sentence it sits in. A marker attached to a chart");
+  push("axis, a table row, or a caption is reported but never quoted, because a fragment offered as");
+  push("evidence looks like something and is not.");
+  push();
+  push("| basis of a recorded mention | mentions | rows |");
+  push("|---|---:|---:|");
+  for (const b of byBasis) push("| " + b.basis + " | " + b.n + " | " + b.rows + " |");
+  push();
+  push("A resolved citation is held to the same bar as one that names the tool: it must sit in");
+  push("prose, under a heading the citing paper itself printed, and not in the bibliography entry");
+  push("that names the applicant's paper — a reference list proves only that the author cited the");
+  push("work, not where or how. Where a row's tier rests on such a citation, that is said in the");
+  push("report rather than left for a reader to infer from a section heading alone.");
+  push();
+  push(rMentions + " mentions across " + rRows + " citing works rest on resolution or on a person\u2019s");
+  push("reading, not on a named-tool scan. `scan-mentions.js` reports those rows separately and");
+  push("leaves their tier alone \u2014 it is not built to find them, so its silence is not evidence");
+  push("against them.");
+  push();
+  // Two rows the packet has already decided against carry resolved citations too. Saying
+  // so pre-empts the question "did the new method find anything you threw away?".
+  const co = db.prepare(`SELECT COUNT(*) n FROM mention m JOIN citation c ON c.row_uid = m.row_uid
+    WHERE m.basis <> 'extracted text' AND c.status = 'screened-out'`).get().n;
+  if (co) {
+    push("Resolution also reached " + co + " citation(s) on rows the packet has already screened");
+    push("out. Those rows stay out: each was screened for a reason the citation does not answer");
+    push("— one is not independent, the other was already submitted with the original application");
+    push("— and a stronger citation cannot undo either. They are recorded rather than dropped so");
+    push("the decision can be re-examined if the reason for it changes.");
+  }
+  push();
+}
 
 // 4.x — how each PDF got here. Written because "the PDFs were downloaded" is a claim that
 // has to survive being asked "by what, and from where, and what is still missing?".

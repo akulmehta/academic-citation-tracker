@@ -1,0 +1,1219 @@
+- generic [active] [ref=f109e1]:
+  - navigation "Skip navigation":
+    - link "Skip to Main Content" [ref=f109e2] [cursor=pointer]:
+      - /url: "#skipNav"
+  - generic [ref=f109e3]:
+    - generic [ref=f109e5]:
+      - generic [ref=f109e7]:
+        - link [ref=f109e9] [cursor=pointer]:
+          - /url: /
+          - img "Oxford Academic" [ref=f109e10]
+        - list [ref=f109e11]:
+          - text:   
+          - listitem [ref=f109e12]:
+            - link [ref=f109e13] [cursor=pointer]:
+              - /url: /pages/information
+              - img "Information" [ref=f109e14]
+          - listitem [ref=f109e15]:
+            - button [ref=f109e16] [cursor=pointer]:
+              - img "Account" [ref=f109e17]
+              - img "Harvard University Library" [ref=f109e18]
+          - listitem [ref=f109e19]:
+            - generic [ref=f109e21]:
+              - link "Sign in through your institution" [ref=f109e22] [cursor=pointer]:
+                - /url: javascript:;
+              - generic [ref=f109e25]:
+                - iframe [ref=f109e27]:
+                  - checkbox [checked] [ref=f112e2]
+                - generic [ref=f109e28]: Remember myinstitution
+      - generic:     
+      - generic [ref=f109e30]:
+        - link [ref=f109e31] [cursor=pointer]:
+          - /url: /glycob
+          - img "Glycobiology" [ref=f109e32]
+        - link [ref=f109e35] [cursor=pointer]:
+          - /url: http://www.glycobiology.org/
+          - img "Society for Glycobiology" [ref=f109e36]
+      - generic [ref=f109e38]:
+        - navigation [ref=f109e39]:
+          - list [ref=f109e40]:
+            - listitem [ref=f109e41]:
+              - link "Issues" [ref=f109e42] [cursor=pointer]:
+                - /url: /glycob/issue
+            - listitem [ref=f109e43]:
+              - link "Advance articles" [ref=f109e44] [cursor=pointer]:
+                - /url: /glycob/advance-articles
+            - listitem [ref=f109e45]:
+              - button "Submit " [ref=f109e46] [cursor=pointer]:
+                - text: Submit
+                - generic [ref=f109e47]: 
+              - text: 
+            - listitem [ref=f109e48]:
+              - link "Purchase" [ref=f109e49] [cursor=pointer]:
+                - /url: /glycob/subscribe
+            - listitem [ref=f109e50]:
+              - link "Alerts" [ref=f109e51] [cursor=pointer]:
+                - /url: /my-account/email-alerts
+            - listitem [ref=f109e52]:
+              - button "About " [ref=f109e53] [cursor=pointer]:
+                - text: About
+                - generic [ref=f109e54]: 
+              - text: 
+        - generic [ref=f109e55]:
+          - search "Site search" [ref=f109e58]:
+            - generic [ref=f109e59]:
+              - generic [ref=f109e60]: Navbar Search Filter
+              - combobox "Navbar Search Filter" [ref=f109e61]:
+                - option "Glycobiology" [selected]
+                - option "This issue"
+                - option "Carbohydrates"
+                - option "Books"
+                - option "Journals"
+                - option "Oxford Academic"
+              - generic [ref=f109e62]: Enter search term
+              - searchbox "Enter search term" [ref=f109e63]
+              - link " Search" [ref=f109e64] [cursor=pointer]:
+                - /url: javascript:;
+                - text: 
+                - generic [ref=f109e65]: Search
+          - text: 
+          - generic [ref=f109e66]:
+            - link [ref=f109e67] [cursor=pointer]:
+              - /url: /ai-discovery-assistant
+              - generic "AI Discovery Assistant" [ref=f109e68]:
+                - generic [ref=f109e69]: 
+                - text: AI Discovery Assistant
+            - text: 
+    - generic [ref=f109e73]:
+      - complementary "Article information" [ref=f109e74]:
+        - generic [ref=f109e75]:
+          - text: 
+          - generic [ref=f109e76]:
+            - generic [ref=f109e78]:
+              - text: 
+              - link "Glycobiology Cover Image for Volume 32, Issue 7 Volume 32, Issue 7 July 2022" [ref=f109e79] [cursor=pointer]:
+                - /url: /glycob/issue/32/7
+                - img "Glycobiology Cover Image for Volume 32, Issue 7" [ref=f109e81]
+                - generic [ref=f109e82]:
+                  - generic [ref=f109e83]: Volume 32, Issue 7
+                  - generic [ref=f109e84]: July 2022
+            - generic [ref=f109e86]:
+              - heading "Article Contents" [level=2] [ref=f109e87]
+              - list [ref=f109e88]:
+                - listitem [ref=f109e89]:
+                  - link "Abstract" [ref=f109e91] [cursor=pointer]:
+                    - /url: "#359847478"
+                - listitem [ref=f109e92]:
+                  - link "Introduction" [ref=f109e94] [cursor=pointer]:
+                    - /url: "#359847483"
+                - listitem [ref=f109e95]:
+                  - link "CarbArrayART architecture" [ref=f109e97] [cursor=pointer]:
+                    - /url: "#359847501"
+                - listitem [ref=f109e98]:
+                  - link "Discussion and perspectives" [ref=f109e100] [cursor=pointer]:
+                    - /url: "#359847526"
+                - listitem [ref=f109e101]:
+                  - link "Funding" [ref=f109e103] [cursor=pointer]:
+                    - /url: "#359847540"
+                - listitem [ref=f109e104]:
+                  - link "Conflict of interest statement" [ref=f109e106] [cursor=pointer]:
+                    - /url: "#359847549"
+                - listitem [ref=f109e107]:
+                  - link "Availability and software for download" [ref=f109e109] [cursor=pointer]:
+                    - /url: "#359847557"
+                - listitem [ref=f109e110]:
+                  - link "References" [ref=f109e112] [cursor=pointer]:
+                    - /url: "#359847566"
+            - list [ref=f109e114]:
+              - listitem [ref=f109e115]:
+                - link "< Previous" [ref=f109e116] [cursor=pointer]:
+                  - /url: /glycob/article/32/7/551/6606056
+              - listitem [ref=f109e117]:
+                - link "Next >" [ref=f109e118] [cursor=pointer]:
+                  - /url: /glycob/article/32/7/556/6549488
+      - main [ref=f109e119]:
+        - generic [ref=f109e120]:
+          - generic [ref=f109e122]:
+            - generic [ref=f109e123]: Journal Article
+            - generic [ref=f109e125]:
+              - 'heading "CarbArrayART: a new software tool for carbohydrate microarray data storage, processing, presentation, and reporting " [level=1] [ref=f109e127]':
+                - text: "CarbArrayART: a new software tool for carbohydrate microarray data storage, processing, presentation, and reporting"
+                - generic "Open Access" [ref=f109e129]: 
+              - generic [ref=f109e131]:
+                - generic [ref=f109e132]:
+                  - link "Yukie Akune " [ref=f109e133] [cursor=pointer]:
+                    - /url: javascript:;
+                    - text: Yukie Akune
+                    - generic [ref=f109e134]: 
+                  - text: ","
+                - generic [ref=f109e135]:
+                  - link "Sena Arpinar" [ref=f109e136] [cursor=pointer]:
+                    - /url: javascript:;
+                  - text: ","
+                - generic [ref=f109e137]:
+                  - link "Lisete M Silva" [ref=f109e138] [cursor=pointer]:
+                    - /url: javascript:;
+                  - text: ","
+                - generic [ref=f109e139]:
+                  - link "Angelina S Palma" [ref=f109e140] [cursor=pointer]:
+                    - /url: javascript:;
+                  - text: ","
+                - generic [ref=f109e141]:
+                  - link "Virginia Tajadura-Ortega" [ref=f109e142] [cursor=pointer]:
+                    - /url: javascript:;
+                  - text: ","
+                - generic [ref=f109e143]:
+                  - link "Kiyoko F Aoki-Kinoshita" [ref=f109e144] [cursor=pointer]:
+                    - /url: javascript:;
+                  - text: ","
+                - generic [ref=f109e145]:
+                  - link "René Ranzinger" [ref=f109e146] [cursor=pointer]:
+                    - /url: javascript:;
+                  - text: ","
+                - generic [ref=f109e147]:
+                  - link "Yan Liu" [ref=f109e148] [cursor=pointer]:
+                    - /url: javascript:;
+                  - text: ","
+                - link "Ten Feizi" [ref=f109e150] [cursor=pointer]:
+                  - /url: javascript:;
+              - generic [ref=f109e151]:
+                - generic [ref=f109e153]:
+                  - emphasis [ref=f109e154]: Glycobiology
+                  - text: ", Volume 32, Issue 7, July 2022, Pages 552–555,"
+                  - link "https://doi.org/10.1093/glycob/cwac018" [ref=f109e155] [cursor=pointer]:
+                    - /url: https://doi.org/10.1093/glycob/cwac018
+                - generic [ref=f109e156]:
+                  - generic [ref=f109e157]: "Published: 29 March 2022"
+                  - link "Article history" [ref=f109e158] [cursor=pointer]:
+                    - /url: javascript:;
+                    - text: Article history
+                    - generic [ref=f109e159]: 
+          - generic [ref=f109e160]:
+            - generic [ref=f109e162]:
+              - navigation [ref=f109e164]:
+                - listitem [ref=f109e165]:
+                  - link [ref=f109e166] [cursor=pointer]:
+                    - /url: /glycob/article-pdf/32/7/552/44028620/cwac018.pdf
+                    - img "pdf" [ref=f109e167]
+                    - text: PDF
+                - listitem [ref=f109e168]:
+                  - link " Split View" [ref=f109e169] [cursor=pointer]:
+                    - /url: javascript:;
+                    - generic [ref=f109e170]: 
+                    - text: Split View
+                - text:  
+                - listitem [ref=f109e171]:
+                  - link " Cite" [ref=f109e173] [cursor=pointer]:
+                    - /url: "#"
+                    - generic [ref=f109e174]: 
+                    - text: Cite
+                - listitem [ref=f109e175]:
+                  - link " Permissions Icon Permissions" [ref=f109e178] [cursor=pointer]:
+                    - /url: https://s100.copyright.com/AppDispatchServlet?publisherName=OUP&publication=1460-2423&title=CarbArrayART%3A%20a%20new%20software%20tool%20for%20carbohydrate%20microarray%20data%20storage%2C%20processing%2C%20presentation%2C%20and%20reporting&publicationDate=2022-03-29&volumeNum=32&issueNum=7&author=Akune%2C%20Yukie%3B%20Arpinar%2C%20Sena&startPage=552&endPage=555&contentId=10.1093%2Fglycob%2Fcwac018&oa=CC%20BY&copyright=%C2%A9%20The%20Author%28s%29%202022.%20Published%20by%20Oxford%20University%20Press.&orderBeanReset=True
+                    - generic [ref=f109e179]:
+                      - text: 
+                      - generic [ref=f109e180]: Permissions Icon
+                    - text: Permissions
+                - listitem [ref=f109e181]:
+                  - button " Share Icon Share " [ref=f109e182] [cursor=pointer]:
+                    - generic [ref=f109e183]:
+                      - text: 
+                      - generic [ref=f109e184]: Share Icon
+                    - generic [ref=f109e185]:
+                      - text: Share
+                      - generic [ref=f109e186]: 
+              - text:     
+            - generic [ref=f109e187]:
+              - generic [ref=f109e190]:
+                - heading "Abstract" [level=2] [ref=f109e191]
+                - region "Main abstract" [ref=f109e192]:
+                  - paragraph [ref=f109e193]: "Glycan microarrays are essential tools in glycobiology and are being widely used for assignment of glycan ligands in diverse glycan recognition systems. We have developed a new software, called Carbohydrate microArray Analysis and Reporting Tool (CarbArrayART), to address the need for a distributable application for glycan microarray data management. The main features of CarbArrayART include: (i) Storage of quantified array data from different array layouts with scan data and array-specific metadata, such as lists of arrayed glycans, array geometry, information on glycan-binding samples, and experimental protocols. (ii) Presentation of microarray data as charts, tables, and heatmaps derived from the average fluorescence intensity values that are calculated based on the imaging scan data and array geometry, as well as filtering and sorting functions according to monosaccharide content and glycan sequences. (iii) Data export for reporting in Word, PDF, and Excel formats, together with metadata that are compliant with the guidelines of MIRAGE (Minimum Information Required for A Glycomics Experiment). CarbArrayART is designed for routine use in recording, storage, and management of any slide-based glycan microarray experiment. In conjunction with the MIRAGE guidelines, CarbArrayART addresses issues that are critical for glycobiology, namely, clarity of data for evaluation of reproducibility and validity."
+                - generic [ref=f109e195]:
+                  - link "glycan microarray data management" [ref=f109e196] [cursor=pointer]:
+                    - /url: javascript:;
+                  - text: ","
+                  - link "glycan microarray data presentation" [ref=f109e197] [cursor=pointer]:
+                    - /url: javascript:;
+                  - text: ","
+                  - link "glycan microarray data storage" [ref=f109e198] [cursor=pointer]:
+                    - /url: javascript:;
+                  - text: ","
+                  - link "glycan microarray software" [ref=f109e199] [cursor=pointer]:
+                    - /url: javascript:;
+                  - text: ","
+                  - link "glycoinformatics" [ref=f109e200] [cursor=pointer]:
+                    - /url: javascript:;
+                - heading "Introduction" [level=2] [ref=f109e201]
+                - paragraph [ref=f109e202]:
+                  - text: Since their inception in 2002, microarrays of sequence-defined glycans (
+                  - link "Fukui et al. 2002" [ref=f109e203] [cursor=pointer]:
+                    - /url: javascript:;
+                  - text: ) have become essential tools in biology and medicine, particularly in elucidating glycan-binding specificities of antibodies, other proteins of the immune system, adhesins of microbial agents, and diverse other carbohydrate-recognizing systems (
+                  - link "Rillahan and Paulson 2011" [ref=f109e204] [cursor=pointer]:
+                    - /url: javascript:;
+                  - text: ;
+                  - link "Li and Feizi 2018" [ref=f109e205] [cursor=pointer]:
+                    - /url: javascript:;
+                  - text: ;
+                  - link "Gao et al. 2019" [ref=f109e206] [cursor=pointer]:
+                    - /url: javascript:;
+                  - text: ;
+                  - link "Geissner et al. 2019" [ref=f109e207] [cursor=pointer]:
+                    - /url: javascript:;
+                  - text: ;
+                  - link "Xia and Gildersleeve 2019" [ref=f109e208] [cursor=pointer]:
+                    - /url: javascript:;
+                  - text: ;
+                  - link "Silva et al. 2021" [ref=f109e209] [cursor=pointer]:
+                    - /url: javascript:;
+                  - text: ). The number and structural diversity of sequence-defined glycans that can be spotted on microarrays are increasing. Currently, they are approaching 1,000 glycans in the largest glycan microarray facilities (Glycosciences Laboratory website
+                  - link "https://glycosciences.med.ic.ac.uk" [ref=f109e210] [cursor=pointer]:
+                    - /url: https://glycosciences.med.ic.ac.uk
+                  - text: ; Consortium for Functional Glycomics (CFG) website
+                  - link "http://www.functionalglycomics.org/glycomics/publicdata/primaryscreen.jsp" [ref=f109e211] [cursor=pointer]:
+                    - /url: http://www.functionalglycomics.org/glycomics/publicdata/primaryscreen.jsp
+                  - text: ; National Center for Functional Glycomics (NCFG)
+                  - link "https://ncfg.hms.harvard.edu/microarrays" [ref=f109e212] [cursor=pointer]:
+                    - /url: https://ncfg.hms.harvard.edu/microarrays
+                  - text: ).
+                - paragraph [ref=f109e213]:
+                  - text: Beyond data recording, it is desirable to have dedicated software for storage, processing, and display, which includes sorting and filtering functions for the glycan probes according to structural features of those bound or not bound by particular recognition systems. Unique software tools with such functionalities were developed as prototypes (
+                  - link "Stoll and Feizi 2009" [ref=f109e214] [cursor=pointer]:
+                    - /url: javascript:;
+                  - text: ). Indeed, these have been the mainstay of data storage, presentation, and reporting in the Glycosciences Laboratory at Imperial College London (160 published and over 8,000 internal data sets). However, these software tools were developed over the years, in stages, using Microsoft Office, in house Microsoft Access databases and Visual Studio; as such, they were not readily distributable.
+                - paragraph [ref=f109e215]:
+                  - text: Encompassing the above-mentioned functionalities, we have been developing a new distributable software package using the Java programming language called Carbohydrate micro-Array Analysis and Reporting Tool (CarbArrayART). This is geared for day-to-day use by experimentalists working on slide-based glycan microarrays. An important feature of CarbArrayART is that it allows users to store centrally glycan microarray data within their laboratory with ease of retrieval, comparison, and mining of data generated. This includes compliance with the glycan microarray guidelines for Minimum Information Required for A Glycomics Experiment [(MIRAGE) (
+                  - link "Liu et al. 2016" [ref=f109e216] [cursor=pointer]:
+                    - /url: javascript:;
+                  - text: )]. The guidelines were authored by a team of experts for generating interpretable data from a glycan microarray experiment.
+                - paragraph [ref=f109e217]:
+                  - text: CarbArrayART benefits from the GRITS Toolbox, a software package initially developed for storing, processing, and visualizing MS data (
+                  - link "Weatherly et al. 2019" [ref=f109e218] [cursor=pointer]:
+                    - /url: javascript:;
+                  - text: ). GRITS Toolbox allows users to record metadata, such as project and collaborator information, sample metadata, and experimental protocol as well as storage related data files as archives. All these functionalities are adopted as an integral part of the CarbArrayART data storage and management system for glycan microarrays. To these, we have incorporated microarray-specific features that enable storing, processing, interpretation, and reporting of array data (
+                  - link "Fig. 1" [ref=f109e219] [cursor=pointer]:
+                    - /url: javascript:;
+                  - text: ). These include glycan probe list, array geometry information, assay conditions, and quantified array data files such as GenePix Result files, commonly referred to as GPR. Thus, CarbArrayART is the first distributable software tool that accommodates storage at a laboratory level of glycan microarray data and metadata with easy retrieval, comparison, mining, and sharing of data generated. The information generated with CarbArrayART is eminently usable by bioinformaticians and biologists using glyco-informatics tools that are discussed below.
+                - heading [level=3]
+                - generic [ref=f109e221]:
+                  - figure [ref=f109e222]:
+                    - img "Schematic representation of the carbohydrate microarray analysis and reporting tool, CarbArrayART." [ref=f109e223]
+                    - generic [ref=f109e224]:
+                      - text: Fig. 1
+                      - paragraph [ref=f109e226]: Schematic representation of the carbohydrate microarray analysis and reporting tool, CarbArrayART.
+                  - generic [ref=f109e227]:
+                    - button "Open in new tab" [ref=f109e228] [cursor=pointer]
+                    - button "Download slide" [ref=f109e229] [cursor=pointer]
+                - heading "CarbArrayART architecture" [level=2] [ref=f109e230]
+                - heading "Workspace, project, and analyte" [level=3] [ref=f109e231]
+                - paragraph [ref=f109e232]: Workspace, project, and analyte are compartments derived from the GRITS Toolbox. When the software is run initially, users are required to create a workspace folder in which the microarray data will be saved. Project is a user-defined folder within the workspace, where microarray data files of a single or multiple analytes and the corresponding metadata are saved. For example, in the entry page for a glycan-binding sample (Analyte) users can record sample metadata compliant with the MIRAGE Glycan Array guidelines. These include the origin of the sample (synthetic, natural, or recombinant), database-associated information (e.g. PDB ID), purity, and quality control information on the sample. In the experiment design tool, users can store the experimental procedures (e.g. conditions used for different incubation and washing steps).
+                - heading "Glycan probes and array geometry" [level=3] [ref=f109e233]
+                - paragraph [ref=f109e234]:
+                  - text: Microarray laboratories have differing approaches for preparing glycan microarrays (
+                  - link "Oyelaran and Gildersleeve 2009" [ref=f109e235] [cursor=pointer]:
+                    - /url: javascript:;
+                  - text: ;
+                  - link "Liu et al. 2012" [ref=f109e236] [cursor=pointer]:
+                    - /url: javascript:;
+                  - text: ;
+                  - link "Wang et al. 2014" [ref=f109e237] [cursor=pointer]:
+                    - /url: javascript:;
+                  - text: ). CarbArrayART has been designed to cater for different slide-based array and file formats.
+                - paragraph [ref=f109e238]:
+                  - text: Glycan probe is the term used to define an arrayed glycan, its sequence, as well as the tag moiety, if applicable. Glycan sequence representations that can be used in CarbArrayART include 2D TEXT (
+                  - link "Stoll and Feizi 2009" [ref=f109e239] [cursor=pointer]:
+                    - /url: javascript:;
+                  - text: ), CFG-IUPAC, GlycoWorkbench Sequence (GWS) (
+                  - link "Ceroni et al. 2008" [ref=f109e240] [cursor=pointer]:
+                    - /url: javascript:;
+                  - text: ;
+                  - link "Damerell et al. 2012" [ref=f109e241] [cursor=pointer]:
+                    - /url: javascript:;
+                  - text: ), Web3 unique representation of carbohydrate structures (WURCS) (
+                  - link "Matsubara et al. 2017" [ref=f109e242] [cursor=pointer]:
+                    - /url: javascript:;
+                  - text: ), and the currently recommended machine-readable format GlycoCT (
+                  - link "Herget et al. 2008" [ref=f109e243] [cursor=pointer]:
+                    - /url: javascript:;
+                  - text: ). Glycans can also be imported using GlyTouCan ID (
+                  - link "Fujita et al. 2021" [ref=f109e244] [cursor=pointer]:
+                    - /url: javascript:;
+                  - text: ) and retrieving their sequence information from that repository.
+                - paragraph [ref=f109e245]: Tag information is stored separately from the glycan moiety information. For example, users can designate a tag to denote its feature such as Cer32 and Cer42, which are synthetic glycolipids with ceramide having 32 and 42 carbon atoms, respectively. Inclusion the tag information facilitates comparisons of signals elicited by a given glycan sequence with different tags appended; examples are GSC-16 (NeuAcα-3Galß-4Glcß-Cer32) and GSC-18 (NeuAcα-3Galß-4Glcß-Cer42). For arrays of glycans with sequences undefined or arrays of other types of glycoconjugates, the name, source, and other informative features can be entered.
+                - paragraph [ref=f109e246]:
+                  - text: "There are entry tools for: (i) generating the glycan probe list (Glycan Glyco-probe); (ii) designing the layout of spots on a block (“Subarray Layout”); and (iii) arranging positions of subarrays on a slide (“Array Layout”). There is an additional entry tool for array geometry using an Excel file, which contains the block number, spot numbers, and printing conditions for each glycan probe such as the concentrations in arrayed solution or dose arrayed per spot. This is an extended format of GenePix Array List (often referred to as a GAL file,"
+                  - link "https://www.moleculardevices.com/en/assets/app-note/br/genepix-array-list-gal-files#gref" [ref=f109e247] [cursor=pointer]:
+                    - /url: https://www.moleculardevices.com/en/assets/app-note/br/genepix-array-list-gal-files#gref
+                  - text: ). A template and an example of this is included in the CarbArrayART software package.
+                - heading "Data entry, processing, and storage" [level=3] [ref=f109e248]
+                - paragraph [ref=f109e249]:
+                  - text: Binding signals are acquired with microarray scanners, such as ProScanArray microarray scanner (PerkinElmer) that generates a tab-delimited text file, or GenePix Microarray Scanner (Molecular Devices) that generates GenePix Result (GPR) file. In addition, GenePix Settings (GPS) are acquired, which include parameters such as the PMT voltage, scan area, identification of blocks, brightness, and contrast settings. (
+                  - link "https://mdc.custhelp.com/app/answers/detail/a_id/18883/∼/genepix%C2%AE-file-formats" [ref=f109e250] [cursor=pointer]:
+                    - /url: https://mdc.custhelp.com/app/answers/detail/a_id/18883/∼/genepix%C2%AE-file-formats
+                  - text: ). At the same time, the TIFF images of the slides are acquired.
+                - paragraph [ref=f109e251]: In CarbArrayART, the scan result files such as tab-delimited file and GPR are linked to the array geometry information to generate the processed data for presentation. Other files such as GPS and TIFF image files are stored as archived data.
+                - heading "Data presentation and reporting" [level=3] [ref=f109e252]
+                - paragraph [ref=f109e253]: "During the image scanning, the scanner software acquires the fluorescence intensity value for each spot including mean, median, mean minus background, and median minus background. The acquired intensity values for multiple spots of each glycan probe, which are recorded in the scan result file, are averaged. Users can select the averaging method: either the mean of the replicated spots or the mean after eliminating outliers."
+                - paragraph [ref=f109e254]: In the results page of CarbArrayART, the processed data, which are generated based on the scan result file and array geometry using the selected averaging method, are displayed as tables and charts.
+                - paragraph [ref=f109e255]:
+                  - text: Users can filter and sort the binding signals based on monosaccharides, or other features, e.g. sialyl linkage and oligosaccharide motifs stored in CarbArrayART. Currently, 69 types of monosaccharides and 60 types of substructures and motifs have been adapted from the Symbol Nomenclature for Glycans (
+                  - link "Neelamegham et al. 2019" [ref=f109e256] [cursor=pointer]:
+                    - /url: javascript:;
+                  - text: ) and our previous software tools.
+                - paragraph [ref=f109e257]: The processed data and metadata are exportable as Excel, PDF, and Word, together with sample and experimental metadata. The exported tabulations can be used for generating heatmaps using the template file included in the CarbArrayART software package.
+                - heading "Discussion and perspectives" [level=2] [ref=f109e258]
+                - paragraph [ref=f109e259]:
+                  - text: Several web resources and software tools for glycan microarray data have been reported. Glycan Array Dashboard (GLAD) (
+                  - link "Mehta and Cummings 2019" [ref=f109e260] [cursor=pointer]:
+                    - /url: javascript:;
+                  - text: ) provides online tools to display glycan microarray results including glycans with relative fluorescence units in bar charts and heatmaps to allow users to look for glycan-binding motifs after sorting. Glycan microarray databases such as DAGR (
+                  - link "Sterner et al. 2016" [ref=f109e261] [cursor=pointer]:
+                    - /url: javascript:;
+                  - text: ), MCAW-DB (
+                  - link "Hosoda et al. 2018" [ref=f109e262] [cursor=pointer]:
+                    - /url: javascript:;
+                  - text: ), GlyMDB (
+                  - link "Cao et al. 2020" [ref=f109e263] [cursor=pointer]:
+                    - /url: javascript:;
+                  - text: "), and CarboGrove (Klamer et al. preprint posted. doi:"
+                  - link "10.1101/2021.11.12.468378" [ref=f109e264] [cursor=pointer]:
+                    - /url: https://doi.org/10.1101/2021.11.12.468378
+                  - text: ) store glycan determinants for diverse recognition systems. MotifFinder (
+                  - link "Klamer et al. 2021" [ref=f109e265] [cursor=pointer]:
+                    - /url: javascript:;
+                  - text: ) is a software tool for predicting glycan-binding motifs by introducing a new text-based glycan presentation method and algorithm for data mining. Collectively, these web resources and software tools are important for the glycan microarray community and are highly complementary with CarbArrayART.
+                - paragraph [ref=f109e266]: CarbArrayART differs in being the first distributable software tool, which accommodates storage at a laboratory level of glycan microarray data and metadata with easy retrieval, comparison, mining, and sharing of data generated.
+                - paragraph [ref=f109e267]: Clarity, reproducibility, and validity of glycan microarray analysis data are critical topics in glycobiology. CarbArrayART is designed to address these in conjunction with MIRAGE guidelines. The glycan-binding specificities thereby assigned pave the way to detailed studies to establish specific glycan sequences as players in molecular recognition events, for example, in many aspects of cell signaling and cell behavior, and in the initiation of infections and triggering of immunity.
+                - paragraph [ref=f109e268]:
+                  - text: In its present form, CarbArrayART is geared for slide-based glycan microarray experiments using sequence defined glycans as well as glycan fractions in glycomic-scale microarray analysis. In the future, we anticipate accommodating other microarray formats such as glycan bead array (
+                  - link "Purohit et al. 2018" [ref=f109e269] [cursor=pointer]:
+                    - /url: javascript:;
+                  - text: ), next-generation glycan microarray (
+                  - link "Yan et al. 2019" [ref=f109e270] [cursor=pointer]:
+                    - /url: javascript:;
+                  - text: ), competitive universal proxy receptor assay (
+                  - link "Kitov et al. 2019" [ref=f109e271] [cursor=pointer]:
+                    - /url: javascript:;
+                  - text: ), and liquid glycan array (
+                  - link "Sojitra et al. 2021" [ref=f109e272] [cursor=pointer]:
+                    - /url: javascript:;
+                  - text: ). Future versions of CarbArrayART, we will also include text file formats such as .csv and .xml in the export functions to enable the data to be processed further.
+                - paragraph [ref=f109e273]:
+                  - text: The first glycan microarray repository is being developed within GlyGen (
+                  - link "York et al. 2020" [ref=f109e274] [cursor=pointer]:
+                    - /url: javascript:;
+                  - text: ) with support from the NIH Glycoscience Common Fund. GlyGen is the computational and informatics resource for glycoscience to integrate data and knowledge from diverse disciplines relevant to glycobiology. Under development are new features, whereby CarbArrayART will serve as a vehicle for uploading and downloading data to and from the glycan microarray repository.
+                - heading "Funding" [level=2] [ref=f109e275]
+                - paragraph [ref=f109e276]: This project is supported by Wellcome Trust Biomedical Resource grants (WT099197/Z/12/Z, 108430/Z/15/Z and 218304/Z/19/Z); March of Dimes European Prematurity Research Centre grant 22-FY18-82 and NIH Commons Fund 1U01GM125267-01.
+                - heading "Conflict of interest statement" [level=2] [ref=f109e277]
+                - paragraph [ref=f109e278]: None declared.
+                - heading "Availability and software for download" [level=2] [ref=f109e279]
+                - paragraph [ref=f109e280]: CarbArrayART operable in Windows 7 (64bit), Windows 10, Mac OS X Lion (10.7.5), Mac OS X Yosemite (10.10.5) and Mac OS Big Sur (11.1).
+                - paragraph [ref=f109e281]:
+                  - text: Software with online user’s manual is accessible from
+                  - link "http://carbarrayart.org" [ref=f109e282] [cursor=pointer]:
+                    - /url: http://carbarrayart.org
+                  - text: .
+                - heading "References" [level=2] [ref=f109e283]
+                - generic [ref=f109e284]:
+                  - generic [ref=f109e288]:
+                    - paragraph
+                    - text: Cao Y,
+                    - generic [ref=f109e289]: Park SJ
+                    - text: ","
+                    - generic [ref=f109e290]: Mehta AY
+                    - text: ","
+                    - generic [ref=f109e291]: Cummings RD
+                    - text: ","
+                    - generic [ref=f109e292]: Im W
+                    - text: ". GlyMDB: glycan microarray database and analysis toolset. Bioinformatics. 2020:36:2438–2442."
+                    - paragraph
+                    - generic [ref=f109e293]:
+                      - paragraph [ref=f109e294]:
+                        - link "Google Scholar" [ref=f109e296] [cursor=pointer]:
+                          - /url: https://scholar.google.com/scholar_lookup?title=GlyMDB%3A%20glycan%20microarray%20database%20and%20analysis%20toolset&author=Y%20Cao&author=SJ%20Park&author=AY%20Mehta&author=RD%20Cummings&author=W%20Im&publication_year=2020&journal=Bioinformatics&volume=36&pages=2438-2442
+                      - link "Crossref" [ref=f109e298] [cursor=pointer]:
+                        - /url: http://dx.doi.org/10.1093/bioinformatics/btz934
+                      - link "PubMed" [ref=f109e300] [cursor=pointer]:
+                        - /url: http://www.ncbi.nlm.nih.gov/pubmed/31841142
+                      - paragraph [ref=f109e301]:
+                        - link "WorldCat" [ref=f109e303] [cursor=pointer]:
+                          - /url: https://www.worldcat.org/search?q=ti:GlyMDB%3A%20glycan%20microarray%20database%20and%20analysis%20toolset&qt=advanced&dblist=638
+                  - generic [ref=f109e307]:
+                    - paragraph
+                    - text: Ceroni A,
+                    - generic [ref=f109e308]: Maass K
+                    - text: ","
+                    - generic [ref=f109e309]: Geyer H
+                    - text: ","
+                    - generic [ref=f109e310]: Geyer R
+                    - text: ","
+                    - generic [ref=f109e311]: Dell A
+                    - text: ","
+                    - generic [ref=f109e312]: Haslam SM
+                    - text: ". GlycoWorkbench: a tool for the computer-assisted annotation of mass spectra of glycans. J Proteome Res. 2008:7:1650–1659."
+                    - paragraph
+                    - generic [ref=f109e313]:
+                      - paragraph [ref=f109e314]:
+                        - link "Google Scholar" [ref=f109e316] [cursor=pointer]:
+                          - /url: https://scholar.google.com/scholar_lookup?title=GlycoWorkbench%3A%20a%20tool%20for%20the%20computer-assisted%20annotation%20of%20mass%20spectra%20of%20glycans&author=A%20Ceroni&author=K%20Maass&author=H%20Geyer&author=R%20Geyer&author=A%20Dell&author=SM%20Haslam&publication_year=2008&journal=J%20Proteome%20Res&volume=7&pages=1650-1659
+                      - link "Crossref" [ref=f109e318] [cursor=pointer]:
+                        - /url: http://dx.doi.org/10.1021/pr7008252
+                      - link "PubMed" [ref=f109e320] [cursor=pointer]:
+                        - /url: http://www.ncbi.nlm.nih.gov/pubmed/18311910
+                      - paragraph [ref=f109e321]:
+                        - link "WorldCat" [ref=f109e323] [cursor=pointer]:
+                          - /url: https://www.worldcat.org/search?q=ti:GlycoWorkbench%3A%20a%20tool%20for%20the%20computer-assisted%20annotation%20of%20mass%20spectra%20of%20glycans&qt=advanced&dblist=638
+                  - generic [ref=f109e327]:
+                    - paragraph
+                    - text: Damerell D,
+                    - generic [ref=f109e328]: Ceroni A
+                    - text: ","
+                    - generic [ref=f109e329]: Maass K
+                    - text: ","
+                    - generic [ref=f109e330]: Ranzinger R
+                    - text: ","
+                    - generic [ref=f109e331]: Dell A
+                    - text: ","
+                    - generic [ref=f109e332]: Haslam SM
+                    - text: ". The glycan builder and GlycoWorkbench glycoinformatics tools: updates and new developments. Biol Chem. 2012:393:1357–1362."
+                    - paragraph
+                    - generic [ref=f109e333]:
+                      - paragraph [ref=f109e334]:
+                        - link "Google Scholar" [ref=f109e336] [cursor=pointer]:
+                          - /url: https://scholar.google.com/scholar_lookup?title=The%20glycan%20builder%20and%20GlycoWorkbench%20glycoinformatics%20tools%3A%20updates%20and%20new%20developments&author=D%20Damerell&author=A%20Ceroni&author=K%20Maass&author=R%20Ranzinger&author=A%20Dell&author=SM%20Haslam&publication_year=2012&journal=Biol%20Chem&volume=393&pages=1357-1362
+                      - link "Crossref" [ref=f109e338] [cursor=pointer]:
+                        - /url: http://dx.doi.org/10.1515/hsz-2012-0135
+                      - link "PubMed" [ref=f109e340] [cursor=pointer]:
+                        - /url: http://www.ncbi.nlm.nih.gov/pubmed/23109548
+                      - paragraph [ref=f109e341]:
+                        - link "WorldCat" [ref=f109e343] [cursor=pointer]:
+                          - /url: https://www.worldcat.org/search?q=ti:The%20glycan%20builder%20and%20GlycoWorkbench%20glycoinformatics%20tools%3A%20updates%20and%20new%20developments&qt=advanced&dblist=638
+                  - generic [ref=f109e347]:
+                    - paragraph
+                    - text: Fujita A,
+                    - generic [ref=f109e348]: Aoki NP
+                    - text: ","
+                    - generic [ref=f109e349]: Shinmachi D
+                    - text: ","
+                    - generic [ref=f109e350]: Matsubara M
+                    - text: ","
+                    - generic [ref=f109e351]: Tsuchiya S
+                    - text: ","
+                    - generic [ref=f109e352]: Shiota M
+                    - text: ","
+                    - generic [ref=f109e353]: Ono T
+                    - text: ","
+                    - generic [ref=f109e354]: Yamada I
+                    - text: ","
+                    - generic [ref=f109e355]: Aoki-Kinoshita KF
+                    - text: . The international glycan repository GlyTouCan version 3.0. Nucleic Acids Res. 2021:49:D1529–D1533.
+                    - paragraph
+                    - generic [ref=f109e356]:
+                      - paragraph [ref=f109e357]:
+                        - link "Google Scholar" [ref=f109e359] [cursor=pointer]:
+                          - /url: https://scholar.google.com/scholar_lookup?title=The%20international%20glycan%20repository%20GlyTouCan%20version%203.0&author=A%20Fujita&author=NP%20Aoki&author=D%20Shinmachi&author=M%20Matsubara&author=S%20Tsuchiya&author=M%20Shiota&author=T%20Ono&author=I%20Yamada&author=KF%20Aoki-Kinoshita&publication_year=2021&journal=Nucleic%20Acids%20Res&volume=49&pages=D1529-D1533
+                      - link "Crossref" [ref=f109e361] [cursor=pointer]:
+                        - /url: http://dx.doi.org/10.1093/nar/gkaa947
+                      - link "PubMed" [ref=f109e363] [cursor=pointer]:
+                        - /url: http://www.ncbi.nlm.nih.gov/pubmed/33125071
+                      - paragraph [ref=f109e364]:
+                        - link "WorldCat" [ref=f109e366] [cursor=pointer]:
+                          - /url: https://www.worldcat.org/search?q=ti:The%20international%20glycan%20repository%20GlyTouCan%20version%203.0&qt=advanced&dblist=638
+                  - generic [ref=f109e370]:
+                    - paragraph
+                    - text: Fukui S,
+                    - generic [ref=f109e371]: Feizi T
+                    - text: ","
+                    - generic [ref=f109e372]: Galustian C
+                    - text: ","
+                    - generic [ref=f109e373]: Lawson AM
+                    - text: ","
+                    - generic [ref=f109e374]: Chai W
+                    - text: . Oligosaccharide microarrays for high-throughput detection and specificity assignments of carbohydrate-protein interactions. Nat Biotechnol. 2002:20:1011–1017.
+                    - paragraph
+                    - generic [ref=f109e375]:
+                      - paragraph [ref=f109e376]:
+                        - link "Google Scholar" [ref=f109e378] [cursor=pointer]:
+                          - /url: https://scholar.google.com/scholar_lookup?title=Oligosaccharide%20microarrays%20for%20high-throughput%20detection%20and%20specificity%20assignments%20of%20carbohydrate-protein%20interactions&author=S%20Fukui&author=T%20Feizi&author=C%20Galustian&author=AM%20Lawson&author=W%20Chai&publication_year=2002&journal=Nat%20Biotechnol&volume=20&pages=1011-1017
+                      - link "Crossref" [ref=f109e380] [cursor=pointer]:
+                        - /url: http://dx.doi.org/10.1038/nbt735
+                      - link "PubMed" [ref=f109e382] [cursor=pointer]:
+                        - /url: http://www.ncbi.nlm.nih.gov/pubmed/12219077
+                      - paragraph [ref=f109e383]:
+                        - link "WorldCat" [ref=f109e385] [cursor=pointer]:
+                          - /url: https://www.worldcat.org/search?q=ti:Oligosaccharide%20microarrays%20for%20high-throughput%20detection%20and%20specificity%20assignments%20of%20carbohydrate-protein%20interactions&qt=advanced&dblist=638
+                  - generic [ref=f109e389]:
+                    - paragraph
+                    - text: Gao C,
+                    - generic [ref=f109e390]: Wei M
+                    - text: ","
+                    - generic [ref=f109e391]: McKitrick TR
+                    - text: ","
+                    - generic [ref=f109e392]: McQuillan AM
+                    - text: ","
+                    - generic [ref=f109e393]: Heimburg-Molinaro J
+                    - text: ","
+                    - generic [ref=f109e394]: Cummings RD
+                    - text: . Glycan microarrays as chemical tools for identifying glycan recognition by immune proteins. Front Chem. 2019:7:833.
+                    - paragraph
+                    - generic [ref=f109e395]:
+                      - paragraph [ref=f109e396]:
+                        - link "Google Scholar" [ref=f109e398] [cursor=pointer]:
+                          - /url: https://scholar.google.com/scholar_lookup?title=Glycan%20microarrays%20as%20chemical%20tools%20for%20identifying%20glycan%20recognition%20by%20immune%20proteins&author=C%20Gao&author=M%20Wei&author=TR%20McKitrick&author=AM%20McQuillan&author=J%20Heimburg-Molinaro&author=RD%20Cummings&publication_year=2019&journal=Front%20Chem&volume=7&pages=833
+                      - link "Crossref" [ref=f109e400] [cursor=pointer]:
+                        - /url: http://dx.doi.org/10.3389/fchem.2019.00833
+                      - link "PubMed" [ref=f109e402] [cursor=pointer]:
+                        - /url: http://www.ncbi.nlm.nih.gov/pubmed/31921763
+                      - paragraph [ref=f109e403]:
+                        - link "WorldCat" [ref=f109e405] [cursor=pointer]:
+                          - /url: https://www.worldcat.org/search?q=ti:Glycan%20microarrays%20as%20chemical%20tools%20for%20identifying%20glycan%20recognition%20by%20immune%20proteins&qt=advanced&dblist=638
+                  - generic [ref=f109e409]:
+                    - paragraph
+                    - text: Geissner A,
+                    - generic [ref=f109e410]: Reinhardt A
+                    - text: ","
+                    - generic [ref=f109e411]: Rademacher C
+                    - text: ","
+                    - generic [ref=f109e412]: Johannssen T
+                    - text: ","
+                    - generic [ref=f109e413]: Monteiro J
+                    - text: ", Lepenies B, Thépaut M, Fieschi F, Mrázková J, Wimmerova M, et al. Microbe-focused glycan array screening platform. Proc Natl Acad Sci U S A. 2019:116:1958–1967."
+                    - paragraph
+                    - generic [ref=f109e414]:
+                      - paragraph [ref=f109e415]:
+                        - link "Google Scholar" [ref=f109e417] [cursor=pointer]:
+                          - /url: https://scholar.google.com/scholar_lookup?title=Microbe-focused%20glycan%20array%20screening%20platform&author=A%20Geissner&author=A%20Reinhardt&author=C%20Rademacher&author=T%20Johannssen&author=J%20Monteiro&publication_year=2019&journal=Proc%20Natl%20Acad%20Sci%20U%20S%20A&volume=116&pages=1958-1967
+                      - link "Crossref" [ref=f109e419] [cursor=pointer]:
+                        - /url: http://dx.doi.org/10.1073/pnas.1800853116
+                      - link "PubMed" [ref=f109e421] [cursor=pointer]:
+                        - /url: http://www.ncbi.nlm.nih.gov/pubmed/30670663
+                      - paragraph [ref=f109e422]:
+                        - link "WorldCat" [ref=f109e424] [cursor=pointer]:
+                          - /url: https://www.worldcat.org/search?q=ti:Microbe-focused%20glycan%20array%20screening%20platform&qt=advanced&dblist=638
+                  - generic [ref=f109e428]:
+                    - paragraph
+                    - text: Herget S,
+                    - generic [ref=f109e429]: Ranzinger R
+                    - text: ","
+                    - generic [ref=f109e430]: Maass K
+                    - text: ","
+                    - generic [ref=f109e431]: Lieth CW
+                    - text: . GlycoCT—a unifying sequence format for carbohydrates. Carbohydr Res. 2008:343:2162–2171.
+                    - paragraph
+                    - generic [ref=f109e432]:
+                      - paragraph [ref=f109e433]:
+                        - link "Google Scholar" [ref=f109e435] [cursor=pointer]:
+                          - /url: https://scholar.google.com/scholar_lookup?title=GlycoCT%E2%80%94a%20unifying%20sequence%20format%20for%20carbohydrates&author=S%20Herget&author=R%20Ranzinger&author=K%20Maass&author=CW%20Lieth&publication_year=2008&journal=Carbohydr%20Res&volume=343&pages=2162-2171
+                      - link "Crossref" [ref=f109e437] [cursor=pointer]:
+                        - /url: http://dx.doi.org/10.1016/j.carres.2008.03.011
+                      - link "PubMed" [ref=f109e439] [cursor=pointer]:
+                        - /url: http://www.ncbi.nlm.nih.gov/pubmed/18436199
+                      - paragraph [ref=f109e440]:
+                        - link "WorldCat" [ref=f109e442] [cursor=pointer]:
+                          - /url: https://www.worldcat.org/search?q=ti:GlycoCT%E2%80%94a%20unifying%20sequence%20format%20for%20carbohydrates&qt=advanced&dblist=638
+                  - generic [ref=f109e446]:
+                    - paragraph
+                    - text: Hosoda M,
+                    - generic [ref=f109e447]: Takahashi Y
+                    - text: ","
+                    - generic [ref=f109e448]: Shiota M
+                    - text: ","
+                    - generic [ref=f109e449]: Shinmachi D
+                    - text: ","
+                    - generic [ref=f109e450]: Inomoto R
+                    - text: ", Higashimoto S, Aoki-Kinoshita KF. MCAW-DB: a glycan profile database capturing the ambiguity of glycan recognition patterns. Carbohydr Res. 2018:464:44–56."
+                    - paragraph
+                    - generic [ref=f109e451]:
+                      - paragraph [ref=f109e452]:
+                        - link "Google Scholar" [ref=f109e454] [cursor=pointer]:
+                          - /url: https://scholar.google.com/scholar_lookup?title=MCAW-DB%3A%20a%20glycan%20profile%20database%20capturing%20the%20ambiguity%20of%20glycan%20recognition%20patterns&author=M%20Hosoda&author=Y%20Takahashi&author=M%20Shiota&author=D%20Shinmachi&author=R%20Inomoto&publication_year=2018&journal=Carbohydr%20Res&volume=464&pages=44-56
+                      - link "Crossref" [ref=f109e456] [cursor=pointer]:
+                        - /url: http://dx.doi.org/10.1016/j.carres.2018.05.003
+                      - link "PubMed" [ref=f109e458] [cursor=pointer]:
+                        - /url: http://www.ncbi.nlm.nih.gov/pubmed/29859376
+                      - paragraph [ref=f109e459]:
+                        - link "WorldCat" [ref=f109e461] [cursor=pointer]:
+                          - /url: https://www.worldcat.org/search?q=ti:MCAW-DB%3A%20a%20glycan%20profile%20database%20capturing%20the%20ambiguity%20of%20glycan%20recognition%20patterns&qt=advanced&dblist=638
+                  - generic [ref=f109e465]:
+                    - paragraph
+                    - text: Kitov PI,
+                    - generic [ref=f109e466]: Kitova EN
+                    - text: ","
+                    - generic [ref=f109e467]: Han L
+                    - text: ","
+                    - generic [ref=f109e468]: Li Z
+                    - text: ","
+                    - generic [ref=f109e469]: Jung J
+                    - text: ", Rodrigues E, Hunter CD, Cairo CW, Macauley MS, Klassen JS. A quantitative, high-throughput method identifies protein–glycan interactions via mass spectrometry. Commun Biol. 2019:2:1–7."
+                    - paragraph
+                    - generic [ref=f109e470]:
+                      - paragraph [ref=f109e471]:
+                        - link "Google Scholar" [ref=f109e473] [cursor=pointer]:
+                          - /url: https://scholar.google.com/scholar_lookup?title=A%20quantitative%2C%20high-throughput%20method%20identifies%20protein%E2%80%93glycan%20interactions%20via%20mass%20spectrometry&author=PI%20Kitov&author=EN%20Kitova&author=L%20Han&author=Z%20Li&author=J%20Jung&publication_year=2019&journal=Commun%20Biol&volume=2&pages=1-7
+                      - link "Crossref" [ref=f109e475] [cursor=pointer]:
+                        - /url: http://dx.doi.org/10.1038/s42003-019-0507-2
+                      - link "PubMed" [ref=f109e477] [cursor=pointer]:
+                        - /url: http://www.ncbi.nlm.nih.gov/pubmed/30740537
+                      - paragraph [ref=f109e478]:
+                        - link "WorldCat" [ref=f109e480] [cursor=pointer]:
+                          - /url: https://www.worldcat.org/search?q=ti:A%20quantitative%2C%20high-throughput%20method%20identifies%20protein%E2%80%93glycan%20interactions%20via%20mass%20spectrometry&qt=advanced&dblist=638
+                  - generic [ref=f109e484]:
+                    - paragraph
+                    - text: Klamer ZL,
+                    - generic [ref=f109e485]: Haab BB
+                    - text: ". Combined analysis of multiple glycan-array datasets: new explorations of protein–glycan interactions. Anal Chem. 2021:93:10925–10933."
+                    - paragraph
+                    - generic [ref=f109e486]:
+                      - paragraph [ref=f109e487]:
+                        - link "Google Scholar" [ref=f109e489] [cursor=pointer]:
+                          - /url: https://scholar.google.com/scholar_lookup?title=Combined%20analysis%20of%20multiple%20glycan-array%20datasets%3A%20new%20explorations%20of%20protein%E2%80%93glycan%20interactions&author=ZL%20Klamer&author=BB%20Haab&publication_year=2021&journal=Anal%20Chem&volume=93&pages=10925-10933
+                      - link "Crossref" [ref=f109e491] [cursor=pointer]:
+                        - /url: http://dx.doi.org/10.1021/acs.analchem.1c01739
+                      - link "PubMed" [ref=f109e493] [cursor=pointer]:
+                        - /url: http://www.ncbi.nlm.nih.gov/pubmed/34319080
+                      - paragraph [ref=f109e494]:
+                        - link "WorldCat" [ref=f109e496] [cursor=pointer]:
+                          - /url: https://www.worldcat.org/search?q=ti:Combined%20analysis%20of%20multiple%20glycan-array%20datasets%3A%20new%20explorations%20of%20protein%E2%80%93glycan%20interactions&qt=advanced&dblist=638
+                  - generic [ref=f109e500]:
+                    - paragraph
+                    - text: Liu Y,
+                    - generic [ref=f109e501]: Childs RA
+                    - text: ","
+                    - generic [ref=f109e502]: Palma AS
+                    - text: ","
+                    - generic [ref=f109e503]: Campanero-Rhodes MA
+                    - text: ","
+                    - generic [ref=f109e504]: Stoll MS
+                    - text: ","
+                    - generic [ref=f109e505]: Chai W
+                    - text: ","
+                    - generic [ref=f109e506]: Feizi T
+                    - text: ". Neoglycolipid-based oligosaccharide microarray system: preparation of NGLs and their noncovalent immobilization on nitrocellulose-coated glass slides for microarray analyses. Methods Mol Biol. 2012:808:117–136."
+                    - paragraph
+                    - generic [ref=f109e507]:
+                      - paragraph [ref=f109e508]:
+                        - link "Google Scholar" [ref=f109e510] [cursor=pointer]:
+                          - /url: https://scholar.google.com/scholar_lookup?title=Neoglycolipid-based%20oligosaccharide%20microarray%20system%3A%20preparation%20of%20NGLs%20and%20their%20noncovalent%20immobilization%20on%20nitrocellulose-coated%20glass%20slides%20for%20microarray%20analyses&author=Y%20Liu&author=RA%20Childs&author=AS%20Palma&author=MA%20Campanero-Rhodes&author=MS%20Stoll&author=W%20Chai&author=T%20Feizi&publication_year=2012&journal=Methods%20Mol%20Biol&volume=808&pages=117-136
+                      - link "Crossref" [ref=f109e512] [cursor=pointer]:
+                        - /url: http://dx.doi.org/10.1007/978-1-61779-373-8
+                      - link "PubMed" [ref=f109e514] [cursor=pointer]:
+                        - /url: http://www.ncbi.nlm.nih.gov/pubmed/22057521
+                      - paragraph [ref=f109e515]:
+                        - link "WorldCat" [ref=f109e517] [cursor=pointer]:
+                          - /url: https://www.worldcat.org/search?q=ti:Neoglycolipid-based%20oligosaccharide%20microarray%20system%3A%20preparation%20of%20NGLs%20and%20their%20noncovalent%20immobilization%20on%20nitrocellulose-coated%20glass%20slides%20for%20microarray%20analyses&qt=advanced&dblist=638
+                  - generic [ref=f109e521]:
+                    - paragraph
+                    - text: Liu Y,
+                    - generic [ref=f109e522]: McBride R
+                    - text: ","
+                    - generic [ref=f109e523]: Stoll M
+                    - text: ","
+                    - generic [ref=f109e524]: Palma AS
+                    - text: ","
+                    - generic [ref=f109e525]: Silva L
+                    - text: ", Agravat S, Aoki-Kinoshita KF, Campbell MP, Costello CE, Dell A, et al. The minimum information required for a glycomics experiment (MIRAGE) project: improving the standards for reporting glycan microarray-based data. Glycobiology. 2016:27:280–284."
+                    - paragraph
+                    - generic [ref=f109e526]:
+                      - paragraph [ref=f109e527]:
+                        - link "Google Scholar" [ref=f109e529] [cursor=pointer]:
+                          - /url: https://scholar.google.com/scholar_lookup?title=The%20minimum%20information%20required%20for%20a%20glycomics%20experiment%20%28MIRAGE%29%20project%3A%20improving%20the%20standards%20for%20reporting%20glycan%20microarray-based%20data&author=Y%20Liu&author=R%20McBride&author=M%20Stoll&author=AS%20Palma&author=L%20Silva&publication_year=2016&journal=Glycobiology&volume=27&pages=280-284
+                      - link "PubMed" [ref=f109e531] [cursor=pointer]:
+                        - /url: http://www.ncbi.nlm.nih.gov/pubmed/27993942
+                      - paragraph [ref=f109e532]:
+                        - link "WorldCat" [ref=f109e534] [cursor=pointer]:
+                          - /url: https://www.worldcat.org/search?q=ti:The%20minimum%20information%20required%20for%20a%20glycomics%20experiment%20%28MIRAGE%29%20project%3A%20improving%20the%20standards%20for%20reporting%20glycan%20microarray-based%20data&qt=advanced&dblist=638
+                  - generic [ref=f109e538]:
+                    - paragraph
+                    - text: Matsubara M,
+                    - generic [ref=f109e539]: Aoki-Kinoshita KF
+                    - text: ","
+                    - generic [ref=f109e540]: Aoki NP
+                    - text: ","
+                    - generic [ref=f109e541]: Yamada I
+                    - text: ","
+                    - generic [ref=f109e542]: Narimatsu H
+                    - text: . WURCS 2.0 update to encapsulate ambiguous carbohydrate structures. J Chem Inf Model. 2017:57:632–637.
+                    - paragraph
+                    - generic [ref=f109e543]:
+                      - paragraph [ref=f109e544]:
+                        - link "Google Scholar" [ref=f109e546] [cursor=pointer]:
+                          - /url: https://scholar.google.com/scholar_lookup?title=WURCS%202.0%20update%20to%20encapsulate%20ambiguous%20carbohydrate%20structures&author=M%20Matsubara&author=KF%20Aoki-Kinoshita&author=NP%20Aoki&author=I%20Yamada&author=H%20Narimatsu&publication_year=2017&journal=J%20Chem%20Inf%20Model&volume=57&pages=632-637
+                      - link "Crossref" [ref=f109e548] [cursor=pointer]:
+                        - /url: http://dx.doi.org/10.1021/acs.jcim.6b00650
+                      - link "PubMed" [ref=f109e550] [cursor=pointer]:
+                        - /url: http://www.ncbi.nlm.nih.gov/pubmed/28263066
+                      - paragraph [ref=f109e551]:
+                        - link "WorldCat" [ref=f109e553] [cursor=pointer]:
+                          - /url: https://www.worldcat.org/search?q=ti:WURCS%202.0%20update%20to%20encapsulate%20ambiguous%20carbohydrate%20structures&qt=advanced&dblist=638
+                  - generic [ref=f109e557]:
+                    - paragraph
+                    - text: Mehta AY,
+                    - generic [ref=f109e558]: Cummings RD
+                    - text: ". GLAD: GLycan Array dashboard, a visual analytics tool for glycan microarrays. Bioinformatics. 2019:35:3536–3537."
+                    - paragraph
+                    - generic [ref=f109e559]:
+                      - paragraph [ref=f109e560]:
+                        - link "Google Scholar" [ref=f109e562] [cursor=pointer]:
+                          - /url: https://scholar.google.com/scholar_lookup?title=GLAD%3A%20GLycan%20Array%20dashboard%2C%20a%20visual%20analytics%20tool%20for%20glycan%20microarrays&author=AY%20Mehta&author=RD%20Cummings&publication_year=2019&journal=Bioinformatics&volume=35&pages=3536-3537
+                      - link "Crossref" [ref=f109e564] [cursor=pointer]:
+                        - /url: http://dx.doi.org/10.1093/bioinformatics/btz075
+                      - link "PubMed" [ref=f109e566] [cursor=pointer]:
+                        - /url: http://www.ncbi.nlm.nih.gov/pubmed/30715201
+                      - paragraph [ref=f109e567]:
+                        - link "WorldCat" [ref=f109e569] [cursor=pointer]:
+                          - /url: https://www.worldcat.org/search?q=ti:GLAD%3A%20GLycan%20Array%20dashboard%2C%20a%20visual%20analytics%20tool%20for%20glycan%20microarrays&qt=advanced&dblist=638
+                  - generic [ref=f109e573]:
+                    - paragraph
+                    - text: Neelamegham S,
+                    - generic [ref=f109e574]: Aoki-Kinoshita K
+                    - text: ","
+                    - generic [ref=f109e575]: Bolton E
+                    - text: ","
+                    - generic [ref=f109e576]: Frank M
+                    - text: ","
+                    - generic [ref=f109e577]: Lisacek F
+                    - text: ", Lütteke T, O'Boyle N, Packer NH, Stanley P, Toukach P, et al. Updates to the symbol nomenclature for glycans guidelines. Glycobiology. 2019:29:620–624."
+                    - paragraph
+                    - generic [ref=f109e578]:
+                      - paragraph [ref=f109e579]:
+                        - link "Google Scholar" [ref=f109e581] [cursor=pointer]:
+                          - /url: https://scholar.google.com/scholar_lookup?title=Updates%20to%20the%20symbol%20nomenclature%20for%20glycans%20guidelines&author=S%20Neelamegham&author=K%20Aoki-Kinoshita&author=E%20Bolton&author=M%20Frank&author=F%20Lisacek&publication_year=2019&journal=Glycobiology&volume=29&pages=620-624
+                      - link "Crossref" [ref=f109e583] [cursor=pointer]:
+                        - /url: http://dx.doi.org/10.1093/glycob/cwz045
+                      - link "PubMed" [ref=f109e585] [cursor=pointer]:
+                        - /url: http://www.ncbi.nlm.nih.gov/pubmed/31184695
+                      - paragraph [ref=f109e586]:
+                        - link "WorldCat" [ref=f109e588] [cursor=pointer]:
+                          - /url: https://www.worldcat.org/search?q=ti:Updates%20to%20the%20symbol%20nomenclature%20for%20glycans%20guidelines&qt=advanced&dblist=638
+                  - generic [ref=f109e592]:
+                    - paragraph
+                    - text: Oyelaran O,
+                    - generic [ref=f109e593]: Gildersleeve JC
+                    - text: ". Glycan arrays: recent advances and future challenges. Curr Opin Chem Biol. 2009:13:406–413."
+                    - paragraph
+                    - generic [ref=f109e594]:
+                      - paragraph [ref=f109e595]:
+                        - link "Google Scholar" [ref=f109e597] [cursor=pointer]:
+                          - /url: https://scholar.google.com/scholar_lookup?title=Glycan%20arrays%3A%20recent%20advances%20and%20future%20challenges&author=O%20Oyelaran&author=JC%20Gildersleeve&publication_year=2009&journal=Curr%20Opin%20Chem%20Biol&volume=13&pages=406-413
+                      - link "Crossref" [ref=f109e599] [cursor=pointer]:
+                        - /url: http://dx.doi.org/10.1016/j.cbpa.2009.06.021
+                      - link "PubMed" [ref=f109e601] [cursor=pointer]:
+                        - /url: http://www.ncbi.nlm.nih.gov/pubmed/19625207
+                      - paragraph [ref=f109e602]:
+                        - link "WorldCat" [ref=f109e604] [cursor=pointer]:
+                          - /url: https://www.worldcat.org/search?q=ti:Glycan%20arrays%3A%20recent%20advances%20and%20future%20challenges&qt=advanced&dblist=638
+                  - generic [ref=f109e608]:
+                    - paragraph
+                    - text: Purohit S,
+                    - generic [ref=f109e609]: Li T
+                    - text: ","
+                    - generic [ref=f109e610]: Guan W
+                    - text: ","
+                    - generic [ref=f109e611]: Song X
+                    - text: ","
+                    - generic [ref=f109e612]: Song J
+                    - text: ", Tian Y, Li L, Sharma A, Dun B, Mysona D, et al. Multiplex glycan bead array for high throughput and high content analyses of glycan binding proteins. Nat Commun. 2018:9:1–12."
+                    - paragraph
+                    - generic [ref=f109e613]:
+                      - paragraph [ref=f109e614]:
+                        - link "Google Scholar" [ref=f109e616] [cursor=pointer]:
+                          - /url: https://scholar.google.com/scholar_lookup?title=Multiplex%20glycan%20bead%20array%20for%20high%20throughput%20and%20high%20content%20analyses%20of%20glycan%20binding%20proteins&author=S%20Purohit&author=T%20Li&author=W%20Guan&author=X%20Song&author=J%20Song&publication_year=2018&journal=Nat%20Commun&volume=9&pages=1-12
+                      - link "Crossref" [ref=f109e618] [cursor=pointer]:
+                        - /url: http://dx.doi.org/10.1038/s41467-017-02747-y
+                      - link "PubMed" [ref=f109e620] [cursor=pointer]:
+                        - /url: http://www.ncbi.nlm.nih.gov/pubmed/29317637
+                      - paragraph [ref=f109e621]:
+                        - link "WorldCat" [ref=f109e623] [cursor=pointer]:
+                          - /url: https://www.worldcat.org/search?q=ti:Multiplex%20glycan%20bead%20array%20for%20high%20throughput%20and%20high%20content%20analyses%20of%20glycan%20binding%20proteins&qt=advanced&dblist=638
+                  - generic [ref=f109e627]:
+                    - paragraph
+                    - text: Rillahan CD,
+                    - generic [ref=f109e628]: Paulson JC
+                    - text: . Glycan microarrays for decoding the glycome. Annu Rev Biochem. 2011:80:797–823.
+                    - paragraph
+                    - generic [ref=f109e629]:
+                      - paragraph [ref=f109e630]:
+                        - link "Google Scholar" [ref=f109e632] [cursor=pointer]:
+                          - /url: https://scholar.google.com/scholar_lookup?title=Glycan%20microarrays%20for%20decoding%20the%20glycome&author=CD%20Rillahan&author=JC%20Paulson&publication_year=2011&journal=Annu%20Rev%20Biochem&volume=80&pages=797-823
+                      - link "Crossref" [ref=f109e634] [cursor=pointer]:
+                        - /url: http://dx.doi.org/10.1146/biochem.2011.80.issue-1
+                      - link "PubMed" [ref=f109e636] [cursor=pointer]:
+                        - /url: http://www.ncbi.nlm.nih.gov/pubmed/21469953
+                      - paragraph [ref=f109e637]:
+                        - link "WorldCat" [ref=f109e639] [cursor=pointer]:
+                          - /url: https://www.worldcat.org/search?q=ti:Glycan%20microarrays%20for%20decoding%20the%20glycome&qt=advanced&dblist=638
+                  - generic [ref=f109e643]:
+                    - paragraph
+                    - text: Silva LM,
+                    - generic [ref=f109e644]: Correia VG
+                    - text: ","
+                    - generic [ref=f109e645]: Moreira ASP
+                    - text: ","
+                    - generic [ref=f109e646]: Domingues MRM
+                    - text: ","
+                    - generic [ref=f109e647]: Ferreira RM
+                    - text: ", Figueiredo C, Azevedo NF, Marcos-Pinto R, Carneiro F, Magalhaes A, et al. Helicobacter pylori lipopolysaccharide structural domains and their recognition by immune proteins revealed with carbohydrate microarrays. Carbohydr Polym. 2021:253:117350."
+                    - paragraph
+                    - generic [ref=f109e648]:
+                      - paragraph [ref=f109e649]:
+                        - link "Google Scholar" [ref=f109e651] [cursor=pointer]:
+                          - /url: https://scholar.google.com/scholar_lookup?title=Helicobacter%20pylori%20lipopolysaccharide%20structural%20domains%20and%20their%20recognition%20by%20immune%20proteins%20revealed%20with%20carbohydrate%20microarrays&author=LM%20Silva&author=VG%20Correia&author=ASP%20Moreira&author=MRM%20Domingues&author=RM%20Ferreira&publication_year=2021&journal=Carbohydr%20Polym&volume=253&pages=117350
+                      - link "Crossref" [ref=f109e653] [cursor=pointer]:
+                        - /url: http://dx.doi.org/10.1016/j.carbpol.2020.117350
+                      - link "PubMed" [ref=f109e655] [cursor=pointer]:
+                        - /url: http://www.ncbi.nlm.nih.gov/pubmed/33278960
+                      - paragraph [ref=f109e656]:
+                        - link "WorldCat" [ref=f109e658] [cursor=pointer]:
+                          - /url: https://www.worldcat.org/search?q=ti:Helicobacter%20pylori%20lipopolysaccharide%20structural%20domains%20and%20their%20recognition%20by%20immune%20proteins%20revealed%20with%20carbohydrate%20microarrays&qt=advanced&dblist=638
+                  - generic [ref=f109e662]:
+                    - paragraph
+                    - text: Sojitra M,
+                    - generic [ref=f109e663]: Sarkar S
+                    - text: ","
+                    - generic [ref=f109e664]: Maghera J
+                    - text: ","
+                    - generic [ref=f109e665]: Rodrigues E
+                    - text: ","
+                    - generic [ref=f109e666]: Carpenter EJ
+                    - text: ", Seth S, Ferrer Vinals D, Bennett NJ, Reddy R, Khalil A, et al. Genetically encoded multivalent liquid glycan array displayed on M13 bacteriophage. Nat Chem Biol. 2021:17:806–816."
+                    - paragraph
+                    - generic [ref=f109e667]:
+                      - paragraph [ref=f109e668]:
+                        - link "Google Scholar" [ref=f109e670] [cursor=pointer]:
+                          - /url: https://scholar.google.com/scholar_lookup?title=Genetically%20encoded%20multivalent%20liquid%20glycan%20array%20displayed%20on%20M13%20bacteriophage&author=M%20Sojitra&author=S%20Sarkar&author=J%20Maghera&author=E%20Rodrigues&author=EJ%20Carpenter&publication_year=2021&journal=Nat%20Chem%20Biol&volume=17&pages=806-816
+                      - link "Crossref" [ref=f109e672] [cursor=pointer]:
+                        - /url: http://dx.doi.org/10.1038/s41589-021-00788-5
+                      - link "PubMed" [ref=f109e674] [cursor=pointer]:
+                        - /url: http://www.ncbi.nlm.nih.gov/pubmed/33958792
+                      - paragraph [ref=f109e675]:
+                        - link "WorldCat" [ref=f109e677] [cursor=pointer]:
+                          - /url: https://www.worldcat.org/search?q=ti:Genetically%20encoded%20multivalent%20liquid%20glycan%20array%20displayed%20on%20M13%20bacteriophage&qt=advanced&dblist=638
+                  - generic [ref=f109e681]:
+                    - paragraph
+                    - text: Sterner E,
+                    - generic [ref=f109e682]: Flanagan N
+                    - text: ","
+                    - generic [ref=f109e683]: Gildersleeve JC
+                    - text: . Perspectives on anti-glycan antibodies gleaned from development of a community resource database. ACS Chem Biol. 2016:11:1773–1783.
+                    - paragraph
+                    - generic [ref=f109e684]:
+                      - paragraph [ref=f109e685]:
+                        - link "Google Scholar" [ref=f109e687] [cursor=pointer]:
+                          - /url: https://scholar.google.com/scholar_lookup?title=Perspectives%20on%20anti-glycan%20antibodies%20gleaned%20from%20development%20of%20a%20community%20resource%20database&author=E%20Sterner&author=N%20Flanagan&author=JC%20Gildersleeve&publication_year=2016&journal=ACS%20Chem%20Biol&volume=11&pages=1773-1783
+                      - link "Crossref" [ref=f109e689] [cursor=pointer]:
+                        - /url: http://dx.doi.org/10.1021/acschembio.6b00244
+                      - link "PubMed" [ref=f109e691] [cursor=pointer]:
+                        - /url: http://www.ncbi.nlm.nih.gov/pubmed/27220698
+                      - paragraph [ref=f109e692]:
+                        - link "WorldCat" [ref=f109e694] [cursor=pointer]:
+                          - /url: https://www.worldcat.org/search?q=ti:Perspectives%20on%20anti-glycan%20antibodies%20gleaned%20from%20development%20of%20a%20community%20resource%20database&qt=advanced&dblist=638
+                  - generic [ref=f109e698]:
+                    - paragraph
+                    - text: Stoll M,
+                    - generic [ref=f109e699]: Feizi T
+                    - text: ". Software tools for storing, processing and displaying carbohydrate microarray data. In: Proceeding of the Beilstein Symposium on Glyco-Bioinformatics. 2009, p. 123–140."
+                    - paragraph
+                  - generic [ref=f109e703]:
+                    - paragraph
+                    - text: Wang L,
+                    - generic [ref=f109e704]: Cummings RD
+                    - text: ","
+                    - generic [ref=f109e705]: Smith DF
+                    - text: ","
+                    - generic [ref=f109e706]: Huflejt M
+                    - text: ","
+                    - generic [ref=f109e707]: Campbell CT
+                    - text: ", Gildersleeve JC, Gerlach JQ, Kilcoyne M, Joshi L, Serna S, et al. Cross-platform comparison of glycan microarray formats. Glycobiology. 2014:24:507–517."
+                    - paragraph
+                    - generic [ref=f109e708]:
+                      - paragraph [ref=f109e709]:
+                        - link "Google Scholar" [ref=f109e711] [cursor=pointer]:
+                          - /url: https://scholar.google.com/scholar_lookup?title=Cross-platform%20comparison%20of%20glycan%20microarray%20formats&author=L%20Wang&author=RD%20Cummings&author=DF%20Smith&author=M%20Huflejt&author=CT%20Campbell&publication_year=2014&journal=Glycobiology&volume=24&pages=507-517
+                      - link "Crossref" [ref=f109e713] [cursor=pointer]:
+                        - /url: http://dx.doi.org/10.1093/glycob/cwu019
+                      - link "PubMed" [ref=f109e715] [cursor=pointer]:
+                        - /url: http://www.ncbi.nlm.nih.gov/pubmed/24658466
+                      - paragraph [ref=f109e716]:
+                        - link "WorldCat" [ref=f109e718] [cursor=pointer]:
+                          - /url: https://www.worldcat.org/search?q=ti:Cross-platform%20comparison%20of%20glycan%20microarray%20formats&qt=advanced&dblist=638
+                  - generic [ref=f109e722]:
+                    - paragraph
+                    - text: Weatherly DB,
+                    - generic [ref=f109e723]: Arpinar FS
+                    - text: ","
+                    - generic [ref=f109e724]: Porterfield M
+                    - text: ","
+                    - generic [ref=f109e725]: Tiemeyer M
+                    - text: ","
+                    - generic [ref=f109e726]: York WS
+                    - text: ","
+                    - generic [ref=f109e727]: Ranzinger R
+                    - text: . GRITS toolbox-a freely available software for processing, annotating and archiving glycomics mass spectrometry data. Glycobiology. 2019:29:452–460.
+                    - paragraph
+                    - generic [ref=f109e728]:
+                      - paragraph [ref=f109e729]:
+                        - link "Google Scholar" [ref=f109e731] [cursor=pointer]:
+                          - /url: https://scholar.google.com/scholar_lookup?title=GRITS%20toolbox-a%20freely%20available%20software%20for%20processing%2C%20annotating%20and%20archiving%20glycomics%20mass%20spectrometry%20data&author=DB%20Weatherly&author=FS%20Arpinar&author=M%20Porterfield&author=M%20Tiemeyer&author=WS%20York&author=R%20Ranzinger&publication_year=2019&journal=Glycobiology&volume=29&pages=452-460
+                      - link "Crossref" [ref=f109e733] [cursor=pointer]:
+                        - /url: http://dx.doi.org/10.1093/glycob/cwz023
+                      - link "PubMed" [ref=f109e735] [cursor=pointer]:
+                        - /url: http://www.ncbi.nlm.nih.gov/pubmed/30913289
+                      - paragraph [ref=f109e736]:
+                        - link "WorldCat" [ref=f109e738] [cursor=pointer]:
+                          - /url: https://www.worldcat.org/search?q=ti:GRITS%20toolbox-a%20freely%20available%20software%20for%20processing%2C%20annotating%20and%20archiving%20glycomics%20mass%20spectrometry%20data&qt=advanced&dblist=638
+                  - generic [ref=f109e742]:
+                    - paragraph
+                    - text: Xia L,
+                    - generic [ref=f109e743]: Gildersleeve JC
+                    - text: . Anti-glycan IgM repertoires in newborn human cord blood. PLoS One. 2019:14:e0218575.
+                    - paragraph
+                    - generic [ref=f109e744]:
+                      - paragraph [ref=f109e745]:
+                        - link "Google Scholar" [ref=f109e747] [cursor=pointer]:
+                          - /url: https://scholar.google.com/scholar_lookup?title=Anti-glycan%20IgM%20repertoires%20in%20newborn%20human%20cord%20blood&author=L%20Xia&author=JC%20Gildersleeve&publication_year=2019&journal=PLoS%20One&volume=14&pages=e0218575
+                      - link "Crossref" [ref=f109e749] [cursor=pointer]:
+                        - /url: http://dx.doi.org/10.1371/journal.pone.0218575
+                      - link "PubMed" [ref=f109e751] [cursor=pointer]:
+                        - /url: http://www.ncbi.nlm.nih.gov/pubmed/31365539
+                      - paragraph [ref=f109e752]:
+                        - link "WorldCat" [ref=f109e754] [cursor=pointer]:
+                          - /url: https://www.worldcat.org/search?q=ti:Anti-glycan%20IgM%20repertoires%20in%20newborn%20human%20cord%20blood&qt=advanced&dblist=638
+                  - generic [ref=f109e758]:
+                    - paragraph
+                    - text: Yan M,
+                    - generic [ref=f109e759]: Zhu Y
+                    - text: ","
+                    - generic [ref=f109e760]: Liu X
+                    - text: ","
+                    - generic [ref=f109e761]: Lasanajak Y
+                    - text: ","
+                    - generic [ref=f109e762]: Xiong J
+                    - text: ", Lu J, Lin X, Ashline D, Reinhold V, Smith DF, et al. Next-generation glycan microarray enabled by DNA-coded glycan library and next-generation sequencing technology. Anal Chem. 2019:91:9221–9228."
+                    - paragraph
+                    - generic [ref=f109e763]:
+                      - paragraph [ref=f109e764]:
+                        - link "Google Scholar" [ref=f109e766] [cursor=pointer]:
+                          - /url: https://scholar.google.com/scholar_lookup?title=Next-generation%20glycan%20microarray%20enabled%20by%20DNA-coded%20glycan%20library%20and%20next-generation%20sequencing%20technology&author=M%20Yan&author=Y%20Zhu&author=X%20Liu&author=Y%20Lasanajak&author=J%20Xiong&publication_year=2019&journal=Anal%20Chem&volume=91&pages=9221-9228
+                      - link "Crossref" [ref=f109e768] [cursor=pointer]:
+                        - /url: http://dx.doi.org/10.1021/acs.analchem.9b01988
+                      - link "PubMed" [ref=f109e770] [cursor=pointer]:
+                        - /url: http://www.ncbi.nlm.nih.gov/pubmed/31187982
+                      - paragraph [ref=f109e771]:
+                        - link "WorldCat" [ref=f109e773] [cursor=pointer]:
+                          - /url: https://www.worldcat.org/search?q=ti:Next-generation%20glycan%20microarray%20enabled%20by%20DNA-coded%20glycan%20library%20and%20next-generation%20sequencing%20technology&qt=advanced&dblist=638
+                  - generic [ref=f109e777]:
+                    - paragraph
+                    - text: York WS,
+                    - generic [ref=f109e778]: Mazumder R
+                    - text: ","
+                    - generic [ref=f109e779]: Ranzinger R
+                    - text: ","
+                    - generic [ref=f109e780]: Edwards N
+                    - text: ","
+                    - generic [ref=f109e781]: Kahsay R
+                    - text: ", Aoki-Kinoshita KF, Campbell MP, Cummings RD, Feizi T, Martin M, et al. GlyGen: computational and informatics resources for Glycoscience. Glycobiology. 2020:30:72–73."
+                    - paragraph
+                    - generic [ref=f109e782]:
+                      - paragraph [ref=f109e783]:
+                        - link "Google Scholar" [ref=f109e785] [cursor=pointer]:
+                          - /url: https://scholar.google.com/scholar_lookup?title=GlyGen%3A%20computational%20and%20informatics%20resources%20for%20Glycoscience&author=WS%20York&author=R%20Mazumder&author=R%20Ranzinger&author=N%20Edwards&author=R%20Kahsay&publication_year=2020&journal=Glycobiology&volume=30&pages=72-73
+                      - link "Crossref" [ref=f109e787] [cursor=pointer]:
+                        - /url: http://dx.doi.org/10.1093/glycob/cwz080
+                      - link "PubMed" [ref=f109e789] [cursor=pointer]:
+                        - /url: http://www.ncbi.nlm.nih.gov/pubmed/31616925
+                      - paragraph [ref=f109e790]:
+                        - link "WorldCat" [ref=f109e792] [cursor=pointer]:
+                          - /url: https://www.worldcat.org/search?q=ti:GlyGen%3A%20computational%20and%20informatics%20resources%20for%20Glycoscience&qt=advanced&dblist=638
+                - generic [ref=f109e793]: © The Author(s) 2022. Published by Oxford University Press.
+                - generic [ref=f109e795]:
+                  - text: This is an Open Access article distributed under the terms of the Creative Commons Attribution License (
+                  - link "https://creativecommons.org/licenses/by/4.0/" [ref=f109e796] [cursor=pointer]:
+                    - /url: https://creativecommons.org/licenses/by/4.0/
+                  - text: ), which permits unrestricted reuse, distribution, and reproduction in any medium, provided the original work is properly cited.
+              - generic [ref=f109e799]:
+                - generic [ref=f109e800]: "Issue Section:"
+                - link "GlycoForum—Technical Note" [ref=f109e801] [cursor=pointer]:
+                  - /url: /glycob/search-results?f_TocHeadingTitleList=GlycoForum%e2%80%94Technical+Note
+      - generic [ref=f109e806]:
+        - generic [ref=f109e810]:
+          - generic [ref=f109e811]:
+            - heading "Views" [level=2] [ref=f109e812]
+            - generic [ref=f109e813]: 1,982
+          - heading "Altmetric" [level=2] [ref=f109e816]
+          - button [ref=f109e818] [cursor=pointer]:
+            - img "Information" [ref=f109e819]
+            - text: More metrics information
+        - generic [ref=f109e821]:
+          - heading "Email alerts" [level=2] [ref=f109e822]
+          - link "New journal issues" [ref=f109e824] [cursor=pointer]:
+            - /url: /glycob/new-journals-alert
+          - link "New journal articles" [ref=f109e826] [cursor=pointer]:
+            - /url: /glycob/new-journal-articles-alert
+          - button "Activity related to this article" [ref=f109e828]
+          - link "Sign up for marketing" [ref=f109e830] [cursor=pointer]:
+            - /url: /my-account/communication-preferences
+        - generic [ref=f109e832]:
+          - heading "Citing articles via" [level=2] [ref=f109e833]
+          - generic [ref=f109e834]:
+            - link "Web of Science (8)" [ref=f109e836] [cursor=pointer]:
+              - /url: https://www.webofscience.com/api/gateway?GWVersion=2&SrcApp=silverchair&SrcAuth=WosAPI&KeyUT=WOS:000812827400002&DestLinkType=CitingArticles&DestApp=WOS_CPL
+            - link "Google Scholar" [ref=f109e838] [cursor=pointer]:
+              - /url: http://scholar.google.com/scholar?q=link:https%3A%2F%2Facademic.oup.com%2Fglycob%2Farticle%2F32%2F7%2F552%2F6555547
+        - generic [ref=f109e839]:
+          - heading "New and popular articles" [level=2] [ref=f109e840]
+          - list [ref=f109e841]:
+            - listitem [ref=f109e842]:
+              - button "View Latest articles" [pressed] [ref=f109e843] [cursor=pointer]: Latest
+            - listitem [ref=f109e844]:
+              - button "View Most Read articles" [ref=f109e845] [cursor=pointer]: Most Read
+            - listitem [ref=f109e846]:
+              - button "View Most Cited articles" [ref=f109e847] [cursor=pointer]: Most Cited
+          - generic [ref=f109e852]:
+            - link "Structure-Based and Glycosylation-Aware Interpretation of Glycogene Variants" [ref=f109e854] [cursor=pointer]:
+              - /url: /glycob/advance-article/doi/10.1093/glycob/cwag107/9018108?searchresult=1
+            - 'link "A practical framework for label-free GAG disaccharide analysis by HILIC-MS/MS: detailed protocols for analysis of diverse biological sample types" [ref=f109e857] [cursor=pointer]':
+              - /url: /glycob/advance-article/doi/10.1093/glycob/cwag104/9016049?searchresult=1
+            - link "How the terminal glucoside of the N-glycan donor affects the catalytic efficiency of the eukaryotic oligosaccharyltransferase" [ref=f109e860] [cursor=pointer]:
+              - /url: /glycob/advance-article/doi/10.1093/glycob/cwag102/9003596?searchresult=1
+            - link "Guidelines and Best Practices for O-GlcNAcylation, OGT, and OGA Imaging in Fixed Cells and Tissues" [ref=f109e863] [cursor=pointer]:
+              - /url: /glycob/advance-article/doi/10.1093/glycob/cwag101/9002171?searchresult=1
+            - 'link "scGlycoAI: machine learning analysis of single-cell glycan and RNA sequencing data for cell-type annotation and malignancy-associated glycan discovery" [ref=f109e866] [cursor=pointer]':
+              - /url: /glycob/article/36/11/cwag100/8996782?searchresult=1
+        - generic [ref=f109e869]:
+          - heading "More from Oxford Academic" [level=2] [ref=f109e870]
+          - link "Biochemistry" [ref=f109e872] [cursor=pointer]:
+            - /url: /search-results?tax=AcademicSubjects/SCI00980
+          - link "Biological Sciences" [ref=f109e874] [cursor=pointer]:
+            - /url: /search-results?tax=AcademicSubjects/SCI00960
+          - link "Carbohydrates" [ref=f109e876] [cursor=pointer]:
+            - /url: /search-results?tax=AcademicSubjects/SCI01000
+          - link "Science and Mathematics" [ref=f109e878] [cursor=pointer]:
+            - /url: /search-results?tax=AcademicSubjects/SCI00010
+          - link "Books" [ref=f109e880] [cursor=pointer]:
+            - /url: /books/search-results?sort=Title+-+A+to+Z&f_ContentType=Book&fl_SiteID=6283&page=1
+          - link "Journals" [ref=f109e882] [cursor=pointer]:
+            - /url: /journals/pages/journals_a_to_z
+    - generic [ref=f109e883]:
+      - generic [ref=f109e887]:
+        - generic [ref=f109e888]:
+          - list [ref=f109e889]:
+            - listitem [ref=f109e890]:
+              - link "About Glycobiology" [ref=f109e891] [cursor=pointer]:
+                - /url: /glycob/pages/About
+            - listitem [ref=f109e892]:
+              - link "Editorial Board" [ref=f109e893] [cursor=pointer]:
+                - /url: /glycob/pages/Editorial_Board
+            - listitem [ref=f109e894]:
+              - link "Author Guidelines" [ref=f109e895] [cursor=pointer]:
+                - /url: /glycob/pages/General_Instructions
+            - listitem [ref=f109e896]:
+              - link "Contact Us" [ref=f109e897] [cursor=pointer]:
+                - /url: http://www.glycobiology.org/
+            - listitem [ref=f109e898]:
+              - link "Facebook" [ref=f109e899] [cursor=pointer]:
+                - /url: https://www.facebook.com/OUPAcademic
+          - list [ref=f109e900]:
+            - listitem [ref=f109e901]:
+              - link "X (formerly Twitter)" [ref=f109e902] [cursor=pointer]:
+                - /url: https://twitter.com/OxfordJournals
+            - listitem [ref=f109e903]:
+              - link "Purchase" [ref=f109e904] [cursor=pointer]:
+                - /url: /glycob/subscribe
+            - listitem [ref=f109e905]:
+              - link "Recommend to your Library" [ref=f109e906] [cursor=pointer]:
+                - /url: http://www.oxfordjournals.org/en/library-recommendation-form.html
+            - listitem [ref=f109e907]:
+              - link "Advertising and Corporate Services" [ref=f109e908] [cursor=pointer]:
+                - /url: https://academic.oup.com/advertising-and-corporate-services/pages/glycob-media-kit
+            - listitem [ref=f109e909]:
+              - link "Journals Career Network" [ref=f109e910] [cursor=pointer]:
+                - /url: http://science-and-mathematics-careernetwork.oxfordjournals.org
+        - link [ref=f109e912] [cursor=pointer]:
+          - /url: https://academic.oup.com/glycob
+          - img "Glycobiology" [ref=f109e913]
+        - list [ref=f109e915]:
+          - listitem [ref=f109e916]: Online ISSN 1460-2423
+          - listitem [ref=f109e917]: Copyright © 2026 Oxford University Press
+      - generic [ref=f109e920]:
+        - generic [ref=f109e921]:
+          - list [ref=f109e923]:
+            - listitem [ref=f109e924]:
+              - link "About Oxford Academic" [ref=f109e925] [cursor=pointer]:
+                - /url: /pages/about-oxford-academic
+            - listitem [ref=f109e926]:
+              - link "Publish journals with us" [ref=f109e927] [cursor=pointer]:
+                - /url: /pages/about-oxford-academic/publish-journals-with-us
+            - listitem [ref=f109e928]:
+              - link "University press partners" [ref=f109e929] [cursor=pointer]:
+                - /url: /pages/about-oxford-academic/our-university-press-partners
+            - listitem [ref=f109e930]:
+              - link "What we publish" [ref=f109e931] [cursor=pointer]:
+                - /url: /pages/what-we-publish
+            - listitem [ref=f109e932]:
+              - link "New features" [ref=f109e933] [cursor=pointer]:
+                - /url: /pages/new-features
+          - list [ref=f109e935]:
+            - listitem [ref=f109e936]:
+              - link "For authors" [ref=f109e937] [cursor=pointer]:
+                - /url: /pages/for-authors
+            - listitem [ref=f109e938]:
+              - link "Open access" [ref=f109e939] [cursor=pointer]:
+                - /url: /pages/open-research/open-access
+            - listitem [ref=f109e940]:
+              - link "Purchasing" [ref=f109e941] [cursor=pointer]:
+                - /url: /pages/purchasing
+            - listitem [ref=f109e942]:
+              - link "For librarians" [ref=f109e943] [cursor=pointer]:
+                - /url: /pages/for-librarians
+            - listitem [ref=f109e944]:
+              - link "Rights and permissions" [ref=f109e945] [cursor=pointer]:
+                - /url: https://academic.oup.com/pages/purchasing/rights-and-permissions
+          - list [ref=f109e947]:
+            - listitem [ref=f109e948]:
+              - link "Get help with access" [ref=f109e949] [cursor=pointer]:
+                - /url: /pages/get-help-with-access
+            - listitem [ref=f109e950]:
+              - link "Accessibility" [ref=f109e951] [cursor=pointer]:
+                - /url: /pages/about-oxford-academic/accessibility
+            - listitem [ref=f109e952]:
+              - link "Contact us" [ref=f109e953] [cursor=pointer]:
+                - /url: /pages/contact-us
+            - listitem [ref=f109e954]:
+              - link "Advertising" [ref=f109e955] [cursor=pointer]:
+                - /url: /pages/advertising
+            - listitem [ref=f109e956]:
+              - link "Media enquiries" [ref=f109e957] [cursor=pointer]:
+                - /url: /pages/media-enquiries
+          - list [ref=f109e959]:
+            - listitem [ref=f109e960]:
+              - link "Oxford University Press" [ref=f109e961] [cursor=pointer]:
+                - /url: https://global.oup.com/
+            - listitem [ref=f109e962]:
+              - link "News" [ref=f109e963] [cursor=pointer]:
+                - /url: https://corp.oup.com/press-office
+            - listitem [ref=f109e964]:
+              - link "Oxford Languages" [ref=f109e965] [cursor=pointer]:
+                - /url: https://languages.oup.com/
+            - listitem [ref=f109e966]:
+              - link "University of Oxford" [ref=f109e967] [cursor=pointer]:
+                - /url: https://www.ox.ac.uk/
+          - generic [ref=f109e968]:
+            - paragraph [ref=f109e969]: Oxford University Press is a department of the University of Oxford. It furthers the University's objective of excellence in research, scholarship, and education by publishing worldwide
+            - img "Oxford University Press" [ref=f109e970]
+        - list [ref=f109e973]:
+          - listitem [ref=f109e974]: Copyright © 2026 Oxford University Press
+          - listitem [ref=f109e975]:
+            - link "Cookie settings" [ref=f109e976] [cursor=pointer]:
+              - /url: "#openCookiePreferences"
+          - listitem [ref=f109e977]:
+            - link "Cookie policy" [ref=f109e978] [cursor=pointer]:
+              - /url: https://global.oup.com/cookiepolicy
+          - listitem [ref=f109e979]:
+            - link "Privacy policy" [ref=f109e980] [cursor=pointer]:
+              - /url: https://global.oup.com/privacy
+          - listitem [ref=f109e981]:
+            - link "Legal notice" [ref=f109e982] [cursor=pointer]:
+              - /url: https://academic.oup.com/pages/legal-notice
+  - generic:  
+  - region "Advertisement"

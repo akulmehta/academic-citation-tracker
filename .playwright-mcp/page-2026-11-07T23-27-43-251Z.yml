@@ -1,0 +1,670 @@
+- generic [active] [ref=f169e1]:
+  - generic [ref=f169e3]:
+    - link "Skip to main content":
+      - /url: "#main"
+    - link "Skip to article":
+      - /url: "#article"
+    - banner [ref=f169e6]:
+      - generic [ref=f169e7]:
+        - link "ScienceDirect home page" [ref=f169e8] [cursor=pointer]:
+          - /url: /
+          - img "Elsevier logo" [ref=f169e9]
+        - generic [ref=f169e18]:
+          - navigation "ai-links" [ref=f169e19]:
+            - list [ref=f169e20]:
+              - listitem [ref=f169e21]:
+                - link "LeapSpace" [ref=f169e22] [cursor=pointer]:
+                  - /url: /leapspace?DGCID=rai_sd_header_ls_link
+                  - generic [ref=f169e25]:
+                    - text: LeapSpace
+                    - img "Opens in new window" [ref=f169e26]
+          - navigation "links" [ref=f169e28]:
+            - list [ref=f169e29]:
+              - listitem [ref=f169e30]:
+                - link "Journals & Books" [ref=f169e31] [cursor=pointer]:
+                  - /url: /browse/journals-and-books
+          - navigation "utilities" [ref=f169e33]:
+            - list [ref=f169e34]:
+              - listitem [ref=f169e35]:
+                - button "Help" [ref=f169e39] [cursor=pointer]
+              - listitem [ref=f169e43]:
+                - button "Search" [ref=f169e45] [cursor=pointer]
+        - link "My account" [ref=f169e50] [cursor=pointer]:
+          - /url: /customer/profile/display?targetURL=%2Fscience%2Farticle%2Fpii%2FS1877050922005026
+        - button "Harvard University Institutional Access" [ref=f169e57] [cursor=pointer]
+        - link [ref=f169e61] [cursor=pointer]:
+          - /url: http://library.harvard.edu
+          - img "You have institutional Access via Harvard University" [ref=f169e62]
+    - main [ref=f169e64]:
+      - generic [ref=f169e65]:
+        - generic [ref=f169e67]:
+          - link "Homepage for Procedia Computer Science" [ref=f169e69] [cursor=pointer]:
+            - /url: /journal/procedia-computer-science/vol/201/suppl/C
+            - img "Procedia Computer Science" [ref=f169e72]
+          - generic [ref=f169e73]:
+            - generic [ref=f169e74]:
+              - heading [level=2] [ref=f169e76]:
+                - link "Procedia Computer Science" [ref=f169e77] [cursor=pointer]:
+                  - /url: /journal/procedia-computer-science
+              - generic [ref=f169e79]:
+                - generic [ref=f169e80]:
+                  - generic [ref=f169e81]: "Date:"
+                  - text: "2022"
+                - generic [ref=f169e82]:
+                  - generic [ref=f169e83]:
+                    - generic [ref=f169e84]: "Pages:"
+                    - text: 673-678
+                  - generic [ref=f169e85]:
+                    - generic [ref=f169e86]: "Volume:"
+                    - link "Volume 201" [ref=f169e87] [cursor=pointer]:
+                      - /url: /journal/procedia-computer-science/vol/201/suppl/C
+              - button "View accessibility information" [ref=f169e89] [cursor=pointer]
+            - generic [ref=f169e91]:
+              - heading "Part of special issue" [level=2] [ref=f169e92]
+              - generic [ref=f169e94]:
+                - link "The 13th International Conference on Ambient Systems, Networks and Technologies (ANT) / The 5th International Conference on Emerging Data and Industry 4.0 (EDI40)" [ref=f169e95] [cursor=pointer]:
+                  - /url: /science/journal/18770509/201/supp/C
+                - generic [ref=f169e98]:
+                  - generic [ref=f169e99]: Edited by
+                  - generic [ref=f169e100]: Elhadi Shakshuki
+              - link "View special issue" [ref=f169e101] [cursor=pointer]:
+                - /url: /science/journal/18770509/201/supp/C
+            - generic [ref=f169e105]:
+              - heading "Published by" [level=3] [ref=f169e106]
+              - link [ref=f169e108] [cursor=pointer]:
+                - /url: /journal/procedia-computer-science
+                - img "Elsevier" [ref=f169e111]
+        - generic [ref=f169e113]:
+          - generic [ref=f169e114]:
+            - generic [ref=f169e115]:
+              - generic [ref=f169e116]:
+                - generic [ref=f169e117]: Research article
+                - generic [ref=f169e118]: Open access
+              - generic [ref=f169e119]:
+                - text: Under a Creative Commons
+                - link [ref=f169e120] [cursor=pointer]:
+                  - /url: http://creativecommons.org/licenses/by-nc-nd/4.0/
+                  - generic [ref=f169e121]:
+                    - text: license
+                    - img "Opens in new window" [ref=f169e122]
+              - link [ref=f169e125] [cursor=pointer]:
+                - /url: https://s100.copyright.com/AppDispatchServlet?publisherName=ELS&contentID=S1877050922005026&orderBeanReset=true
+                - generic [ref=f169e126]:
+                  - text: Get rights and content
+                  - img "Opens in new window" [ref=f169e127]
+            - heading "A Visual Dashboard of Thai Weaving Pattern Image Gallery" [level=1] [ref=f169e129]
+            - generic [ref=f169e130]:
+              - generic [ref=f169e132]:
+                - button "Porawat Visutsak aAuthor email or social media contact details icon" [ref=f169e133] [cursor=pointer]:
+                  - generic [ref=f169e135]:
+                    - generic [ref=f169e136]: Porawat Visutsak
+                    - superscript [ref=f169e138]: a
+                    - img "Author email or social media contact details icon" [ref=f169e139]
+                - text: ","
+                - button "Nutchapol Thathai a" [ref=f169e141] [cursor=pointer]:
+                  - generic [ref=f169e143]:
+                    - generic [ref=f169e144]: Nutchapol Thathai
+                    - superscript [ref=f169e146]: a
+                - text: ","
+                - button "Sakda Jangkorn a" [ref=f169e147] [cursor=pointer]:
+                  - generic [ref=f169e149]:
+                    - generic [ref=f169e150]: Sakda Jangkorn
+                    - superscript [ref=f169e152]: a
+                - text: ","
+                - button "Ganlayarat Bunyakiat a" [ref=f169e153] [cursor=pointer]:
+                  - generic [ref=f169e155]:
+                    - generic [ref=f169e156]: Ganlayarat Bunyakiat
+                    - superscript [ref=f169e158]: a
+              - button "Show more" [ref=f169e159] [cursor=pointer]
+          - generic [ref=f169e165]:
+            - link "View PDF. Opens in a new window." [ref=f169e166] [cursor=pointer]:
+              - /url: /science/article/pii/S1877050922005026/pdf?md5=d83ccf9ab256765509287d0bbedbe6a3&pid=1-s2.0-S1877050922005026-main.pdf
+              - generic [ref=f169e174]:
+                - text: View
+                - strong [ref=f169e175]: PDF
+            - button "Download full issue" [ref=f169e176] [cursor=pointer]
+            - button "Cite" [ref=f169e183] [cursor=pointer]
+            - button "Add to Mendeley" [ref=f169e187] [cursor=pointer]
+            - button "Share" [ref=f169e193] [cursor=pointer]
+            - link [ref=f169e200] [cursor=pointer]:
+              - /url: https://doi.org/10.1016/j.procs.2022.03.089
+              - generic [ref=f169e201]:
+                - text: 10.1016/j.procs.2022.03.089
+                - img "Opens in new window" [ref=f169e202]
+        - navigation "In-page navigation" [ref=f169e204]:
+          - list [ref=f169e205]:
+            - listitem [ref=f169e206]:
+              - link "Article" [ref=f169e207] [cursor=pointer]:
+                - /url: "#article"
+            - listitem [ref=f169e208]:
+              - link "Special issue articles" [ref=f169e209] [cursor=pointer]:
+                - /url: "#special-issue-articles"
+            - listitem [ref=f169e211]:
+              - link "Recommended articles" [ref=f169e212] [cursor=pointer]:
+                - /url: "#recommended-articles"
+            - listitem [ref=f169e213]:
+              - link "Cited by (1)" [ref=f169e214] [cursor=pointer]:
+                - /url: "#cited-by"
+            - listitem [ref=f169e216]:
+              - link "Metrics" [ref=f169e217] [cursor=pointer]:
+                - /url: "#metrics"
+        - navigation "Table of contents" [ref=f169e219]:
+          - generic [ref=f169e221]:
+            - heading "Outline" [level=2] [ref=f169e222]
+            - list [ref=f169e224]:
+              - listitem [ref=f169e225]:
+                - link "Abstract" [ref=f169e226] [cursor=pointer]:
+                  - /url: "#abs0001"
+              - listitem [ref=f169e228]:
+                - link "Keywords" [ref=f169e229] [cursor=pointer]:
+                  - /url: "#keys0001"
+              - listitem [ref=f169e231]:
+                - link "References" [ref=f169e232] [cursor=pointer]:
+                  - /url: "#cebibsec1"
+        - generic [ref=f169e234]:
+          - generic [ref=f169e236]:
+            - heading "Abstract" [level=2] [ref=f169e237]
+            - generic [ref=f169e238]: "The knowledge of weaving pattern design has spread to almost all regions in Thailand since prehistoric. The ethnic pattern design may vary based on ideology, beliefs, and traditions of people in each region. Until this day, the original weaving pattern may change by the adaptation of local textile designer and the Cross-cultural environment. Thus, the study of Thai weaving pattern design is necessary for reserving Thai ethnic wisdom of textile design. This work aims to develop the data dashboard by collecting Thai weaving pattern images from Google based on the information from the Royal Thai Silk Conservation Village Project, the Office of Sericulture Conservation and Standard Conformity Assessment, the Queen Sirikit Department of Sericulture, Ministry of Agriculture and Cooperatives. Our image gallery of Thai weaving patterns consists of 28 patterns from 4 regions: 1) The weaving patterns of northern Thailand include Jok Mae Jam, Jok Maueng Long, Yok Mook Lab Lae, Yok Dok Lamphun silk, and Sin Maueng Nan; 2) The weaving patterns of northeastern Thailand include Hol, Hang Kra Rok, Amprom, La Buek, Sin Tiew, Saked silk, Kaab Bua, Mud Mee Chonnabot silk, Luk Kaew patterned ebony-dyed silk, Mud Mee Teen Dang, Mud Mee Kaew Mookda silk, Mud Mee Kor Naree silk, Praewa silk, Mud Mee Soi Dok Mak silk, Samor, Anloonseem, and Kid; 3) The weaving patterns of central Thailand include Thai-Yuan Yok Mook and Thai-Yuan Jok; The weaving patterns of southern Thailand include Chuan Tani, Pum Riang silk, Yok Maueng Nakhon, and Na Muen Si. Our system can show the useful information of Thai weaving pattern such as the location on the map, the philosopher who gave the detail of weaving pattern, the weaving pattern design, and the textile techniques."
+          - generic [ref=f169e242]:
+            - heading "Keywords" [level=2] [ref=f169e243]
+            - generic [ref=f169e244]: Data visualization
+            - text: ;
+            - generic [ref=f169e245]: Thai weaving pattern
+            - text: ;
+            - generic [ref=f169e246]: Thai textile
+            - text: ;
+            - generic [ref=f169e247]: Dashboard design
+            - text: ;
+            - generic [ref=f169e248]: User testing
+            - text: ;
+            - generic [ref=f169e249]: Google images
+          - list [ref=f169e250]:
+            - listitem [ref=f169e251]:
+              - link "Previous article in this issue" [ref=f169e252] [cursor=pointer]:
+                - /url: /science/article/pii/S1877050922005014
+            - listitem [ref=f169e257]:
+              - link "Next article in this issue" [ref=f169e258] [cursor=pointer]:
+                - /url: /science/article/pii/S1877050922005038
+          - region "PDF viewer" [ref=f169e263]:
+            - generic "Embedded PDF" [ref=f169e264]
+            - link [ref=f169e266] [cursor=pointer]:
+              - /url: /science/article/pii/S1877050922005026/pdf?md5=d83ccf9ab256765509287d0bbedbe6a3&pid=1-s2.0-S1877050922005026-main.pdf
+              - generic [ref=f169e272]:
+                - text: View PDF
+                - img "Opens in new window" [ref=f169e273]
+          - generic [ref=f169e276]:
+            - heading "References" [level=2] [ref=f169e277]
+            - list [ref=f169e279]:
+              - listitem [ref=f169e280]:
+                - link "1" [ref=f169e282] [cursor=pointer]:
+                  - /url: "#bbib0001"
+                - generic [ref=f169e284]:
+                  - generic [ref=f169e285]: The Queen Sirikit Department of Sericulture (2016) “The Royal Thai Silk Conservation Village Project 1st ed.” The Office of Sericulture Conservation and Standard Conformity Assessment, the Queen Sirikit Department of Sericulture, Ministry of Agriculture and Cooperatives
+                  - link [ref=f169e287] [cursor=pointer]:
+                    - /url: https://scholar.google.com/scholar?q=The%20Queen%20Sirikit%20Department%20of%20Sericulture%20(2016)%20%E2%80%9CThe%20Royal%20Thai%20Silk%20Conservation%20Village%20Project%201st%20ed.%E2%80%9D%20The%20Office%20of%20Sericulture%20Conservation%20and%20Standard%20Conformity%20Assessment%2C%20the%20Queen%20Sirikit%20Department%20of%20Sericulture%2C%20Ministry%20of%20Agriculture%20and%20Cooperatives
+                    - generic [ref=f169e288]:
+                      - text: Google Scholar
+                      - img "Opens in new window" [ref=f169e289]
+              - listitem [ref=f169e291]:
+                - link "2" [ref=f169e293] [cursor=pointer]:
+                  - /url: "#bbib0002"
+                - generic [ref=f169e295]:
+                  - generic [ref=f169e296]:
+                    - generic [ref=f169e297]: Masum Hassan, Peter Singer
+                    - generic [ref=f169e298]: “A Visual Dashboard for Moving Health Technologies from Lab to Village.”
+                  - generic [ref=f169e299]: J Med Internet Res, 9 (4) (2007), p. e32
+                  - link [ref=f169e301] [cursor=pointer]:
+                    - /url: https://doi.org/10.2196/jmir.9.4.e32
+                    - generic [ref=f169e302]:
+                      - text: https://doi.org/10.2196/jmir.9.4.e32
+                      - img "Opens in new window" [ref=f169e303]
+                  - generic [ref=f169e305]:
+                    - link [ref=f169e306] [cursor=pointer]:
+                      - /url: https://doi.org/10.2196/jmir.9.4.e32
+                      - generic [ref=f169e307]:
+                        - text: Crossref
+                        - img "Opens in new window" [ref=f169e308]
+                    - link [ref=f169e310] [cursor=pointer]:
+                      - /url: https://www.scopus.com/inward/record.url?eid=2-s2.0-36048965102&partnerID=10&rel=R3.0.0
+                      - generic [ref=f169e311]:
+                        - text: View in Scopus
+                        - img "Opens in new window" [ref=f169e312]
+                    - link [ref=f169e314] [cursor=pointer]:
+                      - /url: https://scholar.google.com/scholar_lookup?title=A%20Visual%20Dashboard%20for%20Moving%20Health%20Technologies%20from%20Lab%20to%20Village.&publication_year=2007&author=Hassan%20Masum&author=Peter%20Singer
+                      - generic [ref=f169e315]:
+                        - text: Google Scholar
+                        - img "Opens in new window" [ref=f169e316]
+              - listitem [ref=f169e318]:
+                - link "3" [ref=f169e320] [cursor=pointer]:
+                  - /url: "#bbib0003"
+                - generic [ref=f169e322]:
+                  - generic [ref=f169e323]:
+                    - generic [ref=f169e324]: Li Luming, Todd Barnes
+                    - generic [ref=f169e325]: “A Visual Dashboard to Monitor Restraint Use in Hospitalized Psychiatry Patients.”
+                  - generic [ref=f169e326]: The Joint Commission Journal on Quality and Patient Safety, 47 (5) (2021), pp. 282-287
+                  - link [ref=f169e328] [cursor=pointer]:
+                    - /url: https://doi.org/10.1016/j.jcjq.2021.01.004
+                    - generic [ref=f169e329]:
+                      - text: https://doi.org/10.1016/j.jcjq.2021.01.004
+                      - img "Opens in new window" [ref=f169e330]
+                  - generic [ref=f169e332]:
+                    - link "View PDF" [ref=f169e333] [cursor=pointer]:
+                      - /url: /science/article/pii/S1553725021000052/pdfft?md5=76760729519a6159b0788131badcb3b7&pid=1-s2.0-S1553725021000052-main.pdf
+                    - link "View article" [ref=f169e340] [cursor=pointer]:
+                      - /url: /science/article/pii/S1553725021000052
+                    - link [ref=f169e342] [cursor=pointer]:
+                      - /url: https://doi.org/10.3390/cryst11030282
+                      - generic [ref=f169e343]:
+                        - text: Crossref
+                        - img "Opens in new window" [ref=f169e344]
+                    - link [ref=f169e346] [cursor=pointer]:
+                      - /url: https://scholar.google.com/scholar_lookup?title=A%20Visual%20Dashboard%20to%20Monitor%20Restraint%20Use%20in%20Hospitalized%20Psychiatry%20Patients.&publication_year=2021&author=Luming%20Li&author=Todd%20Barnes
+                      - generic [ref=f169e347]:
+                        - text: Google Scholar
+                        - img "Opens in new window" [ref=f169e348]
+              - listitem [ref=f169e350]:
+                - link "4" [ref=f169e352] [cursor=pointer]:
+                  - /url: "#bbib0004"
+                - generic [ref=f169e354]:
+                  - generic [ref=f169e355]: Grieg, Nikolai Alexander, Svein-Ivar Lillehaug, and Yngve Lamo. (2019) “A Visual Analytics Dashboard to support iCBT Therapists.” Proceedings of the 17th Scandinavian Conference on Health Informatics (SHI 2019), November 12-13, 2019, Oslo, Norway. Linköping Electronic Conference Proceedings 161:23, s. 134-140.
+                  - link [ref=f169e357] [cursor=pointer]:
+                    - /url: https://scholar.google.com/scholar?q=Grieg%2C%20Nikolai%20Alexander%2C%20Svein-Ivar%20Lillehaug%2C%20and%20Yngve%20Lamo.%20(2019)%20%E2%80%9CA%20Visual%20Analytics%20Dashboard%20to%20support%20iCBT%20Therapists.%E2%80%9D%20Proceedings%20of%20the%2017th%20Scandinavian%20Conference%20on%20Health%20Informatics%20(SHI%202019)%2C%20November%2012-13%2C%202019%2C%20Oslo%2C%20Norway.%20Link%C3%B6ping%20Electronic%20Conference%20Proceedings%20161%3A23%2C%20s.%20134-140.
+                    - generic [ref=f169e358]:
+                      - text: Google Scholar
+                      - img "Opens in new window" [ref=f169e359]
+              - listitem [ref=f169e361]:
+                - link "5" [ref=f169e363] [cursor=pointer]:
+                  - /url: "#bbib0005"
+                - generic [ref=f169e365]:
+                  - generic [ref=f169e367]:
+                    - text: "Al-Hajj, Samar, Ian Pike, Bernhard Riecke, and Brian Fisher. (2013) “Visual Analytics for Public Health: Supporting Knowledge Construction and Decision-Making.” 46th Hawaii International Conference on System Sciences, pp. 2416-2423."
+                    - link [ref=f169e368] [cursor=pointer]:
+                      - /url: https://doi.org/10.1109/HICSS.2013.599
+                      - generic [ref=f169e369]:
+                        - text: https://doi.org/10.1109/HICSS.2013.599
+                        - img "Opens in new window" [ref=f169e370]
+                  - link [ref=f169e373] [cursor=pointer]:
+                    - /url: https://scholar.google.com/scholar?q=Al-Hajj%2C%20Samar%2C%20Ian%20Pike%2C%20Bernhard%20Riecke%2C%20and%20Brian%20Fisher.%20(2013)%20%E2%80%9CVisual%20Analytics%20for%20Public%20Health%3A%20Supporting%20Knowledge%20Construction%20and%20Decision-Making.%E2%80%9D%2046th%20Hawaii%20International%20Conference%20on%20System%20Sciences%2C%20pp.%202416-2423.%20https%3A%2F%2Fdoi.org%2F10.1109%2FHICSS.2013.599
+                    - generic [ref=f169e374]:
+                      - text: Google Scholar
+                      - img "Opens in new window" [ref=f169e375]
+              - listitem [ref=f169e377]:
+                - link "6" [ref=f169e379] [cursor=pointer]:
+                  - /url: "#bbib0006"
+                - generic [ref=f169e381]:
+                  - generic [ref=f169e382]:
+                    - generic [ref=f169e383]: Mehta Akul Y., Richard D Cummings
+                    - generic [ref=f169e384]: "“GLAD: GLycan Array Dashboard, a visual analytics tool for glycan microarrays.”"
+                  - generic [ref=f169e385]: Bioinformatics, 35 (18) (2019), pp. 3536-3537
+                  - generic [ref=f169e386]:
+                    - text: 15,
+                    - link [ref=f169e387] [cursor=pointer]:
+                      - /url: https://doi.org/10.1093/bioinformatics/btz075
+                      - generic [ref=f169e388]:
+                        - text: https://doi.org/10.1093/bioinformatics/btz075
+                        - img "Opens in new window" [ref=f169e389]
+                  - generic [ref=f169e391]:
+                    - link [ref=f169e392] [cursor=pointer]:
+                      - /url: https://doi.org/10.1093/bioinformatics/btz075
+                      - generic [ref=f169e393]:
+                        - text: Crossref
+                        - img "Opens in new window" [ref=f169e394]
+                    - link [ref=f169e396] [cursor=pointer]:
+                      - /url: https://www.scopus.com/inward/record.url?eid=2-s2.0-85068579018&partnerID=10&rel=R3.0.0
+                      - generic [ref=f169e397]:
+                        - text: View in Scopus
+                        - img "Opens in new window" [ref=f169e398]
+                    - link [ref=f169e400] [cursor=pointer]:
+                      - /url: https://scholar.google.com/scholar_lookup?title=GLAD%3A%20GLycan%20Array%20Dashboard%2C%20a%20visual%20analytics%20tool%20for%20glycan%20microarrays.&publication_year=2019&author=Akul%20Y.%20Mehta&author=Richard%20D%20Cummings
+                      - generic [ref=f169e401]:
+                        - text: Google Scholar
+                        - img "Opens in new window" [ref=f169e402]
+              - listitem [ref=f169e404]:
+                - link "7" [ref=f169e406] [cursor=pointer]:
+                  - /url: "#bbib0007"
+                - generic [ref=f169e408]:
+                  - generic [ref=f169e409]:
+                    - generic [ref=f169e410]: Naranjo Diana M., José R. Prieto, Germán Moltó, Amanda Calatrava
+                    - generic [ref=f169e411]: “A Visual Dashboard to Track Learning Analytics for Educational Cloud Computing.”
+                  - generic [ref=f169e412]: Sensors, 19 (2019), p. 2952
+                  - link [ref=f169e414] [cursor=pointer]:
+                    - /url: https://doi.org/10.3390/s19132952
+                    - generic [ref=f169e415]:
+                      - text: https://doi.org/10.3390/s19132952
+                      - img "Opens in new window" [ref=f169e416]
+                  - generic [ref=f169e418]:
+                    - link [ref=f169e419] [cursor=pointer]:
+                      - /url: https://doi.org/10.3390/s19132952
+                      - generic [ref=f169e420]:
+                        - text: Crossref
+                        - img "Opens in new window" [ref=f169e421]
+                    - link [ref=f169e423] [cursor=pointer]:
+                      - /url: https://www.scopus.com/inward/record.url?eid=2-s2.0-85069268181&partnerID=10&rel=R3.0.0
+                      - generic [ref=f169e424]:
+                        - text: View in Scopus
+                        - img "Opens in new window" [ref=f169e425]
+                    - link [ref=f169e427] [cursor=pointer]:
+                      - /url: https://scholar.google.com/scholar_lookup?title=A%20Visual%20Dashboard%20to%20Track%20Learning%20Analytics%20for%20Educational%20Cloud%20Computing.&publication_year=2019&author=Diana%20M.%20Naranjo&author=Jos%C3%A9%20R.%20Prieto&author=Germ%C3%A1n%20Molt%C3%B3&author=Amanda%20Calatrava
+                      - generic [ref=f169e428]:
+                        - text: Google Scholar
+                        - img "Opens in new window" [ref=f169e429]
+              - listitem [ref=f169e431]:
+                - link "8" [ref=f169e433] [cursor=pointer]:
+                  - /url: "#bbib0008"
+                - generic [ref=f169e435]:
+                  - generic [ref=f169e436]: "Hugo, Jacques V. and Shawn St. Germain. (2016) “Human Factors Principles in Information Dashboard Design.” United States: N. p., Web."
+                  - link [ref=f169e438] [cursor=pointer]:
+                    - /url: https://scholar.google.com/scholar?q=Hugo%2C%20Jacques%20V.%20and%20Shawn%20St.%20Germain.%20(2016)%20%E2%80%9CHuman%20Factors%20Principles%20in%20Information%20Dashboard%20Design.%E2%80%9D%20United%20States%3A%20N.%20p.%2C%20Web.
+                    - generic [ref=f169e439]:
+                      - text: Google Scholar
+                      - img "Opens in new window" [ref=f169e440]
+              - listitem [ref=f169e442]:
+                - link "9" [ref=f169e444] [cursor=pointer]:
+                  - /url: "#bbib0009"
+                - generic [ref=f169e446]:
+                  - generic [ref=f169e447]: Flesch, Benjamin. (2014) “Design, Development and Evaluation of a Big Data Analytics Dashboard.” M.S. Thesis
+                  - link [ref=f169e449] [cursor=pointer]:
+                    - /url: https://scholar.google.com/scholar?q=Flesch%2C%20Benjamin.%20(2014)%20%E2%80%9CDesign%2C%20Development%20and%20Evaluation%20of%20a%20Big%20Data%20Analytics%20Dashboard.%E2%80%9D%20M.S.%20Thesis
+                    - generic [ref=f169e450]:
+                      - text: Google Scholar
+                      - img "Opens in new window" [ref=f169e451]
+              - listitem [ref=f169e453]:
+                - link "10" [ref=f169e455] [cursor=pointer]:
+                  - /url: "#bbib00010"
+                - generic [ref=f169e457]:
+                  - generic [ref=f169e458]:
+                    - generic [ref=f169e459]: Abou-Ibrahim Hisham, Farook Hamzeh
+                    - generic [ref=f169e460]: “A visual dashboard to monitor BIM model dynamics.”
+                  - generic [ref=f169e461]: Canadian Journal of Civil Engineering, 47 (2) (2019), pp. 178-185
+                  - link [ref=f169e463] [cursor=pointer]:
+                    - /url: https://doi.org/10.1139/cjce-2018-0411
+                    - generic [ref=f169e464]:
+                      - text: https://doi.org/10.1139/cjce-2018-0411
+                      - img "Opens in new window" [ref=f169e465]
+                  - generic [ref=f169e467]:
+                    - link "View article" [ref=f169e468] [cursor=pointer]:
+                      - /url: /science/article/pii/S0315146819001287
+                    - link [ref=f169e470] [cursor=pointer]:
+                      - /url: https://scholar.google.com/scholar_lookup?title=A%20visual%20dashboard%20to%20monitor%20BIM%20model%20dynamics.&publication_year=2019&author=Hisham%20Abou-Ibrahim&author=Farook%20Hamzeh
+                      - generic [ref=f169e471]:
+                        - text: Google Scholar
+                        - img "Opens in new window" [ref=f169e472]
+              - listitem [ref=f169e474]:
+                - link "11" [ref=f169e476] [cursor=pointer]:
+                  - /url: "#bbib00011"
+                - generic [ref=f169e478]:
+                  - generic [ref=f169e480]:
+                    - text: "Elias, Micheline and Anastasia Bezerianos. (2011) “Exploration Views: Understanding Dashboard Creation and Customization for Visualization Novices.” In: Campos P., Graham N., Jorge J., Nunes N., Palanque P., Winckler M. (eds) Human-Computer Interaction – INTERACT 2011. INTERACT 2011. Lecture Notes in Computer Science, vol 6949. Springer, Berlin, Heidelberg."
+                    - link [ref=f169e481] [cursor=pointer]:
+                      - /url: https://doi.org/10.1007/978-3-642-23768-3_23
+                      - generic [ref=f169e482]:
+                        - text: https://doi.org/10.1007/978-3-642-23768-3_23
+                        - img "Opens in new window" [ref=f169e483]
+                  - link [ref=f169e486] [cursor=pointer]:
+                    - /url: https://scholar.google.com/scholar?q=Elias%2C%20Micheline%20and%20Anastasia%20Bezerianos.%20(2011)%20%E2%80%9CExploration%20Views%3A%20Understanding%20Dashboard%20Creation%20and%20Customization%20for%20Visualization%20Novices.%E2%80%9D%20In%3A%20Campos%20P.%2C%20Graham%20N.%2C%20Jorge%20J.%2C%20Nunes%20N.%2C%20Palanque%20P.%2C%20Winckler%20M.%20(eds)%20Human-Computer%20Interaction%20%E2%80%93%20INTERACT%202011.%20INTERACT%202011.%20Lecture%20Notes%20in%20Computer%20Science%2C%20vol%206949.%20Springer%2C%20Berlin%2C%20Heidelberg.%20https%3A%2F%2Fdoi.org%2F10.1007%2F978-3-642-23768-3_23
+                    - generic [ref=f169e487]:
+                      - text: Google Scholar
+                      - img "Opens in new window" [ref=f169e488]
+              - listitem [ref=f169e490]:
+                - link "12" [ref=f169e492] [cursor=pointer]:
+                  - /url: "#bbib00012"
+                - generic [ref=f169e494]:
+                  - generic [ref=f169e495]: Rahman, Arif. (2017) “Designing a Dashboard as Geo-Visual Exploration Tool for Origin- Destination Data.” M.S. Thesis
+                  - link [ref=f169e497] [cursor=pointer]:
+                    - /url: https://scholar.google.com/scholar?q=Rahman%2C%20Arif.%20(2017)%20%E2%80%9CDesigning%20a%20Dashboard%20as%20Geo-Visual%20Exploration%20Tool%20for%20Origin-%20Destination%20Data.%E2%80%9D%20M.S.%20Thesis
+                    - generic [ref=f169e498]:
+                      - text: Google Scholar
+                      - img "Opens in new window" [ref=f169e499]
+              - listitem [ref=f169e501]:
+                - link "13" [ref=f169e503] [cursor=pointer]:
+                  - /url: "#bbib00013"
+                - generic [ref=f169e505]:
+                  - generic [ref=f169e507]:
+                    - text: "Pappas, Lisa and Lisa Whitman. (2011) “Riding the Technology Wave: Effective Dashboard Data Visualization.” In: Smith M.J., Salvendy G. (eds) Human Interface and the Management of Information. Interacting with Information. Human Interface 2011. Lecture Notes in Computer Science, vol 6771. Springer, Berlin, Heidelberg."
+                    - link [ref=f169e508] [cursor=pointer]:
+                      - /url: https://doi.org/10.1007/978-3-642-21793-7_29
+                      - generic [ref=f169e509]:
+                        - text: https://doi.org/10.1007/978-3-642-21793-7_29
+                        - img "Opens in new window" [ref=f169e510]
+                  - link [ref=f169e513] [cursor=pointer]:
+                    - /url: https://scholar.google.com/scholar?q=Pappas%2C%20Lisa%20and%20Lisa%20Whitman.%20(2011)%20%E2%80%9CRiding%20the%20Technology%20Wave%3A%20Effective%20Dashboard%20Data%20Visualization.%E2%80%9D%20In%3A%20Smith%20M.J.%2C%20Salvendy%20G.%20(eds)%20Human%20Interface%20and%20the%20Management%20of%20Information.%20Interacting%20with%20Information.%20Human%20Interface%202011.%20Lecture%20Notes%20in%20Computer%20Science%2C%20vol%206771.%20Springer%2C%20Berlin%2C%20Heidelberg.%20https%3A%2F%2Fdoi.org%2F10.1007%2F978-3-642-21793-7_29
+                    - generic [ref=f169e514]:
+                      - text: Google Scholar
+                      - img "Opens in new window" [ref=f169e515]
+              - listitem [ref=f169e517]:
+                - link "14" [ref=f169e519] [cursor=pointer]:
+                  - /url: "#bbib00014"
+                - generic [ref=f169e521]:
+                  - generic [ref=f169e522]:
+                    - generic [ref=f169e523]: Visutsak Porawat, Keun Ho Ryu
+                    - generic [ref=f169e524]: “Thai Weaving Pattern Classification using Convolutional Neural Networks.”
+                  - generic [ref=f169e525]: Science, Engineering and Health Studies, 15 (2021), p. 21020006
+                  - link [ref=f169e527] [cursor=pointer]:
+                    - /url: https://scholar.google.com/scholar_lookup?title=Thai%20Weaving%20Pattern%20Classification%20using%20Convolutional%20Neural%20Networks.&publication_year=2021&author=Porawat%20Visutsak&author=Keun%20Ho%20Ryu
+                    - generic [ref=f169e528]:
+                      - text: Google Scholar
+                      - img "Opens in new window" [ref=f169e529]
+              - listitem [ref=f169e531]:
+                - link "15" [ref=f169e533] [cursor=pointer]:
+                  - /url: "#bbib00015"
+                - generic [ref=f169e535]:
+                  - link [ref=f169e538] [cursor=pointer]:
+                    - /url: https://gitlab.com/nutchapol.thathaii/dashboard.git
+                    - generic [ref=f169e539]:
+                      - text: https://gitlab.com/nutchapol.thathaii/dashboard.git
+                      - img "Opens in new window" [ref=f169e540]
+                  - link [ref=f169e543] [cursor=pointer]:
+                    - /url: https://scholar.google.com/scholar?q=https%3A%2F%2Fgitlab.com%2Fnutchapol.thathaii%2Fdashboard.git
+                    - generic [ref=f169e544]:
+                      - text: Google Scholar
+                      - img "Opens in new window" [ref=f169e545]
+        - generic [ref=f169e547]:
+          - generic [ref=f169e548]:
+            - heading "Special issue articles" [level=2] [ref=f169e549]
+            - generic [ref=f169e550]:
+              - generic [ref=f169e551]: "Articles part of:"
+              - generic [ref=f169e552]:
+                - generic [ref=f169e554]:
+                  - link "The 13th International Conference on Ambient Systems, Networks and Technologies (ANT) / The 5th International Conference on Emerging Data and Industry 4.0 (EDI40)" [ref=f169e555] [cursor=pointer]:
+                    - /url: /science/journal/18770509/201/supp/C
+                  - generic [ref=f169e558]:
+                    - generic [ref=f169e559]: Edited by
+                    - generic [ref=f169e560]: Elhadi Shakshuki
+                - generic [ref=f169e561]:
+                  - link "View special issue" [ref=f169e562] [cursor=pointer]:
+                    - /url: /science/journal/18770509/201/supp/C
+                  - button "Download full issue" [ref=f169e565] [cursor=pointer]
+            - listitem [ref=f169e569]:
+              - generic [ref=f169e570]:
+                - generic [ref=f169e571]:
+                  - text: Research article
+                  - generic [ref=f169e572]: Open access
+                - link "Reinforcement Learning-Based HTTP Adaptive Streaming Scheme in Edge Computing Environments" [ref=f169e574] [cursor=pointer]:
+                  - /url: /science/article/pii/S1877050922004161
+                - generic [ref=f169e577]: Minsu Kim, Kwangsue Chung
+                - text: "2022"
+              - link "View PDF" [ref=f169e579] [cursor=pointer]:
+                - /url: /science/article/pii/S1877050922004161/pdfft?md5=decba2bae506863f57d061809d092671&pid=1-s2.0-S1877050922004161-main.pdf
+            - listitem [ref=f169e586]:
+              - generic [ref=f169e587]:
+                - generic [ref=f169e588]:
+                  - text: Research article
+                  - generic [ref=f169e589]: Open access
+                - link "Are Professional Drivers more Aggressive than General Drivers? A Case Study from Doha, Qatar" [ref=f169e591] [cursor=pointer]:
+                  - /url: /science/article/pii/S1877050922004173
+                - generic [ref=f169e594]: Charitha Dias, …, Nooreldeen Abdelfattah
+                - text: "2022"
+              - link "View PDF" [ref=f169e596] [cursor=pointer]:
+                - /url: /science/article/pii/S1877050922004173/pdfft?md5=fb5ecb2c2db4afd9ce1a333c83a9e917&pid=1-s2.0-S1877050922004173-main.pdf
+            - listitem [ref=f169e603]:
+              - generic [ref=f169e604]:
+                - generic [ref=f169e605]:
+                  - text: Research article
+                  - generic [ref=f169e606]: Open access
+                - 'link "Information upwards, recommendation downwards: reinforcement learning with hierarchy for traffic signal control" [ref=f169e608] [cursor=pointer]':
+                  - /url: /science/article/pii/S1877050922004185
+                - generic [ref=f169e611]: Taylor de O. Antes, …, Anderson Rocha Tavares
+                - text: "2022"
+              - link "View PDF" [ref=f169e613] [cursor=pointer]:
+                - /url: /science/article/pii/S1877050922004185/pdfft?md5=ca8061ecc010c0b225f2515db087e6ed&pid=1-s2.0-S1877050922004185-main.pdf
+          - generic [ref=f169e620]:
+            - heading "Recommended articles" [level=2] [ref=f169e621]
+            - heading "Based on reading popularity" [level=3] [ref=f169e622]
+            - list [ref=f169e623]:
+              - listitem [ref=f169e624]:
+                - generic [ref=f169e625]:
+                  - generic [ref=f169e626]:
+                    - text: Research article
+                    - generic [ref=f169e627]: Open access
+                  - 'link "Evaluation of drones for public security: a multicriteria approach by the PROMETHEE-SAPEVO-M1 systematic" [ref=f169e629] [cursor=pointer]':
+                    - /url: /science/article/pii/S1877050922000163
+                  - generic [ref=f169e632]: Miguel Ângelo Lellis Moreira, …, Rafael Ris-Ala José Jardim
+                  - generic [ref=f169e633]:
+                    - generic [ref=f169e634]: Procedia Computer Science
+                    - text: • Volume 199 • 2022 • Pages 125-133
+                - link "View PDF" [ref=f169e636] [cursor=pointer]:
+                  - /url: /science/article/pii/S1877050922000163/pdf?md5=6689e433fd0efe7be31407fed0b01494&pid=1-s2.0-S1877050922000163-main.pdf
+              - listitem [ref=f169e643]:
+                - generic [ref=f169e644]:
+                  - generic [ref=f169e645]:
+                    - text: Research article
+                    - generic [ref=f169e646]: Open access
+                  - link "On intelligent agent-based simulation of COVID-19 epidemic process in Ukraine" [ref=f169e648] [cursor=pointer]:
+                    - /url: /science/article/pii/S1877050921025497
+                  - generic [ref=f169e651]: Dmytro Chumachenko, …, Sergiy Yakovlev
+                  - generic [ref=f169e652]:
+                    - generic [ref=f169e653]: Procedia Computer Science
+                    - text: • Volume 198 • 2022 • Pages 706-711
+                - link "View PDF" [ref=f169e655] [cursor=pointer]:
+                  - /url: /science/article/pii/S1877050921025497/pdf?md5=bac7d74f72faf020742da64bbfc988b3&pid=1-s2.0-S1877050921025497-main.pdf
+              - listitem [ref=f169e662]:
+                - generic [ref=f169e663]:
+                  - generic [ref=f169e664]: Review article
+                  - link "Convolutional Neural Network for Thailand's Eastern Economic Corridor (EEC) land cover classification using overlapping process on satellite images" [ref=f169e666] [cursor=pointer]:
+                    - /url: /science/article/pii/S2352938521000793
+                  - generic [ref=f169e669]: P. Chermprayong, …, L. Mezeix
+                  - generic [ref=f169e670]:
+                    - generic [ref=f169e671]: "Remote Sensing Applications: Society and Environment"
+                    - text: • Volume 23 • 2021 • Article 100543
+              - listitem [ref=f169e672]:
+                - generic [ref=f169e673]:
+                  - generic [ref=f169e674]:
+                    - text: Research article
+                    - generic [ref=f169e675]: Open access
+                  - link "Deep Learning based Currency Exchange Volatility Classifier for Best Trading Time Recommendation" [ref=f169e677] [cursor=pointer]:
+                    - /url: /science/article/pii/S1877050922010997
+                  - generic [ref=f169e680]: Smail Tigani, …, Hasnae Chaibi
+                  - generic [ref=f169e681]:
+                    - generic [ref=f169e682]: Procedia Computer Science
+                    - text: • Volume 207 • 2022 • Pages 1591-1597
+                - link "View PDF" [ref=f169e684] [cursor=pointer]:
+                  - /url: /science/article/pii/S1877050922010997/pdf?md5=b7c6c59f3cd8d43dca5d268af7be4577&pid=1-s2.0-S1877050922010997-main.pdf
+              - listitem [ref=f169e691]:
+                - generic [ref=f169e692]:
+                  - generic [ref=f169e693]:
+                    - text: Research article
+                    - generic [ref=f169e694]: Open access
+                  - link "Feature Selection for financial data – comparison" [ref=f169e696] [cursor=pointer]:
+                    - /url: /science/article/pii/S1877050922012522
+                  - generic [ref=f169e699]: Karolina Miałkowska, …, Mykola Dyvakb
+                  - generic [ref=f169e700]:
+                    - generic [ref=f169e701]: Procedia Computer Science
+                    - text: • Volume 207 • 2022 • Pages 3047-3056
+                - link "View PDF" [ref=f169e703] [cursor=pointer]:
+                  - /url: /science/article/pii/S1877050922012522/pdf?md5=f3603a7cdcd0ef049f7108fc7e5a952b&pid=1-s2.0-S1877050922012522-main.pdf
+              - listitem [ref=f169e710]:
+                - generic [ref=f169e711]:
+                  - generic [ref=f169e712]:
+                    - text: Research article
+                    - generic [ref=f169e713]: Open access
+                  - link "Predictive discarding of wafers based on power leakage predictions from single layer misalignment data" [ref=f169e715] [cursor=pointer]:
+                    - /url: /science/article/pii/S1877050922003611
+                  - generic [ref=f169e718]: Geert H. van Kollenburg, …, Nirvana Meratnia
+                  - generic [ref=f169e719]:
+                    - generic [ref=f169e720]: Procedia Computer Science
+                    - text: • Volume 200 • 2022 • Pages 1508-1515
+                - link "View PDF" [ref=f169e722] [cursor=pointer]:
+                  - /url: /science/article/pii/S1877050922003611/pdf?md5=734c55048554ca7cd2bab8b9e19e1fef&pid=1-s2.0-S1877050922003611-main.pdf
+          - generic [ref=f169e729]:
+            - heading "Cited by (1)" [level=2] [ref=f169e730]
+            - list [ref=f169e731]:
+              - listitem [ref=f169e732]:
+                - generic [ref=f169e733]:
+                  - link "The Evaluation of GUI Design using Questionnaire and Multivariate TestingOpens in new window" [ref=f169e735] [cursor=pointer]:
+                    - /url: http://www.scopus.com/scopus/inward/record.url?partnerID=10&rel=3.0.0&view=basic&eid=2-s2.0-85141796893&md5=e374cf83acfa39a3351db3b2d619b2
+                    - generic [ref=f169e736]:
+                      - generic [ref=f169e737]: The Evaluation of GUI Design using Questionnaire and Multivariate Testing
+                      - img "Opens in new window" [ref=f169e738]
+                  - generic [ref=f169e740]: Kamolsin C., …, Visutsak P.
+                  - generic [ref=f169e741]:
+                    - generic [ref=f169e742]: "Proceedings - 2022 Research, Invention, and Innovation Congress: Innovative Electricals and Electronics, RI2C 2022"
+                    - text: • 2022
+          - generic [ref=f169e743]:
+            - heading "Metrics" [level=2] [ref=f169e744]
+            - generic [ref=f169e745]:
+              - heading "Citations" [level=3] [ref=f169e746]
+              - list [ref=f169e747]:
+                - listitem [ref=f169e748]:
+                  - generic [ref=f169e749]: Citation Indexes
+                  - generic [ref=f169e750]: "1"
+              - heading "Captures" [level=3] [ref=f169e751]
+              - list [ref=f169e752]:
+                - listitem [ref=f169e753]:
+                  - generic [ref=f169e754]: Mendeley Readers
+                  - generic [ref=f169e755]: "27"
+              - generic [ref=f169e756]:
+                - img "PlumX Metrics Logo" [ref=f169e757]
+                - link [ref=f169e758] [cursor=pointer]:
+                  - /url: https://plumx.elsevier.com/plum/a/?doi=10.1016%2Fj.procs.2022.03.089&theme=plum-sciencedirect-theme&hideUsage=true
+                  - generic [ref=f169e759]:
+                    - text: View details
+                    - img "Opens in new window" [ref=f169e760]
+          - generic [ref=f169e762]: © 2022 King Mongkut's University of Technology North Bangkok. Published by Elsevier B.V.
+    - contentinfo [ref=f169e763]:
+      - link "Elsevier home page (opens in a new tab)" [ref=f169e765] [cursor=pointer]:
+        - /url: https://www.elsevier.com/
+        - img "Elsevier logo with wordmark" [ref=f169e766]
+      - generic [ref=f169e767]:
+        - list [ref=f169e769]:
+          - listitem [ref=f169e770]:
+            - link [ref=f169e771] [cursor=pointer]:
+              - /url: https://www.elsevier.com/solutions/sciencedirect
+              - generic [ref=f169e772]:
+                - text: About ScienceDirect
+                - img "Opens in new window" [ref=f169e773]
+          - listitem [ref=f169e775]:
+            - link "Remote access" [ref=f169e776] [cursor=pointer]:
+              - /url: /user/institution/login?targetURL=%2Fscience%2Farticle%2Fpii%2FS1877050922005026
+          - listitem [ref=f169e778]:
+            - link [ref=f169e779] [cursor=pointer]:
+              - /url: https://service.elsevier.com/app/contact/supporthub/sciencedirect/
+              - generic [ref=f169e780]:
+                - text: Contact and support
+                - img "Opens in new window" [ref=f169e781]
+          - listitem [ref=f169e783]:
+            - link [ref=f169e784] [cursor=pointer]:
+              - /url: https://www.elsevier.com/legal/elsevier-website-terms-and-conditions
+              - generic [ref=f169e785]:
+                - text: Terms and conditions
+                - img "Opens in new window" [ref=f169e786]
+          - listitem [ref=f169e788]:
+            - link [ref=f169e789] [cursor=pointer]:
+              - /url: https://www.elsevier.com/legal/privacy-policy
+              - generic [ref=f169e790]:
+                - text: Privacy policy
+                - img "Opens in new window" [ref=f169e791]
+          - listitem [ref=f169e793]:
+            - button "Cookie settings" [ref=f169e794] [cursor=pointer]
+        - paragraph [ref=f169e795]: "All content on this site: Copyright © 2026 Elsevier B.V., its licensors, and contributors. All rights are reserved, including those for text and data mining, AI training, and similar technologies. For all open access content, the relevant licensing terms apply."
+      - link "RELX home page (opens in a new tab)" [ref=f169e797] [cursor=pointer]:
+        - /url: https://www.relx.com/
+        - img "RELX group home page" [ref=f169e798]
+  - generic:
+    - tooltip
+  - generic [ref=f169e799]:
+    - link "PDF" [ref=f169e800] [cursor=pointer]:
+      - /url: https://scholar.google.com/scholar_url?url=https://www.sciencedirect.com/science/article/pii/S1877050922005026/pdf%3Fmd5%3Dd83ccf9ab256765509287d0bbedbe6a3%26pid%3D1-s2.0-S1877050922005026-main.pdf&hl=en&sa=T&oi=ucasa&ct=ufr&ei=6LPvatLyGIDEieoP9IDv-AE&scisig=AIL1Nv5CBsjkr3ULNlVgbQqOaDCq
+    - link "Help" [ref=f169e801] [cursor=pointer]:
+      - /url: https://scholar.google.com/scholar/help.html#access
+  - button "Feedback" [ref=f169e802] [cursor=pointer]:
+    - img "Feedback" [ref=f169e803]

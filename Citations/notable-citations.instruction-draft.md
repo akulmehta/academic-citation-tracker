@@ -193,10 +193,104 @@ Two traps, both encountered on files already in this folder:
 - **A tool can be cited by reference number alone.** A Methods paragraph may end in a bare
   superscript pointing at the tool rather than naming it. Searching the text for "MAWE" or "GLAD"
   will then find only the reference list and wrongly suggest the tool was never used in Methods.
+  See §2.1 — this is the common case, not an edge case.
 - **A heading may be letterspaced or numbered**, so a naive `^Methods$` match fails. See §1.1.
 
 Do not classify a folder from a filename. The folder a PDF sits in is a claim about the article,
 and it must be checked against the article.
+
+### 2.1 A citation that never names the tool
+
+(Applicant instruction, 2026-11-09: find the citation by its **reference number** in the PDF, then
+read the text where that number appears, including ranges such as `[5-9]`.)
+
+A citing author who used GLAD or MAWE often writes neither name in the body. Two shapes cause it,
+and both were found in the stored PDFs rather than imagined:
+
+- **Numbered** — `following established procedures [125–127]`, `(49)`, or a bare superscript
+  typeset tight against a word. In the Kiessling article the *only* in-text mark for MAWE is a
+  superscript `69` after the word "unclear"; the string "MAWE" appears nowhere outside the
+  reference list, so a text search for the tool name reports nothing.
+- **Author–year** — `(Mehta et al. 2024)`, `(Mehta & Cummings, 2019)`. There is no number to
+  resolve at all, and **six filed PDFs have no numbered bibliography whatsoever**, so a
+  number-only resolver would find nothing in a quarter of the corpus.
+
+`scripts/scan-refs.js` resolves both. It first decides *which* bibliography entry is the
+applicant's paper — matching on title, year and first author, **two signals required, never a
+guess** — and only then reports every place that number, or that surname-and-year, is credited,
+with the section the citing paper printed and the sentence the marker sits in.
+`scripts/ref-cites.js` is the single resolver; no caller may re-implement marker parsing, and
+`parseNumbered` is not exported precisely so a caller cannot skip the author–year style and
+silently under-report.
+
+**A resolved citation is held to exactly the same bar as one that names the tool.** It must sit in
+prose, under a heading the citing paper itself printed, and *not* in the bibliography entry that
+names the applicant's paper — a reference list proves only that the author cited the work, not
+where or how, and quoting the reference list would manufacture a Methods use out of a citation.
+Ranges are resolved, not guessed: `[125–127]` credits three works, and each of the three is
+checked separately rather than the range being credited to whichever one is being looked for.
+
+A marker is reported but **never quoted** when it is not attached to a sentence. Three tests, each
+derived from a real false positive rather than invented:
+
+| Test | Question it answers | What it kills |
+|---|---|---|
+| `followsProse` | is the line *above* a sentence at all? | a chart axis — `0 10 20 30`, where the tick `30` looked like a reference |
+| `looksLikeTableOrCaption` | is this line a table row or caption? | `1 Antifreeze components >27 kD, pI 4–8` (a row opening with its index); a title-cased column heading |
+| `isProseLine` | is this line substantial enough to *quote*? | short fragments, `Inkscape for Fig. 5` |
+
+Replacing a weaker test with a stronger one changed nothing about which citations are real — it
+only removed two sentences that were never sentences. **Do not conclude a citation is weak from a
+fragment**; check whether the marked text is prose at all.
+
+Recording the result has a destructive trap in it. **`record-mentions.js --from=X` replaces every
+mention already filed for a row**, and the resolution spec covers only citations that name no
+tool. Feeding it that spec directly would silently delete the named-tool mentions beside it. Use
+`scripts/merge-ref-mentions.js`, which reads each row's existing mentions, keeps them, and appends
+only a resolved citation whose quote shares no normalised sentence with anything already recorded.
+`sameSentence()` lives in `scripts/lib.js` as the single definition of "the same sentence" — do not
+re-implement it in a caller.
+
+`scan-mentions.js` cannot see any of this, because it scans for literal tool names. It now reports
+a row whose tier rests on a resolved or human mention as *backed by evidence this scan cannot see*,
+instead of calling it unsupported, and it leaves that row's tier alone. **A scanner's silence is
+not evidence against a citation it was never built to find** — and clearing a `held` row's tier
+because its own scan came back empty was a real bug this fixed.
+
+`node scripts/test-ref-cites.js` is the check (64 assertions, every one drawn from a string in a
+stored PDF: each positive is a marker that really occurs, each negative is a molar extinction
+coefficient, a wavelength, a publication year, a page range, or an ion concentration).
+
+### 2.2 How a PDF gets fetched
+
+Order of preference, cheapest and least intrusive first:
+
+1. **`scripts/discover-pdfs.js --fetch`** for a genuinely open copy (publisher OA, PMC, a
+   repository). This is reproducible from a script and needs nothing from the applicant.
+2. **The Playwright MCP attached to the applicant's desktop Chrome** (`--extension`, the
+   [Playwright Extension](https://chromewebstore.google.com/detail/playwright-extension/mmlmfjhmonkocbjadbfplnigmagldckm)).
+   This reuses their logged-in sessions and installed extensions, which is what makes a
+   subscription-only article reachable. It is *their* browser: navigate deliberately, download
+   only the file asked for, and leave the session as found. `channel: chrome` alone launches a
+   clean profile and is **not** logged in — that distinction cost a session's worth of confusion
+   when a paywalled page looked like a broken proxy.
+3. **The Harvard libraries proxy**, for a paper the applicant's institution subscribes to. In the
+   Playwright Chrome window, the bookmark to use is:
+
+   ```
+   javascript:void(location.href="https://go.openathens.net/redirector/library.harvard.edu?url="+location.href)
+   ```
+
+   Navigate to the article page first, then run it with the article URL as the target. Measured on
+   2026-11-09: it works on ScienceDirect, where the direct article page is otherwise blocked, and
+   returns **403 on Oxford University Press** — a failed proxy is a finding about access, not about
+   the paper.
+4. **Ask the applicant.** Cloudflare interstitials on Chrome are cleared by a human, not by a
+   retry loop. Stop, say what appeared and on which URL, and wait. Downloads land in the Windows
+   `Downloads` folder; move them into the packet's storage root and record the host they came from.
+
+A throttled or failed look-up must never be recorded as "not indexed" (§5.6). Access outcomes are
+about access.
 
 ---
 
@@ -860,6 +954,8 @@ node scripts/promote-candidates.js --write # queue -> table citation (screened i
 node scripts/screen-dependents.js         # re-read every non-included row against the record
 node scripts/relocate-pdfs.js --write     # move each folder to the root its status implies (§5.1)
 node scripts/scan-mentions.js --write     # where the tools appear (scan_tier only; never tier)
+node scripts/scan-refs.js --mentions=f.json # where the work is credited without naming it (§2.1)
+node scripts/merge-ref-mentions.js --from=f.json --write  # append those, keeping the named ones
 node scripts/record-evidence.js --write   # file tier/section/page/quote, each verified in the PDF
 node scripts/record-mentions.js --write   # every occurrence, one row each (table `mention`)
 node scripts/narrative-intake.js --write  # the four prose sections (table `narrative`)
@@ -919,11 +1015,23 @@ It excludes, in order: superseded rows, non-independent rows, copies that do not
 rows not listed in English, rows already confirmed in the packet, and rows already used in the original
 application (§3). Every row removed is counted, so the page prints arithmetic that adds up.
 
-**Claim no tier on that page.** A tier is a claim about where a sentence sits in an article, and a
-candidate has not been read. The page records access instead — `open-copy`, `paywalled`,
-`no-open-copy`, `not-in-indexes` — and those are findings about *access*, not about whether the paper
-exists: a throttled or failed look-up must never read as "not indexed". Transferring a candidate means
+**Tiers on that page are scan results, never judgements.** A tier is a claim about where a sentence
+sits in an article, so a candidate that has not been read shows none. Once a PDF is on file,
+`scan-mentions.js` reads it and the page shows what it found: a plain `Tier X` pill is that scan's
+`scan_tier`, and a blue `Tier X — resolved` pill is a citation the §2.1 resolver found for a row
+whose paper never names the tool. Both must be traceable to the database — `validate-packet.js`
+§12b fails on a pill the scan did not read or a resolved tier no mention records, and
+`test-potential-tier-check.js` proves that check can fail by planting each defect and restoring the
+file. What the page may not do is invent a tier in prose, or imply that an unread candidate has been
+assessed. Access is still recorded alongside — `open-copy`, `paywalled`, `no-open-copy`,
+`not-in-indexes` — and those are findings about *access*, not about whether the paper exists: a
+throttled or failed look-up must never read as "not indexed". Transferring a candidate means
 running the pipeline on its `row_uid`, not copying a row across.
+
+Each candidate carries its own report block at the foot of the page, the same shape the packet
+uses, so the applicant can read the citation and its location without opening the PDF. Every
+external link on that page opens in a new tab with `rel="noopener"` — the page is read *beside* the
+packet, and a link that replaces it loses the list; §12b check 4b enforces it.
 
 ---
 
@@ -954,8 +1062,10 @@ These are non-negotiable because the packet is read as a representation of the e
   empty, and say so in `notes`; do not smooth it into a use claim and do not quietly drop the row.
 - **Record how each claim was established** in `evidence_basis`. A note carried over from
   `Citation-summary.md` is weaker than text read out of the PDF itself, and the two should not look
-  identical in the output. Where a citation appears only as a reference number (`[125–127]`, `⁶⁹`),
-  resolve the number to its list entry and record that as `reference-number resolution`.
+  identical in the output. Where a citation appears only as a reference number (`[125–127]`, `⁶⁹`)
+  or as an author–year pair (`(Mehta et al. 2024)`), resolve it as §2.1 and record
+  `reference-number resolution`; a human reading of the article records `human reading`. Neither is
+  ever reported as if the scanner had found it, and neither is ever overwritten by a rescan.
 - **Do not invent facts, dates, citation counts, or quotations.** If a field cannot be
   established, leave it empty and say why in `notes`.
 - **Dates.** State which date is which. A preprint date and a journal publication date are
@@ -1025,8 +1135,15 @@ worse than no packet.
 - [ ] Every tier that differs from the folder it came from has a `tier_decision` recorded by
       `record-tier-decision.js` (§1.1), rather than a silently edited `tier`.
 - [ ] `potential_notable_citations.html` (§5.6) is **not** linked from `packet.html`, is not printed
-      with it, lists no row that is in the packet or in the original application, and claims no tier.
-      Every row on it is independent on the record, not merely on the queued snapshot.
+      with it, lists no row that is in the packet or in the original application, and shows no tier
+      the database cannot support. Every row on it is independent on the record, not merely on the
+      queued snapshot. Every tier pill — plain or `&mdash; resolved` — matches `scan_tier` or a
+      recorded mention, and every external link carries `target` and `rel="noopener"`. Checked by
+      `validate-packet.js` §12b; `node scripts/test-potential-tier-check.js` proves that check can
+      still fail by planting each defect and restoring the page byte-for-byte.
+- [ ] `node scripts/test-ref-cites.js` passes (§2.1). Its negatives are the point: a resolver that
+      accepts a wavelength, an extinction coefficient, or a chart axis tick as a citation credits a
+      sentence to the applicant's paper that credits nothing.
 - [ ] Every `project` value is 1–4 and every section sits under the right project.
 - [ ] `print/packet.pdf` exists, is non-empty, and opens.
 - [ ] The generated HTML was not hand-edited after generation.

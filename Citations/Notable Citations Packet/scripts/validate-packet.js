@@ -597,9 +597,72 @@ for (const r of cits) {
       const flagged = potUids.filter(u => { const c = catRows.get(u); return c && (c.is_non_english || c.is_primary_copy === 0 || c.superseded_at); });
       if (flagged.length) fail("potential", `${flagged.length} candidate(s) are non-English, a copy that does not stand, or superseded: ${flagged.slice(0, 6).join(", ")}`);
 
-      // 4. No tier is claimed for an unread article.
-      const tierClaims = pot.match(/\btier\s+[ABCD]\b/gi);
-      if (tierClaims) fail("potential", `the potential page states a tier (${[...new Set(tierClaims)].join(", ")}) — a tier is a claim about where a sentence sits, and no candidate has been read (§5.6)`);
+      // 4. A tier on this page is a scan result, so it must be traceable to one.
+      //    The page used to forbid tier language outright because nothing had been
+      //    read; now the candidates with a PDF on file have been read by
+      //    scan-mentions.js, and suppressing that would hide the very information
+      //    the applicant needs to choose. What must hold instead is that every tier
+      //    shown is the database's own scan_tier for that row, on a row that has a
+      //    PDF — a tier invented in the template, or one left behind after a rescan
+      //    cleared it, is the failure this guards.
+      //    Read one table row at a time. A single expression over the whole page
+      //    pairs a row with the NEXT row's pill, so a candidate with no tier inherits
+      //    its neighbour's and the check reports claims the page never made.
+      const rowsWithScan = new Map(db.prepare(
+        `SELECT row_uid, scan_tier, scanned_on, scan_note FROM citation WHERE row_uid IN (`
+        + potUids.map(() => "?").join(",") + ")").all(...potUids).map(r => [r.row_uid, r]));
+      const rowsWithPdf = new Set(db.prepare(
+        `SELECT c.row_uid FROM citation c JOIN file f ON f.folder_uid = c.folder_uid AND f.cited = 1
+         WHERE c.row_uid IN (` + potUids.map(() => "?").join(",") + ")").all(...potUids).map(r => r.row_uid));
+      const mentionsBy = new Map();
+      for (const m of db.prepare("SELECT row_uid, tier, basis FROM mention").all()) {
+        if (!mentionsBy.has(m.row_uid)) mentionsBy.set(m.row_uid, []);
+        mentionsBy.get(m.row_uid).push(m);
+      }
+      const invented = [];
+      let shownTiers = 0;
+      for (const raw of pot.split(/<tr\b/).slice(1)) {
+        // Cut at the row's own close. Without it the LAST row's chunk runs to the
+        // end of the document and picks up a pill from the per-article reports
+        // below the table, which would pair a candidate with a claim it never made.
+        const close = raw.indexOf("</tr>");
+        const tr = close >= 0 ? raw.slice(0, close) : raw;
+        const uidMatch = tr.match(/<td class="uid">(cit-\d{6})<\/td>/);
+        if (!uidMatch) continue;                       // header row, or a table that is not the list
+        const uid = uidMatch[1];
+        const scanPill = tr.match(/<span class="pill [^"]*">Tier ([ABCD])<\/span>/);
+        const resPill = tr.match(/<span class="pill [^"]*">Tier ([ABCD]) &mdash; resolved<\/span>/);
+        if (scanPill) {
+          shownTiers++;
+          const r = rowsWithScan.get(uid);
+          if (!r || !r.scan_tier || !rowsWithPdf.has(uid)) invented.push(`${uid} Tier ${scanPill[1]}`);
+          else if (r.scan_tier !== scanPill[1]) invented.push(`${uid} shows Tier ${scanPill[1]} but the scan read ${r.scan_tier}`);
+        } else if (resPill) {
+          // A resolved tier comes from the mention table, not from scan_tier, and it
+          // is only honest if a mention with that tier and a non-text basis is really
+          // recorded for the row. Otherwise the page invented it.
+          shownTiers++;
+          const m = (mentionsBy.get(uid) || []).find(x => x.tier === resPill[1] && x.basis !== "extracted text");
+          if (!m) invented.push(`${uid} Tier ${resPill[1]} resolved with no such recorded mention`);
+        }
+      }
+      if (invented.length) {
+        fail("potential", `${invented.length} tier claim(s) on the review page are not the scan's reading of a PDF on file (§5.6): ${invented.slice(0, 6).join("; ")}`);
+      }
+      // Prose must not claim a tier for a row the scan could not place.
+      const stray = (pot.replace(/<span class="pill [^"]*">Tier [ABCD]<\/span>/g, "")
+        .match(/\bTier\s+[ABCD]\b[^<]*?(?=<\/(?:p|div|li)>)/g) || [])
+        .filter(s => !/Tier [ABCD] —|means|a tier|Tier A means/i.test(s));
+      if (stray.length) fail("potential", `the review page asserts a tier in prose (${stray.slice(0, 2).join(" / ").slice(0, 120)}) outside a scanned pill`);
+
+      // 4b. Every external link opens in a new tab. The page is read beside the
+      //     packet, and a candidate link that replaces it loses the list — and the
+      //     applicant's place in it.
+      const ext = [...pot.matchAll(/<a\b[^>]*href="(https?:\/\/[^"]*)"[^>]*>/g)];
+      const noTarget = ext.filter(m => !/target=/.test(m[0])).map(m => m[1]);
+      if (noTarget.length) fail("potential", `${noTarget.length} external link(s) open in the same tab: ${noTarget.slice(0, 4).join(", ")}`);
+      const noRel = ext.filter(m => /target=/.test(m[0]) && !/rel="[^"]*noopener/.test(m[0])).map(m => m[1]);
+      if (noRel.length) fail("potential", `${noRel.length} external link(s) omit rel="noopener", letting the opened page reach back at this one: ${noRel.slice(0, 4).join(", ")}`);
 
       // 5. The printed screen must add up, or the page misrepresents the corpus.
       const screenBlock = pot.match(/<table class="screen">([\s\S]*?)<\/table>/);
@@ -625,7 +688,7 @@ for (const r of cits) {
       const screened = potPdf.filter(h => h.startsWith(ROOT_SCREENED + "/"));
       if (screened.length) fail("potential", `the review page links ${screened.length} screened-out PDF(s) (§4.5): ${screened.slice(0, 4).join(", ")}`);
 
-      if (!QUIET) note("potential", `${potUids.length} candidate row(s) on the review page; all independent on the record, none in the packet or the original application, no tier claimed`);
+      if (!QUIET) note("potential", `${potUids.length} candidate row(s) on the review page; all independent on the record, none in the packet or the original application; ${shownTiers} tier(s) shown, each backed by a scan of a PDF on file or a resolved mention`);
     }
   }
 }

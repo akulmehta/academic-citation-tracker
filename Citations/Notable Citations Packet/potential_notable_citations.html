@@ -9,7 +9,7 @@
   * { box-sizing: border-box; }
   body { margin:0; background:#fff; color:var(--ink);
          font:16px/1.55 "Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif; }
-  main { max-width: 64rem; margin:0 auto; padding:2.5rem 1.5rem 5rem; }
+  main { max-width: 78rem; margin:0 auto; padding:2.5rem 1.5rem 5rem; }
   h1 { font-size:1.9rem; line-height:1.2; margin:.2rem 0 .4rem; }
   h2 { font-size:1.2rem; margin:2.2rem 0 .5rem; padding-bottom:.3rem; border-bottom:2px solid var(--accent); }
   p { margin:.5rem 0; }
@@ -34,13 +34,28 @@
   .pill.ok { background:#e3f0e4; color:#26562a; }
   .pill.warn { background:#f6ecd9; color:#7a5c00; }
   .pill.bad { background:#f7e0e0; color:#7a1f1f; }
+  .pill.resolved { background:#e2ecf6; color:#1f3f6e; }
   .screen { font-size:.8rem; color:var(--muted); }
   .screen td { border:none; padding:.12rem .35rem; }
   .screen td.n { font-variant-numeric:tabular-nums; color:var(--ink); }
+  .tier { font-size:.74rem; white-space:nowrap; }
+  .cite { font-size:.74rem; min-width:14rem; }
+  .cite .q { display:block; margin-bottom:.15rem; }
+  .report { border:1px solid var(--rule); border-left:3px solid var(--accent); padding:.9rem 1.1rem; margin:1.4rem 0; }
+  .report h3 { font-size:1.02rem; margin:.1rem 0 .2rem; }
+  .report h4 { font-size:.78rem; text-transform:uppercase; letter-spacing:.06em; margin:1.1rem 0 .3rem; color:var(--muted); }
+  .report dl { display:grid; grid-template-columns:minmax(9rem,max-content) 1fr; gap:.15rem .8rem; margin:.5rem 0; font-size:.82rem; }
+  .report dt { color:var(--muted); font-size:.74rem; text-transform:uppercase; letter-spacing:.03em; padding-top:.15rem; }
+  .report dd { margin:0; }
+  .report blockquote { margin:.4rem 0 .2rem; padding:.4rem .9rem; border-left:3px solid var(--rule);
+                       background:#faf8f5; font-size:.86rem; }
+  .report .cite-page { font-size:.72rem; color:var(--muted); margin:.1rem 0 0; }
+  .report .files-list { margin:.3rem 0; padding-left:1.2rem; font-size:.82rem; }
+  .report .trace { font-size:.72rem; color:var(--muted); border-top:1px solid var(--rule); padding-top:.4rem; margin:.9rem 0 0; }
   .foot { margin-top:2rem; font-size:.75rem; color:var(--muted); border-top:1px solid var(--rule); padding-top:.8rem; }
   @media print {
     .pick, thead th.pick { display:none; }
-    main { padding:0; }
+    main { padding:0; max-width:none; }
     a { color:inherit; text-decoration:none; }
   }
 </style>
@@ -56,16 +71,19 @@
     page is in it. Tick a row, or send the <code>row_uid</code>s, and the pipeline
     (<code>discover-pdfs.js</code> &rarr; <code>file-pdf.js</code> &rarr; <code>scan-mentions.js</code>
     &rarr; <code>record-evidence.js</code>) reads the full text, finds the section and page, and
-    files it at the tier the text supports. Until that reading exists, no tier is claimed here.
+    files it at the tier the text supports. Where a PDF is already on file, the Tier and
+    Citation columns carry what that reading found; where it is not, they say so and claim nothing.
   </div>
   <div class="cited">
     <strong>Cited work:</strong> GLAD: GLycan Array Dashboard, a visual analytics tool for glycan microarrays (2019)<br>
     <span class="sub">AY Mehta, RD Cummings</span>
   </div>
-  <p>35 independent citations of this work are not in the packet and were not used in
+  <p>34 independent citations of this work are not in the packet and were not used in
      the original application. Each is a real, independently authored citation of the applicant&rsquo;s
-     tool; what is not yet known is where in each article the citation sits, which is what decides
-     its tier.</p>
+     tool. 2 of them have been read and the sentence that cites the tool is recorded;
+     3 have been read and the tool does not appear anywhere the
+     article ranks as a section; 29 have no PDF yet, so where the
+     citation sits is still unknown &mdash; and that is what decides a tier.</p>
   <table class="screen">
     <tr><td>Citing works the record lists for this paper</td><td class="n">64</td></tr>
     <tr><td>less not independent (shares an author with the cited work, or names a PI)</td><td class="n">&minus;18</td></tr>
@@ -73,15 +91,20 @@
     <tr><td>less not listed in English</td><td class="n">&minus;0</td></tr>
     <tr><td>less already confirmed in the packet</td><td class="n">&minus;7</td></tr>
     <tr><td>less already used in the original application</td><td class="n">&minus;2</td></tr>
-    <tr><td><strong>listed here for review</strong></td><td class="n"><strong>35</strong></td></tr>
+    <tr><td>less already decided against on review (kept in <code>screened-out.csv</code>)</td><td class="n">&minus;1</td></tr>
+    <tr><td><strong>listed here for review</strong></td><td class="n"><strong>34</strong></td></tr>
   </table>
 </header>
 
-<h2>The 35 candidates</h2>
+<h2>The 34 candidates</h2>
+<p>5 of them have a PDF on file and have been read by the scanner; those carry a
+   tier and the sentence it rests on. The rest have no tier because nothing has been read, which is
+   a statement about the file, not about the paper.</p>
 <table>
   <thead><tr>
     <th>row_uid</th><th>Citing paper</th><th>Senior author</th><th>Year</th><th>Venue</th>
-    <th>Where it is</th><th>Open copy</th><th>PDF on file</th><th class="pick">Decision</th>
+    <th>Where it is</th><th>Open copy</th><th>PDF on file</th><th>Tier</th><th>Citation</th>
+    <th class="pick">Decision</th>
   </tr></thead>
   <tbody>
     <tr>
@@ -91,9 +114,11 @@
       <td>Campbell</td>
       <td>2020</td>
       <td>Current opinion in</td>
-      <td class="src"><a href="https://www.sciencedirect.com/science/article/pii/S0959440X19301356">www.sciencedirect.com</a></td>
+      <td class="src"><a href="https://www.sciencedirect.com/science/article/pii/S0959440X19301356" target="_blank" rel="noopener noreferrer">www.sciencedirect.com</a></td>
       <td class="disc"><span class="pill warn">No open copy</span><div class="sub">OpenAlex has the work (10.1016/j.sbi.2019.11.009), no open-access PDF location</div></td>
       <td class="pdf"><span class="none">not retrieved</span></td>
+      <td class="tier"><span class="none">not read</span></td>
+      <td class="cite"><span class="none">no PDF, so nothing has been quoted</span></td>
       <td class="pick"><label><input type="checkbox"> include</label></td>
     </tr>
     <tr>
@@ -103,9 +128,11 @@
       <td>Lewis</td>
       <td>2021</td>
       <td>Trends in biochemical sciences</td>
-      <td class="src"><a href="https://www.cell.com/trends/biochemical-sciences/abstract/S0968-0004(20)30266-8">www.cell.com</a></td>
+      <td class="src"><a href="https://www.cell.com/trends/biochemical-sciences/abstract/S0968-0004(20)30266-8" target="_blank" rel="noopener noreferrer">www.cell.com</a></td>
       <td class="disc"><span class="pill warn">Paywalled</span><div class="sub">OpenAlex offered a PDF but the host answered 403</div></td>
       <td class="pdf"><span class="none">not retrieved</span></td>
+      <td class="tier"><span class="none">not read</span></td>
+      <td class="cite"><span class="none">no PDF, so nothing has been quoted</span></td>
       <td class="pick"><label><input type="checkbox"> include</label></td>
     </tr>
     <tr>
@@ -115,9 +142,11 @@
       <td>Pekosz</td>
       <td>2023</td>
       <td>Scientific reports</td>
-      <td class="src"><a href="https://www.nature.com/articles/s41598-023-37122-z">www.nature.com</a></td>
+      <td class="src"><a href="https://www.nature.com/articles/s41598-023-37122-z" target="_blank" rel="noopener noreferrer">www.nature.com</a></td>
       <td class="disc"><span class="pill ok">Open copy found</span><div class="sub">downloaded from www.nature.com</div></td>
       <td class="pdf"><a href="pending-papers/cit-000510/01-article-Pekosz-2023.pdf">PDF</a></td>
+      <td class="tier"><span class="pill ok">Tier A</span><div class="sub">Methods, p. 10</div></td>
+      <td class="cite"><span class="q">&ldquo;only include these glycans for a total of 139 glycans (see supplementary Table S1) and organized by structure using the Glycan Array Dashboard (GLAD) 63&rdquo;</span><div class="sub">Methods, p. 10 · scanned 2026-11-08 · <a href="#rep-cit-000510">full report</a></div></td>
       <td class="pick"><label><input type="checkbox"> include</label></td>
     </tr>
     <tr>
@@ -127,9 +156,11 @@
       <td>Aoki-Kinoshita</td>
       <td>—</td>
       <td>—</td>
-      <td class="src"><a href="https://pubs.acs.org/jaaucr/article-abstract/3/1/4/1253251">pubs.acs.org</a></td>
+      <td class="src"><a href="https://pubs.acs.org/jaaucr/article-abstract/3/1/4/1253251" target="_blank" rel="noopener noreferrer">pubs.acs.org</a></td>
       <td class="disc"><span class="pill warn">Paywalled</span><div class="sub">OpenAlex offered a PDF but the host answered 403</div></td>
       <td class="pdf"><span class="none">not retrieved</span></td>
+      <td class="tier"><span class="none">not read</span></td>
+      <td class="cite"><span class="none">no PDF, so nothing has been quoted</span></td>
       <td class="pick"><label><input type="checkbox"> include</label></td>
     </tr>
     <tr>
@@ -139,9 +170,11 @@
       <td>Zou</td>
       <td>2020</td>
       <td>International Journal of Molecular</td>
-      <td class="src"><a href="https://www.mdpi.com/1422-0067/21/18/6727">www.mdpi.com</a></td>
+      <td class="src"><a href="https://www.mdpi.com/1422-0067/21/18/6727" target="_blank" rel="noopener noreferrer">www.mdpi.com</a></td>
       <td class="disc"><span class="pill ok">Open copy found</span><div class="sub">downloaded from www.mdpi.com</div></td>
       <td class="pdf"><a href="pending-papers/cit-000513/01-article-Zou-2020.pdf">PDF</a></td>
+      <td class="tier"><span class="pill bad">no tier</span><div class="sub">read 2026-11-08, but no mention in a section that earns one</div></td>
+      <td class="cite"><span class="sub">7 appearance(s) of GLAD, none in a section the paper ranked: Section 5: Glycan-Protein Interaction Databases p.10, Section 5: Glycan-Protein Interaction Databases p.10, Section 5: Glycan-Protein…</span><div class="sub"><a href="#rep-cit-000513">full report</a></div></td>
       <td class="pick"><label><input type="checkbox"> include</label></td>
     </tr>
     <tr>
@@ -151,9 +184,11 @@
       <td>Hokke</td>
       <td>2022</td>
       <td>Molecular &amp; Cellular</td>
-      <td class="src"><a href="https://www.mcponline.org/article/S1535-9476(22)00009-3/fulltext">www.mcponline.org</a></td>
+      <td class="src"><a href="https://www.mcponline.org/article/S1535-9476(22)00009-3/fulltext" target="_blank" rel="noopener noreferrer">www.mcponline.org</a></td>
       <td class="disc"><span class="pill warn">Paywalled</span><div class="sub">OpenAlex offered a PDF but the host answered 403</div></td>
       <td class="pdf"><span class="none">not retrieved</span></td>
+      <td class="tier"><span class="none">not read</span></td>
+      <td class="cite"><span class="none">no PDF, so nothing has been quoted</span></td>
       <td class="pick"><label><input type="checkbox"> include</label></td>
     </tr>
     <tr>
@@ -163,9 +198,11 @@
       <td>Vasta</td>
       <td>2025</td>
       <td>Frontiers in Cellular</td>
-      <td class="src"><a href="https://www.frontiersin.org/journals/cellular-and-infection-microbiology/articles/10.3389/fcimb.2025.1572734/full">www.frontiersin.org</a><div class="sub">10.3389/fcimb.2025.1572734/full</div></td>
+      <td class="src"><a href="https://www.frontiersin.org/journals/cellular-and-infection-microbiology/articles/10.3389/fcimb.2025.1572734/full" target="_blank" rel="noopener noreferrer">www.frontiersin.org</a><div class="sub"><a href="https://doi.org/10.3389/fcimb.2025.1572734/full" target="_blank" rel="noopener noreferrer">10.3389/fcimb.2025.1572734/full</a></div></td>
       <td class="disc"><span class="pill ok">Open copy found</span><div class="sub">downloaded from www.frontiersin.org</div></td>
       <td class="pdf"><a href="pending-papers/cit-000520/01-article-Vasta-2025.pdf">PDF</a></td>
+      <td class="tier"><span class="pill ok">Tier A</span><div class="sub">Methods, p. 6</div></td>
+      <td class="cite"><span class="q">&ldquo;. Results were analyzed by GLAD (Mehta and Cummings, 2019).&rdquo;</span><div class="sub">Methods, p. 6 · scanned 2026-11-08 · <a href="#rep-cit-000520">full report</a></div></td>
       <td class="pick"><label><input type="checkbox"> include</label></td>
     </tr>
     <tr>
@@ -175,9 +212,11 @@
       <td>Imberty</td>
       <td>2020</td>
       <td>Lectin Purification and</td>
-      <td class="src"><a href="https://link.springer.com/protocol/10.1007/978-1-0716-0430-4_1">link.springer.com</a><div class="sub">10.1007/978-1-0716-0430-4_1</div></td>
+      <td class="src"><a href="https://link.springer.com/protocol/10.1007/978-1-0716-0430-4_1" target="_blank" rel="noopener noreferrer">link.springer.com</a><div class="sub"><a href="https://doi.org/10.1007/978-1-0716-0430-4_1" target="_blank" rel="noopener noreferrer">10.1007/978-1-0716-0430-4_1</a></div></td>
       <td class="disc"><span class="pill warn">No open copy</span><div class="sub">OpenAlex has the work (10.1007/978-1-0716-0430-4_1), no open-access PDF location</div></td>
       <td class="pdf"><span class="none">not retrieved</span></td>
+      <td class="tier"><span class="none">not read</span></td>
+      <td class="cite"><span class="none">no PDF, so nothing has been quoted</span></td>
       <td class="pick"><label><input type="checkbox"> include</label></td>
     </tr>
     <tr>
@@ -187,9 +226,11 @@
       <td>—</td>
       <td>2021</td>
       <td>Analytical chemistry</td>
-      <td class="src"><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC8862541/">pmc.ncbi.nlm.nih.gov</a></td>
+      <td class="src"><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC8862541/" target="_blank" rel="noopener noreferrer">pmc.ncbi.nlm.nih.gov</a></td>
       <td class="disc"><span class="pill warn">No open copy</span><div class="sub">OpenAlex has the work (10.1021/acs.analchem.1c01739), no open-access PDF location</div></td>
       <td class="pdf"><span class="none">not retrieved</span></td>
+      <td class="tier"><span class="none">not read</span></td>
+      <td class="cite"><span class="none">no PDF, so nothing has been quoted</span></td>
       <td class="pick"><label><input type="checkbox"> include</label></td>
     </tr>
     <tr>
@@ -199,9 +240,11 @@
       <td>Kunej</td>
       <td>2019</td>
       <td>OMICS: A Journal of Integrative Biology</td>
-      <td class="src"><a href="https://journals.sagepub.com/doi/abs/10.1089/omi.2019.0149">journals.sagepub.com</a><div class="sub">10.1089/omi.2019.0149</div></td>
+      <td class="src"><a href="https://journals.sagepub.com/doi/abs/10.1089/omi.2019.0149" target="_blank" rel="noopener noreferrer">journals.sagepub.com</a><div class="sub"><a href="https://doi.org/10.1089/omi.2019.0149" target="_blank" rel="noopener noreferrer">10.1089/omi.2019.0149</a></div></td>
       <td class="disc"><span class="pill warn">No open copy</span><div class="sub">OpenAlex has the work (10.1089/omi.2019.0149), no open-access PDF location</div></td>
       <td class="pdf"><span class="none">not retrieved</span></td>
+      <td class="tier"><span class="none">not read</span></td>
+      <td class="cite"><span class="none">no PDF, so nothing has been quoted</span></td>
       <td class="pick"><label><input type="checkbox"> include</label></td>
     </tr>
     <tr>
@@ -211,9 +254,11 @@
       <td>Pekosz</td>
       <td>2024</td>
       <td>bioRxiv</td>
-      <td class="src"><a href="https://www.biorxiv.org/content/10.1101/2024.05.18.594815.abstract">www.biorxiv.org</a><div class="sub">10.1101/2024.05.18.594815.abstract</div></td>
+      <td class="src"><a href="https://www.biorxiv.org/content/10.1101/2024.05.18.594815.abstract" target="_blank" rel="noopener noreferrer">www.biorxiv.org</a><div class="sub"><a href="https://doi.org/10.1101/2024.05.18.594815.abstract" target="_blank" rel="noopener noreferrer">10.1101/2024.05.18.594815.abstract</a></div></td>
       <td class="disc"><span class="pill warn">No open copy</span><div class="sub">OpenAlex has the work (10.1101/2024.05.18.594815), no open-access PDF location</div></td>
       <td class="pdf"><span class="none">not retrieved</span></td>
+      <td class="tier"><span class="none">not read</span></td>
+      <td class="cite"><span class="none">no PDF, so nothing has been quoted</span></td>
       <td class="pick"><label><input type="checkbox"> include</label></td>
     </tr>
     <tr>
@@ -223,9 +268,11 @@
       <td>Hokke</td>
       <td>2023</td>
       <td>Frontiers in</td>
-      <td class="src"><a href="https://www.frontiersin.org/journals/immunology/articles/10.3389/fimmu.2023.1102344/full">www.frontiersin.org</a><div class="sub">10.3389/fimmu.2023.1102344/full</div></td>
+      <td class="src"><a href="https://www.frontiersin.org/journals/immunology/articles/10.3389/fimmu.2023.1102344/full" target="_blank" rel="noopener noreferrer">www.frontiersin.org</a><div class="sub"><a href="https://doi.org/10.3389/fimmu.2023.1102344/full" target="_blank" rel="noopener noreferrer">10.3389/fimmu.2023.1102344/full</a></div></td>
       <td class="disc"><span class="pill warn">No open copy</span><div class="sub">OpenAlex has the work (10.3389/fimmu.2023.1102344), no open-access PDF location</div></td>
       <td class="pdf"><span class="none">not retrieved</span></td>
+      <td class="tier"><span class="none">not read</span></td>
+      <td class="cite"><span class="none">no PDF, so nothing has been quoted</span></td>
       <td class="pick"><label><input type="checkbox"> include</label></td>
     </tr>
     <tr>
@@ -235,9 +282,11 @@
       <td>Afanasiev</td>
       <td>2019</td>
       <td>Oral health by using</td>
-      <td class="src"><a href="https://www.intechopen.com/chapters/67420">www.intechopen.com</a></td>
+      <td class="src"><a href="https://www.intechopen.com/chapters/67420" target="_blank" rel="noopener noreferrer">www.intechopen.com</a></td>
       <td class="disc"><span class="pill ok">Open copy found</span><div class="sub">downloaded from www.intechopen.com</div></td>
       <td class="pdf"><a href="pending-papers/cit-000536/01-article-Afanasiev-2019.pdf">PDF</a></td>
+      <td class="tier"><span class="pill warn resolved">Tier C &mdash; resolved</span><div class="sub">Introduction, p. 1, named by its reference number or author-year citation</div></td>
+      <td class="cite"><span class="q">&ldquo;proteins (mainly adhesions and lectins) [5–9].&rdquo;</span><div class="sub">Introduction, p. 1 · resolved 2026-11-08 · <a href="#rep-cit-000536">full report</a></div></td>
       <td class="pick"><label><input type="checkbox"> include</label></td>
     </tr>
     <tr>
@@ -247,9 +296,11 @@
       <td>Kiessling</td>
       <td>2023</td>
       <td>ACS Central</td>
-      <td class="src"><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC10214521/">pmc.ncbi.nlm.nih.gov</a></td>
+      <td class="src"><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC10214521/" target="_blank" rel="noopener noreferrer">pmc.ncbi.nlm.nih.gov</a></td>
       <td class="disc"><span class="pill warn">Paywalled</span><div class="sub">OpenAlex offered a PDF but the host answered 403</div></td>
       <td class="pdf"><span class="none">not retrieved</span></td>
+      <td class="tier"><span class="none">not read</span></td>
+      <td class="cite"><span class="none">no PDF, so nothing has been quoted</span></td>
       <td class="pick"><label><input type="checkbox"> include</label></td>
     </tr>
     <tr>
@@ -259,9 +310,11 @@
       <td>Cha</td>
       <td>2020</td>
       <td>Yonsei medical</td>
-      <td class="src"><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC7214107/">pmc.ncbi.nlm.nih.gov</a></td>
+      <td class="src"><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC7214107/" target="_blank" rel="noopener noreferrer">pmc.ncbi.nlm.nih.gov</a></td>
       <td class="disc"><span class="pill warn">Paywalled</span><div class="sub">host returned text/html, not a PDF body</div></td>
       <td class="pdf"><span class="none">not retrieved</span></td>
+      <td class="tier"><span class="none">not read</span></td>
+      <td class="cite"><span class="none">no PDF, so nothing has been quoted</span></td>
       <td class="pick"><label><input type="checkbox"> include</label></td>
     </tr>
     <tr>
@@ -271,9 +324,11 @@
       <td>Feizi</td>
       <td>2022</td>
       <td>—</td>
-      <td class="src"><a href="https://academic.oup.com/glycob/article-abstract/32/7/552/6555547">academic.oup.com</a></td>
+      <td class="src"><a href="https://academic.oup.com/glycob/article-abstract/32/7/552/6555547" target="_blank" rel="noopener noreferrer">academic.oup.com</a></td>
       <td class="disc"><span class="pill warn">Paywalled</span><div class="sub">OpenAlex offered a PDF but the host answered 403</div></td>
       <td class="pdf"><span class="none">not retrieved</span></td>
+      <td class="tier"><span class="none">not read</span></td>
+      <td class="cite"><span class="none">no PDF, so nothing has been quoted</span></td>
       <td class="pick"><label><input type="checkbox"> include</label></td>
     </tr>
     <tr>
@@ -283,9 +338,11 @@
       <td>—</td>
       <td>2020</td>
       <td>RSC advances</td>
-      <td class="src"><a href="https://pubs.rsc.org/ra/article-abstract/10/56/34099/702166">pubs.rsc.org</a></td>
+      <td class="src"><a href="https://pubs.rsc.org/ra/article-abstract/10/56/34099/702166" target="_blank" rel="noopener noreferrer">pubs.rsc.org</a></td>
       <td class="disc"><span class="pill warn">No open copy</span><div class="sub">OpenAlex has the work (10.1039/d0ra04471g), no open-access PDF location</div></td>
       <td class="pdf"><span class="none">not retrieved</span></td>
+      <td class="tier"><span class="none">not read</span></td>
+      <td class="cite"><span class="none">no PDF, so nothing has been quoted</span></td>
       <td class="pick"><label><input type="checkbox"> include</label></td>
     </tr>
     <tr>
@@ -295,9 +352,11 @@
       <td>Aruleba</td>
       <td>2020</td>
       <td>International Conference on</td>
-      <td class="src"><a href="https://link.springer.com/chapter/10.1007/978-3-030-71187-0_35">link.springer.com</a><div class="sub">10.1007/978-3-030-71187-0_35</div></td>
+      <td class="src"><a href="https://link.springer.com/chapter/10.1007/978-3-030-71187-0_35" target="_blank" rel="noopener noreferrer">link.springer.com</a><div class="sub"><a href="https://doi.org/10.1007/978-3-030-71187-0_35" target="_blank" rel="noopener noreferrer">10.1007/978-3-030-71187-0_35</a></div></td>
       <td class="disc"><span class="pill warn">No open copy</span><div class="sub">OpenAlex has the work (10.1007/978-3-030-71187-0_35), no open-access PDF location</div></td>
       <td class="pdf"><span class="none">not retrieved</span></td>
+      <td class="tier"><span class="none">not read</span></td>
+      <td class="cite"><span class="none">no PDF, so nothing has been quoted</span></td>
       <td class="pick"><label><input type="checkbox"> include</label></td>
     </tr>
     <tr>
@@ -307,9 +366,11 @@
       <td>Perez</td>
       <td>—</td>
       <td>—</td>
-      <td class="src"><a href="https://books.rsc.org/books/edited-volume/2205/chapter/8051227">books.rsc.org</a></td>
+      <td class="src"><a href="https://books.rsc.org/books/edited-volume/2205/chapter/8051227" target="_blank" rel="noopener noreferrer">books.rsc.org</a></td>
       <td class="disc"><span class="pill warn">Paywalled</span><div class="sub">OpenAlex offered a PDF but the host answered 403</div></td>
       <td class="pdf"><span class="none">not retrieved</span></td>
+      <td class="tier"><span class="none">not read</span></td>
+      <td class="cite"><span class="none">no PDF, so nothing has been quoted</span></td>
       <td class="pick"><label><input type="checkbox"> include</label></td>
     </tr>
     <tr>
@@ -319,9 +380,11 @@
       <td>—</td>
       <td>—</td>
       <td>—</td>
-      <td class="src"><a href="https://jscholarship.library.jhu.edu/items/0dbcacaf-9e37-49c3-8a95-a3f55b8ae645">jscholarship.library.jhu.edu</a></td>
+      <td class="src"><a href="https://jscholarship.library.jhu.edu/items/0dbcacaf-9e37-49c3-8a95-a3f55b8ae645" target="_blank" rel="noopener noreferrer">jscholarship.library.jhu.edu</a></td>
       <td class="disc"><span class="pill warn">Not in OpenAlex</span><div class="sub">no OpenAlex record by title</div></td>
       <td class="pdf"><span class="none">not retrieved</span></td>
+      <td class="tier"><span class="none">not read</span></td>
+      <td class="cite"><span class="none">no PDF, so nothing has been quoted</span></td>
       <td class="pick"><label><input type="checkbox"> include</label></td>
     </tr>
     <tr>
@@ -331,9 +394,11 @@
       <td>Lisacek</td>
       <td>2019</td>
       <td>Maillard… - Viruses</td>
-      <td class="src"><a href="https://www.mdpi.com/1999-4915/11/4/374">www.mdpi.com</a></td>
+      <td class="src"><a href="https://www.mdpi.com/1999-4915/11/4/374" target="_blank" rel="noopener noreferrer">www.mdpi.com</a></td>
       <td class="disc"><span class="pill ok">Open copy found</span><div class="sub">downloaded from www.mdpi.com</div></td>
       <td class="pdf"><a href="pending-papers/cit-000550/01-article-Lisacek-2019.pdf">PDF</a></td>
+      <td class="tier"><span class="pill bad">no tier</span><div class="sub">read 2026-11-08, but no mention in a section that earns one</div></td>
+      <td class="cite"><span class="sub">2 appearance(s) of GLAD, none in a section the paper ranked: Introduction p.6, References p.13</span><div class="sub"><a href="#rep-cit-000550">full report</a></div></td>
       <td class="pick"><label><input type="checkbox"> include</label></td>
     </tr>
     <tr>
@@ -346,18 +411,8 @@
       <td class="src">—</td>
       <td class="disc"><span class="pill warn">Not in OpenAlex</span><div class="sub">no OpenAlex record by title</div></td>
       <td class="pdf"><span class="none">not retrieved</span></td>
-      <td class="pick"><label><input type="checkbox"> include</label></td>
-    </tr>
-    <tr>
-      <td class="uid">cit-000553</td>
-      <td class="title">A Visual Dashboard of Thai Weaving Pattern Image Gallery
-        <div class="byline">P Visutsak, N Thathai, S Jangkorn… - Procedia Computer …, 2022 - Elsevier</div></td>
-      <td>Bunyakiat</td>
-      <td>2022</td>
-      <td>Procedia Computer</td>
-      <td class="src"><a href="https://www.sciencedirect.com/science/article/pii/S1877050922005026">www.sciencedirect.com</a></td>
-      <td class="disc"><span class="pill warn">Paywalled</span><div class="sub">OpenAlex offered a PDF but the host answered 403</div></td>
-      <td class="pdf"><span class="none">not retrieved</span></td>
+      <td class="tier"><span class="none">not read</span></td>
+      <td class="cite"><span class="none">no PDF, so nothing has been quoted</span></td>
       <td class="pick"><label><input type="checkbox"> include</label></td>
     </tr>
     <tr>
@@ -367,9 +422,11 @@
       <td>Sukhija</td>
       <td>2021</td>
       <td>Glycome: The Hidden Code in</td>
-      <td class="src"><a href="https://www.dattaconsultinggroup.com/akdsite/assets/publications/glycocodearticle.pdf">www.dattaconsultinggroup.com</a></td>
+      <td class="src"><a href="https://www.dattaconsultinggroup.com/akdsite/assets/publications/glycocodearticle.pdf" target="_blank" rel="noopener noreferrer">www.dattaconsultinggroup.com</a></td>
       <td class="disc"><span class="pill warn">Not in OpenAlex</span><div class="sub">no OpenAlex record by title</div></td>
       <td class="pdf"><span class="none">not retrieved</span></td>
+      <td class="tier"><span class="none">not read</span></td>
+      <td class="cite"><span class="none">no PDF, so nothing has been quoted</span></td>
       <td class="pick"><label><input type="checkbox"> include</label></td>
     </tr>
     <tr>
@@ -379,9 +436,11 @@
       <td>—</td>
       <td>—</td>
       <td>—</td>
-      <td class="src"><a href="https://scholarlypublications.universiteitleiden.nl/access/item%3A4212215/download">scholarlypublications.universiteitleiden.nl</a></td>
+      <td class="src"><a href="https://scholarlypublications.universiteitleiden.nl/access/item%3A4212215/download" target="_blank" rel="noopener noreferrer">scholarlypublications.universiteitleiden.nl</a></td>
       <td class="disc"><span class="pill warn">Not in OpenAlex</span><div class="sub">no OpenAlex record by title</div></td>
       <td class="pdf"><span class="none">not retrieved</span></td>
+      <td class="tier"><span class="none">not read</span></td>
+      <td class="cite"><span class="none">no PDF, so nothing has been quoted</span></td>
       <td class="pick"><label><input type="checkbox"> include</label></td>
     </tr>
     <tr>
@@ -391,9 +450,11 @@
       <td>—</td>
       <td>—</td>
       <td>—</td>
-      <td class="src"><a href="https://www.rpthjournal.org/cms/10.1016/j.rpth.2026.103414/attachment/5e1ef181-290b-47ad-a0b6-2820746565cf/mmc1.pdf">www.rpthjournal.org</a><div class="sub">10.1016/j.rpth.2026.103414/attachment/5e1ef181-290b-47ad-a0b6-2820746565cf/mmc1.pdf</div></td>
+      <td class="src"><a href="https://www.rpthjournal.org/cms/10.1016/j.rpth.2026.103414/attachment/5e1ef181-290b-47ad-a0b6-2820746565cf/mmc1.pdf" target="_blank" rel="noopener noreferrer">www.rpthjournal.org</a><div class="sub"><a href="https://doi.org/10.1016/j.rpth.2026.103414/attachment/5e1ef181-290b-47ad-a0b6-2820746565cf/mmc1.pdf" target="_blank" rel="noopener noreferrer">10.1016/j.rpth.2026.103414/attachment/5e1ef181-290b-47ad-a0b6-2820746565cf/mmc1.pdf</a></div></td>
       <td class="disc"><span class="pill warn">Not in OpenAlex</span><div class="sub">no OpenAlex record by DOI (10.1016/j.rpth.2026.103414) or by title</div></td>
       <td class="pdf"><span class="none">not retrieved</span></td>
+      <td class="tier"><span class="none">not read</span></td>
+      <td class="cite"><span class="none">no PDF, so nothing has been quoted</span></td>
       <td class="pick"><label><input type="checkbox"> include</label></td>
     </tr>
     <tr>
@@ -403,9 +464,11 @@
       <td>—</td>
       <td>—</td>
       <td>—</td>
-      <td class="src"><a href="https://www.creative-proteomics.com/resource/glycan-microarray-analysis-and-database-integration.htm">www.creative-proteomics.com</a></td>
+      <td class="src"><a href="https://www.creative-proteomics.com/resource/glycan-microarray-analysis-and-database-integration.htm" target="_blank" rel="noopener noreferrer">www.creative-proteomics.com</a></td>
       <td class="disc"><span class="pill warn">Not in OpenAlex</span><div class="sub">no OpenAlex record by title</div></td>
       <td class="pdf"><span class="none">not retrieved</span></td>
+      <td class="tier"><span class="none">not read</span></td>
+      <td class="cite"><span class="none">no PDF, so nothing has been quoted</span></td>
       <td class="pick"><label><input type="checkbox"> include</label></td>
     </tr>
     <tr>
@@ -415,9 +478,11 @@
       <td>Feizi</td>
       <td>—</td>
       <td>—</td>
-      <td class="src"><a href="https://spiral.imperial.ac.uk/entities/publication/6ebd01fb-2687-4761-a614-c85c1a192b24">spiral.imperial.ac.uk</a></td>
+      <td class="src"><a href="https://spiral.imperial.ac.uk/entities/publication/6ebd01fb-2687-4761-a614-c85c1a192b24" target="_blank" rel="noopener noreferrer">spiral.imperial.ac.uk</a></td>
       <td class="disc"><span class="pill warn">Not in OpenAlex</span><div class="sub">no OpenAlex record by title</div></td>
       <td class="pdf"><span class="none">not retrieved</span></td>
+      <td class="tier"><span class="none">not read</span></td>
+      <td class="cite"><span class="none">no PDF, so nothing has been quoted</span></td>
       <td class="pick"><label><input type="checkbox"> include</label></td>
     </tr>
     <tr>
@@ -427,9 +492,11 @@
       <td>Willats</td>
       <td>2021</td>
       <td>The Art of Carbohydrate Analysis</td>
-      <td class="src"><a href="https://link.springer.com/chapter/10.1007/978-3-030-77791-3_10">link.springer.com</a><div class="sub">10.1007/978-3-030-77791-3_10</div></td>
+      <td class="src"><a href="https://link.springer.com/chapter/10.1007/978-3-030-77791-3_10" target="_blank" rel="noopener noreferrer">link.springer.com</a><div class="sub"><a href="https://doi.org/10.1007/978-3-030-77791-3_10" target="_blank" rel="noopener noreferrer">10.1007/978-3-030-77791-3_10</a></div></td>
       <td class="disc"><span class="pill warn">No open copy</span><div class="sub">OpenAlex has the work (10.1007/978-3-030-77791-3_10), no open-access PDF location</div></td>
       <td class="pdf"><span class="none">not retrieved</span></td>
+      <td class="tier"><span class="none">not read</span></td>
+      <td class="cite"><span class="none">no PDF, so nothing has been quoted</span></td>
       <td class="pick"><label><input type="checkbox"> include</label></td>
     </tr>
     <tr>
@@ -439,21 +506,25 @@
       <td>Feizi</td>
       <td>—</td>
       <td>—</td>
-      <td class="src"><a href="https://run.unl.pt/entities/publication/48e256d4-d5a1-4fde-a8a0-ec184408ff34">run.unl.pt</a></td>
+      <td class="src"><a href="https://run.unl.pt/entities/publication/48e256d4-d5a1-4fde-a8a0-ec184408ff34" target="_blank" rel="noopener noreferrer">run.unl.pt</a></td>
       <td class="disc"><span class="pill warn">Paywalled</span><div class="sub">OpenAlex offered a PDF but the host answered 403</div></td>
       <td class="pdf"><span class="none">not retrieved</span></td>
+      <td class="tier"><span class="none">not read</span></td>
+      <td class="cite"><span class="none">no PDF, so nothing has been quoted</span></td>
       <td class="pick"><label><input type="checkbox"> include</label></td>
     </tr>
     <tr>
       <td class="uid">cit-000563</td>
       <td class="title">Involvement of N-glycans in binding of Photorhabdus
         <div class="byline">H Bakker, W Römer, K Aktories, G Schmidt - 2021 - academia.edu</div></td>
-      <td>Schmidt</td>
       <td>—</td>
       <td>—</td>
-      <td class="src"><a href="https://www.academia.edu/download/106476898/cmi.pdf">www.academia.edu</a></td>
-      <td class="disc"><span class="pill warn">No open copy</span><div class="sub">OpenAlex has the work (10.1111/cmi.13326), no open-access PDF location</div></td>
+      <td>—</td>
+      <td class="src"><a href="https://www.academia.edu/download/106476898/cmi.pdf" target="_blank" rel="noopener noreferrer">www.academia.edu</a></td>
+      <td class="disc"><span class="pill warn">Not yet looked up</span></td>
       <td class="pdf"><span class="none">not retrieved</span></td>
+      <td class="tier"><span class="none">not read</span></td>
+      <td class="cite"><span class="none">no PDF, so nothing has been quoted</span></td>
       <td class="pick"><label><input type="checkbox"> include</label></td>
     </tr>
     <tr>
@@ -463,21 +534,25 @@
       <td>—</td>
       <td>—</td>
       <td>—</td>
-      <td class="src"><a href="https://freidok.uni-freiburg.de/files/166648/Qf-K5JUjPFmyT68-/Peter+NjengaThesis.pdf">freidok.uni-freiburg.de</a></td>
+      <td class="src"><a href="https://freidok.uni-freiburg.de/files/166648/Qf-K5JUjPFmyT68-/Peter+NjengaThesis.pdf" target="_blank" rel="noopener noreferrer">freidok.uni-freiburg.de</a></td>
       <td class="disc"><span class="pill warn">Not in OpenAlex</span><div class="sub">no OpenAlex record by title</div></td>
       <td class="pdf"><span class="none">not retrieved</span></td>
+      <td class="tier"><span class="none">not read</span></td>
+      <td class="cite"><span class="none">no PDF, so nothing has been quoted</span></td>
       <td class="pick"><label><input type="checkbox"> include</label></td>
     </tr>
     <tr>
       <td class="uid">cit-000565</td>
       <td class="title">Metabolite Multiprobiotic
         <div class="byline">VA Aleshkin, SS Afanasiev - Oral Health by Using Probiotic …, 2019 - books.google.com</div></td>
-      <td>Afanasiev</td>
-      <td>2019</td>
-      <td>Oral Health by Using Probiotic</td>
-      <td class="src"><a href="https://books.google.com/books?hl=en&amp;lr=&amp;id=jGiTEQAAQBAJ&amp;oi=fnd&amp;pg=PA71&amp;ots=uH3IOUCcDj&amp;sig=BfNqav-_QtYA6fpWtFBSSGOSDf0">books.google.com</a></td>
-      <td class="disc"><span class="pill ok">Open copy found</span><div class="sub">downloaded from www.intechopen.com Stored once under cit-000536.</div></td>
-      <td class="pdf"><a href="pending-papers/cit-000536/01-article-Afanasiev-2019.pdf">PDF</a> <span class="sub">(same work as another row)</span></td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+      <td class="src"><a href="https://books.google.com/books?hl=en&amp;lr=&amp;id=jGiTEQAAQBAJ&amp;oi=fnd&amp;pg=PA71&amp;ots=uH3IOUCcDj&amp;sig=BfNqav-_QtYA6fpWtFBSSGOSDf0" target="_blank" rel="noopener noreferrer">books.google.com</a></td>
+      <td class="disc"><span class="pill warn">Not yet looked up</span></td>
+      <td class="pdf"><span class="none">not retrieved</span></td>
+      <td class="tier"><span class="none">not read</span></td>
+      <td class="cite"><span class="none">no PDF, so nothing has been quoted</span></td>
       <td class="pick"><label><input type="checkbox"> include</label></td>
     </tr>
     <tr>
@@ -487,9 +562,11 @@
       <td>—</td>
       <td>2020</td>
       <td>Muga - HEALTHINF</td>
-      <td class="src"><a href="https://www.scitepress.org/PublishedPapers/2020/89601/89601.pdf">www.scitepress.org</a></td>
+      <td class="src"><a href="https://www.scitepress.org/PublishedPapers/2020/89601/89601.pdf" target="_blank" rel="noopener noreferrer">www.scitepress.org</a></td>
       <td class="disc"><span class="pill warn">No open copy</span><div class="sub">OpenAlex has the work (10.5220/0008960100002513), no open-access PDF location</div></td>
       <td class="pdf"><span class="none">not retrieved</span></td>
+      <td class="tier"><span class="none">not read</span></td>
+      <td class="cite"><span class="none">no PDF, so nothing has been quoted</span></td>
       <td class="pick"><label><input type="checkbox"> include</label></td>
     </tr>
     <tr>
@@ -499,9 +576,11 @@
       <td>Tiemeyer</td>
       <td>—</td>
       <td>—</td>
-      <td class="src">—<div class="sub">10.1016/b978-0-12-819475-1.00107-3</div></td>
+      <td class="src">—<div class="sub"><a href="https://doi.org/10.1016/b978-0-12-819475-1.00107-3" target="_blank" rel="noopener noreferrer">10.1016/b978-0-12-819475-1.00107-3</a></div></td>
       <td class="disc"><span class="pill warn">No open copy</span><div class="sub">OpenAlex has the work (10.1016/b978-0-12-819475-1.00107-3), no open-access PDF location</div></td>
       <td class="pdf"><span class="none">not retrieved</span></td>
+      <td class="tier"><span class="none">not read</span></td>
+      <td class="cite"><span class="none">no PDF, so nothing has been quoted</span></td>
       <td class="pick"><label><input type="checkbox"> include</label></td>
     </tr>
   </tbody>
@@ -519,15 +598,888 @@
    The record reads the complete author list of both papers. A citing paper that shares an author
    with the cited work, or that names Richard D. Cummings or the former PI Umesh R. Desai, is a
    self-citation and was removed at the first screen above.</p>
-<p><strong>Tiers are deliberately absent.</strong> A tier is a claim about where a sentence sits in
-   an article, and no article on this page has been read page by page. Filing one here would put a
-   number behind a guess.</p>
+<p><strong>A tier is a scan result, and only for an article that has actually been read.</strong>
+   The Tier and Citation columns are filled from the PDF on file: <code>scan-mentions.js</code> extracts the
+   text, finds every appearance of the tool, and reads the heading the article itself printed above
+   it. Tier A means the mention sits in the Methods as the method performed; B in the Results or
+   Figures; C in a high-reputation publication; D an acknowledgement. Where the column says
+   <em>no tier</em>, the article was read and the tool appears only in a reference list, a table, or
+   a section that earns no tier &mdash; the note says which. Where it says <em>not read</em>, no
+   PDF exists yet, so no claim is made. A scan is a machine reading of prose: it is good at telling
+   a Methods sentence from a bibliography entry, and it cannot tell whether the use was substantial.
+   A person&rsquo;s reading of the page decides, and filing a candidate runs the same scanner again
+   into the packet.</p>
+<p><strong>A blue &ldquo;Tier&nbsp;X &mdash; resolved&rdquo; pill means the citing paper never names the tool.</strong>
+   A citing author who used the work often credits it only as a reference number (&ldquo;following
+   established procedures [125&ndash;127]&rdquo;, a superscript <sup>69</sup>) or, in author&ndash;year
+   journals, only as &ldquo;(Mehta et al. 2024)&rdquo;. <code>scan-refs.js</code> identifies which
+   bibliography entry is the applicant&rsquo;s paper &mdash; two signals required, title plus year plus
+   first author, never a guess &mdash; and then reports every place that number or that citation is
+   credited, with the section and the sentence. The tier bar is identical to a named mention&rsquo;s:
+   under a heading the citing paper printed, in prose, not a table cell and not the reference list.
+   The colour only says how the citation was found, not that it is weaker.</p>
 
-<p class="foot">Generated 2026-11-07 by <code>scripts/build-potential.js</code> from
+<h2>Report on each candidate</h2>
+<p>The same structure as <code>packet.html</code>, one block per candidate, so a row above can be
+   judged on its background and its quotation together. A block is a review note, not evidence:
+   nothing here reaches counsel unless the row is confirmed and the packet is re-rendered.</p>
+
+<article class="report" id="rep-cit-000510">
+  <h3>2019–2020 H1N1 clade A5a. 1 viruses have better in vitro fitness compared with the co-circulating A5a. 2 clade</h3>
+  <p class="byline">Swanson, Nicholas J; Marinho, Paula; Dziedzic, Amanda; Jedlicka, Anne; Liu, Hsuan; Fenstermacher, Katherine; Rothman, Richard; Pekosz, Andrew<br>
+     <span class="venue">Scientific reports, 2023</span> &middot; <a href="https://www.nature.com/articles/s41598-023-37122-z" target="_blank" rel="noopener noreferrer">www.nature.com</a></p>
+  <dl>
+    <dt>Cited work</dt>
+    <dd>GLAD: GLycan Array Dashboard, a visual analytics tool for glycan microarrays <span class="sub">(GLAD)</span></dd>
+    <dt>Where the citation appears</dt>
+    <dd><strong>Methods</strong>, page 10 — Tier A — the tool is used in the Methods as the method performed</dd>
+    <dt>Citing authors&rsquo; institutions</dt>
+    <dd><span class="none">Not recorded — confirm from the PDF&rsquo;s affiliation block.</span></dd>
+    <dt>Article type</dt>
+    <dd>article</dd>
+    <dt>Independence</dt>
+    <dd>Re-checked against the citation record: complete author lists of both papers, no shared
+        author, neither PI named on the citing paper; basis on the record: unverified-coverage.</dd>
+  </dl>
+  <h4>What the text says</h4>
+  <blockquote>&ldquo;only include these glycans for a total of 139 glycans (see supplementary Table S1) and organized by structure using the Glycan Array Dashboard (GLAD) 63&rdquo;</blockquote><p class="cite-page">Methods, p.&nbsp;10 &middot; scanned 2026-11-08</p>
+  <h4>Files</h4>
+  <ul class="files-list"><li><a href="pending-papers/cit-000510/01-article-Pekosz-2023.pdf">01-article-Pekosz-2023.pdf</a> <span class="sub">article</span></li></ul>
+  <p class="trace"><code>cit-000510</code> &middot; review note only — not part of
+     <code>packet.html</code> and not evidence until the row is confirmed and the packet re-rendered</p>
+</article>
+
+<article class="report" id="rep-cit-000513">
+  <h3>Databases and bioinformatic tools for glycobiology and glycoproteomics</h3>
+  <p class="byline">Li X, Xu Z, Hong X, Zhang Y, Zou X<br>
+     <span class="venue">International Journal of Molecular …, 2020</span> &middot; <a href="https://www.mdpi.com/1422-0067/21/18/6727" target="_blank" rel="noopener noreferrer">www.mdpi.com</a></p>
+  <dl>
+    <dt>Cited work</dt>
+    <dd>GLAD: GLycan Array Dashboard, a visual analytics tool for glycan microarrays <span class="sub">(GLAD)</span></dd>
+    <dt>Where the citation appears</dt>
+    <dd><span class="pill bad">no tier</span> 7 appearance(s) of GLAD, none in a section the paper ranked: Section 5: Glycan-Protein Interaction Databases p.10, Section 5: Glycan-Protein Interaction Databases p.10, Section 5: Glycan-Protein…</dd>
+    <dt>Citing authors&rsquo; institutions</dt>
+    <dd><span class="none">Not recorded — confirm from the PDF&rsquo;s affiliation block.</span></dd>
+    <dt>Article type</dt>
+    <dd>article</dd>
+    <dt>Independence</dt>
+    <dd>Re-checked against the citation record: complete author lists of both papers, no shared
+        author, neither PI named on the citing paper; basis on the record: confirmed.</dd>
+  </dl>
+  <h4>What the text says</h4>
+  <blockquote>&ldquo;. GLAD: Glycan Array Dashboard The glycan array is a high-throughput tool for profiling protein–glycan interactions.&rdquo;</blockquote><p class="cite-page"> &middot; scanned 2026-11-08</p>
+  <h4>Files</h4>
+  <ul class="files-list"><li><a href="pending-papers/cit-000513/01-article-Zou-2020.pdf">01-article-Zou-2020.pdf</a> <span class="sub">article</span></li></ul>
+  <p class="trace"><code>cit-000513</code> &middot; review note only — not part of
+     <code>packet.html</code> and not evidence until the row is confirmed and the packet re-rendered</p>
+</article>
+
+<article class="report" id="rep-cit-000520">
+  <h3>A “proto” type galectin expressed in striped bass (Morone saxatilis) tissues is released to epidermal mucus and binds to bacterial and mucus glycans</h3>
+  <p class="byline">Henrikson DE, Ahmed H, Tasumi S, Gokara M, Feng C, Abernathy K, Iqbal M, Bianchet MA, Vasta GR<br>
+     <span class="venue">Frontiers in Cellular …, 2025</span> &middot; <a href="https://www.frontiersin.org/journals/cellular-and-infection-microbiology/articles/10.3389/fcimb.2025.1572734/full" target="_blank" rel="noopener noreferrer">www.frontiersin.org</a> &middot; <a href="https://doi.org/10.3389/fcimb.2025.1572734/full" target="_blank" rel="noopener noreferrer">10.3389/fcimb.2025.1572734/full</a></p>
+  <dl>
+    <dt>Cited work</dt>
+    <dd>GLAD: GLycan Array Dashboard, a visual analytics tool for glycan microarrays <span class="sub">(GLAD)</span></dd>
+    <dt>Where the citation appears</dt>
+    <dd><strong>Methods</strong>, page 6 — Tier A — the tool is used in the Methods as the method performed</dd>
+    <dt>Citing authors&rsquo; institutions</dt>
+    <dd><span class="none">Not recorded — confirm from the PDF&rsquo;s affiliation block.</span></dd>
+    <dt>Article type</dt>
+    <dd>article</dd>
+    <dt>Independence</dt>
+    <dd>Re-checked against the citation record: complete author lists of both papers, no shared
+        author, neither PI named on the citing paper; basis on the record: confirmed.</dd>
+  </dl>
+  <h4>What the text says</h4>
+  <blockquote>&ldquo;. Results were analyzed by GLAD (Mehta and Cummings, 2019).&rdquo;</blockquote><p class="cite-page">Methods, p.&nbsp;6 &middot; scanned 2026-11-08</p>
+  <h4>Files</h4>
+  <ul class="files-list"><li><a href="pending-papers/cit-000520/01-article-Vasta-2025.pdf">01-article-Vasta-2025.pdf</a> <span class="sub">article</span></li></ul>
+  <p class="trace"><code>cit-000520</code> &middot; review note only — not part of
+     <code>packet.html</code> and not evidence until the row is confirmed and the packet re-rendered</p>
+</article>
+
+<article class="report" id="rep-cit-000536">
+  <h3>Metabolite multiprobiotic formulas for microbial health</h3>
+  <p class="byline">Lakhtin, Mikhail V; Lakhtin, Vladimir M; Aleshkin, Vladimir A; Afanasiev, Stanislav S<br>
+     <span class="venue">Oral health by using …, 2019</span> &middot; <a href="https://www.intechopen.com/chapters/67420" target="_blank" rel="noopener noreferrer">www.intechopen.com</a></p>
+  <dl>
+    <dt>Cited work</dt>
+    <dd>GLAD: GLycan Array Dashboard, a visual analytics tool for glycan microarrays <span class="sub">(GLAD)</span></dd>
+    <dt>Where the citation appears</dt>
+    <dd><span class="pill warn resolved">Tier C &mdash; resolved</span> <strong>Introduction</strong>, page 1 — Tier C — cited in a high-reputation publication, and the citing paper names no tool there: the citation was found by its reference number or author-year citation.</dd>
+    <dt>Citing authors&rsquo; institutions</dt>
+    <dd><span class="none">Not recorded — confirm from the PDF&rsquo;s affiliation block.</span></dd>
+    <dt>Article type</dt>
+    <dd>article</dd>
+    <dt>Independence</dt>
+    <dd>Re-checked against the citation record: complete author lists of both papers, no shared
+        author, neither PI named on the citing paper; basis on the record: unverified-coverage.</dd>
+  </dl>
+  <h4>What the text says</h4>
+  <blockquote>&ldquo;. GLAD: GLycan Array Dashboard, a Visual&rdquo;</blockquote><p class="cite-page"> &middot; scanned 2026-11-08</p>
+  <h4>Files</h4>
+  <ul class="files-list"><li><a href="pending-papers/cit-000536/01-article-Afanasiev-2019.pdf">01-article-Afanasiev-2019.pdf</a> <span class="sub">article</span></li></ul>
+  <p class="trace"><code>cit-000536</code> &middot; review note only — not part of
+     <code>packet.html</code> and not evidence until the row is confirmed and the packet re-rendered</p>
+</article>
+
+<article class="report" id="rep-cit-000550">
+  <h3>A bioinformatics view of glycan–virus interactions</h3>
+  <p class="byline">Le Mercier, Philippe; Mariethoz, Julien; Lascano-Maillard, Josefina; Bonnardel, Fran{\c{c}}ois; Imberty, Anne; Ricard-Blum, Sylvie; Lisacek, Fr{\'e}d{\'e}rique<br>
+     <span class="venue">Maillard… - Viruses, 2019</span> &middot; <a href="https://www.mdpi.com/1999-4915/11/4/374" target="_blank" rel="noopener noreferrer">www.mdpi.com</a></p>
+  <dl>
+    <dt>Cited work</dt>
+    <dd>GLAD: GLycan Array Dashboard, a visual analytics tool for glycan microarrays <span class="sub">(GLAD)</span></dd>
+    <dt>Where the citation appears</dt>
+    <dd><span class="pill bad">no tier</span> 2 appearance(s) of GLAD, none in a section the paper ranked: Introduction p.6, References p.13</dd>
+    <dt>Citing authors&rsquo; institutions</dt>
+    <dd><span class="none">Not recorded — confirm from the PDF&rsquo;s affiliation block.</span></dd>
+    <dt>Article type</dt>
+    <dd>article</dd>
+    <dt>Independence</dt>
+    <dd>Re-checked against the citation record: complete author lists of both papers, no shared
+        author, neither PI named on the citing paper; basis on the record: unverified-coverage.</dd>
+  </dl>
+  <h4>What the text says</h4>
+  <blockquote>&ldquo;GlycoPattern glycopattern.emory.edu Analysis of glycan array data yes 2014 [37] GLAD glycotoolkit.com/GLAD Visualization and analysis of glycan array data yes 2019 [38] Glycome Atlas rings.t.soka.ac.jp/GlycomeAtlasV5/index.html Visualization of glycan array data no 2012 [39]&rdquo;</blockquote><p class="cite-page"> &middot; scanned 2026-11-08</p>
+  <h4>Files</h4>
+  <ul class="files-list"><li><a href="pending-papers/cit-000550/01-article-Lisacek-2019.pdf">01-article-Lisacek-2019.pdf</a> <span class="sub">article</span></li></ul>
+  <p class="trace"><code>cit-000550</code> &middot; review note only — not part of
+     <code>packet.html</code> and not evidence until the row is confirmed and the packet re-rendered</p>
+</article>
+
+<article class="report" id="rep-cit-000507">
+  <h3>Recent advances in glycoinformatic platforms for glycomics and glycoproteomics</h3>
+  <p class="byline">Abrahams JL, Taherzadeh G, Jarvas G, Guttman A, Zhou Y, Campbell MP<br>
+     <span class="venue">Current opinion in …, 2020</span> &middot; <a href="https://www.sciencedirect.com/science/article/pii/S0959440X19301356" target="_blank" rel="noopener noreferrer">www.sciencedirect.com</a></p>
+  <dl>
+    <dt>Cited work</dt>
+    <dd>GLAD: GLycan Array Dashboard, a visual analytics tool for glycan microarrays <span class="sub">(GLAD)</span></dd>
+    <dt>Where the citation appears</dt>
+    <dd><span class="none">not read — no PDF on file, so no claim about where the citation sits</span></dd>
+    <dt>Citing authors&rsquo; institutions</dt>
+    <dd><span class="none">Not recorded — confirm from the PDF&rsquo;s affiliation block.</span></dd>
+    <dt>Article type</dt>
+    <dd>article</dd>
+    <dt>Independence</dt>
+    <dd>Re-checked against the citation record: complete author lists of both papers, no shared
+        author, neither PI named on the citing paper; basis on the record: confirmed.</dd>
+  </dl>
+  <h4>What the text says</h4>
+  <p class="none">No verbatim sentence recorded.</p>
+  <h4>Files</h4>
+  <p class="none">No PDF on file. No open copy — OpenAlex has the work (10.1016/j.sbi.2019.11.009), no open-access PDF location.</p>
+  <p class="trace"><code>cit-000507</code> &middot; review note only — not part of
+     <code>packet.html</code> and not evidence until the row is confirmed and the packet re-rendered</p>
+</article>
+
+<article class="report" id="rep-cit-000508">
+  <h3>Big-data glycomics: tools to connect glycan biosynthesis to extracellular communication</h3>
+  <p class="byline">Kellman BP, Lewis NE<br>
+     <span class="venue">Trends in biochemical sciences, 2021</span> &middot; <a href="https://www.cell.com/trends/biochemical-sciences/abstract/S0968-0004(20)30266-8" target="_blank" rel="noopener noreferrer">www.cell.com</a></p>
+  <dl>
+    <dt>Cited work</dt>
+    <dd>GLAD: GLycan Array Dashboard, a visual analytics tool for glycan microarrays <span class="sub">(GLAD)</span></dd>
+    <dt>Where the citation appears</dt>
+    <dd><span class="none">not read — no PDF on file, so no claim about where the citation sits</span></dd>
+    <dt>Citing authors&rsquo; institutions</dt>
+    <dd><span class="none">Not recorded — confirm from the PDF&rsquo;s affiliation block.</span></dd>
+    <dt>Article type</dt>
+    <dd>article</dd>
+    <dt>Independence</dt>
+    <dd>Re-checked against the citation record: complete author lists of both papers, no shared
+        author, neither PI named on the citing paper; basis on the record: confirmed.</dd>
+  </dl>
+  <h4>What the text says</h4>
+  <p class="none">No verbatim sentence recorded.</p>
+  <h4>Files</h4>
+  <p class="none">No PDF on file. Paywalled — OpenAlex offered a PDF but the host answered 403.</p>
+  <p class="trace"><code>cit-000508</code> &middot; review note only — not part of
+     <code>packet.html</code> and not evidence until the row is confirmed and the packet re-rendered</p>
+</article>
+
+<article class="report" id="rep-cit-000512">
+  <h3>Worldwide glycoscience informatics infrastructure: the GlySpace Alliance</h3>
+  <p class="byline">Lisacek F, Tiemeyer M, Mazumder R, Aoki-Kinoshita KF<br>
+     <span class="venue"></span> &middot; <a href="https://pubs.acs.org/jaaucr/article-abstract/3/1/4/1253251" target="_blank" rel="noopener noreferrer">pubs.acs.org</a></p>
+  <dl>
+    <dt>Cited work</dt>
+    <dd>GLAD: GLycan Array Dashboard, a visual analytics tool for glycan microarrays <span class="sub">(GLAD)</span></dd>
+    <dt>Where the citation appears</dt>
+    <dd><span class="none">not read — no PDF on file, so no claim about where the citation sits</span></dd>
+    <dt>Citing authors&rsquo; institutions</dt>
+    <dd><span class="none">Not recorded — confirm from the PDF&rsquo;s affiliation block.</span></dd>
+    <dt>Article type</dt>
+    <dd>article</dd>
+    <dt>Independence</dt>
+    <dd>Re-checked against the citation record: complete author lists of both papers, no shared
+        author, neither PI named on the citing paper; basis on the record: confirmed.</dd>
+  </dl>
+  <h4>What the text says</h4>
+  <p class="none">No verbatim sentence recorded.</p>
+  <h4>Files</h4>
+  <p class="none">No PDF on file. Paywalled — OpenAlex offered a PDF but the host answered 403.</p>
+  <p class="trace"><code>cit-000512</code> &middot; review note only — not part of
+     <code>packet.html</code> and not evidence until the row is confirmed and the packet re-rendered</p>
+</article>
+
+<article class="report" id="rep-cit-000514">
+  <h3>Mass spectrometric and glycan microarray–based characterization of the filarial nematode Brugia malayi glycome reveals anionic and zwitterionic glycan antigens</h3>
+  <p class="byline">Petralia LMC, van Diepen A, Lokker LA, Nguyen DL, Sartono E, Khatri V, Kalyanasundaram R, Taron CH, Foster JM, Hokke CH<br>
+     <span class="venue">Molecular &amp; Cellular …, 2022</span> &middot; <a href="https://www.mcponline.org/article/S1535-9476(22)00009-3/fulltext" target="_blank" rel="noopener noreferrer">www.mcponline.org</a></p>
+  <dl>
+    <dt>Cited work</dt>
+    <dd>GLAD: GLycan Array Dashboard, a visual analytics tool for glycan microarrays <span class="sub">(GLAD)</span></dd>
+    <dt>Where the citation appears</dt>
+    <dd><span class="none">not read — no PDF on file, so no claim about where the citation sits</span></dd>
+    <dt>Citing authors&rsquo; institutions</dt>
+    <dd><span class="none">Not recorded — confirm from the PDF&rsquo;s affiliation block.</span></dd>
+    <dt>Article type</dt>
+    <dd>article</dd>
+    <dt>Independence</dt>
+    <dd>Re-checked against the citation record: complete author lists of both papers, no shared
+        author, neither PI named on the citing paper; basis on the record: confirmed.</dd>
+  </dl>
+  <h4>What the text says</h4>
+  <p class="none">No verbatim sentence recorded.</p>
+  <h4>Files</h4>
+  <p class="none">No PDF on file. Paywalled — OpenAlex offered a PDF but the host answered 403.</p>
+  <p class="trace"><code>cit-000514</code> &middot; review note only — not part of
+     <code>packet.html</code> and not evidence until the row is confirmed and the packet re-rendered</p>
+</article>
+
+<article class="report" id="rep-cit-000524">
+  <h3>Structural database for lectins and the UniLectin web platform</h3>
+  <p class="byline">Bonnardel F, Perez S, Lisacek F, Imberty A<br>
+     <span class="venue">Lectin Purification and …, 2020</span> &middot; <a href="https://link.springer.com/protocol/10.1007/978-1-0716-0430-4_1" target="_blank" rel="noopener noreferrer">link.springer.com</a> &middot; <a href="https://doi.org/10.1007/978-1-0716-0430-4_1" target="_blank" rel="noopener noreferrer">10.1007/978-1-0716-0430-4_1</a></p>
+  <dl>
+    <dt>Cited work</dt>
+    <dd>GLAD: GLycan Array Dashboard, a visual analytics tool for glycan microarrays <span class="sub">(GLAD)</span></dd>
+    <dt>Where the citation appears</dt>
+    <dd><span class="none">not read — no PDF on file, so no claim about where the citation sits</span></dd>
+    <dt>Citing authors&rsquo; institutions</dt>
+    <dd><span class="none">Not recorded — confirm from the PDF&rsquo;s affiliation block.</span></dd>
+    <dt>Article type</dt>
+    <dd>article</dd>
+    <dt>Independence</dt>
+    <dd>Re-checked against the citation record: complete author lists of both papers, no shared
+        author, neither PI named on the citing paper; basis on the record: confirmed.</dd>
+  </dl>
+  <h4>What the text says</h4>
+  <p class="none">No verbatim sentence recorded.</p>
+  <h4>Files</h4>
+  <p class="none">No PDF on file. No open copy — OpenAlex has the work (10.1007/978-1-0716-0430-4_1), no open-access PDF location.</p>
+  <p class="trace"><code>cit-000524</code> &middot; review note only — not part of
+     <code>packet.html</code> and not evidence until the row is confirmed and the packet re-rendered</p>
+</article>
+
+<article class="report" id="rep-cit-000525">
+  <h3>Combined analysis of multiple glycan-array datasets: new explorations of protein-glycan interactions</h3>
+  <p class="byline">Z Klamer, B Haab<br>
+     <span class="venue">Analytical chemistry, 2021</span> &middot; <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC8862541/" target="_blank" rel="noopener noreferrer">pmc.ncbi.nlm.nih.gov</a></p>
+  <dl>
+    <dt>Cited work</dt>
+    <dd>GLAD: GLycan Array Dashboard, a visual analytics tool for glycan microarrays <span class="sub">(GLAD)</span></dd>
+    <dt>Where the citation appears</dt>
+    <dd><span class="none">not read — no PDF on file, so no claim about where the citation sits</span></dd>
+    <dt>Citing authors&rsquo; institutions</dt>
+    <dd><span class="none">Not recorded — confirm from the PDF&rsquo;s affiliation block.</span></dd>
+    <dt>Article type</dt>
+    <dd>article</dd>
+    <dt>Independence</dt>
+    <dd>Re-checked against the citation record: complete author lists of both papers, no shared
+        author, neither PI named on the citing paper; basis on the record: unverified-coverage.</dd>
+  </dl>
+  <h4>What the text says</h4>
+  <p class="none">No verbatim sentence recorded.</p>
+  <h4>Files</h4>
+  <p class="none">No PDF on file. No open copy — OpenAlex has the work (10.1021/acs.analchem.1c01739), no open-access PDF location.</p>
+  <p class="trace"><code>cit-000525</code> &middot; review note only — not part of
+     <code>packet.html</code> and not evidence until the row is confirmed and the packet re-rendered</p>
+</article>
+
+<article class="report" id="rep-cit-000526">
+  <h3>Rise of systems glycobiology and personalized glycomedicine: why and how to integrate glycomics with multiomics science?</h3>
+  <p class="byline">Kunej T<br>
+     <span class="venue">OMICS: A Journal of Integrative Biology, 2019</span> &middot; <a href="https://journals.sagepub.com/doi/abs/10.1089/omi.2019.0149" target="_blank" rel="noopener noreferrer">journals.sagepub.com</a> &middot; <a href="https://doi.org/10.1089/omi.2019.0149" target="_blank" rel="noopener noreferrer">10.1089/omi.2019.0149</a></p>
+  <dl>
+    <dt>Cited work</dt>
+    <dd>GLAD: GLycan Array Dashboard, a visual analytics tool for glycan microarrays <span class="sub">(GLAD)</span></dd>
+    <dt>Where the citation appears</dt>
+    <dd><span class="none">not read — no PDF on file, so no claim about where the citation sits</span></dd>
+    <dt>Citing authors&rsquo; institutions</dt>
+    <dd><span class="none">Not recorded — confirm from the PDF&rsquo;s affiliation block.</span></dd>
+    <dt>Article type</dt>
+    <dd>article</dd>
+    <dt>Independence</dt>
+    <dd>Re-checked against the citation record: complete author lists of both papers, no shared
+        author, neither PI named on the citing paper; basis on the record: confirmed.</dd>
+  </dl>
+  <h4>What the text says</h4>
+  <p class="none">No verbatim sentence recorded.</p>
+  <h4>Files</h4>
+  <p class="none">No PDF on file. No open copy — OpenAlex has the work (10.1089/omi.2019.0149), no open-access PDF location.</p>
+  <p class="trace"><code>cit-000526</code> &middot; review note only — not part of
+     <code>packet.html</code> and not evidence until the row is confirmed and the packet re-rendered</p>
+</article>
+
+<article class="report" id="rep-cit-000531">
+  <h3>Clade-defining mutations in human H1N1 hemagglutinin protein from 2021-2023 have opposing effects on in vitro fitness and antigenic drift</h3>
+  <p class="byline">Swanson NJ, Girish J, Yunker M, Liu H, Norton J, Han C, Mostafa H, Fenstermacher K, Rothman RE, Pekosz A<br>
+     <span class="venue">bioRxiv, 2024</span> &middot; <a href="https://www.biorxiv.org/content/10.1101/2024.05.18.594815.abstract" target="_blank" rel="noopener noreferrer">www.biorxiv.org</a> &middot; <a href="https://doi.org/10.1101/2024.05.18.594815.abstract" target="_blank" rel="noopener noreferrer">10.1101/2024.05.18.594815.abstract</a></p>
+  <dl>
+    <dt>Cited work</dt>
+    <dd>GLAD: GLycan Array Dashboard, a visual analytics tool for glycan microarrays <span class="sub">(GLAD)</span></dd>
+    <dt>Where the citation appears</dt>
+    <dd><span class="none">not read — no PDF on file, so no claim about where the citation sits</span></dd>
+    <dt>Citing authors&rsquo; institutions</dt>
+    <dd><span class="none">Not recorded — confirm from the PDF&rsquo;s affiliation block.</span></dd>
+    <dt>Article type</dt>
+    <dd>article</dd>
+    <dt>Independence</dt>
+    <dd>Re-checked against the citation record: complete author lists of both papers, no shared
+        author, neither PI named on the citing paper; basis on the record: confirmed.</dd>
+  </dl>
+  <h4>What the text says</h4>
+  <p class="none">No verbatim sentence recorded.</p>
+  <h4>Files</h4>
+  <p class="none">No PDF on file. No open copy — OpenAlex has the work (10.1101/2024.05.18.594815), no open-access PDF location.</p>
+  <p class="trace"><code>cit-000531</code> &middot; review note only — not part of
+     <code>packet.html</code> and not evidence until the row is confirmed and the packet re-rendered</p>
+</article>
+
+<article class="report" id="rep-cit-000532">
+  <h3>Unraveling cross-reactivity of anti-glycan IgG responses in filarial nematode infections</h3>
+  <p class="byline">Petralia LMC, van Diepen A, Nguyen DL, Lokker LA, Sartono E, Bennuru S, Nutman TB, Pfarr K, Hoerauf A, Wanji S, Foster JM, Hokke CH<br>
+     <span class="venue">Frontiers in …, 2023</span> &middot; <a href="https://www.frontiersin.org/journals/immunology/articles/10.3389/fimmu.2023.1102344/full" target="_blank" rel="noopener noreferrer">www.frontiersin.org</a> &middot; <a href="https://doi.org/10.3389/fimmu.2023.1102344/full" target="_blank" rel="noopener noreferrer">10.3389/fimmu.2023.1102344/full</a></p>
+  <dl>
+    <dt>Cited work</dt>
+    <dd>GLAD: GLycan Array Dashboard, a visual analytics tool for glycan microarrays <span class="sub">(GLAD)</span></dd>
+    <dt>Where the citation appears</dt>
+    <dd><span class="none">not read — no PDF on file, so no claim about where the citation sits</span></dd>
+    <dt>Citing authors&rsquo; institutions</dt>
+    <dd><span class="none">Not recorded — confirm from the PDF&rsquo;s affiliation block.</span></dd>
+    <dt>Article type</dt>
+    <dd>article</dd>
+    <dt>Independence</dt>
+    <dd>Re-checked against the citation record: complete author lists of both papers, no shared
+        author, neither PI named on the citing paper; basis on the record: confirmed.</dd>
+  </dl>
+  <h4>What the text says</h4>
+  <p class="none">No verbatim sentence recorded.</p>
+  <h4>Files</h4>
+  <p class="none">No PDF on file. No open copy — OpenAlex has the work (10.3389/fimmu.2023.1102344), no open-access PDF location.</p>
+  <p class="trace"><code>cit-000532</code> &middot; review note only — not part of
+     <code>packet.html</code> and not evidence until the row is confirmed and the packet re-rendered</p>
+</article>
+
+<article class="report" id="rep-cit-000538">
+  <h3>Lectin fingerprinting distinguishes antibody neutralization in SARS-CoV-2</h3>
+  <p class="byline">Wuo MG, Dugan AE, Halim M, Hauser BM, Feldman J, Caradonna TM, Zhang S, Pepi LE, Atyeo C, Fischinger S, Alter G, Garcia-Beltran WF, Azadi P, Hung D, Schmidt AG, Kiessling LL<br>
+     <span class="venue">ACS Central …, 2023</span> &middot; <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC10214521/" target="_blank" rel="noopener noreferrer">pmc.ncbi.nlm.nih.gov</a></p>
+  <dl>
+    <dt>Cited work</dt>
+    <dd>GLAD: GLycan Array Dashboard, a visual analytics tool for glycan microarrays <span class="sub">(GLAD)</span></dd>
+    <dt>Where the citation appears</dt>
+    <dd><span class="none">not read — no PDF on file, so no claim about where the citation sits</span></dd>
+    <dt>Citing authors&rsquo; institutions</dt>
+    <dd><span class="none">Not recorded — confirm from the PDF&rsquo;s affiliation block.</span></dd>
+    <dt>Article type</dt>
+    <dd>article</dd>
+    <dt>Independence</dt>
+    <dd>Re-checked against the citation record: complete author lists of both papers, no shared
+        author, neither PI named on the citing paper; basis on the record: confirmed.</dd>
+  </dl>
+  <h4>What the text says</h4>
+  <p class="none">No verbatim sentence recorded.</p>
+  <h4>Files</h4>
+  <p class="none">No PDF on file. Paywalled — OpenAlex offered a PDF but the host answered 403.</p>
+  <p class="trace"><code>cit-000538</code> &middot; review note only — not part of
+     <code>packet.html</code> and not evidence until the row is confirmed and the packet re-rendered</p>
+</article>
+
+<article class="report" id="rep-cit-000541">
+  <h3>An automated fast healthcare interoperability resources-based 12-lead electrocardiogram mobile alert system for suspected acute coronary syndrome</h3>
+  <p class="byline">Hur, Sujeong; Lee, Jeanhyoung; Kim, Taerim; Choi, Jong Soo; Kang, Mira; Chang, Dong Kyung; Cha, Won Chul<br>
+     <span class="venue">Yonsei medical …, 2020</span> &middot; <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC7214107/" target="_blank" rel="noopener noreferrer">pmc.ncbi.nlm.nih.gov</a></p>
+  <dl>
+    <dt>Cited work</dt>
+    <dd>GLAD: GLycan Array Dashboard, a visual analytics tool for glycan microarrays <span class="sub">(GLAD)</span></dd>
+    <dt>Where the citation appears</dt>
+    <dd><span class="none">not read — no PDF on file, so no claim about where the citation sits</span></dd>
+    <dt>Citing authors&rsquo; institutions</dt>
+    <dd><span class="none">Not recorded — confirm from the PDF&rsquo;s affiliation block.</span></dd>
+    <dt>Article type</dt>
+    <dd>article</dd>
+    <dt>Independence</dt>
+    <dd>Re-checked against the citation record: complete author lists of both papers, no shared
+        author, neither PI named on the citing paper; basis on the record: unverified-coverage.</dd>
+  </dl>
+  <h4>What the text says</h4>
+  <p class="none">No verbatim sentence recorded.</p>
+  <h4>Files</h4>
+  <p class="none">No PDF on file. Paywalled — host returned text/html, not a PDF body.</p>
+  <p class="trace"><code>cit-000541</code> &middot; review note only — not part of
+     <code>packet.html</code> and not evidence until the row is confirmed and the packet re-rendered</p>
+</article>
+
+<article class="report" id="rep-cit-000543">
+  <h3>CarbArrayART: a new software tool for carbohydrate microarray data storage, processing, presentation, and reporting</h3>
+  <p class="byline">Akune Y, Arpinar S, Silva LM, Palma AS, Tajadura-Ortega V, Aoki-Kinoshita KF, Ranzinger R, Liu Y, Feizi T<br>
+     <span class="venue">…, 2022</span> &middot; <a href="https://academic.oup.com/glycob/article-abstract/32/7/552/6555547" target="_blank" rel="noopener noreferrer">academic.oup.com</a></p>
+  <dl>
+    <dt>Cited work</dt>
+    <dd>GLAD: GLycan Array Dashboard, a visual analytics tool for glycan microarrays <span class="sub">(GLAD)</span></dd>
+    <dt>Where the citation appears</dt>
+    <dd><span class="none">not read — no PDF on file, so no claim about where the citation sits</span></dd>
+    <dt>Citing authors&rsquo; institutions</dt>
+    <dd><span class="none">Not recorded — confirm from the PDF&rsquo;s affiliation block.</span></dd>
+    <dt>Article type</dt>
+    <dd>article</dd>
+    <dt>Independence</dt>
+    <dd>Re-checked against the citation record: complete author lists of both papers, no shared
+        author, neither PI named on the citing paper; basis on the record: confirmed.</dd>
+  </dl>
+  <h4>What the text says</h4>
+  <p class="none">No verbatim sentence recorded.</p>
+  <h4>Files</h4>
+  <p class="none">No PDF on file. Paywalled — OpenAlex offered a PDF but the host answered 403.</p>
+  <p class="trace"><code>cit-000543</code> &middot; review note only — not part of
+     <code>packet.html</code> and not evidence until the row is confirmed and the packet re-rendered</p>
+</article>
+
+<article class="report" id="rep-cit-000546">
+  <h3>Decoding glycans: deciphering the sugary secrets to be coherent on the implication</h3>
+  <p class="byline">S Sharma, S Shekhar, B Sharma, P Jain<br>
+     <span class="venue">RSC advances, 2020</span> &middot; <a href="https://pubs.rsc.org/ra/article-abstract/10/56/34099/702166" target="_blank" rel="noopener noreferrer">pubs.rsc.org</a></p>
+  <dl>
+    <dt>Cited work</dt>
+    <dd>GLAD: GLycan Array Dashboard, a visual analytics tool for glycan microarrays <span class="sub">(GLAD)</span></dd>
+    <dt>Where the citation appears</dt>
+    <dd><span class="none">not read — no PDF on file, so no claim about where the citation sits</span></dd>
+    <dt>Citing authors&rsquo; institutions</dt>
+    <dd><span class="none">Not recorded — confirm from the PDF&rsquo;s affiliation block.</span></dd>
+    <dt>Article type</dt>
+    <dd>article</dd>
+    <dt>Independence</dt>
+    <dd>Re-checked against the citation record: complete author lists of both papers, no shared
+        author, neither PI named on the citing paper; basis on the record: unverified-coverage.</dd>
+  </dl>
+  <h4>What the text says</h4>
+  <p class="none">No verbatim sentence recorded.</p>
+  <h4>Files</h4>
+  <p class="none">No PDF on file. No open copy — OpenAlex has the work (10.1039/d0ra04471g), no open-access PDF location.</p>
+  <p class="trace"><code>cit-000546</code> &middot; review note only — not part of
+     <code>packet.html</code> and not evidence until the row is confirmed and the packet re-rendered</p>
+</article>
+
+<article class="report" id="rep-cit-000547">
+  <h3>Visual data mining: A comparative analysis of selected datasets</h3>
+  <p class="byline">Mgboh, Ujunwa; Ogbuokiri, Blessing; Obaido, George; Aruleba, Kehinde<br>
+     <span class="venue">International Conference on …, 2020</span> &middot; <a href="https://link.springer.com/chapter/10.1007/978-3-030-71187-0_35" target="_blank" rel="noopener noreferrer">link.springer.com</a> &middot; <a href="https://doi.org/10.1007/978-3-030-71187-0_35" target="_blank" rel="noopener noreferrer">10.1007/978-3-030-71187-0_35</a></p>
+  <dl>
+    <dt>Cited work</dt>
+    <dd>GLAD: GLycan Array Dashboard, a visual analytics tool for glycan microarrays <span class="sub">(GLAD)</span></dd>
+    <dt>Where the citation appears</dt>
+    <dd><span class="none">not read — no PDF on file, so no claim about where the citation sits</span></dd>
+    <dt>Citing authors&rsquo; institutions</dt>
+    <dd><span class="none">Not recorded — confirm from the PDF&rsquo;s affiliation block.</span></dd>
+    <dt>Article type</dt>
+    <dd>article</dd>
+    <dt>Independence</dt>
+    <dd>Re-checked against the citation record: complete author lists of both papers, no shared
+        author, neither PI named on the citing paper; basis on the record: unverified-coverage.</dd>
+  </dl>
+  <h4>What the text says</h4>
+  <p class="none">No verbatim sentence recorded.</p>
+  <h4>Files</h4>
+  <p class="none">No PDF on file. No open copy — OpenAlex has the work (10.1007/978-3-030-71187-0_35), no open-access PDF location.</p>
+  <p class="trace"><code>cit-000547</code> &middot; review note only — not part of
+     <code>packet.html</code> and not evidence until the row is confirmed and the packet re-rendered</p>
+</article>
+
+<article class="report" id="rep-cit-000548">
+  <h3>CBMcarb-DB: interface of the three-dimensional landscape of carbohydrate-binding modules</h3>
+  <p class="byline">Ribeiro, DO; Bonnardel, F; Palma, Angelina S{\'a}; Carvalho, ALM; Perez, Serge<br>
+     <span class="venue"></span> &middot; <a href="https://books.rsc.org/books/edited-volume/2205/chapter/8051227" target="_blank" rel="noopener noreferrer">books.rsc.org</a></p>
+  <dl>
+    <dt>Cited work</dt>
+    <dd>GLAD: GLycan Array Dashboard, a visual analytics tool for glycan microarrays <span class="sub">(GLAD)</span></dd>
+    <dt>Where the citation appears</dt>
+    <dd><span class="none">not read — no PDF on file, so no claim about where the citation sits</span></dd>
+    <dt>Citing authors&rsquo; institutions</dt>
+    <dd><span class="none">Not recorded — confirm from the PDF&rsquo;s affiliation block.</span></dd>
+    <dt>Article type</dt>
+    <dd>article</dd>
+    <dt>Independence</dt>
+    <dd>Re-checked against the citation record: complete author lists of both papers, no shared
+        author, neither PI named on the citing paper; basis on the record: unverified-coverage.</dd>
+  </dl>
+  <h4>What the text says</h4>
+  <p class="none">No verbatim sentence recorded.</p>
+  <h4>Files</h4>
+  <p class="none">No PDF on file. Paywalled — OpenAlex offered a PDF but the host answered 403.</p>
+  <p class="trace"><code>cit-000548</code> &middot; review note only — not part of
+     <code>packet.html</code> and not evidence until the row is confirmed and the packet re-rendered</p>
+</article>
+
+<article class="report" id="rep-cit-000549">
+  <h3>CHARACTERIZATION OF IN VITRO FITNESS AND ANTIGENIC DRIFT DIFFERENCES BETWEEN CIRCULATING H1N1 INFLUENZA CLADES</h3>
+  <p class="byline">N Swanson<br>
+     <span class="venue"></span> &middot; <a href="https://jscholarship.library.jhu.edu/items/0dbcacaf-9e37-49c3-8a95-a3f55b8ae645" target="_blank" rel="noopener noreferrer">jscholarship.library.jhu.edu</a></p>
+  <dl>
+    <dt>Cited work</dt>
+    <dd>GLAD: GLycan Array Dashboard, a visual analytics tool for glycan microarrays <span class="sub">(GLAD)</span></dd>
+    <dt>Where the citation appears</dt>
+    <dd><span class="none">not read — no PDF on file, so no claim about where the citation sits</span></dd>
+    <dt>Citing authors&rsquo; institutions</dt>
+    <dd><span class="none">Not recorded — confirm from the PDF&rsquo;s affiliation block.</span></dd>
+    <dt>Article type</dt>
+    <dd>article</dd>
+    <dt>Independence</dt>
+    <dd>Re-checked against the citation record: complete author lists of both papers, no shared
+        author, neither PI named on the citing paper; basis on the record: unverified-coverage.</dd>
+  </dl>
+  <h4>What the text says</h4>
+  <p class="none">No verbatim sentence recorded.</p>
+  <h4>Files</h4>
+  <p class="none">No PDF on file. Not in OpenAlex — no OpenAlex record by title.</p>
+  <p class="trace"><code>cit-000549</code> &middot; review note only — not part of
+     <code>packet.html</code> and not evidence until the row is confirmed and the packet re-rendered</p>
+</article>
+
+<article class="report" id="rep-cit-000552">
+  <h3>[CITATION] METABOLITE MULTIPRO/SYNBIOTICS: APPROACHES FOR CONSTRUCTING</h3>
+  <p class="byline">MV Lakhtin, VM Lakhtin<br>
+     <span class="venue"></span></p>
+  <dl>
+    <dt>Cited work</dt>
+    <dd>GLAD: GLycan Array Dashboard, a visual analytics tool for glycan microarrays <span class="sub">(GLAD)</span></dd>
+    <dt>Where the citation appears</dt>
+    <dd><span class="none">not read — no PDF on file, so no claim about where the citation sits</span></dd>
+    <dt>Citing authors&rsquo; institutions</dt>
+    <dd><span class="none">Not recorded — confirm from the PDF&rsquo;s affiliation block.</span></dd>
+    <dt>Article type</dt>
+    <dd>article</dd>
+    <dt>Independence</dt>
+    <dd>Re-checked against the citation record: complete author lists of both papers, no shared
+        author, neither PI named on the citing paper; basis on the record: user-decided.</dd>
+  </dl>
+  <h4>What the text says</h4>
+  <p class="none">No verbatim sentence recorded.</p>
+  <h4>Files</h4>
+  <p class="none">No PDF on file. Not in OpenAlex — no OpenAlex record by title.</p>
+  <p class="trace"><code>cit-000552</code> &middot; review note only — not part of
+     <code>packet.html</code> and not evidence until the row is confirmed and the packet re-rendered</p>
+</article>
+
+<article class="report" id="rep-cit-000554">
+  <h3>Glycobioinformatics in deciphering the mammalian glycocode: Recent advances</h3>
+  <p class="byline">Datta, Arun K; Sukhija, Nitin<br>
+     <span class="venue">Glycome: The Hidden Code in …, 2021</span> &middot; <a href="https://www.dattaconsultinggroup.com/akdsite/assets/publications/glycocodearticle.pdf" target="_blank" rel="noopener noreferrer">www.dattaconsultinggroup.com</a></p>
+  <dl>
+    <dt>Cited work</dt>
+    <dd>GLAD: GLycan Array Dashboard, a visual analytics tool for glycan microarrays <span class="sub">(GLAD)</span></dd>
+    <dt>Where the citation appears</dt>
+    <dd><span class="none">not read — no PDF on file, so no claim about where the citation sits</span></dd>
+    <dt>Citing authors&rsquo; institutions</dt>
+    <dd><span class="none">Not recorded — confirm from the PDF&rsquo;s affiliation block.</span></dd>
+    <dt>Article type</dt>
+    <dd>article</dd>
+    <dt>Independence</dt>
+    <dd>Re-checked against the citation record: complete author lists of both papers, no shared
+        author, neither PI named on the citing paper; basis on the record: unverified-coverage.</dd>
+  </dl>
+  <h4>What the text says</h4>
+  <p class="none">No verbatim sentence recorded.</p>
+  <h4>Files</h4>
+  <p class="none">No PDF on file. Not in OpenAlex — no OpenAlex record by title.</p>
+  <p class="trace"><code>cit-000554</code> &middot; review note only — not part of
+     <code>packet.html</code> and not evidence until the row is confirmed and the packet re-rendered</p>
+</article>
+
+<article class="report" id="rep-cit-000555">
+  <h3>Ad ancing helminth gl comics: structural specificit and immunogenicit of schistosomal and filarial gl cans</h3>
+  <p class="byline">LMC Petralia<br>
+     <span class="venue"></span> &middot; <a href="https://scholarlypublications.universiteitleiden.nl/access/item%3A4212215/download" target="_blank" rel="noopener noreferrer">scholarlypublications.universiteitleiden.nl</a></p>
+  <dl>
+    <dt>Cited work</dt>
+    <dd>GLAD: GLycan Array Dashboard, a visual analytics tool for glycan microarrays <span class="sub">(GLAD)</span></dd>
+    <dt>Where the citation appears</dt>
+    <dd><span class="none">not read — no PDF on file, so no claim about where the citation sits</span></dd>
+    <dt>Citing authors&rsquo; institutions</dt>
+    <dd><span class="none">Not recorded — confirm from the PDF&rsquo;s affiliation block.</span></dd>
+    <dt>Article type</dt>
+    <dd>article</dd>
+    <dt>Independence</dt>
+    <dd>Re-checked against the citation record: complete author lists of both papers, no shared
+        author, neither PI named on the citing paper; basis on the record: user-decided.</dd>
+  </dl>
+  <h4>What the text says</h4>
+  <p class="none">No verbatim sentence recorded.</p>
+  <h4>Files</h4>
+  <p class="none">No PDF on file. Not in OpenAlex — no OpenAlex record by title.</p>
+  <p class="trace"><code>cit-000555</code> &middot; review note only — not part of
+     <code>packet.html</code> and not evidence until the row is confirmed and the packet re-rendered</p>
+</article>
+
+<article class="report" id="rep-cit-000556">
+  <h3>Phenotyping murine and human platelet-derived extracellular vesicles gives implications for future in vivo biodistribution and clearance studies</h3>
+  <p class="byline">O An, F Reusswig, V Krenzlin, C Deppermann<br>
+     <span class="venue"></span> &middot; <a href="https://www.rpthjournal.org/cms/10.1016/j.rpth.2026.103414/attachment/5e1ef181-290b-47ad-a0b6-2820746565cf/mmc1.pdf" target="_blank" rel="noopener noreferrer">www.rpthjournal.org</a> &middot; <a href="https://doi.org/10.1016/j.rpth.2026.103414/attachment/5e1ef181-290b-47ad-a0b6-2820746565cf/mmc1.pdf" target="_blank" rel="noopener noreferrer">10.1016/j.rpth.2026.103414/attachment/5e1ef181-290b-47ad-a0b6-2820746565cf/mmc1.pdf</a></p>
+  <dl>
+    <dt>Cited work</dt>
+    <dd>GLAD: GLycan Array Dashboard, a visual analytics tool for glycan microarrays <span class="sub">(GLAD)</span></dd>
+    <dt>Where the citation appears</dt>
+    <dd><span class="none">not read — no PDF on file, so no claim about where the citation sits</span></dd>
+    <dt>Citing authors&rsquo; institutions</dt>
+    <dd><span class="none">Not recorded — confirm from the PDF&rsquo;s affiliation block.</span></dd>
+    <dt>Article type</dt>
+    <dd>article</dd>
+    <dt>Independence</dt>
+    <dd>Re-checked against the citation record: complete author lists of both papers, no shared
+        author, neither PI named on the citing paper; basis on the record: unverified-coverage.</dd>
+  </dl>
+  <h4>What the text says</h4>
+  <p class="none">No verbatim sentence recorded.</p>
+  <h4>Files</h4>
+  <p class="none">No PDF on file. Not in OpenAlex — no OpenAlex record by DOI (10.1016/j.rpth.2026.103414) or by title.</p>
+  <p class="trace"><code>cit-000556</code> &middot; review note only — not part of
+     <code>packet.html</code> and not evidence until the row is confirmed and the packet re-rendered</p>
+</article>
+
+<article class="report" id="rep-cit-000559">
+  <h3>Glycan Microarray Data Analysis: From Raw Data to Public Database Integration</h3>
+  <p class="byline">WTWMB You<br>
+     <span class="venue"></span> &middot; <a href="https://www.creative-proteomics.com/resource/glycan-microarray-analysis-and-database-integration.htm" target="_blank" rel="noopener noreferrer">www.creative-proteomics.com</a></p>
+  <dl>
+    <dt>Cited work</dt>
+    <dd>GLAD: GLycan Array Dashboard, a visual analytics tool for glycan microarrays <span class="sub">(GLAD)</span></dd>
+    <dt>Where the citation appears</dt>
+    <dd><span class="none">not read — no PDF on file, so no claim about where the citation sits</span></dd>
+    <dt>Citing authors&rsquo; institutions</dt>
+    <dd><span class="none">Not recorded — confirm from the PDF&rsquo;s affiliation block.</span></dd>
+    <dt>Article type</dt>
+    <dd>article</dd>
+    <dt>Independence</dt>
+    <dd>Re-checked against the citation record: complete author lists of both papers, no shared
+        author, neither PI named on the citing paper; basis on the record: unverified-coverage.</dd>
+  </dl>
+  <h4>What the text says</h4>
+  <p class="none">No verbatim sentence recorded.</p>
+  <h4>Files</h4>
+  <p class="none">No PDF on file. Not in OpenAlex — no OpenAlex record by title.</p>
+  <p class="trace"><code>cit-000559</code> &middot; review note only — not part of
+     <code>packet.html</code> and not evidence until the row is confirmed and the packet re-rendered</p>
+</article>
+
+<article class="report" id="rep-cit-000560">
+  <h3>CarbArrayART-An update on the software tool for carbohydrate microarray data, storage, processing, presentation and reporting</h3>
+  <p class="byline">Akune, Yukie; Arpinar, Sena; Silva, Lisete M; Palma, Angelina S; Liu, Yan; Ranzinger, Rene; Feizi, Ten<br>
+     <span class="venue"></span> &middot; <a href="https://spiral.imperial.ac.uk/entities/publication/6ebd01fb-2687-4761-a614-c85c1a192b24" target="_blank" rel="noopener noreferrer">spiral.imperial.ac.uk</a></p>
+  <dl>
+    <dt>Cited work</dt>
+    <dd>GLAD: GLycan Array Dashboard, a visual analytics tool for glycan microarrays <span class="sub">(GLAD)</span></dd>
+    <dt>Where the citation appears</dt>
+    <dd><span class="none">not read — no PDF on file, so no claim about where the citation sits</span></dd>
+    <dt>Citing authors&rsquo; institutions</dt>
+    <dd><span class="none">Not recorded — confirm from the PDF&rsquo;s affiliation block.</span></dd>
+    <dt>Article type</dt>
+    <dd>article</dd>
+    <dt>Independence</dt>
+    <dd>Re-checked against the citation record: complete author lists of both papers, no shared
+        author, neither PI named on the citing paper; basis on the record: unverified-coverage.</dd>
+  </dl>
+  <h4>What the text says</h4>
+  <p class="none">No verbatim sentence recorded.</p>
+  <h4>Files</h4>
+  <p class="none">No PDF on file. Not in OpenAlex — no OpenAlex record by title.</p>
+  <p class="trace"><code>cit-000560</code> &middot; review note only — not part of
+     <code>packet.html</code> and not evidence until the row is confirmed and the packet re-rendered</p>
+</article>
+
+<article class="report" id="rep-cit-000561">
+  <h3>Carbohydrate Microarray Technology</h3>
+  <p class="byline">Kračun SK, Fangel JU, Rydahl MG, Pedersen HL, Vidal-Melgosa S, Willats WG<br>
+     <span class="venue">The Art of Carbohydrate Analysis, 2021</span> &middot; <a href="https://link.springer.com/chapter/10.1007/978-3-030-77791-3_10" target="_blank" rel="noopener noreferrer">link.springer.com</a> &middot; <a href="https://doi.org/10.1007/978-3-030-77791-3_10" target="_blank" rel="noopener noreferrer">10.1007/978-3-030-77791-3_10</a></p>
+  <dl>
+    <dt>Cited work</dt>
+    <dd>GLAD: GLycan Array Dashboard, a visual analytics tool for glycan microarrays <span class="sub">(GLAD)</span></dd>
+    <dt>Where the citation appears</dt>
+    <dd><span class="none">not read — no PDF on file, so no claim about where the citation sits</span></dd>
+    <dt>Citing authors&rsquo; institutions</dt>
+    <dd><span class="none">Not recorded — confirm from the PDF&rsquo;s affiliation block.</span></dd>
+    <dt>Article type</dt>
+    <dd>article</dd>
+    <dt>Independence</dt>
+    <dd>Re-checked against the citation record: complete author lists of both papers, no shared
+        author, neither PI named on the citing paper; basis on the record: confirmed.</dd>
+  </dl>
+  <h4>What the text says</h4>
+  <p class="none">No verbatim sentence recorded.</p>
+  <h4>Files</h4>
+  <p class="none">No PDF on file. No open copy — OpenAlex has the work (10.1007/978-3-030-77791-3_10), no open-access PDF location.</p>
+  <p class="trace"><code>cit-000561</code> &middot; review note only — not part of
+     <code>packet.html</code> and not evidence until the row is confirmed and the packet re-rendered</p>
+</article>
+
+<article class="report" id="rep-cit-000562">
+  <h3>CarbArrayART</h3>
+  <p class="byline">Akune Y, Arpinar S, Silva LM, Palma AS, Tajadura-Ortega V, Aoki-Kinoshita KF, Ranzinger R, Liu Y, Feizi T<br>
+     <span class="venue"></span> &middot; <a href="https://run.unl.pt/entities/publication/48e256d4-d5a1-4fde-a8a0-ec184408ff34" target="_blank" rel="noopener noreferrer">run.unl.pt</a></p>
+  <dl>
+    <dt>Cited work</dt>
+    <dd>GLAD: GLycan Array Dashboard, a visual analytics tool for glycan microarrays <span class="sub">(GLAD)</span></dd>
+    <dt>Where the citation appears</dt>
+    <dd><span class="none">not read — no PDF on file, so no claim about where the citation sits</span></dd>
+    <dt>Citing authors&rsquo; institutions</dt>
+    <dd><span class="none">Not recorded — confirm from the PDF&rsquo;s affiliation block.</span></dd>
+    <dt>Article type</dt>
+    <dd>article</dd>
+    <dt>Independence</dt>
+    <dd>Re-checked against the citation record: complete author lists of both papers, no shared
+        author, neither PI named on the citing paper; basis on the record: unverified-coverage.</dd>
+  </dl>
+  <h4>What the text says</h4>
+  <p class="none">No verbatim sentence recorded.</p>
+  <h4>Files</h4>
+  <p class="none">No PDF on file. Paywalled — OpenAlex offered a PDF but the host answered 403.</p>
+  <p class="trace"><code>cit-000562</code> &middot; review note only — not part of
+     <code>packet.html</code> and not evidence until the row is confirmed and the packet re-rendered</p>
+</article>
+
+<article class="report" id="rep-cit-000563">
+  <h3>Involvement of N-glycans in binding of Photorhabdus</h3>
+  <p class="byline">H Bakker, W Römer, K Aktories, G Schmidt - 2021 - academia.edu<br>
+     <span class="venue"></span> &middot; <a href="https://www.academia.edu/download/106476898/cmi.pdf" target="_blank" rel="noopener noreferrer">www.academia.edu</a></p>
+  <dl>
+    <dt>Cited work</dt>
+    <dd>—</dd>
+    <dt>Where the citation appears</dt>
+    <dd><span class="none">not read — no PDF on file, so no claim about where the citation sits</span></dd>
+    <dt>Citing authors&rsquo; institutions</dt>
+    <dd><span class="none">Not recorded — confirm from the PDF&rsquo;s affiliation block.</span></dd>
+    <dt>Article type</dt>
+    <dd>—</dd>
+    <dt>Independence</dt>
+    <dd>Re-checked against the citation record: complete author lists of both papers, no shared
+        author, neither PI named on the citing paper; basis on the record: confirmed.</dd>
+  </dl>
+  <h4>What the text says</h4>
+  <p class="none">No verbatim sentence recorded.</p>
+  <h4>Files</h4>
+  <p class="none">No PDF on file. Not yet looked up.</p>
+  <p class="trace"><code>cit-000563</code> &middot; review note only — not part of
+     <code>packet.html</code> and not evidence until the row is confirmed and the packet re-rendered</p>
+</article>
+
+<article class="report" id="rep-cit-000564">
+  <h3>Structure-function analysis of the photorhabdus Tc toxin complex</h3>
+  <p class="byline">PN Ng'ang'a<br>
+     <span class="venue"></span> &middot; <a href="https://freidok.uni-freiburg.de/files/166648/Qf-K5JUjPFmyT68-/Peter+NjengaThesis.pdf" target="_blank" rel="noopener noreferrer">freidok.uni-freiburg.de</a></p>
+  <dl>
+    <dt>Cited work</dt>
+    <dd>GLAD: GLycan Array Dashboard, a visual analytics tool for glycan microarrays <span class="sub">(GLAD)</span></dd>
+    <dt>Where the citation appears</dt>
+    <dd><span class="none">not read — no PDF on file, so no claim about where the citation sits</span></dd>
+    <dt>Citing authors&rsquo; institutions</dt>
+    <dd><span class="none">Not recorded — confirm from the PDF&rsquo;s affiliation block.</span></dd>
+    <dt>Article type</dt>
+    <dd>article</dd>
+    <dt>Independence</dt>
+    <dd>Re-checked against the citation record: complete author lists of both papers, no shared
+        author, neither PI named on the citing paper; basis on the record: unverified-coverage.</dd>
+  </dl>
+  <h4>What the text says</h4>
+  <p class="none">No verbatim sentence recorded.</p>
+  <h4>Files</h4>
+  <p class="none">No PDF on file. Not in OpenAlex — no OpenAlex record by title.</p>
+  <p class="trace"><code>cit-000564</code> &middot; review note only — not part of
+     <code>packet.html</code> and not evidence until the row is confirmed and the packet re-rendered</p>
+</article>
+
+<article class="report" id="rep-cit-000565">
+  <h3>Metabolite Multiprobiotic</h3>
+  <p class="byline">VA Aleshkin, SS Afanasiev - Oral Health by Using Probiotic …, 2019 - books.google.com<br>
+     <span class="venue"></span> &middot; <a href="https://books.google.com/books?hl=en&amp;lr=&amp;id=jGiTEQAAQBAJ&amp;oi=fnd&amp;pg=PA71&amp;ots=uH3IOUCcDj&amp;sig=BfNqav-_QtYA6fpWtFBSSGOSDf0" target="_blank" rel="noopener noreferrer">books.google.com</a></p>
+  <dl>
+    <dt>Cited work</dt>
+    <dd>—</dd>
+    <dt>Where the citation appears</dt>
+    <dd><span class="none">not read — no PDF on file, so no claim about where the citation sits</span></dd>
+    <dt>Citing authors&rsquo; institutions</dt>
+    <dd><span class="none">Not recorded — confirm from the PDF&rsquo;s affiliation block.</span></dd>
+    <dt>Article type</dt>
+    <dd>—</dd>
+    <dt>Independence</dt>
+    <dd>Re-checked against the citation record: complete author lists of both papers, no shared
+        author, neither PI named on the citing paper; basis on the record: unverified-coverage.</dd>
+  </dl>
+  <h4>What the text says</h4>
+  <p class="none">No verbatim sentence recorded.</p>
+  <h4>Files</h4>
+  <p class="none">No PDF on file. Not yet looked up.</p>
+  <p class="trace"><code>cit-000565</code> &middot; review note only — not part of
+     <code>packet.html</code> and not evidence until the row is confirmed and the packet re-rendered</p>
+</article>
+
+<article class="report" id="rep-cit-000566">
+  <h3>SugarArray: A User-centred-designed Platform for the Analysis of Lectin and Glycan Microarrays.</h3>
+  <p class="byline">A Sucre, R Pazos, NC Reichardt, A Garín-Muga<br>
+     <span class="venue">Muga - HEALTHINF, 2020</span> &middot; <a href="https://www.scitepress.org/PublishedPapers/2020/89601/89601.pdf" target="_blank" rel="noopener noreferrer">www.scitepress.org</a></p>
+  <dl>
+    <dt>Cited work</dt>
+    <dd>GLAD: GLycan Array Dashboard, a visual analytics tool for glycan microarrays <span class="sub">(GLAD)</span></dd>
+    <dt>Where the citation appears</dt>
+    <dd><span class="none">not read — no PDF on file, so no claim about where the citation sits</span></dd>
+    <dt>Citing authors&rsquo; institutions</dt>
+    <dd><span class="none">Not recorded — confirm from the PDF&rsquo;s affiliation block.</span></dd>
+    <dt>Article type</dt>
+    <dd>article</dd>
+    <dt>Independence</dt>
+    <dd>Re-checked against the citation record: complete author lists of both papers, no shared
+        author, neither PI named on the citing paper; basis on the record: unverified-coverage.</dd>
+  </dl>
+  <h4>What the text says</h4>
+  <p class="none">No verbatim sentence recorded.</p>
+  <h4>Files</h4>
+  <p class="none">No PDF on file. No open copy — OpenAlex has the work (10.5220/0008960100002513), no open-access PDF location.</p>
+  <p class="trace"><code>cit-000566</code> &middot; review note only — not part of
+     <code>packet.html</code> and not evidence until the row is confirmed and the packet re-rendered</p>
+</article>
+
+<article class="report" id="rep-cit-000567">
+  <h3>[CITATION] Glycoinformatics resources integrated through the GlySpace Alliance</h3>
+  <p class="byline">Frederique Lisacek, Kiyoko F. Aoki-Kinoshita, Jeet Kiran Vora, Raja Mazumder, Mike Tiemeyer<br>
+     <span class="venue"></span> &middot; <a href="https://doi.org/10.1016/b978-0-12-819475-1.00107-3" target="_blank" rel="noopener noreferrer">10.1016/b978-0-12-819475-1.00107-3</a></p>
+  <dl>
+    <dt>Cited work</dt>
+    <dd>GLAD: GLycan Array Dashboard, a visual analytics tool for glycan microarrays <span class="sub">(GLAD)</span></dd>
+    <dt>Where the citation appears</dt>
+    <dd><span class="none">not read — no PDF on file, so no claim about where the citation sits</span></dd>
+    <dt>Citing authors&rsquo; institutions</dt>
+    <dd><span class="none">Not recorded — confirm from the PDF&rsquo;s affiliation block.</span></dd>
+    <dt>Article type</dt>
+    <dd>article</dd>
+    <dt>Independence</dt>
+    <dd>Re-checked against the citation record: complete author lists of both papers, no shared
+        author, neither PI named on the citing paper; basis on the record: confirmed.</dd>
+  </dl>
+  <h4>What the text says</h4>
+  <p class="none">No verbatim sentence recorded.</p>
+  <h4>Files</h4>
+  <p class="none">No PDF on file. No open copy — OpenAlex has the work (10.1016/b978-0-12-819475-1.00107-3), no open-access PDF location.</p>
+  <p class="trace"><code>cit-000567</code> &middot; review note only — not part of
+     <code>packet.html</code> and not evidence until the row is confirmed and the packet re-rendered</p>
+</article>
+
+<p class="foot">Generated 2026-11-08 by <code>scripts/build-potential.js</code> from
    <code>Database/citation-catalog.sqlite</code> (read-only) and
    <code>notable-citations.sqlite</code>. Not linked from <code>packet.html</code> and not printed
    with it. Independence screen: <code>status = INDEPENDENT</code> and
-   <code>is_countable_independent = 1</code> on the active, standing, English row.</p>
+   <code>is_countable_independent = 1</code> on the active, standing, English row.
+   5 of 34 read by <code>scan-mentions.js</code> on or before 2026-11-08.</p>
 </main>
 </body>
 </html>

@@ -182,11 +182,16 @@ function potentialIndependent(cat, db, citesId) {
     FROM citations WHERE cites_id = ? ORDER BY row_uid`).all(citesId);
   const included = new Set(db.prepare(
     "SELECT row_uid FROM citation WHERE status = 'included'").all().map(r => r.row_uid));
+  // A row someone already decided against stays in the database (§4.5 keeps the
+  // record of what was screened) but must not reappear on the review page —
+  // otherwise the same article is reconsidered from scratch by the next reader.
+  const decided = new Set(db.prepare(
+    "SELECT row_uid FROM citation WHERE status = 'screened-out'").all().map(r => r.row_uid));
   const orig = originalApplicationUids();
   if (orig === null) {
     throw new Error("Original-Application-Citations.md is missing — cannot exclude citations already filed.");
   }
-  const screen = { total: all.length, superseded: 0, dependent: 0, notStanding: 0, nonEnglish: 0, inPacket: 0, origApp: 0 };
+  const screen = { total: all.length, superseded: 0, dependent: 0, notStanding: 0, nonEnglish: 0, inPacket: 0, origApp: 0, decided: 0 };
   const rows = [];
   for (const r of all) {
     if (r.superseded_at) { screen.superseded++; continue; }
@@ -195,6 +200,7 @@ function potentialIndependent(cat, db, citesId) {
     if (r.is_non_english) { screen.nonEnglish++; continue; }
     if (included.has(r.row_uid)) { screen.inPacket++; continue; }
     if (orig.has(r.row_uid)) { screen.origApp++; continue; }
+    if (decided.has(r.row_uid)) { screen.decided++; continue; }
     rows.push(r);
   }
   return { rows, screen, origAppUids: orig };
@@ -631,4 +637,27 @@ function projectForCitedPaper(title) {
   return null;
 }
 
-module.exports = { PKT, REPO, CATALOG, SUMMARY_MD, PDF_ROOT, PACKET_DB, PAPERS, PENDING_PAPERS, SCREENED_PAPERS, ROOT_PAPERS, ROOT_PENDING, ROOT_SCREENED, STORAGE_ROOTS, openCatalog, openPacket, SCHEMA, surnameSlug, surnameOf, seniorAuthor, readEnv, rel, authorKeys, sharesAuthor, toolForCitedPaper, projectForCitedPaper, TIER_RANK, headlineTier, originalApplicationUids, potentialIndependent, ROOT_FOR_STATUS, folderRoots, storageDir, absFile };
+/**
+ * Whether two quotations are the same printed sentence seen twice.
+ *
+ * Three tools quote the same line for different reasons: `scan-mentions.js` takes
+ * the sentence around a named tool, `scan-refs.js` takes the sentence around a
+ * resolved reference number, and `record-mentions.js` stores whichever was recorded
+ * last. Their excerpts overlap without being equal, so an equality test reads one
+ * sentence as two citations and a page ends up claiming a paper cited the work
+ * twice. A shared run of thirty normalised characters is the same sentence.
+ */
+function sameSentence(a, b) {
+  const flat = s => String(s || "").toLowerCase().replace(/[^a-z0-9]+/g, "");
+  const x = flat(a), y = flat(b);
+  if (!x || !y) return false;
+  if (x.includes(y) || y.includes(x)) return true;
+  const short = x.length <= y.length ? x : y;
+  const long = x.length <= y.length ? y : x;
+  for (let i = 0; i + 30 <= short.length; i += 10) {
+    if (long.includes(short.slice(i, i + 30))) return true;
+  }
+  return false;
+}
+
+module.exports = { PKT, REPO, CATALOG, SUMMARY_MD, PDF_ROOT, PACKET_DB, PAPERS, PENDING_PAPERS, SCREENED_PAPERS, ROOT_PAPERS, ROOT_PENDING, ROOT_SCREENED, STORAGE_ROOTS, openCatalog, openPacket, SCHEMA, surnameSlug, surnameOf, seniorAuthor, readEnv, rel, authorKeys, sharesAuthor, toolForCitedPaper, projectForCitedPaper, TIER_RANK, headlineTier, originalApplicationUids, potentialIndependent, ROOT_FOR_STATUS, folderRoots, storageDir, absFile, sameSentence };

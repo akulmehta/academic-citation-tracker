@@ -1,0 +1,1204 @@
+{
+  "generated": "2026-11-08",
+  "results": [
+    {
+      "row_uid": "cit-000416",
+      "status": "included",
+      "recorded_tier": "C",
+      "cited_paper": "Differential recognition of oligomannose isomers by glycan-binding proteins involved in innate and adaptive immunity",
+      "cited_year": "2021",
+      "cited_surname": "gao",
+      "coauthors": [
+        "Stavenhagen",
+        "Eckmair",
+        "McKitrick",
+        "Mehta",
+        "..."
+      ],
+      "files": [
+        {
+          "file": "papers/cit-000416/01-article-Guerardel-2026.pdf",
+          "style": "author-year",
+          "outcome": "found",
+          "hit": {
+            "page": 19,
+            "marker_page": 19,
+            "section": "Discussion",
+            "rank": "C",
+            "inTable": false,
+            "marker": "(Gao et al. 2021)",
+            "style": "author-year",
+            "jointWith": [],
+            "certain": false,
+            "contextIsProse": true,
+            "quote": "restricted, specificities toward oligomannose motifs (Gao et al. 2021).",
+            "line": "restricted, specificities toward oligomannose motifs (Gao et al. 2021). To address this issue, we"
+          }
+        }
+      ]
+    },
+    {
+      "row_uid": "cit-000540",
+      "status": "included",
+      "recorded_tier": "A",
+      "cited_paper": "GLAD: GLycan Array Dashboard, a visual analytics tool for glycan microarrays",
+      "cited_year": "2019",
+      "cited_surname": "mehta",
+      "coauthors": [
+        "Cummings"
+      ],
+      "files": [
+        {
+          "file": "papers/cit-000416/01-article-Guerardel-2026.pdf",
+          "style": "author-year",
+          "outcome": "found",
+          "hit": {
+            "page": 30,
+            "marker_page": 30,
+            "section": "Methods",
+            "rank": "A",
+            "inTable": false,
+            "marker": "(Mehta and Cummings 2019)",
+            "style": "author-year",
+            "jointWith": [],
+            "certain": true,
+            "contextIsProse": true,
+            "quote": "binding profiles and identification of enriched glycan motifs (Mehta and Cummings 2019).",
+            "line": "binding profiles and identification of enriched glycan motifs (Mehta and Cummings 2019)."
+          }
+        }
+      ]
+    },
+    {
+      "row_uid": "cit-000987",
+      "status": "included",
+      "recorded_tier": "A",
+      "cited_paper": "Insights into glycobiology and the protein-glycan interactome using glycan microarray technologies",
+      "cited_year": "2024",
+      "cited_surname": "heimburg molinaro",
+      "coauthors": [
+        "Mehta",
+        "Tilton",
+        "Cummings"
+      ],
+      "files": [
+        {
+          "file": "papers/cit-000416/01-article-Guerardel-2026.pdf",
+          "style": "author-year",
+          "outcome": "found",
+          "hit": {
+            "page": 29,
+            "marker_page": 29,
+            "section": "Methods",
+            "rank": "A",
+            "inTable": false,
+            "marker": "(Heimburg-Molinaro et al. 2024)",
+            "style": "author-year",
+            "jointWith": [],
+            "certain": false,
+            "contextIsProse": true,
+            "quote": "request) (Heimburg-Molinaro et al. 2024).",
+            "line": "request) (Heimburg-Molinaro et al. 2024). VLPs were tested at 50 μg/mL and detected with an"
+          }
+        }
+      ]
+    },
+    {
+      "row_uid": "cit-001259",
+      "status": "included",
+      "recorded_tier": "A",
+      "cited_paper": "Reusable glycan microarrays using a microwave assisted wet-erase (MAWE) process",
+      "cited_year": "2024",
+      "cited_surname": "mehta",
+      "coauthors": [
+        "Tilton",
+        "Muerner",
+        "Gunten",
+        "..."
+      ],
+      "files": [
+        {
+          "file": "papers/cit-000416/01-article-Guerardel-2026.pdf",
+          "style": "author-year",
+          "outcome": "found",
+          "hit": {
+            "page": 30,
+            "marker_page": 30,
+            "section": "Methods",
+            "rank": "A",
+            "inTable": false,
+            "marker": "(Mehta et al. 2024)",
+            "style": "author-year",
+            "jointWith": [],
+            "certain": false,
+            "contextIsProse": true,
+            "quote": "(RFU) standard deviation, and coefficient of variation for each glycan (Mehta et al. 2024).",
+            "line": "(RFU) standard deviation, and coefficient of variation for each glycan (Mehta et al. 2024). The"
+          }
+        }
+      ]
+    },
+    {
+      "row_uid": "cit-000510",
+      "status": "held",
+      "recorded_tier": "A",
+      "cited_paper": "GLAD: GLycan Array Dashboard, a visual analytics tool for glycan microarrays",
+      "cited_year": "2019",
+      "cited_surname": "mehta",
+      "coauthors": [
+        "Cummings"
+      ],
+      "files": [
+        {
+          "file": "pending-papers/cit-000510/01-article-Pekosz-2023.pdf",
+          "style": "numbered",
+          "outcome": "found",
+          "num": 63,
+          "entry": "Mehta, A. Y. & Cummings, R. D. GLAD: GLycan array dashboard, a visual analytics tool for glycan microarrays. Bioinformatics 35, 3536–3537 (2019). Acknowledgements This work was supported by National Insitutes of Health (NIH) contracts N272201400007C and N7503021C00045 for the Johns Hopkins Centers o",
+          "titleScore": 1,
+          "hit": {
+            "page": 10,
+            "marker_page": 10,
+            "section": "Methods",
+            "rank": "A",
+            "inTable": false,
+            "marker": "63",
+            "style": "orphan superscript line",
+            "jointWith": [],
+            "contextIsProse": true,
+            "quote": "visually analyzed to confirm selective binding of terminally sialylated glycans, after which data was filtered to only include these glycans for a total of 139 glycans (see supplementary Table S1) and organized by structure using the Glycan Array Dashboard (GLAD)",
+            "line": "63"
+          }
+        }
+      ]
+    },
+    {
+      "row_uid": "cit-000511",
+      "status": "screened-out",
+      "recorded_tier": null,
+      "cited_paper": "GLAD: GLycan Array Dashboard, a visual analytics tool for glycan microarrays",
+      "cited_year": "2019",
+      "cited_surname": "mehta",
+      "coauthors": [
+        "Cummings"
+      ],
+      "files": [
+        {
+          "file": "screened-papers/cit-000511/01-article-Cummings-2020.pdf",
+          "style": "numbered",
+          "outcome": "found",
+          "num": 42,
+          "entry": "Mehta, A. Y. & Cummings, R. D. GLAD: GLycan Array Dashboard, a visual analytics tool for glycan microarrays. Bioinformatics 35, 3536–3537 (2019).",
+          "titleScore": 1,
+          "hit": {
+            "page": 4,
+            "marker_page": 4,
+            "section": "Results",
+            "rank": "B",
+            "inTable": false,
+            "marker": "42",
+            "style": "superscript",
+            "jointWith": [],
+            "contextIsProse": true,
+            "quote": "of a force graph 42 (Fig. 2g), where each individual node (colored,",
+            "line": "of a force graph 42 (Fig. 2g), where each individual node (colored,"
+          }
+        }
+      ]
+    },
+    {
+      "row_uid": "cit-000513",
+      "status": "held",
+      "recorded_tier": null,
+      "cited_paper": "GLAD: GLycan Array Dashboard, a visual analytics tool for glycan microarrays",
+      "cited_year": "2019",
+      "cited_surname": "mehta",
+      "coauthors": [
+        "Cummings"
+      ],
+      "files": [
+        {
+          "file": "pending-papers/cit-000513/01-article-Zou-2020.pdf",
+          "style": "numbered",
+          "outcome": "found",
+          "num": 71,
+          "entry": "Mehta, A.Y.; Cummings, R.D. Glad: Glycan array dashboard, a visual analytics tool for glycan microarrays. Bioinformatics 2019, 35, 3536–3537. [CrossRef]",
+          "titleScore": 1,
+          "hit": {
+            "page": 10,
+            "marker_page": 10,
+            "section": "Section 5: Glycan-Protein Interaction Databases",
+            "rank": "?",
+            "inTable": false,
+            "marker": "[71]",
+            "style": "bracketed",
+            "jointWith": [],
+            "contextIsProse": true,
+            "quote": "a web-based tool developed to visualize, analyze, and present glycan array data [71].",
+            "line": "a web-based tool developed to visualize, analyze, and present glycan array data [71]. Users input data"
+          }
+        },
+        {
+          "file": "pending-papers/cit-000513/01-article-Zou-2020.pdf",
+          "style": "numbered",
+          "outcome": "found",
+          "num": 71,
+          "entry": "Mehta, A.Y.; Cummings, R.D. Glad: Glycan array dashboard, a visual analytics tool for glycan microarrays. Bioinformatics 2019, 35, 3536–3537. [CrossRef]",
+          "titleScore": 1,
+          "hit": {
+            "page": 20,
+            "marker_page": 20,
+            "section": "Methods",
+            "rank": "A",
+            "inTable": true,
+            "marker": "[71]",
+            "style": "bracketed",
+            "jointWith": [],
+            "contextIsProse": true,
+            "quote": "GLAD [71] A web-based tool to visualize, analyze,",
+            "line": "GLAD [71] A web-based tool to visualize, analyze,"
+          }
+        }
+      ]
+    },
+    {
+      "row_uid": "cit-000516",
+      "status": "included",
+      "recorded_tier": "A",
+      "cited_paper": "GLAD: GLycan Array Dashboard, a visual analytics tool for glycan microarrays",
+      "cited_year": "2019",
+      "cited_surname": "mehta",
+      "coauthors": [
+        "Cummings"
+      ],
+      "files": [
+        {
+          "file": "papers/cit-000516/01-article-Vasta-2026.pdf",
+          "style": "numbered",
+          "outcome": "found",
+          "num": 128,
+          "entry": "Mehta, A.Y.; Cummings, R.D. GLAD: GLycan Array Dashboard, a visual analytics tool for glycan microarrays. Bioinformatics 2019, 35, 3536–3537. [CrossRef] [PubMed] [PubMed Central]",
+          "titleScore": 1,
+          "hit": {
+            "page": 21,
+            "marker_page": 21,
+            "section": "Methods",
+            "rank": "A",
+            "inTable": false,
+            "marker": "[ 128 ]",
+            "style": "bracketed",
+            "jointWith": [],
+            "contextIsProse": true,
+            "quote": "2025) The results were analyzed by the GLycan Array Dashboard (GLAD) platform [ 128 ],",
+            "line": "2025) The results were analyzed by the GLycan Array Dashboard (GLAD) platform [ 128 ],"
+          }
+        }
+      ]
+    },
+    {
+      "row_uid": "cit-000603",
+      "status": "included",
+      "recorded_tier": "A",
+      "cited_paper": "GlycoGlyph: a glycan visualizing, drawing and naming application",
+      "cited_year": "2020",
+      "cited_surname": "mehta",
+      "coauthors": [
+        "Cummings"
+      ],
+      "files": [
+        {
+          "file": "papers/cit-000516/01-article-Vasta-2026.pdf",
+          "style": "numbered",
+          "outcome": "found",
+          "num": 129,
+          "entry": "Mehta, A.Y.; Cummings, R.D. GlycoGlyph: A glycan visualizing, drawing and naming application. Bioinformatics 2020, 36, 3613–3614. [CrossRef] [PubMed] [PubMed Central]",
+          "titleScore": 1,
+          "hit": {
+            "page": 21,
+            "marker_page": 21,
+            "section": "Methods",
+            "rank": "A",
+            "inTable": false,
+            "marker": "[129]",
+            "style": "bracketed",
+            "jointWith": [],
+            "contextIsProse": true,
+            "quote": "and the glycan models were constructed using GlycoGlyph [129].",
+            "line": "and the glycan models were constructed using GlycoGlyph [129]."
+          }
+        }
+      ]
+    },
+    {
+      "row_uid": "cit-000976",
+      "status": "included",
+      "recorded_tier": "A",
+      "cited_paper": "Insights into glycobiology and the protein-glycan interactome using glycan microarray technologies",
+      "cited_year": "2024",
+      "cited_surname": "heimburg molinaro",
+      "coauthors": [
+        "Mehta",
+        "Tilton",
+        "Cummings"
+      ],
+      "files": [
+        {
+          "file": "papers/cit-000516/01-article-Vasta-2026.pdf",
+          "style": "numbered",
+          "outcome": "found",
+          "num": 125,
+          "entry": "Heimburg-Molinaro, J.; Mehta, A.Y.; Tilton, C.A.; Cummings, R.D. Insights Into Glycobiology and the Protein-Glycan Interactome Using Glycan Microarray Technologies. Mol. Cell. Proteom. 2024, 23, 100844. [CrossRef] [PubMed] [PubMed Central]",
+          "titleScore": 0.83,
+          "hit": {
+            "page": 21,
+            "marker_page": 21,
+            "section": "Methods",
+            "rank": "A",
+            "inTable": false,
+            "marker": "[125 –127 ]",
+            "style": "bracketed",
+            "jointWith": [
+              126,
+              127
+            ],
+            "contextIsProse": true,
+            "quote": "Glycan microarray analysis following established procedures [125 –127 ] was carried",
+            "line": "Glycan microarray analysis following established procedures [125 –127 ] was carried"
+          }
+        }
+      ]
+    },
+    {
+      "row_uid": "cit-001252",
+      "status": "included",
+      "recorded_tier": "A",
+      "cited_paper": "Reusable glycan microarrays using a microwave assisted wet-erase (MAWE) process",
+      "cited_year": "2024",
+      "cited_surname": "mehta",
+      "coauthors": [
+        "Tilton",
+        "Muerner",
+        "Gunten",
+        "..."
+      ],
+      "files": [
+        {
+          "file": "papers/cit-000516/01-article-Vasta-2026.pdf",
+          "style": "numbered",
+          "outcome": "found",
+          "num": 127,
+          "entry": "Mehta, A.Y.; Tilton, C.A.; Muerner, L.; von Gunten, S.; Heimburg-Molinaro, J.; Cummings, R.D. Reusable glycan microarrays using a microwave assisted wet-erase (MAWE) process. Glycobiology 2024, 34, cwad091. [CrossRef] [PubMed] [PubMed Central]",
+          "titleScore": 1,
+          "hit": {
+            "page": 21,
+            "marker_page": 21,
+            "section": "Methods",
+            "rank": "A",
+            "inTable": false,
+            "marker": "[125 –127 ]",
+            "style": "bracketed",
+            "jointWith": [
+              125,
+              126
+            ],
+            "contextIsProse": true,
+            "quote": "Glycan microarray analysis following established procedures [125 –127 ] was carried",
+            "line": "Glycan microarray analysis following established procedures [125 –127 ] was carried"
+          }
+        }
+      ]
+    },
+    {
+      "row_uid": "cit-000518",
+      "status": "included",
+      "recorded_tier": "A",
+      "cited_paper": "GLAD: GLycan Array Dashboard, a visual analytics tool for glycan microarrays",
+      "cited_year": "2019",
+      "cited_surname": "mehta",
+      "coauthors": [
+        "Cummings"
+      ],
+      "files": [
+        {
+          "file": "papers/cit-000518/01-article-Hokke-2026.pdf",
+          "style": "numbered",
+          "outcome": "found",
+          "num": 93,
+          "entry": "Mehta, A. Y. & Cummings, R. D. Data and text mining GLAD: GLycan Array Dashboard, a visual analytics tool for glycan microarrays. Bioinformatics 35, 3536–3537 (2019).",
+          "titleScore": 1,
+          "hit": {
+            "page": 16,
+            "marker_page": 16,
+            "section": "Methods",
+            "rank": "A",
+            "inTable": false,
+            "marker": "93",
+            "style": "orphan superscript line",
+            "jointWith": [],
+            "contextIsProse": true,
+            "quote": "average fluorescence intensity of “blank” spots—i.e. spots printed from wells containing spotting buffer only - as a baseline. Finally, GLycan Array Dashboard (GLAD)",
+            "line": "93"
+          }
+        }
+      ]
+    },
+    {
+      "row_uid": "cit-000520",
+      "status": "held",
+      "recorded_tier": "A",
+      "cited_paper": "GLAD: GLycan Array Dashboard, a visual analytics tool for glycan microarrays",
+      "cited_year": "2019",
+      "cited_surname": "mehta",
+      "coauthors": [
+        "Cummings"
+      ],
+      "files": [
+        {
+          "file": "pending-papers/cit-000520/01-article-Vasta-2025.pdf",
+          "style": "author-year",
+          "outcome": "found",
+          "hit": {
+            "page": 6,
+            "marker_page": 6,
+            "section": "Methods",
+            "rank": "A",
+            "inTable": false,
+            "marker": "(Mehta and Cummings, 2019)",
+            "style": "author-year",
+            "jointWith": [],
+            "certain": true,
+            "contextIsProse": true,
+            "quote": "by GLAD (Mehta and Cummings, 2019).",
+            "line": "by GLAD (Mehta and Cummings, 2019). Glycan models were"
+          }
+        }
+      ]
+    },
+    {
+      "row_uid": "cit-000521",
+      "status": "included",
+      "recorded_tier": "A",
+      "cited_paper": "GLAD: GLycan Array Dashboard, a visual analytics tool for glycan microarrays",
+      "cited_year": "2019",
+      "cited_surname": "mehta",
+      "coauthors": [
+        "Cummings"
+      ],
+      "files": [
+        {
+          "file": "papers/cit-000521/01-article-Wilson-2025.pdf",
+          "style": "either",
+          "outcome": "entry-not-found",
+          "best": null,
+          "entries": 0,
+          "detail": "no bibliography entry matched title + year + author, and no surname+year marker was found"
+        }
+      ]
+    },
+    {
+      "row_uid": "cit-000534",
+      "status": "screened-out",
+      "recorded_tier": "A",
+      "cited_paper": "GLAD: GLycan Array Dashboard, a visual analytics tool for glycan microarrays",
+      "cited_year": "2019",
+      "cited_surname": "mehta",
+      "coauthors": [
+        "Cummings"
+      ],
+      "files": [
+        {
+          "file": "screened-papers/cit-000534/01-article-Schmidt.pdf",
+          "style": "author-year",
+          "outcome": "found",
+          "hit": {
+            "page": 2,
+            "marker_page": 2,
+            "section": "Results",
+            "rank": "B",
+            "inTable": false,
+            "marker": "(Mehta & Cummings, 2019)",
+            "style": "author-year",
+            "jointWith": [],
+            "certain": true,
+            "contextIsProse": true,
+            "quote": "(Mehta & Cummings, 2019).",
+            "line": "(Mehta & Cummings, 2019). First, a force graph showing interaction"
+          }
+        },
+        {
+          "file": "screened-papers/cit-000534/01-article-Schmidt.pdf",
+          "style": "author-year",
+          "outcome": "found",
+          "hit": {
+            "page": 13,
+            "marker_page": 13,
+            "section": "Methods",
+            "rank": "A",
+            "inTable": false,
+            "marker": "(Mehta & Cummings, 2019)",
+            "style": "author-year",
+            "jointWith": [],
+            "certain": true,
+            "contextIsProse": true,
+            "quote": "(Mehta & Cummings, 2019) provided by the CFG.",
+            "line": "(Mehta & Cummings, 2019) provided by the CFG."
+          }
+        }
+      ]
+    },
+    {
+      "row_uid": "cit-000536",
+      "status": "held",
+      "recorded_tier": null,
+      "cited_paper": "GLAD: GLycan Array Dashboard, a visual analytics tool for glycan microarrays",
+      "cited_year": "2019",
+      "cited_surname": "mehta",
+      "coauthors": [
+        "Cummings"
+      ],
+      "files": [
+        {
+          "file": "pending-papers/cit-000536/01-article-Afanasiev-2019.pdf",
+          "style": "numbered",
+          "outcome": "found",
+          "num": 6,
+          "entry": "Mehta AY, Cummings RD. GLAD: GLycan Array Dashboard, a Visual Analytics Tool for Glycan Microarrays. Bioinformatics. 1 Feb 2019. DOI: 10.1093/ bioinformatics/btz075 [Epub ahead of print]",
+          "titleScore": 1,
+          "hit": {
+            "page": 1,
+            "marker_page": 1,
+            "section": "Introduction",
+            "rank": "C",
+            "inTable": false,
+            "marker": "[5–9]",
+            "style": "bracketed",
+            "jointWith": [
+              5,
+              7,
+              8,
+              9
+            ],
+            "contextIsProse": true,
+            "quote": "proteins (mainly adhesions and lectins) [5–9].",
+            "line": "proteins (mainly adhesions and lectins) [5–9]. Lectin systems (LS) of symbiotic/"
+          }
+        },
+        {
+          "file": "pending-papers/cit-000536/01-article-Afanasiev-2019.pdf",
+          "style": "numbered",
+          "outcome": "found",
+          "num": 6,
+          "entry": "Mehta AY, Cummings RD. GLAD: GLycan Array Dashboard, a Visual Analytics Tool for Glycan Microarrays. Bioinformatics. 1 Feb 2019. DOI: 10.1093/ bioinformatics/btz075 [Epub ahead of print]",
+          "titleScore": 1,
+          "hit": {
+            "page": 10,
+            "marker_page": 10,
+            "section": "Discussion",
+            "rank": "C",
+            "inTable": false,
+            "marker": "4–8",
+            "style": "bare number",
+            "jointWith": [
+              4,
+              5,
+              7,
+              8
+            ],
+            "contextIsProse": false,
+            "quote": "1 Antifreeze components >27 kD, pI 4–8",
+            "line": "1 Antifreeze components >27 kD, pI 4–8"
+          }
+        },
+        {
+          "file": "pending-papers/cit-000536/01-article-Afanasiev-2019.pdf",
+          "style": "numbered",
+          "outcome": "found",
+          "num": 6,
+          "entry": "Mehta AY, Cummings RD. GLAD: GLycan Array Dashboard, a Visual Analytics Tool for Glycan Microarrays. Bioinformatics. 1 Feb 2019. DOI: 10.1093/ bioinformatics/btz075 [Epub ahead of print]",
+          "titleScore": 1,
+          "hit": {
+            "page": 10,
+            "marker_page": 10,
+            "section": "Discussion",
+            "rank": "C",
+            "inTable": false,
+            "marker": "6",
+            "style": "bare number",
+            "jointWith": [],
+            "contextIsProse": false,
+            "quote": "4. 6.",
+            "line": "4. 6."
+          }
+        },
+        {
+          "file": "pending-papers/cit-000536/01-article-Afanasiev-2019.pdf",
+          "style": "numbered",
+          "outcome": "found",
+          "num": 6,
+          "entry": "Mehta AY, Cummings RD. GLAD: GLycan Array Dashboard, a Visual Analytics Tool for Glycan Microarrays. Bioinformatics. 1 Feb 2019. DOI: 10.1093/ bioinformatics/btz075 [Epub ahead of print]",
+          "titleScore": 1,
+          "hit": {
+            "page": 10,
+            "marker_page": 10,
+            "section": "Discussion",
+            "rank": "C",
+            "inTable": false,
+            "marker": "6",
+            "style": "bare number",
+            "jointWith": [],
+            "contextIsProse": false,
+            "quote": "7. 4. 1. 5. 6.",
+            "line": "7. 4. 1. 5. 6."
+          }
+        },
+        {
+          "file": "pending-papers/cit-000536/01-article-Afanasiev-2019.pdf",
+          "style": "numbered",
+          "outcome": "found",
+          "num": 6,
+          "entry": "Mehta AY, Cummings RD. GLAD: GLycan Array Dashboard, a Visual Analytics Tool for Glycan Microarrays. Bioinformatics. 1 Feb 2019. DOI: 10.1093/ bioinformatics/btz075 [Epub ahead of print]",
+          "titleScore": 1,
+          "hit": {
+            "page": 10,
+            "marker_page": 10,
+            "section": "Discussion",
+            "rank": "C",
+            "inTable": false,
+            "marker": "6",
+            "style": "bare number",
+            "jointWith": [],
+            "contextIsProse": false,
+            "quote": "5. 7. 4. 6.",
+            "line": "5. 7. 4. 6."
+          }
+        }
+      ]
+    },
+    {
+      "row_uid": "cit-000542",
+      "status": "included",
+      "recorded_tier": "A",
+      "cited_paper": "GLAD: GLycan Array Dashboard, a visual analytics tool for glycan microarrays",
+      "cited_year": "2019",
+      "cited_surname": "mehta",
+      "coauthors": [
+        "Cummings"
+      ],
+      "files": [
+        {
+          "file": "papers/cit-000542/01-article-VanDerWal-2026.pdf",
+          "style": "numbered",
+          "outcome": "found",
+          "num": 44,
+          "entry": "Mehta AY, Cummings RD. GLAD: GLycan Array Dashboard, a visual analytics tool for glycan microarrays. Bioinformatics. 2019;35:3536–7.",
+          "titleScore": 1,
+          "hit": {
+            "page": 5,
+            "marker_page": 5,
+            "section": "Methods",
+            "rank": "A",
+            "inTable": false,
+            "marker": "[44]",
+            "style": "bracketed",
+            "jointWith": [],
+            "contextIsProse": true,
+            "quote": "visualize the glycan array data [44].",
+            "line": "visualize the glycan array data [44]. The description of the"
+          }
+        }
+      ]
+    },
+    {
+      "row_uid": "cit-000544",
+      "status": "included",
+      "recorded_tier": "A",
+      "cited_paper": "GLAD: GLycan Array Dashboard, a visual analytics tool for glycan microarrays",
+      "cited_year": "2019",
+      "cited_surname": "mehta",
+      "coauthors": [
+        "Cummings"
+      ],
+      "files": [
+        {
+          "file": "papers/cit-000544/01-preprint-Heras-2023-04-29.pdf",
+          "style": "either",
+          "outcome": "entry-not-found",
+          "best": null,
+          "entries": 0,
+          "detail": "no bibliography entry matched title + year + author, and no surname+year marker was found"
+        },
+        {
+          "file": "papers/cit-000544/03-article-Heras-2024.pdf",
+          "style": "either",
+          "outcome": "entry-not-found",
+          "best": null,
+          "entries": 0,
+          "detail": "no bibliography entry matched title + year + author, and no surname+year marker was found"
+        }
+      ]
+    },
+    {
+      "row_uid": "cit-000558",
+      "status": "included",
+      "recorded_tier": "A",
+      "cited_paper": "GLAD: GLycan Array Dashboard, a visual analytics tool for glycan microarrays",
+      "cited_year": "2019",
+      "cited_surname": "mehta",
+      "coauthors": [
+        "Cummings"
+      ],
+      "files": [
+        {
+          "file": "papers/cit-000544/01-preprint-Heras-2023-04-29.pdf",
+          "style": "either",
+          "outcome": "entry-not-found",
+          "best": null,
+          "entries": 0,
+          "detail": "no bibliography entry matched title + year + author, and no surname+year marker was found"
+        },
+        {
+          "file": "papers/cit-000544/03-article-Heras-2024.pdf",
+          "style": "either",
+          "outcome": "entry-not-found",
+          "best": null,
+          "entries": 0,
+          "detail": "no bibliography entry matched title + year + author, and no surname+year marker was found"
+        }
+      ]
+    },
+    {
+      "row_uid": "cit-000550",
+      "status": "held",
+      "recorded_tier": null,
+      "cited_paper": "GLAD: GLycan Array Dashboard, a visual analytics tool for glycan microarrays",
+      "cited_year": "2019",
+      "cited_surname": "mehta",
+      "coauthors": [
+        "Cummings"
+      ],
+      "files": [
+        {
+          "file": "pending-papers/cit-000550/01-article-Lisacek-2019.pdf",
+          "style": "numbered",
+          "outcome": "found",
+          "num": 38,
+          "entry": "Mehta, A.Y.; Cummings, R.D. GLAD: GLycan Array Dashboard, a visual analytics tool for glycan microarrays. Bioinformatics 2019. [CrossRef] Viruses 2019, 11, 374 14 of 14",
+          "titleScore": 1,
+          "hit": {
+            "page": 6,
+            "marker_page": 6,
+            "section": "Introduction",
+            "rank": "C",
+            "inTable": true,
+            "marker": "[38]",
+            "style": "bracketed",
+            "jointWith": [],
+            "contextIsProse": true,
+            "quote": "GLAD glycotoolkit.com/GLAD Visualization and analysis of glycan array data yes 2019 [38]",
+            "line": "GLAD glycotoolkit.com/GLAD Visualization and analysis of glycan array data yes 2019 [38]"
+          }
+        },
+        {
+          "file": "pending-papers/cit-000550/01-article-Lisacek-2019.pdf",
+          "style": "numbered",
+          "outcome": "found",
+          "num": 38,
+          "entry": "Mehta, A.Y.; Cummings, R.D. GLAD: GLycan Array Dashboard, a visual analytics tool for glycan microarrays. Bioinformatics 2019. [CrossRef] Viruses 2019, 11, 374 14 of 14",
+          "titleScore": 1,
+          "hit": {
+            "page": 7,
+            "marker_page": 7,
+            "section": "Section 3: Repertoire Mapping to Enrich Databases",
+            "rank": "?",
+            "inTable": false,
+            "marker": "[38]",
+            "style": "bracketed",
+            "jointWith": [],
+            "contextIsProse": true,
+            "quote": "in a just released Application Note [38].",
+            "line": "in a just released Application Note [38]. This shows that bioinformatics applied to processing and"
+          }
+        }
+      ]
+    },
+    {
+      "row_uid": "cit-000594",
+      "status": "included",
+      "recorded_tier": "A",
+      "cited_paper": "GlycoGlyph: a glycan visualizing, drawing and naming application",
+      "cited_year": "2020",
+      "cited_surname": "mehta",
+      "coauthors": [
+        "Cummings"
+      ],
+      "files": [
+        {
+          "file": "papers/cit-000594/01-article-Knight-2026.pdf",
+          "style": "numbered",
+          "outcome": "found",
+          "num": 30,
+          "entry": "Mehta AY, Cummings RD. GlycoGlyph: a glycan visualizing, drawing and naming application. Bioinformatics 2020;36:3613–4. https://doi.org/10.1093/bioinformatics/btaa190",
+          "titleScore": 1,
+          "hit": {
+            "page": 5,
+            "marker_page": 5,
+            "section": "Methods",
+            "rank": "A",
+            "inTable": false,
+            "marker": "[30]",
+            "style": "bracketed",
+            "jointWith": [],
+            "contextIsProse": true,
+            "quote": "Glycans were drawn using GlycoGlyph [30].",
+            "line": "significant. Glycans were drawn using GlycoGlyph [30]."
+          }
+        }
+      ]
+    },
+    {
+      "row_uid": "cit-000602",
+      "status": "included",
+      "recorded_tier": "A",
+      "cited_paper": "GlycoGlyph: a glycan visualizing, drawing and naming application",
+      "cited_year": "2020",
+      "cited_surname": "mehta",
+      "coauthors": [
+        "Cummings"
+      ],
+      "files": [
+        {
+          "file": "papers/cit-000602/01-article-Subramaniam-2026.pdf",
+          "style": "numbered",
+          "outcome": "found",
+          "num": 56,
+          "entry": "Mehta, A. Y. & Cummings, R. D. GlycoGlyph: a glycan visualizing, drawing and naming application. Bioinformatics 36, 3613–3614 https://doi.org/10.1093/bioinformatics/btaa190 (2020).",
+          "titleScore": 1,
+          "hit": {
+            "page": 11,
+            "marker_page": 11,
+            "section": "Methods",
+            "rank": "A",
+            "inTable": false,
+            "marker": "10,11,56",
+            "style": "orphan superscript line",
+            "jointWith": [
+              10,
+              11
+            ],
+            "contextIsProse": true,
+            "quote": "nal from glycan-free spots. Glycan schematics adapted from Z Biotech for Figs. 3 and 4 and produced on GlycoGlyph with adjustments on Inkscape for Fig. 5",
+            "line": "10,11,56"
+          }
+        },
+        {
+          "file": "papers/cit-000602/01-article-Subramaniam-2026.pdf",
+          "style": "numbered",
+          "outcome": "found",
+          "num": 56,
+          "entry": "Mehta, A. Y. & Cummings, R. D. GlycoGlyph: a glycan visualizing, drawing and naming application. Bioinformatics 36, 3613–3614 https://doi.org/10.1093/bioinformatics/btaa190 (2020).",
+          "titleScore": 1,
+          "hit": {
+            "page": 11,
+            "marker_page": 11,
+            "section": "Methods",
+            "rank": "A",
+            "inTable": false,
+            "marker": "56",
+            "style": "orphan superscript line",
+            "jointWith": [],
+            "contextIsProse": true,
+            "quote": "slope) method, we fit curves for data with log10-transformed con- centration values. We produced glycan schematics using GlycoGlyph then adjusted them on Inkscape",
+            "line": "56"
+          }
+        }
+      ]
+    },
+    {
+      "row_uid": "cit-000613",
+      "status": "included",
+      "recorded_tier": "B",
+      "cited_paper": "GlycoGlyph: a glycan visualizing, drawing and naming application",
+      "cited_year": "2020",
+      "cited_surname": "mehta",
+      "coauthors": [
+        "Cummings"
+      ],
+      "files": [
+        {
+          "file": "papers/cit-000613/01-article-Maares-2026.pdf",
+          "style": "numbered",
+          "outcome": "found",
+          "num": 14,
+          "entry": "Mehta, A. Y. & Cummings, R. D. GlycoGlyph: A glycan visualizing, drawing and naming application. Bioinformatics 36, 3613–3614 (2020).",
+          "titleScore": 1,
+          "hit": {
+            "page": 11,
+            "marker_page": 11,
+            "section": "Discussion",
+            "rank": "C",
+            "inTable": false,
+            "marker": "14",
+            "style": "superscript (glued to word)",
+            "jointWith": [],
+            "contextIsProse": true,
+            "quote": "Glycans were drawn with GlycoGlyph14.",
+            "line": "values. Glycans were drawn with GlycoGlyph14."
+          }
+        }
+      ]
+    },
+    {
+      "row_uid": "cit-000619",
+      "status": "included",
+      "recorded_tier": "A",
+      "cited_paper": "GlycoGlyph: a glycan visualizing, drawing and naming application",
+      "cited_year": "2020",
+      "cited_surname": "mehta",
+      "coauthors": [
+        "Cummings"
+      ],
+      "files": [
+        {
+          "file": "papers/cit-000619/01-article-GrossmanHaham-2026.pdf",
+          "style": "author-year",
+          "outcome": "found",
+          "hit": {
+            "page": 14,
+            "marker_page": 14,
+            "section": "Methods",
+            "rank": "A",
+            "inTable": false,
+            "marker": "(Mehta & Cummings, 2020)",
+            "style": "author-year",
+            "jointWith": [],
+            "certain": true,
+            "contextIsProse": true,
+            "quote": "(Mehta & Cummings, 2020).",
+            "line": "(Mehta & Cummings, 2020). The glycan model (or just"
+          }
+        }
+      ]
+    },
+    {
+      "row_uid": "cit-000621",
+      "status": "included",
+      "recorded_tier": "A",
+      "cited_paper": "GlycoGlyph: a glycan visualizing, drawing and naming application",
+      "cited_year": "2020",
+      "cited_surname": "mehta",
+      "coauthors": [
+        "Cummings"
+      ],
+      "files": [
+        {
+          "file": "papers/cit-000621/01-article-Lewis-2026.pdf",
+          "style": "numbered",
+          "outcome": "found",
+          "num": 112,
+          "entry": "Mehta, A. Y., and Cummings, R. D. (2020) GlycoGlyph: a glycan visualizing, drawing and naming application. Bioinformatics 36, 3613–3614",
+          "titleScore": 1,
+          "hit": {
+            "page": 12,
+            "marker_page": 12,
+            "section": "Methods",
+            "rank": "A",
+            "inTable": false,
+            "marker": "(112)",
+            "style": "bracketed",
+            "jointWith": [],
+            "contextIsProse": true,
+            "quote": "(112) (https://glycotoolkit.com/Tools/GlycoGlyph/)",
+            "line": "(112) (https://glycotoolkit.com/Tools/GlycoGlyph/)"
+          }
+        }
+      ]
+    },
+    {
+      "row_uid": "cit-000629",
+      "status": "included",
+      "recorded_tier": "A",
+      "cited_paper": "GlycoGlyph: a glycan visualizing, drawing and naming application",
+      "cited_year": "2020",
+      "cited_surname": "mehta",
+      "coauthors": [
+        "Cummings"
+      ],
+      "files": [
+        {
+          "file": "papers/cit-000629/01-article-Georgiev-2025.pdf",
+          "style": "numbered",
+          "outcome": "found",
+          "num": 49,
+          "entry": "Mehta AY, Cummings RD. 2020. GlycoGlyph: a glycan visualizing, drawing and naming application. Bioinformatics 36:3613–3614. https://d oi.org/10.1093/bioinformatics/btaa190",
+          "titleScore": 1,
+          "hit": {
+            "page": 6,
+            "marker_page": 6,
+            "section": "Results",
+            "rank": "B",
+            "inTable": false,
+            "marker": "(49)",
+            "style": "bracketed",
+            "jointWith": [],
+            "contextIsProse": true,
+            "quote": "generated using GlycoGlyph (49).",
+            "line": "generated using GlycoGlyph (49). Glycan microarray protocol was followed using the microwave-assisted wet-erase process by"
+          }
+        },
+        {
+          "file": "papers/cit-000629/01-article-Georgiev-2025.pdf",
+          "style": "numbered",
+          "outcome": "found",
+          "num": 49,
+          "entry": "Mehta AY, Cummings RD. 2020. GlycoGlyph: a glycan visualizing, drawing and naming application. Bioinformatics 36:3613–3614. https://d oi.org/10.1093/bioinformatics/btaa190",
+          "titleScore": 1,
+          "hit": {
+            "page": 20,
+            "marker_page": 20,
+            "section": "Methods",
+            "rank": "A",
+            "inTable": false,
+            "marker": "(49)",
+            "style": "bracketed",
+            "jointWith": [],
+            "contextIsProse": true,
+            "quote": "Figures of glycan structures were gathered using GlycoGlyph (49).",
+            "line": "mentioned previously. Figures of glycan structures were gathered using GlycoGlyph (49)."
+          }
+        }
+      ]
+    },
+    {
+      "row_uid": "cit-001261",
+      "status": "included",
+      "recorded_tier": "A",
+      "cited_paper": "Reusable glycan microarrays using a microwave assisted wet-erase (MAWE) process",
+      "cited_year": "2024",
+      "cited_surname": "mehta",
+      "coauthors": [
+        "Tilton",
+        "Muerner",
+        "Gunten",
+        "..."
+      ],
+      "files": [
+        {
+          "file": "papers/cit-000629/01-article-Georgiev-2025.pdf",
+          "style": "numbered",
+          "outcome": "found",
+          "num": 50,
+          "entry": "Mehta AY, Tilton CA, Muerner L, von Gunten S, Heimburg-Molinaro J, Cummings RD. 2024. Reusable glycan microarrays using a microwave assisted wet-erase (MAWE) process. Glycobiology 34:cwad091. https://d oi.org/10.1093/glycob/cwad091",
+          "titleScore": 1,
+          "hit": {
+            "page": 6,
+            "marker_page": 6,
+            "section": "Results",
+            "rank": "B",
+            "inTable": false,
+            "marker": "(50)",
+            "style": "bracketed",
+            "jointWith": [],
+            "contextIsProse": true,
+            "quote": "Mehta et al. (50).",
+            "line": "Mehta et al. (50). The assay was performed in replicates of six."
+          }
+        },
+        {
+          "file": "papers/cit-000629/01-article-Georgiev-2025.pdf",
+          "style": "numbered",
+          "outcome": "found",
+          "num": 50,
+          "entry": "Mehta AY, Tilton CA, Muerner L, von Gunten S, Heimburg-Molinaro J, Cummings RD. 2024. Reusable glycan microarrays using a microwave assisted wet-erase (MAWE) process. Glycobiology 34:cwad091. https://d oi.org/10.1093/glycob/cwad091",
+          "titleScore": 1,
+          "hit": {
+            "page": 20,
+            "marker_page": 20,
+            "section": "Methods",
+            "rank": "A",
+            "inTable": false,
+            "marker": "(50)",
+            "style": "bracketed",
+            "jointWith": [],
+            "contextIsProse": true,
+            "quote": "(50).",
+            "line": "(50). PBS was used as a buffer instead of TSM; therefore, the binding buffer was PBS with"
+          }
+        }
+      ]
+    },
+    {
+      "row_uid": "cit-001253",
+      "status": "included",
+      "recorded_tier": "A",
+      "cited_paper": "Reusable glycan microarrays using a microwave assisted wet-erase (MAWE) process",
+      "cited_year": "2024",
+      "cited_surname": "mehta",
+      "coauthors": [
+        "Tilton",
+        "Muerner",
+        "Gunten",
+        "..."
+      ],
+      "files": [
+        {
+          "file": "papers/cit-001253/01-article-Kiessling-2026.pdf",
+          "style": "numbered",
+          "outcome": "found",
+          "num": 69,
+          "entry": "Mehta, A. Y. et al. Reusable glycan microarrays using a microwave assisted wet-erase (MAWE) process. Glycobiology 34, cwad091 (2024).",
+          "titleScore": 1,
+          "hit": {
+            "page": 15,
+            "marker_page": 15,
+            "section": "Methods",
+            "rank": "A",
+            "inTable": false,
+            "marker": "69",
+            "style": "superscript (glued to word)",
+            "jointWith": [],
+            "contextIsProse": true,
+            "quote": "ing slides; the long-term effects on fluorescence intensity are unclear69.",
+            "line": "ing slides; the long-term effects on fluorescence intensity are unclear69."
+          }
+        }
+      ]
+    },
+    {
+      "row_uid": "cit-001257",
+      "status": "included",
+      "recorded_tier": "A",
+      "cited_paper": "Reusable glycan microarrays using a microwave assisted wet-erase (MAWE) process",
+      "cited_year": "2024",
+      "cited_surname": "mehta",
+      "coauthors": [
+        "Tilton",
+        "Muerner",
+        "Gunten",
+        "..."
+      ],
+      "files": [
+        {
+          "file": "papers/cit-001257/01-article-Overbaugh-2026.pdf",
+          "style": "numbered",
+          "outcome": "found",
+          "num": 45,
+          "entry": "Mehta, A. Y. et al. Reusable glycan microarrays using a microwave assisted wet-erase (MAWE) process. Glycobiologyhttps://doi.org/10.1093/glycob/cwad091 (2024).",
+          "titleScore": 1,
+          "hit": {
+            "page": 10,
+            "marker_page": 10,
+            "section": "Methods",
+            "rank": "A",
+            "inTable": false,
+            "marker": "45",
+            "style": "orphan superscript line",
+            "jointWith": [],
+            "contextIsProse": true,
+            "quote": "agglutinin (WFA; 10 μg/mL, Vector Labs) was included; these lectins recognize high-mannose/N-linked gly- cans, fucosylated glycans, and terminal N-acetylgalactosamine (GalNAc)-containing glycans, respectively. Data were analyzed using the MAWE method as described previously",
+            "line": "45"
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,402 @@
+[
+  {
+    "row_uid": "cit-000416",
+    "mentions": [
+      {
+        "section": "Discussion",
+        "tier": "C",
+        "page": "19",
+        "quote": "restricted, specificities toward oligomannose motifs (Gao et al. 2021).",
+        "use_type": null,
+        "basis": "reference-number resolution",
+        "verified": 0,
+        "note": "author-year citation on surname + year alone: (Gao et al. 2021) — read it before relying on it"
+      }
+    ]
+  },
+  {
+    "row_uid": "cit-000540",
+    "mentions": [
+      {
+        "section": "Methods",
+        "tier": "A",
+        "page": "30",
+        "quote": "binding profiles and identification of enriched glycan motifs (Mehta and Cummings 2019).",
+        "use_type": null,
+        "basis": "reference-number resolution",
+        "verified": 0,
+        "note": "author-year citation naming a co-author: (Mehta and Cummings 2019)"
+      }
+    ]
+  },
+  {
+    "row_uid": "cit-000987",
+    "mentions": [
+      {
+        "section": "Methods",
+        "tier": "A",
+        "page": "29",
+        "quote": "request) (Heimburg-Molinaro et al. 2024).",
+        "use_type": null,
+        "basis": "reference-number resolution",
+        "verified": 0,
+        "note": "author-year citation on surname + year alone: (Heimburg-Molinaro et al. 2024) — read it before relying on it"
+      }
+    ]
+  },
+  {
+    "row_uid": "cit-001259",
+    "mentions": [
+      {
+        "section": "Methods",
+        "tier": "A",
+        "page": "30",
+        "quote": "(RFU) standard deviation, and coefficient of variation for each glycan (Mehta et al. 2024).",
+        "use_type": null,
+        "basis": "reference-number resolution",
+        "verified": 0,
+        "note": "author-year citation on surname + year alone: (Mehta et al. 2024) — read it before relying on it"
+      }
+    ]
+  },
+  {
+    "row_uid": "cit-000510",
+    "mentions": [
+      {
+        "section": "Methods",
+        "tier": "A",
+        "page": "10",
+        "quote": "visually analyzed to confirm selective binding of terminally sialylated glycans, after which data was filtered to only include these glycans for a total of 139 glycans (see supplementary Table S1) and organized by structure using the Glycan Array Dashboard (GLAD)",
+        "use_type": null,
+        "basis": "reference-number resolution",
+        "verified": 0,
+        "note": "cited as orphan superscript line: 63"
+      }
+    ]
+  },
+  {
+    "row_uid": "cit-000511",
+    "mentions": [
+      {
+        "section": "Results",
+        "tier": "B",
+        "page": "4",
+        "quote": "of a force graph 42 (Fig. 2g), where each individual node (colored,",
+        "use_type": null,
+        "basis": "reference-number resolution",
+        "verified": 0,
+        "note": "cited as superscript: 42"
+      }
+    ]
+  },
+  {
+    "row_uid": "cit-000516",
+    "mentions": [
+      {
+        "section": "Methods",
+        "tier": "A",
+        "page": "21",
+        "quote": "2025) The results were analyzed by the GLycan Array Dashboard (GLAD) platform [ 128 ],",
+        "use_type": null,
+        "basis": "reference-number resolution",
+        "verified": 0,
+        "note": "cited as bracketed: [ 128 ]"
+      }
+    ]
+  },
+  {
+    "row_uid": "cit-000603",
+    "mentions": [
+      {
+        "section": "Methods",
+        "tier": "A",
+        "page": "21",
+        "quote": "and the glycan models were constructed using GlycoGlyph [129].",
+        "use_type": null,
+        "basis": "reference-number resolution",
+        "verified": 0,
+        "note": "cited as bracketed: [129]"
+      }
+    ]
+  },
+  {
+    "row_uid": "cit-000976",
+    "mentions": [
+      {
+        "section": "Methods",
+        "tier": "A",
+        "page": "21",
+        "quote": "Glycan microarray analysis following established procedures [125 –127 ] was carried",
+        "use_type": null,
+        "basis": "reference-number resolution",
+        "verified": 0,
+        "note": "cited as bracketed jointly with 126, 127: [125 –127 ]"
+      }
+    ]
+  },
+  {
+    "row_uid": "cit-001252",
+    "mentions": [
+      {
+        "section": "Methods",
+        "tier": "A",
+        "page": "21",
+        "quote": "Glycan microarray analysis following established procedures [125 –127 ] was carried",
+        "use_type": null,
+        "basis": "reference-number resolution",
+        "verified": 0,
+        "note": "cited as bracketed jointly with 125, 126: [125 –127 ]"
+      }
+    ]
+  },
+  {
+    "row_uid": "cit-000518",
+    "mentions": [
+      {
+        "section": "Methods",
+        "tier": "A",
+        "page": "16",
+        "quote": "average fluorescence intensity of “blank” spots—i.e. spots printed from wells containing spotting buffer only - as a baseline. Finally, GLycan Array Dashboard (GLAD)",
+        "use_type": null,
+        "basis": "reference-number resolution",
+        "verified": 0,
+        "note": "cited as orphan superscript line: 93"
+      }
+    ]
+  },
+  {
+    "row_uid": "cit-000520",
+    "mentions": [
+      {
+        "section": "Methods",
+        "tier": "A",
+        "page": "6",
+        "quote": "by GLAD (Mehta and Cummings, 2019).",
+        "use_type": null,
+        "basis": "reference-number resolution",
+        "verified": 0,
+        "note": "author-year citation naming a co-author: (Mehta and Cummings, 2019)"
+      }
+    ]
+  },
+  {
+    "row_uid": "cit-000534",
+    "mentions": [
+      {
+        "section": "Results",
+        "tier": "B",
+        "page": "2",
+        "quote": "(Mehta & Cummings, 2019).",
+        "use_type": null,
+        "basis": "reference-number resolution",
+        "verified": 0,
+        "note": "author-year citation naming a co-author: (Mehta & Cummings, 2019)"
+      },
+      {
+        "section": "Methods",
+        "tier": "A",
+        "page": "13",
+        "quote": "(Mehta & Cummings, 2019) provided by the CFG.",
+        "use_type": null,
+        "basis": "reference-number resolution",
+        "verified": 0,
+        "note": "author-year citation naming a co-author: (Mehta & Cummings, 2019)"
+      }
+    ]
+  },
+  {
+    "row_uid": "cit-000536",
+    "mentions": [
+      {
+        "section": "Introduction",
+        "tier": "C",
+        "page": "1",
+        "quote": "proteins (mainly adhesions and lectins) [5–9].",
+        "use_type": null,
+        "basis": "reference-number resolution",
+        "verified": 0,
+        "note": "cited as bracketed jointly with 5, 7, 8, 9: [5–9]"
+      }
+    ]
+  },
+  {
+    "row_uid": "cit-000542",
+    "mentions": [
+      {
+        "section": "Methods",
+        "tier": "A",
+        "page": "5",
+        "quote": "visualize the glycan array data [44].",
+        "use_type": null,
+        "basis": "reference-number resolution",
+        "verified": 0,
+        "note": "cited as bracketed: [44]"
+      }
+    ]
+  },
+  {
+    "row_uid": "cit-000594",
+    "mentions": [
+      {
+        "section": "Methods",
+        "tier": "A",
+        "page": "5",
+        "quote": "Glycans were drawn using GlycoGlyph [30].",
+        "use_type": null,
+        "basis": "reference-number resolution",
+        "verified": 0,
+        "note": "cited as bracketed: [30]"
+      }
+    ]
+  },
+  {
+    "row_uid": "cit-000602",
+    "mentions": [
+      {
+        "section": "Methods",
+        "tier": "A",
+        "page": "11",
+        "quote": "nal from glycan-free spots. Glycan schematics adapted from Z Biotech for Figs. 3 and 4 and produced on GlycoGlyph with adjustments on Inkscape for Fig. 5",
+        "use_type": null,
+        "basis": "reference-number resolution",
+        "verified": 0,
+        "note": "cited as orphan superscript line jointly with 10, 11: 10,11,56"
+      },
+      {
+        "section": "Methods",
+        "tier": "A",
+        "page": "11",
+        "quote": "slope) method, we fit curves for data with log10-transformed con- centration values. We produced glycan schematics using GlycoGlyph then adjusted them on Inkscape",
+        "use_type": null,
+        "basis": "reference-number resolution",
+        "verified": 0,
+        "note": "cited as orphan superscript line: 56"
+      }
+    ]
+  },
+  {
+    "row_uid": "cit-000613",
+    "mentions": [
+      {
+        "section": "Discussion",
+        "tier": "C",
+        "page": "11",
+        "quote": "Glycans were drawn with GlycoGlyph14.",
+        "use_type": null,
+        "basis": "reference-number resolution",
+        "verified": 0,
+        "note": "cited as superscript (glued to word): 14"
+      }
+    ]
+  },
+  {
+    "row_uid": "cit-000619",
+    "mentions": [
+      {
+        "section": "Methods",
+        "tier": "A",
+        "page": "14",
+        "quote": "(Mehta & Cummings, 2020).",
+        "use_type": null,
+        "basis": "reference-number resolution",
+        "verified": 0,
+        "note": "author-year citation naming a co-author: (Mehta & Cummings, 2020)"
+      }
+    ]
+  },
+  {
+    "row_uid": "cit-000621",
+    "mentions": [
+      {
+        "section": "Methods",
+        "tier": "A",
+        "page": "12",
+        "quote": "(112) (https://glycotoolkit.com/Tools/GlycoGlyph/)",
+        "use_type": null,
+        "basis": "reference-number resolution",
+        "verified": 0,
+        "note": "cited as bracketed: (112)"
+      }
+    ]
+  },
+  {
+    "row_uid": "cit-000629",
+    "mentions": [
+      {
+        "section": "Results",
+        "tier": "B",
+        "page": "6",
+        "quote": "generated using GlycoGlyph (49).",
+        "use_type": null,
+        "basis": "reference-number resolution",
+        "verified": 0,
+        "note": "cited as bracketed: (49)"
+      },
+      {
+        "section": "Methods",
+        "tier": "A",
+        "page": "20",
+        "quote": "Figures of glycan structures were gathered using GlycoGlyph (49).",
+        "use_type": null,
+        "basis": "reference-number resolution",
+        "verified": 0,
+        "note": "cited as bracketed: (49)"
+      }
+    ]
+  },
+  {
+    "row_uid": "cit-001261",
+    "mentions": [
+      {
+        "section": "Results",
+        "tier": "B",
+        "page": "6",
+        "quote": "Mehta et al. (50).",
+        "use_type": null,
+        "basis": "reference-number resolution",
+        "verified": 0,
+        "note": "cited as bracketed: (50)"
+      },
+      {
+        "section": "Methods",
+        "tier": "A",
+        "page": "20",
+        "quote": "(50).",
+        "use_type": null,
+        "basis": "reference-number resolution",
+        "verified": 0,
+        "note": "cited as bracketed: (50)"
+      }
+    ]
+  },
+  {
+    "row_uid": "cit-001253",
+    "mentions": [
+      {
+        "section": "Methods",
+        "tier": "A",
+        "page": "15",
+        "quote": "ing slides; the long-term effects on fluorescence intensity are unclear69.",
+        "use_type": null,
+        "basis": "reference-number resolution",
+        "verified": 0,
+        "note": "cited as superscript (glued to word): 69"
+      }
+    ]
+  },
+  {
+    "row_uid": "cit-001257",
+    "mentions": [
+      {
+        "section": "Methods",
+        "tier": "A",
+        "page": "10",
+        "quote": "agglutinin (WFA; 10 μg/mL, Vector Labs) was included; these lectins recognize high-mannose/N-linked gly- cans, fucosylated glycans, and terminal N-acetylgalactosamine (GalNAc)-containing glycans, respectively. Data were analyzed using the MAWE method as described previously",
+        "use_type": null,
+        "basis": "reference-number resolution",
+        "verified": 0,
+        "note": "cited as orphan superscript line: 45"
+      }
+    ]
+  }
+]

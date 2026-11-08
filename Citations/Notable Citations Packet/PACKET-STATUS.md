@@ -1,6 +1,6 @@
 # Packet status — open items
 
-Generated 2026-11-07 by `scripts/build-status.js`. **Do not hand-edit it** — re-run the
+Generated 2026-11-08 by `scripts/build-status.js`. **Do not hand-edit it** — re-run the
 script. Every count and every row below is read from `notable-citations.sqlite` at run time,
 so this document cannot quietly fall behind the data.
 
@@ -13,22 +13,22 @@ decision that only a person can make.
 
 | | count |
 |---|---:|
-| Citations in the packet (in `packet.html`) | 23 |
+| Citations in the packet (in `packet.html`) | 22 |
 | Works those citations are filed as (§5.1 folders) | 14 |
 | PDFs filed under `papers/` (in the packet) | 16 |
 | PDFs under `pending-papers/` (awaiting a decision) | 5 |
-| PDFs under `screened-papers/` (kept, not filed) | 1 |
-| Held — open items, listed below | 37 |
-| Screened out — decided, kept for the record (§4.5) | 1 |
-| **Rows in table `citation`** | **61** |
+| PDFs under `screened-papers/` (kept, not filed) | 2 |
+| Held — open items, listed below | 32 |
+| Screened out — decided, kept for the record (§4.5) | 4 |
+| **Rows in table `citation`** | **58** |
 
-`packet.csv` holds the 23 included rows. `screened-out.csv` holds the other 38,
+`packet.csv` holds the 22 included rows. `screened-out.csv` holds the other 36,
 because §4.5 exports `screened-out` and `held` together — counsel is entitled to see that the
 work was screened and on what grounds. A screened-out row is not missing work: it is the
 record of what was looked at and rejected, with the reason beside it. A held row is open, and
 every held row appears in §2 below.
 
-## 2. Held rows — 37 open items
+## 2. Held rows — 32 open items
 
 
 ### 2.1 `read` — 2 row(s)
@@ -40,14 +40,6 @@ The PDF is filed and the applicant's tool appears in a section of the paper. Wha
 | `cit-000510` | GLAD | 2023 | Pekosz | 2019–2020 H1N1 clade A5a. 1 viruses have better in vitro fitness compared w… | [open](https://www.nature.com/articles/s41598-023-37122-z) |
 | `cit-000520` | GLAD | 2025 | Vasta | A “proto” type galectin expressed in striped bass (Morone saxatilis) tissue… | [open](https://www.frontiersin.org/journals/cellular-and-infection-microbiology/articles/10.3389/fcimb.2025.1572734/full) |
 
-### 2.2 `unread` — 1 row(s)
-
-The PDF is filed. Nobody has read it yet.
-
-| row_uid | tool | year | senior author | citing title | link |
-|---|---|---|---|---|---|
-| `cit-000565` | GLAD | 2019 | Afanasiev | Metabolite Multiprobiotic | [open](https://books.google.com/books?hl=en&lr=&id=jGiTEQAAQBAJ&oi=fnd&pg=PA71&ots=uH3IOUCcDj&sig=BfNqav-_QtYA6fpWtFBSSGOSDf0) |
-
 ### 2.3 `unsupported` — 3 row(s)
 
 The PDF is filed, but the extracted text does not support a use in any section — the mentions sit in the reference list, in a table, or under a heading the paper did not print. Either re-read the page and record what it says, or screen the row out.
@@ -58,7 +50,7 @@ The PDF is filed, but the extracted text does not support a use in any section �
 | `cit-000550` | GLAD | 2019 | Lisacek | A bioinformatics view of glycan–virus interactions | [open](https://www.mdpi.com/1999-4915/11/4/374) |
 | `cit-000513` | GLAD | 2020 | Zou | Databases and bioinformatic tools for glycobiology and glycoproteomics | [open](https://www.mdpi.com/1422-0067/21/18/6727) |
 
-### 2.4 `paywalled` — 9 row(s)
+### 2.4 `paywalled` — 8 row(s)
 
 A copy exists behind a paywall. If the applicant can obtain the PDF through an institution, drop it in the folder and the row can be read.
 
@@ -68,13 +60,12 @@ A copy exists behind a paywall. If the applicant can obtain the PDF through an i
 | `cit-000508` | GLAD | 2021 | Lewis | Big-data glycomics: tools to connect glycan biosynthesis to extracellular c… | [open](https://www.cell.com/trends/biochemical-sciences/abstract/S0968-0004(20)30266-8) |
 | `cit-000514` | GLAD | 2022 | Hokke | Mass spectrometric and glycan microarray–based characterization of the fila… | [open](https://www.mcponline.org/article/S1535-9476(22)00009-3/fulltext) |
 | `cit-000543` | GLAD | 2022 | Feizi | CarbArrayART: a new software tool for carbohydrate microarray data storage,… | [open](https://academic.oup.com/glycob/article-abstract/32/7/552/6555547) |
-| `cit-000553` | GLAD | 2022 | Bunyakiat | A Visual Dashboard of Thai Weaving Pattern Image Gallery | [open](https://www.sciencedirect.com/science/article/pii/S1877050922005026) |
 | `cit-000538` | GLAD | 2023 | Kiessling | Lectin fingerprinting distinguishes antibody neutralization in SARS-CoV-2 | [open](https://pmc.ncbi.nlm.nih.gov/articles/PMC10214521/) |
 | `cit-000512` | GLAD | — | Aoki-Kinoshita | Worldwide glycoscience informatics infrastructure: the GlySpace Alliance | [open](https://pubs.acs.org/jaaucr/article-abstract/3/1/4/1253251) |
 | `cit-000548` | GLAD | — | Perez | CBMcarb-DB: interface of the three-dimensional landscape of carbohydrate-bi… | [open](https://books.rsc.org/books/edited-volume/2205/chapter/8051227) |
 | `cit-000562` | GLAD | — | Feizi | CarbArrayART | [open](https://run.unl.pt/entities/publication/48e256d4-d5a1-4fde-a8a0-ec184408ff34) |
 
-### 2.5 `no-open-copy` — 14 row(s)
+### 2.5 `no-open-copy` — 11 row(s)
 
 No openly accessible copy was found. The publisher's landing page is given so the applicant can check institutional access.
 
@@ -88,11 +79,8 @@ No openly accessible copy was found. The publisher's landing page is given so th
 | `cit-000566` | GLAD | 2020 | — | SugarArray: A User-centred-designed Platform for the Analysis of Lectin and… | [open](https://www.scitepress.org/PublishedPapers/2020/89601/89601.pdf) |
 | `cit-000525` | GLAD | 2021 | — | Combined analysis of multiple glycan-array datasets: new explorations of pr… | [open](https://pmc.ncbi.nlm.nih.gov/articles/PMC8862541/) |
 | `cit-000561` | GLAD | 2021 | Willats | Carbohydrate Microarray Technology | [open](https://link.springer.com/chapter/10.1007/978-3-030-77791-3_10) |
-| `cit-000523` | GLAD | 2022 | Kimber | Secreted filarial nematode galectins modulate host immune cells | [open](https://www.frontiersin.org/journals/immunology/articles/10.3389/fimmu.2022.952104/full) |
 | `cit-000532` | GLAD | 2023 | Hokke | Unraveling cross-reactivity of anti-glycan IgG responses in filarial nemato… | [open](https://www.frontiersin.org/journals/immunology/articles/10.3389/fimmu.2023.1102344/full) |
 | `cit-000531` | GLAD | 2024 | Pekosz | Clade-defining mutations in human H1N1 hemagglutinin protein from 2021-2023… | [open](https://www.biorxiv.org/content/10.1101/2024.05.18.594815.abstract) |
-| `cit-000534` | GLAD | — | Schmidt | Involvement of N‐glycans in binding of Photorhabdus luminescens Tc toxin | [open](https://onlinelibrary.wiley.com/doi/abs/10.1111/cmi.13326) |
-| `cit-000563` | GLAD | — | Schmidt | Involvement of N-glycans in binding of Photorhabdus | [open](https://www.academia.edu/download/106476898/cmi.pdf) |
 | `cit-000567` | GLAD | — | Tiemeyer | Glycoinformatics resources integrated through the GlySpace Alliance | — |
 
 ### 2.6 `not-in-indexes` — 8 row(s)
@@ -129,7 +117,7 @@ counsel relies on them:
 | GlycoGlyph | 2 |
 | MAWE | 3 |
 
-Distribution over all 61 rows: `2` = 53, `3` = 7, `(blank)` = 1.
+Distribution over all 58 rows: `2` = 50, `3` = 7, `(blank)` = 1.
 
 If a number is wrong, the single place to change it is `toolForCitedPaper` /
 `projectForCitedPaper` in [`scripts/lib.js`](./scripts/lib.js), then re-run the importer and
@@ -202,16 +190,7 @@ before downloading a PDF or drafting prose about any candidate (§1.2).
 
 ### 3.4c An included citation the record does not count
 
-These rows are **in** `packet.html`, but the Independent Citation Record does not count
-them as a standing independent citation. That is not automatically wrong — the packet and
-the record answer different questions, and a copy Scholar lists twice can still be the copy
-the applicant wants filed — but it is a discrepancy, and one counsel should hear about from
-us. The record is not changed by this report; if a row should be corrected there, that is a
-decision for the applicant through the record's own `tools/apply-decision.js`.
-
-| row_uid | folder | tier | what the record says |
-|---|---|---|---|
-| `cit-000551` | `cit-000518` | A | not countable; a copy that does not stand for its work |
+None. Every row in `packet.html` is an independent, countable, standing citation on the record.
 
 ### 3.5 Included citations with no verbatim quotation
 
@@ -292,25 +271,30 @@ quietly re-merging. This is the only place the advice is written down.
 
 ## 4. Potential citations not in the packet
 
-[`potential_notable_citations.html`](./potential_notable_citations.html) lists **35** independent citations of “GLAD: GLycan Array Dashboard, a visual analytics tool for glycan micr…” (2019) that are **not** in `packet.html`. It is a review page for the
+[`potential_notable_citations.html`](./potential_notable_citations.html) lists **34** independent citations of “GLAD: GLycan Array Dashboard, a visual analytics tool for glycan micr…” (2019) that are **not** in `packet.html`. It is a review page for the
 applicant: it is not linked from the packet, not printed with it, and nothing on it is
 evidence until a person has read the article and filed it.
 
 | | count |
 |---|---:|
 | Citing works the record lists for that paper | 64 |
+| less rows retired by a later re-capture | 0 |
 | less not independent (shared author, or a PI on the citing paper) | 18 |
 | less copies that do not stand for their work | 2 |
 | less not listed in English | 0 |
 | less already confirmed in the packet | 7 |
 | less already used in the original application (§3) | 2 |
-| **listed for review** | **35** |
+| less decided against by the applicant | 1 |
+| **listed for review** | **34** |
 
-6 of them already have a PDF on file, held under `pending-papers/` until a
+5 of them already have a PDF on file, held under `pending-papers/` until a
 decision is made. The rest sit at
 `no-open-copy`, `paywalled`, or `not-in-indexes` — findings about access, not about
-whether the paper exists. **No tier is claimed for any of them:** a tier is a claim about
-where a sentence sits in an article, and none of these articles has been read page by page.
+whether the paper exists. **A tier appears only for an article that has actually been read:**
+a plain tier is a named mention under a heading the citing paper printed, and a tier marked
+“resolved” is a citation the paper credited by reference number or by author–year
+without naming the tool. The rest claim nothing, because a tier is a claim about where a
+sentence sits and their articles have not been read page by page.
 To bring one in, name its `row_uid` and run `discover-pdfs.js` → `file-pdf.js` →
 `scan-mentions.js` → `record-evidence.js`, then re-render the packet.
 
@@ -328,7 +312,7 @@ cite. Borrowing the value from a sibling row in the same folder is what §5 forb
 
 ### 5.2 One work, two titles
 
-`cit-000544` and `cit-000518` hold two rows with **different citing
+`cit-000544` hold two rows with **different citing
 titles**. That is not an error: Google Scholar lists the work twice, once under its preprint
 title and once under its journal title, and the folder exists precisely to show the dates.
 The identity rests on the applicant's note and the DOI chain, not on the title, and
@@ -359,25 +343,67 @@ They are rewritten every run and are never the basis of a claim in the packet: `
 and `quote` remain the applicant's fields, and §1.3 forbids a script overwriting them. If
 `scanned_on` is older than the newest PDF, re-run `node scripts/scan-mentions.js --write`.
 
+### How a citation that never names the tool is found
+
+A citing author who used GLAD or MAWE often writes neither name in the body. Two shapes cause
+that, and both were found in the stored PDFs rather than imagined:
+
+- **Numbered** — “following established procedures [125–127]”, or a bare superscript
+  typeset tight against a word. In the Kiessling article the *only* in-text mark for MAWE is a
+  superscript `69` after the word “unclear”, and the string “MAWE” appears nowhere
+  outside the reference list.
+- **Author–year** — “(Mehta et al. 2024)”, where there is no number to resolve at all.
+  Six filed PDFs have no numbered bibliography whatsoever.
+
+`scripts/scan-refs.js` resolves both. It identifies which bibliography entry is the
+applicant’s paper — title plus year plus first author, two signals required, never a guess
+— and then reports every place that number, or that surname-and-year, is credited, with the
+section the citing paper printed and the sentence it sits in. A marker attached to a chart
+axis, a table row, or a caption is reported but never quoted, because a fragment offered as
+evidence looks like something and is not.
+
+| basis of a recorded mention | mentions | rows |
+|---|---:|---:|
+| extracted text | 23 | 19 |
+| reference-number resolution | 12 | 11 |
+| human reading | 1 | 1 |
+
+A resolved citation is held to the same bar as one that names the tool: it must sit in
+prose, under a heading the citing paper itself printed, and not in the bibliography entry
+that names the applicant's paper — a reference list proves only that the author cited the
+work, not where or how. Where a row's tier rests on such a citation, that is said in the
+report rather than left for a reader to infer from a section heading alone.
+
+13 mentions across 12 citing works rest on resolution or on a person’s
+reading, not on a named-tool scan. `scan-mentions.js` reports those rows separately and
+leaves their tier alone — it is not built to find them, so its silence is not evidence
+against them.
+
+Resolution also reached 3 citation(s) on rows the packet has already screened
+out. Those rows stay out: each was screened for a reason the citation does not answer
+— one is not independent, the other was already submitted with the original application
+— and a stronger citation cannot undo either. They are recorded rather than dropped so
+the decision can be re-examined if the reason for it changes.
+
 ### 5.6 How each PDF got here, and what is still missing
 
 Every PDF in the storage roots (`papers/`, `pending-papers/`, `screened-papers/`) arrived
 one of two ways, and the distinction matters because only the first is reproducible from a
 script.
 
-**Fetched by `discover-pdfs.js`** — 7 candidate row(s) across 6 distinct file(s), each recorded with the host it came from:
+**Fetched by `discover-pdfs.js`** — 6 candidate row(s) across 6 distinct file(s), each recorded with the host it came from:
 
 | host | rows | row_uid(s) |
 |---|---:|---|
 | www.nature.com | 2 | `cit-000510`, `cit-000511` |
 | www.mdpi.com | 2 | `cit-000513`, `cit-000550` |
-| www.intechopen.com | 2 | `cit-000536`, `cit-000565` |
 | www.frontiersin.org | 1 | `cit-000520` |
+| www.intechopen.com | 1 | `cit-000536` |
 
 All of them are open-access copies resolved through OpenAlex and taken from the publisher.
 
-**Placed in the folder by the applicant** — 14 folder(s) hold a file that
-no candidate row claims as its fetch: `cit-000544`, `cit-000594`, `cit-001253`, `cit-000518`, `cit-000521`, `cit-000629`, `cit-000619`, `cit-000542`, `cit-000602`, `cit-000516`, `cit-000613`, `cit-001257`, `cit-000416`, `cit-000621`.
+**Placed in the folder by the applicant** — 15 folder(s) hold a file that
+no candidate row claims as its fetch: `cit-000544`, `cit-000594`, `cit-001253`, `cit-000518`, `cit-000521`, `cit-000629`, `cit-000619`, `cit-000542`, `cit-000602`, `cit-000516`, `cit-000613`, `cit-001257`, `cit-000416`, `cit-000621`, `cit-000534`.
 These came from the `In Methods` / `In Acknowledgements` imports and were registered into table
 `file`; nothing downloaded them.
 
@@ -385,19 +411,19 @@ These came from the `In Methods` / `In Acknowledgements` imports and were regist
 all, so the NCBI key in `.env` is used for author corroboration, not for fetching. Any statement
 that these papers came from PubMed Central would be wrong.
 
-Discovery state of all 110 GLAD candidates, from `candidate.discover_state`:
+Discovery state of all 108 GLAD candidates, from `candidate.discover_state`:
 
 | state | rows | meaning |
 |---|---:|---|
-| `no-open-copy` | 35 | looked, nothing retrievable found |
-| `open-copy` | 30 | an open-access copy was located; the row is only `has-pdf` once the file is on disk |
+| `no-open-copy` | 34 | looked, nothing retrievable found |
+| `open-copy` | 29 | an open-access copy was located; the row is only `has-pdf` once the file is on disk |
 | `not-in-indexes` | 22 | not found in the open-access indexes consulted |
 | `has-pdf` | 13 | a PDF was already filed when the candidate list was seeded |
 | `paywalled` | 10 | located behind a paywall — the applicant may be able to obtain these |
 
 **Still open:** 23 row(s) sit at `open-copy` with no file on disk — a copy was
 located and never fetched. Chasing them is a decision, not a defect: a row must be independent
-(§1.2) before it is worth a download, and 16 candidate(s) are already held — check why before spending effort on a PDF for a row that
+(§1.2) before it is worth a download, and 18 candidate(s) are already held — check why before spending effort on a PDF for a row that
 cannot be filed.
 
 ## 6. Before handing the packet over

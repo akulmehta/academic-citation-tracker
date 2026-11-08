@@ -1,0 +1,68 @@
+- generic [ref=f150e3]:
+  - banner [ref=f150e4]:
+    - link "ScienceDirect home page" [ref=f150e6] [cursor=pointer]:
+      - /url: /
+      - img "Elsevier logo" [ref=f150e7]
+  - main [ref=f150e15]:
+    - generic [ref=f150e18]:
+      - generic [ref=f150e19]:
+        - heading "Are you a robot?" [level=1] [ref=f150e20]
+        - generic [ref=f150e21]:
+          - generic [ref=f150e22]: Please confirm you are a human by completing the captcha challenge below.
+          - main [ref=f150e24]:
+            - generic [ref=f150e25]:
+              - heading [level=2]
+              - paragraph
+          - list [ref=f150e30]:
+            - listitem [ref=f150e31]:
+              - strong [ref=f150e32]: "Reference number:"
+              - text: a5701bdfcc978120
+            - listitem [ref=f150e33]:
+              - strong [ref=f150e34]: "IP Address:"
+              - text: 209.6.249.190
+            - listitem [ref=f150e35]:
+              - strong [ref=f150e36]: "User Agent:"
+              - text: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.0.0 Safari/537.36
+            - listitem [ref=f150e37]:
+              - strong [ref=f150e38]: "Timestamp:"
+              - text: 2026-11-07 23:27:26 UTC
+      - img "problem providing content" [ref=f150e40]
+  - contentinfo [ref=f150e71]:
+    - link "Elsevier home page (opens in a new tab)" [ref=f150e73] [cursor=pointer]:
+      - /url: https://www.elsevier.com/
+      - img "Elsevier logo with wordmark" [ref=f150e74]
+    - generic [ref=f150e75]:
+      - list [ref=f150e77]:
+        - listitem [ref=f150e78]:
+          - link [ref=f150e79] [cursor=pointer]:
+            - /url: https://www.elsevier.com/solutions/sciencedirect
+            - generic [ref=f150e80]:
+              - text: About ScienceDirect
+              - img "Opens in new window" [ref=f150e81]
+        - listitem [ref=f150e83]:
+          - link "Remote access" [ref=f150e84] [cursor=pointer]:
+            - /url: https://www.sciencedirect.com/user/institution/login?targetURL=%2F
+        - listitem [ref=f150e86]:
+          - link [ref=f150e87] [cursor=pointer]:
+            - /url: https://service.elsevier.com/app/contact/supporthub/sciencedirect/
+            - generic [ref=f150e88]:
+              - text: Contact and support
+              - img "Opens in new window" [ref=f150e89]
+        - listitem [ref=f150e91]:
+          - link [ref=f150e92] [cursor=pointer]:
+            - /url: https://www.elsevier.com/legal/elsevier-website-terms-and-conditions
+            - generic [ref=f150e93]:
+              - text: Terms and conditions
+              - img "Opens in new window" [ref=f150e94]
+        - listitem [ref=f150e96]:
+          - link [ref=f150e97] [cursor=pointer]:
+            - /url: https://www.elsevier.com/legal/privacy-policy
+            - generic [ref=f150e98]:
+              - text: Privacy policy
+              - img "Opens in new window" [ref=f150e99]
+        - listitem [ref=f150e101]:
+          - button "Cookie settings" [ref=f150e102] [cursor=pointer]
+      - paragraph [ref=f150e103]: "All content on this site: Copyright © 2026 Elsevier B.V., its licensors, and contributors. All rights are reserved, including those for text and data mining, AI training, and similar technologies. For all open access content, the relevant licensing terms apply."
+    - link "RELX home page (opens in a new tab)" [ref=f150e105] [cursor=pointer]:
+      - /url: https://www.relx.com/
+      - img "RELX group home page" [ref=f150e106]

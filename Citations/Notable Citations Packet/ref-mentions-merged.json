@@ -1,0 +1,419 @@
+[
+  {
+    "row_uid": "cit-000416",
+    "mentions": [
+      {
+        "section": "Discussion",
+        "tier": "C",
+        "page": "19",
+        "quote": "receptors known to bind to oligomannosylated N-glycans exhibit, in fact, unique, and sometimes very restricted, specificities toward oligomannose motifs (Gao et al. 2021)",
+        "use_type": null,
+        "basis": "extracted text",
+        "verified": 1
+      }
+    ]
+  },
+  {
+    "row_uid": "cit-000540",
+    "mentions": [
+      {
+        "section": "Materials and Methods",
+        "tier": "A",
+        "page": "30",
+        "quote": "The results have analyzed with GLAD (Glycan Array Dashboard), which enables comparison of binding profiles and identification of enriched glycan motifs (Mehta and Cummings 2019)",
+        "use_type": "Implemented",
+        "basis": "extracted text",
+        "verified": 1
+      }
+    ]
+  },
+  {
+    "row_uid": "cit-000987",
+    "mentions": [
+      {
+        "section": "Materials and Methods",
+        "tier": "A",
+        "page": "29",
+        "quote": "printed glycan microarray platform (version 5.6), comprising 539 glycans printed in six replicates per glycan (https://research.bidmc.org/ncfg/service-collaboration-request) (Heimburg-Molinaro et al. 2024)",
+        "use_type": "Implemented",
+        "basis": "extracted text",
+        "verified": 1
+      }
+    ]
+  },
+  {
+    "row_uid": "cit-001259",
+    "mentions": [
+      {
+        "section": "Materials and Methods",
+        "tier": "A",
+        "page": "30",
+        "quote": "signal intensities were processed using the MAWE workflow, which excludes the highest and lowest replicate values before calculating the mean relative fluorescence units (RFU) standard deviation, and coefficient of variation for each glycan (Mehta et al. 2024)",
+        "use_type": "Implemented",
+        "basis": "extracted text",
+        "verified": 1
+      }
+    ]
+  },
+  {
+    "row_uid": "cit-000510",
+    "mentions": [
+      {
+        "section": "Methods",
+        "tier": "A",
+        "page": "10",
+        "quote": "visually analyzed to confirm selective binding of terminally sialylated glycans, after which data was filtered to only include these glycans for a total of 139 glycans (see supplementary Table S1) and organized by structure using the Glycan Array Dashboard (GLAD)",
+        "use_type": null,
+        "basis": "reference-number resolution",
+        "verified": 0,
+        "note": "cited as orphan superscript line: 63"
+      }
+    ]
+  },
+  {
+    "row_uid": "cit-000511",
+    "mentions": [
+      {
+        "section": "Results",
+        "tier": "B",
+        "page": "4",
+        "quote": "of a force graph 42 (Fig. 2g), where each individual node (colored,",
+        "use_type": null,
+        "basis": "reference-number resolution",
+        "verified": 0,
+        "note": "cited as superscript: 42"
+      }
+    ]
+  },
+  {
+    "row_uid": "cit-000516",
+    "mentions": [
+      {
+        "section": "Materials and Methods",
+        "tier": "A",
+        "page": "21",
+        "quote": "The results were analyzed by the GLycan Array Dashboard (GLAD) platform [128], and the glycan models were constructed using GlycoGlyph [129]",
+        "use_type": "Implemented",
+        "basis": "extracted text",
+        "verified": 1
+      }
+    ]
+  },
+  {
+    "row_uid": "cit-000603",
+    "mentions": [
+      {
+        "section": "Materials and Methods",
+        "tier": "A",
+        "page": "21",
+        "quote": "The results were analyzed by the GLycan Array Dashboard (GLAD) platform [128], and the glycan models were constructed using GlycoGlyph [129]",
+        "use_type": "Implemented",
+        "basis": "extracted text",
+        "verified": 1
+      }
+    ]
+  },
+  {
+    "row_uid": "cit-000976",
+    "mentions": [
+      {
+        "section": "Materials and Methods",
+        "tier": "A",
+        "page": "21",
+        "quote": "Glycan microarray analysis following established procedures [125-127] was carried out at the National Center for Functional Glycomics (NCFG) at Beth Israel Deaconess Medical Center, Harvard Medical School",
+        "use_type": "Implemented",
+        "basis": "reference-number resolution",
+        "verified": 1
+      }
+    ]
+  },
+  {
+    "row_uid": "cit-001252",
+    "mentions": [
+      {
+        "section": "Materials and Methods",
+        "tier": "A",
+        "page": "21",
+        "quote": "Glycan microarray analysis following established procedures [125-127] was carried out at the National Center for Functional Glycomics (NCFG) at Beth Israel Deaconess Medical Center, Harvard Medical School",
+        "use_type": "Implemented",
+        "basis": "reference-number resolution",
+        "verified": 1
+      }
+    ]
+  },
+  {
+    "row_uid": "cit-000518",
+    "mentions": [
+      {
+        "section": "Materials and Methods",
+        "tier": "A",
+        "page": "16",
+        "quote": "Finally, GLycan Array Dashboard (GLAD) 93, version 3.1, from the glycotoolkit website (glycotoolkit.com/Tools/GLAD/) hosted by the National Center for Functional Glycomics, was used for data visualization, data mining, generation of heatmaps and boxplot graphs",
+        "use_type": "Implemented",
+        "basis": "extracted text",
+        "verified": 1
+      },
+      {
+        "section": "Methods",
+        "tier": "A",
+        "page": "16",
+        "quote": "average fluorescence intensity of “blank” spots—i.e. spots printed from wells containing spotting buffer only - as a baseline. Finally, GLycan Array Dashboard (GLAD)",
+        "use_type": null,
+        "basis": "reference-number resolution",
+        "verified": 0,
+        "note": "cited as orphan superscript line: 93"
+      }
+    ]
+  },
+  {
+    "row_uid": "cit-000520",
+    "mentions": [
+      {
+        "section": "Methods",
+        "tier": "A",
+        "page": "6",
+        "quote": "by GLAD (Mehta and Cummings, 2019).",
+        "use_type": null,
+        "basis": "reference-number resolution",
+        "verified": 0,
+        "note": "author-year citation naming a co-author: (Mehta and Cummings, 2019)"
+      }
+    ]
+  },
+  {
+    "row_uid": "cit-000534",
+    "mentions": [
+      {
+        "section": "Results",
+        "tier": "B",
+        "page": "2",
+        "quote": "(Mehta & Cummings, 2019).",
+        "use_type": null,
+        "basis": "reference-number resolution",
+        "verified": 0,
+        "note": "author-year citation naming a co-author: (Mehta & Cummings, 2019)"
+      },
+      {
+        "section": "Methods",
+        "tier": "A",
+        "page": "13",
+        "quote": "(Mehta & Cummings, 2019) provided by the CFG.",
+        "use_type": null,
+        "basis": "reference-number resolution",
+        "verified": 0,
+        "note": "author-year citation naming a co-author: (Mehta & Cummings, 2019)"
+      }
+    ]
+  },
+  {
+    "row_uid": "cit-000536",
+    "mentions": [
+      {
+        "section": "Introduction",
+        "tier": "C",
+        "page": "1",
+        "quote": "proteins (mainly adhesions and lectins) [5–9].",
+        "use_type": null,
+        "basis": "reference-number resolution",
+        "verified": 0,
+        "note": "cited as bracketed jointly with 5, 7, 8, 9: [5–9]"
+      }
+    ]
+  },
+  {
+    "row_uid": "cit-000542",
+    "mentions": [
+      {
+        "section": "Materials and Methods",
+        "tier": "A",
+        "page": "5",
+        "quote": "Glycan Array Dashboard (version 3.1) was used to analyze and visualize the glycan array data [44]",
+        "use_type": "Implemented",
+        "basis": "extracted text",
+        "verified": 1
+      },
+      {
+        "section": "Acknowledgments",
+        "tier": "D",
+        "page": "12",
+        "quote": "We also thank Akul Mehta (Harvard University) for valuable discussions and help with the glycan tool Glycan Array Dashboard",
+        "use_type": null,
+        "basis": "human reading",
+        "verified": 1
+      }
+    ]
+  },
+  {
+    "row_uid": "cit-000594",
+    "mentions": [
+      {
+        "section": "Materials and Methods",
+        "tier": "A",
+        "page": "5",
+        "quote": "Glycans were drawn using GlycoGlyph [30]",
+        "use_type": "Implemented",
+        "basis": "extracted text",
+        "verified": 1
+      }
+    ]
+  },
+  {
+    "row_uid": "cit-000602",
+    "mentions": [
+      {
+        "section": "Materials and Methods",
+        "tier": "A",
+        "page": "11",
+        "quote": "We produced glycan schematics using GlycoGlyph then adjusted them on Inkscape",
+        "use_type": "Implemented",
+        "basis": "extracted text",
+        "verified": 1
+      },
+      {
+        "section": "Methods",
+        "tier": "A",
+        "page": "11",
+        "quote": "nal from glycan-free spots. Glycan schematics adapted from Z Biotech for Figs. 3 and 4 and produced on GlycoGlyph with adjustments on Inkscape for Fig. 5",
+        "use_type": null,
+        "basis": "reference-number resolution",
+        "verified": 0,
+        "note": "cited as orphan superscript line jointly with 10, 11: 10,11,56"
+      }
+    ]
+  },
+  {
+    "row_uid": "cit-000613",
+    "mentions": [
+      {
+        "section": "Results / Figures",
+        "tier": "B",
+        "page": "4",
+        "quote": "Glycan structures were drawn with GlycoGlyph14",
+        "use_type": "Implemented",
+        "basis": "extracted text",
+        "verified": 1
+      },
+      {
+        "section": "Figure legend",
+        "tier": "B",
+        "page": "11",
+        "quote": "Predicted N-glycan structures are shown above the corresponding m/z values. Glycans were drawn with GlycoGlyph14",
+        "use_type": "Implemented",
+        "basis": "extracted text",
+        "verified": 1
+      }
+    ]
+  },
+  {
+    "row_uid": "cit-000619",
+    "mentions": [
+      {
+        "section": "Materials and Methods",
+        "tier": "A",
+        "page": "14",
+        "quote": "A model of the N-linked glycan containing two N-acetylglucosamine (GlcNac) units and a mannose (Man) was generated in GlycoGlyph (Mehta & Cummings, 2020)",
+        "use_type": "Implemented",
+        "basis": "extracted text",
+        "verified": 1
+      }
+    ]
+  },
+  {
+    "row_uid": "cit-000621",
+    "mentions": [
+      {
+        "section": "Materials and Methods",
+        "tier": "A",
+        "page": "12",
+        "quote": "The glycan structures were drawn using GlycoGlyph (112)",
+        "use_type": "Implemented",
+        "basis": "extracted text",
+        "verified": 1
+      },
+      {
+        "section": "Methods",
+        "tier": "A",
+        "page": "12",
+        "quote": "(112) (https://glycotoolkit.com/Tools/GlycoGlyph/)",
+        "use_type": null,
+        "basis": "reference-number resolution",
+        "verified": 0,
+        "note": "cited as bracketed: (112)"
+      }
+    ]
+  },
+  {
+    "row_uid": "cit-000629",
+    "mentions": [
+      {
+        "section": "Materials and Methods",
+        "tier": "A",
+        "page": "20",
+        "quote": "Figures of glycan structures were gathered using GlycoGlyph (49)",
+        "use_type": "Implemented",
+        "basis": "extracted text",
+        "verified": 1
+      },
+      {
+        "section": "Figure legend",
+        "tier": "B",
+        "page": "6",
+        "quote": "Diagrams of glycan structures were generated using GlycoGlyph (49)",
+        "use_type": "Implemented",
+        "basis": "extracted text",
+        "verified": 1
+      }
+    ]
+  },
+  {
+    "row_uid": "cit-001261",
+    "mentions": [
+      {
+        "section": "Materials and Methods",
+        "tier": "A",
+        "page": "20",
+        "quote": "Antibodies were tested against a panel of 562 unique glycan structures following a previously reported microwave-assisted wet-erase protocol, but with several exceptions (50)",
+        "use_type": "Implemented",
+        "basis": "extracted text",
+        "verified": 1
+      },
+      {
+        "section": "Figure legend",
+        "tier": "B",
+        "page": "6",
+        "quote": "Glycan microarray protocol was followed using the microwave-assisted wet-erase process by Mehta et al. (50)",
+        "use_type": "Implemented",
+        "basis": "extracted text",
+        "verified": 1
+      }
+    ]
+  },
+  {
+    "row_uid": "cit-001253",
+    "mentions": [
+      {
+        "section": "Materials and Methods",
+        "tier": "A",
+        "page": "15",
+        "quote": "the core facility also changed protocols and began regenerating and reusing slides; the long-term effects on fluorescence intensity are unclear",
+        "use_type": null,
+        "basis": "reference-number resolution",
+        "verified": 1
+      }
+    ]
+  },
+  {
+    "row_uid": "cit-001257",
+    "mentions": [
+      {
+        "section": "Materials and Methods",
+        "tier": "A",
+        "page": "10",
+        "quote": "Data were analyzed using the MAWE method as described previously 45",
+        "use_type": "Implemented",
+        "basis": "extracted text",
+        "verified": 1
+      }
+    ]
+  }
+]

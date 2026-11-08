@@ -19,11 +19,21 @@
  *      `Citations/Notable Citations in Original Application/Original-Application-Citations.md`
  *      and re-submitting one would be a duplicate, not new evidence (§3).
  *   4. English, and the copy that stands for its work.
+ *   5. Not already decided against. A `screened-out` row keeps its record (§4.5)
+ *      but must not be offered again — a row that stays on the page gets
+ *      reconsidered from scratch by whoever reads it next.
  *
  * A row is listed with the row_uid first, because that is the permanent handle:
  *   node scripts/record-tier-decision.js ...      (once it is in the packet)
  * and, to bring one in, the applicant names the uid and the pipeline runs
  * discover-pdfs -> file-pdf -> scan-mentions -> record-evidence for it.
+ *
+ * The Tier and Citation columns carry a SCAN result, not a guess: they are filled
+ * only for a candidate whose PDF is on file and was read by `scan-mentions.js`,
+ * and an article that has not been read says so. A tier is a claim about where a
+ * sentence sits in an article, so the claim travels with the sentence it came from
+ * and with the section and page — see the per-article reports at the foot of the
+ * page, which use the same structure as `packet.html`.
  *
  * Read-only against everything. This script writes exactly one file, inside the
  * packet folder, and never opens the Independent Citation Record for writing (§0).
@@ -34,16 +44,44 @@
  */
 const fs = require("fs");
 const path = require("path");
-const { PKT, openCatalog, openPacket, potentialIndependent } = require("./lib.js");
+const { PKT, openCatalog, openPacket, potentialIndependent, sameSentence } = require("./lib.js");
 
 const argv = process.argv.slice(2);
 const WRITE = argv.includes("--write");
 const OUT = path.join(PKT, "potential_notable_citations.html");
 
+/**
+ * Same wording as `render-packet.js`, deliberately: a tier shown on the review
+ * page has to mean exactly what it means in the packet, or a candidate looks
+ * stronger or weaker here than it will once it is filed.
+ */
+const TIER_LABEL = {
+  A: "Tier A — the tool is used in the Methods as the method performed",
+  B: "Tier B — the tool is used in the Results or Figures",
+  C: "Tier C — cited in a high-reputation publication",
+  D: "Tier D — acknowledged",
+};
+
 function esc(s) {
   return String(s == null ? "" : s)
     .replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;")
     .replace(/"/g, "&quot;");
+}
+
+/** Encode each path segment but keep the slashes, so a relative link still resolves. */
+function href(p) {
+  return esc(String(p).split("/").map(seg => encodeURIComponent(seg)).join("/"));
+}
+
+/**
+ * Every external link opens in a new tab (§5.6): the page is a worklist someone
+ * works down, and clicking a publisher link must not destroy the row they were
+ * reading. Relative links — the PDFs inside this folder — stay in the tab.
+ * `rel=noopener` so the opened page cannot reach back at this one through
+ * `window.opener`.
+ */
+function extLink(url, label) {
+  return `<a href="${esc(url)}" target="_blank" rel="noopener noreferrer">${esc(label)}</a>`;
 }
 
 /** Resolve the cited work by a name fragment so a re-capture cannot point at the wrong paper. */
@@ -79,6 +117,18 @@ function main() {
   const packetRows = new Map(db.prepare("SELECT * FROM citation").all().map(r => [r.row_uid, r]));
   const cand = new Map(db.prepare("SELECT * FROM candidate").all().map(r => [r.row_uid, r]));
   const files = db.prepare("SELECT * FROM file ORDER BY folder_uid, file").all();
+  // Every recorded place the work appears, including the citations that name no
+  // tool. `scan-mentions.js` can only find a mention that spells GLAD out, so a
+  // paper crediting the work as `[5–9]` or `(Mehta and Cummings 2019)` reads "no
+  // tier" to it — and `scan-refs.js` resolves those into the mention table. Showing
+  // only the scan would hide a real citation on a page whose whole purpose is to
+  // help the applicant choose.
+  const mentionsBy = new Map();
+  for (const m of db.prepare(`SELECT * FROM mention
+      ORDER BY row_uid, INSTR('ABCD', tier), CAST(page AS INTEGER)`).all()) {
+    if (!mentionsBy.has(m.row_uid)) mentionsBy.set(m.row_uid, []);
+    mentionsBy.get(m.row_uid).push(m);
+  }
   const fileByFolder = new Map();
   for (const f of files) {
     if (!fileByFolder.has(f.folder_uid)) fileByFolder.set(f.folder_uid, []);
@@ -102,6 +152,11 @@ function main() {
     const pdfs = fileByFolder.get(r.row_uid) || [];
     // A candidate that shares a downloaded copy with another row points at the same file.
     const sharedPdf = !pdfs.length && c.pdf_file ? c.pdf_file : null;
+    const hasPdf = !!(pdfs.length || sharedPdf);
+    // What a scan of that PDF concluded. `scan_tier` is set only when the tool's
+    // mention sat under a heading the article itself printed and in prose (not a
+    // reference entry or a table cell); `scan_note` then says why it did not.
+    const scannedOn = pkt ? pkt.scanned_on : null;
     return {
       uid: r.row_uid,
       title: stripTrailingEllipsis(r.title),
@@ -117,12 +172,30 @@ function main() {
       discover: c.discover_state || "not-queued",
       discoverNote: c.discover_note || "",
       pdfSource: c.pdf_source || "",
-      pdfs, sharedPdf,
+      pdfs, sharedPdf, hasPdf,
+      mentions: mentionsBy.get(r.row_uid) || [],
       inPacket: pkt ? pkt.status : "",
+      scanTier: pkt ? pkt.scan_tier : null,
+      scanNote: pkt ? pkt.scan_note : null,
+      scannedOn: pkt ? pkt.scanned_on : null,
+      section: pkt ? pkt.section : null,
+      page: pkt ? pkt.page : null,
+      quote: pkt ? pkt.quote : null,
+      citesTool: pkt ? pkt.cited_tool : null,
+      citedPaper: pkt ? pkt.cited_paper : null,
+      citesId: pkt ? pkt.cites_id : null,
+      url: pkt ? pkt.citing_url : null,
+      venueFull: pkt ? pkt.citing_venue : null,
+      authorsFull: pkt ? pkt.citing_authors : null,
+      articleType: pkt ? pkt.citing_article_type : null,
+      institutions: pkt ? pkt.citing_institutions : null,
+      screening: pkt ? pkt.screen_reason : null,
     };
   });
 
-  const withPdf = rows.filter(r => r.pdfs.length || r.sharedPdf);
+  const scanned = rows.filter(r => r.hasPdf);
+  const withPdf = scanned;
+  const withTier = rows.filter(r => r.scanTier);
   const today = new Date().toISOString().slice(0, 10);
 
   const DISCOVER_LABEL = {
@@ -138,22 +211,183 @@ function main() {
     "not-in-indexes": "warn", "lookup-failed": "bad", "not-queued": "warn",
   };
 
+  const TIER_PILL = { A: "ok", B: "ok", C: "warn", D: "warn" };
+
+  /** How a citation was found, in words a reader can weigh. */
+  const BASIS_LABEL = {
+    "reference-number resolution": "its reference number or author-year citation",
+    "human reading": "a person reading the page",
+  };
+
+  /**
+   * Tier cell — a scan result, never an inference from the title or venue.
+   *
+   * Two kinds of pill, and they mean different things:
+   *   - `Tier A` — the named-tool scan found "GLAD" in prose under a heading the
+   *     citing paper printed.
+   *   - `Tier A — resolved` — the paper credits the work without naming it, and
+   *     `scan-refs.js` identified the reference number or the author-year citation
+   *     and recorded the sentence. Same tier bar, different route to it, so the
+   *     page says which.
+   */
+  function tierCell(r) {
+    if (r.scanTier) {
+      return `<span class="pill ${TIER_PILL[r.scanTier] || "warn"}">Tier ${esc(r.scanTier)}</span>` +
+        `<div class="sub">${esc(r.section || "")}${r.page ? `, p.\u00a0${esc(r.page)}` : ""}</div>`;
+    }
+    const res = bestResolved(r);
+    if (res) {
+      return `<span class="pill ${TIER_PILL[res.tier] || "warn"} resolved">Tier ${esc(res.tier)} &mdash; resolved</span>` +
+        `<div class="sub">${esc(res.section)}${res.page ? `, p.\u00a0${esc(res.page)}` : ""}, named by ${esc(BASIS_LABEL[res.basis] || res.basis)}</div>`;
+    }
+    if (r.hasPdf) {
+      return `<span class="pill bad">no tier</span>` +
+        `<div class="sub">read ${esc(r.scannedOn || "\u2014")}, but no mention in a section that earns one</div>`;
+    }
+    return `<span class="none">not read</span>`;
+  }
+
+  /**
+   * The strongest recorded mention that the named-tool scan did NOT already show.
+   *
+   * The scan's own verdict is printed from `citation.section`/`quote`, so a mention
+   * recording the same sentence would be printed twice; `sameSentence` keeps the
+   * two tools' two views of one line to one row.
+   */
+  function bestResolved(r) {
+    for (const m of r.mentions) {
+      if (m.basis === "extracted text") continue;
+      if (r.scanTier && sameSentence(m.quote, r.quote)) continue;
+      return m;
+    }
+    return null;
+  }
+
+  /**
+   * Citation cell — the words the tier came from, so the judgement in the column
+   * beside it can be checked without opening the PDF. The full sentence is at the
+   * foot of the page; this is a working excerpt.
+   */
+  function citationCell(r) {
+    if (r.scanTier && r.quote) {
+      return quoteCell(r.quote, `${esc(r.section || "")}${r.page ? `, p.\u00a0${esc(r.page)}` : ""} \u00b7 `
+        + `scanned ${esc(r.scannedOn || "\u2014")}`, r);
+    }
+    const res = bestResolved(r);
+    if (res) {
+      return quoteCell(res.quote, `${esc(res.section)}${res.page ? `, p.\u00a0${esc(res.page)}` : ""} \u00b7 `
+        + `resolved ${esc(res.noted_on || "\u2014")}`, r);
+    }
+    if (r.hasPdf) {
+      return `<span class="sub">${esc(shortNote(r.scanNote))}</span>` +
+        `<div class="sub"><a href="#rep-${esc(r.uid)}">full report</a></div>`;
+    }
+    return `<span class="none">no PDF, so nothing has been quoted</span>`;
+  }
+
+  function quoteCell(text, where, r) {
+    const q = text.length > 260 ? text.slice(0, 260).replace(/\s+\S*$/, "") + "\u2026" : text;
+    return `<span class="q">&ldquo;${esc(q)}&rdquo;</span>` +
+      `<div class="sub">${where} \u00b7 <a href="#rep-${esc(r.uid)}">full report</a></div>`;
+  }
+
+  /** The scan note names the section and page; the table shows that, not the whole sentence. */
+  function shortNote(note) {
+    const s = String(note || "").trim();
+    if (!s) return "no usable mention of the cited tool was found in the text";
+    return s.length > 200 ? s.slice(0, 200).replace(/\s+\S*$/, "") + "\u2026" : s;
+  }
+
+  /**
+   * One report block per candidate, at the foot of the page, in the same shape as
+   * an entry in `packet.html`: the citing paper, the work it cites, where the
+   * citation sits, the quotation, and the files. Kept deliberately shorter than a
+   * packet entry — there is no narrative here, because a narrative is written for
+   * a citation somebody has decided to file, not for one under review.
+   */
+  function reportBlock(r) {
+    const files = r.pdfs.length
+      ? `<ul class="files-list">${r.pdfs.map(f => `<li><a href="${href(f.file)}">${esc(f.file.split("/").pop())}</a>` +
+          ` <span class="sub">${esc(f.role || "")}</span></li>`).join("")}</ul>`
+      : r.sharedPdf
+        ? `<ul class="files-list"><li><a href="${href(r.sharedPdf)}">${esc(r.sharedPdf.split("/").pop())}</a>` +
+          ` <span class="sub">same work as another row</span></li></ul>`
+        : `<p class="none">No PDF on file. ${esc(DISCOVER_LABEL[r.discover] || r.discover)}${r.discoverNote ? ` — ${esc(r.discoverNote)}` : ""}.</p>`;
+
+    const res = bestResolved(r);
+    const where = r.scanTier
+      ? `<strong>${esc(r.section || "")}</strong>${r.page ? `, page ${esc(r.page)}` : ""} — ${esc(TIER_LABEL[r.scanTier] || r.scanTier)}`
+      : res
+        ? `<span class="pill ${TIER_PILL[res.tier] || "warn"} resolved">Tier ${esc(res.tier)} &mdash; resolved</span> `
+          + `<strong>${esc(res.section)}</strong>${res.page ? `, page ${esc(res.page)}` : ""} — `
+          + `${esc(TIER_LABEL[res.tier] || res.tier)}, and the citing paper names no tool there: the citation was found by ${esc(BASIS_LABEL[res.basis] || res.basis)}.`
+        : r.hasPdf
+          ? `<span class="pill bad">no tier</span> ${esc(shortNote(r.scanNote))}`
+          : `<span class="none">not read — no PDF on file, so no claim about where the citation sits</span>`;
+
+    const quote = r.quote
+      ? `<blockquote>&ldquo;${esc(r.quote)}&rdquo;</blockquote>` +
+        `<p class="cite-page">${esc(r.section || "")}${r.page ? `, p.&nbsp;${esc(r.page)}` : ""}` +
+        `${r.scannedOn ? ` &middot; scanned ${esc(r.scannedOn)}` : ""}</p>`
+      : res
+        ? `<blockquote>&ldquo;${esc(res.quote)}&rdquo;</blockquote>` +
+          `<p class="cite-page">${esc(res.section)}${res.page ? `, p.&nbsp;${esc(res.page)}` : ""}` +
+          `${res.noted_on ? ` &middot; resolved ${esc(res.noted_on)}` : ""}` +
+          ` &middot; the marker as printed: ${esc(res.use_type || "reference number or author-year citation")}</p>`
+        : `<p class="none">No verbatim sentence recorded.</p>`;
+
+    return `
+<article class="report" id="rep-${esc(r.uid)}">
+  <h3>${esc(r.title)}</h3>
+  <p class="byline">${esc(r.authorsFull || r.authors || "")}<br>
+     <span class="venue">${esc(r.venueFull || r.venue || "")}${r.year ? `, ${esc(r.year)}` : ""}</span>` +
+     `${r.link ? ` &middot; ${extLink(r.link, hostOf(r.link))}` : ""}` +
+     `${r.doi ? ` &middot; ${extLink(`https://doi.org/${r.doi}`, r.doi)}` : ""}</p>
+  <dl>
+    <dt>Cited work</dt>
+    <dd>${esc(r.citedPaper || r.citesTool || "—")}${r.citesTool ? ` <span class="sub">(${esc(r.citesTool)})</span>` : ""}</dd>
+    <dt>Where the citation appears</dt>
+    <dd>${where}</dd>
+    <dt>Citing authors&rsquo; institutions</dt>
+    <dd>${r.institutions ? esc(r.institutions) : `<span class="none">Not recorded — confirm from the PDF&rsquo;s affiliation block.</span>`}</dd>
+    <dt>Article type</dt>
+    <dd>${esc(r.articleType || "—")}</dd>
+    <dt>Independence</dt>
+    <dd>Re-checked against the citation record: complete author lists of both papers, no shared
+        author, neither PI named on the citing paper${r.confirm ? `; basis on the record: ${esc(r.confirm)}` : ""}.</dd>
+  </dl>
+  <h4>What the text says</h4>
+  ${quote}
+  <h4>Files</h4>
+  ${files}
+  <p class="trace"><code>${esc(r.uid)}</code> &middot; review note only — not part of
+     <code>packet.html</code> and not evidence until the row is confirmed and the packet re-rendered</p>
+</article>`;
+  }
+
+  // Read articles first: the point of the reports is to help decide the ones with
+  // a PDF, and an unread row's block would only repeat the table.
+  const reports = [...rows].sort((a, b) => (b.hasPdf - a.hasPdf) || a.uid.localeCompare(b.uid))
+    .map(reportBlock).join("\n");
+
   const body = rows.map((r, i) => {
     const pdfCell = r.pdfs.length
-      ? r.pdfs.map(f => `<a href="${esc(f.file)}">PDF</a>`).join(" ")
+      ? r.pdfs.map(f => `<a href="${href(f.file)}">PDF</a>`).join(" ")
       : r.sharedPdf
-        ? `<a href="${esc(r.sharedPdf)}">PDF</a> <span class="sub">(same work as another row)</span>`
+        ? `<a href="${href(r.sharedPdf)}">PDF</a> <span class="sub">(same work as another row)</span>`
         : `<span class="none">not retrieved</span>`;
     return `    <tr>
       <td class="uid">${esc(r.uid)}</td>
       <td class="title">${esc(r.title)}${r.rawTitle !== r.title ? ' <span class="sub">[title as Scholar shows it continues]</span>' : ""}
         ${r.authors ? `<div class="byline">${esc(r.authors)}</div>` : ""}</td>
-      <td>${esc(r.senior || "—")}</td>
-      <td>${esc(r.year || "—")}</td>
-      <td>${esc(r.venue || "—")}</td>
-      <td class="src">${r.link ? `<a href="${esc(r.link)}">${esc(hostOf(r.link) || "Scholar link")}</a>` : "—"}${r.doi ? `<div class="sub">${esc(r.doi)}</div>` : ""}</td>
+      <td>${esc(r.senior || "\u2014")}</td>
+      <td>${esc(r.year || "\u2014")}</td>
+      <td>${esc(r.venue || "\u2014")}</td>
+      <td class="src">${r.link ? extLink(r.link, hostOf(r.link) || "Scholar link") : "\u2014"}${r.doi ? `<div class="sub">${extLink(`https://doi.org/${r.doi}`, r.doi)}</div>` : ""}</td>
       <td class="disc"><span class="pill ${DISCOVER_CLASS[r.discover] || "warn"}">${esc(DISCOVER_LABEL[r.discover] || r.discover)}</span>${r.discoverNote ? `<div class="sub">${esc(r.discoverNote)}</div>` : ""}</td>
       <td class="pdf">${pdfCell}</td>
+      <td class="tier">${tierCell(r)}</td>
+      <td class="cite">${citationCell(r)}</td>
       <td class="pick"><label><input type="checkbox"> include</label></td>
     </tr>`;
   }).join("\n");
@@ -169,7 +403,7 @@ function main() {
   * { box-sizing: border-box; }
   body { margin:0; background:#fff; color:var(--ink);
          font:16px/1.55 "Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif; }
-  main { max-width: 64rem; margin:0 auto; padding:2.5rem 1.5rem 5rem; }
+  main { max-width: 78rem; margin:0 auto; padding:2.5rem 1.5rem 5rem; }
   h1 { font-size:1.9rem; line-height:1.2; margin:.2rem 0 .4rem; }
   h2 { font-size:1.2rem; margin:2.2rem 0 .5rem; padding-bottom:.3rem; border-bottom:2px solid var(--accent); }
   p { margin:.5rem 0; }
@@ -194,13 +428,28 @@ function main() {
   .pill.ok { background:#e3f0e4; color:#26562a; }
   .pill.warn { background:#f6ecd9; color:#7a5c00; }
   .pill.bad { background:#f7e0e0; color:#7a1f1f; }
+  .pill.resolved { background:#e2ecf6; color:#1f3f6e; }
   .screen { font-size:.8rem; color:var(--muted); }
   .screen td { border:none; padding:.12rem .35rem; }
   .screen td.n { font-variant-numeric:tabular-nums; color:var(--ink); }
+  .tier { font-size:.74rem; white-space:nowrap; }
+  .cite { font-size:.74rem; min-width:14rem; }
+  .cite .q { display:block; margin-bottom:.15rem; }
+  .report { border:1px solid var(--rule); border-left:3px solid var(--accent); padding:.9rem 1.1rem; margin:1.4rem 0; }
+  .report h3 { font-size:1.02rem; margin:.1rem 0 .2rem; }
+  .report h4 { font-size:.78rem; text-transform:uppercase; letter-spacing:.06em; margin:1.1rem 0 .3rem; color:var(--muted); }
+  .report dl { display:grid; grid-template-columns:minmax(9rem,max-content) 1fr; gap:.15rem .8rem; margin:.5rem 0; font-size:.82rem; }
+  .report dt { color:var(--muted); font-size:.74rem; text-transform:uppercase; letter-spacing:.03em; padding-top:.15rem; }
+  .report dd { margin:0; }
+  .report blockquote { margin:.4rem 0 .2rem; padding:.4rem .9rem; border-left:3px solid var(--rule);
+                       background:#faf8f5; font-size:.86rem; }
+  .report .cite-page { font-size:.72rem; color:var(--muted); margin:.1rem 0 0; }
+  .report .files-list { margin:.3rem 0; padding-left:1.2rem; font-size:.82rem; }
+  .report .trace { font-size:.72rem; color:var(--muted); border-top:1px solid var(--rule); padding-top:.4rem; margin:.9rem 0 0; }
   .foot { margin-top:2rem; font-size:.75rem; color:var(--muted); border-top:1px solid var(--rule); padding-top:.8rem; }
   @media print {
     .pick, thead th.pick { display:none; }
-    main { padding:0; }
+    main { padding:0; max-width:none; }
     a { color:inherit; text-decoration:none; }
   }
 </style>
@@ -216,7 +465,8 @@ function main() {
     page is in it. Tick a row, or send the <code>row_uid</code>s, and the pipeline
     (<code>discover-pdfs.js</code> &rarr; <code>file-pdf.js</code> &rarr; <code>scan-mentions.js</code>
     &rarr; <code>record-evidence.js</code>) reads the full text, finds the section and page, and
-    files it at the tier the text supports. Until that reading exists, no tier is claimed here.
+    files it at the tier the text supports. Where a PDF is already on file, the Tier and
+    Citation columns carry what that reading found; where it is not, they say so and claim nothing.
   </div>
   <div class="cited">
     <strong>Cited work:</strong> ${esc(cited.title)} (${esc(cited.year || "—")})<br>
@@ -224,8 +474,10 @@ function main() {
   </div>
   <p>${rows.length} independent citations of this work are not in the packet and were not used in
      the original application. Each is a real, independently authored citation of the applicant&rsquo;s
-     tool; what is not yet known is where in each article the citation sits, which is what decides
-     its tier.</p>
+     tool. ${withTier.length} of them have been read and the sentence that cites the tool is recorded;
+     ${withPdf.length - withTier.length} have been read and the tool does not appear anywhere the
+     article ranks as a section; ${rows.length - withPdf.length} have no PDF yet, so where the
+     citation sits is still unknown &mdash; and that is what decides a tier.</p>
   <table class="screen">
     <tr><td>Citing works the record lists for this paper</td><td class="n">${screen.total}</td></tr>
 ${screen.superseded ? `    <tr><td>less rows retired by a re-capture</td><td class="n">&minus;${screen.superseded}</td></tr>\n` : ""}    <tr><td>less not independent (shares an author with the cited work, or names a PI)</td><td class="n">&minus;${screen.dependent}</td></tr>
@@ -233,15 +485,19 @@ ${screen.superseded ? `    <tr><td>less rows retired by a re-capture</td><td cla
     <tr><td>less not listed in English</td><td class="n">&minus;${screen.nonEnglish}</td></tr>
     <tr><td>less already confirmed in the packet</td><td class="n">&minus;${screen.inPacket}</td></tr>
     <tr><td>less already used in the original application</td><td class="n">&minus;${screen.origApp}</td></tr>
-    <tr><td><strong>listed here for review</strong></td><td class="n"><strong>${rows.length}</strong></td></tr>
+${screen.decided ? `    <tr><td>less already decided against on review (kept in <code>screened-out.csv</code>)</td><td class="n">&minus;${screen.decided}</td></tr>\n` : ""}    <tr><td><strong>listed here for review</strong></td><td class="n"><strong>${rows.length}</strong></td></tr>
   </table>
 </header>
 
 <h2>The ${rows.length} candidates</h2>
+<p>${withPdf.length} of them have a PDF on file and have been read by the scanner; those carry a
+   tier and the sentence it rests on. The rest have no tier because nothing has been read, which is
+   a statement about the file, not about the paper.</p>
 <table>
   <thead><tr>
     <th>row_uid</th><th>Citing paper</th><th>Senior author</th><th>Year</th><th>Venue</th>
-    <th>Where it is</th><th>Open copy</th><th>PDF on file</th><th class="pick">Decision</th>
+    <th>Where it is</th><th>Open copy</th><th>PDF on file</th><th>Tier</th><th>Citation</th>
+    <th class="pick">Decision</th>
   </tr></thead>
   <tbody>
 ${body}
@@ -260,15 +516,39 @@ ${body}
    The record reads the complete author list of both papers. A citing paper that shares an author
    with the cited work, or that names Richard D. Cummings or the former PI Umesh R. Desai, is a
    self-citation and was removed at the first screen above.</p>
-<p><strong>Tiers are deliberately absent.</strong> A tier is a claim about where a sentence sits in
-   an article, and no article on this page has been read page by page. Filing one here would put a
-   number behind a guess.</p>
+<p><strong>A tier is a scan result, and only for an article that has actually been read.</strong>
+   The Tier and Citation columns are filled from the PDF on file: <code>scan-mentions.js</code> extracts the
+   text, finds every appearance of the tool, and reads the heading the article itself printed above
+   it. Tier A means the mention sits in the Methods as the method performed; B in the Results or
+   Figures; C in a high-reputation publication; D an acknowledgement. Where the column says
+   <em>no tier</em>, the article was read and the tool appears only in a reference list, a table, or
+   a section that earns no tier &mdash; the note says which. Where it says <em>not read</em>, no
+   PDF exists yet, so no claim is made. A scan is a machine reading of prose: it is good at telling
+   a Methods sentence from a bibliography entry, and it cannot tell whether the use was substantial.
+   A person&rsquo;s reading of the page decides, and filing a candidate runs the same scanner again
+   into the packet.</p>
+<p><strong>A blue &ldquo;Tier&nbsp;X &mdash; resolved&rdquo; pill means the citing paper never names the tool.</strong>
+   A citing author who used the work often credits it only as a reference number (&ldquo;following
+   established procedures [125&ndash;127]&rdquo;, a superscript <sup>69</sup>) or, in author&ndash;year
+   journals, only as &ldquo;(Mehta et al. 2024)&rdquo;. <code>scan-refs.js</code> identifies which
+   bibliography entry is the applicant&rsquo;s paper &mdash; two signals required, title plus year plus
+   first author, never a guess &mdash; and then reports every place that number or that citation is
+   credited, with the section and the sentence. The tier bar is identical to a named mention&rsquo;s:
+   under a heading the citing paper printed, in prose, not a table cell and not the reference list.
+   The colour only says how the citation was found, not that it is weaker.</p>
+
+<h2>Report on each candidate</h2>
+<p>The same structure as <code>packet.html</code>, one block per candidate, so a row above can be
+   judged on its background and its quotation together. A block is a review note, not evidence:
+   nothing here reaches counsel unless the row is confirmed and the packet is re-rendered.</p>
+${reports}
 
 <p class="foot">Generated ${today} by <code>scripts/build-potential.js</code> from
    <code>Database/citation-catalog.sqlite</code> (read-only) and
    <code>notable-citations.sqlite</code>. Not linked from <code>packet.html</code> and not printed
    with it. Independence screen: <code>status = INDEPENDENT</code> and
-   <code>is_countable_independent = 1</code> on the active, standing, English row.</p>
+   <code>is_countable_independent = 1</code> on the active, standing, English row.
+   ${withPdf.length} of ${rows.length} read by <code>scan-mentions.js</code> on or before ${esc(today)}.</p>
 </main>
 </body>
 </html>`;

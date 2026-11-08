@@ -89,6 +89,36 @@ const STANDALONE = SECTIONS.map(s => ({ ...s, test: new RegExp(NUM + "(?:" + s.r
 const INLINE = SECTIONS.map(s => ({ ...s, test: new RegExp(NUM + "(?:" + s.re.source + ")[.:]\\s+\\S", "i") }));
 
 /**
+ * A heading whose letters were spaced in SYLLABLES rather than singly.
+ *
+ * `untrack` below collapses a run of single letters, which is what tracking looks
+ * like in most journals. Cellular Microbiology sets its headings two and three
+ * letters at a time, so the words never reassemble: the Methods heading of
+ * cit-000534 extracts as "EX PE RI M EN TALP RO CEDURES" and is invisible to every
+ * word pattern above, which left a genuine Tier A mention reading "unresolved".
+ * For such a line, test it with the whitespace removed instead — hence every `\s+`
+ * in a section pattern becoming `\s*` here.
+ */
+const DESPACED = SECTIONS.map(s => ({
+  ...s,
+  test: new RegExp(NUM + "(?:" + s.re.source.replace(/\\s\+/g, "\\s*") + ")\\s*[.:]?$", "i"),
+}));
+
+/**
+ * Is this line set in tracked syllables rather than written as words?
+ *
+ * Gated on shape so ordinary prose is never despaced and tested: require several
+ * words, most of them short, which is what "EX PE RI M EN TAL" produces and what
+ * "The screen data were further analysed" does not.
+ */
+function trackedSyllables(line) {
+  const t = line.replace(/^\d+(?:\.\d+)*[.)\s|\u2013-]*/, "").trim();
+  const words = t.split(/\s+/).filter(w => /[A-Za-z]/.test(w));
+  if (words.length < 3) return false;
+  return words.filter(w => w.length <= 4).length / words.length >= 0.7;
+}
+
+/**
  * Undo tracked capitals: "2 | M E T H O D S" and "I N T R O D U C T I O N".
  *
  * Some publishers set a heading by spacing every letter, and pdf.js extracts
@@ -124,6 +154,11 @@ function headingOf(line) {
   if (alone) return { section: alone, number: leadingNumber(text) };
   const inl = INLINE.find(s => s.test.test(text));
   if (inl) return { section: inl, number: leadingNumber(text) };
+  if (trackedSyllables(line)) {
+    const solid = text.replace(/\s+/g, "");
+    const dy = DESPACED.find(s => s.test.test(solid));
+    if (dy) return { section: dy, number: leadingNumber(solid) };
+  }
   return null;
 }
 
@@ -202,18 +237,33 @@ async function extractPages(file) {
     const page = await doc.getPage(p);
     const tc = await page.getTextContent();
     // Rebuild lines by y position so headings survive as short standalone lines.
+    // Each item keeps its height and x extent: a citation drawn as a superscript
+    // is only visible in the glyph box, and reference-number resolution
+    // (`ref-cites.js`) is the one reader that needs it.
     const lines = [];
     let cur = null;
     for (const it of tc.items) {
       const y = Math.round(it.transform[5]);
       if (!cur || Math.abs(cur.y - y) > 3) {
-        cur = { y, text: "" };
+        cur = { y, text: "", items: [] };
         lines.push(cur);
       }
       cur.text += it.str;
+      if (it.str) {
+        cur.items.push({
+          str: it.str,
+          h: Math.round(Math.abs(it.transform[3]) * 100) / 100,
+          // The baseline matters as much as the height: a superscript is drawn
+          // both smaller AND higher, a subscript smaller AND lower, and height
+          // alone cannot tell the two apart.
+          base: Math.round(it.transform[5] * 100) / 100,
+          x: Math.round(it.transform[4] * 100) / 100,
+          w: Math.round((it.width || 0) * 100) / 100,
+        });
+      }
     }
     pages.push(lines
-      .map(l => ({ y: l.y, text: l.text.replace(/\s+/g, " ").trim() }))
+      .map(l => ({ y: l.y, text: l.text.replace(/\s+/g, " ").trim(), items: l.items }))
       .filter(l => l.text.length));
   }
   await doc.destroy();
@@ -541,7 +591,7 @@ async function main() {
   // that also fires on `held` rows, which carry no tier claim for counsel. A
   // number that conflates them cannot be compared against a query of the database.
   let scanned = 0, located = 0, notFound = 0;
-  let tierDiffers = 0, unsupported = 0;
+  let tierDiffers = 0, unsupported = 0, resolutionBacked = 0;
   for (const folder of folders) {
     const files = db.prepare(`SELECT * FROM file WHERE folder_uid=? AND cited=1 ORDER BY file`).all(folder);
     const hits = [];
@@ -566,6 +616,24 @@ async function main() {
     const rows = db.prepare(`SELECT row_uid, status, is_main, tier, evidence_basis, cited_paper, quote
       FROM citation WHERE folder_uid=? ORDER BY is_main DESC, row_uid`).all(folder);
 
+    // A tier this scanner cannot see is not a tier that lacks support. A citation
+    // resolved by reference number or by author-year names no tool in the prose
+    // (`[125-127]`, `(Mehta et al. 2024)`) and a mention recorded by a person is
+    // their own reading of the page, so warning about either would be the scanner
+    // disbelieving evidence it is not built to find.
+    const backedBy = new Map();
+    for (const m of db.prepare(`SELECT row_uid, basis, tier, section, page FROM mention
+        WHERE basis <> 'extracted text'`).all()) {
+      if (!backedBy.has(m.row_uid)) backedBy.set(m.row_uid, []);
+      backedBy.get(m.row_uid).push(m);
+    }
+    const supportNote = (rowUid) => {
+      const ms = backedBy.get(rowUid) || [];
+      if (!ms.length) return "";
+      const m = ms[0];
+      return `; a mention recorded by ${m.basis} (${m.tier}, ${m.section} p.${m.page}) is evidence this scan cannot see`;
+    };
+
     if (!hits.length) {
       notFound++;
       // "Not in the text" is a finding only when the extract worked. A file that
@@ -574,10 +642,12 @@ async function main() {
       console.log(`${folder}: no mention of the applicant's tools found in the extracted text`);
       for (const r of rows) {
         if (r.tier) {
+          const note = supportNote(r.row_uid);
+          if (note) { resolutionBacked++; console.log(`    ${r.row_uid}: recorded tier ${r.tier} (basis: ${r.evidence_basis || "unstated"}) is not in the prose${note}`); continue; }
           unsupported++;
           console.log(`    ${r.row_uid}: recorded tier ${r.tier} (basis: ${r.evidence_basis || "unstated"}) is not in the extracted text at all — confirm the PDF is the full article`);
         }
-        if (!DRY && r.status === "held") {
+        if (!DRY && r.status === "held" && !supportNote(r.row_uid)) {
           upd.run(null, null, null, null,
             "Scanner: no mention of GLAD / GlycoGlyph / MAWE / Glyco-SPOT in the extracted text — check the PDF is the full article", r.row_uid);
         }
@@ -624,16 +694,26 @@ async function main() {
 
       if (!best) {
         if (r.tier) {
-          unsupported++;
-          console.log(`    ${r.row_uid}: recorded tier ${r.tier} (basis: ${r.evidence_basis || "unstated"}) is not supported by the extracted text — every mention of ${want || "its cited paper"} is a reference entry, a table, or under a heading the paper did not rank`
-            + (r.status === "included" ? "; the row is `included`, so a person should re-read the page" : ""));
+          const note = supportNote(r.row_uid);
+          if (note) {
+            resolutionBacked++;
+            console.log(`    ${r.row_uid}: recorded tier ${r.tier} (basis: ${r.evidence_basis || "unstated"}) is not in the prose${note}`);
+          } else {
+            unsupported++;
+            console.log(`    ${r.row_uid}: recorded tier ${r.tier} (basis: ${r.evidence_basis || "unstated"}) is not supported by the extracted text — every mention of ${want || "its cited paper"} is a reference entry, a table, or under a heading the paper did not rank`
+              + (r.status === "included" ? "; the row is `included`, so a person should re-read the page" : ""));
+          }
         }
         // Write unconditionally for a held row. A row whose only mentions are
         // reference entries must have any earlier verdict CLEARED, not left
         // behind: before reference pages were recognised this tool filed
         // "tier A, Methods p.20" for cit-000513 from a row of a comparison table,
         // and writing only on a positive verdict would keep that overstatement.
-        if (!DRY && r.status === "held") {
+        //
+        // Unless a person or the reference resolver put that tier somewhere this
+        // scanner cannot read. Clearing it here would delete evidence the tool was
+        // never built to find, so the row is reported and left alone.
+        if (!DRY && r.status === "held" && !supportNote(r.row_uid)) {
           upd.run(null, null, null, mine.length ? mine[0].quote : null,
             want
               ? `Scanner: ${want} appears only in the reference list${mine.some(h => h.inTable) ? ", a table, or" : "or"} an unranked section — no section of the citing paper uses it as a method${mine.length ? ` (appearance: ${mine[0].section} p.${mine[0].page})` : ""}`
@@ -670,6 +750,14 @@ async function main() {
   console.log(`${tierDiffers} tier disagreement(s): the scan found the tool in a ranked section and read a different tier than the row records.`);
   console.log(`${unsupported} row(s) with a recorded tier the text does not support (no usable mention, or no mention at all).`);
   console.log("  Note: `unsupported` includes `held` rows, whose tier may be one this scanner wrote itself; it is not a count of claims in the packet.");
+  if (resolutionBacked) {
+    console.log(`${resolutionBacked} row(s) whose recorded tier rests on a mention this scan cannot see (a resolved reference number, an author-year citation, or a person's reading) — reported, not counted as unsupported, and their tier was left alone.`);
+  }
   db.close();
 }
-main();
+// `scan-refs.js` reuses this exact reader and section map, so that reference-number
+// resolution and the named-tool scan cannot disagree about which section a page
+// is in. Requiring this file must not start a scan.
+module.exports = { extractPages, sectionMap, isReferencePage, sentenceAround, TOOLS, scanFile };
+
+if (require.main === module) main();
