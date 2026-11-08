@@ -16,7 +16,7 @@ decision that only a person can make.
 | Citations in the packet (in `packet.html`) | 22 |
 | Works those citations are filed as (§5.1 folders) | 14 |
 | PDFs filed under `papers/` (in the packet) | 16 |
-| PDFs under `pending-papers/` (awaiting a decision) | 122 |
+| PDFs under `pending-papers/` (awaiting a decision) | 123 |
 | PDFs under `screened-papers/` (kept, not filed) | 61 |
 | Held — open items, listed below | 730 |
 | Screened out — decided, kept for the record (§4.5) | 246 |
@@ -31,7 +31,7 @@ every held row appears in §2 below.
 ## 2. Held rows — 730 open items
 
 
-### 2.1 `read` — 17 row(s)
+### 2.1 `read` — 18 row(s)
 
 The PDF is filed and the applicant's tool appears in a section of the paper. What is missing is the applicant's reading: a location on its own is not a claim about how the tool was used (§1.1).
 
@@ -43,6 +43,7 @@ The PDF is filed and the applicant's tool appears in a section of the paper. Wha
 | `cit-000514` | GLAD | 2022 | Hokke | Mass spectrometric and glycan microarray–based characterization of the fila… | [open](https://www.mcponline.org/article/S1535-9476(22)00009-3/fulltext) |
 | `cit-000543` | GLAD | 2022 | Feizi | CarbArrayART: a new software tool for carbohydrate microarray data storage,… | [open](https://academic.oup.com/glycob/article-abstract/32/7/552/6555547) |
 | `cit-000600` | GlycoGlyph | 2022 | Prasad | Novel fold of rotavirus glycan-binding domain predicted by AlphaFold2 and d… | [open](https://www.nature.com/articles/s42003-022-03357-1) |
+| `cit-000617` | GlycoGlyph | 2022 | Gildersleeve | Abnormal antibodies to self-carbohydrates in SARS-CoV-2-infected patients | [open](https://academic.oup.com/pnasnexus/article-abstract/1/3/pgac062/6609787) |
 | `cit-000510` | GLAD | 2023 | Pekosz | 2019–2020 H1N1 clade A5a. 1 viruses have better in vitro fitness compared w… | [open](https://www.nature.com/articles/s41598-023-37122-z) |
 | `cit-000532` | GLAD | 2023 | Hokke | Unraveling cross-reactivity of anti-glycan IgG responses in filarial nemato… | [open](https://www.frontiersin.org/journals/immunology/articles/10.3389/fimmu.2023.1102344/full) |
 | `cit-000538` | GLAD | 2023 | Kiessling | Lectin fingerprinting distinguishes antibody neutralization in SARS-CoV-2 | [open](https://pmc.ncbi.nlm.nih.gov/articles/PMC10214521/) |
@@ -187,7 +188,7 @@ The PDF is filed, but the extracted text does not support a use in any section �
 | `cit-000605` | GlycoGlyph | 2025 | Kontoravdi | GlyCompute: towards the automated analysis of protein N-linked glycosylatio… | [open](https://link.springer.com/article/10.1007/s00216-024-05522-3) |
 | `cit-001116` | Glyco-SPOT | 2026 | Hurevich | Stirring glycopeptides away from the constraints of solid-phase synthesis m… | [open](https://www.frontiersin.org/journals/molecular-biosciences/articles/10.3389/fmolb.2026.1863326/full) |
 
-### 2.4 `paywalled` — 121 row(s)
+### 2.4 `paywalled` — 120 row(s)
 
 A copy exists behind a paywall. If the applicant can obtain the PDF through an institution, drop it in the folder and the row can be read.
 
@@ -240,7 +241,6 @@ A copy exists behind a paywall. If the applicant can obtain the PDF through an i
 | `cit-000678` | — | 2021 | Zardecki | RCSB Protein Data Bank: Celebrating 50 years of the PDB with new tools for … | [open](https://onlinelibrary.wiley.com/doi/abs/10.1002/pro.4213) |
 | `cit-000807` | — | 2021 | Tusnády | PolarProtDb: a database of transmembrane and secreted proteins showing apic… | [open](https://www.sciencedirect.com/science/article/pii/S0022283620306239) |
 | `cit-000462` | — | 2022 | Laganà | The key role of metal adducts in the differentiation of phosphopeptide from… | [open](https://pubs.acs.org/ancham/article-abstract/94/26/9234/835076) |
-| `cit-000617` | GlycoGlyph | 2022 | Gildersleeve | Abnormal antibodies to self-carbohydrates in SARS-CoV-2-infected patients | [open](https://academic.oup.com/pnasnexus/article-abstract/1/3/pgac062/6609787) |
 | `cit-000627` | GlycoGlyph | 2022 | Owonikoko | Serum glycomic profile as a predictive biomarker of recurrence in patients … | [open](https://onlinelibrary.wiley.com/doi/abs/10.1002/cam4.5465) |
 | `cit-000719` | — | 2022 | Kohler | A photo-cross-linking GlcNAc analog enables covalent capture of N-linked gl… | [open](https://www.cell.com/cell-chemical-biology/fulltext/S2451-9456(21)00347-0) |
 | `cit-000733` | — | 2022 | Neelamegham | GlycoEnzOnto: a GlycoEnzyme pathway and molecular function ontology | [open](https://academic.oup.com/bioinformatics/article-abstract/38/24/5413/6772808) |
@@ -1959,7 +1959,7 @@ Every PDF in the storage roots (`papers/`, `pending-papers/`, `screened-papers/`
 one of three ways, and the distinction matters because only the first two are reproducible
 from a script.
 
-**Fetched by `discover-pdfs.js`** — 205 candidate row(s) across 184 distinct file(s), each recorded with the host it came from:
+**Fetched by `discover-pdfs.js`** — 206 candidate row(s) across 185 distinct file(s), each recorded with the host it came from:
 
 | host | rows | row_uid(s) |
 |---|---:|---|
@@ -1970,8 +1970,8 @@ from a script.
 | (no source recorded) | 15 | `cit-000507`, `cit-000523`, `cit-000525`, `cit-000531`, `cit-000532`, `cit-000534`, `cit-000549`, `cit-000554`, `cit-000564`, `cit-000566`, `cit-000581`, `cit-000614`, `cit-000621`, `cit-000623`, `cit-001263` |
 | link.springer.com | 13 | `cit-000589`, `cit-000605`, `cit-000622`, `cit-000707`, `cit-000713`, `cit-000737`, `cit-000782`, `cit-000802`, `cit-001302`, `cit-001532`, `cit-000246`, `cit-000959`, `cit-000960` |
 | www.intechopen.com | 4 | `cit-000536`, `cit-000129`, `cit-000297`, `cit-000565` |
+| academic.oup.com | 3 | `cit-000543`, `cit-000595`, `cit-000617` |
 | journals.plos.org | 3 | `cit-000741`, `cit-000182`, `cit-001497` |
-| academic.oup.com | 2 | `cit-000543`, `cit-000595` |
 | genomebiology.biomedcentral.com | 2 | `cit-000704`, `cit-000831` |
 | arxiv.org | 2 | `cit-000705`, `cit-000726` |
 | www.preprints.org | 2 | `cit-000784`, `cit-000050` |
@@ -2022,15 +2022,15 @@ Discovery state of all 996 GLAD candidates, from `candidate.discover_state`:
 | state | rows | meaning |
 |---|---:|---|
 | `no-open-copy` | 478 | looked, nothing retrievable found |
-| `has-pdf` | 203 | a PDF is on file for the row — seeded that way, fetched by a script, or filed with `file-pdf.js` |
-| `paywalled` | 157 | located behind a paywall — the applicant may be able to obtain these |
+| `has-pdf` | 204 | a PDF is on file for the row — seeded that way, fetched by a script, or filed with `file-pdf.js` |
+| `paywalled` | 156 | located behind a paywall — the applicant may be able to obtain these |
 | `not-in-indexes` | 134 | not found in the open-access indexes consulted |
 | `open-copy` | 21 | an open-access copy was located; the row is only `has-pdf` once the file is on disk |
 | `lookup-failed` | 3 | — |
 
 **Still open:** 0 row(s) sit at `open-copy` with no file on disk — a copy was
 located and never fetched. Chasing them is a decision, not a defect: a row must be independent
-(§1.2) before it is worth a download, and 190 candidate(s) are already held — check why before spending effort on a PDF for a row that
+(§1.2) before it is worth a download, and 191 candidate(s) are already held — check why before spending effort on a PDF for a row that
 cannot be filed.
 
 ## 6. Before handing the packet over
