@@ -1,0 +1,32 @@
+[
+  {
+    "row_uid": "cit-001105",
+    "mentions": [
+      {
+        "section": "Introduction",
+        "tier": "C",
+        "page": "6",
+        "quote": "structurally defined standards [109–114].",
+        "use_type": null,
+        "basis": "reference-number resolution",
+        "verified": 0,
+        "note": "cited as bracketed jointly with 109, 110, 111, 112, 113: [109–114]"
+      }
+    ]
+  },
+  {
+    "row_uid": "cit-001116",
+    "mentions": [
+      {
+        "section": "Introduction",
+        "tier": "C",
+        "page": "1",
+        "quote": "is limited by the inherent synthetic difficulties (Mehta et al., 2020).",
+        "use_type": null,
+        "basis": "reference-number resolution",
+        "verified": 0,
+        "note": "author-year citation on surname + year alone: (Mehta et al., 2020) — read it before relying on it"
+      }
+    ]
+  }
+]
