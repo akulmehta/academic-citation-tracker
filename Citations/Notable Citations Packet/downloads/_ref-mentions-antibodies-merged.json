@@ -1,0 +1,382 @@
+[
+  {
+    "row_uid": "cit-001515",
+    "mentions": [
+      {
+        "section": "Introduction",
+        "tier": "C",
+        "page": "3",
+        "quote": "reactions (21, 22).",
+        "use_type": null,
+        "basis": "reference-number resolution",
+        "verified": 0,
+        "note": "cited as bracketed jointly with 21: (21, 22)"
+      }
+    ]
+  },
+  {
+    "row_uid": "cit-001535",
+    "mentions": [
+      {
+        "section": "Introduction",
+        "tier": "C",
+        "page": "1",
+        "quote": "topes expressed by different species [ 1– 4].",
+        "use_type": null,
+        "basis": "reference-number resolution",
+        "verified": 0,
+        "note": "cited as bracketed jointly with 2, 3, 4: [ 1– 4]"
+      },
+      {
+        "section": "Introduction",
+        "tier": "C",
+        "page": "2",
+        "quote": "an analog of Neu5Ac (1).",
+        "use_type": null,
+        "basis": "reference-number resolution",
+        "verified": 0,
+        "note": "cited as bracketed: (1)"
+      },
+      {
+        "section": "Methods",
+        "tier": "A",
+        "page": "10",
+        "quote": "solvents) to obtain the desired nonulosonosides. Leg5,7diN3α2–6GalNAcαProNHCbz (12). A total of 110 mg, 99% yield, white amorphous solid.",
+        "use_type": null,
+        "basis": "reference-number resolution",
+        "verified": 0,
+        "note": "cited as orphan superscript line: 1"
+      },
+      {
+        "section": "Methods",
+        "tier": "A",
+        "page": "10",
+        "quote": "1.80 (p, J = 6.4 Hz, 2H), 1.65 (t, J = 12.1 Hz, 1H), 1.15 (d, J = 6.3 Hz, 3H).",
+        "use_type": null,
+        "basis": "reference-number resolution",
+        "verified": 0,
+        "note": "cited as superscript: 1"
+      },
+      {
+        "section": "Methods",
+        "tier": "A",
+        "page": "11",
+        "quote": "(ESI) m/z calculated for C34H49N8O18− [M − H]− 857.3170, found 857.3141. Leg5,7diN3α2–6Galβ1–3GalNAcβProNHCbz (15). A total of 73 mg, 93% yield, white amor- phous solid.",
+        "use_type": null,
+        "basis": "reference-number resolution",
+        "verified": 0,
+        "note": "cited as orphan superscript line: 1"
+      },
+      {
+        "section": "Methods",
+        "tier": "A",
+        "page": "11",
+        "quote": "found 857.3174. Leg5,7diN3α2–6Galβ1–3GalNAcαProNHCbz (16). A total of 38 mg, 77% yield, white amor- phous solid.",
+        "use_type": null,
+        "basis": "reference-number resolution",
+        "verified": 0,
+        "note": "cited as orphan superscript line: 1"
+      },
+      {
+        "section": "Methods",
+        "tier": "A",
+        "page": "11",
+        "quote": "857.3170, found 857.3134. Leg5,7diN3α2–6Galβ1–3GlcNAcβProNHCbz (17). A total of 62 mg, 81% yield, white amor- phous solid.",
+        "use_type": null,
+        "basis": "reference-number resolution",
+        "verified": 0,
+        "note": "cited as orphan superscript line: 1"
+      },
+      {
+        "section": "Methods",
+        "tier": "A",
+        "page": "11",
+        "quote": "857.3170, found 857.3139. Leg5,7diN3α2–6Galβ1–3GlcNAcαProNHCbz (18). A total of 49 mg, 99% yield, white amor- phous solid.",
+        "use_type": null,
+        "basis": "reference-number resolution",
+        "verified": 0,
+        "note": "cited as orphan superscript line: 1"
+      },
+      {
+        "section": "Methods",
+        "tier": "A",
+        "page": "12",
+        "quote": "816.1905, found 816.1870. Leg5,7diN3α2–3LacNAcβProNHCbz (20). A total of 27 mg, 71% yield, white amorphous solid.",
+        "use_type": null,
+        "basis": "reference-number resolution",
+        "verified": 0,
+        "note": "cited as orphan superscript line: 1"
+      },
+      {
+        "section": "Methods",
+        "tier": "A",
+        "page": "12",
+        "quote": "857.3170, found 857.3137. Leg5,7diN3α2–3Galβ1–3GalNAcβProNHCbz (21). A total of 23 mg, 96% yield, white amor- phous solid.",
+        "use_type": null,
+        "basis": "reference-number resolution",
+        "verified": 0,
+        "note": "cited as orphan superscript line: 1"
+      },
+      {
+        "section": "Methods",
+        "tier": "A",
+        "page": "12",
+        "quote": "1H), 2.01 (s, 3H), 1.93–1.72 (m, 3H), 1.39 (d, J = 6.2 Hz, 3H).",
+        "use_type": null,
+        "basis": "reference-number resolution",
+        "verified": 0,
+        "note": "cited as superscript: 1"
+      },
+      {
+        "section": "Methods",
+        "tier": "A",
+        "page": "12",
+        "quote": "857.3170, found 857.3135. Leg5,7diN3α2–3Galβ1–3GalNAcαProNHCbz (22). A total of 36 mg, 77% yield, white amor- phous solid.",
+        "use_type": null,
+        "basis": "reference-number resolution",
+        "verified": 0,
+        "note": "cited as orphan superscript line: 1"
+      },
+      {
+        "section": "Methods",
+        "tier": "A",
+        "page": "12",
+        "quote": "Leg5,7diN3α2–3Galβ1–3GlcNAcβProNHCbz (23). A total of 60 mg, 80% yield, white amor- phous solid.",
+        "use_type": null,
+        "basis": "reference-number resolution",
+        "verified": 0,
+        "note": "cited as orphan superscript line: 1"
+      },
+      {
+        "section": "Methods",
+        "tier": "A",
+        "page": "12",
+        "quote": "857.3170, found 857.3142. Leg5,7diN3α2–3Galβ1–3GlcNAcαProNHCbz (24). A total of 47 mg, 96% yield, white amor- phous solid.",
+        "use_type": null,
+        "basis": "reference-number resolution",
+        "verified": 0,
+        "note": "cited as orphan superscript line: 1"
+      },
+      {
+        "section": "Methods",
+        "tier": "A",
+        "page": "13",
+        "quote": "solid. 1H NMR (400 MHz, D2O) δ 7.54–7.28 (m, 5H), 5.29–5.03 (m, 2H), 4.20–4.08 (m, 1H),",
+        "use_type": null,
+        "basis": "reference-number resolution",
+        "verified": 0,
+        "note": "cited as superscript: 1"
+      },
+      {
+        "section": "Methods",
+        "tier": "A",
+        "page": "13",
+        "quote": "[M − H]− 727.3043, found 727.3006. Leg5,7Ac2α2–6LacβProNHCbz (26). A total of 23 mg, 78% yield, white amorphous solid.",
+        "use_type": null,
+        "basis": "reference-number resolution",
+        "verified": 0,
+        "note": "cited as orphan superscript line: 1"
+      },
+      {
+        "section": "Methods",
+        "tier": "A",
+        "page": "13",
+        "quote": "Leg5,7Ac2α2–6Galβ1–3GalNAcβProNHCbz (28). A total of 25 mg, 90% yield, white amor- phous solid.",
+        "use_type": null,
+        "basis": "reference-number resolution",
+        "verified": 0,
+        "note": "cited as orphan superscript line: 1"
+      },
+      {
+        "section": "Methods",
+        "tier": "A",
+        "page": "13",
+        "quote": "889.3572, found 889.3580. Leg5,7Ac2α2–6Galβ1–3GalNAcαProNHCbz (29). A total of 6 mg, 68% yield, white amorphous solid.",
+        "use_type": null,
+        "basis": "reference-number resolution",
+        "verified": 0,
+        "note": "cited as orphan superscript line: 1"
+      },
+      {
+        "section": "Methods",
+        "tier": "A",
+        "page": "13",
+        "quote": "1.84–1.75 (m, 2H), 1.71 (t, J = 12.1 Hz, 1H), 1.11 (d, J = 6.4 Hz, 3H).",
+        "use_type": null,
+        "basis": "reference-number resolution",
+        "verified": 0,
+        "note": "cited as superscript: 1"
+      },
+      {
+        "section": "Methods",
+        "tier": "A",
+        "page": "14",
+        "quote": "Leg5,7Ac2α2–6Galβ1–3GlcNAcβProNHCbz (30). A total of 21 mg, 78% yield, white amor- phous solid.",
+        "use_type": null,
+        "basis": "reference-number resolution",
+        "verified": 0,
+        "note": "cited as orphan superscript line: 1"
+      },
+      {
+        "section": "Methods",
+        "tier": "A",
+        "page": "14",
+        "quote": "889.3572, found 889.3534. Leg5,7Ac2α2–6Galβ1–3GlcNAcαProNHCbz (31). A total of 17 mg, 71% yield, white amor- phous solid.",
+        "use_type": null,
+        "basis": "reference-number resolution",
+        "verified": 0,
+        "note": "cited as orphan superscript line: 1"
+      },
+      {
+        "section": "Methods",
+        "tier": "A",
+        "page": "14",
+        "quote": "889.3572, found 889.3536. Leg5,7Ac2α2–3LacβProNHCbz (32). A total of 7 mg, 68% yield, white amorphous solid.",
+        "use_type": null,
+        "basis": "reference-number resolution",
+        "verified": 0,
+        "note": "cited as orphan superscript line: 1"
+      },
+      {
+        "section": "Methods",
+        "tier": "A",
+        "page": "14",
+        "quote": "40.1, 37.3, 28.8, 22.1, 21.9, 18.0. HRMS (ESI) m/z calculated for C36H54N3O20− [M − H]− 848.3306, found 848.3271. Leg5,7Ac2α2–3LacNAcβProNHCbz (33). A total of 9 mg, 67% yield, white amorphous solid.",
+        "use_type": null,
+        "basis": "reference-number resolution",
+        "verified": 0,
+        "note": "cited as orphan superscript line: 1"
+      },
+      {
+        "section": "Methods",
+        "tier": "A",
+        "page": "14",
+        "quote": "889.3572, found 889.3540. Leg5,7Ac2α2–3Galβ1–3GalNAcβProNHCbz (34). A total of 5 mg, 67% yield, white amorphous solid.",
+        "use_type": null,
+        "basis": "reference-number resolution",
+        "verified": 0,
+        "note": "cited as orphan superscript line: 1"
+      },
+      {
+        "section": "Methods",
+        "tier": "A",
+        "page": "14",
+        "quote": "HRMS (ESI) m/z calculated for C38H57N4O20− [M − H]− 889.3572, found 889.3536. Leg5,7Ac2α2–3Galβ1–3GalNAcαProNHCbz (35). A total of 13 mg, 69% yield, white amor- phous solid.",
+        "use_type": null,
+        "basis": "reference-number resolution",
+        "verified": 0,
+        "note": "cited as orphan superscript line: 1"
+      },
+      {
+        "section": "Methods",
+        "tier": "A",
+        "page": "15",
+        "quote": "phous solid. 1H NMR (400 MHz, D2O) δ 7.54–7.34 (m, 5H), 5.18–5.05 (m, 2H), 4.47 (dd,",
+        "use_type": null,
+        "basis": "reference-number resolution",
+        "verified": 0,
+        "note": "cited as superscript: 1"
+      },
+      {
+        "section": "Methods",
+        "tier": "A",
+        "page": "15",
+        "quote": "for C38H57N4O20− [M − H]− 889.3572, found 889.3532. Leg5,7Ac2α2–3Galβ1–3GlcNAcαProNHCbz (37). A total of 11 mg, 72% yield, white amor- phous solid.",
+        "use_type": null,
+        "basis": "reference-number resolution",
+        "verified": 0,
+        "note": "cited as orphan superscript line: 1"
+      },
+      {
+        "section": "Discussion",
+        "tier": "C",
+        "page": "16",
+        "quote": "https://www.mdpi.com/article/10.3390/molecules29163980/s1: the 1H and 13C NMR spectra of",
+        "use_type": null,
+        "basis": "reference-number resolution",
+        "verified": 0,
+        "note": "cited as superscript: 1"
+      }
+    ]
+  },
+  {
+    "row_uid": "cit-001536",
+    "mentions": [
+      {
+        "section": "Introduction",
+        "tier": "C",
+        "page": "1",
+        "quote": "humans contains various anti-GSL antibodies [4, 5], indicating that endogenous GSLs",
+        "use_type": null,
+        "basis": "reference-number resolution",
+        "verified": 0,
+        "note": "cited as bracketed jointly with 4: [4, 5]"
+      },
+      {
+        "section": "Introduction",
+        "tier": "C",
+        "page": "7",
+        "quote": "its derivatives [ 4, 5].",
+        "use_type": null,
+        "basis": "reference-number resolution",
+        "verified": 0,
+        "note": "cited as bracketed jointly with 4: [ 4, 5]"
+      }
+    ]
+  },
+  {
+    "row_uid": "cit-001537",
+    "mentions": [
+      {
+        "section": "Results",
+        "tier": "B",
+        "page": "5",
+        "quote": "serum (Figure 1, full information is given in Supplementary Material File S1), [ 21, 22 ,26 , 27].",
+        "use_type": null,
+        "basis": "reference-number resolution",
+        "verified": 0,
+        "note": "cited as bracketed jointly with 21, 22, 27: [ 21, 22 ,26 , 27]"
+      },
+      {
+        "section": "Discussion",
+        "tier": "C",
+        "page": "10",
+        "quote": "is evident from several studies using the printed glycan array (PGA) [20, 21, 26, 32 ].",
+        "use_type": null,
+        "basis": "reference-number resolution",
+        "verified": 0,
+        "note": "cited as bracketed jointly with 20, 21, 32: [20, 21, 26, 32 ]"
+      }
+    ]
+  },
+  {
+    "row_uid": "cit-001548",
+    "mentions": [
+      {
+        "section": "Discussion",
+        "tier": "C",
+        "page": "14",
+        "quote": "these anti-FORS1 antibodies is still unclear [28,29].",
+        "use_type": null,
+        "basis": "reference-number resolution",
+        "verified": 0,
+        "note": "cited as bracketed jointly with 28: [28,29]"
+      }
+    ]
+  },
+  {
+    "row_uid": "cit-001553",
+    "mentions": [
+      {
+        "section": "Introduction",
+        "tier": "C",
+        "page": "2",
+        "quote": "as Forssman antigens (FS Ag)) is poorly understood [25].",
+        "use_type": null,
+        "basis": "reference-number resolution",
+        "verified": 0,
+        "note": "cited as bracketed: [25]"
+      }
+    ]
+  }
+]
