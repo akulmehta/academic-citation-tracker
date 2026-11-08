@@ -1,0 +1,17 @@
+[
+  {
+    "row_uid": "cit-000330",
+    "mentions": [
+      {
+        "section": "Results",
+        "tier": "B",
+        "page": "10",
+        "quote": "Enzymes can have multiple exosites 39,40 which interact with different substrates.",
+        "use_type": null,
+        "basis": "reference-number resolution",
+        "verified": 0,
+        "note": "cited as superscript jointly with 40: 39,40"
+      }
+    ]
+  }
+]
