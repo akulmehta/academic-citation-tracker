@@ -1,0 +1,27 @@
+[
+  {
+    "row_uid": "cit-000050",
+    "mentions": [
+      {
+        "section": "Introduction",
+        "tier": "C",
+        "page": "9",
+        "quote": "with active site binding molecules (i.e. partial allosteric regulation can offer control with respect to efficacy in addition to potency)",
+        "use_type": null,
+        "basis": "reference-number resolution",
+        "verified": 0,
+        "note": "cited as orphan superscript line: 51"
+      },
+      {
+        "section": "Introduction",
+        "tier": "C",
+        "page": "13",
+        "quote": "reactivity can shut down the other site preventing complete inhibition. This could potentially get revealed as partial inhibition",
+        "use_type": null,
+        "basis": "reference-number resolution",
+        "verified": 0,
+        "note": "cited as orphan superscript line jointly with 93: 51,93"
+      }
+    ]
+  }
+]
