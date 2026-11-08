@@ -1,0 +1,17 @@
+[
+  {
+    "row_uid": "cit-000297",
+    "mentions": [
+      {
+        "section": "Introduction",
+        "tier": "C",
+        "page": "6",
+        "quote": "INLIGHT has been adapted for O-glycan and heparin oligomer analysis [23, 24], with",
+        "use_type": null,
+        "basis": "reference-number resolution",
+        "verified": 0,
+        "note": "cited as bracketed jointly with 23: [23, 24]"
+      }
+    ]
+  }
+]
