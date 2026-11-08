@@ -53,10 +53,32 @@
   .report .files-list { margin:.3rem 0; padding-left:1.2rem; font-size:.82rem; }
   .report .trace { font-size:.72rem; color:var(--muted); border-top:1px solid var(--rule); padding-top:.4rem; margin:.9rem 0 0; }
   .foot { margin-top:2rem; font-size:.75rem; color:var(--muted); border-top:1px solid var(--rule); padding-top:.8rem; }
+
+  /* Filter bar over the candidate table. Screen only. */
+  .filters { display:flex; flex-wrap:wrap; gap:.6rem .9rem; align-items:flex-end;
+             margin:1rem 0 .2rem; padding:.7rem .9rem;
+             background:#faf8f5; border:1px solid var(--rule); border-left:3px solid var(--accent); }
+  .filters .fld { display:flex; flex-direction:column; gap:.2rem; }
+  .filters label { font-size:.66rem; text-transform:uppercase; letter-spacing:.06em; color:var(--muted); }
+  .filters input, .filters select { font:inherit; font-size:.78rem; padding:.25rem .35rem;
+             border:1px solid #bbb; background:#fff; color:var(--ink); }
+  .filters input[type=search] { min-width:18rem; }
+  .filters .spacer { flex:1 1 auto; }
+  .filters button { font:inherit; font-size:.76rem; padding:.3rem .7rem; background:#fff;
+             border:1px solid #bbb; cursor:pointer; }
+  .filters button:hover { background:#f1ede7; }
+  #shown { font-size:.78rem; color:var(--muted); white-space:nowrap; }
+  #no-hits { display:none; margin:.6rem 0; padding:.5rem .8rem; background:#fdf7e3;
+             border-left:3px solid #c9a227; font-size:.8rem; }
+  tr.excluded { display:none; }
+
   @media print {
     .pick, thead th.pick { display:none; }
     main { padding:0; max-width:none; }
     a { color:inherit; text-decoration:none; }
+    /* A printed exhibit is the whole screen, whatever was filtered on screen. */
+    .filters, #no-hits { display:none !important; }
+    tr.excluded { display:table-row !important; }
   }
 </style>
 </head>
@@ -100,14 +122,30 @@
 <p>16 of them have a PDF on file and have been read by the scanner; those carry a
    tier and the sentence it rests on. The rest have no tier because nothing has been read, which is
    a statement about the file, not about the paper.</p>
-<table>
+
+<div class="filters">
+  <div class="fld">
+    <label for="f-q">Search (title, author, venue, quote, uid, doi)</label>
+    <input type="search" id="f-q" placeholder="e.g. glycan array, Heras, cit-000544" autocomplete="off">
+  </div>
+  <div class="fld"><label for="f-tier">Tier</label><select id="f-tier"><option value="">any</option><option value="A">Tier A</option><option value="B">Tier B</option><option value="C">Tier C</option><option value="D">Tier D</option><option value="resolved">any tier, found by reference</option><option value="untiered">read, no tier</option><option value="unread">not read</option></select></div>
+  <div class="fld"><label for="f-disc">Open copy</label><select id="f-disc"><option value="">any</option><option value="paywalled">Paywalled</option><option value="no-open-copy">No open copy</option><option value="not-in-indexes">Not in OpenAlex</option><option value="not-queued">Not yet looked up</option></select></div>
+  <div class="fld"><label for="f-pdf">PDF on file</label><select id="f-pdf"><option value="">any</option><option value="1">yes</option><option value="0">no</option></select></div>
+  <div class="fld"><label for="f-year">Year</label><select id="f-year"><option value="">any</option><option value="2025">2025</option><option value="2024">2024</option><option value="2023">2023</option><option value="2022">2022</option><option value="2021">2021</option><option value="2020">2020</option><option value="2019">2019</option></select></div>
+  <div class="spacer"></div>
+  <div class="fld"><label>&nbsp;</label><button type="button" id="f-reset">Reset</button></div>
+  <div class="fld"><label>&nbsp;</label><span id="shown"></span></div>
+</div>
+<p id="no-hits">No row matches those filters. Reset to see all 34.</p>
+
+<table id="cand">
   <thead><tr>
     <th>row_uid</th><th>Citing paper</th><th>Senior author</th><th>Year</th><th>Venue</th>
     <th>Where it is</th><th>Open copy</th><th>PDF on file</th><th>Tier</th><th>Citation</th>
     <th class="pick">Decision</th>
   </tr></thead>
-  <tbody>
-    <tr>
+  <tbody id="cand-body">
+    <tr data-uid="cit-000507" data-tier="C" data-disc="has-pdf" data-pdf="1" data-year="2020" data-text="cit-000507 · recent advances in glycoinformatic platforms for glycomics and glycoproteomics · jl abrahams, g taherzadeh, g jarvas… - current opinion in …, 2020 - elsevier · campbell · current opinion in · glycan array and modelling software glad glycan array dashboard is a web-based tool to visualise, analyse, present, and mine glycan microarray data. · ">
       <td class="uid">cit-000507</td>
       <td class="title">Recent advances in glycoinformatic platforms for glycomics and glycoproteomics
         <div class="byline">JL Abrahams, G Taherzadeh, G Jarvas… - Current opinion in …, 2020 - Elsevier</div></td>
@@ -121,7 +159,7 @@
       <td class="cite"><span class="q">&ldquo;Glycan array and modelling software GLAD GLycan Array Dashboard is a web-based tool to visualise, analyse, present, and mine glycan microarray data.&rdquo;</span><div class="sub">Introduction, p. 8 · scanned 2026-11-08 · <a href="#rep-cit-000507">full report</a></div></td>
       <td class="pick"><label><input type="checkbox"> include</label></td>
     </tr>
-    <tr>
+    <tr data-uid="cit-000508" data-tier="none" data-disc="paywalled" data-pdf="0" data-year="2021" data-text="cit-000508 · big-data glycomics: tools to connect glycan biosynthesis to extracellular communication · bp kellman, ne lewis - trends in biochemical sciences, 2021 - cell.com · lewis · trends in biochemical sciences ·  · ">
       <td class="uid">cit-000508</td>
       <td class="title">Big-data glycomics: tools to connect glycan biosynthesis to extracellular communication
         <div class="byline">BP Kellman, NE Lewis - Trends in biochemical sciences, 2021 - cell.com</div></td>
@@ -135,7 +173,7 @@
       <td class="cite"><span class="none">no PDF, so nothing has been quoted</span></td>
       <td class="pick"><label><input type="checkbox"> include</label></td>
     </tr>
-    <tr>
+    <tr data-uid="cit-000510" data-tier="A" data-disc="has-pdf" data-pdf="1" data-year="2023" data-text="cit-000510 · 2019–2020 h1n1 clade a5a. 1 viruses have better in vitro fitness compared with the co-circulating a5a. 2 clade · nj swanson, p marinho, a dziedzic, a jedlicka… - scientific reports, 2023 - nature.com · pekosz · scientific reports · only include these glycans for a total of 139 glycans (see supplementary table s1) and organized by structure using the glycan array dashboard (glad) 63 · ">
       <td class="uid">cit-000510</td>
       <td class="title">2019–2020 H1N1 clade A5a. 1 viruses have better in vitro fitness compared with the co-circulating A5a. 2 clade
         <div class="byline">NJ Swanson, P Marinho, A Dziedzic, A Jedlicka… - Scientific reports, 2023 - nature.com</div></td>
@@ -149,7 +187,7 @@
       <td class="cite"><span class="q">&ldquo;only include these glycans for a total of 139 glycans (see supplementary Table S1) and organized by structure using the Glycan Array Dashboard (GLAD) 63&rdquo;</span><div class="sub">Methods, p. 10 · scanned 2026-11-08 · <a href="#rep-cit-000510">full report</a></div></td>
       <td class="pick"><label><input type="checkbox"> include</label></td>
     </tr>
-    <tr>
+    <tr data-uid="cit-000512" data-tier="none" data-disc="paywalled" data-pdf="0" data-year="" data-text="cit-000512 · worldwide glycoscience informatics infrastructure: the glyspace alliance · f lisacek, m tiemeyer, r mazumder… - jacs au, 2023 - acs publications · aoki-kinoshita ·  ·  · ">
       <td class="uid">cit-000512</td>
       <td class="title">Worldwide glycoscience informatics infrastructure: the GlySpace Alliance
         <div class="byline">F Lisacek, M Tiemeyer, R Mazumder… - JACS Au, 2023 - ACS Publications</div></td>
@@ -163,7 +201,7 @@
       <td class="cite"><span class="none">no PDF, so nothing has been quoted</span></td>
       <td class="pick"><label><input type="checkbox"> include</label></td>
     </tr>
-    <tr>
+    <tr data-uid="cit-000513" data-tier="none" data-disc="has-pdf" data-pdf="1" data-year="2020" data-text="cit-000513 · databases and bioinformatic tools for glycobiology and glycoproteomics · x li, z xu, x hong, y zhang, x zou - international journal of molecular …, 2020 - mdpi.com · zou · international journal of molecular · . glad: glycan array dashboard the glycan array is a high-throughput tool for profiling protein–glycan interactions. · ">
       <td class="uid">cit-000513</td>
       <td class="title">Databases and bioinformatic tools for glycobiology and glycoproteomics
         <div class="byline">X Li, Z Xu, X Hong, Y Zhang, X Zou - International Journal of Molecular …, 2020 - mdpi.com</div></td>
@@ -177,7 +215,7 @@
       <td class="cite"><span class="sub">7 appearance(s) of GLAD, none in a section the paper ranked: Section 5: Glycan-Protein Interaction Databases p.10, Section 5: Glycan-Protein Interaction Databases p.10, Section 5: Glycan-Protein…</span><div class="sub"><a href="#rep-cit-000513">full report</a></div></td>
       <td class="pick"><label><input type="checkbox"> include</label></td>
     </tr>
-    <tr>
+    <tr data-uid="cit-000514" data-tier="none" data-disc="paywalled" data-pdf="0" data-year="2022" data-text="cit-000514 · mass spectrometric and glycan microarray–based characterization of the filarial nematode brugia malayi glycome reveals anionic and zwitterionic glycan antigens · lmc petralia, a van diepen, la lokker… - molecular &amp; cellular …, 2022 - mcponline.org · hokke · molecular &amp; cellular ·  · ">
       <td class="uid">cit-000514</td>
       <td class="title">Mass spectrometric and glycan microarray–based characterization of the filarial nematode Brugia malayi glycome reveals anionic and zwitterionic glycan antigens
         <div class="byline">LMC Petralia, A van Diepen, LA Lokker… - Molecular &amp; Cellular …, 2022 - mcponline.org</div></td>
@@ -191,7 +229,7 @@
       <td class="cite"><span class="none">no PDF, so nothing has been quoted</span></td>
       <td class="pick"><label><input type="checkbox"> include</label></td>
     </tr>
-    <tr>
+    <tr data-uid="cit-000520" data-tier="A" data-disc="has-pdf" data-pdf="1" data-year="2025" data-text="cit-000520 · a “proto” type galectin expressed in striped bass (morone saxatilis) tissues is released to epidermal mucus and binds to bacterial and mucus glycans · de henrikson, h ahmed, s tasumi… - frontiers in cellular …, 2025 - frontiersin.org · vasta · frontiers in cellular · . results were analyzed by glad (mehta and cummings, 2019). · 10.3389/fcimb.2025.1572734/full">
       <td class="uid">cit-000520</td>
       <td class="title">A “proto” type galectin expressed in striped bass (Morone saxatilis) tissues is released to epidermal mucus and binds to bacterial and mucus glycans
         <div class="byline">DE Henrikson, H Ahmed, S Tasumi… - Frontiers in Cellular …, 2025 - frontiersin.org</div></td>
@@ -205,7 +243,7 @@
       <td class="cite"><span class="q">&ldquo;. Results were analyzed by GLAD (Mehta and Cummings, 2019).&rdquo;</span><div class="sub">Methods, p. 6 · scanned 2026-11-08 · <a href="#rep-cit-000520">full report</a></div></td>
       <td class="pick"><label><input type="checkbox"> include</label></td>
     </tr>
-    <tr>
+    <tr data-uid="cit-000524" data-tier="none" data-disc="no-open-copy" data-pdf="0" data-year="2020" data-text="cit-000524 · structural database for lectins and the unilectin web platform · f bonnardel, s perez, f lisacek, a imberty - lectin purification and …, 2020 - springer · imberty · lectin purification and ·  · 10.1007/978-1-0716-0430-4_1">
       <td class="uid">cit-000524</td>
       <td class="title">Structural database for lectins and the UniLectin web platform
         <div class="byline">F Bonnardel, S Perez, F Lisacek, A Imberty - Lectin Purification and …, 2020 - Springer</div></td>
@@ -219,7 +257,7 @@
       <td class="cite"><span class="none">no PDF, so nothing has been quoted</span></td>
       <td class="pick"><label><input type="checkbox"> include</label></td>
     </tr>
-    <tr>
+    <tr data-uid="cit-000525" data-tier="C" data-disc="has-pdf" data-pdf="1" data-year="2021" data-text="cit-000525 · combined analysis of multiple glycan-array datasets: new explorations of protein-glycan interactions · z klamer, b haab - analytical chemistry, 2021 - pmc.ncbi.nlm.nih.gov ·  · analytical chemistry · the methods accessible to non-bioinformaticians include glycopattern26, glycan miner27, the mcaw database28, the glycan array dashboard (glad)29, and the glycan microarray database (glymdb)30. · ">
       <td class="uid">cit-000525</td>
       <td class="title">Combined analysis of multiple glycan-array datasets: new explorations of protein-glycan interactions
         <div class="byline">Z Klamer, B Haab - Analytical chemistry, 2021 - pmc.ncbi.nlm.nih.gov</div></td>
@@ -233,7 +271,7 @@
       <td class="cite"><span class="q">&ldquo;the methods accessible to non-bioinformaticians include GlycoPattern26, Glycan Miner27, the MCAW database28, the Glycan Array Dashboard (GLAD)29, and the Glycan Microarray Database (GlyMDB)30.&rdquo;</span><div class="sub">Introduction, p. 2 · scanned 2026-11-08 · <a href="#rep-cit-000525">full report</a></div></td>
       <td class="pick"><label><input type="checkbox"> include</label></td>
     </tr>
-    <tr>
+    <tr data-uid="cit-000526" data-tier="none" data-disc="paywalled" data-pdf="0" data-year="2019" data-text="cit-000526 · rise of systems glycobiology and personalized glycomedicine: why and how to integrate glycomics with multiomics science? · t kunej - omics: a journal of integrative biology, 2019 - journals.sagepub.com · kunej · omics: a journal of integrative biology ·  · 10.1089/omi.2019.0149">
       <td class="uid">cit-000526</td>
       <td class="title">Rise of systems glycobiology and personalized glycomedicine: why and how to integrate glycomics with multiomics science?
         <div class="byline">T Kunej - OMICS: A Journal of Integrative Biology, 2019 - journals.sagepub.com</div></td>
@@ -247,7 +285,7 @@
       <td class="cite"><span class="none">no PDF, so nothing has been quoted</span></td>
       <td class="pick"><label><input type="checkbox"> include</label></td>
     </tr>
-    <tr>
+    <tr data-uid="cit-000531" data-tier="none" data-disc="has-pdf" data-pdf="1" data-year="2024" data-text="cit-000531 · clade-defining mutations in human h1n1 hemagglutinin protein from 2021-2023 have opposing effects on in vitro fitness and antigenic drift · nj swanson, j girish, m yunker, h liu, j norton… - biorxiv, 2024 - biorxiv.org · pekosz · biorxiv · then normalized to a maximum value of 100, and organized by structure using the glycan array463 dashboard (glad) (69). · 10.1101/2024.05.18.594815.abstract">
       <td class="uid">cit-000531</td>
       <td class="title">Clade-defining mutations in human H1N1 hemagglutinin protein from 2021-2023 have opposing effects on in vitro fitness and antigenic drift
         <div class="byline">NJ Swanson, J Girish, M Yunker, H Liu, J Norton… - bioRxiv, 2024 - biorxiv.org</div></td>
@@ -261,7 +299,7 @@
       <td class="cite"><span class="sub">3 appearance(s) of GLAD, none in a section the paper ranked: front matter p.23, front matter p.23, front matter p.40</span><div class="sub"><a href="#rep-cit-000531">full report</a></div></td>
       <td class="pick"><label><input type="checkbox"> include</label></td>
     </tr>
-    <tr>
+    <tr data-uid="cit-000532" data-tier="A" data-disc="has-pdf" data-pdf="1" data-year="2023" data-text="cit-000532 · unraveling cross-reactivity of anti-glycan igg responses in filarial nematode infections · lmc petralia, a van diepen, dl nguyen… - frontiers in …, 2023 - frontiersin.org · hokke · frontiers in · . glycan array dashboard (glad) (37), from the glycotoolkit website (glycotoolkit.com/tools/glad/) hosted by the national · 10.3389/fimmu.2023.1102344/full">
       <td class="uid">cit-000532</td>
       <td class="title">Unraveling cross-reactivity of anti-glycan IgG responses in filarial nematode infections
         <div class="byline">LMC Petralia, A van Diepen, DL Nguyen… - Frontiers in …, 2023 - frontiersin.org</div></td>
@@ -275,7 +313,7 @@
       <td class="cite"><span class="q">&ldquo;. GLycan Array Dashboard (GLAD) (37), from the glycotoolkit website (glycotoolkit.com/Tools/GLAD/) hosted by the National&rdquo;</span><div class="sub">Methods, p. 4 · scanned 2026-11-08 · <a href="#rep-cit-000532">full report</a></div></td>
       <td class="pick"><label><input type="checkbox"> include</label></td>
     </tr>
-    <tr>
+    <tr data-uid="cit-000536" data-tier="C-resolved" data-disc="has-pdf" data-pdf="1" data-year="2019" data-text="cit-000536 · metabolite multiprobiotic formulas for microbial health · mv lakhtin, vm lakhtin, va aleshkin… - oral health by using …, 2019 - intechopen.com · afanasiev · oral health by using · . glad: glycan array dashboard, a visual · ">
       <td class="uid">cit-000536</td>
       <td class="title">Metabolite multiprobiotic formulas for microbial health
         <div class="byline">MV Lakhtin, VM Lakhtin, VA Aleshkin… - Oral health by using …, 2019 - intechopen.com</div></td>
@@ -289,7 +327,7 @@
       <td class="cite"><span class="q">&ldquo;proteins (mainly adhesions and lectins) [5–9].&rdquo;</span><div class="sub">Introduction, p. 1 · resolved 2026-11-08 · <a href="#rep-cit-000536">full report</a></div></td>
       <td class="pick"><label><input type="checkbox"> include</label></td>
     </tr>
-    <tr>
+    <tr data-uid="cit-000538" data-tier="B" data-disc="has-pdf" data-pdf="1" data-year="2023" data-text="cit-000538 · lectin fingerprinting distinguishes antibody neutralization in sars-cov-2 · mg wuo, ae dugan, m halim, bm hauser… - acs central …, 2023 - pmc.ncbi.nlm.nih.gov · kiessling · acs central · . we began by using the glycan array dashboard (glad) tool · ">
       <td class="uid">cit-000538</td>
       <td class="title">Lectin fingerprinting distinguishes antibody neutralization in SARS-CoV-2
         <div class="byline">MG Wuo, AE Dugan, M Halim, BM Hauser… - ACS Central …, 2023 - pmc.ncbi.nlm.nih.gov</div></td>
@@ -303,7 +341,7 @@
       <td class="cite"><span class="q">&ldquo;. We began by using the Glycan Array Dashboard (GLAD) tool&rdquo;</span><div class="sub">Results, p. 4 · scanned 2026-11-08 · <a href="#rep-cit-000538">full report</a></div></td>
       <td class="pick"><label><input type="checkbox"> include</label></td>
     </tr>
-    <tr>
+    <tr data-uid="cit-000541" data-tier="C-resolved" data-disc="has-pdf" data-pdf="1" data-year="2020" data-text="cit-000541 · an automated fast healthcare interoperability resources-based 12-lead electrocardiogram mobile alert system for suspected acute coronary syndrome · s hur, j lee, t kim, js choi, m kang… - yonsei medical …, 2020 - pmc.ncbi.nlm.nih.gov · cha · yonsei medical · . glad: glycan array dashboard, a visu- al analytics tool for glycan microarrays. · ">
       <td class="uid">cit-000541</td>
       <td class="title">An automated fast healthcare interoperability resources-based 12-lead electrocardiogram mobile alert system for suspected acute coronary syndrome
         <div class="byline">S Hur, J Lee, T Kim, JS Choi, M Kang… - Yonsei medical …, 2020 - pmc.ncbi.nlm.nih.gov</div></td>
@@ -317,7 +355,7 @@
       <td class="cite"><span class="q">&ldquo;let devices.14,15 These features hold more importance when ap-&rdquo;</span><div class="sub">Introduction, p. 2 · resolved 2026-11-08 · <a href="#rep-cit-000541">full report</a></div></td>
       <td class="pick"><label><input type="checkbox"> include</label></td>
     </tr>
-    <tr>
+    <tr data-uid="cit-000543" data-tier="C" data-disc="has-pdf" data-pdf="1" data-year="2022" data-text="cit-000543 · carbarrayart: a new software tool for carbohydrate microarray data storage, processing, presentation, and reporting · y akune, s arpinar, lm silva, as palma… - …, 2022 - academic.oup.com · feizi ·  · . glycan array dashboard (glad) (mehta and cummings 2019) provides online tools · ">
       <td class="uid">cit-000543</td>
       <td class="title">CarbArrayART: a new software tool for carbohydrate microarray data storage, processing, presentation, and reporting
         <div class="byline">Y Akune, S Arpinar, LM Silva, AS Palma… - …, 2022 - academic.oup.com</div></td>
@@ -331,7 +369,7 @@
       <td class="cite"><span class="q">&ldquo;. Glycan Array Dashboard (GLAD) (Mehta and Cummings 2019) provides online tools&rdquo;</span><div class="sub">Introduction, p. 3 · scanned 2026-11-08 · <a href="#rep-cit-000543">full report</a></div></td>
       <td class="pick"><label><input type="checkbox"> include</label></td>
     </tr>
-    <tr>
+    <tr data-uid="cit-000546" data-tier="none" data-disc="no-open-copy" data-pdf="0" data-year="2020" data-text="cit-000546 · decoding glycans: deciphering the sugary secrets to be coherent on the implication · s sharma, s shekhar, b sharma, p jain - rsc advances, 2020 - pubs.rsc.org ·  · rsc advances ·  · ">
       <td class="uid">cit-000546</td>
       <td class="title">Decoding glycans: deciphering the sugary secrets to be coherent on the implication
         <div class="byline">S Sharma, S Shekhar, B Sharma, P Jain - RSC advances, 2020 - pubs.rsc.org</div></td>
@@ -345,7 +383,7 @@
       <td class="cite"><span class="none">no PDF, so nothing has been quoted</span></td>
       <td class="pick"><label><input type="checkbox"> include</label></td>
     </tr>
-    <tr>
+    <tr data-uid="cit-000547" data-tier="none" data-disc="no-open-copy" data-pdf="0" data-year="2020" data-text="cit-000547 · visual data mining: a comparative analysis of selected datasets · u mgboh, b ogbuokiri, g obaido, k aruleba - international conference on …, 2020 - springer · aruleba · international conference on ·  · 10.1007/978-3-030-71187-0_35">
       <td class="uid">cit-000547</td>
       <td class="title">Visual data mining: A comparative analysis of selected datasets
         <div class="byline">U Mgboh, B Ogbuokiri, G Obaido, K Aruleba - International Conference on …, 2020 - Springer</div></td>
@@ -359,7 +397,7 @@
       <td class="cite"><span class="none">no PDF, so nothing has been quoted</span></td>
       <td class="pick"><label><input type="checkbox"> include</label></td>
     </tr>
-    <tr>
+    <tr data-uid="cit-000548" data-tier="none" data-disc="no-open-copy" data-pdf="0" data-year="" data-text="cit-000548 · cbmcarb-db: interface of the three-dimensional landscape of carbohydrate-binding modules · do ribeiro, f bonnardel, as palma, alm carvalho… - 2024 - books.rsc.org · perez ·  ·  · ">
       <td class="uid">cit-000548</td>
       <td class="title">CBMcarb-DB: interface of the three-dimensional landscape of carbohydrate-binding modules
         <div class="byline">DO Ribeiro, F Bonnardel, AS Palma, ALM Carvalho… - 2024 - books.rsc.org</div></td>
@@ -373,7 +411,7 @@
       <td class="cite"><span class="none">no PDF, so nothing has been quoted</span></td>
       <td class="pick"><label><input type="checkbox"> include</label></td>
     </tr>
-    <tr>
+    <tr data-uid="cit-000549" data-tier="A" data-disc="has-pdf" data-pdf="1" data-year="" data-text="cit-000549 · characterization of in vitro fitness and antigenic drift differences between circulating h1n1 influenza clades · n swanson - 2024 - jscholarship.library.jhu.edu ·  ·  · of 139 glycans (see table 2.3) and organized by structure using the glycan array dashboard (glad)(246). · ">
       <td class="uid">cit-000549</td>
       <td class="title">CHARACTERIZATION OF IN VITRO FITNESS AND ANTIGENIC DRIFT DIFFERENCES BETWEEN CIRCULATING H1N1 INFLUENZA CLADES
         <div class="byline">N Swanson - 2024 - jscholarship.library.jhu.edu</div></td>
@@ -387,7 +425,7 @@
       <td class="cite"><span class="q">&ldquo;of 139 glycans (see Table 2.3) and organized by structure using the Glycan Array Dashboard (GLAD)(246).&rdquo;</span><div class="sub">Methods, p. 61 · scanned 2026-11-08 · <a href="#rep-cit-000549">full report</a></div></td>
       <td class="pick"><label><input type="checkbox"> include</label></td>
     </tr>
-    <tr>
+    <tr data-uid="cit-000550" data-tier="none" data-disc="has-pdf" data-pdf="1" data-year="2019" data-text="cit-000550 · a bioinformatics view of glycan–virus interactions · p le mercier, j mariethoz, j lascano-maillard… - viruses, 2019 - mdpi.com · lisacek · maillard… - viruses · glycopattern glycopattern.emory.edu analysis of glycan array data yes 2014 [37] glad glycotoolkit.com/glad visualization and analysis of glycan array data yes 2019 [38] glycome atlas rings.t.soka.ac.jp/glycomeatlasv5/index.html visualization of glycan array data no 2012 [39] · ">
       <td class="uid">cit-000550</td>
       <td class="title">A bioinformatics view of glycan–virus interactions
         <div class="byline">P Le Mercier, J Mariethoz, J Lascano-Maillard… - Viruses, 2019 - mdpi.com</div></td>
@@ -401,7 +439,7 @@
       <td class="cite"><span class="sub">2 appearance(s) of GLAD, none in a section the paper ranked: Introduction p.6, References p.13</span><div class="sub"><a href="#rep-cit-000550">full report</a></div></td>
       <td class="pick"><label><input type="checkbox"> include</label></td>
     </tr>
-    <tr>
+    <tr data-uid="cit-000552" data-tier="none" data-disc="not-in-indexes" data-pdf="0" data-year="" data-text="cit-000552 · [citation] metabolite multipro/synbiotics: approaches for constructing · mv lakhtin, vm lakhtin… - news of …, 2019 - publishing house «education and … ·  ·  ·  · ">
       <td class="uid">cit-000552</td>
       <td class="title">[CITATION] METABOLITE MULTIPRO/SYNBIOTICS: APPROACHES FOR CONSTRUCTING
         <div class="byline">MV Lakhtin, VM Lakhtin… - News of …, 2019 - Publishing House «Education and …</div></td>
@@ -415,7 +453,7 @@
       <td class="cite"><span class="none">no PDF, so nothing has been quoted</span></td>
       <td class="pick"><label><input type="checkbox"> include</label></td>
     </tr>
-    <tr>
+    <tr data-uid="cit-000554" data-tier="none" data-disc="has-pdf" data-pdf="1" data-year="2021" data-text="cit-000554 · glycobioinformatics in deciphering the mammalian glycocode: recent advances · ak datta, n sukhija - glycome: the hidden code in …, 2021 - dattaconsultinggroup.com · sukhija · glycome: the hidden code in · . glad: glycan array dashboard, a visual analytics tool for glycan microarrays. · ">
       <td class="uid">cit-000554</td>
       <td class="title">Glycobioinformatics in deciphering the mammalian glycocode: Recent advances
         <div class="byline">AK Datta, N Sukhija - Glycome: The Hidden Code in …, 2021 - dattaconsultinggroup.com</div></td>
@@ -429,7 +467,7 @@
       <td class="cite"><span class="sub">1 appearance(s) of GLAD, none in a section the paper ranked: References p.27</span><div class="sub"><a href="#rep-cit-000554">full report</a></div></td>
       <td class="pick"><label><input type="checkbox"> include</label></td>
     </tr>
-    <tr>
+    <tr data-uid="cit-000555" data-tier="none" data-disc="no-open-copy" data-pdf="0" data-year="" data-text="cit-000555 · ad ancing helminth gl comics: structural specificit and immunogenicit of schistosomal and filarial gl cans · lmc petralia - scholarlypublications … ·  ·  ·  · ">
       <td class="uid">cit-000555</td>
       <td class="title">Ad ancing helminth gl comics: structural specificit and immunogenicit of schistosomal and filarial gl cans
         <div class="byline">LMC Petralia - scholarlypublications …</div></td>
@@ -443,7 +481,7 @@
       <td class="cite"><span class="none">no PDF, so nothing has been quoted</span></td>
       <td class="pick"><label><input type="checkbox"> include</label></td>
     </tr>
-    <tr>
+    <tr data-uid="cit-000556" data-tier="none" data-disc="paywalled" data-pdf="0" data-year="" data-text="cit-000556 · phenotyping murine and human platelet-derived extracellular vesicles gives implications for future in vivo biodistribution and clearance studies · o an, f reusswig, v krenzlin, c deppermann - rpthjournal.org ·  ·  ·  · 10.1016/j.rpth.2026.103414/attachment/5e1ef181-290b-47ad-a0b6-2820746565cf/mmc1.pdf">
       <td class="uid">cit-000556</td>
       <td class="title">Phenotyping murine and human platelet-derived extracellular vesicles gives implications for future in vivo biodistribution and clearance studies
         <div class="byline">O An, F Reusswig, V Krenzlin, C Deppermann - rpthjournal.org</div></td>
@@ -457,7 +495,7 @@
       <td class="cite"><span class="none">no PDF, so nothing has been quoted</span></td>
       <td class="pick"><label><input type="checkbox"> include</label></td>
     </tr>
-    <tr>
+    <tr data-uid="cit-000559" data-tier="none" data-disc="no-open-copy" data-pdf="0" data-year="" data-text="cit-000559 · glycan microarray data analysis: from raw data to public database integration · wtwmb you - creative-proteomics.com ·  ·  ·  · ">
       <td class="uid">cit-000559</td>
       <td class="title">Glycan Microarray Data Analysis: From Raw Data to Public Database Integration
         <div class="byline">WTWMB You - creative-proteomics.com</div></td>
@@ -471,7 +509,7 @@
       <td class="cite"><span class="none">no PDF, so nothing has been quoted</span></td>
       <td class="pick"><label><input type="checkbox"> include</label></td>
     </tr>
-    <tr>
+    <tr data-uid="cit-000560" data-tier="none" data-disc="no-open-copy" data-pdf="0" data-year="" data-text="cit-000560 · carbarrayart-an update on the software tool for carbohydrate microarray data, storage, processing, presentation and reporting · y akune, s arpinar, lm silva, as palma, y liu… - 2022 - spiral.imperial.ac.uk · feizi ·  ·  · ">
       <td class="uid">cit-000560</td>
       <td class="title">CarbArrayART-An update on the software tool for carbohydrate microarray data, storage, processing, presentation and reporting
         <div class="byline">Y Akune, S Arpinar, LM Silva, AS Palma, Y Liu… - 2022 - spiral.imperial.ac.uk</div></td>
@@ -485,7 +523,7 @@
       <td class="cite"><span class="none">no PDF, so nothing has been quoted</span></td>
       <td class="pick"><label><input type="checkbox"> include</label></td>
     </tr>
-    <tr>
+    <tr data-uid="cit-000561" data-tier="none" data-disc="no-open-copy" data-pdf="0" data-year="2021" data-text="cit-000561 · carbohydrate microarray technology · gj gerwig - the art of carbohydrate analysis, 2021 - springer · willats · the art of carbohydrate analysis ·  · 10.1007/978-3-030-77791-3_10">
       <td class="uid">cit-000561</td>
       <td class="title">Carbohydrate Microarray Technology
         <div class="byline">GJ Gerwig - The Art of Carbohydrate Analysis, 2021 - Springer</div></td>
@@ -499,7 +537,7 @@
       <td class="cite"><span class="none">no PDF, so nothing has been quoted</span></td>
       <td class="pick"><label><input type="checkbox"> include</label></td>
     </tr>
-    <tr>
+    <tr data-uid="cit-000562" data-tier="none" data-disc="no-open-copy" data-pdf="0" data-year="" data-text="cit-000562 · carbarrayart · y akune, s arpinar, lm silva, as palma… - 2022 - run.unl.pt · feizi ·  ·  · ">
       <td class="uid">cit-000562</td>
       <td class="title">CarbArrayART
         <div class="byline">Y Akune, S Arpinar, LM Silva, AS Palma… - 2022 - run.unl.pt</div></td>
@@ -513,7 +551,7 @@
       <td class="cite"><span class="none">no PDF, so nothing has been quoted</span></td>
       <td class="pick"><label><input type="checkbox"> include</label></td>
     </tr>
-    <tr>
+    <tr data-uid="cit-000563" data-tier="none" data-disc="not-queued" data-pdf="0" data-year="" data-text="cit-000563 · involvement of n-glycans in binding of photorhabdus · h bakker, w römer, k aktories, g schmidt - 2021 - academia.edu ·  ·  ·  · ">
       <td class="uid">cit-000563</td>
       <td class="title">Involvement of N-glycans in binding of Photorhabdus
         <div class="byline">H Bakker, W Römer, K Aktories, G Schmidt - 2021 - academia.edu</div></td>
@@ -527,7 +565,7 @@
       <td class="cite"><span class="none">no PDF, so nothing has been quoted</span></td>
       <td class="pick"><label><input type="checkbox"> include</label></td>
     </tr>
-    <tr>
+    <tr data-uid="cit-000564" data-tier="B" data-disc="has-pdf" data-pdf="1" data-year="" data-text="cit-000564 · structure-function analysis of the photorhabdus tc toxin complex · pn ng'ang'a - 2020 - freidok.uni-freiburg.de ·  ·  · . the screen data was further analysed using the online glycan array dashboard (glad) software (mehta and cummings, 2019). · ">
       <td class="uid">cit-000564</td>
       <td class="title">Structure-function analysis of the photorhabdus Tc toxin complex
         <div class="byline">PN Ng'ang'a - 2020 - freidok.uni-freiburg.de</div></td>
@@ -541,7 +579,7 @@
       <td class="cite"><span class="q">&ldquo;. The screen data was further analysed using the online Glycan Array Dashboard (GLAD) software (Mehta and Cummings, 2019).&rdquo;</span><div class="sub">Results, p. 96 · scanned 2026-11-08 · <a href="#rep-cit-000564">full report</a></div></td>
       <td class="pick"><label><input type="checkbox"> include</label></td>
     </tr>
-    <tr>
+    <tr data-uid="cit-000565" data-tier="none" data-disc="not-queued" data-pdf="0" data-year="" data-text="cit-000565 · metabolite multiprobiotic · va aleshkin, ss afanasiev - oral health by using probiotic …, 2019 - books.google.com ·  ·  ·  · ">
       <td class="uid">cit-000565</td>
       <td class="title">Metabolite Multiprobiotic
         <div class="byline">VA Aleshkin, SS Afanasiev - Oral Health by Using Probiotic …, 2019 - books.google.com</div></td>
@@ -555,7 +593,7 @@
       <td class="cite"><span class="none">no PDF, so nothing has been quoted</span></td>
       <td class="pick"><label><input type="checkbox"> include</label></td>
     </tr>
-    <tr>
+    <tr data-uid="cit-000566" data-tier="C" data-disc="has-pdf" data-pdf="1" data-year="2020" data-text="cit-000566 · sugararray: a user-centred-designed platform for the analysis of lectin and glycan microarrays. · a sucre, r pazos, nc reichardt, a garín-muga - healthinf, 2020 - scitepress.org ·  · muga - healthinf · . the second tool is called glad (glycan array dashboard), and it is a web-based tool that provides · ">
       <td class="uid">cit-000566</td>
       <td class="title">SugarArray: A User-centred-designed Platform for the Analysis of Lectin and Glycan Microarrays.
         <div class="byline">A Sucre, R Pazos, NC Reichardt, A Garín-Muga - HEALTHINF, 2020 - scitepress.org</div></td>
@@ -569,7 +607,7 @@
       <td class="cite"><span class="q">&ldquo;. The second tool is called GLAD (Glycan Array Dashboard), and it is a web-based tool that provides&rdquo;</span><div class="sub">Introduction, p. 2 · scanned 2026-11-08 · <a href="#rep-cit-000566">full report</a></div></td>
       <td class="pick"><label><input type="checkbox"> include</label></td>
     </tr>
-    <tr>
+    <tr data-uid="cit-000567" data-tier="none" data-disc="not-in-indexes" data-pdf="0" data-year="" data-text="cit-000567 · [citation] glycoinformatics resources integrated through the glyspace alliance · f lisacek, kf aoki-kinoshita, jk vora, r mazumder… - 2021 - elsevier · tiemeyer ·  ·  · 10.1016/b978-0-12-819475-1.00107-3">
       <td class="uid">cit-000567</td>
       <td class="title">[CITATION] Glycoinformatics resources integrated through the GlySpace Alliance
         <div class="byline">F Lisacek, KF Aoki-Kinoshita, JK Vora, R Mazumder… - 2021 - Elsevier</div></td>
@@ -585,6 +623,8 @@
     </tr>
   </tbody>
 </table>
+<p class="sub">Filtering is screen only: a printed or PDF copy of this page always shows every
+   candidate, so what is on screen cannot silently decide what gets filed.</p>
 
 <h2>Notes on the list</h2>
 <p><strong>&ldquo;Open copy&rdquo; is a statement about access, not about the paper.</strong>
@@ -1481,5 +1521,63 @@
    <code>is_countable_independent = 1</code> on the active, standing, English row.
    16 of 34 read by <code>scan-mentions.js</code> on or before 2026-11-08.</p>
 </main>
+<script>
+/* Filter the candidate table. Reads the data-* attributes the row was written
+   with, never the rendered prose: a label reworded for a reader must not change
+   what a filter matches. */
+(function () {
+  var tbody = document.getElementById("cand-body");
+  if (!tbody) return;
+  var rows = Array.prototype.slice.call(tbody.rows);
+  var q = document.getElementById("f-q"), tier = document.getElementById("f-tier"),
+      disc = document.getElementById("f-disc"), pdf = document.getElementById("f-pdf"),
+      year = document.getElementById("f-year"), shown = document.getElementById("shown"),
+      none = document.getElementById("no-hits");
+
+  function keep(r) {
+    var d = r.dataset, t = tier.value;
+    if (t === "A" || t === "B" || t === "C" || t === "D") {
+      if (d.tier !== t) return false;
+    } else if (t === "resolved") {
+      if (d.tier.indexOf("-resolved") < 0) return false;
+    } else if (t === "untiered" || t === "unread") {
+      if (d.tier !== "none") return false;
+      if (t === "untiered" && d.pdf !== "1") return false;
+      if (t === "unread" && d.pdf !== "0") return false;
+    }
+    if (disc.value && d.disc !== disc.value) return false;
+    if (pdf.value && d.pdf !== pdf.value) return false;
+    if (year.value && d.year !== year.value) return false;
+    var needle = q.value.trim().toLowerCase();
+    if (needle) {
+      // Every whitespace-separated term must appear; order does not matter.
+      var hit = needle.split(/s+/).every(function (w) { return d.text.indexOf(w) >= 0; });
+      if (!hit) return false;
+    }
+    return true;
+  }
+
+  function apply() {
+    var n = 0;
+    rows.forEach(function (r) {
+      var ok = keep(r);
+      r.classList.toggle("excluded", !ok);
+      if (ok) n++;
+    });
+    shown.textContent = "showing " + n + " of " + rows.length;
+    none.style.display = n ? "none" : "block";
+  }
+
+  [q, tier, disc, pdf, year].forEach(function (el) {
+    el.addEventListener("input", apply);
+    el.addEventListener("change", apply);
+  });
+  document.getElementById("f-reset").addEventListener("click", function () {
+    q.value = ""; tier.value = ""; disc.value = ""; pdf.value = ""; year.value = "";
+    apply();
+  });
+  apply();
+})();
+</script>
 </body>
 </html>

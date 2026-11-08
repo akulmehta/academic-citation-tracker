@@ -20,7 +20,7 @@
  */
 const fs = require("fs");
 const path = require("path");
-const { PKT, openPacket, openCatalog, potentialIndependent } = require("./lib.js");
+const { PKT, openPacket, openCatalog, potentialIndependent, toolForCitedPaper } = require("./lib.js");
 
 const DRY = !process.argv.includes("--write");
 const OUT = path.join(PKT, "PACKET-STATUS.md");
@@ -571,20 +571,41 @@ if (withNote.length) {
 /* ---------------------------------------------------------------- */
 push("## 4. Potential citations not in the packet");
 push();
-// Built from lib.potentialIndependent — the same screen the review page uses — so
-// the two documents cannot disagree about what "potential" means.
+// Built from lib.potentialIndependent — the same screen the review pages use — so
+// the two documents cannot disagree about what "potential" means. One subsection
+// per cited work the candidate queue holds, mirroring the one-page-per-work rule
+// in build-potential.js: the screen is arithmetic about ONE cited paper, so a
+// single combined table would misrepresent every work in it.
 try {
   const catS = openCatalog();
-  const pubs = catS.prepare("SELECT cites_id, title, year FROM publications").all()
-    .filter(p => /GLAD/i.test(p.title));
-  if (pubs.length === 1) {
-    const { rows: pot, screen } = potentialIndependent(catS, db, pubs[0].cites_id);
+  const queuedIds = [...new Set(db.prepare(
+    "SELECT cites_id FROM candidate WHERE cites_id IS NOT NULL AND cites_id <> ''").all().map(r => String(r.cites_id)))];
+  const pubById = new Map(catS.prepare("SELECT cites_id, title, year FROM publications").all()
+    .map(p => [String(p.cites_id), p]));
+  const works = queuedIds.map(id => pubById.get(id)).filter(Boolean);
+  works.sort((a, b) => {
+    const rank = t => (/^GLAD$/i.test(t) ? 0 : /^GlycoGlyph$/i.test(t) ? 1 : /^MAWE$/i.test(t) ? 2 : 3);
+    const ra = rank(toolForCitedPaper(a.title) || ""), rb = rank(toolForCitedPaper(b.title) || "");
+    return ra - rb || String(a.title).localeCompare(String(b.title));
+  });
+  if (!works.length) {
+    push("_Not generated: the candidate queue holds no cited work, so there is nothing this");
+    push("_document can list. Run `discover-pdfs.js --seed --cites=\u2026` for the work you want to work on._");
+  }
+  let anySub = 0;
+  for (const pub of works) {
+    anySub++;
+    const tool = toolForCitedPaper(pub.title) || "Other";
+    const page = tool === "GLAD" ? "potential_notable_citations.html"
+      : `potential_notable_citations-${tool.replace(/[^A-Za-z0-9]/g, "")}.html`;
+    const { rows: pot, screen } = potentialIndependent(catS, db, pub.cites_id);
     const potPdf = pot.filter(r => candBy.get(r.row_uid) && candBy.get(r.row_uid).pdf_file);
-    push("[`potential_notable_citations.html`](./potential_notable_citations.html) lists **"
-      + pot.length + "** independent citations of \u201c" + short(pubs[0].title, 70) + "\u201d ("
-      + (pubs[0].year || "\u2014") + ") that are **not** in `packet.html`. It is a review page for the");
-    push("applicant: it is not linked from the packet, not printed with it, and nothing on it is");
-    push("evidence until a person has read the article and filed it.");
+    push(`### 4.${anySub} ${tool} — \u201c${short(pub.title, 70)}\u201d (${pub.year || "\u2014"})`);
+    push();
+    push(`[\`${page}\`](./${page}) lists **${pot.length}** independent citations of that work that are`);
+    push("**not** in `packet.html`. It is a review page for the applicant: it is not linked from the");
+    push("packet, not printed with it, and nothing on it is evidence until a person has read the");
+    push("article and filed it.");
     push();
     push("| | count |");
     push("|---|---:|");
@@ -608,11 +629,9 @@ try {
     push("sentence sits and their articles have not been read page by page.");
     push("To bring one in, name its `row_uid` and run `discover-pdfs.js` \u2192 `file-pdf.js` \u2192");
     push("`scan-mentions.js` \u2192 `record-evidence.js`, then re-render the packet.");
-    catS.close();
-  } else {
-    push("_Not generated: the record's publication list does not resolve \u201cGLAD\u201d to exactly one_");
-    push("_cited work, so the screen would have to guess which paper it was screening._");
+    push();
   }
+  catS.close();
 } catch (e) {
   push("_Not generated: " + esc(e.message) + "_");
 }

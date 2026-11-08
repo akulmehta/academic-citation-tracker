@@ -13,7 +13,7 @@
 const fs = require("fs");
 const path = require("path");
 const { execFileSync } = require("child_process");
-const { PKT, REPO, openPacket, openCatalog, headlineTier, originalApplicationUids, folderRoots, STORAGE_ROOTS, ROOT_PENDING, ROOT_SCREENED } = require("./lib.js");
+const { PKT, REPO, openPacket, openCatalog, headlineTier, originalApplicationUids, folderRoots, STORAGE_ROOTS, ROOT_PENDING, ROOT_SCREENED, toolForCitedPaper } = require("./lib.js");
 
 const QUIET = process.argv.includes("--quiet");
 const DEEP = process.argv.includes("--deep");
@@ -549,26 +549,59 @@ for (const r of cits) {
 }
 
 /* ------------------------------------------------------------------ */
-/* 12b. The potential page stays separate from the packet (§5.6)        */
+/* 12b. The potential pages stay separate from the packet (§5.6)        */
 /* ------------------------------------------------------------------ */
 // packet.html is what counsel receives and holds only confirmed citations. The
-// review page holds candidates. The failure worth guarding against is the quiet
-// one: a candidate leaking into the packet, or a packet row being re-offered as
-// though nobody had decided it. Both are checked against the database and the
-// record, not against prose on the page.
+// review pages hold candidates — one page per cited work, since the screen table
+// each page prints is arithmetic about one cited paper. The failure worth guarding
+// against is the quiet one: a candidate leaking into the packet, or a packet row
+// being re-offered as though nobody had decided it. Both are checked against the
+// database and the record, not against prose on the page.
 {
-  const POT = path.join(PKT, "potential_notable_citations.html");
+  const failAny = fail;
   const packetHtml = fs.existsSync(path.join(PKT, "packet.html"))
     ? fs.readFileSync(path.join(PKT, "packet.html"), "utf8") : "";
   const includedUids = new Set(included.map(r => r.row_uid));
-  if (!fs.existsSync(POT)) {
-    warn("potential", "potential_notable_citations.html is missing — run scripts/build-potential.js --write so unfiled independent citations are not simply invisible");
-  } else {
-    const pot = fs.readFileSync(POT, "utf8");
-    const potUids = [...new Set([...pot.matchAll(/<td class="uid">(cit-\d{6})<\/td>/g)].map(m => m[1]))];
-    if (!potUids.length) {
-      fail("potential", "no candidate rows parsed from potential_notable_citations.html — the markup changed shape and this check has gone blind");
-    } else {
+  const pageNames = fs.readdirSync(PKT)
+    .filter(f => /^potential_notable_citations(-[A-Za-z0-9]+)?\.html$/.test(f))
+    .sort();
+  if (!pageNames.length) {
+    warn("potential", "no potential_notable_citations*.html exists — run scripts/build-potential.js --all --write so unfiled independent citations are not simply invisible");
+  }
+  // Every cited work the candidate queue holds must have a page. A work whose
+  // page was dropped would leave its candidates invisible rather than failing.
+  {
+    const queued = db.prepare(`SELECT DISTINCT cites_id FROM candidate
+      WHERE cites_id IS NOT NULL AND cites_id <> ''`).all().map(r => String(r.cites_id));
+    const catQ = openCatalog();
+    const missingPage = [];
+    for (const id of queued) {
+      const pub = catQ.prepare("SELECT title FROM publications WHERE cites_id = ?").get(id);
+      if (!pub) continue;
+      const tool = toolForCitedPaper(pub.title);
+      const want = (!tool || tool === "GLAD")
+        ? "potential_notable_citations.html"
+        : `potential_notable_citations-${tool.replace(/[^A-Za-z0-9]/g, "")}.html`;
+      if (!pageNames.includes(want)) missingPage.push(`${pub.title.slice(0, 40)} -> ${want}`);
+    }
+    catQ.close();
+    if (missingPage.length) {
+      failAny("potential", `${missingPage.length} queued cited work(s) have no review page — run `
+        + `build-potential.js --all --write: ${missingPage.slice(0, 3).join("; ")}`);
+    }
+  }
+  for (const name of pageNames) {
+    const POT = path.join(PKT, name);
+    // Prefix every finding with the page it came from, now that several pages
+    // run through the same checks. Shadowing `fail` keeps the body below
+    // unchanged; `failAny` above is the unprefixed original.
+    const fail = (c, d) => failAny(c, `${name}: ${d}`);
+    {
+      const pot = fs.readFileSync(POT, "utf8");
+      const potUids = [...new Set([...pot.matchAll(/<td class="uid">(cit-\d{6})<\/td>/g)].map(m => m[1]))];
+      if (!potUids.length) {
+        fail("potential", "no candidate rows parsed — the markup changed shape and this check has gone blind");
+      } else {
       // 1. Separation. Neither document may reference the other.
       if (/potential_notable/i.test(packetHtml)) fail("potential", "packet.html links or mentions potential_notable_citations.html — candidates must not appear in the document counsel receives");
       if (/<a[^>]+packet\.html/i.test(pot)) fail("potential", "the potential page links packet.html — keep the two documents unlinked so a candidate cannot borrow the packet's authority");
@@ -688,7 +721,8 @@ for (const r of cits) {
       const screened = potPdf.filter(h => h.startsWith(ROOT_SCREENED + "/"));
       if (screened.length) fail("potential", `the review page links ${screened.length} screened-out PDF(s) (§4.5): ${screened.slice(0, 4).join(", ")}`);
 
-      if (!QUIET) note("potential", `${potUids.length} candidate row(s) on the review page; all independent on the record, none in the packet or the original application; ${shownTiers} tier(s) shown, each backed by a scan of a PDF on file or a resolved mention`);
+      if (!QUIET) note("potential", `${name}: ${potUids.length} candidate row(s); all independent on the record, none in the packet or the original application; ${shownTiers} tier(s) shown, each backed by a scan of a PDF on file or a resolved mention`);
+    }
     }
   }
 }

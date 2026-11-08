@@ -13,7 +13,11 @@
 const { openCatalog, openPacket, sharesAuthor } = require("./lib");
 
 const argv = process.argv.slice(2);
-const DRY = argv.includes("--dry");
+// Dry-run by default, like every other writer in this folder (§5.5 documents
+// `--write`), because promoting is not a read: it inserts rows into `citation`
+// and stamps `candidate.packet_row_uid`. `--dry` is still accepted as a no-op
+// so an older command line does not suddenly write.
+const DRY = !argv.includes("--write");
 
 function main() {
   const db = openPacket();

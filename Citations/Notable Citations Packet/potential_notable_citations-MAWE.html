@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Potential notable citations — Reusable glycan microarrays using a microwave assisted wet-erase (MAWE) process</title>
+<style>
+  :root { --ink:#1b1b1b; --muted:#666; --rule:#d8d8d8; --accent:#7a1f1f; }
+  * { box-sizing: border-box; }
+  body { margin:0; background:#fff; color:var(--ink);
+         font:16px/1.55 "Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif; }
+  main { max-width: 78rem; margin:0 auto; padding:2.5rem 1.5rem 5rem; }
+  h1 { font-size:1.9rem; line-height:1.2; margin:.2rem 0 .4rem; }
+  h2 { font-size:1.2rem; margin:2.2rem 0 .5rem; padding-bottom:.3rem; border-bottom:2px solid var(--accent); }
+  p { margin:.5rem 0; }
+  a { color:var(--accent); }
+  code { font-family:"SFMono-Regular",Consolas,monospace; font-size:.85em; background:#f3f3f3; padding:.05em .3em; border-radius:3px; }
+  .kicker { font-size:.75rem; letter-spacing:.14em; text-transform:uppercase; color:var(--muted); }
+  .notice { border:1px solid #c9a227; background:#fdf7e3; padding:.9rem 1.1rem; margin:1.2rem 0; }
+  .notice strong { color:#7a5c00; }
+  .cited { background:#f6f1ec; border-left:3px solid #b08968; padding:.7rem 1rem; margin:1.2rem 0; font-size:.92rem; }
+  table { border-collapse:collapse; width:100%; font-size:.8rem; margin-top:.8rem; }
+  th, td { border-bottom:1px solid var(--rule); padding:.4rem .35rem; vertical-align:top; text-align:left; }
+  thead th { border-bottom:2px solid var(--ink); font-size:.7rem; text-transform:uppercase; letter-spacing:.04em; }
+  .uid { font-family:"SFMono-Regular",Consolas,monospace; font-size:.74rem; white-space:nowrap; }
+  .title { min-width:16rem; }
+  .byline { color:var(--muted); font-size:.74rem; margin-top:.15rem; }
+  .sub { color:var(--muted); font-size:.7rem; }
+  .src, .disc { font-size:.74rem; }
+  .pdf { white-space:nowrap; }
+  .none { color:var(--muted); font-style:italic; font-size:.72rem; }
+  .pick { white-space:nowrap; font-size:.72rem; color:var(--muted); }
+  .pill { display:inline-block; padding:.05rem .4rem; border-radius:9px; font-size:.68rem; white-space:nowrap; }
+  .pill.ok { background:#e3f0e4; color:#26562a; }
+  .pill.warn { background:#f6ecd9; color:#7a5c00; }
+  .pill.bad { background:#f7e0e0; color:#7a1f1f; }
+  .pill.resolved { background:#e2ecf6; color:#1f3f6e; }
+  .screen { font-size:.8rem; color:var(--muted); }
+  .screen td { border:none; padding:.12rem .35rem; }
+  .screen td.n { font-variant-numeric:tabular-nums; color:var(--ink); }
+  .tier { font-size:.74rem; white-space:nowrap; }
+  .cite { font-size:.74rem; min-width:14rem; }
+  .cite .q { display:block; margin-bottom:.15rem; }
+  .report { border:1px solid var(--rule); border-left:3px solid var(--accent); padding:.9rem 1.1rem; margin:1.4rem 0; }
+  .report h3 { font-size:1.02rem; margin:.1rem 0 .2rem; }
+  .report h4 { font-size:.78rem; text-transform:uppercase; letter-spacing:.06em; margin:1.1rem 0 .3rem; color:var(--muted); }
+  .report dl { display:grid; grid-template-columns:minmax(9rem,max-content) 1fr; gap:.15rem .8rem; margin:.5rem 0; font-size:.82rem; }
+  .report dt { color:var(--muted); font-size:.74rem; text-transform:uppercase; letter-spacing:.03em; padding-top:.15rem; }
+  .report dd { margin:0; }
+  .report blockquote { margin:.4rem 0 .2rem; padding:.4rem .9rem; border-left:3px solid var(--rule);
+                       background:#faf8f5; font-size:.86rem; }
+  .report .cite-page { font-size:.72rem; color:var(--muted); margin:.1rem 0 0; }
+  .report .files-list { margin:.3rem 0; padding-left:1.2rem; font-size:.82rem; }
+  .report .trace { font-size:.72rem; color:var(--muted); border-top:1px solid var(--rule); padding-top:.4rem; margin:.9rem 0 0; }
+  .foot { margin-top:2rem; font-size:.75rem; color:var(--muted); border-top:1px solid var(--rule); padding-top:.8rem; }
+
+  /* Filter bar over the candidate table. Screen only. */
+  .filters { display:flex; flex-wrap:wrap; gap:.6rem .9rem; align-items:flex-end;
+             margin:1rem 0 .2rem; padding:.7rem .9rem;
+             background:#faf8f5; border:1px solid var(--rule); border-left:3px solid var(--accent); }
+  .filters .fld { display:flex; flex-direction:column; gap:.2rem; }
+  .filters label { font-size:.66rem; text-transform:uppercase; letter-spacing:.06em; color:var(--muted); }
+  .filters input, .filters select { font:inherit; font-size:.78rem; padding:.25rem .35rem;
+             border:1px solid #bbb; background:#fff; color:var(--ink); }
+  .filters input[type=search] { min-width:18rem; }
+  .filters .spacer { flex:1 1 auto; }
+  .filters button { font:inherit; font-size:.76rem; padding:.3rem .7rem; background:#fff;
+             border:1px solid #bbb; cursor:pointer; }
+  .filters button:hover { background:#f1ede7; }
+  #shown { font-size:.78rem; color:var(--muted); white-space:nowrap; }
+  #no-hits { display:none; margin:.6rem 0; padding:.5rem .8rem; background:#fdf7e3;
+             border-left:3px solid #c9a227; font-size:.8rem; }
+  tr.excluded { display:none; }
+
+  @media print {
+    .pick, thead th.pick { display:none; }
+    main { padding:0; max-width:none; }
+    a { color:inherit; text-decoration:none; }
+    /* A printed exhibit is the whole screen, whatever was filtered on screen. */
+    .filters, #no-hits { display:none !important; }
+    tr.excluded { display:table-row !important; }
+  }
+</style>
+</head>
+<body>
+<main>
+<header>
+  <p class="kicker">Review page — not part of the packet</p>
+  <h1>Potential notable citations</h1>
+  <div class="notice">
+    <strong>This page is for the applicant&rsquo;s review, not for counsel.</strong>
+    <code>packet.html</code> holds only the citations confirmed for the filing; nothing on this
+    page is in it. Tick a row, or send the <code>row_uid</code>s, and the pipeline
+    (<code>discover-pdfs.js</code> &rarr; <code>file-pdf.js</code> &rarr; <code>scan-mentions.js</code>
+    &rarr; <code>record-evidence.js</code>) reads the full text, finds the section and page, and
+    files it at the tier the text supports. Where a PDF is already on file, the Tier and
+    Citation columns carry what that reading found; where it is not, they say so and claim nothing.
+  </div>
+  <div class="cited">
+    <strong>Cited work:</strong> Reusable glycan microarrays using a microwave assisted wet-erase (MAWE) process (2024)<br>
+    <span class="sub">AY Mehta, CA Tilton, L Muerner, S von Gunten, J Heimburg-Molinaro, ...</span>
+  </div>
+  <p>3 independent citations of this work are not in the packet and were not used in
+     the original application. Each is a real, independently authored citation of the applicant&rsquo;s
+     tool. 0 of them have been read and the sentence that cites the tool is recorded;
+     0 have been read and the tool does not appear anywhere the
+     article ranks as a section; 3 have no PDF yet, so where the
+     citation sits is still unknown &mdash; and that is what decides a tier.</p>
+  <table class="screen">
+    <tr><td>Citing works the record lists for this paper</td><td class="n">15</td></tr>
+    <tr><td>less not independent (shares an author with the cited work, or names a PI)</td><td class="n">&minus;6</td></tr>
+    <tr><td>less copies that do not stand for their work (preprint / repository twin)</td><td class="n">&minus;1</td></tr>
+    <tr><td>less not listed in English</td><td class="n">&minus;0</td></tr>
+    <tr><td>less already confirmed in the packet</td><td class="n">&minus;5</td></tr>
+    <tr><td>less already used in the original application</td><td class="n">&minus;0</td></tr>
+    <tr><td><strong>listed here for review</strong></td><td class="n"><strong>3</strong></td></tr>
+  </table>
+</header>
+
+<h2>The 3 candidates</h2>
+<p>0 of them have a PDF on file and have been read by the scanner; those carry a
+   tier and the sentence it rests on. The rest have no tier because nothing has been read, which is
+   a statement about the file, not about the paper.</p>
+
+<div class="filters">
+  <div class="fld">
+    <label for="f-q">Search (title, author, venue, quote, uid, doi)</label>
+    <input type="search" id="f-q" placeholder="e.g. glycan array, Heras, cit-000544" autocomplete="off">
+  </div>
+  <div class="fld"><label for="f-tier">Tier</label><select id="f-tier"><option value="">any</option><option value="A">Tier A</option><option value="B">Tier B</option><option value="C">Tier C</option><option value="D">Tier D</option><option value="resolved">any tier, found by reference</option><option value="untiered">read, no tier</option><option value="unread">not read</option></select></div>
+  <div class="fld"><label for="f-disc">Open copy</label><select id="f-disc"><option value="">any</option><option value="paywalled">Paywalled</option><option value="not-in-indexes">Not in OpenAlex</option></select></div>
+  <div class="fld"><label for="f-pdf">PDF on file</label><select id="f-pdf"><option value="">any</option><option value="1">yes</option><option value="0">no</option></select></div>
+  <div class="fld"><label for="f-year">Year</label><select id="f-year"><option value="">any</option><option value="2026">2026</option></select></div>
+  <div class="spacer"></div>
+  <div class="fld"><label>&nbsp;</label><button type="button" id="f-reset">Reset</button></div>
+  <div class="fld"><label>&nbsp;</label><span id="shown"></span></div>
+</div>
+<p id="no-hits">No row matches those filters. Reset to see all 3.</p>
+
+<table id="cand">
+  <thead><tr>
+    <th>row_uid</th><th>Citing paper</th><th>Senior author</th><th>Year</th><th>Venue</th>
+    <th>Where it is</th><th>Open copy</th><th>PDF on file</th><th>Tier</th><th>Citation</th>
+    <th class="pick">Decision</th>
+  </tr></thead>
+  <tbody id="cand-body">
+    <tr data-uid="cit-001254" data-tier="none" data-disc="paywalled" data-pdf="0" data-year="2026" data-text="cit-001254 · using synthetic glycans to investigate anti‐glycan antibodies and explore their medical potential · f weber, a valenti, j ledvinka… - angewandte chemie …, 2026 - wiley online library · seeberger ·  ·  · 10.1002/anie.7795967">
+      <td class="uid">cit-001254</td>
+      <td class="title">Using Synthetic Glycans to Investigate Anti‐Glycan Antibodies and Explore Their Medical Potential
+        <div class="byline">F Weber, A Valenti, J Ledvinka… - Angewandte Chemie …, 2026 - Wiley Online Library</div></td>
+      <td>Seeberger</td>
+      <td>2026</td>
+      <td>—</td>
+      <td class="src"><a href="https://onlinelibrary.wiley.com/doi/abs/10.1002/anie.7795967" target="_blank" rel="noopener noreferrer">onlinelibrary.wiley.com</a><div class="sub"><a href="https://doi.org/10.1002/anie.7795967" target="_blank" rel="noopener noreferrer">10.1002/anie.7795967</a></div></td>
+      <td class="disc"><span class="pill warn">Paywalled</span><div class="sub">OpenAlex offered a PDF but the host answered 403</div></td>
+      <td class="pdf"><span class="none">not retrieved</span></td>
+      <td class="tier"><span class="none">not read</span></td>
+      <td class="cite"><span class="none">no PDF, so nothing has been quoted</span></td>
+      <td class="pick"><label><input type="checkbox"> include</label></td>
+    </tr>
+    <tr data-uid="cit-001262" data-tier="none" data-disc="paywalled" data-pdf="0" data-year="2026" data-text="cit-001262 · establishing “glycoantigens” as a cross-field concept in glycobiology, transfusion, transplant, and immunology · wj lane - human immunology, 2026 - elsevier · lane · human immunology ·  · 10.1016/j.humimm.2026.111812">
+      <td class="uid">cit-001262</td>
+      <td class="title">Establishing “Glycoantigens” as a cross-field concept in Glycobiology, transfusion, transplant, and immunology
+        <div class="byline">WJ Lane - Human Immunology, 2026 - Elsevier</div></td>
+      <td>Lane</td>
+      <td>2026</td>
+      <td>Human Immunology</td>
+      <td class="src"><a href="https://www.sciencedirect.com/science/article/pii/S0198885926001588" target="_blank" rel="noopener noreferrer">www.sciencedirect.com</a><div class="sub"><a href="https://doi.org/10.1016/j.humimm.2026.111812" target="_blank" rel="noopener noreferrer">10.1016/j.humimm.2026.111812</a></div></td>
+      <td class="disc"><span class="pill warn">Paywalled</span><div class="sub">host returned text/html; charset=utf-8, not a PDF body</div></td>
+      <td class="pdf"><span class="none">not retrieved</span></td>
+      <td class="tier"><span class="none">not read</span></td>
+      <td class="cite"><span class="none">no PDF, so nothing has been quoted</span></td>
+      <td class="pick"><label><input type="checkbox"> include</label></td>
+    </tr>
+    <tr data-uid="cit-001263" data-tier="none" data-disc="not-in-indexes" data-pdf="0" data-year="" data-text="cit-001263 · structure-function studies of an rtx-adhesin from vibrio vulnificus and its role in binding host cell surfaces · bp soares - 2026 - queensu.scholaris.ca ·  ·  ·  · ">
+      <td class="uid">cit-001263</td>
+      <td class="title">STRUCTURE-FUNCTION STUDIES OF AN RTX-ADHESIN FROM VIBRIO VULNIFICUS AND ITS ROLE IN BINDING HOST CELL SURFACES
+        <div class="byline">BP Soares - 2026 - queensu.scholaris.ca</div></td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+      <td class="src"><a href="https://queensu.scholaris.ca/server/api/core/bitstreams/5594e40f-e0d9-4469-9a8f-016e81f60463/content" target="_blank" rel="noopener noreferrer">queensu.scholaris.ca</a></td>
+      <td class="disc"><span class="pill warn">Not in OpenAlex</span><div class="sub">no OpenAlex record by title</div></td>
+      <td class="pdf"><span class="none">not retrieved</span></td>
+      <td class="tier"><span class="none">not read</span></td>
+      <td class="cite"><span class="none">no PDF, so nothing has been quoted</span></td>
+      <td class="pick"><label><input type="checkbox"> include</label></td>
+    </tr>
+  </tbody>
+</table>
+<p class="sub">Filtering is screen only: a printed or PDF copy of this page always shows every
+   candidate, so what is on screen cannot silently decide what gets filed.</p>
+
+<h2>Notes on the list</h2>
+<p><strong>&ldquo;Open copy&rdquo; is a statement about access, not about the paper.</strong>
+   <em>Open copy found</em> means a downloadable version exists and, where the PDF column has a
+   link, it is already in this folder. <em>Paywalled</em> means the article is real and the
+   publisher gates the file &mdash; an access the applicant&rsquo;s own subscription or an
+   interlibrary loan can settle. <em>No open copy</em> and <em>Not in OpenAlex</em> mean the
+   look-up completed and found nothing downloadable; they are not findings that the paper does
+   not exist, and a publisher page or a library copy can still supply the text.</p>
+<p><strong>Independence was re-checked against the citation record, not the queued snapshot.</strong>
+   The record reads the complete author list of both papers. A citing paper that shares an author
+   with the cited work, or that names Richard D. Cummings or the former PI Umesh R. Desai, is a
+   self-citation and was removed at the first screen above.</p>
+<p><strong>A tier is a scan result, and only for an article that has actually been read.</strong>
+   The Tier and Citation columns are filled from the PDF on file: <code>scan-mentions.js</code> extracts the
+   text, finds every appearance of the tool, and reads the heading the article itself printed above
+   it. Tier A means the mention sits in the Methods as the method performed; B in the Results or
+   Figures; C in a high-reputation publication; D an acknowledgement. Where the column says
+   <em>no tier</em>, the article was read and the tool appears only in a reference list, a table, or
+   a section that earns no tier &mdash; the note says which. Where it says <em>not read</em>, no
+   PDF exists yet, so no claim is made. A scan is a machine reading of prose: it is good at telling
+   a Methods sentence from a bibliography entry, and it cannot tell whether the use was substantial.
+   A person&rsquo;s reading of the page decides, and filing a candidate runs the same scanner again
+   into the packet.</p>
+<p><strong>A blue &ldquo;Tier&nbsp;X &mdash; resolved&rdquo; pill means the citing paper never names the tool.</strong>
+   A citing author who used the work often credits it only as a reference number (&ldquo;following
+   established procedures [125&ndash;127]&rdquo;, a superscript <sup>69</sup>) or, in author&ndash;year
+   journals, only as &ldquo;(Mehta et al. 2024)&rdquo;. <code>scan-refs.js</code> identifies which
+   bibliography entry is the applicant&rsquo;s paper &mdash; two signals required, title plus year plus
+   first author, never a guess &mdash; and then reports every place that number or that citation is
+   credited, with the section and the sentence. The tier bar is identical to a named mention&rsquo;s:
+   under a heading the citing paper printed, in prose, not a table cell and not the reference list.
+   The colour only says how the citation was found, not that it is weaker.</p>
+
+<h2>Report on each candidate</h2>
+<p>The same structure as <code>packet.html</code>, one block per candidate, so a row above can be
+   judged on its background and its quotation together. A block is a review note, not evidence:
+   nothing here reaches counsel unless the row is confirmed and the packet is re-rendered.</p>
+
+<article class="report" id="rep-cit-001254">
+  <h3>Using Synthetic Glycans to Investigate Anti‐Glycan Antibodies and Explore Their Medical Potential</h3>
+  <p class="byline">Weber F, Valenti A, Ledvinka J, Moscovitz O, Seeberger PH<br>
+     <span class="venue">, 2026</span> &middot; <a href="https://onlinelibrary.wiley.com/doi/abs/10.1002/anie.7795967" target="_blank" rel="noopener noreferrer">onlinelibrary.wiley.com</a> &middot; <a href="https://doi.org/10.1002/anie.7795967" target="_blank" rel="noopener noreferrer">10.1002/anie.7795967</a></p>
+  <dl>
+    <dt>Cited work</dt>
+    <dd>Reusable glycan microarrays using a microwave assisted wet-erase (MAWE) process <span class="sub">(MAWE)</span></dd>
+    <dt>Where the citation appears</dt>
+    <dd><span class="none">not read — no PDF on file, so no claim about where the citation sits</span></dd>
+    <dt>Citing authors&rsquo; institutions</dt>
+    <dd><span class="none">Not recorded — confirm from the PDF&rsquo;s affiliation block.</span></dd>
+    <dt>Article type</dt>
+    <dd>article</dd>
+    <dt>Independence</dt>
+    <dd>Re-checked against the citation record: complete author lists of both papers, no shared
+        author, neither PI named on the citing paper; basis on the record: confirmed.</dd>
+  </dl>
+  <h4>What the text says</h4>
+  <p class="none">No verbatim sentence recorded.</p>
+  <h4>Files</h4>
+  <p class="none">No PDF on file. Paywalled — OpenAlex offered a PDF but the host answered 403.</p>
+  <p class="trace"><code>cit-001254</code> &middot; review note only — not part of
+     <code>packet.html</code> and not evidence until the row is confirmed and the packet re-rendered</p>
+</article>
+
+<article class="report" id="rep-cit-001262">
+  <h3>Establishing “Glycoantigens” as a cross-field concept in Glycobiology, transfusion, transplant, and immunology</h3>
+  <p class="byline">Lane WJ<br>
+     <span class="venue">Human Immunology, 2026</span> &middot; <a href="https://www.sciencedirect.com/science/article/pii/S0198885926001588" target="_blank" rel="noopener noreferrer">www.sciencedirect.com</a> &middot; <a href="https://doi.org/10.1016/j.humimm.2026.111812" target="_blank" rel="noopener noreferrer">10.1016/j.humimm.2026.111812</a></p>
+  <dl>
+    <dt>Cited work</dt>
+    <dd>Reusable glycan microarrays using a microwave assisted wet-erase (MAWE) process <span class="sub">(MAWE)</span></dd>
+    <dt>Where the citation appears</dt>
+    <dd><span class="none">not read — no PDF on file, so no claim about where the citation sits</span></dd>
+    <dt>Citing authors&rsquo; institutions</dt>
+    <dd><span class="none">Not recorded — confirm from the PDF&rsquo;s affiliation block.</span></dd>
+    <dt>Article type</dt>
+    <dd>article</dd>
+    <dt>Independence</dt>
+    <dd>Re-checked against the citation record: complete author lists of both papers, no shared
+        author, neither PI named on the citing paper; basis on the record: confirmed.</dd>
+  </dl>
+  <h4>What the text says</h4>
+  <p class="none">No verbatim sentence recorded.</p>
+  <h4>Files</h4>
+  <p class="none">No PDF on file. Paywalled — host returned text/html; charset=utf-8, not a PDF body.</p>
+  <p class="trace"><code>cit-001262</code> &middot; review note only — not part of
+     <code>packet.html</code> and not evidence until the row is confirmed and the packet re-rendered</p>
+</article>
+
+<article class="report" id="rep-cit-001263">
+  <h3>STRUCTURE-FUNCTION STUDIES OF AN RTX-ADHESIN FROM VIBRIO VULNIFICUS AND ITS ROLE IN BINDING HOST CELL SURFACES</h3>
+  <p class="byline">BP Soares<br>
+     <span class="venue"></span> &middot; <a href="https://queensu.scholaris.ca/server/api/core/bitstreams/5594e40f-e0d9-4469-9a8f-016e81f60463/content" target="_blank" rel="noopener noreferrer">queensu.scholaris.ca</a></p>
+  <dl>
+    <dt>Cited work</dt>
+    <dd>Reusable glycan microarrays using a microwave assisted wet-erase (MAWE) process <span class="sub">(MAWE)</span></dd>
+    <dt>Where the citation appears</dt>
+    <dd><span class="none">not read — no PDF on file, so no claim about where the citation sits</span></dd>
+    <dt>Citing authors&rsquo; institutions</dt>
+    <dd><span class="none">Not recorded — confirm from the PDF&rsquo;s affiliation block.</span></dd>
+    <dt>Article type</dt>
+    <dd>article</dd>
+    <dt>Independence</dt>
+    <dd>Re-checked against the citation record: complete author lists of both papers, no shared
+        author, neither PI named on the citing paper; basis on the record: unverified-coverage.</dd>
+  </dl>
+  <h4>What the text says</h4>
+  <p class="none">No verbatim sentence recorded.</p>
+  <h4>Files</h4>
+  <p class="none">No PDF on file. Not in OpenAlex — no OpenAlex record by title.</p>
+  <p class="trace"><code>cit-001263</code> &middot; review note only — not part of
+     <code>packet.html</code> and not evidence until the row is confirmed and the packet re-rendered</p>
+</article>
+
+<p class="foot">Generated 2026-11-08 by <code>scripts/build-potential.js</code> from
+   <code>Database/citation-catalog.sqlite</code> (read-only) and
+   <code>notable-citations.sqlite</code>. Not linked from <code>packet.html</code> and not printed
+   with it. Independence screen: <code>status = INDEPENDENT</code> and
+   <code>is_countable_independent = 1</code> on the active, standing, English row.
+   0 of 3 read by <code>scan-mentions.js</code> on or before 2026-11-08.</p>
+</main>
+<script>
+/* Filter the candidate table. Reads the data-* attributes the row was written
+   with, never the rendered prose: a label reworded for a reader must not change
+   what a filter matches. */
+(function () {
+  var tbody = document.getElementById("cand-body");
+  if (!tbody) return;
+  var rows = Array.prototype.slice.call(tbody.rows);
+  var q = document.getElementById("f-q"), tier = document.getElementById("f-tier"),
+      disc = document.getElementById("f-disc"), pdf = document.getElementById("f-pdf"),
+      year = document.getElementById("f-year"), shown = document.getElementById("shown"),
+      none = document.getElementById("no-hits");
+
+  function keep(r) {
+    var d = r.dataset, t = tier.value;
+    if (t === "A" || t === "B" || t === "C" || t === "D") {
+      if (d.tier !== t) return false;
+    } else if (t === "resolved") {
+      if (d.tier.indexOf("-resolved") < 0) return false;
+    } else if (t === "untiered" || t === "unread") {
+      if (d.tier !== "none") return false;
+      if (t === "untiered" && d.pdf !== "1") return false;
+      if (t === "unread" && d.pdf !== "0") return false;
+    }
+    if (disc.value && d.disc !== disc.value) return false;
+    if (pdf.value && d.pdf !== pdf.value) return false;
+    if (year.value && d.year !== year.value) return false;
+    var needle = q.value.trim().toLowerCase();
+    if (needle) {
+      // Every whitespace-separated term must appear; order does not matter.
+      var hit = needle.split(/s+/).every(function (w) { return d.text.indexOf(w) >= 0; });
+      if (!hit) return false;
+    }
+    return true;
+  }
+
+  function apply() {
+    var n = 0;
+    rows.forEach(function (r) {
+      var ok = keep(r);
+      r.classList.toggle("excluded", !ok);
+      if (ok) n++;
+    });
+    shown.textContent = "showing " + n + " of " + rows.length;
+    none.style.display = n ? "none" : "block";
+  }
+
+  [q, tier, disc, pdf, year].forEach(function (el) {
+    el.addEventListener("input", apply);
+    el.addEventListener("change", apply);
+  });
+  document.getElementById("f-reset").addEventListener("click", function () {
+    q.value = ""; tier.value = ""; disc.value = ""; pdf.value = ""; year.value = "";
+    apply();
+  });
+  apply();
+})();
+</script>
+</body>
+</html>
