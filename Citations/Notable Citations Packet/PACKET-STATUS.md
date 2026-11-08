@@ -16,19 +16,19 @@ decision that only a person can make.
 | Citations in the packet (in `packet.html`) | 22 |
 | Works those citations are filed as (§5.1 folders) | 14 |
 | PDFs filed under `papers/` (in the packet) | 16 |
-| PDFs under `pending-papers/` (awaiting a decision) | 125 |
+| PDFs under `pending-papers/` (awaiting a decision) | 126 |
 | PDFs under `screened-papers/` (kept, not filed) | 56 |
-| Held — open items, listed below | 730 |
-| Screened out — decided, kept for the record (§4.5) | 236 |
-| **Rows in table `citation`** | **988** |
+| Held — open items, listed below | 733 |
+| Screened out — decided, kept for the record (§4.5) | 237 |
+| **Rows in table `citation`** | **992** |
 
-`packet.csv` holds the 22 included rows. `screened-out.csv` holds the other 966,
+`packet.csv` holds the 22 included rows. `screened-out.csv` holds the other 970,
 because §4.5 exports `screened-out` and `held` together — counsel is entitled to see that the
 work was screened and on what grounds. A screened-out row is not missing work: it is the
 record of what was looked at and rejected, with the reason beside it. A held row is open, and
 every held row appears in §2 below.
 
-## 2. Held rows — 730 open items
+## 2. Held rows — 733 open items
 
 
 ### 2.1 `read` — 17 row(s)
@@ -55,7 +55,7 @@ The PDF is filed and the applicant's tool appears in a section of the paper. Wha
 | `cit-000614` | GlycoGlyph | 2026 | Subramaniam | Loss of α2, 3-linked sialoside in the receptor-binding site of a H5N1 influ… | [open](https://www.biorxiv.org/content/10.64898/2026.01.19.700419.abstract) |
 | `cit-000633` | GlycoGlyph | 2026 | Schäfer | Engineering Functional CLA-Targeting CAR Approaches for Pancreatic Ductal A… | [open](https://www.biorxiv.org/content/10.64898/2026.07.03.736395.abstract) |
 
-### 2.2 `unread` — 109 row(s)
+### 2.2 `unread` — 110 row(s)
 
 The PDF is filed. Nobody has read it yet.
 
@@ -95,6 +95,7 @@ The PDF is filed. Nobody has read it yet.
 | `cit-000800` | — | 2022 | Zgoda | Construction of 2DE patterns of plasma proteins: aspect of potential tumor … | [open](https://www.mdpi.com/1422-0067/23/19/11113) |
 | `cit-000845` | — | 2022 | Ronald | Sensitive spatiotemporal tracking of spontaneous metastasis in deep tissues… | [open](https://www.biorxiv.org/content/10.1101/2022.02.09.479610.abstract) |
 | `cit-000924` | MAWE | 2022 | Varki | Simple and practical sialoglycan encoding system reveals vast diversity in … | [open](https://academic.oup.com/glycob/article-abstract/32/12/1101/6682810) |
+| `cit-001266` | — | 2022 | Mur | Isolation and Characterisation of Quercitrin as a Potent Anti-Sickle Cell A… | [open](https://www.mdpi.com/2077-0383/11/8/2177) |
 | `cit-001303` | — | 2022 | Liu | Physicochemical Properties and Anticoagulant Activity of Purified Heteropol… | [open](https://www.mdpi.com/1420-3049/27/9/3027) |
 | `cit-001471` | MAWE | 2022 | Varki | Simple and practical sialoglycan encoding system reveals vast diversity in … | [open](https://academic.oup.com/glycob/article-abstract/32/12/1101/6682810) |
 | `cit-001532` | — | 2022 | Á | Intravenous immunoglobulins promote an expansion of monocytic myeloid-deriv… | [open](https://link.springer.com/article/10.1007/s10875-022-01277-7) |
@@ -189,7 +190,7 @@ The PDF is filed, but the extracted text does not support a use in any section �
 | `cit-000605` | GlycoGlyph | 2025 | Kontoravdi | GlyCompute: towards the automated analysis of protein N-linked glycosylatio… | [open](https://link.springer.com/article/10.1007/s00216-024-05522-3) |
 | `cit-001116` | Glyco-SPOT | 2026 | Hurevich | Stirring glycopeptides away from the constraints of solid-phase synthesis m… | [open](https://www.frontiersin.org/journals/molecular-biosciences/articles/10.3389/fmolb.2026.1863326/full) |
 
-### 2.4 `paywalled` — 122 row(s)
+### 2.4 `paywalled` — 123 row(s)
 
 A copy exists behind a paywall. If the applicant can obtain the PDF through an institution, drop it in the folder and the row can be read.
 
@@ -308,6 +309,7 @@ A copy exists behind a paywall. If the applicant can obtain the PDF through an i
 | `cit-001018` | — | 2025 | Lai | Heparinized Dendritic Mesoporous Silica Nanoparticles for the Selective Ads… | [open](https://pmc.ncbi.nlm.nih.gov/articles/PMC12658825/) |
 | `cit-001089` | — | 2025 | Cecioni | A trifunctional probe for generation of fluorogenic glycan-photocrosslinker… | [open](https://pubs.rsc.org/cb/article-abstract/6/11/1779/312283) |
 | `cit-001114` | Glyco-SPOT | 2025 | McAllister | Efficient synthesis of O-glycosylated amino acids | [open](https://pubs.rsc.org/cb/article-abstract/6/6/851/881650) |
+| `cit-001271` | — | 2025 | Connes | Challenges of the allosteric regulation of hemoglobin by interaction with C… | [open](https://academic.oup.com/jscd/article-abstract/2/1/yoaf012/8104053) |
 | `cit-001310` | — | 2025 | Tata | The discovery of a novel anticoagulant mechanism: factor XI activation inhi… | [open](https://pubs.acs.org/aptsfn/article-abstract/8/9/3090/3761803) |
 | `cit-001505` | — | 2025 | Pinho | N-Glycans as fundamental immune-checkpoints at the frontiers of inflammatio… | [open](https://books.rsc.org/books/edited-volume/2487/chapter/8761831) |
 | `cit-000406` | — | 2026 | Struwe | An Evolutionary Distinct Nipah Virus N-Glycosylation Site Provides Stabilit… | [open](https://www.mcponline.org/article/S1535-9476(26)00027-7/fulltext) |
@@ -318,7 +320,7 @@ A copy exists behind a paywall. If the applicant can obtain the PDF through an i
 | `cit-000512` | GLAD | — | Aoki-Kinoshita | Worldwide glycoscience informatics infrastructure: the GlySpace Alliance | [open](https://pubs.acs.org/jaaucr/article-abstract/3/1/4/1253251) |
 | `cit-000556` | GLAD | — | — | Phenotyping murine and human platelet-derived extracellular vesicles gives … | [open](https://www.rpthjournal.org/cms/10.1016/j.rpth.2026.103414/attachment/5e1ef181-290b-47ad-a0b6-2820746565cf/mmc1.pdf) |
 
-### 2.5 `no-open-copy` — 347 row(s)
+### 2.5 `no-open-copy` — 348 row(s)
 
 No openly accessible copy was found. The publisher's landing page is given so the applicant can check institutional access.
 
@@ -658,6 +660,7 @@ No openly accessible copy was found. The publisher's landing page is given so th
 | `cit-001058` | — | 2026 | Kondo | Development and In Vitro Evaluation of Near-Infrared Dye-Conjugated Pullula… | [open](https://www.mdpi.com/2624-845x/7/3/20) |
 | `cit-001061` | — | 2026 | Werling | Analysis of genetic variation in the bovine Mannose Receptor gene (MRC1), i… | [open](https://www.biorxiv.org/content/10.64898/2026.06.27.734952.abstract) |
 | `cit-001113` | Glyco-SPOT | 2026 | Li | Chemoenzymatic synthesis of sulfated O-glycopeptides from human CD34 | [open](https://pubs.rsc.org/cc/article-abstract/62/16/4843/919937) |
+| `cit-001272` | — | 2026 | Mur | Isolation and Characterisation of Quercitrin, a Potent Anti-sickle Cell Ana… | [open](https://research.aber.ac.uk/files/42147851/Adeniyi_Olayemi_Adedayo.pdf) |
 | `cit-001323` | — | 2026 | Zhang | AlphaFold3 assisted screening strategy identifying novel coagulation factor… | [open](https://www.sciencedirect.com/science/article/pii/S0960852426015798) |
 | `cit-001325` | — | 2026 | Yue | Discovery of Novel FXIa Inhibitory Peptides from Deep-Sea Gigantidas platif… | [open](https://pubs.acs.org/jafcau/article/74/25/19936/5165424) |
 | `cit-001332` | — | 2026 | Zhang | Peptidomic characterization and evaluation of in vitro and in vivo anticoag… | [open](https://www.sciencedirect.com/science/article/pii/S2212429226007790) |
@@ -822,7 +825,7 @@ counsel relies on them:
 | GlycoGlyph | 2 |
 | MAWE | 3 |
 
-Distribution over all 988 rows: `2` = 108, `3` = 44, `4` = 18, `(blank)` = 818.
+Distribution over all 992 rows: `2` = 108, `3` = 44, `4` = 18, `(blank)` = 822.
 
 If a number is wrong, the single place to change it is `toolForCitedPaper` /
 `projectForCitedPaper` in [`scripts/lib.js`](./scripts/lib.js), then re-run the importer and
@@ -980,9 +983,9 @@ quietly re-merging. This is the only place the advice is written down.
 
 ## 4. Potential citations not in the packet
 
-[`potential_notable_citations.html`](./potential_notable_citations.html) lists **709**
+[`potential_notable_citations.html`](./potential_notable_citations.html) lists **712**
 independent citations of the works in the candidate queue that are **not** in `packet.html`.
-They appear as **631 rows**
+They appear as **634 rows**
 because 78 citations sit on a row already held by
 another of my works. One article that cites two of them is one row with two judgements
 in it, one per work, so the row says where GLAD sits and where GlycoGlyph sits separately.
@@ -1019,16 +1022,17 @@ with it, and nothing on it is evidence until a person has read the article and f
 | **Glyco-SPOT** — Parallel Glyco-SPOT Synthesis of Glycopeptide… (2020) | 22 | 0 | 3 | 1 | 0 | 0 | 2 | 4 | **12** | 3 |
 | **Other** — Potent direct inhibitors of factor Xa based o… (2012) | 32 | 0 | 8 | 1 | 0 | 0 | 0 | 2 | **21** | 3 |
 | **Other** — Rational design of potent, small, synthetic a… (2011) | 74 | 0 | 28 | 2 | 0 | 0 | 2 | 10 | **32** | 0 |
+| **Other** — Structural modification of azolylacryloyl der… (2019) | 9 | 0 | 5 | 0 | 0 | 0 | 0 | 1 | **3** | 1 |
 | **Other** — Sulfated pentagalloylglucoside is a potent, a… (2013) | 110 | 0 | 54 | 4 | 0 | 0 | 2 | 16 | **34** | 1 |
 | **Other** — Targeting the GPIbα Binding Site of Thrombin … (2014) | 31 | 0 | 6 | 1 | 0 | 0 | 3 | 7 | **14** | 0 |
 | **Other** — Tumor cells express pauci-and oligomannosidic… (2021) | 35 | 0 | 4 | 1 | 0 | 0 | 2 | 6 | **22** | 5 |
 | **Other** — Unique repertoire of anti-carbohydrate antibo… (2020) | 44 | 0 | 12 | 1 | 0 | 0 | 1 | 6 | **24** | 7 |
-| **all works** | | | | | | | | | **709** | 132 |
+| **all works** | | | | | | | | | **712** | 133 |
 
 Each work's own arithmetic is printed on the review page beside its name; the row above
 is the same screen, not a second tally.
 
-132 citations already have a PDF on file, held under `pending-papers/` until a
+133 citations already have a PDF on file, held under `pending-papers/` until a
 decision is made. The rest sit at
 `no-open-copy`, `paywalled`, or `not-in-indexes` — findings about access, not about
 whether the paper exists. **A tier appears only for an article that has actually been read:**
@@ -1864,6 +1868,10 @@ To bring one in, name its `row_uid` and run `discover-pdfs.js` → `file-pdf.js`
 | `cit-000298` | Comparative analysis of INLIGHT™-labeled enzymatically depolymerized heparin by reverse-phase chromatography … |
 | `cit-000302` | Comparative analysis of INLIGHT™-labeled enzymatically depolymerized heparin by reverse-phase chromatography … |
 | `cit-000303` | Comparative analysis of INLIGHT™-labeled enzymatically depolymerized heparin by reverse-phase chromatography … |
+| `cit-001264` | Structural modification of azolylacryloyl derivatives yields a novel class of covalent modifiers of hemoglobi… |
+| `cit-001266` | Structural modification of azolylacryloyl derivatives yields a novel class of covalent modifiers of hemoglobi… |
+| `cit-001271` | Structural modification of azolylacryloyl derivatives yields a novel class of covalent modifiers of hemoglobi… |
+| `cit-001272` | Structural modification of azolylacryloyl derivatives yields a novel class of covalent modifiers of hemoglobi… |
 
 The tier and project columns are **blank** on this row on purpose. Its `cited_paper` is a
 different work, so a tier recorded for GLAD or MAWE would describe a paper this row does not
@@ -1923,7 +1931,7 @@ evidence looks like something and is not.
 
 | basis of a recorded mention | mentions | rows |
 |---|---:|---:|
-| reference-number resolution | 180 | 105 |
+| reference-number resolution | 181 | 106 |
 | extracted text | 4 | 3 |
 
 A resolved citation is held to the same bar as one that names the tool: it must sit in
@@ -1932,7 +1940,7 @@ that names the applicant's paper — a reference list proves only that the autho
 work, not where or how. Where a row's tier rests on such a citation, that is said in the
 report rather than left for a reader to infer from a section heading alone.
 
-180 mentions across 105 citing works rest on resolution or on a person’s
+181 mentions across 106 citing works rest on resolution or on a person’s
 reading, not on a named-tool scan. `scan-mentions.js` reports those rows separately and
 leaves their tier alone — it is not built to find them, so its silence is not evidence
 against them.
@@ -1949,11 +1957,11 @@ Every PDF in the storage roots (`papers/`, `pending-papers/`, `screened-papers/`
 one of three ways, and the distinction matters because only the first two are reproducible
 from a script.
 
-**Fetched by `discover-pdfs.js`** — 201 candidate row(s) across 182 distinct file(s), each recorded with the host it came from:
+**Fetched by `discover-pdfs.js`** — 202 candidate row(s) across 183 distinct file(s), each recorded with the host it came from:
 
 | host | rows | row_uid(s) |
 |---|---:|---|
-| www.mdpi.com | 60 | `cit-000513`, `cit-000550`, `cit-000592`, `cit-000606`, `cit-000626`, `cit-000660`, `cit-000706`, `cit-000721`, `cit-000757`, `cit-000770`, `cit-000780`, `cit-000795`, `cit-000800`, `cit-000804`, `cit-000821`, `cit-001303`, `cit-001186`, `cit-000092`, `cit-000093`, `cit-000112`, `cit-000116`, `cit-000193`, `cit-000206`, `cit-000432`, `cit-000454`, `cit-000459`, `cit-000352`, `cit-001050`, `cit-000405`, `cit-000409`, `cit-000417`, `cit-000421`, `cit-000423`, `cit-001535`, `cit-001536`, `cit-001537`, `cit-001547`, `cit-001548`, `cit-001553`, `cit-000042`, `cit-000045`, `cit-000053`, `cit-001491`, `cit-001496`, `cit-001498`, `cit-000152`, `cit-001438`, `cit-001129`, `cit-001139`, `cit-000911`, `cit-000913`, `cit-000951`, `cit-000957`, `cit-000961`, `cit-000962`, `cit-001463`, `cit-001466`, `cit-000307`, `cit-000493`, `cit-000498` |
+| www.mdpi.com | 61 | `cit-000513`, `cit-000550`, `cit-000592`, `cit-000606`, `cit-000626`, `cit-000660`, `cit-000706`, `cit-000721`, `cit-000757`, `cit-000770`, `cit-000780`, `cit-000795`, `cit-000800`, `cit-000804`, `cit-000821`, `cit-001303`, `cit-001186`, `cit-000092`, `cit-000093`, `cit-000112`, `cit-000116`, `cit-000193`, `cit-000206`, `cit-000432`, `cit-000454`, `cit-000459`, `cit-000352`, `cit-001050`, `cit-000405`, `cit-000409`, `cit-000417`, `cit-000421`, `cit-000423`, `cit-001535`, `cit-001536`, `cit-001537`, `cit-001547`, `cit-001548`, `cit-001553`, `cit-000042`, `cit-000045`, `cit-000053`, `cit-001491`, `cit-001496`, `cit-001498`, `cit-000152`, `cit-001438`, `cit-001129`, `cit-001139`, `cit-000911`, `cit-000913`, `cit-000951`, `cit-000957`, `cit-000961`, `cit-000962`, `cit-001463`, `cit-001466`, `cit-000307`, `cit-000493`, `cit-000498`, `cit-001266` |
 | www.nature.com | 33 | `cit-000510`, `cit-000511`, `cit-000596`, `cit-000600`, `cit-000654`, `cit-000665`, `cit-000666`, `cit-000689`, `cit-000693`, `cit-000695`, `cit-000696`, `cit-000727`, `cit-000744`, `cit-000799`, `cit-000185`, `cit-000188`, `cit-000191`, `cit-000442`, `cit-000449`, `cit-000460`, `cit-000330`, `cit-001041`, `cit-001048`, `cit-001051`, `cit-001070`, `cit-001517`, `cit-000006`, `cit-001483`, `cit-000248`, `cit-000250`, `cit-001108`, `cit-001460`, `cit-000487` |
 | www.frontiersin.org | 20 | `cit-000520`, `cit-000593`, `cit-000607`, `cit-000715`, `cit-000730`, `cit-000731`, `cit-000844`, `cit-001287`, `cit-000455`, `cit-001042`, `cit-001055`, `cit-001057`, `cit-001515`, `cit-001525`, `cit-001534`, `cit-001116`, `cit-000955`, `cit-001090`, `cit-001467`, `cit-000305` |
 | www.biorxiv.org | 19 | `cit-000631`, `cit-000633`, `cit-000683`, `cit-000742`, `cit-000832`, `cit-000833`, `cit-000843`, `cit-000108`, `cit-000202`, `cit-000217`, `cit-000465`, `cit-000414`, `cit-000420`, `cit-000424`, `cit-000263`, `cit-000924`, `cit-001121`, `cit-001098`, `cit-001471` |
@@ -2007,20 +2015,20 @@ These came from the `In Methods` / `In Acknowledgements` imports and were regist
 all, so the NCBI key in `.env` is used for author corroboration, not for fetching. Any statement
 that these papers came from PubMed Central would be wrong.
 
-Discovery state of all 986 GLAD candidates, from `candidate.discover_state`:
+Discovery state of all 990 GLAD candidates, from `candidate.discover_state`:
 
 | state | rows | meaning |
 |---|---:|---|
-| `no-open-copy` | 474 | looked, nothing retrievable found |
-| `has-pdf` | 201 | a PDF is on file for the row — seeded that way, fetched by a script, or filed with `file-pdf.js` |
-| `paywalled` | 156 | located behind a paywall — the applicant may be able to obtain these |
+| `no-open-copy` | 476 | looked, nothing retrievable found |
+| `has-pdf` | 202 | a PDF is on file for the row — seeded that way, fetched by a script, or filed with `file-pdf.js` |
+| `paywalled` | 157 | located behind a paywall — the applicant may be able to obtain these |
 | `not-in-indexes` | 133 | not found in the open-access indexes consulted |
 | `open-copy` | 19 | an open-access copy was located; the row is only `has-pdf` once the file is on disk |
 | `lookup-failed` | 3 | — |
 
 **Still open:** 0 row(s) sit at `open-copy` with no file on disk — a copy was
 located and never fetched. Chasing them is a decision, not a defect: a row must be independent
-(§1.2) before it is worth a download, and 195 candidate(s) are already held — check why before spending effort on a PDF for a row that
+(§1.2) before it is worth a download, and 196 candidate(s) are already held — check why before spending effort on a PDF for a row that
 cannot be filed.
 
 ## 6. Before handing the packet over
