@@ -12,6 +12,12 @@
 # (cookies, tokens, cache). It must never be committed.
 tools/.playwright-profile/
 
+# The Playwright MCP server writes page snapshots, console logs and network
+# traces into .playwright-mcp/ at the repo root as it works. They are debug
+# scratch, not evidence, and a snapshot can contain a signed URL or session
+# cookie from a paywalled host.
+.playwright-mcp/
+
 # --- Dependencies ------------------------------------------------------------
 node_modules/
 

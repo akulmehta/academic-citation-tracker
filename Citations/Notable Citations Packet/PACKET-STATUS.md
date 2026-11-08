@@ -16,7 +16,7 @@ decision that only a person can make.
 | Citations in the packet (in `packet.html`) | 22 |
 | Works those citations are filed as (§5.1 folders) | 14 |
 | PDFs filed under `papers/` (in the packet) | 16 |
-| PDFs under `pending-papers/` (awaiting a decision) | 121 |
+| PDFs under `pending-papers/` (awaiting a decision) | 122 |
 | PDFs under `screened-papers/` (kept, not filed) | 61 |
 | Held — open items, listed below | 730 |
 | Screened out — decided, kept for the record (§4.5) | 246 |
@@ -31,7 +31,7 @@ every held row appears in §2 below.
 ## 2. Held rows — 730 open items
 
 
-### 2.1 `read` — 16 row(s)
+### 2.1 `read` — 17 row(s)
 
 The PDF is filed and the applicant's tool appears in a section of the paper. What is missing is the applicant's reading: a location on its own is not a claim about how the tool was used (§1.1).
 
@@ -46,6 +46,7 @@ The PDF is filed and the applicant's tool appears in a section of the paper. Wha
 | `cit-000510` | GLAD | 2023 | Pekosz | 2019–2020 H1N1 clade A5a. 1 viruses have better in vitro fitness compared w… | [open](https://www.nature.com/articles/s41598-023-37122-z) |
 | `cit-000532` | GLAD | 2023 | Hokke | Unraveling cross-reactivity of anti-glycan IgG responses in filarial nemato… | [open](https://www.frontiersin.org/journals/immunology/articles/10.3389/fimmu.2023.1102344/full) |
 | `cit-000538` | GLAD | 2023 | Kiessling | Lectin fingerprinting distinguishes antibody neutralization in SARS-CoV-2 | [open](https://pmc.ncbi.nlm.nih.gov/articles/PMC10214521/) |
+| `cit-000595` | GlycoGlyph | 2023 | Bojar | GlycoDraw: a python implementation for generating high-quality glycan figur… | [open](https://academic.oup.com/glycob/article-abstract/33/11/927/7232175) |
 | `cit-000531` | GLAD | 2024 | Pekosz | Clade-defining mutations in human H1N1 hemagglutinin protein from 2021-2023… | [open](https://www.biorxiv.org/content/10.1101/2024.05.18.594815.abstract) |
 | `cit-000520` | GLAD | 2025 | Vasta | A “proto” type galectin expressed in striped bass (Morone saxatilis) tissue… | [open](https://www.frontiersin.org/journals/cellular-and-infection-microbiology/articles/10.3389/fcimb.2025.1572734/full) |
 | `cit-000596` | GlycoGlyph | 2025 | Eichler | Identification of the D-glucuronyl C5-epimerase that introduces iduronic ac… | [open](https://www.nature.com/articles/s42003-025-08987-9) |
@@ -186,7 +187,7 @@ The PDF is filed, but the extracted text does not support a use in any section �
 | `cit-000605` | GlycoGlyph | 2025 | Kontoravdi | GlyCompute: towards the automated analysis of protein N-linked glycosylatio… | [open](https://link.springer.com/article/10.1007/s00216-024-05522-3) |
 | `cit-001116` | Glyco-SPOT | 2026 | Hurevich | Stirring glycopeptides away from the constraints of solid-phase synthesis m… | [open](https://www.frontiersin.org/journals/molecular-biosciences/articles/10.3389/fmolb.2026.1863326/full) |
 
-### 2.4 `paywalled` — 122 row(s)
+### 2.4 `paywalled` — 121 row(s)
 
 A copy exists behind a paywall. If the applicant can obtain the PDF through an institution, drop it in the folder and the row can be read.
 
@@ -260,7 +261,6 @@ A copy exists behind a paywall. If the applicant can obtain the PDF through an i
 | `cit-000400` | — | 2023 | Klassen | Absolute affinities from quantitative shotgun glycomics using concentration… | [open](https://pmc.ncbi.nlm.nih.gov/articles/PMC10303200/) |
 | `cit-000447` | — | 2023 | Niu | Fluorosulfate as a latent sulfate in peptides and proteins | [open](https://pubs.acs.org/jacsat/article-abstract/145/37/20189/431527) |
 | `cit-000497` | — | 2023 | Melero | CD137 (4-1BB) requires physically associated cIAPs for signal transduction … | [open](https://www.science.org/doi/abs/10.1126/sciadv.adf6692) |
-| `cit-000595` | GlycoGlyph | 2023 | Bojar | GlycoDraw: a python implementation for generating high-quality glycan figur… | [open](https://academic.oup.com/glycob/article-abstract/33/11/927/7232175) |
 | `cit-000710` | — | 2023 | Bojar | Breast milk oligosaccharides contain immunomodulatory glucuronic acid and L… | [open](https://www.mcponline.org/article/S1535-9476(23)00146-9/fulltext) |
 | `cit-000724` | — | 2023 | Gerken | Polypeptide N-acetylgalactosaminyltransferase (GalNAc-T) isozyme surface ch… | [open](https://academic.oup.com/glycob/article-abstract/33/10/817/7239863) |
 | `cit-000765` | — | 2023 | Ramaiah | Elucidating the molecular role of MUC5B in progressive lung adenocarcinoma:… | [open](https://onlinelibrary.wiley.com/doi/abs/10.1002/jmr.3064) |
@@ -993,7 +993,7 @@ with it, and nothing on it is evidence until a person has read the article and f
 | my work | citing works the record lists | less retired | less not independent | less copies | less not English | less in packet | less in original app. | less decided | listed | PDF on file |
 |---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
 | **GLAD** — GLAD: GLycan Array Dashboard, a visual analyt… (2019) | 64 | 0 | 18 | 2 | 0 | 7 | 2 | 9 | **26** | 13 |
-| **GlycoGlyph** — GlycoGlyph: a glycan visualizing, drawing and… (2020) | 78 | 0 | 9 | 4 | 0 | 7 | 3 | 30 | **25** | 10 |
+| **GlycoGlyph** — GlycoGlyph: a glycan visualizing, drawing and… (2020) | 78 | 0 | 9 | 4 | 0 | 7 | 3 | 30 | **25** | 11 |
 | **MAWE** — GlyMDB: Glycan Microarray Database and analys… (2020) | 24 | 0 | 4 | 1 | 0 | 0 | 0 | 6 | **13** | 1 |
 | **MAWE** — Reusable glycan microarrays using a microwave… (2024) | 15 | 0 | 6 | 1 | 0 | 5 | 0 | 3 | **0** | 0 |
 | **MAWE** — Tools for generating and analyzing glycan mic… (2020) | 18 | 0 | 3 | 0 | 0 | 0 | 1 | 5 | **9** | 2 |
@@ -1025,12 +1025,12 @@ with it, and nothing on it is evidence until a person has read the article and f
 | **Other** — Targeting the GPIbα Binding Site of Thrombin … (2014) | 31 | 0 | 6 | 1 | 0 | 0 | 3 | 7 | **14** | 0 |
 | **Other** — Tumor cells express pauci-and oligomannosidic… (2021) | 35 | 0 | 4 | 1 | 0 | 0 | 2 | 6 | **22** | 5 |
 | **Other** — Unique repertoire of anti-carbohydrate antibo… (2020) | 44 | 0 | 12 | 1 | 0 | 0 | 1 | 6 | **24** | 7 |
-| **all works** | | | | | | | | | **707** | 129 |
+| **all works** | | | | | | | | | **707** | 130 |
 
 Each work's own arithmetic is printed on the review page beside its name; the row above
 is the same screen, not a second tally.
 
-129 citations already have a PDF on file, held under `pending-papers/` until a
+130 citations already have a PDF on file, held under `pending-papers/` until a
 decision is made. The rest sit at
 `no-open-copy`, `paywalled`, or `not-in-indexes` — findings about access, not about
 whether the paper exists. **A tier appears only for an article that has actually been read:**
@@ -1959,7 +1959,7 @@ Every PDF in the storage roots (`papers/`, `pending-papers/`, `screened-papers/`
 one of three ways, and the distinction matters because only the first two are reproducible
 from a script.
 
-**Fetched by `discover-pdfs.js`** — 204 candidate row(s) across 183 distinct file(s), each recorded with the host it came from:
+**Fetched by `discover-pdfs.js`** — 205 candidate row(s) across 184 distinct file(s), each recorded with the host it came from:
 
 | host | rows | row_uid(s) |
 |---|---:|---|
@@ -1971,6 +1971,7 @@ from a script.
 | link.springer.com | 13 | `cit-000589`, `cit-000605`, `cit-000622`, `cit-000707`, `cit-000713`, `cit-000737`, `cit-000782`, `cit-000802`, `cit-001302`, `cit-001532`, `cit-000246`, `cit-000959`, `cit-000960` |
 | www.intechopen.com | 4 | `cit-000536`, `cit-000129`, `cit-000297`, `cit-000565` |
 | journals.plos.org | 3 | `cit-000741`, `cit-000182`, `cit-001497` |
+| academic.oup.com | 2 | `cit-000543`, `cit-000595` |
 | genomebiology.biomedcentral.com | 2 | `cit-000704`, `cit-000831` |
 | arxiv.org | 2 | `cit-000705`, `cit-000726` |
 | www.preprints.org | 2 | `cit-000784`, `cit-000050` |
@@ -1982,7 +1983,6 @@ from a script.
 | www.mcponline.org | 1 | `cit-000514` |
 | pubs.acs.org | 1 | `cit-000538` |
 | eymj.org | 1 | `cit-000541` |
-| academic.oup.com | 1 | `cit-000543` |
 | www.beilstein-journals.org | 1 | `cit-000625` |
 | theses.hal.science | 1 | `cit-000656` |
 | pmc.ncbi.nlm.nih.gov | 1 | `cit-001262` |
@@ -2022,15 +2022,15 @@ Discovery state of all 996 GLAD candidates, from `candidate.discover_state`:
 | state | rows | meaning |
 |---|---:|---|
 | `no-open-copy` | 478 | looked, nothing retrievable found |
-| `has-pdf` | 202 | a PDF is on file for the row — seeded that way, fetched by a script, or filed with `file-pdf.js` |
-| `paywalled` | 158 | located behind a paywall — the applicant may be able to obtain these |
+| `has-pdf` | 203 | a PDF is on file for the row — seeded that way, fetched by a script, or filed with `file-pdf.js` |
+| `paywalled` | 157 | located behind a paywall — the applicant may be able to obtain these |
 | `not-in-indexes` | 134 | not found in the open-access indexes consulted |
 | `open-copy` | 21 | an open-access copy was located; the row is only `has-pdf` once the file is on disk |
 | `lookup-failed` | 3 | — |
 
 **Still open:** 0 row(s) sit at `open-copy` with no file on disk — a copy was
 located and never fetched. Chasing them is a decision, not a defect: a row must be independent
-(§1.2) before it is worth a download, and 189 candidate(s) are already held — check why before spending effort on a PDF for a row that
+(§1.2) before it is worth a download, and 190 candidate(s) are already held — check why before spending effort on a PDF for a row that
 cannot be filed.
 
 ## 6. Before handing the packet over
