@@ -16,7 +16,7 @@ decision that only a person can make.
 | Citations in the packet (in `packet.html`) | 22 |
 | Works those citations are filed as (§5.1 folders) | 14 |
 | PDFs filed under `papers/` (in the packet) | 16 |
-| PDFs under `pending-papers/` (awaiting a decision) | 22 |
+| PDFs under `pending-papers/` (awaiting a decision) | 26 |
 | PDFs under `screened-papers/` (kept, not filed) | 13 |
 | Held — open items, listed below | 58 |
 | Screened out — decided, kept for the record (§4.5) | 39 |
@@ -31,7 +31,7 @@ every held row appears in §2 below.
 ## 2. Held rows — 58 open items
 
 
-### 2.1 `read` — 15 row(s)
+### 2.1 `read` — 17 row(s)
 
 The PDF is filed and the applicant's tool appears in a section of the paper. What is missing is the applicant's reading: a location on its own is not a claim about how the tool was used (§1.1).
 
@@ -50,7 +50,9 @@ The PDF is filed and the applicant's tool appears in a section of the paper. Wha
 | `cit-000531` | GLAD | 2024 | Pekosz | Clade-defining mutations in human H1N1 hemagglutinin protein from 2021-2023… | [open](https://www.biorxiv.org/content/10.1101/2024.05.18.594815.abstract) |
 | `cit-000520` | GLAD | 2025 | Vasta | A “proto” type galectin expressed in striped bass (Morone saxatilis) tissue… | [open](https://www.frontiersin.org/journals/cellular-and-infection-microbiology/articles/10.3389/fcimb.2025.1572734/full) |
 | `cit-000596` | GlycoGlyph | 2025 | Eichler | Identification of the D-glucuronyl C5-epimerase that introduces iduronic ac… | [open](https://www.nature.com/articles/s42003-025-08987-9) |
+| `cit-000607` | GlycoGlyph | 2025 | Vasta | A “proto” type galectin expressed in striped bass (Morone saxatilis) tissue… | [open](https://www.frontiersin.org/journals/cellular-and-infection-microbiology/articles/10.3389/fcimb.2025.1572734/full) |
 | `cit-000631` | GlycoGlyph | 2025 | Karstens | Complex carbohydrates catabolism capacity of bladder microbiota inhabiting … | [open](https://europepmc.org/article/med/40236069) |
+| `cit-000614` | GlycoGlyph | 2026 | Subramaniam | Loss of α2, 3-linked sialoside in the receptor-binding site of a H5N1 influ… | [open](https://www.biorxiv.org/content/10.64898/2026.01.19.700419.abstract) |
 | `cit-000633` | GlycoGlyph | 2026 | Schäfer | Engineering Functional CLA-Targeting CAR Approaches for Pancreatic Ductal A… | [open](https://www.biorxiv.org/content/10.64898/2026.07.03.736395.abstract) |
 
 ### 2.2 `unread` — 2 row(s)
@@ -59,10 +61,10 @@ The PDF is filed. Nobody has read it yet.
 
 | row_uid | tool | year | senior author | citing title | link |
 |---|---|---|---|---|---|
+| `cit-000623` | GlycoGlyph | 2020 | Lewis | A consensus-based and readable extension of Linear Code for Reaction Rules … | [open](https://www.beilstein-journals.org/bjoc/articles/16/215) |
 | `cit-000654` | GlycoGlyph | 2022 | Prasad | Novel fold of rotavirus glycan-binding domain predicted by AlphaFold2 and d… | [open](https://escholarship.org/content/qt77j1n0fs/qt77j1n0fs.pdf?v=lg) |
-| `cit-000607` | GlycoGlyph | 2025 | Vasta | A “proto” type galectin expressed in striped bass (Morone saxatilis) tissue… | [open](https://www.frontiersin.org/journals/cellular-and-infection-microbiology/articles/10.3389/fcimb.2025.1572734/full) |
 
-### 2.3 `unsupported` — 7 row(s)
+### 2.3 `unsupported` — 8 row(s)
 
 The PDF is filed, but the extracted text does not support a use in any section — the mentions sit in the reference list, in a table, or under a heading the paper did not print. Either re-read the page and record what it says, or screen the row out.
 
@@ -73,6 +75,7 @@ The PDF is filed, but the extracted text does not support a use in any section �
 | `cit-000513` | GLAD | 2020 | Zou | Databases and bioinformatic tools for glycobiology and glycoproteomics | [open](https://www.mdpi.com/1422-0067/21/18/6727) |
 | `cit-000541` | GLAD | 2020 | Cha | An automated fast healthcare interoperability resources-based 12-lead elect… | [open](https://pmc.ncbi.nlm.nih.gov/articles/PMC7214107/) |
 | `cit-000554` | GLAD | 2021 | Sukhija | Glycobioinformatics in deciphering the mammalian glycocode: Recent advances | [open](https://www.dattaconsultinggroup.com/akdsite/assets/publications/glycocodearticle.pdf) |
+| `cit-000581` | GlycoGlyph | 2021 | Munkley | FUT8 alpha-(1, 6)-fucosyltransferase in cancer | [open](https://www.mdpi.com/1422-0067/22/1/455) |
 | `cit-000592` | GlycoGlyph | 2024 | Siebels | Hypoxia-induced adaptations of N-glycomes and proteomes in breast cancer ce… | [open](https://www.mdpi.com/1422-0067/25/18/10216) |
 | `cit-000605` | GlycoGlyph | 2025 | Kontoravdi | GlyCompute: towards the automated analysis of protein N-linked glycosylatio… | [open](https://link.springer.com/article/10.1007/s00216-024-05522-3) |
 
@@ -118,15 +121,12 @@ No openly accessible copy was found. The publisher's landing page is given so th
 | `cit-000560` | GLAD | — | Feizi | CarbArrayART-An update on the software tool for carbohydrate microarray dat… | [open](https://spiral.imperial.ac.uk/entities/publication/6ebd01fb-2687-4761-a614-c85c1a192b24) |
 | `cit-000562` | GLAD | — | Feizi | CarbArrayART | [open](https://run.unl.pt/entities/publication/48e256d4-d5a1-4fde-a8a0-ec184408ff34) |
 
-### 2.6 `not-in-indexes` — 6 row(s)
+### 2.6 `not-in-indexes` — 3 row(s)
 
 Neither PubMed nor OpenAlex returned the work, so there was nothing to fetch. These tend to be theses, book chapters, or commercial pages.
 
 | row_uid | tool | year | senior author | citing title | link |
 |---|---|---|---|---|---|
-| `cit-000623` | GlycoGlyph | 2020 | Lewis | A consensus-based and readable extension of Linear Code for Reaction Rules … | [open](https://www.beilstein-journals.org/bjoc/articles/16/215) |
-| `cit-000581` | GlycoGlyph | 2021 | Munkley | FUT8 alpha-(1, 6)-fucosyltransferase in cancer | [open](https://www.mdpi.com/1422-0067/22/1/455) |
-| `cit-000614` | GlycoGlyph | 2026 | Subramaniam | Loss of α2, 3-linked sialoside in the receptor-binding site of a H5N1 influ… | [open](https://www.biorxiv.org/content/10.64898/2026.01.19.700419.abstract) |
 | `cit-000552` | GLAD | — | — | METABOLITE MULTIPRO/SYNBIOTICS: APPROACHES FOR CONSTRUCTING | — |
 | `cit-000567` | GLAD | — | Tiemeyer | Glycoinformatics resources integrated through the GlySpace Alliance | — |
 | `cit-000650` | GlycoGlyph | — | — | Probing and elucidating the dynamics of virus-membrane interaction via plas… | — |
@@ -317,14 +317,14 @@ with it, and nothing on it is evidence until a person has read the article and f
 | my work | citing works the record lists | less retired | less not independent | less copies | less not English | less in packet | less in original app. | less decided | listed | PDF on file |
 |---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
 | **GLAD** — GLAD: GLycan Array Dashboard, a visual analyt… (2019) | 64 | 0 | 18 | 2 | 0 | 7 | 2 | 5 | **30** | 15 |
-| **GlycoGlyph** — GlycoGlyph: a glycan visualizing, drawing and… (2020) | 78 | 0 | 9 | 4 | 0 | 7 | 3 | 28 | **27** | 9 |
+| **GlycoGlyph** — GlycoGlyph: a glycan visualizing, drawing and… (2020) | 78 | 0 | 9 | 4 | 0 | 7 | 3 | 28 | **27** | 12 |
 | **MAWE** — Reusable glycan microarrays using a microwave… (2024) | 15 | 0 | 6 | 1 | 0 | 5 | 0 | 2 | **1** | 0 |
-| **all works** | | | | | | | | | **58** | 24 |
+| **all works** | | | | | | | | | **58** | 27 |
 
 Each work's own arithmetic is printed on the review page beside its name; the row above
 is the same screen, not a second tally.
 
-24 citations already have a PDF on file, held under `pending-papers/` until a
+27 citations already have a PDF on file, held under `pending-papers/` until a
 decision is made. The rest sit at
 `no-open-copy`, `paywalled`, or `not-in-indexes` — findings about access, not about
 whether the paper exists. **A tier appears only for an article that has actually been read:**
@@ -428,11 +428,11 @@ Every PDF in the storage roots (`papers/`, `pending-papers/`, `screened-papers/`
 one of three ways, and the distinction matters because only the first two are reproducible
 from a script.
 
-**Fetched by `discover-pdfs.js`** — 38 candidate row(s) across 36 distinct file(s), each recorded with the host it came from:
+**Fetched by `discover-pdfs.js`** — 41 candidate row(s) across 40 distinct file(s), each recorded with the host it came from:
 
 | host | rows | row_uid(s) |
 |---|---:|---|
-| (no source recorded) | 12 | `cit-000507`, `cit-000523`, `cit-000525`, `cit-000531`, `cit-000532`, `cit-000534`, `cit-000549`, `cit-000554`, `cit-000564`, `cit-000566`, `cit-000621`, `cit-001263` |
+| (no source recorded) | 15 | `cit-000507`, `cit-000523`, `cit-000525`, `cit-000531`, `cit-000532`, `cit-000534`, `cit-000549`, `cit-000554`, `cit-000564`, `cit-000566`, `cit-000581`, `cit-000614`, `cit-000621`, `cit-000623`, `cit-001263` |
 | www.nature.com | 5 | `cit-000510`, `cit-000511`, `cit-000596`, `cit-000600`, `cit-000654` |
 | www.mdpi.com | 5 | `cit-000513`, `cit-000550`, `cit-000592`, `cit-000606`, `cit-000626` |
 | www.frontiersin.org | 3 | `cit-000520`, `cit-000593`, `cit-000607` |
@@ -469,15 +469,15 @@ Discovery state of all 116 GLAD candidates, from `candidate.discover_state`:
 
 | state | rows | meaning |
 |---|---:|---|
-| `has-pdf` | 54 | a PDF is on file for the row — seeded that way, fetched by a script, or filed with `file-pdf.js` |
+| `has-pdf` | 58 | a PDF is on file for the row — seeded that way, fetched by a script, or filed with `file-pdf.js` |
 | `no-open-copy` | 30 | looked, nothing retrievable found |
-| `not-in-indexes` | 16 | not found in the open-access indexes consulted |
 | `paywalled` | 14 | located behind a paywall — the applicant may be able to obtain these |
-| `open-copy` | 2 | an open-access copy was located; the row is only `has-pdf` once the file is on disk |
+| `not-in-indexes` | 13 | not found in the open-access indexes consulted |
+| `open-copy` | 1 | an open-access copy was located; the row is only `has-pdf` once the file is on disk |
 
 **Still open:** 0 row(s) sit at `open-copy` with no file on disk — a copy was
 located and never fetched. Chasing them is a decision, not a defect: a row must be independent
-(§1.2) before it is worth a download, and 48 candidate(s) are already held — check why before spending effort on a PDF for a row that
+(§1.2) before it is worth a download, and 52 candidate(s) are already held — check why before spending effort on a PDF for a row that
 cannot be filed.
 
 ## 6. Before handing the packet over

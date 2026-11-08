@@ -1188,6 +1188,13 @@ These are non-negotiable because the packet is read as a representation of the e
 - **A quote belongs to the row, not the folder.** One citing article appears on the "cited by" page
   of every paper it cites, so a single folder can hold four rows citing four different applicant
   works. A sentence copied folder-wide therefore credits tool X to a row that cites tool Y.
+- **The sentence must name the row's own tool, not merely the sentence the scanner hit first.**
+  When one line names two tools — the Vasta paper prints *"Results were analyzed by GLAD (Mehta and
+  Cummings, 2019). Glycan models were constructed using GlycoGlyph (Mehta and Cummings, 2020)."* —
+  a `sentenceAround()` that searches for *any* tool returns the GLAD sentence to both rows, and the
+  GlycoGlyph row is filed with evidence about GLAD. `scan-mentions.js` now builds one quote per
+  tool on the line (`h.quotes[label]`) and each row reads its own via `qFor()`. Found 2026-11-08 on
+  `cit-000607`.
 - **A quote is filed by `scripts/record-evidence.js`, never by an `UPDATE` in a terminal.** That tool
   re-reads the PDF that row points at and refuses any sentence it cannot find there, on the page
   claimed. It caught four wrong proposals (including two swapped page numbers) on its first run; a

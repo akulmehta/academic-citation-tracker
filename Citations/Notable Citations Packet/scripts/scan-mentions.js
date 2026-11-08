@@ -458,8 +458,16 @@ function toolAtLeftFor(pageLines) {
   };
 }
 
-function sentenceAround(text) {
-  const i = text.search(/\bGLAD\b|glyco\s*glyph|glycoglyph|\bMAWE\b|glyco[- ]?spot/i);
+function sentenceAround(text, pats) {
+  // Key on the tool this row cites, not on any tool. A paragraph that names two
+  // of them — "Results were analyzed by GLAD (…). Glycan models were constructed
+  // using GlycoGlyph (…)" — made every row in the folder quote the FIRST tool's
+  // sentence, so cit-000607's GlycoGlyph row carried GLAD's sentence as its
+  // evidence. Each row must quote the sentence containing its own tool.
+  const re = pats && pats.length
+    ? new RegExp(pats.map(p => p.source).join("|"), "i")
+    : /\bGLAD\b|glyco\s*glyph|glycoglyph|\bMAWE\b|glyco[- ]?spot/i;
+  const i = text.search(re);
   if (i < 0) return text.slice(0, 300);
   const start = Math.max(0, text.lastIndexOf(". ", Math.max(0, i - 2)));
   const endRel = text.slice(i).search(/\.\s|\.$/);
@@ -498,9 +506,13 @@ async function scanFile(abs, signatures) {
     // a different page are excluded — a page break is not a paragraph join.
     const samePage = n => lines[n] && lines[n].page === L.page;
     const para = [samePage(i - 1) && lines[i - 1].text, L.text, samePage(i + 1) && lines[i + 1].text].filter(Boolean).join(" ");
+    // One quote per tool the line names, each keyed on that tool, so a row citing
+    // GlycoGlyph never inherits the sentence that names GLAD.
+    const quotes = {};
+    for (const t of tools) quotes[t.label] = sentenceAround(para, t.pats).slice(0, 600);
     found.push({
       tools: tools.map(t => t.label), page: L.page, section: L.section, rank: L.rank,
-      quote: sentenceAround(para).slice(0, 600),
+      quote: quotes[tools[0].label], quotes,
       looksLikeReference: L.rank === "REF" || isReferenceEntry(L.text, signatures),
       inTable: !!L.inTable,
     });
@@ -683,6 +695,8 @@ async function main() {
       // not a reference entry, not a table cell, and under a heading the paper
       // itself printed.
       const mine = want ? hits.filter(h => h.tools.includes(want)) : [];
+      // The sentence naming THIS row's tool, not whatever tool shared the line.
+      const qFor = h => (h.quotes && want && h.quotes[want]) || h.quote;
       const usable = mine.filter(h => !h.looksLikeReference && !h.inTable && h.rank !== "?" && h.rank !== "REF");
       const best = usable.sort((a, b) => "ABCD".indexOf(a.rank) - "ABCD".indexOf(b.rank))[0] || null;
       const tier = best ? best.rank : null;
@@ -693,7 +707,7 @@ async function main() {
       // to do about it.
       if (!DRY) {
         scanUpd.run(tier,
-          best ? `${best.section} p.${best.page}: ${best.quote}`
+          best ? `${best.section} p.${best.page}: ${qFor(best)}`
             : mine.length
               ? `${mine.length} appearance(s) of ${want}, none in a section the paper ranked: ${where}`
               : want
@@ -724,7 +738,7 @@ async function main() {
         // scanner cannot read. Clearing it here would delete evidence the tool was
         // never built to find, so the row is reported and left alone.
         if (!DRY && r.status === "held" && !supportNote(r.row_uid)) {
-          upd.run(null, null, null, mine.length ? mine[0].quote : null,
+          upd.run(null, null, null, mine.length ? qFor(mine[0]) : null,
             want
               ? `Scanner: ${want} appears only in the reference list${mine.some(h => h.inTable) ? ", a table, or" : "or"} an unranked section — no section of the citing paper uses it as a method${mine.length ? ` (appearance: ${mine[0].section} p.${mine[0].page})` : ""}`
               : `Scanner: this row cites "${r.cited_paper}", which is not one of the four tools, so the text scan has nothing to locate`,
@@ -743,13 +757,13 @@ async function main() {
           // The tier agrees, so the location the scan found is safe to record
           // beside it. Fills only what is missing: a page or quote the applicant
           // wrote stands, and the recorded section is never replaced.
-          if (!DRY) backfill.run(String(best.page), best.quote, r.row_uid);
+          if (!DRY) backfill.run(String(best.page), qFor(best), r.row_uid);
         }
         continue;
       }
 
       if (!DRY && r.status === "held") {
-        upd.run(tier, best.section, String(best.page), best.quote,
+        upd.run(tier, best.section, String(best.page), qFor(best),
           `Scanner: mention found in the ${best.section} section of ${best.file}, page ${best.page}`, r.row_uid);
       }
     }
