@@ -1,0 +1,207 @@
+[
+  {
+    "row_uid": "cit-000405",
+    "mentions": [
+      {
+        "section": "Discussion",
+        "tier": "C",
+        "page": "16",
+        "quote": "and the macrophage mannose receptor) [ 57 –59 ], raising the possibility that oligomannosy-",
+        "use_type": null,
+        "basis": "reference-number resolution",
+        "verified": 0,
+        "note": "cited as bracketed jointly with 58, 59: [ 57 –59 ]"
+      }
+    ]
+  },
+  {
+    "row_uid": "cit-000409",
+    "mentions": [
+      {
+        "section": "Discussion",
+        "tier": "C",
+        "page": "13",
+        "quote": "References [34–39] are cited in Supplementary Materials.",
+        "use_type": null,
+        "basis": "reference-number resolution",
+        "verified": 0,
+        "note": "cited as bracketed jointly with 35, 36, 37, 38, 39: [34–39]"
+      }
+    ]
+  },
+  {
+    "row_uid": "cit-000414",
+    "mentions": [
+      {
+        "section": "Introduction",
+        "tier": "C",
+        "page": "2",
+        "quote": "which the appropriate binding epitopes are presented [8; 9], e.g., as demonstrated by the glycan binding",
+        "use_type": null,
+        "basis": "reference-number resolution",
+        "verified": 0,
+        "note": "cited as bracketed jointly with 8: [8; 9]"
+      },
+      {
+        "section": "Introduction",
+        "tier": "C",
+        "page": "2",
+        "quote": "relationships become available [8;9 ], methods are needed to analyze and explore (Fig 1, middle and right)",
+        "use_type": null,
+        "basis": "reference-number resolution",
+        "verified": 0,
+        "note": "cited as bracketed jointly with 8: [8;9 ]"
+      },
+      {
+        "section": "Introduction",
+        "tier": "C",
+        "page": "3",
+        "quote": "glycan functionality [8; 9].",
+        "use_type": null,
+        "basis": "reference-number resolution",
+        "verified": 0,
+        "note": "cited as bracketed jointly with 8: [8; 9]"
+      },
+      {
+        "section": "Results",
+        "tier": "B",
+        "page": "7",
+        "quote": "previously understood [8; 9].",
+        "use_type": null,
+        "basis": "reference-number resolution",
+        "verified": 0,
+        "note": "cited as bracketed jointly with 8: [8; 9]"
+      },
+      {
+        "section": "Results",
+        "tier": "B",
+        "page": "7",
+        "quote": "its primary motif and the mannose-content of surrounding branches [9]; furthermore, MAL-II has similar",
+        "use_type": null,
+        "basis": "reference-number resolution",
+        "verified": 0,
+        "note": "cited as bracketed: [9]"
+      }
+    ]
+  },
+  {
+    "row_uid": "cit-000416",
+    "mentions": [
+      {
+        "section": "Discussion",
+        "tier": "C",
+        "page": "19",
+        "quote": "restricted, specificities toward oligomannose motifs (Gao et al. 2021).",
+        "use_type": null,
+        "basis": "reference-number resolution",
+        "verified": 0,
+        "note": "author-year citation on surname + year alone: (Gao et al. 2021) — read it before relying on it"
+      }
+    ]
+  },
+  {
+    "row_uid": "cit-000540",
+    "mentions": [
+      {
+        "section": "Methods",
+        "tier": "A",
+        "page": "30",
+        "quote": "binding profiles and identification of enriched glycan motifs (Mehta and Cummings 2019).",
+        "use_type": null,
+        "basis": "reference-number resolution",
+        "verified": 0,
+        "note": "author-year citation naming a co-author: (Mehta and Cummings 2019)"
+      }
+    ]
+  },
+  {
+    "row_uid": "cit-000987",
+    "mentions": [
+      {
+        "section": "Methods",
+        "tier": "A",
+        "page": "29",
+        "quote": "request) (Heimburg-Molinaro et al. 2024).",
+        "use_type": null,
+        "basis": "reference-number resolution",
+        "verified": 0,
+        "note": "author-year citation on surname + year alone: (Heimburg-Molinaro et al. 2024) — read it before relying on it"
+      }
+    ]
+  },
+  {
+    "row_uid": "cit-001259",
+    "mentions": [
+      {
+        "section": "Methods",
+        "tier": "A",
+        "page": "30",
+        "quote": "(RFU) standard deviation, and coefficient of variation for each glycan (Mehta et al. 2024).",
+        "use_type": null,
+        "basis": "reference-number resolution",
+        "verified": 0,
+        "note": "author-year citation on surname + year alone: (Mehta et al. 2024) — read it before relying on it"
+      }
+    ]
+  },
+  {
+    "row_uid": "cit-000421",
+    "mentions": [
+      {
+        "section": "Introduction",
+        "tier": "C",
+        "page": "2",
+        "quote": "the rapid systemic distribution and toxicity noted with the previous compounds [3–6].",
+        "use_type": null,
+        "basis": "reference-number resolution",
+        "verified": 0,
+        "note": "cited as bracketed jointly with 3, 5, 6: [3–6]"
+      },
+      {
+        "section": "Introduction",
+        "tier": "C",
+        "page": "2",
+        "quote": "histocompatibility complex (MHC) class II molecules [4,5].",
+        "use_type": null,
+        "basis": "reference-number resolution",
+        "verified": 0,
+        "note": "cited as bracketed jointly with 5: [4,5]"
+      },
+      {
+        "section": "Methods",
+        "tier": "A",
+        "page": "2",
+        "quote": "Detection (InvivoGen); the mixture was distributed into 96-well plates at 2.5 × 104 cells/well,",
+        "use_type": null,
+        "basis": "reference-number resolution",
+        "verified": 0,
+        "note": "cited as superscript (glued to word): 4"
+      }
+    ]
+  },
+  {
+    "row_uid": "cit-000423",
+    "mentions": [
+      {
+        "section": "Results",
+        "tier": "B",
+        "page": "10",
+        "quote": "with those from a recent glycan assay study (Figure 6C) [51 ].",
+        "use_type": null,
+        "basis": "reference-number resolution",
+        "verified": 0,
+        "note": "cited as bracketed: [51 ]"
+      },
+      {
+        "section": "Results",
+        "tier": "B",
+        "page": "11",
+        "quote": "sistent with those from a recent glycan assay study (Figure 6C) [51].",
+        "use_type": null,
+        "basis": "reference-number resolution",
+        "verified": 0,
+        "note": "cited as bracketed: [51]"
+      }
+    ]
+  }
+]
