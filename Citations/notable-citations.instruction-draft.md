@@ -129,11 +129,39 @@ Journals head the Methods section in many different ways — `Methods`, `Materia
 letterspaced forms such as `2 | M E T H O D S`. Do not conclude a paper has no Methods section
 because a simple text match failed.
 
+A tier only ranks a work that is already eligible. Before a candidate earns any tier, it must pass
+the screens in §1.2, the first of which is that the citing work is a primary research article.
+
 ### 1.2 Screen these out
 
 Screening decides what the packet *contains*. It does not decide what the record *keeps*: every
 candidate below still gets a row with its reason (§4.5).
 
+- **Citing works that are not primary research articles.** Applicant instruction, 2026-11-08:
+  *when collecting notable citations, avoid non-research articles like theses and review articles —
+  narrow the scope to research articles, i.e. those having experimental methods and results.* So the
+  packet collects only original research reports. Excluded: theses and dissertations, review
+  articles, and by the same logic conference-abstract supplements, editorials, commentaries, and
+  book chapters. A preprint is judged on what it contains, not on being a preprint — a research
+  article posted to bioRxiv stays in scope, a review-style preprint does not.
+  - **The work type decides eligibility; the tier does not.** A dissertation that runs the tool in
+    its Materials and Methods earns a tier A location and is still screened out. A strong tier is
+    never an argument for keeping an ineligible work type.
+  - **Nothing stored tells you the type.** `candidate.work_type` and `citation.citing_article_type`
+    read `article` for every row in the packet database and neither column is validated, so a
+    dissertation is indistinguishable from a journal article in the data. Judge the type from the
+    source and the file, not from those fields.
+  - How to tell, cheapest first: the **source link** (`search.proquest.com/…&diss=y`,
+    `theses.hal.science`, `*.scholaris.ca`, `freidok.uni-freiburg.de`, `ediss.*`,
+    `open.leidenuniv.nl`, `jscholarship.library.jhu.edu`, a `/handle/` path); the **venue** (a
+    title that publishes only reviews, e.g. *Trends in Biochemical Sciences*); and the **file** —
+    a thesis title page says "A dissertation submitted to … in conformity with the requirements for
+    the degree of …", and a review has no Methods section at all, only prose overview headings.
+  - Found this way on the MAWE queue: `cit-001263` is a Queen's University MSc thesis whose §2.6
+    cites MAWE under "Materials and Methods" (tier A), and `cit-001262` is a *Human Immunology*
+    review with no Methods section. Both are screened out on work type.
+  - Screening is not deleting. The row keeps its `status = 'screened-out'` and this reason, and
+    `node scripts/relocate-pdfs.js --write` moves its PDF to `Citations/low-value/`.
 - **Citations that are not independent.** This is the first screen, before any reading of the
   article. A citation counts only when the citing paper and the cited paper share no author, and
   per the applicant's standing instruction any paper naming Richard D. Cummings or Umesh R. Desai

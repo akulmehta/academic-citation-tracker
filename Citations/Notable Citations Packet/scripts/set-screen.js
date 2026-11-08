@@ -14,6 +14,12 @@
  * from the status, so running it after this is enough.
  *
  * Usage: node scripts/set-screen.js --row=cit-000553 --reason="..." [--restore] [--write]
+ *        node scripts/set-screen.js --rows=cit-000549,cit-000637 --reason="..." [--write]
+ *
+ * `--rows=` applies one reason to several rows in one transaction with one
+ * backup, which is what a screen the applicant stated once needs; using
+ * `--row=` repeatedly for a class of rows writes a backup per row and leaves
+ * the batch half-applied if it is interrupted.
  */
 "use strict";
 const fs = require("fs");
@@ -26,65 +32,89 @@ const args = process.argv.slice(2);
 const WRITE = args.includes("--write");
 const RESTORE = args.includes("--restore");
 const rowUid = (args.find((a) => a.startsWith("--row=")) || "").slice(6);
+const rowList = (args.find((a) => a.startsWith("--rows=")) || "").slice(7);
 const reason = (args.find((a) => a.startsWith("--reason=")) || "").slice(9);
 
 function main() {
-  if (!rowUid) throw new Error("give --row=<uid>");
+  const uids = (rowList ? rowList.split(",") : [rowUid]).map((s) => s.trim()).filter(Boolean);
+  if (!uids.length) throw new Error("give --row=<uid> or --rows=<uid>,<uid>");
   if (!RESTORE && !reason) {
     throw new Error("give --reason=\"...\" -- what made this row drop out, in the applicant's words");
   }
   const db = lib.openPacket();
-  const row = db
-    .prepare(
-      `SELECT row_uid, status, screen_reason, screen_date, citing_title FROM citation WHERE row_uid = ?`
-    )
-    .get(rowUid);
-  if (!row) throw new Error(`${rowUid} is not a row in the packet database`);
-  const target = RESTORE ? "held" : "screened-out";
-  if (row.status === "included" && !RESTORE) {
-    throw new Error(
-      `${rowUid} is IN THE PACKET. Take it out with the packet tooling first; ` +
-        `screening it here would hide a filed exhibit's row.`
-    );
-  }
   const today = new Date().toISOString().slice(0, 10);
+  const target = RESTORE ? "held" : "screened-out";
   const newReason = RESTORE ? null : `Applicant directed this be ignored (${today}): ${reason}`;
 
-  console.log(`${rowUid}  ${row.status} -> ${target}`);
-  console.log(`  ${row.citing_title}`);
-  console.log(`  reason was: ${row.screen_reason || "(none)"}`);
-  console.log(`  reason now: ${newReason || "(cleared)"}`);
-  const files = db
-    .prepare(`SELECT file, role FROM file WHERE folder_uid = ?`)
-    .all(rowUid);
-  if (files.length) {
-    console.log(`  ${files.length} PDF on file: ${files.map((f) => f.file).join(", ")}`);
-    console.log(`  run scripts/relocate-pdfs.js --write to move the folder to the screened root`);
+  // Validate the whole batch before touching anything: half a screen applied
+  // is worse than none, and an included row must never be screened here.
+  const getByUid = db.prepare(
+    `SELECT row_uid, status, screen_reason, citing_title FROM citation WHERE row_uid = ?`
+  );
+  const seen = new Set();
+  const targets = [];
+  for (const uid of uids) {
+    if (seen.has(uid)) continue;
+    seen.add(uid);
+    const row = getByUid.get(uid);
+    if (!row) throw new Error(`${uid} is not a row in the packet database`);
+    if (row.status === "included" && !RESTORE) {
+      throw new Error(
+        `${uid} IS IN THE PACKET. Take it out with the packet tooling first; ` +
+          `screening it here would hide a filed exhibit's row.`
+      );
+    }
+    targets.push(row);
+  }
+
+  const filesFor = db.prepare(`SELECT file, role FROM file WHERE folder_uid = ?`);
+  for (const row of targets) {
+    console.log(`${row.row_uid}  ${row.status} -> ${target}`);
+    console.log(`  ${row.citing_title}`);
+    console.log(`  reason was: ${row.screen_reason || "(none)"}`);
+    console.log(`  reason now: ${newReason || "(cleared)"}`);
+    const files = filesFor.all(row.row_uid);
+    if (files.length) {
+      console.log(`  ${files.length} PDF on file: ${files.map((f) => f.file).join(", ")}`);
+    }
+  }
+  if (targets.length && filesFor.all(targets[0].row_uid).length) {
+    console.log(`run scripts/relocate-pdfs.js --write to move the folders to the screened root`);
   }
   if (!WRITE) {
-    console.log("\nDRY RUN -- nothing written. Re-run with --write.");
+    console.log(`\nDRY RUN -- nothing written (${targets.length} row(s)). Re-run with --write.`);
     return;
   }
   const backup = PACKET_DB.replace(/\.sqlite$/, `.pre-set-screen-${today}.bak`);
   fs.copyFileSync(PACKET_DB, backup);
   console.log(`\nBacked up: ${path.basename(backup)}`);
-  db.prepare(
+  const updCitation = db.prepare(
     `UPDATE citation SET status = ?, screen_reason = ?, screen_date = ? WHERE row_uid = ?`
-  ).run(target, newReason, RESTORE ? null : today, rowUid);
+  );
   // The candidate table is the discovery queue; leaving it 'unscreened' would
   // hand the same row back to the next reader as open work.
-  const cand = db
-    .prepare(`UPDATE candidate SET screen_state = ? WHERE row_uid = ?`)
-    .run(RESTORE ? "held" : "screened-out", rowUid);
-  if (cand.changes) console.log(`Candidate row marked ${RESTORE ? "held" : "screened-out"}.`);
-  const after = db
-    .prepare(`SELECT status, screen_reason FROM citation WHERE row_uid = ?`)
-    .get(rowUid);
-  console.log(`Committed: ${after.status}${after.screen_reason ? " -- " + after.screen_reason : ""}`);
+  const updCandidate = db.prepare(`UPDATE candidate SET screen_state = ? WHERE row_uid = ?`);
+  db.exec("BEGIN");
+  try {
+    for (const row of targets) {
+      updCitation.run(target, newReason, RESTORE ? null : today, row.row_uid);
+      updCandidate.run(RESTORE ? "held" : "screened-out", row.row_uid);
+    }
+    db.exec("COMMIT");
+  } catch (e) {
+    db.exec("ROLLBACK");
+    throw e;
+  }
+  const after = db.prepare(`SELECT status, screen_reason FROM citation WHERE row_uid = ?`);
+  for (const row of targets) {
+    const a = after.get(row.row_uid);
+    console.log(`${row.row_uid}: ${a.status}${a.screen_reason ? " -- " + a.screen_reason : ""}`);
+  }
   const pool = lib.potentialIndependent(lib.openCatalog(), db, "5446863664671350528");
+  const still = targets.filter((r) => pool.rows.some((p) => p.row_uid === r.row_uid));
   console.log(
-    `Potential pool now ${pool.rows.length}; this row ` +
-      (pool.rows.some((r) => r.row_uid === rowUid) ? "is STILL on the page" : "is off the page")
+    `Potential pool now ${pool.rows.length}; ${still.length} of ${targets.length} screened row(s) ` +
+      (still.length ? "STILL on the page: " + still.map((r) => r.row_uid).join(", ") : "left the page")
   );
 }
 
