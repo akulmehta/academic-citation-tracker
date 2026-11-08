@@ -20,6 +20,7 @@
 const fs = require("fs");
 const path = require("path");
 const { execFileSync } = require("child_process");
+const lib = require("./lib.js");
 
 const argv = process.argv.slice(2);
 const opt = n => (argv.find(a => a.startsWith(`--${n}=`)) || "").split("=").slice(1).join("=") || null;
@@ -110,17 +111,29 @@ function pdfProof(ev) {
 }
 
 const groups = new Map();
-// A row already screened-out carries the reason a person wrote for it. Re-running
-// the report over a work must not overwrite that with bulk prose: on 2026-11-08 a
-// GLAD re-sweep replaced two concise thesis reasons with the evidence sentence.
-const alreadyScreened = rows.filter(r => /^SECONDARY/.test(r.verdict) && r.status !== "held");
-if (alreadyScreened.length) {
-  console.log(`\n${alreadyScreened.length} row(s) already screened-out, left alone (their reason stands): ` +
-    alreadyScreened.map(r => r.uid).join(" "));
+// A row already screened-out carries the reason a person wrote for it, so a
+// re-sweep must confirm that screen, never restate it. The status printed in the
+// log is `candidate.screen_state`, which is a snapshot taken when the row was
+// seeded and lags: measured 2026-11-08, 54 rows are screened-out in `citation`
+// while their candidate row still reads 'held', and 5 held rows read
+// 'unscreened'. Filtering on the log column therefore both skips live work and
+// re-offers decided work. Ask the packet database, which is the authority.
+const statusOf = (() => {
+  const db = lib.openPacket();
+  const q = db.prepare("SELECT status FROM citation WHERE row_uid = ?");
+  return (uid) => {
+    const r = q.get(uid);
+    return r ? r.status : null; // null = not (yet) a citation row
+  };
+})();
+const decided = rows.filter(r => /^SECONDARY/.test(r.verdict) && statusOf(r.uid) === "screened-out");
+if (decided.length) {
+  console.log(`\n${decided.length} row(s) already screened-out, left alone (their reason stands): ` +
+    decided.map(r => r.uid).join(" "));
 }
 for (const r of rows) {
   if (!/^SECONDARY/.test(r.verdict)) continue;
-  if (r.status !== "held") continue;
+  if (statusOf(r.uid) !== "held") continue;
   const routes = secondaryRoutes(r.ev);
   // Two routes, or the article itself. One route is not proof (§1.2).
   if (routes.length < 2 && !pdfProof(r.ev)) continue;
@@ -145,5 +158,5 @@ for (const [routes, uids] of [...groups.entries()].sort((a, b) => b[1].length - 
   }
 }
 console.log(`\n${total} of ${rows.length} rows carry proof strong enough to screen${APPLY ? " (applied)" : " — re-run with --apply"}.`);
-const thin = rows.filter(r => r.status === "held" && /^SECONDARY/.test(r.verdict) && secondaryRoutes(r.ev).length < 2 && !pdfProof(r.ev));
+const thin = rows.filter(r => /^SECONDARY/.test(r.verdict) && statusOf(r.uid) === "held" && secondaryRoutes(r.ev).length < 2 && !pdfProof(r.ev));
 if (thin.length) console.log(`${thin.length} row(s) labelled SECONDARY on one route only, left held: ${thin.map(r => r.uid).join(" ")}`);
