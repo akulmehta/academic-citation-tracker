@@ -1,0 +1,102 @@
+[
+  {
+    "row_uid": "cit-000092",
+    "mentions": [
+      {
+        "section": "Introduction",
+        "tier": "C",
+        "page": "7",
+        "quote": "cleavage through allostery and compete with glycoprotein Iba to reduce platelet activation [44].",
+        "use_type": null,
+        "basis": "reference-number resolution",
+        "verified": 0,
+        "note": "cited as bracketed: [44]"
+      }
+    ]
+  },
+  {
+    "row_uid": "cit-000108",
+    "mentions": [
+      {
+        "section": "Introduction",
+        "tier": "C",
+        "page": "5",
+        "quote": "delivery (40), antioxidant properties (41, 42), anticoagulation properties (43), enhanced",
+        "use_type": null,
+        "basis": "reference-number resolution",
+        "verified": 0,
+        "note": "cited as bracketed: (43)"
+      }
+    ]
+  },
+  {
+    "row_uid": "cit-000112",
+    "mentions": [
+      {
+        "section": "Introduction",
+        "tier": "C",
+        "page": "6",
+        "quote": "sulfated β-O4 lignin (SbO4L) [23 ].",
+        "use_type": null,
+        "basis": "reference-number resolution",
+        "verified": 0,
+        "note": "cited as bracketed: [23 ]"
+      }
+    ]
+  },
+  {
+    "row_uid": "cit-000116",
+    "mentions": [
+      {
+        "section": "Introduction",
+        "tier": "C",
+        "page": "2",
+        "quote": "obtain bioactive derivatives [11– 13 ].",
+        "use_type": null,
+        "basis": "reference-number resolution",
+        "verified": 0,
+        "note": "cited as bracketed jointly with 12, 13: [11– 13 ]"
+      },
+      {
+        "section": "Results",
+        "tier": "B",
+        "page": "9",
+        "quote": "fragments of the initial and sulfated birch ethanol lignins are presented in Figure 11.",
+        "use_type": null,
+        "basis": "reference-number resolution",
+        "verified": 0,
+        "note": "cited as bare number: 11"
+      },
+      {
+        "section": "Results",
+        "tier": "B",
+        "page": "9",
+        "quote": "ments are shown in Figure 11.",
+        "use_type": null,
+        "basis": "reference-number resolution",
+        "verified": 0,
+        "note": "cited as bare number: 11"
+      },
+      {
+        "section": "Results",
+        "tier": "B",
+        "page": "10",
+        "quote": "units and fragments are shown in Figure 11.",
+        "use_type": null,
+        "basis": "reference-number resolution",
+        "verified": 0,
+        "note": "cited as bare number: 11"
+      },
+      {
+        "section": "Results",
+        "tier": "B",
+        "page": "10",
+        "quote": "fragments are shown in Figure 11.",
+        "use_type": null,
+        "basis": "reference-number resolution",
+        "verified": 0,
+        "note": "cited as bare number: 11"
+      }
+    ]
+  }
+]
