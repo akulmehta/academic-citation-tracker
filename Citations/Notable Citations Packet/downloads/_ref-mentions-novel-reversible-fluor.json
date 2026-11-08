@@ -1,0 +1,17 @@
+[
+  {
+    "row_uid": "cit-001090",
+    "mentions": [
+      {
+        "section": "Introduction",
+        "tier": "C",
+        "page": "7",
+        "quote": "(Wei et al., 2019).",
+        "use_type": null,
+        "basis": "reference-number resolution",
+        "verified": 0,
+        "note": "author-year citation on surname + year alone: (Wei et al., 2019) — read it before relying on it"
+      }
+    ]
+  }
+]
