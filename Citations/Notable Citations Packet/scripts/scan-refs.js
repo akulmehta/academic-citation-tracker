@@ -51,6 +51,10 @@ const opt = name => {
 };
 const ONLY_FOLDER = opt("folder");
 const ONLY_ROW = opt("row");
+// Scope a sweep to one cited work. Without it, working a newly-seeded publication
+// meant re-resolving every other work's folders, and a run that touches 200 folders
+// to answer a question about 40 of them hides its own result in noise.
+const ONLY_CITES = opt("cites");
 const JSON_OUT = opt("json");
 const MENTIONS_OUT = opt("mentions");
 const VERBOSE = argv.includes("--verbose");
@@ -362,8 +366,12 @@ async function main() {
   const folders = ONLY_FOLDER
     ? [ONLY_FOLDER]
     : db.prepare(`SELECT DISTINCT folder_uid FROM file WHERE cited=1 ORDER BY folder_uid`).all().map(r => r.folder_uid);
+  const scoped = ONLY_CITES
+    ? folders.filter(f => db.prepare("SELECT 1 FROM citation WHERE folder_uid=? AND cites_id=? LIMIT 1").get(f, ONLY_CITES))
+    : folders;
+  if (ONLY_CITES) console.log(`scoped to cited work ${ONLY_CITES}: ${scoped.length} of ${folders.length} folder(s).`);
   const picked = [];
-  for (const f of folders) {
+  for (const f of scoped) {
     if (ONLY_ROW && !db.prepare("SELECT 1 FROM citation WHERE folder_uid=? AND row_uid=?").get(f, ONLY_ROW)) continue;
     picked.push(f);
   }

@@ -1,0 +1,462 @@
+[
+  {
+    "row_uid": "cit-000666",
+    "mentions": [
+      {
+        "section": "Results",
+        "tier": "B",
+        "page": "2",
+        "quote": "possesses 26 glycosylation sites (22 N- and 4 O-glycosylation sites)31.",
+        "use_type": null,
+        "basis": "reference-number resolution",
+        "verified": 0,
+        "note": "cited as superscript: 31"
+      },
+      {
+        "section": "Results",
+        "tier": "B",
+        "page": "3",
+        "quote": "(21–26); green, blood group H antigens (27–32); blue, sulfated compounds (34–38) and HS oligosaccharides (39–41); light blue, antigen-related glycans",
+        "use_type": null,
+        "basis": "reference-number resolution",
+        "verified": 0,
+        "note": "cited as bracketed jointly with 27, 28, 29, 30, 32: (27–32)"
+      },
+      {
+        "section": "Methods",
+        "tier": "A",
+        "page": "11",
+        "quote": "Glycans 15–32,",
+        "use_type": null,
+        "basis": "reference-number resolution",
+        "verified": 0,
+        "note": "cited as bare number jointly with 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 32: 15–32"
+      },
+      {
+        "section": "Acknowledgements",
+        "tier": "D",
+        "page": "17",
+        "quote": "group A antigens (15–20); orange - blood group B antigens (21–26); green - blood group H antigens (27–32); blue - sulfated compounds (34–38) and HS",
+        "use_type": null,
+        "basis": "reference-number resolution",
+        "verified": 0,
+        "note": "cited as bracketed jointly with 27, 28, 29, 30, 32: (27–32)"
+      }
+    ]
+  },
+  {
+    "row_uid": "cit-000696",
+    "mentions": [
+      {
+        "section": "Methods",
+        "tier": "A",
+        "page": "9",
+        "quote": "Five datasets from the GlyGen data website 52,53 were chosen based on",
+        "use_type": null,
+        "basis": "reference-number resolution",
+        "verified": 0,
+        "note": "cited as superscript jointly with 53: 52,53"
+      }
+    ]
+  },
+  {
+    "row_uid": "cit-000704",
+    "mentions": [
+      {
+        "section": "Methods",
+        "tier": "A",
+        "page": "24",
+        "quote": "file 2: Table S5 [26, 46, 47, 67, 69, 74, 76, 77, 80, 81, 83, 88–92].",
+        "use_type": null,
+        "basis": "reference-number resolution",
+        "verified": 0,
+        "note": "cited as bracketed jointly with 26, 46, 47, 67, 69, 74, 76, 77, 80, 81, 83, 88, 89, 90, 91: [26, 46, 47, 67, 69, 74, 76, 77, 80, 81, 83, 88–92]"
+      }
+    ]
+  },
+  {
+    "row_uid": "cit-000706",
+    "mentions": [
+      {
+        "section": "Introduction",
+        "tier": "C",
+        "page": "13",
+        "quote": "These portals are GlyGen [ 165 ]",
+        "use_type": null,
+        "basis": "reference-number resolution",
+        "verified": 0,
+        "note": "cited as bracketed: [ 165 ]"
+      }
+    ]
+  },
+  {
+    "row_uid": "cit-000707",
+    "mentions": [
+      {
+        "section": "Introduction",
+        "tier": "C",
+        "page": "1",
+        "quote": "[24], UniCarb-DR [25], GlyGen [26], Glycomics@ExPASy",
+        "use_type": null,
+        "basis": "reference-number resolution",
+        "verified": 0,
+        "note": "cited as bracketed: [26]"
+      },
+      {
+        "section": "Introduction",
+        "tier": "C",
+        "page": "2",
+        "quote": "USA) [26], Glycomics@ExPASy (in Switzerland) [27], and",
+        "use_type": null,
+        "basis": "reference-number resolution",
+        "verified": 0,
+        "note": "cited as bracketed: [26]"
+      }
+    ]
+  },
+  {
+    "row_uid": "cit-000715",
+    "mentions": [
+      {
+        "section": "Methods",
+        "tier": "A",
+        "page": "3",
+        "quote": "onset was 20 (6-39) months.",
+        "use_type": null,
+        "basis": "reference-number resolution",
+        "verified": 0,
+        "note": "cited as bracketed jointly with 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39: (6-39)"
+      },
+      {
+        "section": "Methods",
+        "tier": "A",
+        "page": "4",
+        "quote": "(27).",
+        "use_type": null,
+        "basis": "reference-number resolution",
+        "verified": 0,
+        "note": "cited as bracketed: (27)"
+      },
+      {
+        "section": "Results",
+        "tier": "B",
+        "page": "5",
+        "quote": "occupied by N-linked glycans (27), and are further supported by",
+        "use_type": null,
+        "basis": "reference-number resolution",
+        "verified": 0,
+        "note": "cited as bracketed: (27)"
+      }
+    ]
+  },
+  {
+    "row_uid": "cit-000722",
+    "mentions": [
+      {
+        "section": "Introduction",
+        "tier": "C",
+        "page": "6",
+        "quote": "portal (https:// www. glygen. org/) [47] currently includes",
+        "use_type": null,
+        "basis": "reference-number resolution",
+        "verified": 0,
+        "note": "cited as bracketed: [47]"
+      }
+    ]
+  },
+  {
+    "row_uid": "cit-000731",
+    "mentions": [
+      {
+        "section": "Introduction",
+        "tier": "C",
+        "page": "2",
+        "quote": "Figure 1) (34, 35).",
+        "use_type": null,
+        "basis": "reference-number resolution",
+        "verified": 0,
+        "note": "cited as bracketed jointly with 35: (34, 35)"
+      }
+    ]
+  },
+  {
+    "row_uid": "cit-000741",
+    "mentions": [
+      {
+        "section": "Methods",
+        "tier": "A",
+        "page": "21",
+        "quote": "(swisspalm.org) and YAAM (http://yaam.ifc.unam.mx) databases [139–145].",
+        "use_type": null,
+        "basis": "reference-number resolution",
+        "verified": 0,
+        "note": "cited as bracketed jointly with 140, 141, 142, 143, 144, 145: [139–145]"
+      }
+    ]
+  },
+  {
+    "row_uid": "cit-000744",
+    "mentions": [
+      {
+        "section": "Results",
+        "tier": "B",
+        "page": "3",
+        "quote": "Leveraging the wealth of proteomic data, we queried the glyco- sites identified in our study against previously reported glycosylation sites in GlyGen",
+        "use_type": null,
+        "basis": "reference-number resolution",
+        "verified": 0,
+        "note": "cited as orphan superscript line: 39"
+      }
+    ]
+  },
+  {
+    "row_uid": "cit-000750",
+    "mentions": [
+      {
+        "section": "Introduction",
+        "tier": "C",
+        "page": "5",
+        "quote": "[27], and GlyGen [32], are specific for glycans and pro-",
+        "use_type": null,
+        "basis": "reference-number resolution",
+        "verified": 0,
+        "note": "cited as bracketed: [32]"
+      }
+    ]
+  },
+  {
+    "row_uid": "cit-000757",
+    "mentions": [
+      {
+        "section": "Methods",
+        "tier": "A",
+        "page": "13",
+        "quote": "in the GlyGen glycan reference database [24].",
+        "use_type": null,
+        "basis": "reference-number resolution",
+        "verified": 0,
+        "note": "cited as bracketed: [24]"
+      }
+    ]
+  },
+  {
+    "row_uid": "cit-000767",
+    "mentions": [
+      {
+        "section": "Methods",
+        "tier": "A",
+        "page": "2",
+        "quote": "glygen.org/) [12], GlyConnect (annotated with “L”, a",
+        "use_type": null,
+        "basis": "reference-number resolution",
+        "verified": 0,
+        "note": "cited as bracketed: [12]"
+      }
+    ]
+  },
+  {
+    "row_uid": "cit-000780",
+    "mentions": [
+      {
+        "section": "Methods",
+        "tier": "A",
+        "page": "14",
+        "quote": "in-house script that searched for possible compositions in the GlyGen database [ 54].",
+        "use_type": null,
+        "basis": "reference-number resolution",
+        "verified": 0,
+        "note": "cited as bracketed: [ 54]"
+      }
+    ]
+  },
+  {
+    "row_uid": "cit-000795",
+    "mentions": [
+      {
+        "section": "Introduction",
+        "tier": "C",
+        "page": "2",
+        "quote": "both GlyToucan and GlyGen [11] databases.",
+        "use_type": null,
+        "basis": "reference-number resolution",
+        "verified": 0,
+        "note": "cited as bracketed: [11]"
+      },
+      {
+        "section": "Discussion",
+        "tier": "C",
+        "page": "10",
+        "quote": "(11) Added customised motifs.",
+        "use_type": null,
+        "basis": "reference-number resolution",
+        "verified": 0,
+        "note": "cited as bracketed: (11)"
+      },
+      {
+        "section": "Discussion",
+        "tier": "C",
+        "page": "11",
+        "quote": "(11) Added customised motifs.",
+        "use_type": null,
+        "basis": "reference-number resolution",
+        "verified": 0,
+        "note": "cited as bracketed: (11)"
+      }
+    ]
+  },
+  {
+    "row_uid": "cit-000799",
+    "mentions": [
+      {
+        "section": "Results",
+        "tier": "B",
+        "page": "13",
+        "quote": "this will need to be confirmed by additional studies. (54) The 70 kDa band was minimal or absent",
+        "use_type": null,
+        "basis": "reference-number resolution",
+        "verified": 0,
+        "note": "cited as bracketed: (54)"
+      }
+    ]
+  },
+  {
+    "row_uid": "cit-000802",
+    "mentions": [
+      {
+        "section": "Methods",
+        "tier": "A",
+        "page": "4",
+        "quote": "ing to GlyGen (https://glygen.org) [20], UniProt [18], and",
+        "use_type": null,
+        "basis": "reference-number resolution",
+        "verified": 0,
+        "note": "cited as bracketed: [20]"
+      }
+    ]
+  },
+  {
+    "row_uid": "cit-000804",
+    "mentions": [
+      {
+        "section": "Discussion",
+        "tier": "C",
+        "page": "11",
+        "quote": "database [51 ].",
+        "use_type": null,
+        "basis": "reference-number resolution",
+        "verified": 0,
+        "note": "cited as bracketed: [51 ]"
+      },
+      {
+        "section": "Discussion",
+        "tier": "C",
+        "page": "11",
+        "quote": "structure repository [51].",
+        "use_type": null,
+        "basis": "reference-number resolution",
+        "verified": 0,
+        "note": "cited as bracketed: [51]"
+      },
+      {
+        "section": "Methods",
+        "tier": "A",
+        "page": "14",
+        "quote": "lation in the GlyGen database [51].",
+        "use_type": null,
+        "basis": "reference-number resolution",
+        "verified": 0,
+        "note": "cited as bracketed: [51]"
+      }
+    ]
+  },
+  {
+    "row_uid": "cit-000832",
+    "mentions": [
+      {
+        "section": "Introduction",
+        "tier": "C",
+        "page": "4",
+        "quote": "Despite significant progress in cataloging covalent modifications in Pol II",
+        "use_type": null,
+        "basis": "reference-number resolution",
+        "verified": 0,
+        "note": "cited as orphan superscript line jointly with 37, 38, 39, 41: 37–41"
+      },
+      {
+        "section": "Results",
+        "tier": "B",
+        "page": "13",
+        "quote": ". Experimentally, across the entire 12-subunit human RNA Pol II complex proteomics/PTM resources report on the order of ~120 distinct ubiquitinated residues in total",
+        "use_type": null,
+        "basis": "reference-number resolution",
+        "verified": 0,
+        "note": "cited as orphan superscript line jointly with 37, 38, 39, 41: 37–41"
+      },
+      {
+        "section": "Methods",
+        "tier": "A",
+        "page": "39",
+        "quote": ".CC-BY 4.0 International licensemade available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is The copyright holder for this preprintthis version posted June 29, 2026.;https://doi.org/10.64898/2026.06.27.734958doi:bioRxiv preprint",
+        "use_type": null,
+        "basis": "reference-number resolution",
+        "verified": 0,
+        "note": "cited as orphan superscript line: 40"
+      }
+    ]
+  },
+  {
+    "row_uid": "cit-000833",
+    "mentions": [
+      {
+        "section": "Methods",
+        "tier": "A",
+        "page": "18",
+        "quote": "annotations were constructed by integrating glycan–PMID associations obtained from372 GlyGen",
+        "use_type": null,
+        "basis": "reference-number resolution",
+        "verified": 0,
+        "note": "cited as orphan superscript line: 49"
+      }
+    ]
+  },
+  {
+    "row_uid": "cit-000843",
+    "mentions": [
+      {
+        "section": "Introduction",
+        "tier": "C",
+        "page": "2",
+        "quote": "Existing resources provide enzyme–reaction knowledge (York et al. 2020; Zhou et al. 2025),",
+        "use_type": null,
+        "basis": "reference-number resolution",
+        "verified": 0,
+        "note": "author-year citation on surname + year alone: (York et al. 2020; Zhou et al. 2025) — read it before relying on it"
+      }
+    ]
+  },
+  {
+    "row_uid": "cit-000847",
+    "mentions": [
+      {
+        "section": "Results",
+        "tier": "B",
+        "page": "28",
+        "quote": "Ser911, Thr950, Thr952, Thr980 [102–104]), with an estimated glycosylation contribution",
+        "use_type": null,
+        "basis": "reference-number resolution",
+        "verified": 0,
+        "note": "cited as bracketed jointly with 102, 103: [102–104]"
+      },
+      {
+        "section": "Methods",
+        "tier": "A",
+        "page": "105",
+        "quote": "On the next day, the medium was removed and 50 μL of non-purified vector supernatant dilutions were added to each well. Two h after vector addition, 150 μL of fresh medium was added.",
+        "use_type": null,
+        "basis": "reference-number resolution",
+        "verified": 0,
+        "note": "cited as orphan superscript line: 104"
+      }
+    ]
+  }
+]
