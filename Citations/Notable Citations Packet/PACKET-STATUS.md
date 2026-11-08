@@ -16,19 +16,19 @@ decision that only a person can make.
 | Citations in the packet (in `packet.html`) | 22 |
 | Works those citations are filed as (§5.1 folders) | 14 |
 | PDFs filed under `papers/` (in the packet) | 16 |
-| PDFs under `pending-papers/` (awaiting a decision) | 105 |
+| PDFs under `pending-papers/` (awaiting a decision) | 107 |
 | PDFs under `screened-papers/` (kept, not filed) | 42 |
-| Held — open items, listed below | 538 |
-| Screened out — decided, kept for the record (§4.5) | 175 |
-| **Rows in table `citation`** | **735** |
+| Held — open items, listed below | 561 |
+| Screened out — decided, kept for the record (§4.5) | 180 |
+| **Rows in table `citation`** | **763** |
 
-`packet.csv` holds the 22 included rows. `screened-out.csv` holds the other 713,
+`packet.csv` holds the 22 included rows. `screened-out.csv` holds the other 741,
 because §4.5 exports `screened-out` and `held` together — counsel is entitled to see that the
 work was screened and on what grounds. A screened-out row is not missing work: it is the
 record of what was looked at and rejected, with the reason beside it. A held row is open, and
 every held row appears in §2 below.
 
-## 2. Held rows — 538 open items
+## 2. Held rows — 561 open items
 
 
 ### 2.1 `read` — 17 row(s)
@@ -55,16 +55,18 @@ The PDF is filed and the applicant's tool appears in a section of the paper. Wha
 | `cit-000614` | GlycoGlyph | 2026 | Subramaniam | Loss of α2, 3-linked sialoside in the receptor-binding site of a H5N1 influ… | [open](https://www.biorxiv.org/content/10.64898/2026.01.19.700419.abstract) |
 | `cit-000633` | GlycoGlyph | 2026 | Schäfer | Engineering Functional CLA-Targeting CAR Approaches for Pancreatic Ductal A… | [open](https://www.biorxiv.org/content/10.64898/2026.07.03.736395.abstract) |
 
-### 2.2 `unread` — 87 row(s)
+### 2.2 `unread` — 89 row(s)
 
 The PDF is filed. Nobody has read it yet.
 
 | row_uid | tool | year | senior author | citing title | link |
 |---|---|---|---|---|---|
+| `cit-000171` | — | 2015 | Clement | Structure-Based Design, Synthesis and Evaluation of Novel Peptidic Inhibito… | [open](https://www.researchgate.net/profile/Anna-Babinska-2/publication/299917863_Structure-Based_Design_Synthesis_and_Evaluation_of_Novel_Peptidic_Inhibitors_of_Thrombin-Induced_Activation_of_Platelets_Aggregation/links/572a174908ae057b0a0788b5/Structure-Based-Design-Synthesis-and-Evaluation-of-Novel-Peptidic-Inhibitors-of-Thrombin-Induced-Activation-of-Platelets-Aggregation.pdf) |
 | `cit-000129` | — | 2016 | Tiuca | Biochemistry and Stereochemistry of Anticoagulants | [open](https://www.intechopen.com/chapters/51710) |
 | `cit-000330` | — | 2016 | Minond | Discovery of an enzyme and substrate selective inhibitor of ADAM10 using an… | [open](https://www.nature.com/articles/s41598-016-0013-4) |
 | `cit-000006` | — | 2017 | Sheffield | Selection and characterization of a DNA aptamer inhibiting coagulation fact… | [open](https://www.nature.com/articles/s41598-017-02055-x) |
 | `cit-000053` | — | 2018 | Stuppner | Phytochemical and Analytical Characterization of Novel Sulfated Coumarins i… | [open](https://www.mdpi.com/1420-3049/23/11/2735) |
+| `cit-000151` | — | 2018 | González-Olivares | Antithrombotic activity of milk protein hydrolysates by lactic acid bacteri… | [open](https://www.scielo.br/j/babt/a/x8bJyKsjdnXvKXPLHSHRtJj/?lang=en) |
 | `cit-000050` | — | 2020 | Srinivasan | Explicit treatment of non‐Michaelis‐Menten and atypical kinetics in early d… | [open](https://chemistry-europe.onlinelibrary.wiley.com/doi/abs/10.1002/cmdc.202000791) |
 | `cit-000217` | — | 2020 | Ellström | Revealing interspecies transmission barriers of avian influenza A viruses | [open](https://www.biorxiv.org/content/10.1101/2020.11.17.386755.abstract) |
 | `cit-000623` | GlycoGlyph | 2020 | Lewis | A consensus-based and readable extension of Linear Code for Reaction Rules … | [open](https://www.beilstein-journals.org/bjoc/articles/16/215) |
@@ -165,7 +167,7 @@ The PDF is filed, but the extracted text does not support a use in any section �
 | `cit-001517` | — | 2024 | Narimatsu | Mammalian cell-based production of glycans, glycopeptides and glycomodules | [open](https://www.nature.com/articles/s41467-024-53738-9) |
 | `cit-000605` | GlycoGlyph | 2025 | Kontoravdi | GlyCompute: towards the automated analysis of protein N-linked glycosylatio… | [open](https://link.springer.com/article/10.1007/s00216-024-05522-3) |
 
-### 2.4 `paywalled` — 87 row(s)
+### 2.4 `paywalled` — 89 row(s)
 
 A copy exists behind a paywall. If the applicant can obtain the PDF through an institution, drop it in the folder and the row can be read.
 
@@ -184,8 +186,10 @@ A copy exists behind a paywall. If the applicant can obtain the PDF through an i
 | `cit-001370` | — | 2014 | Melnyk | Thiocarbamate-Linked Polysulfonate–Peptide Conjugates As Selective Hepatocy… | [open](https://pmc.ncbi.nlm.nih.gov/articles/PMC4064695/) |
 | `cit-000357` | — | 2015 | Yurttacs | Synthesis and biological evaluation of some dibenzofuran-piperazine derivat… | [open](https://www.tandfonline.com/doi/abs/10.3109/14756366.2015.1108971) |
 | `cit-001192` | — | 2015 | Yurttacs | Synthesis and biological evaluation of some dibenzofuran-piperazine derivat… | [open](https://www.tandfonline.com/doi/abs/10.3109/14756366.2015.1108971) |
+| `cit-000147` | — | 2016 | Scilingo | Amaranth peptides with antithrombotic activity released by simulated gastro… | [open](https://www.sciencedirect.com/science/article/pii/S1756464615005125) |
 | `cit-000085` | — | 2018 | Schöneweiß | Reconfigurable DNA-nanochambers as dynamic compartmentalization systems | [open](https://duepublico2.uni-due.de/servlets/MCRFileNodeServlet/duepublico_derivate_00045482/Diss_Schoeneweiss.pdf) |
 | `cit-000139` | — | 2018 | Billur | Biophysical exploration of conformational environments in zymogen prothromb… | [open](https://ir.library.louisville.edu/etd/2904/) |
+| `cit-000160` | — | 2018 | Barberis | Enzymatic and chemical synthesis of new anticoagulant peptides | [open](https://aiche.onlinelibrary.wiley.com/doi/abs/10.1002/btpr.2658) |
 | `cit-001211` | — | 2018 | — | Biophysical exploration of conformational environments in zymogen prothromb… | [open](https://ir.library.louisville.edu/etd/2904/) |
 | `cit-000003` | — | 2019 | Wilmen | Allosteric inhibition as a new mode of action for BAY 1213790, a neutralizi… | [open](https://www.sciencedirect.com/science/article/pii/S0022283619305625) |
 | `cit-000051` | — | 2019 | Sousa | Allosteric inhibition of α-thrombin enzymatic activity with ultrasmall gold… | [open](https://pubs.rsc.org/na/article-abstract/1/1/378/607990) |
@@ -259,7 +263,7 @@ A copy exists behind a paywall. If the applicant can obtain the PDF through an i
 | `cit-000512` | GLAD | — | Aoki-Kinoshita | Worldwide glycoscience informatics infrastructure: the GlySpace Alliance | [open](https://pubs.acs.org/jaaucr/article-abstract/3/1/4/1253251) |
 | `cit-000556` | GLAD | — | — | Phenotyping murine and human platelet-derived extracellular vesicles gives … | [open](https://www.rpthjournal.org/cms/10.1016/j.rpth.2026.103414/attachment/5e1ef181-290b-47ad-a0b6-2820746565cf/mmc1.pdf) |
 
-### 2.5 `no-open-copy` — 248 row(s)
+### 2.5 `no-open-copy` — 261 row(s)
 
 No openly accessible copy was found. The publisher's landing page is given so the applicant can check institutional access.
 
@@ -278,6 +282,8 @@ No openly accessible copy was found. The publisher's landing page is given so th
 | `cit-001227` | — | 2013 | — | Interazioni tra acidi nucleici, proteine e potenziali farmaci antitumorali:… | [open](https://tesidottorato.depositolegale.it/handle/20.500.14242/338305) |
 | `cit-001386` | — | 2013 | Sankar | Newer Oral Anticoagulants | [open](https://link.springer.com/chapter/10.1007/978-1-4614-9560-4_16) |
 | `cit-000019` | — | 2014 | — | Phenylimidazoles as potent and selective inhibitors of coagulation factor X… | [open](https://pubs.acs.org/doi/abs/10.1021/jm5010607) |
+| `cit-000148` | — | 2014 | Mukherjee | A new peptide (Ruviprase) purified from the venom of Daboia russelii russel… | [open](https://www.sciencedirect.com/science/article/pii/S0300908414001849) |
+| `cit-000157` | — | 2014 | Huang | Graphene oxide modified with aptamer-conjugated gold nanoparticles and hepa… | [open](https://pubs.rsc.org/bm/article-abstract/2/10/1332/425767) |
 | `cit-000359` | — | 2014 | — | Polyglycine hydrolases secreted by Pleosporineae fungi that target the link… | [open](https://portlandpress.com/biochemj/article-abstract/460/2/187/46671) |
 | `cit-000378` | — | 2014 | — | Studies on rationally designed, allosteric, coagulation inhibitors | [open](https://search.proquest.com/openview/1e39143b98382b38c71074a9313f8722/1?pq-origsite=gscholar&cbl=18750) |
 | `cit-001217` | — | 2014 | — | Studies on rationally designed, allosteric, coagulation inhibitors | [open](https://search.proquest.com/openview/1e39143b98382b38c71074a9313f8722/1?pq-origsite=gscholar&cbl=18750) |
@@ -296,6 +302,7 @@ No openly accessible copy was found. The publisher's landing page is given so th
 | `cit-000062` | — | 2016 | De Filippis | Molecular mapping of α-thrombin (αT)/β2-glycoprotein I (β2GpI) interaction … | [open](https://portlandpress.com/biochemj/article-abstract/473/24/4629/49339) |
 | `cit-000072` | — | 2016 | Konermann | Evidence of allosteric enzyme regulation via changes in conformational dyna… | [open](https://pubs.acs.org/doi/abs/10.1021/acs.biochem.6b00764) |
 | `cit-000141` | — | 2016 | Stephen | Probing allosteric, partial inhibition of thrombin using novel anticoagulan… | [open](https://search.proquest.com/openview/197f86fac0d2accd9f82fc809da0fdaa/1?pq-origsite=gscholar&cbl=18750&diss=y) |
+| `cit-000158` | — | 2016 | Cai | Rapid magnetic solid-phase extraction combined with ultra-high performance … | [open](https://pubs.rsc.org/ra/article-abstract/6/41/34782/535194) |
 | `cit-000363` | — | 2016 | — | A glassy carbon electrode modified with in-situ generated chromium-loaded C… | [open](https://link.springer.com/article/10.1007/s00604-015-1611-8) |
 | `cit-000376` | — | 2016 | — | Probing allosteric, partial inhibition of thrombin using novel anticoagulan… | [open](https://search.proquest.com/openview/197f86fac0d2accd9f82fc809da0fdaa/1?pq-origsite=gscholar&cbl=18750&diss=y) |
 | `cit-001169` | — | 2016 | Chang | Potent inhibition of enterovirus D68 and human rhinoviruses by dipeptidyl a… | [open](https://www.sciencedirect.com/science/article/pii/S0166354215300322) |
@@ -308,11 +315,16 @@ No openly accessible copy was found. The publisher's landing page is given so th
 | `cit-000110` | — | 2017 | Weitz | Exosite 2-directed ligands attenuate protein C activation by the thrombin–t… | [open](https://pubs.acs.org/doi/abs/10.1021/acs.biochem.7b00250) |
 | `cit-000128` | — | 2017 | Maurer | Deciphering conformational changes associated with the maturation of thromb… | [open](https://pmc.ncbi.nlm.nih.gov/articles/PMC6076386/) |
 | `cit-000140` | — | 2017 | Daniel | Study of Molecular Interactions of Glycosaminoglycans and Glycosaminoglycan… | [open](https://scholarscompass.vcu.edu/etd/4968/) |
+| `cit-000156` | — | 2017 | Hangauer | Modulating hydrogen-bond basicity within the context of protein-ligand bind… | [open](https://www.sciencedirect.com/science/article/pii/S0223523416307681) |
+| `cit-000168` | — | 2017 | Elsamani | Investigation of Anticoagulation Properties of Sulfated Glycosaminoglycan M… | [open](https://scholarscompass.vcu.edu/etd/5054/) |
+| `cit-000169` | — | 2017 | Othman | Identification of extracellular matrix-based targets for the prevention of … | [open](https://research-repository.rmit.edu.au/ndownloader/files/50760633) |
 | `cit-000375` | — | 2017 | — | Study of Molecular Interactions of Glycosaminoglycans and Glycosaminoglycan… | [open](https://scholarscompass.vcu.edu/etd/4968/) |
 | `cit-001198` | — | 2017 | Maurer | Deciphering conformational changes associated with the maturation of thromb… | [open](https://pmc.ncbi.nlm.nih.gov/articles/PMC6076386/) |
 | `cit-001212` | — | 2017 | — | Study of Molecular Interactions of Glycosaminoglycans and Glycosaminoglycan… | [open](https://scholarscompass.vcu.edu/etd/4968/) |
 | `cit-001381` | — | 2017 | — | Study of Molecular Interactions of Glycosaminoglycans and Glycosaminoglycan… | [open](https://scholarscompass.vcu.edu/etd/4968/) |
 | `cit-000136` | — | 2018 | Shin | Lignin as Bio-industrial Materials: Focused on Cosmetic Ingredients | [open](https://www.academia.edu/download/80691983/18011.pdf) |
+| `cit-000150` | — | 2018 | Huang | Self-assembled, bivalent aptamers on graphene oxide as an efficient anticoa… | [open](https://pubs.rsc.org/bm/article-abstract/6/7/1882/592699) |
+| `cit-000154` | — | 2018 | Yadav | Advances in the development of novel factor Xa inhibitors: a patent review | [open](https://www.benthamdirect.com/content/journals/mrmc/10.2174/1389557518666180424120726) |
 | `cit-001311` | — | 2018 | Zhao | Precise structures of fucosylated glycosaminoglycan and its oligosaccharide… | [open](https://www.sciencedirect.com/science/article/pii/S0223523418301776) |
 | `cit-001336` | — | 2018 | Zhao | Modulating the degree of fucosylation of fucosylated chondroitin sulfate en… | [open](https://www.sciencedirect.com/science/article/pii/S0223523418304288) |
 | `cit-001369` | — | 2018 | — | Identifying new clotting factor XIa inhibitors in virtual high‐throughput s… | [open](https://aiche.onlinelibrary.wiley.com/doi/abs/10.1002/btpr.2693) |
@@ -336,6 +348,8 @@ No openly accessible copy was found. The publisher's landing page is given so th
 | `cit-000094` | — | 2020 | Spiridon | Extraction of lignin and therapeutic applications of lignin-derived compoun… | [open](https://link.springer.com/article/10.1007/s10311-020-00981-3) |
 | `cit-000111` | — | 2020 | Iravani | Biomedical applications of lignin-based nanoparticles | [open](https://link.springer.com/chapter/10.1007/978-981-15-0391-7_8) |
 | `cit-000117` | — | 2020 | Jõudu | Applications of lignin in the agri-food industry | [open](https://link.springer.com/chapter/10.1007/978-3-030-40663-9_10) |
+| `cit-000153` | — | 2020 | Marcussi | Enzymatic Modulators from Induratia spp. AP da Silva Pomposo Bastos et al. | [open](https://link.springer.com/article/10.1007/s00284-020-02170-5) |
+| `cit-000165` | — | 2020 | Marcussi | Enzymatic Modulators from Induratia spp. | [open](https://search.proquest.com/openview/a8b867ffe835d28cc431527ef630bd1b/1?pq-origsite=gscholar&cbl=54062) |
 | `cit-000226` | — | 2020 | Powell | Influenza A Virus Fitness Is Linked with Antigenic Changes in the Hemagglut… | [open](https://search.proquest.com/openview/f5d01cc9288fe71db2854ad9f1ba85c5/1?pq-origsite=gscholar&cbl=44156) |
 | `cit-000373` | — | 2020 | — | CHARACTERIZING GLYCOSAMINOGLYCAN AND GLYCOSAMINOGLYCAN-OLIGO INTERACTIONS W… | [open](https://scholarscompass.vcu.edu/etd/6185/) |
 | `cit-000524` | GLAD | 2020 | Imberty | Structural database for lectins and the UniLectin web platform | [open](https://link.springer.com/protocol/10.1007/978-1-0716-0430-4_1) |
@@ -396,6 +410,8 @@ No openly accessible copy was found. The publisher's landing page is given so th
 | `cit-000066` | — | 2023 | Kita | Discovery of novel N-acylpyrazoles as potent and selective thrombin inhibit… | [open](https://www.sciencedirect.com/science/article/pii/S0223523422007577) |
 | `cit-000073` | — | 2023 | Guo | An Overview of Thrombin Inhibitors in the Perspective of Structureactivity … | [open](https://www.benthamdirect.com/content/journals/cmc/10.2174/0929867329666220906105200) |
 | `cit-000081` | — | 2023 | — | Expanding the Scope of mRNA display by Chemical Approaches | [open](https://ses.library.usyd.edu.au/handle/2123/32220) |
+| `cit-000159` | — | 2023 | Guo | An Overview of Thrombin Inhibitors in the Perspective of Structureactivity … | [open](https://www.benthamdirect.com/content/journals/cmc/10.2174/0929867329666220906105200) |
+| `cit-000161` | — | 2023 | Chakraborty | Conformation based in silico studies of cyclic tetrapeptides with βγ fused … | [open](https://chemistry-europe.onlinelibrary.wiley.com/doi/abs/10.1002/slct.202204761) |
 | `cit-000195` | — | 2023 | Manicassamy | Avian influenza A viruses exhibit plasticity in sialylglycoconjugate recept… | [open](https://journals.asm.org/doi/abs/10.1128/jvi.00906-23) |
 | `cit-000197` | — | 2023 | Lowen | Epistasis reduces fitness costs of influenza A virus escape from stem-bindi… | [open](https://www.pnas.org/doi/abs/10.1073/pnas.2208718120) |
 | `cit-000347` | — | 2023 | Kita | Discovery of novel N-acylpyrazoles as potent and selective thrombin inhibit… | [open](https://www.sciencedirect.com/science/article/pii/S0223523422007577) |
@@ -476,6 +492,7 @@ No openly accessible copy was found. The publisher's landing page is given so th
 | `cit-001531` | — | 2025 | Wu | Chemoenzymatic Synthesis of Rhamnolipid-Modified Exendin-4: A Dual Approach… | [open](https://pubs.acs.org/doi/abs/10.1021/acs.jmedchem.5c02146) |
 | `cit-001540` | — | 2025 | Bovin | Polysaccharide epitopes recognized by human α-l-Rha antibodies | [open](https://www.sciencedirect.com/science/article/pii/S000862152500343X) |
 | `cit-001552` | — | 2025 | Bovin | Profiling of Anti-glycan IgA and IgG in Oral Fluid Using a Glycan Microarray | [open](https://link.springer.com/protocol/10.1007/978-1-0716-4627-4_5) |
+| `cit-000146` | — | 2026 | He | From In Silico De Novo Generation to In Vitro Functional Validation: Discov… | [open](https://pubs.acs.org/jafcau/article-abstract/doi/10.1021/acs.jafc.6c07894/5250387) |
 | `cit-000205` | — | 2026 | Pu | Dominant HA motif 131/132-NT shapes the phenotype of avian H9N2 influenza v… | [open](https://www.sciencedirect.com/science/article/pii/S1995820X26000969) |
 | `cit-000208` | — | 2026 | Bovin | Antibody-free detection of influenza viruses on a microarray to study their… | [open](https://link.springer.com/article/10.1007/s00705-026-06578-5) |
 | `cit-000411` | — | 2026 | Klassen | Defining Glycan Recognition by DC-SIGN Using Native Mass Spectrometry | [open](https://pubs.acs.org/acbcct/article-abstract/21/8/1980/5232352) |
@@ -514,7 +531,7 @@ No openly accessible copy was found. The publisher's landing page is given so th
 | `cit-000560` | GLAD | — | Feizi | CarbArrayART-An update on the software tool for carbohydrate microarray dat… | [open](https://spiral.imperial.ac.uk/entities/publication/6ebd01fb-2687-4761-a614-c85c1a192b24) |
 | `cit-000562` | GLAD | — | Feizi | CarbArrayART | [open](https://run.unl.pt/entities/publication/48e256d4-d5a1-4fde-a8a0-ec184408ff34) |
 
-### 2.6 `not-in-indexes` — 89 row(s)
+### 2.6 `not-in-indexes` — 95 row(s)
 
 Neither PubMed nor OpenAlex returned the work, so there was nothing to fetch. These tend to be theses, book chapters, or commercial pages.
 
@@ -544,6 +561,7 @@ Neither PubMed nor OpenAlex returned the work, so there was nothing to fetch. Th
 | `cit-000779` | — | 2024 | — | Protein structure, a genetic encoding for glycosylation | [open](https://www.biorxiv.org/content/10.1101/2024.05.15.594261.abstract) |
 | `cit-001542` | — | 2024 | King | Human Anti-Glycan Reactivity is Driven by the Selection of B cells Utilizin… | [open](https://pmc.ncbi.nlm.nih.gov/articles/PMC11507706/) |
 | `cit-001059` | — | 2025 | van Kasteren | Quantification of single molecule glycan-mannose receptor binding kinetics … | [open](https://www.biorxiv.org/content/10.1101/2025.01.24.634682.abstract) |
+| `cit-000149` | — | 2026 | Yadav | Novel furo [2, 3-d] pyrimidinones as direct thrombin inhibitors: Design, sy… | [open](https://www.sciencedirect.com/science/article/pii/S0968089626002208) |
 | `cit-000211` | — | 2026 | — | Biological Characteristics of the Epidemic Influenza A/Singapore/GP20238/20… | [open](https://iimmun.ru/iimm/article/view/18211) |
 | `cit-000338` | — | 2026 | Yadav | Novel furo [2, 3-d] pyrimidinones as direct thrombin inhibitors: Design, sy… | [open](https://www.sciencedirect.com/science/article/pii/S0968089626002208) |
 | `cit-000829` | — | 2026 | Doering | Two closely related β-1, 2-xylosyltransferases differentially impact fungal… | [open](https://pmc.ncbi.nlm.nih.gov/articles/PMC13131615/) |
@@ -558,6 +576,11 @@ Neither PubMed nor OpenAlex returned the work, so there was nothing to fetch. Th
 | `cit-000080` | — | — | — | ASSESSING DRUG DEVELOPMENT PROPORTIES OF ANTITHROMBOTIC AND ANTI-CANCER AGE… | [open](https://scholarscompass.vcu.edu/etd/7203/?gathStatIcon=true/) |
 | `cit-000088` | — | — | — | Targeting Allosteric Site of Enzyme: New Approach to Overcoming Drug Resist… | — |
 | `cit-000135` | — | — | — | ASSESSING DRUG DEVELOPMENT PROPORTIES OF ANTITHROMBOTIC AND ANTI-CANCER AGE… | [open](https://scholarscompass.vcu.edu/etd/7203/?gathStatIcon=true/) |
+| `cit-000163` | — | — | — | Small Molecule Modulators of Protease-Activated Receptor-I | [open](https://search.proquest.com/openview/fe01386a09c4bde24958e157427df8c7/1?pq-origsite=gscholar&cbl=18750&diss=y) |
+| `cit-000166` | — | — | — | A phosphatase and protease library screen to elucidate aminoglycoside-media… | [open](https://search.proquest.com/openview/0827b4b273be551474326cd5485e8e1c/1?pq-origsite=gscholar&cbl=18750&diss=y) |
+| `cit-000170` | — | — | — | Bioinspired Self-Assembly of Microscale Surface-Tension Based Systems | [open](https://search.proquest.com/openview/a7cea68192d7857f857bd3f76f8d0e18/1?pq-origsite=gscholar&cbl=18750&diss=y) |
+| `cit-000174` | — | — | — | Characterization of some procoagulant and anticoagulant protein (s) and pep… | [open](http://agnee.tezu.ernet.in:8082/jspui/bitstream/1994/295/1/T-348.pdf) |
+| `cit-000177` | — | — | — | THROMBOPHILIAS IN PREGNANCY | — |
 | `cit-000209` | — | — | — | CHARACTERIZATION OF IN VITRO FITNESS AND ANTIGENIC DRIFT DIFFERENCES BETWEE… | [open](https://jscholarship.library.jhu.edu/items/0dbcacaf-9e37-49c3-8a95-a3f55b8ae645) |
 | `cit-000218` | — | — | — | Identifying Host Genetic Targets for Limiting Susceptibility to Respiratory… | [open](https://search.proquest.com/openview/2292ead2556a4b653c9bd29643bc58b8/1?pq-origsite=gscholar&cbl=18750&diss=y) |
 | `cit-000219` | — | — | — | Deciphering Receptor Binding Landscapes: AI-Enabled Insights Into Influenza… | [open](https://search.proquest.com/openview/80aa496f003511e11b714c348e89f9be/1?pq-origsite=gscholar&cbl=18750&diss=y) |
@@ -629,7 +652,7 @@ counsel relies on them:
 | GlycoGlyph | 2 |
 | MAWE | 3 |
 
-Distribution over all 735 rows: `2` = 108, `3` = 10, `(blank)` = 617.
+Distribution over all 763 rows: `2` = 108, `3` = 10, `(blank)` = 645.
 
 If a number is wrong, the single place to change it is `toolForCitedPaper` /
 `projectForCitedPaper` in [`scripts/lib.js`](./scripts/lib.js), then re-run the importer and
@@ -787,10 +810,10 @@ quietly re-merging. This is the only place the advice is written down.
 
 ## 4. Potential citations not in the packet
 
-[`potential_notable_citations.html`](./potential_notable_citations.html) lists **524**
+[`potential_notable_citations.html`](./potential_notable_citations.html) lists **547**
 independent citations of the works in the candidate queue that are **not** in `packet.html`.
-They appear as **476 rows**
-because 48 citations sit on a row already held by
+They appear as **497 rows**
+because 50 citations sit on a row already held by
 another of my works. One article that cites two of them is one row with two judgements
 in it, one per work, so the row says where GLAD sits and where GlycoGlyph sits separately.
 
@@ -805,6 +828,7 @@ with it, and nothing on it is evidence until a person has read the article and f
 | **Other** — Allosteric inhibition of human factor XIa: di… (2014) | 41 | 0 | 8 | 3 | 0 | 0 | 2 | 6 | **22** | 0 |
 | **Other** — Allosteric partial inhibition of monomeric pr… (2016) | 47 | 0 | 15 | 1 | 0 | 0 | 0 | 7 | **24** | 2 |
 | **Other** — Allosterism‐based simultaneous, dual anticoag… (2016) | 56 | 0 | 12 | 3 | 0 | 0 | 2 | 9 | **30** | 3 |
+| **Other** — An update on recent patents on thrombin inhib… (2014) | 70 | 35 | 2 | 5 | 0 | 0 | 0 | 5 | **23** | 2 |
 | **Other** — Antigenic pressure on H3N2 influenza virus dr… (2019) | 48 | 0 | 10 | 2 | 0 | 0 | 2 | 6 | **28** | 5 |
 | **Other** — Designing allosteric regulators of thrombin. … (2013) | 65 | 0 | 29 | 1 | 0 | 0 | 0 | 9 | **26** | 1 |
 | **Other** — Differential recognition of oligomannose isom… (2021) | 39 | 0 | 5 | 0 | 0 | 1 | 1 | 6 | **26** | 7 |
@@ -815,12 +839,12 @@ with it, and nothing on it is evidence until a person has read the article and f
 | **Other** — Sulfated pentagalloylglucoside is a potent, a… (2013) | 110 | 0 | 54 | 4 | 0 | 0 | 2 | 16 | **34** | 1 |
 | **Other** — Tumor cells express pauci-and oligomannosidic… (2021) | 35 | 0 | 4 | 1 | 0 | 0 | 2 | 6 | **22** | 5 |
 | **Other** — Unique repertoire of anti-carbohydrate antibo… (2020) | 44 | 0 | 12 | 1 | 0 | 0 | 1 | 6 | **24** | 7 |
-| **all works** | | | | | | | | | **524** | 110 |
+| **all works** | | | | | | | | | **547** | 112 |
 
 Each work's own arithmetic is printed on the review page beside its name; the row above
 is the same screen, not a second tally.
 
-110 citations already have a PDF on file, held under `pending-papers/` until a
+112 citations already have a PDF on file, held under `pending-papers/` until a
 decision is made. The rest sit at
 `no-open-copy`, `paywalled`, or `not-in-indexes` — findings about access, not about
 whether the paper exists. **A tier appears only for an article that has actually been read:**
@@ -1455,6 +1479,34 @@ To bring one in, name its `row_uid` and run `discover-pdfs.js` → `file-pdf.js`
 | `cit-001507` | Tumor cells express pauci-and oligomannosidic N-glycans in glycoproteins recognized by the mannose receptor (… |
 | `cit-001508` | Tumor cells express pauci-and oligomannosidic N-glycans in glycoproteins recognized by the mannose receptor (… |
 | `cit-001509` | Tumor cells express pauci-and oligomannosidic N-glycans in glycoproteins recognized by the mannose receptor (… |
+| `cit-000145` | An update on recent patents on thrombin inhibitors (2010-2013) |
+| `cit-000146` | An update on recent patents on thrombin inhibitors (2010-2013) |
+| `cit-000147` | An update on recent patents on thrombin inhibitors (2010-2013) |
+| `cit-000148` | An update on recent patents on thrombin inhibitors (2010-2013) |
+| `cit-000149` | An update on recent patents on thrombin inhibitors (2010-2013) |
+| `cit-000150` | An update on recent patents on thrombin inhibitors (2010-2013) |
+| `cit-000151` | An update on recent patents on thrombin inhibitors (2010-2013) |
+| `cit-000152` | An update on recent patents on thrombin inhibitors (2010-2013) |
+| `cit-000153` | An update on recent patents on thrombin inhibitors (2010-2013) |
+| `cit-000154` | An update on recent patents on thrombin inhibitors (2010-2013) |
+| `cit-000155` | An update on recent patents on thrombin inhibitors (2010-2013) |
+| `cit-000156` | An update on recent patents on thrombin inhibitors (2010-2013) |
+| `cit-000157` | An update on recent patents on thrombin inhibitors (2010-2013) |
+| `cit-000158` | An update on recent patents on thrombin inhibitors (2010-2013) |
+| `cit-000159` | An update on recent patents on thrombin inhibitors (2010-2013) |
+| `cit-000160` | An update on recent patents on thrombin inhibitors (2010-2013) |
+| `cit-000161` | An update on recent patents on thrombin inhibitors (2010-2013) |
+| `cit-000162` | An update on recent patents on thrombin inhibitors (2010-2013) |
+| `cit-000163` | An update on recent patents on thrombin inhibitors (2010-2013) |
+| `cit-000165` | An update on recent patents on thrombin inhibitors (2010-2013) |
+| `cit-000166` | An update on recent patents on thrombin inhibitors (2010-2013) |
+| `cit-000167` | An update on recent patents on thrombin inhibitors (2010-2013) |
+| `cit-000168` | An update on recent patents on thrombin inhibitors (2010-2013) |
+| `cit-000169` | An update on recent patents on thrombin inhibitors (2010-2013) |
+| `cit-000170` | An update on recent patents on thrombin inhibitors (2010-2013) |
+| `cit-000171` | An update on recent patents on thrombin inhibitors (2010-2013) |
+| `cit-000174` | An update on recent patents on thrombin inhibitors (2010-2013) |
+| `cit-000177` | An update on recent patents on thrombin inhibitors (2010-2013) |
 
 The tier and project columns are **blank** on this row on purpose. Its `cited_paper` is a
 different work, so a tier recorded for GLAD or MAWE would describe a paper this row does not
@@ -1540,11 +1592,11 @@ Every PDF in the storage roots (`papers/`, `pending-papers/`, `screened-papers/`
 one of three ways, and the distinction matters because only the first two are reproducible
 from a script.
 
-**Fetched by `discover-pdfs.js`** — 159 candidate row(s) across 148 distinct file(s), each recorded with the host it came from:
+**Fetched by `discover-pdfs.js`** — 163 candidate row(s) across 150 distinct file(s), each recorded with the host it came from:
 
 | host | rows | row_uid(s) |
 |---|---:|---|
-| www.mdpi.com | 45 | `cit-000513`, `cit-000550`, `cit-000592`, `cit-000606`, `cit-000626`, `cit-000660`, `cit-000706`, `cit-000721`, `cit-000757`, `cit-000770`, `cit-000780`, `cit-000795`, `cit-000800`, `cit-000804`, `cit-000821`, `cit-001303`, `cit-001186`, `cit-000092`, `cit-000093`, `cit-000112`, `cit-000116`, `cit-000193`, `cit-000206`, `cit-000432`, `cit-000454`, `cit-000459`, `cit-000352`, `cit-001050`, `cit-000405`, `cit-000409`, `cit-000417`, `cit-000421`, `cit-000423`, `cit-001535`, `cit-001536`, `cit-001537`, `cit-001547`, `cit-001548`, `cit-001553`, `cit-000042`, `cit-000045`, `cit-000053`, `cit-001491`, `cit-001496`, `cit-001498` |
+| www.mdpi.com | 46 | `cit-000513`, `cit-000550`, `cit-000592`, `cit-000606`, `cit-000626`, `cit-000660`, `cit-000706`, `cit-000721`, `cit-000757`, `cit-000770`, `cit-000780`, `cit-000795`, `cit-000800`, `cit-000804`, `cit-000821`, `cit-001303`, `cit-001186`, `cit-000092`, `cit-000093`, `cit-000112`, `cit-000116`, `cit-000193`, `cit-000206`, `cit-000432`, `cit-000454`, `cit-000459`, `cit-000352`, `cit-001050`, `cit-000405`, `cit-000409`, `cit-000417`, `cit-000421`, `cit-000423`, `cit-001535`, `cit-001536`, `cit-001537`, `cit-001547`, `cit-001548`, `cit-001553`, `cit-000042`, `cit-000045`, `cit-000053`, `cit-001491`, `cit-001496`, `cit-001498`, `cit-000152` |
 | www.nature.com | 28 | `cit-000510`, `cit-000511`, `cit-000596`, `cit-000600`, `cit-000654`, `cit-000665`, `cit-000666`, `cit-000689`, `cit-000693`, `cit-000695`, `cit-000696`, `cit-000727`, `cit-000744`, `cit-000799`, `cit-000185`, `cit-000188`, `cit-000191`, `cit-000442`, `cit-000449`, `cit-000460`, `cit-000330`, `cit-001041`, `cit-001048`, `cit-001051`, `cit-001070`, `cit-001517`, `cit-000006`, `cit-001483` |
 | www.biorxiv.org | 16 | `cit-000631`, `cit-000633`, `cit-000683`, `cit-000742`, `cit-000824`, `cit-000832`, `cit-000833`, `cit-000843`, `cit-000845`, `cit-000108`, `cit-000202`, `cit-000217`, `cit-000465`, `cit-000414`, `cit-000420`, `cit-000424` |
 | (no source recorded) | 15 | `cit-000507`, `cit-000523`, `cit-000525`, `cit-000531`, `cit-000532`, `cit-000534`, `cit-000549`, `cit-000554`, `cit-000564`, `cit-000566`, `cit-000581`, `cit-000614`, `cit-000621`, `cit-000623`, `cit-001263` |
@@ -1555,6 +1607,7 @@ from a script.
 | genomebiology.biomedcentral.com | 2 | `cit-000704`, `cit-000831` |
 | arxiv.org | 2 | `cit-000705`, `cit-000726` |
 | www.preprints.org | 2 | `cit-000784`, `cit-000050` |
+| repository.nottingham.ac.uk | 2 | `cit-001378`, `cit-000167` |
 | public-pages-files-2025.frontiersin.org | 2 | `cit-001044`, `cit-001062` |
 | www.mcponline.org | 1 | `cit-000514` |
 | pubs.acs.org | 1 | `cit-000538` |
@@ -1569,10 +1622,11 @@ from a script.
 | www.tdx.cat | 1 | `cit-000846` |
 | publikationen.ub.uni-frankfurt.de | 1 | `cit-000847` |
 | www.aginganddisease.org | 1 | `cit-001307` |
-| repository.nottingham.ac.uk | 1 | `cit-001378` |
 | www.jstage.jst.go.jp | 1 | `cit-000458` |
 | medicinus.co | 1 | `cit-001071` |
 | www.thno.org | 1 | `cit-001490` |
+| www.scielo.br | 1 | `cit-000151` |
+| doi.org | 1 | `cit-000171` |
 
 All of them are open-access copies resolved through OpenAlex and taken from the publisher.
 
@@ -1592,20 +1646,20 @@ These came from the `In Methods` / `In Acknowledgements` imports and were regist
 all, so the NCBI key in `.env` is used for author corroboration, not for fetching. Any statement
 that these papers came from PubMed Central would be wrong.
 
-Discovery state of all 733 GLAD candidates, from `candidate.discover_state`:
+Discovery state of all 761 GLAD candidates, from `candidate.discover_state`:
 
 | state | rows | meaning |
 |---|---:|---|
-| `no-open-copy` | 340 | looked, nothing retrievable found |
-| `has-pdf` | 167 | a PDF is on file for the row — seeded that way, fetched by a script, or filed with `file-pdf.js` |
-| `paywalled` | 115 | located behind a paywall — the applicant may be able to obtain these |
-| `not-in-indexes` | 99 | not found in the open-access indexes consulted |
-| `open-copy` | 11 | an open-access copy was located; the row is only `has-pdf` once the file is on disk |
+| `no-open-copy` | 356 | looked, nothing retrievable found |
+| `has-pdf` | 169 | a PDF is on file for the row — seeded that way, fetched by a script, or filed with `file-pdf.js` |
+| `paywalled` | 117 | located behind a paywall — the applicant may be able to obtain these |
+| `not-in-indexes` | 105 | not found in the open-access indexes consulted |
+| `open-copy` | 13 | an open-access copy was located; the row is only `has-pdf` once the file is on disk |
 | `lookup-failed` | 1 | — |
 
 **Still open:** 0 row(s) sit at `open-copy` with no file on disk — a copy was
 located and never fetched. Chasing them is a decision, not a defect: a row must be independent
-(§1.2) before it is worth a download, and 161 candidate(s) are already held — check why before spending effort on a PDF for a row that
+(§1.2) before it is worth a download, and 163 candidate(s) are already held — check why before spending effort on a PDF for a row that
 cannot be filed.
 
 ## 6. Before handing the packet over
