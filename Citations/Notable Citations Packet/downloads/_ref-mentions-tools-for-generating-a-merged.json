@@ -1,0 +1,17 @@
+[
+  {
+    "row_uid": "cit-001466",
+    "mentions": [
+      {
+        "section": "Introduction",
+        "tier": "C",
+        "page": "2",
+        "quote": "have improved our knowledge of glycomics [ 1–3 ], and of “glycosaminoglycanomics” and",
+        "use_type": null,
+        "basis": "reference-number resolution",
+        "verified": 0,
+        "note": "cited as bracketed jointly with 1, 2: [ 1–3 ]"
+      }
+    ]
+  }
+]

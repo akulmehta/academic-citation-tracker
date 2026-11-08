@@ -16,19 +16,19 @@ decision that only a person can make.
 | Citations in the packet (in `packet.html`) | 22 |
 | Works those citations are filed as (§5.1 folders) | 14 |
 | PDFs filed under `papers/` (in the packet) | 16 |
-| PDFs under `pending-papers/` (awaiting a decision) | 123 |
-| PDFs under `screened-papers/` (kept, not filed) | 49 |
-| Held — open items, listed below | 697 |
-| Screened out — decided, kept for the record (§4.5) | 220 |
-| **Rows in table `citation`** | **939** |
+| PDFs under `pending-papers/` (awaiting a decision) | 124 |
+| PDFs under `screened-papers/` (kept, not filed) | 51 |
+| Held — open items, listed below | 707 |
+| Screened out — decided, kept for the record (§4.5) | 225 |
+| **Rows in table `citation`** | **954** |
 
-`packet.csv` holds the 22 included rows. `screened-out.csv` holds the other 917,
+`packet.csv` holds the 22 included rows. `screened-out.csv` holds the other 932,
 because §4.5 exports `screened-out` and `held` together — counsel is entitled to see that the
 work was screened and on what grounds. A screened-out row is not missing work: it is the
 record of what was looked at and rejected, with the reason beside it. A held row is open, and
 every held row appears in §2 below.
 
-## 2. Held rows — 697 open items
+## 2. Held rows — 707 open items
 
 
 ### 2.1 `read` — 17 row(s)
@@ -55,7 +55,7 @@ The PDF is filed and the applicant's tool appears in a section of the paper. Wha
 | `cit-000614` | GlycoGlyph | 2026 | Subramaniam | Loss of α2, 3-linked sialoside in the receptor-binding site of a H5N1 influ… | [open](https://www.biorxiv.org/content/10.64898/2026.01.19.700419.abstract) |
 | `cit-000633` | GlycoGlyph | 2026 | Schäfer | Engineering Functional CLA-Targeting CAR Approaches for Pancreatic Ductal A… | [open](https://www.biorxiv.org/content/10.64898/2026.07.03.736395.abstract) |
 
-### 2.2 `unread` — 106 row(s)
+### 2.2 `unread` — 108 row(s)
 
 The PDF is filed. Nobody has read it yet.
 
@@ -96,6 +96,7 @@ The PDF is filed. Nobody has read it yet.
 | `cit-000845` | — | 2022 | Ronald | Sensitive spatiotemporal tracking of spontaneous metastasis in deep tissues… | [open](https://www.biorxiv.org/content/10.1101/2022.02.09.479610.abstract) |
 | `cit-000924` | MAWE | 2022 | Varki | Simple and practical sialoglycan encoding system reveals vast diversity in … | [open](https://academic.oup.com/glycob/article-abstract/32/12/1101/6682810) |
 | `cit-001303` | — | 2022 | Liu | Physicochemical Properties and Anticoagulant Activity of Purified Heteropol… | [open](https://www.mdpi.com/1420-3049/27/9/3027) |
+| `cit-001471` | MAWE | 2022 | Varki | Simple and practical sialoglycan encoding system reveals vast diversity in … | [open](https://academic.oup.com/glycob/article-abstract/32/12/1101/6682810) |
 | `cit-001532` | — | 2022 | Á | Intravenous immunoglobulins promote an expansion of monocytic myeloid-deriv… | [open](https://link.springer.com/article/10.1007/s10875-022-01277-7) |
 | `cit-000188` | — | 2023 | Pekosz | 2019–2020 H1N1 clade A5a. 1 viruses have better in vitro fitness compared w… | [open](https://www.nature.com/articles/s41598-023-37122-z) |
 | `cit-000191` | — | 2023 | Paulson | Glyco-engineered MDCK cells display preferred receptors of H3N2 influenza a… | [open](https://www.nature.com/articles/s41467-023-41908-0) |
@@ -148,6 +149,7 @@ The PDF is filed. Nobody has read it yet.
 | `cit-001048` | — | 2025 | He | The role of ladderlectin in spermatogenesis and ovarian sperm storage in th… | [open](https://www.nature.com/articles/s42003-025-08055-2) |
 | `cit-001057` | — | 2025 | Asteggiano | In vitro cell model to dilucidate the underlying molecular mechanism associ… | [open](https://www.frontiersin.org/journals/genetics/articles/10.3389/fgene.2025.1678103/full) |
 | `cit-001070` | — | 2025 | He | spermatogenesis and ovarian sperm storage in the black rockfish (Sebastes | [open](https://www.researchgate.net/profile/Yan-He-32/publication/390893517_The_role_of_ladderlectin_in_spermatogenesis_and_ovarian_sperm_storage_in_the_black_rockfish_Sebastes_schlegelii/links/6802efd2d1054b0207d524c1/The-role-of-ladderlectin-in-spermatogenesis-and-ovarian-sperm-storage-in-the-black-rockfish-Sebastes-schlegelii.pdf) |
+| `cit-001460` | MAWE | 2025 | MacIntyre | Identification and characterisation of vaginal bacteria-glycan interactions… | [open](https://www.nature.com/articles/s41467-025-60404-1) |
 | `cit-001490` | — | 2025 | Ferreira | Trimmed n-glycans define aggressive gastric cancer and predict clinical out… | [open](https://pmc.ncbi.nlm.nih.gov/articles/PMC12486017/) |
 | `cit-001491` | — | 2025 | Ferreira | Glycomics and glycoproteomics reveal distinct oligomannose carriers across … | [open](https://www.mdpi.com/1422-0067/26/10/4891) |
 | `cit-000182` | — | 2026 | RP | The receptor binding properties of H5Ny influenza A viruses have evolved to… | [open](https://journals.plos.org/plospathogens/article?id=10.1371/journal.ppat.1013812) |
@@ -186,7 +188,7 @@ The PDF is filed, but the extracted text does not support a use in any section �
 | `cit-000605` | GlycoGlyph | 2025 | Kontoravdi | GlyCompute: towards the automated analysis of protein N-linked glycosylatio… | [open](https://link.springer.com/article/10.1007/s00216-024-05522-3) |
 | `cit-001116` | Glyco-SPOT | 2026 | Hurevich | Stirring glycopeptides away from the constraints of solid-phase synthesis m… | [open](https://www.frontiersin.org/journals/molecular-biosciences/articles/10.3389/fmolb.2026.1863326/full) |
 
-### 2.4 `paywalled` — 118 row(s)
+### 2.4 `paywalled` — 119 row(s)
 
 A copy exists behind a paywall. If the applicant can obtain the PDF through an institution, drop it in the folder and the row can be read.
 
@@ -251,6 +253,7 @@ A copy exists behind a paywall. If the applicant can obtain the PDF through an i
 | `cit-001117` | Glyco-SPOT | 2022 | Hurevich | Expeditious synthesis of a glycopeptide library | [open](https://chemistry-europe.onlinelibrary.wiley.com/doi/abs/10.1002/ejoc.202200623) |
 | `cit-001142` | — | 2022 | Peng | (1R, 3S)-THCCA-Asn: To show the discovery of selective inhibitor of thrombi… | [open](https://www.sciencedirect.com/science/article/pii/S0223523422005839) |
 | `cit-001312` | — | 2022 | Huang | Expedient Synthesis of a Library of Heparan Sulfate‐Like “Head‐to‐Tail” Lin… | [open](https://onlinelibrary.wiley.com/doi/abs/10.1002/ange.202209730) |
+| `cit-001462` | MAWE | 2022 | Haab | CarboGrove: a resource of glycan-binding specificities through analyzed gly… | [open](https://academic.oup.com/glycob/article-abstract/32/8/679/6555550) |
 | `cit-001526` | — | 2022 | Gildersleeve | Microarray-guided evaluation of the frequency, B-cell origins, and selectiv… | [open](https://www.jbc.org/article/S0021-9258(22)00911-5/fulltext) |
 | `cit-000187` | — | 2023 | de Vries | Revealing the specificity of human H1 influenza A viruses to complex N-Glyc… | [open](https://pmc.ncbi.nlm.nih.gov/articles/PMC10052259/) |
 | `cit-000200` | — | 2023 | de Vries | Contemporary human H3N2 influenza a viruses require a low threshold of suit… | [open](https://academic.oup.com/glycob/article-abstract/33/10/784/7227110) |
@@ -311,7 +314,7 @@ A copy exists behind a paywall. If the applicant can obtain the PDF through an i
 | `cit-000512` | GLAD | — | Aoki-Kinoshita | Worldwide glycoscience informatics infrastructure: the GlySpace Alliance | [open](https://pubs.acs.org/jaaucr/article-abstract/3/1/4/1253251) |
 | `cit-000556` | GLAD | — | — | Phenotyping murine and human platelet-derived extracellular vesicles gives … | [open](https://www.rpthjournal.org/cms/10.1016/j.rpth.2026.103414/attachment/5e1ef181-290b-47ad-a0b6-2820746565cf/mmc1.pdf) |
 
-### 2.5 `no-open-copy` — 327 row(s)
+### 2.5 `no-open-copy` — 331 row(s)
 
 No openly accessible copy was found. The publisher's landing page is given so the applicant can check institutional access.
 
@@ -351,6 +354,7 @@ No openly accessible copy was found. The publisher's landing page is given so th
 | `cit-001230` | — | 2015 | Chang | Potent inhibition of enterovirus D68 and human rhinoviruses by dipeptidyl a… | — |
 | `cit-001290` | — | 2015 | Zhao | Discovery of an intrinsic tenase complex inhibitor: Pure nonasaccharide fro… | [open](https://www.pnas.org/doi/abs/10.1073/pnas.1504229112) |
 | `cit-001373` | — | 2015 | Schmaier | Medically-induced hemophilia C to treat thrombosis | [open](https://www.thrombosisresearch.com/article/S0049-3848(15)00240-6/abstract) |
+| `cit-001475` | MAWE | 2015 | Glazowska | An Accessible R-Based Exploratory Toolbox to Analyse Plant Glycomic Microar… | [open](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=4359639) |
 | `cit-000034` | — | 2016 | — | Microwave Assisted Intramolecular Dehydrogenative Dehydro-Diels Alder Appro… | [open](https://d-scholarship.pitt.edu/concern/etds/669352a6-e36a-4aa5-8d89-9f480b34ec1d) |
 | `cit-000035` | — | 2016 | Stephen | Probing allosteric, partial inhibition of thrombin using novel anticoagulan… | [open](https://search.proquest.com/openview/197f86fac0d2accd9f82fc809da0fdaa/1?pq-origsite=gscholar&cbl=18750&diss=y) |
 | `cit-000039` | — | 2016 | Smallheer | Advances in Anticoagulants | — |
@@ -465,6 +469,7 @@ No openly accessible copy was found. The publisher's landing page is given so th
 | `cit-001309` | — | 2021 | Zhao | Five distinct fucan sulfates from sea cucumber Pattalus mollis: Purificatio… | [open](https://www.sciencedirect.com/science/article/pii/S0141813021014847) |
 | `cit-001360` | — | 2021 | Napolitano | Sulfated Oligomers of Tyrosol: Toward a New Class of Bioinspired Nonsacchar… | [open](https://pmc.ncbi.nlm.nih.gov/articles/PMC8023584/) |
 | `cit-001444` | — | 2021 | Fatehi | Present and future prospective of lignin-based materials in biomedical fiel… | [open](https://www.sciencedirect.com/science/chapter/edited-volume/pii/B9780128203033000072) |
+| `cit-001470` | MAWE | 2021 | Packer | GlycoBioinformatics | [open](https://www.beilstein-journals.org/bjoc/articles/17/184) |
 | `cit-001549` | — | 2021 | Kato | Identification of genes for variable regions of immunoglobulins that recogn… | [open](https://www.sciencedirect.com/science/article/pii/S0006291X21009608) |
 | `cit-000009` | — | 2022 | Boxnick | First randomized evaluation of safety, pharmacodynamics, and pharmacokineti… | [open](https://onlinelibrary.wiley.com/doi/abs/10.1111/jth.15744) |
 | `cit-000057` | — | 2022 | — | Quantitative proteomics analysis reveals core and variable tick salivary pr… | [open](https://onlinelibrary.wiley.com/doi/abs/10.1111/mec.16561) |
@@ -493,6 +498,7 @@ No openly accessible copy was found. The publisher's landing page is given so th
 | `cit-001134` | — | 2022 | Dashkin | Review on synthetic approaches toward rivaroxaban (Xarelto), an anticoagula… | [open](https://pubs.acs.org/doi/abs/10.1021/acs.oprd.2c00188) |
 | `cit-001143` | — | 2022 | Yadav | Design, synthesis and biological evaluation of Piperazinylanthranilamides a… | [open](https://www.sciencedirect.com/science/article/pii/S002228602201626X) |
 | `cit-001449` | — | 2022 | Lundblad | The Chemical Biology of Thrombin | [open](https://books.google.com/books?hl=en&lr=&id=_GRnEAAAQBAJ&oi=fnd&pg=PT8&ots=KV1Rbg7HbF&sig=OtdOBk96Rodp6AcAGeZ4SOlbW6Y) |
+| `cit-001469` | MAWE | 2022 | Chen | Structural insight into terminal galactose recognition by two non-HBGA bind… | [open](https://journals.asm.org/doi/abs/10.1128/jvi.00420-22) |
 | `cit-001476` | — | 2022 | Tang | Glycoproteomics | [open](https://www.nature.com/articles/s43586-022-00128-4) |
 | `cit-001546` | — | 2022 | Chen | Structural insight into terminal galactose recognition by two non-HBGA bind… | [open](https://journals.asm.org/doi/abs/10.1128/jvi.00420-22) |
 | `cit-001551` | — | 2022 | — | Measurement of low avidity, polyreactive immunoglobulin G antibodies with i… | [open](https://www.academia.edu/download/85845801/measurement_of_low_avidity_polyreactive_immunoglobulin_g_antibodies.pdf) |
@@ -635,6 +641,7 @@ No openly accessible copy was found. The publisher's landing page is given so th
 | `cit-001323` | — | 2026 | Zhang | AlphaFold3 assisted screening strategy identifying novel coagulation factor… | [open](https://www.sciencedirect.com/science/article/pii/S0960852426015798) |
 | `cit-001325` | — | 2026 | Yue | Discovery of Novel FXIa Inhibitory Peptides from Deep-Sea Gigantidas platif… | [open](https://pubs.acs.org/jafcau/article/74/25/19936/5165424) |
 | `cit-001332` | — | 2026 | Zhang | Peptidomic characterization and evaluation of in vitro and in vivo anticoag… | [open](https://www.sciencedirect.com/science/article/pii/S2212429226007790) |
+| `cit-001468` | MAWE | 2026 | Arthur | Defining the Specificity of Blood-Group-Binding Lectins Through Microarray … | [open](https://link.springer.com/protocol/10.1007/978-1-0716-5376-0_34) |
 | `cit-001493` | — | 2026 | — | Fluorescent probes for intraoperative navigation in glioma resection: recen… | [open](https://www.sciencedirect.com/science/article/pii/S001085452600857X) |
 | `cit-001495` | — | 2026 | Casettari | One‐Step Microfluidic Manufactured Fucose‐Decorated Sweetosomes Choose the … | [open](https://advanced.onlinelibrary.wiley.com/doi/abs/10.1002/adhm.202505617) |
 | `cit-001500` | — | 2026 | At | N-glycan signatures of immunoglobulins-depleted serum proteins in colorecta… | [open](https://link.springer.com/article/10.1007/s10719-026-10216-2) |
@@ -645,7 +652,7 @@ No openly accessible copy was found. The publisher's landing page is given so th
 | `cit-000560` | GLAD | — | Feizi | CarbArrayART-An update on the software tool for carbohydrate microarray dat… | [open](https://spiral.imperial.ac.uk/entities/publication/6ebd01fb-2687-4761-a614-c85c1a192b24) |
 | `cit-000562` | GLAD | — | Feizi | CarbArrayART | [open](https://run.unl.pt/entities/publication/48e256d4-d5a1-4fde-a8a0-ec184408ff34) |
 
-### 2.6 `not-in-indexes` — 117 row(s)
+### 2.6 `not-in-indexes` — 120 row(s)
 
 Neither PubMed nor OpenAlex returned the work, so there was nothing to fetch. These tend to be theses, book chapters, or commercial pages.
 
@@ -667,6 +674,7 @@ Neither PubMed nor OpenAlex returned the work, so there was nothing to fetch. Th
 | `cit-000123` | — | 2021 | Bhaumik | Lignin to platform chemicals and biomaterials: chemical and biological pers… | [open](https://www.taylorfrancis.com/chapters/edit/10.1201/9781003158486-2/lignin-platform-chemicals-biomaterials-yeddula-nikhileshwar-reddy-kunal-gogde-shatabdi-paul-jayeeta-bhaumik) |
 | `cit-000401` | — | 2021 | Thaysen-Andersen | Trends in oligomannosylation and α1, 2-mannosidase expression in human canc… | [open](https://pmc.ncbi.nlm.nih.gov/articles/PMC8522845/) |
 | `cit-000869` | — | 2021 | Sukhija | Glycobioinformatics in deciphering the mammalian glycocode: Recent advances | [open](https://www.dattaconsultinggroup.com/akdsite/assets/publications/glycocodearticle.pdf) |
+| `cit-001473` | MAWE | 2021 | — | Kiyoko F. Aoki-Kinoshita1, Frédérique Lisacek2, Niclas Karlsson3, 4, Daniel… | [open](https://research-management.mq.edu.au/ws/portalfiles/portal/180735915/180733549.pdf) |
 | `cit-001488` | — | 2021 | Thaysen-Andersen | Trends in oligomannosylation and α1, 2-mannosidase expression in human canc… | [open](https://pmc.ncbi.nlm.nih.gov/articles/PMC8522845/) |
 | `cit-000464` | — | 2022 | Su | Efficient TurboID-based proximity labelling method for identifying terminal… | [open](https://pmc.ncbi.nlm.nih.gov/articles/PMC10157534/) |
 | `cit-000853` | — | 2022 | Nesvizhskii | HLA-Glyco: A large-scale interrogation of the glycosylated immunopeptidome | [open](https://www.biorxiv.org/content/10.1101/2022.12.05.519200.abstract) |
@@ -765,6 +773,8 @@ Neither PubMed nor OpenAlex returned the work, so there was nothing to fetch. Th
 | `cit-001448` | — | — | — | ASSESSING DRUG DEVELOPMENT PROPORTIES OF ANTITHROMBOTIC AND ANTI-CANCER AGE… | [open](https://scholarscompass.vcu.edu/etd/7203/?gathStatIcon=true/) |
 | `cit-001455` | — | — | — | This article has been accepted for publication and undergone full peer revi… | [open](https://boris-portal.unibe.ch/bitstreams/b2d903ec-cab8-40a8-b807-ce8129002e65/download) |
 | `cit-001457` | — | — | — | Arimidex clotting trt prevent thrombosis Endocrine Abstracts | — |
+| `cit-001472` | MAWE | — | — | Glycan Microarray Data Analysis: From Raw Data to Public Database Integrati… | [open](https://www.creative-proteomics.com/resource/glycan-microarray-analysis-and-database-integration.htm) |
+| `cit-001474` | MAWE | — | — | Received 19 Oct 2021, Accepted 27 Oct 2021, Published 09 Nov 2021 | [open](https://www.beilstein-journals.org/bjoc/content/html/1860-5397-17-184.html) |
 | `cit-001508` | — | — | — | Glycans as dual orchestrators of microbiome and immune response dynamics in… | [open](https://repositorio-aberto.up.pt/bitstream/10216/165524/2/711641.pdf) |
 | `cit-001509` | — | — | — | Decoding the glycobiology of the paucimannose-rich neutrophil N-glycoproteo… | [open](https://figshare.mq.edu.au/ndownloader/files/42902449) |
 | `cit-001550` | — | — | — | STRUCTURE-FUNCTION STUDIES OF AN RTX-ADHESIN FROM VIBRIO VULNIFICUS AND ITS… | [open](https://queensu.scholaris.ca/server/api/core/bitstreams/5594e40f-e0d9-4469-9a8f-016e81f60463/content) |
@@ -789,7 +799,7 @@ counsel relies on them:
 | GlycoGlyph | 2 |
 | MAWE | 3 |
 
-Distribution over all 939 rows: `2` = 108, `3` = 29, `4` = 18, `(blank)` = 784.
+Distribution over all 954 rows: `2` = 108, `3` = 44, `4` = 18, `(blank)` = 784.
 
 If a number is wrong, the single place to change it is `toolForCitedPaper` /
 `projectForCitedPaper` in [`scripts/lib.js`](./scripts/lib.js), then re-run the importer and
@@ -947,10 +957,10 @@ quietly re-merging. This is the only place the advice is written down.
 
 ## 4. Potential citations not in the packet
 
-[`potential_notable_citations.html`](./potential_notable_citations.html) lists **677**
+[`potential_notable_citations.html`](./potential_notable_citations.html) lists **686**
 independent citations of the works in the candidate queue that are **not** in `packet.html`.
-They appear as **601 rows**
-because 76 citations sit on a row already held by
+They appear as **608 rows**
+because 78 citations sit on a row already held by
 another of my works. One article that cites two of them is one row with two judgements
 in it, one per work, so the row says where GLAD sits and where GlycoGlyph sits separately.
 
@@ -963,6 +973,7 @@ with it, and nothing on it is evidence until a person has read the article and f
 | **GlycoGlyph** — GlycoGlyph: a glycan visualizing, drawing and… (2020) | 78 | 0 | 9 | 4 | 0 | 7 | 3 | 28 | **27** | 12 |
 | **MAWE** — GlyMDB: Glycan Microarray Database and analys… (2020) | 24 | 0 | 4 | 1 | 0 | 0 | 0 | 6 | **13** | 1 |
 | **MAWE** — Reusable glycan microarrays using a microwave… (2024) | 15 | 0 | 6 | 1 | 0 | 5 | 0 | 2 | **1** | 0 |
+| **MAWE** — Tools for generating and analyzing glycan mic… (2020) | 18 | 0 | 3 | 0 | 0 | 0 | 1 | 5 | **9** | 2 |
 | **Other** — Allosteric inhibition of human factor XIa: di… (2014) | 41 | 0 | 8 | 3 | 0 | 0 | 2 | 6 | **22** | 0 |
 | **Other** — Allosteric partial inhibition of monomeric pr… (2016) | 47 | 0 | 15 | 1 | 0 | 0 | 0 | 7 | **24** | 2 |
 | **Other** — Allosterism‐based simultaneous, dual anticoag… (2016) | 56 | 0 | 12 | 3 | 0 | 0 | 2 | 9 | **30** | 3 |
@@ -985,12 +996,12 @@ with it, and nothing on it is evidence until a person has read the article and f
 | **Other** — Targeting the GPIbα Binding Site of Thrombin … (2014) | 31 | 0 | 6 | 1 | 0 | 0 | 3 | 7 | **14** | 0 |
 | **Other** — Tumor cells express pauci-and oligomannosidic… (2021) | 35 | 0 | 4 | 1 | 0 | 0 | 2 | 6 | **22** | 5 |
 | **Other** — Unique repertoire of anti-carbohydrate antibo… (2020) | 44 | 0 | 12 | 1 | 0 | 0 | 1 | 6 | **24** | 7 |
-| **all works** | | | | | | | | | **677** | 129 |
+| **all works** | | | | | | | | | **686** | 131 |
 
 Each work's own arithmetic is printed on the review page beside its name; the row above
 is the same screen, not a second tally.
 
-129 citations already have a PDF on file, held under `pending-papers/` until a
+131 citations already have a PDF on file, held under `pending-papers/` until a
 decision is made. The rest sit at
 `no-open-copy`, `paywalled`, or `not-in-indexes` — findings about access, not about
 whether the paper exists. **A tier appears only for an article that has actually been read:**
@@ -1851,7 +1862,7 @@ evidence looks like something and is not.
 
 | basis of a recorded mention | mentions | rows |
 |---|---:|---:|
-| reference-number resolution | 178 | 103 |
+| reference-number resolution | 179 | 104 |
 | extracted text | 4 | 3 |
 
 A resolved citation is held to the same bar as one that names the tool: it must sit in
@@ -1860,12 +1871,12 @@ that names the applicant's paper — a reference list proves only that the autho
 work, not where or how. Where a row's tier rests on such a citation, that is said in the
 report rather than left for a reader to infer from a section heading alone.
 
-178 mentions across 103 citing works rest on resolution or on a person’s
+179 mentions across 104 citing works rest on resolution or on a person’s
 reading, not on a named-tool scan. `scan-mentions.js` reports those rows separately and
 leaves their tier alone — it is not built to find them, so its silence is not evidence
 against them.
 
-Resolution also reached 21 citation(s) on rows the packet has already screened
+Resolution also reached 22 citation(s) on rows the packet has already screened
 out. Those rows stay out: each was screened for a reason the citation does not answer
 — one is not independent, the other was already submitted with the original application
 — and a stronger citation cannot undo either. They are recorded rather than dropped so
@@ -1877,14 +1888,14 @@ Every PDF in the storage roots (`papers/`, `pending-papers/`, `screened-papers/`
 one of three ways, and the distinction matters because only the first two are reproducible
 from a script.
 
-**Fetched by `discover-pdfs.js`** — 190 candidate row(s) across 173 distinct file(s), each recorded with the host it came from:
+**Fetched by `discover-pdfs.js`** — 195 candidate row(s) across 176 distinct file(s), each recorded with the host it came from:
 
 | host | rows | row_uid(s) |
 |---|---:|---|
-| www.mdpi.com | 55 | `cit-000513`, `cit-000550`, `cit-000592`, `cit-000606`, `cit-000626`, `cit-000660`, `cit-000706`, `cit-000721`, `cit-000757`, `cit-000770`, `cit-000780`, `cit-000795`, `cit-000800`, `cit-000804`, `cit-000821`, `cit-001303`, `cit-001186`, `cit-000092`, `cit-000093`, `cit-000112`, `cit-000116`, `cit-000193`, `cit-000206`, `cit-000432`, `cit-000454`, `cit-000459`, `cit-000352`, `cit-001050`, `cit-000405`, `cit-000409`, `cit-000417`, `cit-000421`, `cit-000423`, `cit-001535`, `cit-001536`, `cit-001537`, `cit-001547`, `cit-001548`, `cit-001553`, `cit-000042`, `cit-000045`, `cit-000053`, `cit-001491`, `cit-001496`, `cit-001498`, `cit-000152`, `cit-001438`, `cit-001129`, `cit-001139`, `cit-000911`, `cit-000913`, `cit-000951`, `cit-000957`, `cit-000961`, `cit-000962` |
-| www.nature.com | 31 | `cit-000510`, `cit-000511`, `cit-000596`, `cit-000600`, `cit-000654`, `cit-000665`, `cit-000666`, `cit-000689`, `cit-000693`, `cit-000695`, `cit-000696`, `cit-000727`, `cit-000744`, `cit-000799`, `cit-000185`, `cit-000188`, `cit-000191`, `cit-000442`, `cit-000449`, `cit-000460`, `cit-000330`, `cit-001041`, `cit-001048`, `cit-001051`, `cit-001070`, `cit-001517`, `cit-000006`, `cit-001483`, `cit-000248`, `cit-000250`, `cit-001108` |
-| www.frontiersin.org | 18 | `cit-000520`, `cit-000593`, `cit-000607`, `cit-000715`, `cit-000730`, `cit-000731`, `cit-000844`, `cit-001287`, `cit-000455`, `cit-001042`, `cit-001055`, `cit-001057`, `cit-001515`, `cit-001525`, `cit-001534`, `cit-001116`, `cit-000955`, `cit-001090` |
-| www.biorxiv.org | 18 | `cit-000631`, `cit-000633`, `cit-000683`, `cit-000742`, `cit-000832`, `cit-000833`, `cit-000843`, `cit-000108`, `cit-000202`, `cit-000217`, `cit-000465`, `cit-000414`, `cit-000420`, `cit-000424`, `cit-000263`, `cit-000924`, `cit-001121`, `cit-001098` |
+| www.mdpi.com | 57 | `cit-000513`, `cit-000550`, `cit-000592`, `cit-000606`, `cit-000626`, `cit-000660`, `cit-000706`, `cit-000721`, `cit-000757`, `cit-000770`, `cit-000780`, `cit-000795`, `cit-000800`, `cit-000804`, `cit-000821`, `cit-001303`, `cit-001186`, `cit-000092`, `cit-000093`, `cit-000112`, `cit-000116`, `cit-000193`, `cit-000206`, `cit-000432`, `cit-000454`, `cit-000459`, `cit-000352`, `cit-001050`, `cit-000405`, `cit-000409`, `cit-000417`, `cit-000421`, `cit-000423`, `cit-001535`, `cit-001536`, `cit-001537`, `cit-001547`, `cit-001548`, `cit-001553`, `cit-000042`, `cit-000045`, `cit-000053`, `cit-001491`, `cit-001496`, `cit-001498`, `cit-000152`, `cit-001438`, `cit-001129`, `cit-001139`, `cit-000911`, `cit-000913`, `cit-000951`, `cit-000957`, `cit-000961`, `cit-000962`, `cit-001463`, `cit-001466` |
+| www.nature.com | 32 | `cit-000510`, `cit-000511`, `cit-000596`, `cit-000600`, `cit-000654`, `cit-000665`, `cit-000666`, `cit-000689`, `cit-000693`, `cit-000695`, `cit-000696`, `cit-000727`, `cit-000744`, `cit-000799`, `cit-000185`, `cit-000188`, `cit-000191`, `cit-000442`, `cit-000449`, `cit-000460`, `cit-000330`, `cit-001041`, `cit-001048`, `cit-001051`, `cit-001070`, `cit-001517`, `cit-000006`, `cit-001483`, `cit-000248`, `cit-000250`, `cit-001108`, `cit-001460` |
+| www.frontiersin.org | 19 | `cit-000520`, `cit-000593`, `cit-000607`, `cit-000715`, `cit-000730`, `cit-000731`, `cit-000844`, `cit-001287`, `cit-000455`, `cit-001042`, `cit-001055`, `cit-001057`, `cit-001515`, `cit-001525`, `cit-001534`, `cit-001116`, `cit-000955`, `cit-001090`, `cit-001467` |
+| www.biorxiv.org | 19 | `cit-000631`, `cit-000633`, `cit-000683`, `cit-000742`, `cit-000832`, `cit-000833`, `cit-000843`, `cit-000108`, `cit-000202`, `cit-000217`, `cit-000465`, `cit-000414`, `cit-000420`, `cit-000424`, `cit-000263`, `cit-000924`, `cit-001121`, `cit-001098`, `cit-001471` |
 | (no source recorded) | 15 | `cit-000507`, `cit-000523`, `cit-000525`, `cit-000531`, `cit-000532`, `cit-000534`, `cit-000549`, `cit-000554`, `cit-000564`, `cit-000566`, `cit-000581`, `cit-000614`, `cit-000621`, `cit-000623`, `cit-001263` |
 | link.springer.com | 13 | `cit-000589`, `cit-000605`, `cit-000622`, `cit-000707`, `cit-000713`, `cit-000737`, `cit-000782`, `cit-000802`, `cit-001302`, `cit-001532`, `cit-000246`, `cit-000959`, `cit-000960` |
 | journals.plos.org | 3 | `cit-000741`, `cit-000182`, `cit-001497` |
@@ -1935,20 +1946,20 @@ These came from the `In Methods` / `In Acknowledgements` imports and were regist
 all, so the NCBI key in `.env` is used for author corroboration, not for fetching. Any statement
 that these papers came from PubMed Central would be wrong.
 
-Discovery state of all 937 GLAD candidates, from `candidate.discover_state`:
+Discovery state of all 952 GLAD candidates, from `candidate.discover_state`:
 
 | state | rows | meaning |
 |---|---:|---|
-| `no-open-copy` | 446 | looked, nothing retrievable found |
-| `has-pdf` | 192 | a PDF is on file for the row — seeded that way, fetched by a script, or filed with `file-pdf.js` |
-| `paywalled` | 152 | located behind a paywall — the applicant may be able to obtain these |
-| `not-in-indexes` | 127 | not found in the open-access indexes consulted |
-| `open-copy` | 17 | an open-access copy was located; the row is only `has-pdf` once the file is on disk |
+| `no-open-copy` | 452 | looked, nothing retrievable found |
+| `has-pdf` | 195 | a PDF is on file for the row — seeded that way, fetched by a script, or filed with `file-pdf.js` |
+| `paywalled` | 153 | located behind a paywall — the applicant may be able to obtain these |
+| `not-in-indexes` | 130 | not found in the open-access indexes consulted |
+| `open-copy` | 19 | an open-access copy was located; the row is only `has-pdf` once the file is on disk |
 | `lookup-failed` | 3 | — |
 
 **Still open:** 0 row(s) sit at `open-copy` with no file on disk — a copy was
 located and never fetched. Chasing them is a decision, not a defect: a row must be independent
-(§1.2) before it is worth a download, and 186 candidate(s) are already held — check why before spending effort on a PDF for a row that
+(§1.2) before it is worth a download, and 187 candidate(s) are already held — check why before spending effort on a PDF for a row that
 cannot be filed.
 
 ## 6. Before handing the packet over
