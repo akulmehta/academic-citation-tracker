@@ -1,0 +1,28 @@
+[
+  {
+    "row_uid": "cit-001263",
+    "mentions": [
+      {
+        "section": "Materials and Methods (Chapter 2, s.2.6 Glycan array analyses)",
+        "tier": "A",
+        "page": 37,
+        "quote": "Application of sample, scanning, and data analysis were performed as outlined by Luetscher et al. and Mehta et al. on a fee-for-service basis (115, 116).",
+        "use_type": "Implemented",
+        "basis": "reference-number resolution"
+      }
+    ]
+  },
+  {
+    "row_uid": "cit-001262",
+    "mentions": [
+      {
+        "section": "Modern Tools Enable Systematic Study (Glycan microarrays)",
+        "tier": "C",
+        "page": 8,
+        "quote": "By displaying hundreds of defined glycan structures on a single chip [17,18], glycan",
+        "use_type": null,
+        "basis": "reference-number resolution"
+      }
+    ]
+  }
+]

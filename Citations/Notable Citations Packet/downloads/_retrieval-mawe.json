@@ -1,0 +1,6 @@
+[
+  {
+    "row_uid": "cit-001254",
+    "note": "Cloudflare wall: tried 2026-11-08 through a real Chrome session as well as plain HTTP, and onlinelibrary.wiley.com answered 403 with cf-mitigated: challenge on /doi/pdfdirect/10.1002/anie.7795967. Work stopped at the wall per the applicant instruction; the article body was not opened, so no mention has been read for this row. State left paywalled because a wall is a prose outcome, not one of the access states record-retrieval.js accepts."
+  }
+]

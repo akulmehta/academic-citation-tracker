@@ -12,8 +12,10 @@
  * What this writes, and what it refuses:
  *   - `discover_note` always, so the attempt and its result are on the record.
  *   - `discover_state` only when the note is about access (`paywalled`,
- *     `no-open-copy`, `not-in-indexes`, `cloudflare`, `no-url`, `link-not-the-paper`).
- *     `has-pdf` is NOT settable here — that state means a file is on disk, and
+ *     `no-open-copy`, `not-in-indexes`, `lookup-failed`, `open-copy` — exactly the
+ *     states `STATES` below allows). A Cloudflare wall, a proof-of-work page or a
+ *     link to the wrong paper is recorded in the note while the state stays what it
+ *     was. `has-pdf` is NOT settable here — that state means a file is on disk, and
  *     `sync-candidate-state.js` derives it from the `file` table rather than from a
  *     claim.
  *   - `pdf_file` only when told explicitly, and only to a path that exists.
@@ -94,7 +96,10 @@ const upd = db.prepare(`UPDATE candidate SET discover_state=?, discover_note=?,
 db.exec("BEGIN");
 try {
   for (const e of spec) {
-    const cur = db.prepare(`SELECT discover_note n FROM candidate WHERE row_uid=?`).get(e.row_uid);
+    // `s` is needed here too: an entry that records only a note keeps its current
+    // state, and reading just the note made `e.state || cur.s` undefined, which the
+    // NOT NULL constraint on discover_state rejected.
+    const cur = db.prepare(`SELECT discover_state s, discover_note n FROM candidate WHERE row_uid=?`).get(e.row_uid);
     upd.run(e.state || cur.s, String(cur.n || "") + ` | ${iso.slice(0, 10)}: ${e.note}`,
       e.pdf_file || null, iso, e.row_uid);
   }

@@ -224,6 +224,31 @@ const PROPOSALS = [
     note: "Quote corrected: the row previously held the bioRxiv preprint's title, which is not a sentence from the paper. This row's `pdf_file` is the final article, so the article's p.4 sentence is filed. The preprint in the same folder makes the same statement at p.10 in slightly different wording — \"PpaPV1 glycan microarray data were compared with PsSC (Ituarte et al., 2018) and PdPV1 (Brola et al., 2020) microarrays using the Glycan Array Dashboard (glycotoolkit.com/GLAD/) (Mehta & Cummings, 2019)\" — which is the point of holding both files: the preprint shows the statement existed before the 25 Apr 2024 filing date.",
     why: "The filed quote was the preprint's title, not a mention; replaced with the sentence that actually names GLAD.",
   },
+  // Two MAWE rows whose only in-text mark was a reference number, so neither the
+  // tool-name scanner nor a text search could see them. Both were resolved from
+  // the citing work's own bibliography and the sentence re-read before filing.
+  {
+    row_uid: "cit-001263",
+    tier: "A",
+    section: "Materials and Methods (Chapter 2, s.2.6 Glycan array analyses)",
+    page: "37",
+    quote: "Application of sample, scanning, and data analysis were performed as outlined by Luetscher et al. and Mehta et al. on a fee-for-service basis (115, 116).",
+    use_type: "Implemented",
+    evidence_basis: "reference-number resolution",
+    note: "Bibliography entry 116 (p.94) is Mehta, A. Y., Tilton, C. A., Muerner, L., von Gunten, S., Heimburg-Molinaro, J., and Cummings, R. D. (2024) Reusable glycan microarrays using a microwave assisted wet-erase (MAWE) process. Glycobiology. 10.1093/glycob/cwad091. The citing sentence is in Chapter 2 Materials and Methods (heading p.34), section 2.6, and credits that paper for how the array sample was applied, scanned and analysed. CAVEAT: the array itself was run for the author by the National Center for Functional Glycomics on a fee-for-service basis, so the method was followed by the service provider, and the two references are credited jointly.",
+    why: "The row had no tier; the reference number resolved to MAWE inside a Methods section, which is tier A under §1.1.",
+  },
+  {
+    row_uid: "cit-001262",
+    tier: "C",
+    section: "Modern Tools Enable Systematic Study (Glycan microarrays)",
+    page: "8",
+    quote: "By displaying hundreds of defined glycan structures on a single chip [17,18], glycan",
+    use_type: null,
+    evidence_basis: "reference-number resolution",
+    note: "Bibliography entry 18 is Mehta AY, Tilton CA, Muerner L, von Gunten S, Heimburg-Molinaro J, Cummings RD. Reusable glycan microarrays using a microwave assisted wet-erase (MAWE) process. Glycobiology. 2024;34(2):cwad091, and the number is credited jointly with 17. READ BEFORE USING: this is a review with no Methods section, and the sentence describes what a glycan microarray is and what it allows — it reports no use of MAWE by these authors. `use_type` is left empty for that reason (§1.3), and §1.2 treats a passing mention with nothing substantive to quote as a screen-out, so this row is a decision for the applicant, not a packet row.",
+    why: "The row had no tier; the resolved citation sits in a descriptive passage of a review, so tier C with no claimed use.",
+  },
 ];
 
 (async () => {

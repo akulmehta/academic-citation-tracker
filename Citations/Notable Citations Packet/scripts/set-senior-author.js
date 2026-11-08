@@ -23,6 +23,7 @@ const WRITE = process.argv.includes("--write");
 // row_uid -> [surname, basis]
 const FIXES = {
   "cit-000525": ["Haab", "Last author on p.1 of the retrieved article: Zachary Klamer, Brian Haab"],
+  "cit-001263": ["Soares", "Sole author on the title page: Blake Anthony Paiva Soares, Queen's University MSc thesis, August 2026"],
   "cit-000549": ["Swanson", "Sole author on the title page: Nicholas Joseph Chudeusz Swanson, JHU dissertation, May 2024"],
   "cit-000555": ["Petralia", "Sole author on the repository record: Petralia, L.M.C."],
   "cit-000564": ["Ng'ang'a", "Sole author on the title page: Peter Njenga Ng'ang'a, Freiburg dissertation, July 2020"],
