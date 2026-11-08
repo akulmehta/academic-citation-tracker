@@ -89,7 +89,21 @@ async function main() {
   // The folder's status decides which storage root it goes into (§5.1): a work
   // nobody has confirmed yet is not counsel's evidence and does not belong in
   // `papers/`. `lib.folderRoots` holds that rule; this only applies it.
-  const relOut = `${storageDir(folderRoots(db), FOLDER)}/${name}`;
+  const dir = storageDir(folderRoots(db), FOLDER);
+  // Re-filing the same bytes is a re-record, not a second copy. Without this, running
+  // the tool twice on one folder allocates `02-article-…` beside the `01-article-…` it
+  // already wrote, and the packet then claims two files for one article. The earlier
+  // path is reused only while the folder still sits in the same root: if a promotion
+  // moved it from `pending-papers/` to `papers/`, the stored path is stale and writing
+  // a fresh file under the new root is the right thing to do.
+  const rawSame = db.prepare(`SELECT file, bytes FROM file WHERE folder_uid=? AND source_pdf=?`)
+    .all(FOLDER, path.relative(PDF_ROOT, abs).split(path.sep).join("/"))
+    .find(f => Number(f.bytes) === buf.length);
+  const same = (rawSame && rawSame.file.split("/")[0] === dir) ? rawSame : null;
+  if (same && same.file !== name) {
+    console.log(`note     ${same.file} was filed from this source and its byte count matches — re-recording it rather than writing a second copy.`);
+  }
+  const relOut = same ? same.file : `${dir}/${name}`;
   console.log(`folder  ${FOLDER}  (${rows.length} row(s), main ${main.row_uid})`);
   console.log(`source  ${path.relative(PDF_ROOT, abs)}  ${(buf.length / 1024 / 1024).toFixed(1)} MB`);
   console.log(`target  ${relOut}`);
@@ -100,7 +114,12 @@ async function main() {
   const text = (await fileText(abs)).toLowerCase().replace(/[^a-z0-9]+/g, " ");
   const words = String(main.citing_title || "").toLowerCase().replace(/[^a-z0-9]+/g, " ").trim().split(" ");
   const probe = words.slice(0, Math.min(6, words.length)).join(" ");
-  const ok = probe.length > 0 && text.includes(probe);
+  // Some typeset PDFs split an `fi`/`fl` ligature into its letters with a gap
+  // ("filarial" extracts as "fi larial"), which breaks the spaced comparison on
+  // the correct paper. Comparing with the spaces removed cannot make a wrong
+  // paper pass — the probe is still six words long — so it is a widening of the
+  // match, not a weakening of it.
+  const ok = probe.length > 0 && (text.includes(probe) || text.replace(/ /g, "").includes(probe.replace(/ /g, "")));
   console.log(`title check  "${probe}" ${ok ? "found in the extracted text" : "NOT FOUND"}`);
   if (!ok) {
     console.error(`\nrefusing to file: the extracted text does not contain the opening of\n  "${main.citing_title}"\nso this PDF is not the article the folder stands for.`);
@@ -113,9 +132,24 @@ async function main() {
       source_pdf=excluded.source_pdf, role=excluded.role, shows_date=excluded.shows_date,
       date_basis=excluded.date_basis, cited=excluded.cited, bytes=excluded.bytes`);
   const updC = db.prepare(`UPDATE citation SET pdf_file=?, source_pdf=? WHERE row_uid=?`);
+  // The candidate queue is where the applicant decides what to chase, and it kept
+  // reading "Paywalled" or "Not in OpenAlex" beside a folder that now held the PDF —
+  // a queue that disagrees with the shelf sends someone off to fetch a paper already
+  // on disk. `has-pdf` is the state `discover-pdfs.js` itself uses for a row with a
+  // file, so this is the same mark, reached from the other direction.
+  const updCand = db.prepare(`UPDATE candidate SET discover_state='has-pdf',
+      discover_note = COALESCE(discover_note || '', ?), pdf_file=?, pdf_bytes=?, tried_at=?
+      WHERE row_uid=?`);
+  const candSeen = db.prepare(`SELECT 1 FROM candidate WHERE row_uid=?`);
+  const stamp = new Date().toISOString().slice(0, 19) + "Z";
 
   if (DRY) {
-    console.log(`\ndry run — would write ${relOut}, add a \`file\` row, and set pdf_file on ${rows.length} row(s).`);
+    const stale = rows.filter(r => {
+      const c = candSeen.get(r.row_uid);
+      return c && db.prepare(`SELECT discover_state s FROM candidate WHERE row_uid=?`).get(r.row_uid).s !== "has-pdf";
+    });
+    console.log(`\ndry run — would write ${relOut}, add a \`file\` row, and set pdf_file on ${rows.length} row(s).`
+      + (stale.length ? `\nAlso would move ${stale.length} candidate row(s) to 'has-pdf': ${stale.map(r => r.row_uid).join(", ")}.` : ""));
     console.log("Re-run with --write.");
   } else {
     const bak = PACKET_DB.replace(/\.sqlite$/, `.pre-file-pdf-${new Date().toISOString().replace(/[:.]/g, "-").slice(0, 19)}.bak`);
@@ -127,7 +161,16 @@ async function main() {
       fs.writeFileSync(outAbs, buf);
       insF.run(FOLDER, relOut, path.relative(PDF_ROOT, abs).split(path.sep).join("/"), ROLE, SHOWS, BASIS, CITED, buf.length);
       for (const r of rows) updC.run(relOut, path.relative(PDF_ROOT, abs).split(path.sep).join("/"), r.row_uid);
+      let moved = 0;
+      for (const r of rows) {
+        if (!candSeen.get(r.row_uid)) continue;
+        const cur = db.prepare(`SELECT discover_state s FROM candidate WHERE row_uid=?`).get(r.row_uid).s;
+        if (cur === "has-pdf") continue;
+        updCand.run(` | filed as ${relOut} on ${stamp.slice(0, 10)} (was: ${cur})`, relOut, buf.length, stamp, r.row_uid);
+        moved++;
+      }
       db.exec("COMMIT");
+      if (moved) console.log(`moved ${moved} candidate row(s) to 'has-pdf'.`);
     } catch (err) {
       db.exec("ROLLBACK");
       throw err;

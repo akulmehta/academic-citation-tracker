@@ -694,6 +694,31 @@ for (const r of cits) {
 }
 
 /* ------------------------------------------------------------------ */
+/* 12b. The candidate queue agrees with the shelf                       */
+/* ------------------------------------------------------------------ */
+// `candidate.discover_state` is what tells the applicant what still needs chasing.
+// PACKET-STATUS.md defines `open-copy` as "the row is only `has-pdf` once the file
+// is on disk", so a row carrying that state beside a folder that already holds the
+// article contradicts the document a reader uses to decide where to spend effort —
+// and sends someone to fetch a paper that is already filed. Two writers set the
+// state and neither re-checked the other, so this is the check that closes it.
+{
+  const stale = db.prepare(`
+    SELECT c.row_uid, c.discover_state FROM candidate c
+     WHERE c.discover_state NOT IN ('has-pdf','skipped')
+       AND EXISTS (SELECT 1 FROM file f WHERE f.folder_uid = c.row_uid)
+     ORDER BY c.row_uid`).all();
+  if (stale.length) {
+    fail("candidate-state", `${stale.length} candidate row(s) hold a PDF but still read `
+      + `${[...new Set(stale.map(r => r.discover_state))].join("/")} — run `
+      + `node scripts/sync-candidate-state.js --write: ${stale.slice(0, 6).map(r => r.row_uid).join(", ")}`);
+  } else if (!QUIET) {
+    const n = db.prepare(`SELECT COUNT(*) n FROM candidate WHERE discover_state='has-pdf'`).get().n;
+    note("candidate-state", `all ${n} candidate row(s) with a PDF on disk are marked 'has-pdf'`);
+  }
+}
+
+/* ------------------------------------------------------------------ */
 /* 13. --deep: re-read the PDFs and confirm every filed quote is in one */
 /* ------------------------------------------------------------------ */
 // §7 says a quotation must be verbatim text from the citing article. Everything

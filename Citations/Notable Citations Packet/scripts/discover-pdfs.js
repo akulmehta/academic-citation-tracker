@@ -334,10 +334,14 @@ async function fetchPdfs(db) {
       // its repository copy). Same bytes, same paper: the packet stores the file
       // once, under the row that stands, and points the other at it. Storing a
       // second copy would make the packet claim two papers where there is one.
-      const twin = db.prepare(`SELECT folder_uid, pdf_file FROM candidate
+      const twin = db.prepare(`SELECT row_uid, pdf_file FROM candidate
         WHERE pdf_url = ? AND pdf_file IS NOT NULL AND row_uid <> ? LIMIT 1`).get(r.pdf_url, r.row_uid);
       if (twin) {
-        upd.run("open-copy", `same file as ${twin.row_uid} (${r.pdf_source}); filed once under ${twin.folder_uid}`,
+        // A file fetched here is filed under its own `row_uid` (see `insF` below),
+        // so the twin's folder IS its row_uid. `candidate` has no `folder_uid`
+        // column; the packet's folder column on this table is `packet_row_uid`,
+        // which holds something else entirely (the confirmed packet folder).
+        upd.run("open-copy", `same file as ${twin.row_uid} (${r.pdf_source}); filed once under ${twin.row_uid}`,
           twin.pdf_file, null, senior, r.senior_author ? "catalog byline" : "publisher page (unverified)", stamp, r.row_uid);
         console.log(`  ${r.row_uid} duplicate of ${twin.row_uid} -> ${twin.pdf_file} (not stored twice)`);
         blocked++;

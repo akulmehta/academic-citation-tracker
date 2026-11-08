@@ -758,19 +758,34 @@ note("The scanner's reading lives in its own columns",
   const dlFiles = new Set();
   for (const [, v] of dl) for (const c of v) dlFiles.add(c.pdf_file);
   const imported = files.filter(f => !cands.some(c => c.pdf_file === f.file));
-  const importedFolders = [...new Set(imported.map(f => f.folder_uid))];
+  // `source_pdf` records where the bytes came from, so it — not a guess — separates the
+  // files retrieved into `downloads/` by the browser scripts from the ones the applicant
+  // placed in the `In Methods` folders. Calling a fetched paper "hand-placed" would tell
+  // a reader it cannot be reproduced from a script when it can.
+  const FETCHED_SRC = /^Notable Citations Packet[\\/]downloads[\\/]/;
+  const fetched = imported.filter(f => FETCHED_SRC.test(f.source_pdf || ""));
+  const placed = imported.filter(f => !FETCHED_SRC.test(f.source_pdf || ""));
+  const fetchedFolders = [...new Set(fetched.map(f => f.folder_uid))];
+  const importedFolders = [...new Set(placed.map(f => f.folder_uid))];
   const openUnfetched = db.prepare(`SELECT COUNT(*) n FROM candidate
     WHERE discover_state='open-copy' AND (pdf_file IS NULL OR pdf_file='')`).get().n;
   const stateCounts = db.prepare(`SELECT discover_state, COUNT(*) n FROM candidate GROUP BY 1 ORDER BY n DESC`).all();
 
   let body = "Every PDF in the storage roots (`papers/`, `pending-papers/`, `screened-papers/`) arrived\n"
-    + "one of two ways, and the distinction matters because only the first is reproducible from a\n"
-    + "script.\n\n"
+    + "one of three ways, and the distinction matters because only the first two are reproducible\n"
+    + "from a script.\n\n"
     + "**Fetched by `discover-pdfs.js`** — " + dlRows + " candidate row(s) across " + dlFiles.size
     + " distinct file(s), each recorded with the host it came from:\n\n"
     + "| host | rows | row_uid(s) |\n|---|---:|---|\n"
     + dl.map(([s, v]) => "| " + s + " | " + v.length + " | " + v.map(c => "`" + c.row_uid + "`").join(", ") + " |").join("\n")
     + "\n\nAll of them are open-access copies resolved through OpenAlex and taken from the publisher.\n\n"
+    + "**Retrieved through the applicant's logged-in browser** — " + fetched.length + " file(s) in "
+    + fetchedFolders.length + " folder(s), staged in `downloads/` by `fetch-downloads.js` (plain HTTP)\n"
+    + "or by the Playwright Chrome session and filed with `file-pdf.js`, which checked the article's\n"
+    + "title against the row before writing: " + fetched.map(f => "`" + f.folder_uid + "`").join(", ") + ".\n"
+    + "These are subscription or repository copies the script route could not reach; the mechanics,\n"
+    + "including the CDP download route and the hosts still behind Cloudflare, are in \u00a72.2 of the\n"
+    + "packet instructions.\n\n"
     + "**Placed in the folder by the applicant** — " + importedFolders.length + " folder(s) hold a file that\n"
     + "no candidate row claims as its fetch: " + importedFolders.map(x => "`" + x + "`").join(", ") + ".\n"
     + "These came from the `In Methods` / `In Acknowledgements` imports and were registered into table\n"
@@ -781,7 +796,7 @@ note("The scanner's reading lives in its own columns",
     + "Discovery state of all " + cands.length + " GLAD candidates, from `candidate.discover_state`:\n\n"
     + "| state | rows | meaning |\n|---|---:|---|\n";
   const MEANING = {
-    "has-pdf": "a PDF was already filed when the candidate list was seeded",
+    "has-pdf": "a PDF is on file for the row — seeded that way, fetched by a script, or filed with `file-pdf.js`",
     "open-copy": "an open-access copy was located; the row is only `has-pdf` once the file is on disk",
     "paywalled": "located behind a paywall — the applicant may be able to obtain these",
     "no-open-copy": "looked, nothing retrievable found",

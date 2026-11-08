@@ -1,0 +1,15 @@
+[
+  { "row_uid": "cit-000556", "url": "https://www.rpthjournal.org/cms/10.1016/j.rpth.2026.103414/attachment/5e1ef181-290b-47ad-a0b6-2820746565cf/mmc1.pdf", "source": "RPTH supplementary PDF from record" },
+  { "row_uid": "cit-000549", "url": "https://jscholarship.library.jhu.edu/items/0dbcacaf-9e37-49c3-8a95-a3f55b8ae645", "source": "JHU repository (HTML)", "html": true },
+  { "row_uid": "cit-000560", "url": "https://spiral.imperial.ac.uk/entities/publication/6ebd01fb-2687-4761-a614-c85c1a192b24", "source": "Spiral Imperial (HTML)", "html": true },
+  { "row_uid": "cit-000562", "url": "https://run.unl.pt/entities/publication/48e256d4-d5a1-4fde-a8a0-ec184408ff34", "source": "RUN UNL repository (HTML)", "html": true },
+  { "row_uid": "cit-000524", "url": "https://link.springer.com/protocol/10.1007/978-1-0716-0430-4_1", "source": "Springer protocol (HTML)", "html": true },
+  { "row_uid": "cit-000547", "url": "https://link.springer.com/chapter/10.1007/978-3-030-71187-0_35", "source": "Springer chapter (HTML)", "html": true },
+  { "row_uid": "cit-000561", "url": "https://link.springer.com/chapter/10.1007/978-3-030-77791-3_10", "source": "Springer chapter (HTML)", "html": true },
+  { "row_uid": "cit-000508", "url": "https://www.cell.com/trends/biochemical-sciences/pdf/S0968-0004(20)30266-8", "source": "Cell (gated)" },
+  { "row_uid": "cit-000526", "url": "https://www.liebertpub.com/doi/pdf/10.1089/omi.2019.0149", "source": "Mary Ann Liebert (gated)" },
+  { "row_uid": "cit-000543", "url": "https://academic.oup.com/glycob/article-abstract/32/7/552/6555547", "source": "OUP Glycobiology (HTML)", "html": true },
+  { "row_uid": "cit-000548", "url": "https://books.rsc.org/books/edited-volume/2205/chapter/8051227", "source": "RSC books (HTML)", "html": true },
+  { "row_uid": "cit-000512", "url": "https://pubs.acs.org/jaaucr/article-abstract/3/1/4/1253251", "source": "ACS JACS-Au (HTML)", "html": true },
+  { "row_uid": "cit-000514", "url": "https://www.mcponline.org/article/S1535-9476(22)00009-3/fulltext", "source": "MCP fulltext (HTML)", "html": true }
+]

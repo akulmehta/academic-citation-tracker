@@ -16,8 +16,8 @@ decision that only a person can make.
 | Citations in the packet (in `packet.html`) | 22 |
 | Works those citations are filed as (§5.1 folders) | 14 |
 | PDFs filed under `papers/` (in the packet) | 16 |
-| PDFs under `pending-papers/` (awaiting a decision) | 5 |
-| PDFs under `screened-papers/` (kept, not filed) | 2 |
+| PDFs under `pending-papers/` (awaiting a decision) | 16 |
+| PDFs under `screened-papers/` (kept, not filed) | 3 |
 | Held — open items, listed below | 32 |
 | Screened out — decided, kept for the record (§4.5) | 4 |
 | **Rows in table `citation`** | **58** |
@@ -31,16 +31,24 @@ every held row appears in §2 below.
 ## 2. Held rows — 32 open items
 
 
-### 2.1 `read` — 2 row(s)
+### 2.1 `read` — 10 row(s)
 
 The PDF is filed and the applicant's tool appears in a section of the paper. What is missing is the applicant's reading: a location on its own is not a claim about how the tool was used (§1.1).
 
 | row_uid | tool | year | senior author | citing title | link |
 |---|---|---|---|---|---|
+| `cit-000507` | GLAD | 2020 | Campbell | Recent advances in glycoinformatic platforms for glycomics and glycoproteom… | [open](https://www.sciencedirect.com/science/article/pii/S0959440X19301356) |
+| `cit-000566` | GLAD | 2020 | Garín-Muga | SugarArray: A User-centred-designed Platform for the Analysis of Lectin and… | [open](https://www.scitepress.org/PublishedPapers/2020/89601/89601.pdf) |
+| `cit-000525` | GLAD | 2021 | Haab | Combined analysis of multiple glycan-array datasets: new explorations of pr… | [open](https://pmc.ncbi.nlm.nih.gov/articles/PMC8862541/) |
+| `cit-000543` | GLAD | 2022 | Feizi | CarbArrayART: a new software tool for carbohydrate microarray data storage,… | [open](https://academic.oup.com/glycob/article-abstract/32/7/552/6555547) |
 | `cit-000510` | GLAD | 2023 | Pekosz | 2019–2020 H1N1 clade A5a. 1 viruses have better in vitro fitness compared w… | [open](https://www.nature.com/articles/s41598-023-37122-z) |
+| `cit-000532` | GLAD | 2023 | Hokke | Unraveling cross-reactivity of anti-glycan IgG responses in filarial nemato… | [open](https://www.frontiersin.org/journals/immunology/articles/10.3389/fimmu.2023.1102344/full) |
+| `cit-000538` | GLAD | 2023 | Kiessling | Lectin fingerprinting distinguishes antibody neutralization in SARS-CoV-2 | [open](https://pmc.ncbi.nlm.nih.gov/articles/PMC10214521/) |
 | `cit-000520` | GLAD | 2025 | Vasta | A “proto” type galectin expressed in striped bass (Morone saxatilis) tissue… | [open](https://www.frontiersin.org/journals/cellular-and-infection-microbiology/articles/10.3389/fcimb.2025.1572734/full) |
+| `cit-000549` | GLAD | — | Swanson | CHARACTERIZATION OF IN VITRO FITNESS AND ANTIGENIC DRIFT DIFFERENCES BETWEE… | [open](https://jscholarship.library.jhu.edu/items/0dbcacaf-9e37-49c3-8a95-a3f55b8ae645) |
+| `cit-000564` | GLAD | — | Ng'ang'a | Structure-function analysis of the photorhabdus Tc toxin complex | [open](https://freidok.uni-freiburg.de/files/166648/Qf-K5JUjPFmyT68-/Peter+NjengaThesis.pdf) |
 
-### 2.3 `unsupported` — 3 row(s)
+### 2.3 `unsupported` — 6 row(s)
 
 The PDF is filed, but the extracted text does not support a use in any section — the mentions sit in the reference list, in a table, or under a heading the paper did not print. Either re-read the page and record what it says, or screen the row out.
 
@@ -49,54 +57,46 @@ The PDF is filed, but the extracted text does not support a use in any section �
 | `cit-000536` | GLAD | 2019 | Afanasiev | Metabolite multiprobiotic formulas for microbial health | [open](https://www.intechopen.com/chapters/67420) |
 | `cit-000550` | GLAD | 2019 | Lisacek | A bioinformatics view of glycan–virus interactions | [open](https://www.mdpi.com/1999-4915/11/4/374) |
 | `cit-000513` | GLAD | 2020 | Zou | Databases and bioinformatic tools for glycobiology and glycoproteomics | [open](https://www.mdpi.com/1422-0067/21/18/6727) |
+| `cit-000541` | GLAD | 2020 | Cha | An automated fast healthcare interoperability resources-based 12-lead elect… | [open](https://pmc.ncbi.nlm.nih.gov/articles/PMC7214107/) |
+| `cit-000554` | GLAD | 2021 | Sukhija | Glycobioinformatics in deciphering the mammalian glycocode: Recent advances | [open](https://www.dattaconsultinggroup.com/akdsite/assets/publications/glycocodearticle.pdf) |
+| `cit-000531` | GLAD | 2024 | Pekosz | Clade-defining mutations in human H1N1 hemagglutinin protein from 2021-2023… | [open](https://www.biorxiv.org/content/10.1101/2024.05.18.594815.abstract) |
 
-### 2.4 `paywalled` — 8 row(s)
+### 2.4 `paywalled` — 5 row(s)
 
 A copy exists behind a paywall. If the applicant can obtain the PDF through an institution, drop it in the folder and the row can be read.
 
 | row_uid | tool | year | senior author | citing title | link |
 |---|---|---|---|---|---|
-| `cit-000541` | GLAD | 2020 | Cha | An automated fast healthcare interoperability resources-based 12-lead elect… | [open](https://pmc.ncbi.nlm.nih.gov/articles/PMC7214107/) |
+| `cit-000526` | GLAD | 2019 | Kunej | Rise of systems glycobiology and personalized glycomedicine: why and how to… | [open](https://journals.sagepub.com/doi/abs/10.1089/omi.2019.0149) |
 | `cit-000508` | GLAD | 2021 | Lewis | Big-data glycomics: tools to connect glycan biosynthesis to extracellular c… | [open](https://www.cell.com/trends/biochemical-sciences/abstract/S0968-0004(20)30266-8) |
 | `cit-000514` | GLAD | 2022 | Hokke | Mass spectrometric and glycan microarray–based characterization of the fila… | [open](https://www.mcponline.org/article/S1535-9476(22)00009-3/fulltext) |
-| `cit-000543` | GLAD | 2022 | Feizi | CarbArrayART: a new software tool for carbohydrate microarray data storage,… | [open](https://academic.oup.com/glycob/article-abstract/32/7/552/6555547) |
-| `cit-000538` | GLAD | 2023 | Kiessling | Lectin fingerprinting distinguishes antibody neutralization in SARS-CoV-2 | [open](https://pmc.ncbi.nlm.nih.gov/articles/PMC10214521/) |
 | `cit-000512` | GLAD | — | Aoki-Kinoshita | Worldwide glycoscience informatics infrastructure: the GlySpace Alliance | [open](https://pubs.acs.org/jaaucr/article-abstract/3/1/4/1253251) |
-| `cit-000548` | GLAD | — | Perez | CBMcarb-DB: interface of the three-dimensional landscape of carbohydrate-bi… | [open](https://books.rsc.org/books/edited-volume/2205/chapter/8051227) |
-| `cit-000562` | GLAD | — | Feizi | CarbArrayART | [open](https://run.unl.pt/entities/publication/48e256d4-d5a1-4fde-a8a0-ec184408ff34) |
+| `cit-000556` | GLAD | — | — | Phenotyping murine and human platelet-derived extracellular vesicles gives … | [open](https://www.rpthjournal.org/cms/10.1016/j.rpth.2026.103414/attachment/5e1ef181-290b-47ad-a0b6-2820746565cf/mmc1.pdf) |
 
-### 2.5 `no-open-copy` — 11 row(s)
+### 2.5 `no-open-copy` — 9 row(s)
 
 No openly accessible copy was found. The publisher's landing page is given so the applicant can check institutional access.
 
 | row_uid | tool | year | senior author | citing title | link |
 |---|---|---|---|---|---|
-| `cit-000526` | GLAD | 2019 | Kunej | Rise of systems glycobiology and personalized glycomedicine: why and how to… | [open](https://journals.sagepub.com/doi/abs/10.1089/omi.2019.0149) |
-| `cit-000507` | GLAD | 2020 | Campbell | Recent advances in glycoinformatic platforms for glycomics and glycoproteom… | [open](https://www.sciencedirect.com/science/article/pii/S0959440X19301356) |
 | `cit-000524` | GLAD | 2020 | Imberty | Structural database for lectins and the UniLectin web platform | [open](https://link.springer.com/protocol/10.1007/978-1-0716-0430-4_1) |
 | `cit-000546` | GLAD | 2020 | — | Decoding glycans: deciphering the sugary secrets to be coherent on the impl… | [open](https://pubs.rsc.org/ra/article-abstract/10/56/34099/702166) |
 | `cit-000547` | GLAD | 2020 | Aruleba | Visual data mining: A comparative analysis of selected datasets | [open](https://link.springer.com/chapter/10.1007/978-3-030-71187-0_35) |
-| `cit-000566` | GLAD | 2020 | — | SugarArray: A User-centred-designed Platform for the Analysis of Lectin and… | [open](https://www.scitepress.org/PublishedPapers/2020/89601/89601.pdf) |
-| `cit-000525` | GLAD | 2021 | — | Combined analysis of multiple glycan-array datasets: new explorations of pr… | [open](https://pmc.ncbi.nlm.nih.gov/articles/PMC8862541/) |
 | `cit-000561` | GLAD | 2021 | Willats | Carbohydrate Microarray Technology | [open](https://link.springer.com/chapter/10.1007/978-3-030-77791-3_10) |
-| `cit-000532` | GLAD | 2023 | Hokke | Unraveling cross-reactivity of anti-glycan IgG responses in filarial nemato… | [open](https://www.frontiersin.org/journals/immunology/articles/10.3389/fimmu.2023.1102344/full) |
-| `cit-000531` | GLAD | 2024 | Pekosz | Clade-defining mutations in human H1N1 hemagglutinin protein from 2021-2023… | [open](https://www.biorxiv.org/content/10.1101/2024.05.18.594815.abstract) |
-| `cit-000567` | GLAD | — | Tiemeyer | Glycoinformatics resources integrated through the GlySpace Alliance | — |
+| `cit-000548` | GLAD | — | Perez | CBMcarb-DB: interface of the three-dimensional landscape of carbohydrate-bi… | [open](https://books.rsc.org/books/edited-volume/2205/chapter/8051227) |
+| `cit-000555` | GLAD | — | Petralia | Ad ancing helminth gl comics: structural specificit and immunogenicit of sc… | [open](https://scholarlypublications.universiteitleiden.nl/access/item%3A4212215/download) |
+| `cit-000559` | GLAD | — | — | Glycan Microarray Data Analysis: From Raw Data to Public Database Integrati… | [open](https://www.creative-proteomics.com/resource/glycan-microarray-analysis-and-database-integration.htm) |
+| `cit-000560` | GLAD | — | Feizi | CarbArrayART-An update on the software tool for carbohydrate microarray dat… | [open](https://spiral.imperial.ac.uk/entities/publication/6ebd01fb-2687-4761-a614-c85c1a192b24) |
+| `cit-000562` | GLAD | — | Feizi | CarbArrayART | [open](https://run.unl.pt/entities/publication/48e256d4-d5a1-4fde-a8a0-ec184408ff34) |
 
-### 2.6 `not-in-indexes` — 8 row(s)
+### 2.6 `not-in-indexes` — 2 row(s)
 
 Neither PubMed nor OpenAlex returned the work, so there was nothing to fetch. These tend to be theses, book chapters, or commercial pages.
 
 | row_uid | tool | year | senior author | citing title | link |
 |---|---|---|---|---|---|
-| `cit-000554` | GLAD | 2021 | Sukhija | Glycobioinformatics in deciphering the mammalian glycocode: Recent advances | [open](https://www.dattaconsultinggroup.com/akdsite/assets/publications/glycocodearticle.pdf) |
-| `cit-000549` | GLAD | — | — | CHARACTERIZATION OF IN VITRO FITNESS AND ANTIGENIC DRIFT DIFFERENCES BETWEE… | [open](https://jscholarship.library.jhu.edu/items/0dbcacaf-9e37-49c3-8a95-a3f55b8ae645) |
 | `cit-000552` | GLAD | — | — | METABOLITE MULTIPRO/SYNBIOTICS: APPROACHES FOR CONSTRUCTING | — |
-| `cit-000555` | GLAD | — | — | Ad ancing helminth gl comics: structural specificit and immunogenicit of sc… | [open](https://scholarlypublications.universiteitleiden.nl/access/item%3A4212215/download) |
-| `cit-000556` | GLAD | — | — | Phenotyping murine and human platelet-derived extracellular vesicles gives … | [open](https://www.rpthjournal.org/cms/10.1016/j.rpth.2026.103414/attachment/5e1ef181-290b-47ad-a0b6-2820746565cf/mmc1.pdf) |
-| `cit-000559` | GLAD | — | — | Glycan Microarray Data Analysis: From Raw Data to Public Database Integrati… | [open](https://www.creative-proteomics.com/resource/glycan-microarray-analysis-and-database-integration.htm) |
-| `cit-000560` | GLAD | — | Feizi | CarbArrayART-An update on the software tool for carbohydrate microarray dat… | [open](https://spiral.imperial.ac.uk/entities/publication/6ebd01fb-2687-4761-a614-c85c1a192b24) |
-| `cit-000564` | GLAD | — | — | Structure-function analysis of the photorhabdus Tc toxin complex | [open](https://freidok.uni-freiburg.de/files/166648/Qf-K5JUjPFmyT68-/Peter+NjengaThesis.pdf) |
+| `cit-000567` | GLAD | — | Tiemeyer | Glycoinformatics resources integrated through the GlySpace Alliance | — |
 
 ## 3. Decisions the packet is waiting on
 
@@ -287,7 +287,7 @@ evidence until a person has read the article and filed it.
 | less decided against by the applicant | 1 |
 | **listed for review** | **34** |
 
-5 of them already have a PDF on file, held under `pending-papers/` until a
+16 of them already have a PDF on file, held under `pending-papers/` until a
 decision is made. The rest sit at
 `no-open-copy`, `paywalled`, or `not-in-indexes` — findings about access, not about
 whether the paper exists. **A tier appears only for an article that has actually been read:**
@@ -364,9 +364,8 @@ evidence looks like something and is not.
 
 | basis of a recorded mention | mentions | rows |
 |---|---:|---:|
-| extracted text | 23 | 19 |
-| reference-number resolution | 12 | 11 |
-| human reading | 1 | 1 |
+| reference-number resolution | 34 | 30 |
+| extracted text | 4 | 3 |
 
 A resolved citation is held to the same bar as one that names the tool: it must sit in
 prose, under a heading the citing paper itself printed, and not in the bibliography entry
@@ -374,12 +373,12 @@ that names the applicant's paper — a reference list proves only that the autho
 work, not where or how. Where a row's tier rests on such a citation, that is said in the
 report rather than left for a reader to infer from a section heading alone.
 
-13 mentions across 12 citing works rest on resolution or on a person’s
+34 mentions across 30 citing works rest on resolution or on a person’s
 reading, not on a named-tool scan. `scan-mentions.js` reports those rows separately and
 leaves their tier alone — it is not built to find them, so its silence is not evidence
 against them.
 
-Resolution also reached 3 citation(s) on rows the packet has already screened
+Resolution also reached 4 citation(s) on rows the packet has already screened
 out. Those rows stay out: each was screened for a reason the citation does not answer
 — one is not independent, the other was already submitted with the original application
 — and a stronger citation cannot undo either. They are recorded rather than dropped so
@@ -388,22 +387,33 @@ the decision can be re-examined if the reason for it changes.
 ### 5.6 How each PDF got here, and what is still missing
 
 Every PDF in the storage roots (`papers/`, `pending-papers/`, `screened-papers/`) arrived
-one of two ways, and the distinction matters because only the first is reproducible from a
-script.
+one of three ways, and the distinction matters because only the first two are reproducible
+from a script.
 
-**Fetched by `discover-pdfs.js`** — 6 candidate row(s) across 6 distinct file(s), each recorded with the host it came from:
+**Fetched by `discover-pdfs.js`** — 20 candidate row(s) across 20 distinct file(s), each recorded with the host it came from:
 
 | host | rows | row_uid(s) |
 |---|---:|---|
+| (no source recorded) | 11 | `cit-000507`, `cit-000523`, `cit-000525`, `cit-000531`, `cit-000532`, `cit-000534`, `cit-000549`, `cit-000554`, `cit-000564`, `cit-000566`, `cit-000621` |
 | www.nature.com | 2 | `cit-000510`, `cit-000511` |
 | www.mdpi.com | 2 | `cit-000513`, `cit-000550` |
 | www.frontiersin.org | 1 | `cit-000520` |
 | www.intechopen.com | 1 | `cit-000536` |
+| pubs.acs.org | 1 | `cit-000538` |
+| eymj.org | 1 | `cit-000541` |
+| academic.oup.com | 1 | `cit-000543` |
 
 All of them are open-access copies resolved through OpenAlex and taken from the publisher.
 
-**Placed in the folder by the applicant** — 15 folder(s) hold a file that
-no candidate row claims as its fetch: `cit-000544`, `cit-000594`, `cit-001253`, `cit-000518`, `cit-000521`, `cit-000629`, `cit-000619`, `cit-000542`, `cit-000602`, `cit-000516`, `cit-000613`, `cit-001257`, `cit-000416`, `cit-000621`, `cit-000534`.
+**Retrieved through the applicant's logged-in browser** — 0 file(s) in 0 folder(s), staged in `downloads/` by `fetch-downloads.js` (plain HTTP)
+or by the Playwright Chrome session and filed with `file-pdf.js`, which checked the article's
+title against the row before writing: .
+These are subscription or repository copies the script route could not reach; the mechanics,
+including the CDP download route and the hosts still behind Cloudflare, are in §2.2 of the
+packet instructions.
+
+**Placed in the folder by the applicant** — 13 folder(s) hold a file that
+no candidate row claims as its fetch: `cit-000544`, `cit-000594`, `cit-001253`, `cit-000518`, `cit-000521`, `cit-000629`, `cit-000619`, `cit-000542`, `cit-000602`, `cit-000516`, `cit-000613`, `cit-001257`, `cit-000416`.
 These came from the `In Methods` / `In Acknowledgements` imports and were registered into table
 `file`; nothing downloaded them.
 
@@ -415,15 +425,15 @@ Discovery state of all 108 GLAD candidates, from `candidate.discover_state`:
 
 | state | rows | meaning |
 |---|---:|---|
-| `no-open-copy` | 34 | looked, nothing retrievable found |
-| `open-copy` | 29 | an open-access copy was located; the row is only `has-pdf` once the file is on disk |
-| `not-in-indexes` | 22 | not found in the open-access indexes consulted |
-| `has-pdf` | 13 | a PDF was already filed when the candidate list was seeded |
-| `paywalled` | 10 | located behind a paywall — the applicant may be able to obtain these |
+| `has-pdf` | 33 | a PDF is on file for the row — seeded that way, fetched by a script, or filed with `file-pdf.js` |
+| `no-open-copy` | 30 | looked, nothing retrievable found |
+| `open-copy` | 23 | an open-access copy was located; the row is only `has-pdf` once the file is on disk |
+| `not-in-indexes` | 16 | not found in the open-access indexes consulted |
+| `paywalled` | 6 | located behind a paywall — the applicant may be able to obtain these |
 
 **Still open:** 23 row(s) sit at `open-copy` with no file on disk — a copy was
 located and never fetched. Chasing them is a decision, not a defect: a row must be independent
-(§1.2) before it is worth a download, and 18 candidate(s) are already held — check why before spending effort on a PDF for a row that
+(§1.2) before it is worth a download, and 30 candidate(s) are already held — check why before spending effort on a PDF for a row that
 cannot be filed.
 
 ## 6. Before handing the packet over

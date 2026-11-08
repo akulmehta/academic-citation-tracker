@@ -1,5 +1,6 @@
 folder_uid,file,source_pdf,role,shows_date,date_basis,cited,bytes
 cit-000416,papers/cit-000416/01-article-Guerardel-2026.pdf,Citations/In Methods/Yann-Guerardel-MAWE-cwag085.pdf,article,,,1,1020346
+cit-000507,pending-papers/cit-000507/01-article-Campbell-2020.pdf,Notable Citations Packet/downloads/cit-000507-Campbell.pdf,article,,,1,776604
 cit-000510,pending-papers/cit-000510/01-article-Pekosz-2023.pdf,downloaded from www.nature.com,article,,,1,4786345
 cit-000511,screened-papers/cit-000511/01-article-Cummings-2020.pdf,downloaded from www.nature.com,article,,,1,2467850
 cit-000513,pending-papers/cit-000513/01-article-Zou-2020.pdf,downloaded from www.mdpi.com,article,,,1,2715367
@@ -7,13 +8,24 @@ cit-000516,papers/cit-000516/01-article-Vasta-2026.pdf,Citations/In Methods/Glyc
 cit-000518,papers/cit-000518/01-article-Hokke-2026.pdf,Citations/In Methods/GLAD-Hokke-2026.pdf,article,,,1,3332233
 cit-000520,pending-papers/cit-000520/01-article-Vasta-2025.pdf,downloaded from www.frontiersin.org,article,,,1,9052779
 cit-000521,papers/cit-000521/01-article-Wilson-2025.pdf,Citations/In Methods/GLAD-Wilson-2026.pdf,article,,,1,3379263
+cit-000523,screened-papers/cit-000523/01-article-Kimber-2022.pdf,Notable Citations Packet/downloads/cit-000523-Kimber.pdf,article,,,1,11014688
+cit-000525,pending-papers/cit-000525/01-article-Haab-2021.pdf,Notable Citations Packet/downloads/cit-000525-Yamashita.pdf,article,,,1,1776125
+cit-000531,pending-papers/cit-000531/01-article-Pekosz-2024.pdf,Notable Citations Packet/downloads/cit-000531-Pekosz.pdf,article,,,1,1420349
+cit-000532,pending-papers/cit-000532/01-article-Hokke-2023.pdf,Notable Citations Packet/downloads/cit-000532-Hokke.pdf,article,,,1,9001285
 cit-000534,screened-papers/cit-000534/01-article-Schmidt.pdf,Notable Citations Packet/downloads/cit-000534-wiley.pdf,article,,,1,27667947
 cit-000536,pending-papers/cit-000536/01-article-Afanasiev-2019.pdf,downloaded from www.intechopen.com,article,,,1,487700
+cit-000538,pending-papers/cit-000538/01-article-Kiessling-2023.pdf,Notable Citations Packet/downloads/cit-000538-Kiessling.pdf,article,,,1,5887017
+cit-000541,pending-papers/cit-000541/01-article-Cha-2020.pdf,Notable Citations Packet/downloads/cit-000541-Cha.pdf,article,,,1,1687315
 cit-000542,papers/cit-000542/01-article-VanDerWal-2026.pdf,Citations/In Acknowledgements/Dianne-van-der-Wal_GLAD.pdf,article,,,1,4902151
+cit-000543,pending-papers/cit-000543/01-article-Feizi-2022.pdf,Notable Citations Packet/downloads/cit-000562-Feizi.pdf,article,,,1,595628
 cit-000544,papers/cit-000544/01-preprint-Heras-2023-04-29.pdf,Citations/In Methods/GLAD-heras-2023-original-bioarchive-preprint.pdf,preprint,2023-04-29,Citation-summary.docx (earliest-date line),1,1117714
 cit-000544,papers/cit-000544/02-webpage-Heras-2023.pdf,Citations/In Methods/GLAD-heras-2023-original-bioarchive-preprint-webpage.pdf,webpage,2023-04-29,"bioRxiv page printed in this PDF: ""Posted April 29, 2023.""",0,459413
 cit-000544,papers/cit-000544/03-article-Heras-2024.pdf,Citations/In Methods/GLAD-heras-2024.pdf,article,2024-01-18,"Article page 1 printed in this PDF: ""Received 18 January 2024; Accepted 8 July 2024"" (the submission date, which is the earliest journal-side date; publication followed the 25 Apr 2024 filing)",1,1124497
+cit-000549,pending-papers/cit-000549/01-article-Swanson.pdf,Notable Citations Packet/downloads/cit-000549-Swanson.pdf,article,,,1,9035738
 cit-000550,pending-papers/cit-000550/01-article-Lisacek-2019.pdf,downloaded from www.mdpi.com,article,,,1,3928794
+cit-000554,pending-papers/cit-000554/01-article-Sukhija-2021.pdf,Notable Citations Packet/downloads/cit-000554-Sukhija.pdf,article,,,1,1342474
+cit-000564,pending-papers/cit-000564/01-article-Nganga.pdf,Notable Citations Packet/downloads/cit-000564-article.pdf,article,,,1,19956022
+cit-000566,pending-papers/cit-000566/01-article-GarinMuga-2020.pdf,Notable Citations Packet/downloads/cit-000566-article.pdf,article,,,1,996363
 cit-000594,papers/cit-000594/01-article-Knight-2026.pdf,Citations/In Methods/GlycoGlyph-Knight-2026.pdf,article,,,1,1863165
 cit-000602,papers/cit-000602/01-article-Subramaniam-2026.pdf,Citations/In Methods/Subramaniam-2026-GlycoGlyph.pdf,article,,,1,5417429
 cit-000613,papers/cit-000613/01-article-Maares-2026.pdf,Citations/In Results and Figures/GlycoGlyph-Maares-2026.pdf,article,,,1,9689493

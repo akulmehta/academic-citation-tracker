@@ -1,0 +1,82 @@
+[
+  {
+    "row_uid": "cit-000508",
+    "state": "paywalled",
+    "note": "attempted 2026-11-09 through the applicant's logged-in Chrome and the Harvard Athens redirect; Cell Trends in Biochemical Sciences returned the abstract page only, no PDF link, and the Athens redirect produced no article body. Needs a personal subscription or the applicant's ill document delivery."
+  },
+  {
+    "row_uid": "cit-000512",
+    "state": "paywalled",
+    "note": "attempted 2026-11-09: pubs.acs.org sits behind a Cloudflare interstitial (page title 'Just a moment...', HTTP 403 to a plain request). Stopped rather than retrying, per the access-wall rule; the applicant can clear it in the browser."
+  },
+  {
+    "row_uid": "cit-000514",
+    "state": "paywalled",
+    "note": "attempted 2026-11-09: mcponline.org sits behind a Cloudflare interstitial (HTTP 403). Harvard Athens did not return a usable article for it. Needs the applicant to clear the wall."
+  },
+  {
+    "row_uid": "cit-000524",
+    "state": "no-open-copy",
+    "note": "attempted 2026-11-09: Springer Protocols chapter. The landing page exposes no citation_pdf_url and no bitstream, and the chapter is subscription-only. Book-chapter hosts in this corpus consistently publish no PDF at all."
+  },
+  {
+    "row_uid": "cit-000526",
+    "state": "paywalled",
+    "note": "attempted 2026-11-09: journals.sagepub.com sits behind a Cloudflare interstitial (HTTP 403). Needs the applicant to clear the wall."
+  },
+  {
+    "row_uid": "cit-000546",
+    "state": "no-open-copy",
+    "note": "attempted 2026-11-09: RSC Advances article-abstract URL only; the host returned 403 to a plain request and no PDF link is published on the abstract page."
+  },
+  {
+    "row_uid": "cit-000547",
+    "state": "no-open-copy",
+    "note": "attempted 2026-11-09: Springer book chapter, no citation_pdf_url and no bitstream on the landing page."
+  },
+  {
+    "row_uid": "cit-000548",
+    "state": "no-open-copy",
+    "note": "attempted 2026-11-09: RSC edited-volume chapter (books.rsc.org); subscription-only and no PDF is exposed on the chapter page."
+  },
+  {
+    "row_uid": "cit-000552",
+    "state": "not-in-indexes",
+    "note": "no URL of any kind on the row. A thesis or report not resolvable from the Scholar record; needs the applicant to say where it was published before it can be looked for."
+  },
+  {
+    "row_uid": "cit-000555",
+    "state": "no-open-copy",
+    "note": "attempted 2026-11-09: the Leiden repository link downloads a 2-page cover sheet, not the thesis body, so it was not filed. Separately, Google Scholar itself renders this title with dropped letters ('Ad ancing helminth gl comics', 'immunogenicit', 'gl cans') - confirmed in the filed exhibit HTML and in Scholar's own BibTeX, so the packet reproduces a defective byline rather than introducing one. Senior author Petralia."
+  },
+  {
+    "row_uid": "cit-000556",
+    "state": "paywalled",
+    "note": "attempted 2026-11-09: rpthjournal.org sits behind a Cloudflare interstitial (HTTP 403). The URL on the row is an mmc1 supplementary attachment, not the article PDF."
+  },
+  {
+    "row_uid": "cit-000559",
+    "state": "no-open-copy",
+    "note": "attempted 2026-11-09: the only link is a creative-proteomics.com marketing page, not a published article. A vendor web page is not a citing work counsel can file; needs a person to decide whether the row stands at all."
+  },
+  {
+    "row_uid": "cit-000560",
+    "state": "no-open-copy",
+    "note": "attempted 2026-11-09: the Imperial Spiral record's own title is 'CarbArrayART-An update...' but the deposited bitstream is 10.1093/glycob/cwac018, which is cit-000543's paper. Europe PMC (PMID 35352122 / PMC9191619) and Crossref both return exactly one CarbArrayART article, so cit-000543, cit-000560 and cit-000562 are three Scholar rows for one work under three titles. Not filed a second time; the copy is filed once under cit-000543, whose title it matches."
+  },
+  {
+    "row_uid": "cit-000561",
+    "state": "no-open-copy",
+    "note": "attempted 2026-11-09: Springer book chapter, no citation_pdf_url and no bitstream on the landing page."
+  },
+  {
+    "row_uid": "cit-000562",
+    "state": "no-open-copy",
+    "note": "retrieved 2026-11-09 through the applicant's logged-in Chrome from RUN UNL, but the deposited file is the cwac018 article (see cit-000560), which this row's Scholar title 'CarbArrayART' does not match. It is the same work as cit-000543, whose title it does match, so it was filed there and not duplicated here."
+  },
+  {
+    "row_uid": "cit-000567",
+    "state": "not-in-indexes",
+    "note": "no URL of any kind on the row. Needs the applicant to say where it was published before it can be looked for."
+  }
+]

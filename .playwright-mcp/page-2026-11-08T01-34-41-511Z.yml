@@ -1,0 +1,161 @@
+- generic [active] [ref=e1]:
+  - link "Skip to main content" [ref=e2] [cursor=pointer]:
+    - /url: "#main-content"
+  - generic [ref=e3]:
+    - banner [ref=e4]:
+      - navigation [ref=e13]:
+        - menu [ref=e14]:
+          - menuitem [ref=e15]:
+            - link "Home" [ref=e16] [cursor=pointer]:
+              - /url: /
+          - menuitem [ref=e17]:
+            - text: "|"
+            - link "Submit" [ref=e18] [cursor=pointer]:
+              - /url: /submit-a-manuscript
+          - menuitem [ref=e19]:
+            - text: "|"
+            - link "FAQ" [ref=e20] [cursor=pointer]:
+              - /url: /about/FAQ
+          - menuitem [ref=e21]:
+            - text: "|"
+            - link "Blog" [ref=e22] [cursor=pointer]:
+              - /url: https://connect.biorxiv.org/news/
+          - menuitem [ref=e23]:
+            - text: "|"
+            - link "ALERTS / RSS" [ref=e24] [cursor=pointer]:
+              - /url: /content/alertsrss
+          - menuitem [ref=e25]:
+            - text: "|"
+            - link "Resources" [ref=e26] [cursor=pointer]:
+              - /url: https://connect.biorxiv.org/resources/
+          - menuitem [ref=e27]:
+            - text: "|"
+            - link "About" [ref=e28] [cursor=pointer]:
+              - /url: /content/about-biorxiv
+          - menuitem [ref=e29]:
+            - text: "|"
+            - link "Channels" [ref=e30] [cursor=pointer]:
+              - /url: "#"
+    - generic [ref=e40]:
+      - generic [ref=e48]:
+        - generic [ref=e49]:
+          - generic [ref=e50]: Search for this keyword
+          - textbox "Search for this keyword" [ref=e51]:
+            - /placeholder: "Search "
+        - generic [ref=e52] [cursor=pointer]:
+          - generic [ref=e53]: 
+          - button "Search" [ref=e54]
+      - paragraph [ref=e57]:
+        - link "Advanced Search" [ref=e58] [cursor=pointer]:
+          - /url: /search
+      - generic [ref=e63]:
+        - generic [ref=e64]: Subject Areas
+        - link [ref=e72] [cursor=pointer]:
+          - /url: /content/early/recent
+          - strong [ref=e73]: All Articles
+        - generic [ref=e76]:
+          - generic [ref=e78]:
+            - list [ref=e79]:
+              - listitem [ref=e80]:
+                - link "Animal Behavior and Cognition" [ref=e83] [cursor=pointer]:
+                  - /url: /collection/animal-behavior-and-cognition
+              - listitem [ref=e84]:
+                - link "Biochemistry" [ref=e87] [cursor=pointer]:
+                  - /url: /collection/biochemistry
+              - listitem [ref=e88]:
+                - link "Bioengineering" [ref=e91] [cursor=pointer]:
+                  - /url: /collection/bioengineering
+              - listitem [ref=e92]:
+                - link "Bioinformatics" [ref=e95] [cursor=pointer]:
+                  - /url: /collection/bioinformatics
+              - listitem [ref=e96]:
+                - link "Biophysics" [ref=e99] [cursor=pointer]:
+                  - /url: /collection/biophysics
+              - listitem [ref=e100]:
+                - link "Cancer Biology" [ref=e103] [cursor=pointer]:
+                  - /url: /collection/cancer-biology
+              - listitem [ref=e104]:
+                - link "Cell Biology" [ref=e107] [cursor=pointer]:
+                  - /url: /collection/cell-biology
+              - listitem [ref=e108]:
+                - link "Clinical Trials*" [ref=e111] [cursor=pointer]:
+                  - /url: /collection/clinical-trials
+              - listitem [ref=e112]:
+                - link "Developmental Biology" [ref=e115] [cursor=pointer]:
+                  - /url: /collection/developmental-biology
+            - list [ref=e116]:
+              - listitem [ref=e117]:
+                - link "Ecology" [ref=e120] [cursor=pointer]:
+                  - /url: /collection/ecology
+              - listitem [ref=e121]:
+                - link "Epidemiology*" [ref=e124] [cursor=pointer]:
+                  - /url: /collection/epidemiology
+              - listitem [ref=e125]:
+                - link "Evolutionary Biology" [ref=e128] [cursor=pointer]:
+                  - /url: /collection/evolutionary-biology
+              - listitem [ref=e129]:
+                - link "Genetics" [ref=e132] [cursor=pointer]:
+                  - /url: /collection/genetics
+              - listitem [ref=e133]:
+                - link "Genomics" [ref=e136] [cursor=pointer]:
+                  - /url: /collection/genomics
+              - listitem [ref=e137]:
+                - link "Immunology" [ref=e140] [cursor=pointer]:
+                  - /url: /collection/immunology
+              - listitem [ref=e141]:
+                - link "Microbiology" [ref=e144] [cursor=pointer]:
+                  - /url: /collection/microbiology
+              - listitem [ref=e145]:
+                - link "Molecular Biology" [ref=e148] [cursor=pointer]:
+                  - /url: /collection/molecular-biology
+              - listitem [ref=e149]:
+                - link "Neuroscience" [ref=e152] [cursor=pointer]:
+                  - /url: /collection/neuroscience
+            - list [ref=e153]:
+              - listitem [ref=e154]:
+                - link "Paleontology" [ref=e157] [cursor=pointer]:
+                  - /url: /collection/paleontology
+              - listitem [ref=e158]:
+                - link "Pathology" [ref=e161] [cursor=pointer]:
+                  - /url: /collection/pathology
+              - listitem [ref=e162]:
+                - link "Pharmacology and Toxicology" [ref=e165] [cursor=pointer]:
+                  - /url: /collection/pharmacology-and-toxicology
+              - listitem [ref=e166]:
+                - link "Physiology" [ref=e169] [cursor=pointer]:
+                  - /url: /collection/physiology
+              - listitem [ref=e170]:
+                - link "Plant Biology" [ref=e173] [cursor=pointer]:
+                  - /url: /collection/plant-biology
+              - listitem [ref=e174]:
+                - link "Scientific Communication and Education" [ref=e177] [cursor=pointer]:
+                  - /url: /collection/scientific-communication-and-education
+              - listitem [ref=e178]:
+                - link "Synthetic Biology" [ref=e181] [cursor=pointer]:
+                  - /url: /collection/synthetic-biology
+              - listitem [ref=e182]:
+                - link "Systems Biology" [ref=e185] [cursor=pointer]:
+                  - /url: /collection/systems-biology
+              - listitem [ref=e186]:
+                - link "Zoology" [ref=e189] [cursor=pointer]:
+                  - /url: /collection/zoology
+          - link "View by Month" [ref=e191] [cursor=pointer]:
+            - /url: /archive
+          - generic [ref=e192]:
+            - text: "* The Clinical Trials and Epidemiology subject categories are now closed to new submissions following the completion of bioRxiv's clinical research pilot project and launch of the dedicated health sciences server medRxiv"
+            - link "(submit.medrxiv.org)" [ref=e193] [cursor=pointer]:
+              - /url: https://submit.medrxiv.org
+            - text: . New papers that report results of Clinical Trials must now be submitted to medRxiv. Most new Epidemiology papers also should be submitted to medRxiv, but if a paper contains no health-related information, authors may choose to submit it to another bioRxiv subject category (e.g., Genetics or Microbiology).
+      - generic [ref=e197]:
+        - generic [ref=e198]:
+          - text: "bioRxiv and medRxiv thank the following for their generous financial support:"
+          - blockquote [ref=e199]: The Chan Zuckerberg Initiative, Cold Spring Harbor Laboratory, the Sergey Brin Family Foundation, California Institute of Technology, Centre National de la Recherche Scientifique, Fred Hutchinson Cancer Center, Imperial College London, Massachusetts Institute of Technology, Stanford University, The University of Edinburgh, University of Washington, and Vrije Universiteit Amsterdam.
+        - link "Donate to openRxiv " [ref=e201] [cursor=pointer]:
+          - /url: https://www.zeffy.com/en-US/donation-form/donate-to-make-a-difference-10981
+          - text: Donate to openRxiv
+          - generic [ref=e202]: 
+  - generic [ref=e205]:
+    - paragraph [ref=e207]: We use cookies on this site to enhance your user experience. By clicking any link on this page you are giving your consent for us to set cookies.
+    - generic [ref=e208]:
+      - dialog [ref=e209] [cursor=pointer]: Continue
+      - dialog [ref=e210] [cursor=pointer]: Find out more

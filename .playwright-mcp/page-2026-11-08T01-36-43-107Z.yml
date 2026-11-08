@@ -1,0 +1,1602 @@
+- generic [active] [ref=f6e1]:
+  - link "Skip to main content" [ref=f6e2] [cursor=pointer]:
+    - /url: "#main-content"
+  - region "Official website of the United States government" [ref=f6e3]:
+    - generic [ref=f6e6]:
+      - paragraph [ref=f6e10]: An official website of the United States government
+      - button "Here's how you know" [ref=f6e11] [cursor=pointer]
+  - region "Alert" [ref=f6e12]:
+    - generic [ref=f6e13]:
+      - heading "NIH Websites Are Changing" [level=3] [ref=f6e14]
+      - list [ref=f6e16]:
+        - listitem [ref=f6e17]:
+          - link "Get the Latest Updates and FAQs on the transition" [ref=f6e18] [cursor=pointer]:
+            - /url: https://www.nih.gov/web-modernization
+        - listitem [ref=f6e19]:
+          - text: Per
+          - link "Executive Order 14434" [ref=f6e20] [cursor=pointer]:
+            - /url: https://www.whitehouse.gov/presidential-actions/2026/09/inaugurating-the-era-of-super-intelligence/
+          - text: ", federal agencies are now using \"Super Intelligence\" (SI) in place of \"Artificial Intelligence\" (AI). You may see both terms across NIH content during this transition."
+      - button "Close Alert" [ref=f6e21] [cursor=pointer]
+  - banner [ref=f6e22]:
+    - generic [ref=f6e24]:
+      - link [ref=f6e25] [cursor=pointer]:
+        - /url: https://www.ncbi.nlm.nih.gov/
+        - img "NCBI home page" [ref=f6e26]
+      - generic [ref=f6e27]:
+        - button "Show search overlay" [ref=f6e28] [cursor=pointer]: Search
+        - button "Show login menu" [ref=f6e30] [cursor=pointer]:
+          - generic [ref=f6e31]: Log in
+    - navigation "Primary navigation" [ref=f6e32]:
+      - paragraph [ref=f6e33]: Primary site navigation
+  - region "PMC Header with search box" [ref=f6e34]:
+    - generic [ref=f6e35]:
+      - link "PMC Home" [ref=f6e38] [cursor=pointer]:
+        - /url: /
+      - generic [ref=f6e39]:
+        - search [ref=f6e40]:
+          - generic [ref=f6e41]: Search PMC Full-Text Archive
+          - combobox "Search PMC Full-Text Archive" [ref=f6e43]:
+            - listbox "Suggestions"
+          - button "Search in PMC" [ref=f6e44] [cursor=pointer]
+        - list [ref=f6e47]:
+          - listitem [ref=f6e48]:
+            - link "Journal List" [ref=f6e49] [cursor=pointer]:
+              - /url: /journals/
+            - text: "|"
+          - listitem [ref=f6e50]:
+            - link "User Guide" [ref=f6e51] [cursor=pointer]:
+              - /url: /about/userguide/
+  - generic [ref=f6e54]:
+    - generic [ref=f6e56]:
+      - complementary "Disclaimer note" [ref=f6e59]:
+        - text: "As a library, NLM provides access to scientific literature. Inclusion in an NLM database does not imply endorsement of, or agreement with, the contents by NLM or the National Institutes of Health. Learn more:"
+        - link "PMC Disclaimer" [ref=f6e60] [cursor=pointer]:
+          - /url: /about/disclaimer/
+        - text: "|"
+        - link "PMC Copyright Notice" [ref=f6e61] [cursor=pointer]:
+          - /url: /about/copyright/
+      - main [ref=f6e63]:
+        - region "Journal banner" [ref=f6e64]:
+          - img "NIHPA Author Manuscripts logo" [ref=f6e65]
+        - article [ref=f6e66]:
+          - region "Article citation and metadata" [ref=f6e67]:
+            - generic [ref=f6e68]:
+              - generic [ref=f6e69]:
+                - button "▸ Anal Chem" [ref=f6e71] [cursor=pointer]
+                - text: ". Author manuscript; available in PMC: 2022 Feb 22."
+              - generic [ref=f6e72]:
+                - emphasis [ref=f6e73]: "Published in final edited form as:"
+                - text: "Anal Chem. 2021 Jul 28;93(31):10925–10933. doi:"
+                - link "External, opens in a new tab. 10.1021/acs.analchem.1c01739" [ref=f6e74] [cursor=pointer]:
+                  - /url: https://doi.org/10.1021/acs.analchem.1c01739
+            - generic [ref=f6e76]:
+              - 'heading "Combined Analysis of Multiple Glycan-Array Datasets: New Explorations of Protein-Glycan Interactions" [level=1] [ref=f6e78]'
+              - generic [ref=f6e79]:
+                - link "Zachary Klamer" [ref=f6e80] [cursor=pointer]:
+                  - /url: https://pubmed.ncbi.nlm.nih.gov/?term="Klamer%20Z"[Author]
+                - superscript [ref=f6e81]: "1"
+                - text: ","
+                - link "Brian Haab" [ref=f6e82] [cursor=pointer]:
+                  - /url: https://pubmed.ncbi.nlm.nih.gov/?term="Haab%20B"[Author]
+                - superscript [ref=f6e83]: 1,
+                - superscript [ref=f6e84]: "*"
+              - list [ref=f6e85]:
+                - listitem [ref=f6e86]:
+                  - button "▸ Author information" [ref=f6e87] [cursor=pointer]
+                - listitem [ref=f6e88]:
+                  - button "▸ Article notes" [ref=f6e89] [cursor=pointer]
+                - listitem [ref=f6e90]:
+                  - button "▸ Copyright and License information" [ref=f6e91] [cursor=pointer]
+              - generic [ref=f6e92]:
+                - text: "PMCID: PMC8862541 NIHMSID: NIHMS1776577 PMID:"
+                - link "34319080" [ref=f6e93] [cursor=pointer]:
+                  - /url: https://pubmed.ncbi.nlm.nih.gov/34319080/
+              - complementary "Related or updated information about this article" [ref=f6e94]:
+                - generic [ref=f6e95]:
+                  - text: The publisher's version of this article is available at
+                  - link "External, opens in a new tab. Anal Chem" [ref=f6e96] [cursor=pointer]:
+                    - /url: https://doi.org/10.1021/acs.analchem.1c01739
+          - region "Article content" [ref=f6e97]:
+            - generic [ref=f6e98]:
+              - generic [ref=f6e99]:
+                - heading "Abstract" [level=2] [ref=f6e100]
+                - paragraph [ref=f6e101]: Glycan arrays are indispensable for learning about the specificities of glycan-binding proteins. Despite the abundance of available data, the current analysis methods do not have the ability to interpret and use the variety of data types and to integrate information across datasets. Here we evaluated whether a novel, automated algorithm for glycan-array analysis could meet that need. We developed a regression-tree algorithm with simultaneous motif optimization and packaged it in software called MotifFinder. We applied the software to data from 8 different glycan-array platforms with widely divergent characteristics and observed an accurate analysis of each dataset. We then evaluated the feasibility and value of the combined analyses of multiple datasets. In an integrated analysis of datasets covering multiple lectin concentrations, the software determined approximate binding constants for distinct motifs and identified major differences between the motifs that were not apparent from single-concentration analyses. Furthermore, an integrated analysis of data sources with complementary sets of glycans produced broader views of lectin specificity than produced by the analysis of just one data source. MotifFinder therefore enables the optimal use of the expanding resource of glycan-array data and promises to advance the studies of protein-glycan interactions.
+              - generic [ref=f6e102]:
+                - heading "Introduction" [level=2] [ref=f6e103]
+                - paragraph [ref=f6e104]:
+                  - text: Lectins are powerful tools for the study of glycans. All cells in every organism produce proteins that engage oligosaccharide ligands. Such proteins, known as lectins, can initiate, modulate, and carry out an array of functions, for example cell-cell communication, anti-microbial defense, cellular trafficking, or membrane organization
+                  - superscript [ref=f6e105]:
+                    - link "1" [ref=f6e106] [cursor=pointer]:
+                      - /url: "#R1"
+                    - text: –
+                    - link "2" [ref=f6e107] [cursor=pointer]:
+                      - /url: "#R2"
+                  - text: . The specificity of a lectin for specific arrangements of oligosaccharides is central to its biological function and to its value in research. If the specificity of a lectin or glycan-binding antibody is well understood, researchers can use the protein to localize and measure the corresponding glycans in biological specimens.
+                - paragraph [ref=f6e108]:
+                  - text: Characterizing the binding preferences of a lectin or glycan-binding antibody (collectively termed glycan-binding proteins, GBPs) is not simple. In the early studies, lectin binding was described in terms of monosaccharides, such as N-acetyl-galactosamine or galactose
+                  - superscript [ref=f6e109]:
+                    - link "3" [ref=f6e110] [cursor=pointer]:
+                      - /url: "#R3"
+                  - text: . As chemists began to produce higher-order structures that better approximated the various features in biology, the studies showed a far higher degree of complexity than previously appreciated. It was revealed that most lectins bind not just one glycan substructure, but rather a family of substructures, all related in some way
+                  - superscript [ref=f6e111]:
+                    - link "4" [ref=f6e112] [cursor=pointer]:
+                      - /url: "#R4"
+                  - text: . The strength of binding within the family depends on secondary features like the surrounding monosaccharides that are not directly in the binding pocket or the particular selection of monosaccharides that are tolerated within the pocket
+                  - superscript [ref=f6e113]:
+                    - link "5" [ref=f6e114] [cursor=pointer]:
+                      - /url: "#R5"
+                  - text: . The ability to view this complexity depends on the experimental capabilities of synthesizing the complex structures and testing the binding to each one.
+                - paragraph [ref=f6e115]:
+                  - text: Fortunately, new synthesis strategies have resulted in the production of an increasing diversity of higher-complexity structures. The new structures include various types of sialylated structures
+                  - superscript [ref=f6e116]:
+                    - link "6" [ref=f6e117] [cursor=pointer]:
+                      - /url: "#R6"
+                    - text: –
+                    - link "8" [ref=f6e118] [cursor=pointer]:
+                      - /url: "#R8"
+                  - text: ", human milk oligosaccharides"
+                  - superscript [ref=f6e119]:
+                    - link "9" [ref=f6e120] [cursor=pointer]:
+                      - /url: "#R9"
+                  - text: ", asymmetrically-branched N-glycans"
+                  - superscript [ref=f6e121]:
+                    - link "10" [ref=f6e122] [cursor=pointer]:
+                      - /url: "#R10"
+                    - text: –
+                    - link "11" [ref=f6e123] [cursor=pointer]:
+                      - /url: "#R11"
+                  - text: . In addition, microarrays have been developed to cover additional classes of glycans, including arrays of microbial glycans
+                  - superscript [ref=f6e124]:
+                    - link "12" [ref=f6e125] [cursor=pointer]:
+                      - /url: "#R12"
+                  - text: ", plant cell-wall glycans"
+                  - superscript [ref=f6e126]:
+                    - link "13" [ref=f6e127] [cursor=pointer]:
+                      - /url: "#R13"
+                  - text: ", and fully-defined heparan sulfate glycans"
+                  - superscript [ref=f6e128]:
+                    - link "14" [ref=f6e129] [cursor=pointer]:
+                      - /url: "#R14"
+                  - text: . New experimental systems for glycan presentation and detection include a glycan bead array
+                  - superscript [ref=f6e130]:
+                    - link "15" [ref=f6e131] [cursor=pointer]:
+                      - /url: "#R15"
+                  - text: ", a Next-Generation Glycan Microarray (NGGM)"
+                  - superscript [ref=f6e132]:
+                    - link "16" [ref=f6e133] [cursor=pointer]:
+                      - /url: "#R16"
+                  - text: ", and a Competitive Universal Proxy Receptor Assay (CUPRA)"
+                  - superscript [ref=f6e134]:
+                    - link "17" [ref=f6e135] [cursor=pointer]:
+                      - /url: "#R17"
+                  - text: . These new technologies offer the potential to identify complex interactions such as multivalent and hetero-multivalent interactions (binding to multiple identical or different ligands, respectively)
+                  - superscript [ref=f6e136]:
+                    - link "18" [ref=f6e137] [cursor=pointer]:
+                      - /url: "#R18"
+                  - text: .
+                - paragraph [ref=f6e138]:
+                  - text: Bioinformatics tools are required to handle this increasing complexity and diversity of data. At the introduction of glycan microarrays, structure-alignment methods were developed for analyzing patterns in glycans
+                  - superscript [ref=f6e139]:
+                    - link "19" [ref=f6e140] [cursor=pointer]:
+                      - /url: "#R19"
+                  - text: . Pattern analysis applied specifically to glycan-array data appeared with a motif-based approach
+                  - superscript [ref=f6e141]:
+                    - link "20" [ref=f6e142] [cursor=pointer]:
+                      - /url: "#R20"
+                  - text: ", followed by subtree mining methods"
+                  - superscript [ref=f6e143]:
+                    - link "21" [ref=f6e144] [cursor=pointer]:
+                      - /url: "#R21"
+                  - text: ", a quantitative structure-activity relationship (QSAR) method"
+                  - superscript [ref=f6e145]:
+                    - link "22" [ref=f6e146] [cursor=pointer]:
+                      - /url: "#R22"
+                  - text: ", an advanced structure alignment method for multiple carbohydrate alignment with weights (MCAW)"
+                  - superscript [ref=f6e147]:
+                    - link "23" [ref=f6e148] [cursor=pointer]:
+                      - /url: "#R23"
+                  - text: ", and an advanced motif-based method that we introduced"
+                  - superscript [ref=f6e149]:
+                    - link "24" [ref=f6e150] [cursor=pointer]:
+                      - /url: "#R24"
+                  - text: . A recent, promising algorithm is carbohydrate classification accounting for restricted linkages (CCARL)
+                  - superscript [ref=f6e151]:
+                    - link "25" [ref=f6e152] [cursor=pointer]:
+                      - /url: "#R25"
+                  - text: . Software to make the methods accessible to non-bioinformaticians include GlycoPattern
+                  - superscript [ref=f6e153]:
+                    - link "26" [ref=f6e154] [cursor=pointer]:
+                      - /url: "#R26"
+                  - text: ", Glycan Miner"
+                  - superscript [ref=f6e155]:
+                    - link "27" [ref=f6e156] [cursor=pointer]:
+                      - /url: "#R27"
+                  - text: ", the MCAW database"
+                  - superscript [ref=f6e157]:
+                    - link "28" [ref=f6e158] [cursor=pointer]:
+                      - /url: "#R28"
+                  - text: ", the Glycan Array Dashboard (GLAD)"
+                  - superscript [ref=f6e159]:
+                    - link "29" [ref=f6e160] [cursor=pointer]:
+                      - /url: "#R29"
+                  - text: ", and the Glycan Microarray Database (GlyMDB)"
+                  - superscript [ref=f6e161]:
+                    - link "30" [ref=f6e162] [cursor=pointer]:
+                      - /url: "#R30"
+                  - text: .
+                - paragraph [ref=f6e163]: While the above methods provided valuable advances in glycan-array analysis, they offer limited ability to fully explore the expanding depth and variety of data. In particular, the current software options are not easily adaptable to diverse glycan-array platforms, and they do not allow for the combined analysis of multiple datasets. Thus, we sought to develop the ability to use and integrate information from multiple data platforms. Further, we aimed at a system that users could directly run without intervention, which is necessary for increasing productivity, reducing bias, and broadening the range of researchers who could use the method.
+              - generic [ref=f6e164]:
+                - heading "Experimental Section" [level=2] [ref=f6e165]
+                - generic [ref=f6e166]:
+                  - heading "Software" [level=3] [ref=f6e167]
+                  - paragraph [ref=f6e168]:
+                    - text: The MotifFinder software was developed using Matlab R2017a and R Version 3.5.0. The analyses presented here used the latest beta branch of MotifFinder version 2.2.4. MotifFinder utilizes the DrawGlycan-SNFG tool for rendering glycan and motif structures
+                    - superscript [ref=f6e169]:
+                      - link "31" [ref=f6e170] [cursor=pointer]:
+                        - /url: "#R31"
+                    - text: . Details on the use of MotifFinder, including screenshots and step-by-step instructions for all procedures used here, are available in the User’s Manual distributed with all release versions of MotifFinder. Slight adaptions were made to CCARL to run on a Window’s 10 operating system and to adapt to a continuous-fit model for the cross-validation analysis.
+                - generic [ref=f6e171]:
+                  - heading "Data Preparation" [level=3] [ref=f6e172]
+                  - paragraph [ref=f6e173]:
+                    - text: Data were retrieved from various sources (
+                    - link "Table S2" [ref=f6e174] [cursor=pointer]:
+                      - /url: "#SD2"
+                    - text: ). The input of MotifFinder is comma-delimited text (Excel/CSV) with columns for the ID, name, intensity, and, optionally, standard deviation associated with each glycan. The glycan name is the simplified IUPAC format used in CFG data. Data from non-CFG sources required modest reformatting. Data from the CUPRA array, which is provide as a depletion index (DI), was inverted (1 – DI) to fit MotifFinder’s expectation of a positive correlation between binding and the quantification metric. The structural-grafting data were given numerical values of 1 to indicate binders and 0 to indicate nonbinders. The results from the GlyMDB and MCAW-DB databases were retrieved from their respective websites.
+                - generic [ref=f6e175]:
+                  - heading "Cross-Validation Analysis of Model Accuracy in 22 Datasets" [level=3] [ref=f6e176]
+                  - paragraph [ref=f6e177]:
+                    - text: The 22 datasets used for cross-validation analyses matched those in Coff
+                    - emphasis [ref=f6e178]: et. al
+                    - text: .
+                    - superscript [ref=f6e179]:
+                      - link "25" [ref=f6e180] [cursor=pointer]:
+                        - /url: "#R25"
+                    - text: ", with the addition of datasets for ECL and DSA. Each dataset was split into 5 folds (4/5 of the glycans for training and 1/5 for testing) using a built-in function in MotifFinder. The default parameters were used for the MotifFinder models. The CCARL models were converted from classification to continuous prediction by substituting lasso-regularized logistic regression with a regression-tree algorithm, using the Sklearn package in python. The regression trees used a cross-validation-selected tree depth without the added motif-optimization features of MotifFinder. The model from each training set was used to predict binding to each glycan in the test set ("
+                    - link "Supporting Methods" [ref=f6e181] [cursor=pointer]:
+                      - /url: "#SD1"
+                    - text: ), and for each prediction, R
+                    - superscript [ref=f6e182]: "2"
+                    - text: was calculated by comparing predicted to actual binding.
+                - generic [ref=f6e183]:
+                  - heading "Graphics and Figure Preparation" [level=3] [ref=f6e184]
+                  - paragraph [ref=f6e185]: Plots were made using Matlab R2017a and R 3.5.0 using the ggplot2 package. The figures were prepared using Deneba Canvas X and Canvas Draw 5.
+                - generic [ref=f6e186]:
+                  - heading "Statistics" [level=3] [ref=f6e187]
+                  - paragraph [ref=f6e188]:
+                    - text: The accuracy of prediction fit was calculated as the , where
+                    - emphasis [ref=f6e189]: prediction error
+                    - text: = Σ(
+                    - emphasis [ref=f6e190]: fitted value
+                    - text: −
+                    - emphasis [ref=f6e191]: observed value
+                    - text: )
+                    - superscript [ref=f6e192]: "2"
+                    - text: and
+                    - emphasis [ref=f6e193]: total error
+                    - text: = Σ(
+                    - emphasis [ref=f6e194]: mean value
+                    - text: −
+                    - emphasis [ref=f6e195]: observed value
+                    - text: )
+                    - superscript [ref=f6e196]: "2"
+                    - text: . Differences between groups of test-set fits were tested using a paired t-test with unequal variances.
+              - generic [ref=f6e197]:
+                - heading "Results" [level=2] [ref=f6e198]
+                - generic [ref=f6e199]:
+                  - heading "Identification of Complex Binding Determinants" [level=3] [ref=f6e200]
+                  - paragraph [ref=f6e201]:
+                    - text: We developed an algorithm to extract the complex specificities of glycan-binding proteins from glycan-array data. We previously reported the algorithm’s theoretical basis
+                    - superscript [ref=f6e202]:
+                      - link "32" [ref=f6e203] [cursor=pointer]:
+                        - /url: "#R32"
+                    - text: ", but we had not applied the method to the combined analysis of diverse glycan-array data. The algorithm uses a previously developed syntax for motifs"
+                    - superscript [ref=f6e204]:
+                      - link "24" [ref=f6e205] [cursor=pointer]:
+                        - /url: "#R24"
+                    - text: that allows for variability in multiple components of the motif (
+                    - link "Figure 1A" [ref=f6e206] [cursor=pointer]:
+                      - /url: "#F1"
+                    - text: ). A new approach for using the motifs, developed for this study, is to represent the specificity of a GBP as two tiers of motifs (
+                    - link "Figure 1B" [ref=f6e207] [cursor=pointer]:
+                      - /url: "#F1"
+                    - text: ). The first tier is the primary motifs, which are the main determinants of binding, and the second tier is the fine specificities, which are modifications to the primary motifs that influence binding. Motif features outside of the glycan proper, such as density, linker composition, and polypeptide sequence, also could affect binding but were not covered in the current version of the syntax.
+                  - figure [ref=f6e208]:
+                    - heading "Figure 1. Automated Mining of Complex Specificities." [level=4] [ref=f6e209]
+                    - paragraph [ref=f6e210]:
+                      - img "Figure 1." [ref=f6e211]
+                    - link "Open in a new tab" [ref=f6e213] [cursor=pointer]:
+                      - /url: figure/F1/
+                    - paragraph [ref=f6e215]: A. Versatile syntax for individual motifs. The syntax allows for the explicit definition of variability in multiple aspects of the structure, which enables the description of motifs of almost any complexity. B. Two-layer family of motifs. The specificity of a glycan-binding protein is represented as a family of motifs. The first layer is the primary motifs, and the second layer is the fine specificities. C. Regression-tree modeling. MotifFinder uses repeated splitting of the data to identify the primary motifs (A and B) and the fine specificities (A1 and A*).
+                  - paragraph [ref=f6e216]:
+                    - text: The algorithm uses regression-tree modeling to uncover the two-tiered family of motifs representing a GBP’s specificity. The algorithm splits the data repeatedly to optimize the separation of the data into groups with distinct binding (
+                    - link "Figure 1C" [ref=f6e217] [cursor=pointer]:
+                      - /url: "#F1"
+                    - text: ), and it concurrently produces new motifs to further optimize the accuracy of the splits. The optimization of the motifs is performed by testing all versions and incrementally growing the ones with the best ability to improve the accuracy of the splits. In this way, the initial splits give the primary motifs (motifs A and B,
+                    - link "Figure 1C" [ref=f6e218] [cursor=pointer]:
+                      - /url: "#F1"
+                    - text: ), and the secondary splits give the fine specificities (motif A1, with the remainder of a primary motif denoted as A*).
+                  - paragraph [ref=f6e219]:
+                    - text: In a test set of lectins that covers a wide range of protein folds, source organisms, and primary binding determinants, the analyses demonstrated useful insights into the nuances of lectin specificities (
+                    - link "Figure S1" [ref=f6e220] [cursor=pointer]:
+                      - /url: "#SD1"
+                    - text: ). For example, a comparison between the jacalin lectin and PNA, which have similar primary motifs but different fine specificities, correctly found the main primary motif of terminal Galβ1–3GalNAc for both lectins as well as fine specificities that agree with previous research. For example, jacalin had been found to bind Galβ1–3GalNAc when attached directly to a polypeptide backbone or as a disaccharide
+                    - superscript [ref=f6e221]:
+                      - link "33" [ref=f6e222] [cursor=pointer]:
+                        - /url: "#R33"
+                    - text: and PNA was found to permit binding when the reducing end is extended
+                    - superscript [ref=f6e223]:
+                      - link "3" [ref=f6e224] [cursor=pointer]:
+                        - /url: "#R3"
+                    - text: . For DSA, the results exactly replicated previous findings
+                    - superscript [ref=f6e225]:
+                      - link "34" [ref=f6e226] [cursor=pointer]:
+                        - /url: "#R34"
+                    - text: by identifying ranked preferences for LacNAc attached 6’ to Man, short chains of β1–4 linked GlcNAc (chitin), and poly-LacNAc, and they added information by identifying a preference for LacNAc in the context of a tetra-antennary N-glycan over LacNAc only on the 6’ branch. The unambiguous syntax also provided greater clarity than qualitative descriptions. For example, MotifFinder gave precise definitions of the canonical specificities of MAL-II as di-sialylated core 1 O-GalNAc and its sulfated variants (motif A1 and the fine specificities of motif B), motifs that are frequently misinterpreted due to confused definitions of specificity
+                    - superscript [ref=f6e227]:
+                      - link "35" [ref=f6e228] [cursor=pointer]:
+                        - /url: "#R35"
+                    - text: . Further, the algorithm added information by identifying binding to the mono-sialylated forms of core 1 O-GalNAc and differences between the variants of the 3’ sulfated epitopes.
+                - generic [ref=f6e229]:
+                  - heading "Analysis of Data from Divergent Platforms" [level=3] [ref=f6e230]
+                  - paragraph [ref=f6e231]: A prerequisite for the integration of diverse data was the seamless processing of data from any glycan array. To this end, we used a parser for the glycan names that allows the input of any data in which the glycan names are in text. We required only an association of each glycan with a quantity that is indicative of binding. We tested data from platforms with differences between them in types of glycans, methods of data acquisition, and modes of quantification. For each dataset, we asked whether the program returned results that concorded with the known specificities and manual analyses, and whether it provided insights into the fine specificities.
+                  - paragraph [ref=f6e232]:
+                    - text: A source with similarities to the CFG in the types of glycans was the glycan bead array
+                    - superscript [ref=f6e233]:
+                      - link "15" [ref=f6e234] [cursor=pointer]:
+                        - /url: "#R15"
+                    - text: . MotifFinder analyzed these data without any modification. In the analysis of PNA (
+                    - link "Figure 2A" [ref=f6e235] [cursor=pointer]:
+                      - /url: "#F2"
+                    - text: ), the algorithm found Galβ1–3GalNAc (Motif A) as the top determinant, in agreement with previous information. Relative to the CFG array (
+                    - link "Figure S1" [ref=f6e236] [cursor=pointer]:
+                      - /url: "#SD1"
+                    - text: ), the bead-array analysis gave fewer fine specificities, but it identified evidence of weak binding to Lewis A epitopes (motif B) and uncommon glycans with a terminal alpha-linkage (Motif C). A source with a completely different set of glycans is a microbial-glycan array
+                    - superscript [ref=f6e237]:
+                      - link "12" [ref=f6e238] [cursor=pointer]:
+                        - /url: "#R12"
+                    - text: . This array includes non-mammalian monosaccharides such as xylose, arabinose, or N-acetyl-fucosamine, as well as oligosaccharide sequences not seen in mammalian glycans. MotifFinder parsed the majority of the glycans (126/141) in a dataset for the bacterial
+                    - emphasis [ref=f6e240]: Burkholderia cenocepacia
+                    - text: lectin (BC2L-A), and it correctly identified binding to glycans containing L-glycero D-manno-heptose (LDmanHep)
+                    - superscript [ref=f6e241]:
+                      - link "36" [ref=f6e242] [cursor=pointer]:
+                        - /url: "#R36"
+                    - text: (Motifs B-B2,
+                    - link "Figure 2B" [ref=f6e243] [cursor=pointer]:
+                      - /url: "#F2"
+                    - text: ). The MotifFinder analysis of this lectin on the CFG array identified only high-mannose glycans (
+                    - link "Figure S2" [ref=f6e244] [cursor=pointer]:
+                      - /url: "#SD1"
+                    - text: ) owing to the absence of LDmanHep-containing glycans on the CFG array.
+                  - figure [ref=f6e245]:
+                    - heading "Figure 2. Analysis of Data from Divergent Platforms." [level=4] [ref=f6e246]
+                    - paragraph [ref=f6e247]:
+                      - img "Figure 2." [ref=f6e248]
+                    - link "Open in a new tab" [ref=f6e250] [cursor=pointer]:
+                      - /url: figure/F2/
+                    - paragraph [ref=f6e252]: The graphs show the intensities of binding to the glycans grouped according to their motifs, which are presented graphically at right. The units of binding vary between the methods. A. The bead array uses mean fluorescence intensity (MFI). B. The microbial array uses relative fluorescence units (RFU). C. Structure grafting denotes compatible and incompatible glycans respectively with a 1 or 0.
+                  - paragraph [ref=f6e253]:
+                    - text: Finally, we tested the method on semi-quantitative data. The glycan-grafting method developed by Grant
+                    - emphasis [ref=f6e254]: et al
+                    - text: . integrates protein structure into glycan binding consideration
+                    - superscript [ref=f6e255]:
+                      - link "37" [ref=f6e256] [cursor=pointer]:
+                        - /url: "#R37"
+                    - text: and categorically reports whether a glycan could or could not be grafted. We assigned glycans a value of 1 or 0 to indicate success or failure of grafting, respectively. The MotifFinder analysis of Ricin B-Chain (PDB 2AAI) indicated tolerance for a wide variety of galactose-containing glycans, including certain 2’ fucosylated or 3’ and 6’ sialylated structures (motif A,
+                    - link "Figure 2C" [ref=f6e257] [cursor=pointer]:
+                      - /url: "#F2"
+                    - text: ). This broad tolerance contrasts with the stricter specificity of RCA-I, which has high sequence similarity to Ricin B-Chain. In any case, the result demonstrates a method to objectively analyze grafting data and to compare it with results from glycan arrays.
+                  - paragraph [ref=f6e258]:
+                    - text: As further testing on diverse platforms, we applied MotifFinder to the CUPRA array, the NGGM array, the neoglycoprotein array, a plant cell-wall array, and an asymmetric N-glycan array (
+                    - link "Figure S3" [ref=f6e259] [cursor=pointer]:
+                      - /url: "#SD1"
+                    - text: ). In each case, the results matched the manually determined specificities and were supported by analyses of the same lectins on the CFG array (
+                    - link "Figure S2" [ref=f6e260] [cursor=pointer]:
+                      - /url: "#SD1"
+                    - text: ). Thus, MotifFinder readily analyzed data from a wide diversity of platforms.
+                - generic [ref=f6e261]:
+                  - heading "Integrated Analysis of Datasets with Varying Lectin Concentrations" [level=3] [ref=f6e262]
+                  - paragraph [ref=f6e263]:
+                    - text: The automated capabilities of this system opened the potential for an integrated analysis of lectin binding over multiple concentrations. To explore this possibility, we developed a function to analyze logistic regression fits of motif binding across protein concentrations (
+                    - link "Supporting Methods" [ref=f6e264] [cursor=pointer]:
+                      - /url: "#SD1"
+                    - text: and
+                    - link "Figure 3A" [ref=f6e265] [cursor=pointer]:
+                      - /url: "#F3"
+                    - text: ). We evaluated whether the analysis could provide information about binding preferences that could not be derived using single-concentration analyses.
+                  - figure [ref=f6e266]:
+                    - heading "Figure 3. Combined Analysis of Datasets with Varied Protein Concentrations." [level=4] [ref=f6e267]
+                    - paragraph [ref=f6e268]:
+                      - img "Figure 3." [ref=f6e269]
+                    - link "Open in a new tab" [ref=f6e271] [cursor=pointer]:
+                      - /url: figure/F3/
+                    - paragraph [ref=f6e273]:
+                      - text: A. The fit of the logistic curve across concentrations provides the asymptote, slope, and half-maximum binding for each motif, the latter approximating the K
+                      - subscript [ref=f6e274]: d
+                      - text: . B. The simultaneous analysis of data for PNA over multiple concentrations gave the average binding to each motif at each concentration. C. The logistic curves fit to the average binding for each motif revealed distinct binding profiles across motifs. D. The relative binding (motif binding normalized to the highest motif binding) was plotted with respect to the curve-derived K
+                      - subscript [ref=f6e275]: d
+                      - text: values.
+                  - paragraph [ref=f6e276]:
+                    - text: We used CFG data for PNA across four lectin concentrations (0.1, 1, 10, and 100 μg/mL). The analysis gave estimates of motif binding at each concentration (
+                    - link "Figure 3B" [ref=f6e277] [cursor=pointer]:
+                      - /url: "#F3"
+                    - text: ) and produced logistic curves with a wide range of binding parameters across the motifs (
+                    - link "Figure 3C" [ref=f6e278] [cursor=pointer]:
+                      - /url: "#F3"
+                    - text: ). These calculations enabled a comparison of the apparent K
+                    - subscript [ref=f6e279]: d
+                    - text: values derived across all concentrations with the relative-binding values derived from each single concentration (
+                    - link "Figure 3D" [ref=f6e280] [cursor=pointer]:
+                      - /url: "#F3"
+                    - text: ). For some motifs, the rank order was significantly different. For example, motifs A2 and A11 had relatively weak binding at all concentrations yet had strong (numerically low) apparent K
+                    - subscript [ref=f6e281]: d
+                    - text: values. Other motifs such as A5, A6, and B1 showed strong relative binding at higher concentrations but weak apparent K
+                    - subscript [ref=f6e282]: d
+                    - text: values, making them likely to have overestimated relative binding in higher-concentration datasets.
+                  - paragraph [ref=f6e283]:
+                    - text: The divergence between apparent K
+                    - subscript [ref=f6e284]: d
+                    - text: and relative binding could stem from experimental sources, such as differences between the glycans in their densities on the surface or their accessibility to lectins when immobilized. Alternatively, the divergence could stem from fundamental kinetics, such as differences between the motifs in their association and disassociation rates. Motifs A2 and A11, which have lower apparent K
+                    - subscript [ref=f6e285]: d
+                    - text: values, have sialic acid near the canonical epitope of Galβ1,3GalNAc, while Motifs A5 and A6, which have much higher apparent K
+                    - subscript [ref=f6e286]: d
+                    - text: values, have an extended branch neighboring the shorter Galβ1,3GalNAc. The extended branch could potentially weaken the interaction (increasing the dissociation rate). The kinetics cannot be directly measured with conventional microarray technology, but within the limits of the experiment, this analysis demonstrates the importance of an integrated analysis across lectin concentrations. The derivation of approximate binding constants could provide more accurate identifications of the strong and weak motifs than would be possible at any single concentration.
+                - generic [ref=f6e287]:
+                  - heading "Integrating Data from Diverse Arrays for a Single Lectin" [level=3] [ref=f6e288]
+                  - paragraph [ref=f6e289]:
+                    - text: Another application opened up by this system is the combined analysis of arrays with complementary glycans. Because the universe of glycans is so vast, and because each array contains only a particular subset of glycans, no single data source could provide a complete picture of specificity. We explored the value of joining information across arrays using data for the
+                    - emphasis [ref=f6e290]: Ricinus communis
+                    - text: agglutinin I (RCA-I) collected over 7 different arrays (
+                    - link "Table S2" [ref=f6e291] [cursor=pointer]:
+                      - /url: "#SD2"
+                    - text: ). To place the datasets in similar ranges and scales, we used post-model mapping and motif curve fitting (
+                    - link "Supporting Methods" [ref=f6e292] [cursor=pointer]:
+                      - /url: "#SD1"
+                    - text: and
+                    - link "Figure S4" [ref=f6e293] [cursor=pointer]:
+                      - /url: "#SD1"
+                    - text: ). Based on the assumption that independent datasets should show basic agreement to build a coherent model, we selected datasets that optimized the generalization of a model from a training set (4/5 of the sets) to a test set (1/5 of the sets) (
+                    - link "Supporting Methods" [ref=f6e294] [cursor=pointer]:
+                      - /url: "#SD1"
+                    - text: ). This process selected the CFG array, the NCFG data (the latest CFG array content and an ASN-linked N-glycan array), an array of asymmetrically extended N-glycans
+                    - superscript [ref=f6e295]:
+                      - link "5" [ref=f6e296] [cursor=pointer]:
+                        - /url: "#R5"
+                    - text: ", and an array of neoglycoproteins"
+                    - superscript [ref=f6e297]:
+                      - link "38" [ref=f6e298] [cursor=pointer]:
+                        - /url: "#R38"
+                    - text: . Datasets excluded from training a combined analysis model were reserved for model validation (
+                    - link "Figure S4" [ref=f6e299] [cursor=pointer]:
+                      - /url: "#SD1"
+                    - text: ).
+                  - paragraph [ref=f6e300]:
+                    - text: We compared the results obtained using only the CFG data (
+                    - link "Figure 4A" [ref=f6e301] [cursor=pointer]:
+                      - /url: "#F4"
+                    - text: ) to the results obtained using multiple data sources (
+                    - link "Figure 4B" [ref=f6e302] [cursor=pointer]:
+                      - /url: "#F4"
+                    - text: ). Both analyses found that terminal LacNAc (Galβ1–4GlcNAc) was required, and that 6’ substitutions on the Gal are tolerated. Whereas the single-source model found biantennary LacNAc as the top motif (Motif A3,
+                    - link "Figure 4A" [ref=f6e303] [cursor=pointer]:
+                      - /url: "#F4"
+                    - text: ), the mixed-source model found terminal poly-LacNAc as the strongest motif (Motifs A8 and A9,
+                    - link "Figure 4B" [ref=f6e304] [cursor=pointer]:
+                      - /url: "#F4"
+                    - text: ). The mixed-source model also found that bi-antennary, terminal LacNAc binds markedly better than mono-antennary LacNAc (Motifs A and B,
+                    - link "Figure 4B" [ref=f6e305] [cursor=pointer]:
+                      - /url: "#F4"
+                    - text: ). The additional information was provided mainly from the monoantennary glycans in the asymmetric N-glycan array and the neoglycoprotein array.
+                  - figure [ref=f6e306]:
+                    - heading "Figure 4. Integration of Data from Mixed Datasets for RCA-I." [level=4] [ref=f6e307]
+                    - paragraph [ref=f6e308]:
+                      - img "Figure 4." [ref=f6e309]
+                    - link "Open in a new tab" [ref=f6e311] [cursor=pointer]:
+                      - /url: figure/F4/
+                    - paragraph [ref=f6e313]: A. The single-source analysis of datasets from the CFG gave six primary motifs and 15 fine specificities. B. The integrated analysis of datasets from five different platforms revealed features not found in the single-source analysis, such as terminal poly-LacNAc (motifs A8, A9, and A7).
+                  - paragraph [ref=f6e314]:
+                    - text: As a further evaluation, we compared the abilities of the models to predict the levels of lectin binding to independent sets glycans (
+                    - link "Supporting Methods" [ref=f6e315] [cursor=pointer]:
+                      - /url: "#SD1"
+                    - text: and
+                    - link "Figure S4" [ref=f6e316] [cursor=pointer]:
+                      - /url: "#SD1"
+                    - text: ). In the application of a model trained only on CFG data (single source) and a model trained on multiple sources (mixed source) to the glycans in the CFG data, the R
+                    - superscript [ref=f6e317]: "2"
+                    - text: fits between predicted and actual binding were similar. But when applied to glycans from all 5 sources used in the mixed-source model or from 5 additional sources used in neither model, the R
+                    - superscript [ref=f6e318]: "2"
+                    - text: fits were significantly higher using the mixed-source model. This result supports the conclusion of increased accuracy in defining lectin specificity using integrated information from diverse sources.
+                - generic [ref=f6e319]:
+                  - heading "Comparisons of Output Between Analysis Tools" [level=3] [ref=f6e320]
+                  - paragraph [ref=f6e321]:
+                    - text: We next assessed the output of MotifFinder by comparing it to the output from other programs. We used CFG-array data for the
+                    - emphasis [ref=f6e322]: Erythrina cristagalli
+                    - text: lectin (ECL) for this purpose. Two databases, GlyMDB and MCAW-DB, had pre-analyzed results for the data, and the programs MotifFinder and CCARL provided fresh analyses. These analysis tools have appeared in publications in the last 5 years and are still supported by their developers. We did not include older tools that are no longer supported by the developers. To enable objective comparisons of the methods, we examined the overall fit of the glycans between predicted and actual binding (
+                    - link "Supporting Methods" [ref=f6e323] [cursor=pointer]:
+                      - /url: "#SD1"
+                    - text: ).
+                  - paragraph [ref=f6e324]:
+                    - text: ECL binds type-2 LacNAc (Galβ1–4GlcNAc), especially in multivalent presentations
+                    - superscript [ref=f6e325]:
+                      - link "39" [ref=f6e326] [cursor=pointer]:
+                        - /url: "#R39"
+                    - text: . It lacks tolerance for 6’ galactose substitutions but allows 2’ galactose substitutions such as found in H-antigen (blood group O)
+                    - superscript [ref=f6e327]:
+                      - link "40" [ref=f6e328] [cursor=pointer]:
+                        - /url: "#R40"
+                      - text: –
+                      - link "41" [ref=f6e329] [cursor=pointer]:
+                        - /url: "#R41"
+                    - text: . The motifs given by the two databases were able to correctly identify many high binding glycans but GlyMDB lacked specificity while MCAW-DB lacked sensitivity. GlyMDB (
+                    - link "Figure 5A" [ref=f6e330] [cursor=pointer]:
+                      - /url: "#F5"
+                    - text: ) uses subtree motifs that lack the ability to specify substitution intolerance (carbons that must be unsubstituted for a glycan to contain the motif). MCAW-DB (
+                    - link "Figure 5B" [ref=f6e331] [cursor=pointer]:
+                      - /url: "#F5"
+                    - text: ) uses an alignment-based method to identify the structure in common for the highest binding glycans but gives little information regarding less strongly bound glycans. CCARL (
+                    - link "Fig. 5C" [ref=f6e332] [cursor=pointer]:
+                      - /url: "#F5"
+                    - text: ) is similar to GlyMDB in the use of subtree modeling, but on account of the use of “restricted nodes” that define substitution intolerance, it gave a superior R
+                    - superscript [ref=f6e333]: "2"
+                    - text: of 0.32. MotifFinder, in contrast, identified features associated with each degree of binding. Binding was highest to Galβ1–4GlcNAc on two separate branches (Motif A), less to the same feature on a single branch (Motif B), and weak to GalNAcβ1–4GlcNAc (Motif C) or Fucα1–2Galβ1–4GlcNAc (Motif D). Accordingly, the R
+                    - superscript [ref=f6e334]: "2"
+                    - text: of 0.75 was over double that of the next highest, MCAW-DB. Thus, all of methods found the main motif of Galβ1–4GlcNAc, but only MotifFinder identified all of the canonical binding motifs (
+                    - link "Figure S5" [ref=f6e335] [cursor=pointer]:
+                      - /url: "#SD1"
+                    - text: ) and their associations with gradations in binding.
+                  - figure [ref=f6e336]:
+                    - heading "Figure 5. Comparisons of Analysis Tools." [level=4] [ref=f6e337]
+                    - paragraph [ref=f6e338]:
+                      - img "Figure 5." [ref=f6e339]
+                    - link "Open in a new tab" [ref=f6e341] [cursor=pointer]:
+                      - /url: figure/F5/
+                    - paragraph [ref=f6e343]:
+                      - text: Each tool was evaluated using a CFG dataset for the lectin ECL. The plots present the ECL binding to the glycans organized by the motifs found by each method. A. GlyMDB. B. MCAW-DB. C. CCARL. D. MotifFinder. The R
+                      - superscript [ref=f6e344]: "2"
+                      - text: values were calculated using the observed binding compared to predicted binding.
+                  - paragraph [ref=f6e345]:
+                    - text: We further evaluated MotifFinder and CCARL by cross-validation. Using datasets from 22 lectins, we derived a specificity model from 4/5 of the glycans in each dataset and used the model to predict binding to the remaining 1/5 of the glycans, with iteration over the five splits. The average R
+                    - superscript [ref=f6e346]: "2"
+                    - text: over all splits and lectins was 0.4 and 0.37 using multiple or single lectin concentrations with MotifFinder, respectively, and 0.27 using CCARL (
+                    - link "Table S2" [ref=f6e347] [cursor=pointer]:
+                      - /url: "#SD2"
+                    - text: ). The values using MotifFinder were higher in 19/22 datasets.
+              - generic [ref=f6e348]:
+                - heading "Discussion" [level=2] [ref=f6e349]
+                - paragraph [ref=f6e350]: The potential value of glycan-array data is increasing. More and more groups produce arrays, and the arrays have greater variety in the glycans. In order to make full use of this resource, researchers need software that can process information from a wide mix of array types and that can integrate information in the combined analysis of multiple datasets. In this work, we present a system to address this need. We used a powerful glycan-name parser with a versatile syntax for motifs to input data from any source, and we developed a decision-tree algorithm with built-in motif optimization to derive the specificities of glycan-binding proteins. We demonstrated the ability to 1) seamlessly analyze data from any glycan-array platform; and 2) perform integrated analyses of multiple datasets. These capabilities are without precedent among methods to analyze glycan-array data.
+                - paragraph [ref=f6e351]:
+                  - text: A useful application of the integrated analysis is to identify concentration-dependent changes in apparent lectin binding. Previous analyses were manual and focused on individual glycans rather than motifs. Here we demonstrate a software tool that calculates apparent binding parameters for individual motifs. By evaluating binding to the motifs that are common between the glycans, the approach reflects the way in which lectins actually bind. The analysis presented here revealed that certain features in the motifs bound by PNA could link to differences between the motifs in apparent K
+                  - subscript [ref=f6e352]: d
+                  - text: . Future research could test the hypotheses that neighboring sialic acids reduce dissociation rates and that extended branches increase dissociation rates of PNA binding. The limitations to the analysis are that the separate concentrations must be run under highly controlled, consistent conditions, and that the concentrations should provide enough range and data to enable accurate curves.
+                - paragraph [ref=f6e353]:
+                  - text: The second application of integrated analysis, to combine information from disparate arrays, showed the potential for obtaining more complete views of specificity. It is clear that no single array can provide enough content to give full information about specificity. Data from complementary arrays could help to meet this need, but without software to combine the analyses, researchers could gather only limited insights. In the present demonstration, the integration of arrays containing motifs not in the CFG array led to useful insights into differential binding between branched glycans, extended monoantennary glycans, and short monoantennary glycans. A limitation of the approach is that at least a subset of the strong-to-moderately bound glycans should overlap between the datasets. In the present analysis, we excluded the microbial array because of poor overlap with the other arrays. Another limitation is that the datasets should have similar lectin concentrations in order to minimize concentration-dependent differences. Finally, the platforms should not have many inherent differences in the types of glycans that are bound. Such differences are not predictable but occasionally occur
+                  - superscript [ref=f6e354]:
+                    - link "42" [ref=f6e355] [cursor=pointer]:
+                      - /url: "#R42"
+                  - text: . Here, we excluded the glycan bead array and the NGGM datasets from training owing to low agreement with the rest of the datasets. The apparent difference in specificity may be due to the novel microarray formats used for those datasets.
+                - paragraph [ref=f6e356]:
+                  - text: An important implication of this work relates to the use of lectins and glycan-binding antibodies as probes for their targets in biological samples. In such studies, the interpretation is typically based on simplified information about the GBP specificities. But given the complexities of the specificities, simple interpretations may not be accurate. To provide higher accuracy, an algorithm that makes use of the output from glycan-array analyses could prove useful. We previously introduced an algorithm for this purpose
+                  - superscript [ref=f6e357]:
+                    - link "43" [ref=f6e358] [cursor=pointer]:
+                      - /url: "#R43"
+                  - text: ", in which we convert the measurements of lectin binding into estimates of the motifs in the sample. Using a similar algorithm, one could predict the binding of a lectin to a previously untested glycan, which could be useful for the design of synthetic glycans."
+                - paragraph [ref=f6e359]:
+                  - text: The current study also suggested important areas for further development. Going forward, analyses could address the fact that other features beyond the motifs used here could influence lectin binding. For example, the microbial glycan array contains glycans with atypical substitutions that are not monosaccharides or common chemical modifiers, such as pyruvates or phosphoamino-pentanol. In other cases, the linker attaching the glycan to the substrate could have significant effects on binding
+                  - superscript [ref=f6e360]:
+                    - link "38" [ref=f6e361] [cursor=pointer]:
+                      - /url: "#R38"
+                  - text: ", as in single amino acids resulting in weaker binding due to steric hindrance"
+                  - superscript [ref=f6e362]:
+                    - link "44" [ref=f6e363] [cursor=pointer]:
+                      - /url: "#R44"
+                  - text: . Other factors include the sequence of the polypeptide backbone and the density of glycosylation, which could be studied using polypeptide arrays
+                  - superscript [ref=f6e364]:
+                    - link "45" [ref=f6e365] [cursor=pointer]:
+                      - /url: "#R45"
+                  - text: and density-variant arrays
+                  - superscript [ref=f6e366]:
+                    - link "46" [ref=f6e367] [cursor=pointer]:
+                      - /url: "#R46"
+                    - text: –
+                    - link "47" [ref=f6e368] [cursor=pointer]:
+                      - /url: "#R47"
+                  - text: . New analyses also could accommodate glycans that do not have fully defined sequences. An array with such glycans is the natural (shotgun) microarray, derived from cell or tissue sources
+                  - superscript [ref=f6e369]:
+                    - link "5" [ref=f6e370] [cursor=pointer]:
+                      - /url: "#R5"
+                    - text: ","
+                    - link "48" [ref=f6e371] [cursor=pointer]:
+                      - /url: "#R48"
+                  - text: . The framework of the motif syntax used here would support buildout to accommodate these features.
+              - generic [ref=f6e372]:
+                - heading "Conclusions" [level=2] [ref=f6e373]
+                - paragraph [ref=f6e374]: Among the various tools currently available for analyzing glycan-array data, the ability to integrate information across arrays and platforms is unique to MotifFinder. The need for such a tool is ever greater, given the expansion and diversification of glycan-array platforms. The ability to run the analysis without intervention by the user and the readily interpretable output make the method accessible to researchers who are not experts in glycobiology or bioinformatics. Thus, an increased number of researchers could analyze data from diverse arrays and leverage the unique advantages of each individual array.
+              - generic [ref=f6e375]:
+                - heading "Supplementary Material" [level=2] [ref=f6e376]
+                - generic [ref=f6e377]:
+                  - generic [ref=f6e378]: Klamer and Haab, Supporting Information
+                  - generic [ref=f6e380]:
+                    - link "NIHMS1776577-supplement-Klamer_and_Haab__Supporting_Information.pdf" [ref=f6e381] [cursor=pointer]:
+                      - /url: /articles/instance/8862541/bin/NIHMS1776577-supplement-Klamer_and_Haab__Supporting_Information.pdf
+                    - superscript [ref=f6e382]: (5.5MB, pdf)
+                - generic [ref=f6e383]:
+                  - generic [ref=f6e384]: Klamer and Haab, Table S2
+                  - generic [ref=f6e386]:
+                    - link "NIHMS1776577-supplement-Klamer_and_Haab__Table_S2.xlsx" [ref=f6e387] [cursor=pointer]:
+                      - /url: /articles/instance/8862541/bin/NIHMS1776577-supplement-Klamer_and_Haab__Table_S2.xlsx
+                    - superscript [ref=f6e388]: (26.8KB, xlsx)
+                - generic [ref=f6e389]:
+                  - generic [ref=f6e390]: Klamer and Haab, Supplementary Data
+                  - generic [ref=f6e392]:
+                    - link "NIHMS1776577-supplement-Klamer_and_Haab__Supplementary_Data.zip" [ref=f6e393] [cursor=pointer]:
+                      - /url: /articles/instance/8862541/bin/NIHMS1776577-supplement-Klamer_and_Haab__Supplementary_Data.zip
+                    - superscript [ref=f6e394]: (25.8MB, zip)
+              - generic [ref=f6e395]:
+                - heading "Acknowledgements" [level=2] [ref=f6e396]
+                - paragraph [ref=f6e397]: We thank the National Institute of General Medical Sciences (R44GM131430 and R42GM112750) and the National Cancer Institute (Early Detection Research Network, U01CA152653; Alliance of Glycobiologists for Cancer Research, U01CA226158) for support of this research. We thank Dr. Jian Zhang and colleagues at Z Biotech for helpful suggestions on the interface and functionality of MotifFinder. Special thanks to Dr. Andrew Guy of the RMIT University in Melbourne, Australia, for advice regarding subtree mining methods and recommendations for the adaptation of CCARL for continuous prediction.
+              - generic [ref=f6e398]:
+                - heading "Abbreviations" [level=2] [ref=f6e399]
+                - generic [ref=f6e400]:
+                  - term [ref=f6e401]: CFG
+                  - definition [ref=f6e402]:
+                    - paragraph [ref=f6e403]: Consortium for Functional Glycomics
+                  - term [ref=f6e404]: NCFG
+                  - definition [ref=f6e405]:
+                    - paragraph [ref=f6e406]: National Center for Functional Glycomics
+                  - term [ref=f6e407]: NGGM
+                  - definition [ref=f6e408]:
+                    - paragraph [ref=f6e409]: Next Generation Glycan Microarray
+                  - term [ref=f6e410]: CUPRA
+                  - definition [ref=f6e411]:
+                    - paragraph [ref=f6e412]: Competitive Universal Proxy Receptor Assay
+                  - term [ref=f6e413]: KCAM
+                  - definition [ref=f6e414]:
+                    - paragraph [ref=f6e415]: KEGG Carbohydrate Matcher
+                  - term [ref=f6e416]: GlyMDB
+                  - definition [ref=f6e417]:
+                    - paragraph [ref=f6e418]: Glycan Microarray Database
+                  - term [ref=f6e419]: CCARL
+                  - definition [ref=f6e420]:
+                    - paragraph [ref=f6e421]: Carbohydrate Classification Accounting for Restricted Linkages
+                  - term [ref=f6e422]: DI
+                  - definition [ref=f6e423]:
+                    - paragraph [ref=f6e424]: Depletion Index
+                  - term [ref=f6e425]: PNA
+                  - definition [ref=f6e426]:
+                    - paragraph [ref=f6e427]: Peanut Agglutinin
+                  - term [ref=f6e428]: MAL-II
+                  - definition [ref=f6e429]:
+                    - paragraph [ref=f6e430]:
+                      - emphasis [ref=f6e431]: Maackia Amurensis
+                      - text: Lectin 2
+                  - term [ref=f6e432]: DSA
+                  - definition [ref=f6e433]:
+                    - paragraph [ref=f6e434]:
+                      - emphasis [ref=f6e435]: Datura Stramonium
+                      - text: Agglutinin
+                  - term [ref=f6e436]: HPA
+                  - definition [ref=f6e437]:
+                    - paragraph [ref=f6e438]:
+                      - emphasis [ref=f6e439]: Helix Pomatia
+                      - text: Agglutinin
+                  - term [ref=f6e440]: BC2L-A
+                  - definition [ref=f6e441]:
+                    - paragraph [ref=f6e442]:
+                      - emphasis [ref=f6e443]: Burkholderia Cenocepacia
+                      - text: Lectin 2 A
+                  - term [ref=f6e444]: RCA-I
+                  - definition [ref=f6e445]:
+                    - paragraph [ref=f6e446]:
+                      - emphasis [ref=f6e447]: Ricinus Communis
+                      - text: Agglutinin
+                  - term [ref=f6e448]: ECL
+                  - definition [ref=f6e449]:
+                    - paragraph [ref=f6e450]:
+                      - emphasis [ref=f6e451]: Erythrina Crista-galli
+                      - text: Lectin
+                  - term [ref=f6e452]: GSL-I-B4
+                  - definition [ref=f6e453]:
+                    - paragraph [ref=f6e454]:
+                      - emphasis [ref=f6e455]: Griffonia (Bandeiraea) Simplicifolia
+                      - text: Lectin 1 Isolectin B4
+                  - term [ref=f6e456]: SNA
+                  - definition [ref=f6e457]:
+                    - paragraph [ref=f6e458]:
+                      - emphasis [ref=f6e459]: Sambucus Nigra
+                      - text: Agglutinin
+                  - term [ref=f6e460]: ConA
+                  - definition [ref=f6e461]:
+                    - paragraph [ref=f6e462]:
+                      - emphasis [ref=f6e463]: Canavalia Ensiformis
+                      - text: Agglutinin
+              - generic [ref=f6e464]:
+                - heading "Footnotes" [level=2] [ref=f6e465]
+                - generic [ref=f6e467]:
+                  - paragraph [ref=f6e468]: Supporting Information
+                  - paragraph [ref=f6e469]: Methods for curve fitting, mapping array data onto comparable scales, and predicting lectin binding to glycans; results from MotifFinder analysis of common lectins and additional glycan-array platforms; additional analysis of the comparisons between analysis programs.
+              - generic [ref=f6e470]:
+                - heading "Data Availability" [level=2] [ref=f6e471]
+                - paragraph [ref=f6e472]:
+                  - text: The input data (
+                  - link "Table S2" [ref=f6e473] [cursor=pointer]:
+                    - /url: "#SD2"
+                  - text: ) were obtained through publicly accessible sources. The output files that were presented in the current study are available in the
+                  - link "Supporting Data" [ref=f6e474] [cursor=pointer]:
+                    - /url: "#SD3"
+                  - text: ". The CCARL source code was downloaded from its source:"
+                  - link "External, opens in a new tab. https://github.com/andrewguy/CCARL" [ref=f6e475] [cursor=pointer]:
+                    - /url: https://github.com/andrewguy/CCARL
+                  - text: ". The results for GlyMDB and MCAW-DB were accessed from their respective websites:"
+                  - link "External, opens in a new tab. http://www.glycanstructure.org/glymdb/" [ref=f6e476] [cursor=pointer]:
+                    - /url: http://www.glycanstructure.org/glymdb/
+                  - text: and
+                  - link "External, opens in a new tab. https://mcawdb.glycoinfo.org/" [ref=f6e477] [cursor=pointer]:
+                    - /url: https://mcawdb.glycoinfo.org/
+                  - text: ". The MotifFinder software is available for download for Windows, MacOS, and Linux at our laboratory website:"
+                  - link "External, opens in a new tab. https://haablab.vai.org/tools/" [ref=f6e478] [cursor=pointer]:
+                    - /url: https://haablab.vai.org/tools/
+                  - text: . The download package includes a User’s Manual and tutorials.
+              - generic [ref=f6e479]:
+                - heading "References" [level=2] [ref=f6e480]
+                - list [ref=f6e482]:
+                  - listitem [ref=f6e483]:
+                    - generic [ref=f6e484]: "1."
+                    - text: "Rudiger H; Gabius HJ Plant Lectins: Occurrence, Biochemistry, Functions and Applications Glycoconj J 2001, 8, 589–613. ["
+                    - link "External, opens in a new tab. DOI" [ref=f6e485] [cursor=pointer]:
+                      - /url: https://doi.org/10.1023/a:1020687518999
+                    - text: "] ["
+                    - link "PubMed" [ref=f6e486] [cursor=pointer]:
+                      - /url: https://pubmed.ncbi.nlm.nih.gov/12376725/
+                    - text: "] ["
+                    - link "External, opens in a new tab. Google Scholar" [ref=f6e487] [cursor=pointer]:
+                      - /url: https://scholar.google.com/scholar_lookup?journal=Glycoconj%20J&title=Plant%20Lectins:%20Occurrence,%20Biochemistry,%20Functions%20and%20Applications&author=H%20Rudiger&author=HJ%20Gabius&volume=8&publication_year=2001&pages=589-613&pmid=12376725&doi=10.1023/a:1020687518999&
+                    - text: "]"
+                  - listitem [ref=f6e488]:
+                    - generic [ref=f6e489]: "2."
+                    - text: Reily C; Stewart TJ; Renfrow MB; Novak J Glycosylation in Health and Disease Nat Rev Nephrol 2019, 6, 346–366. [
+                    - link "External, opens in a new tab. DOI" [ref=f6e490] [cursor=pointer]:
+                      - /url: https://doi.org/10.1038/s41581-019-0129-4
+                    - text: "] ["
+                    - link "PMC free article" [ref=f6e491] [cursor=pointer]:
+                      - /url: /articles/PMC6590709/
+                    - text: "] ["
+                    - link "PubMed" [ref=f6e492] [cursor=pointer]:
+                      - /url: https://pubmed.ncbi.nlm.nih.gov/30858582/
+                    - text: "] ["
+                    - link "External, opens in a new tab. Google Scholar" [ref=f6e493] [cursor=pointer]:
+                      - /url: https://scholar.google.com/scholar_lookup?journal=Nat%20Rev%20Nephrol&title=Glycosylation%20in%20Health%20and%20Disease&author=C%20Reily&author=TJ%20Stewart&author=MB%20Renfrow&author=J%20Novak&volume=6&publication_year=2019&pages=346-366&pmid=30858582&doi=10.1038/s41581-019-0129-4&
+                    - text: "]"
+                  - listitem [ref=f6e494]:
+                    - generic [ref=f6e495]: "3."
+                    - text: Pereira ME; Kabat EA; Lotan R; Sharon N Immunochemical Studies on the Specificity of the Peanut (Arachis Hypogaea) Agglutinin Carbohydr Res 1976, 1, 107–118. [
+                    - link "External, opens in a new tab. DOI" [ref=f6e496] [cursor=pointer]:
+                      - /url: https://doi.org/10.1016/s0008-6215(00)84040-9
+                    - text: "] ["
+                    - link "PubMed" [ref=f6e497] [cursor=pointer]:
+                      - /url: https://pubmed.ncbi.nlm.nih.gov/1033785/
+                    - text: "] ["
+                    - link "External, opens in a new tab. Google Scholar" [ref=f6e498] [cursor=pointer]:
+                      - /url: https://scholar.google.com/scholar_lookup?journal=Carbohydr%20Res&title=Immunochemical%20Studies%20on%20the%20Specificity%20of%20the%20Peanut%20(Arachis%20Hypogaea)%20Agglutinin&author=ME%20Pereira&author=EA%20Kabat&author=R%20Lotan&author=N%20Sharon&volume=1&publication_year=1976&pages=107-118&pmid=1033785&doi=10.1016/s0008-6215(00)84040-9&
+                    - text: "]"
+                  - listitem [ref=f6e499]:
+                    - generic [ref=f6e500]: "4."
+                    - text: Taylor ME; Drickamer K Structural Insights into What Glycan Arrays Tell Us About How Glycan-Binding Proteins Interact with Their Ligands Glycobiology 2009, 11, 1155–1162. [
+                    - link "External, opens in a new tab. DOI" [ref=f6e501] [cursor=pointer]:
+                      - /url: https://doi.org/10.1093/glycob/cwp076
+                    - text: "] ["
+                    - link "PMC free article" [ref=f6e502] [cursor=pointer]:
+                      - /url: /articles/PMC2757572/
+                    - text: "] ["
+                    - link "PubMed" [ref=f6e503] [cursor=pointer]:
+                      - /url: https://pubmed.ncbi.nlm.nih.gov/19528664/
+                    - text: "] ["
+                    - link "External, opens in a new tab. Google Scholar" [ref=f6e504] [cursor=pointer]:
+                      - /url: https://scholar.google.com/scholar_lookup?journal=Glycobiology&title=Structural%20Insights%20into%20What%20Glycan%20Arrays%20Tell%20Us%20About%20How%20Glycan-Binding%20Proteins%20Interact%20with%20Their%20Ligands&author=ME%20Taylor&author=K%20Drickamer&volume=11&publication_year=2009&pages=1155-1162&pmid=19528664&doi=10.1093/glycob/cwp076&
+                    - text: "]"
+                  - listitem [ref=f6e505]:
+                    - generic [ref=f6e506]: "5."
+                    - text: Li L; Guan W; Zhang G; Wu Z; Yu H; Chen X; Wang PG Microarray Analyses of Closely Related Glycoforms Reveal Different Accessibilities of Glycan Determinants on N-Glycan Branches Glycobiology 2020, 5, 334–345. [
+                    - link "External, opens in a new tab. DOI" [ref=f6e507] [cursor=pointer]:
+                      - /url: https://doi.org/10.1093/glycob/cwz100
+                    - text: "] ["
+                    - link "PMC free article" [ref=f6e508] [cursor=pointer]:
+                      - /url: /articles/PMC7175966/
+                    - text: "] ["
+                    - link "PubMed" [ref=f6e509] [cursor=pointer]:
+                      - /url: https://pubmed.ncbi.nlm.nih.gov/32026940/
+                    - text: "] ["
+                    - link "External, opens in a new tab. Google Scholar" [ref=f6e510] [cursor=pointer]:
+                      - /url: https://scholar.google.com/scholar_lookup?journal=Glycobiology&title=Microarray%20Analyses%20of%20Closely%20Related%20Glycoforms%20Reveal%20Different%20Accessibilities%20of%20Glycan%20Determinants%20on%20N-Glycan%20Branches&author=L%20Li&author=W%20Guan&author=G%20Zhang&author=Z%20Wu&author=H%20Yu&volume=5&publication_year=2020&pages=334-345&pmid=32026940&doi=10.1093/glycob/cwz100&
+                    - text: "]"
+                  - listitem [ref=f6e511]:
+                    - generic [ref=f6e512]: "6."
+                    - text: Nycholat CM; McBride R; Ekiert DC; Xu R; Rangarajan J; Peng W; Razi N; Gilbert M; Wakarchuk W; Wilson IA; Paulson JC Recognition of Sialylated Poly-N-Acetyllactosamine Chains on N- and O-Linked Glycans by Human and Avian Influenza a Virus Hemagglutinins Angew Chem Int Ed Engl 2012, 4860–4863. [
+                    - link "External, opens in a new tab. DOI" [ref=f6e513] [cursor=pointer]:
+                      - /url: https://doi.org/10.1002/anie.201200596
+                    - text: "] ["
+                    - link "PMC free article" [ref=f6e514] [cursor=pointer]:
+                      - /url: /articles/PMC3517101/
+                    - text: "] ["
+                    - link "PubMed" [ref=f6e515] [cursor=pointer]:
+                      - /url: https://pubmed.ncbi.nlm.nih.gov/22505324/
+                    - text: "] ["
+                    - link "External, opens in a new tab. Google Scholar" [ref=f6e516] [cursor=pointer]:
+                      - /url: https://scholar.google.com/scholar_lookup?journal=Angew%20Chem%20Int%20Ed%20Engl&title=Recognition%20of%20Sialylated%20Poly-N-Acetyllactosamine%20Chains%20on%20N-%20and%20O-Linked%20Glycans%20by%20Human%20and%20Avian%20Influenza%20a%20Virus%20Hemagglutinins&author=CM%20Nycholat&author=R%20McBride&author=DC%20Ekiert&author=R%20Xu&author=J%20Rangarajan&publication_year=2012&pages=4860-4863&pmid=22505324&doi=10.1002/anie.201200596&
+                    - text: "]"
+                  - listitem [ref=f6e517]:
+                    - generic [ref=f6e518]: "7."
+                    - text: Song X; Yu H; Chen X; Lasanajak Y; Tappert MM; Air GM; Tiwari VK; Cao H; Chokhawala HA; Zheng H; Cummings RD; Smith DF A Sialylated Glycan Microarray Reveals Novel Interactions of Modified Sialic Acids with Proteins and Viruses J Biol Chem 2011, 31610–31622. [
+                    - link "External, opens in a new tab. DOI" [ref=f6e519] [cursor=pointer]:
+                      - /url: https://doi.org/10.1074/jbc.M111.274217
+                    - text: "] ["
+                    - link "PMC free article" [ref=f6e520] [cursor=pointer]:
+                      - /url: /articles/PMC3173124/
+                    - text: "] ["
+                    - link "PubMed" [ref=f6e521] [cursor=pointer]:
+                      - /url: https://pubmed.ncbi.nlm.nih.gov/21757734/
+                    - text: "] ["
+                    - link "External, opens in a new tab. Google Scholar" [ref=f6e522] [cursor=pointer]:
+                      - /url: https://scholar.google.com/scholar_lookup?journal=J%20Biol%20Chem&title=A%20Sialylated%20Glycan%20Microarray%20Reveals%20Novel%20Interactions%20of%20Modified%20Sialic%20Acids%20with%20Proteins%20and%20Viruses&author=X%20Song&author=H%20Yu&author=X%20Chen&author=Y%20Lasanajak&author=MM%20Tappert&publication_year=2011&pages=31610-31622&pmid=21757734&doi=10.1074/jbc.M111.274217&
+                    - text: "]"
+                  - listitem [ref=f6e523]:
+                    - generic [ref=f6e524]: "8."
+                    - text: Padler-Karavani V; Song X; Yu H; Hurtado-Ziola N; Huang S; Muthana S; Chokhawala HA; Cheng J; Verhagen A; Langereis MA; Kleene R; Schachner M; de Groot RJ; Lasanajak Y; Matsuda H; Schwab R; Chen X; Smith DF; Cummings RD; Varki A Cross-Comparison of Protein Recognition of Sialic Acid Diversity on Two Novel Sialoglycan Microarrays J Biol Chem 2012, 27, 22593–22608. [
+                    - link "External, opens in a new tab. DOI" [ref=f6e525] [cursor=pointer]:
+                      - /url: https://doi.org/10.1074/jbc.M112.359323
+                    - text: "] ["
+                    - link "PMC free article" [ref=f6e526] [cursor=pointer]:
+                      - /url: /articles/PMC3391140/
+                    - text: "] ["
+                    - link "PubMed" [ref=f6e527] [cursor=pointer]:
+                      - /url: https://pubmed.ncbi.nlm.nih.gov/22549775/
+                    - text: "] ["
+                    - link "External, opens in a new tab. Google Scholar" [ref=f6e528] [cursor=pointer]:
+                      - /url: https://scholar.google.com/scholar_lookup?journal=J%20Biol%20Chem&title=Cross-Comparison%20of%20Protein%20Recognition%20of%20Sialic%20Acid%20Diversity%20on%20Two%20Novel%20Sialoglycan%20Microarrays&author=V%20Padler-Karavani&author=X%20Song&author=H%20Yu&author=N%20Hurtado-Ziola&author=S%20Huang&volume=27&publication_year=2012&pages=22593-22608&pmid=22549775&doi=10.1074/jbc.M112.359323&
+                    - text: "]"
+                  - listitem [ref=f6e529]:
+                    - generic [ref=f6e530]: "9."
+                    - text: Prudden AR; Liu L; Capicciotti CJ; Wolfert MA; Wang S; Gao Z; Meng L; Moremen KW; Boons GJ Synthesis of Asymmetrical Multiantennary Human Milk Oligosaccharides Proc Natl Acad Sci U S A 2017, 27, 6954–6959. [
+                    - link "External, opens in a new tab. DOI" [ref=f6e531] [cursor=pointer]:
+                      - /url: https://doi.org/10.1073/pnas.1701785114
+                    - text: "] ["
+                    - link "PMC free article" [ref=f6e532] [cursor=pointer]:
+                      - /url: /articles/PMC5502611/
+                    - text: "] ["
+                    - link "PubMed" [ref=f6e533] [cursor=pointer]:
+                      - /url: https://pubmed.ncbi.nlm.nih.gov/28630345/
+                    - text: "] ["
+                    - link "External, opens in a new tab. Google Scholar" [ref=f6e534] [cursor=pointer]:
+                      - /url: https://scholar.google.com/scholar_lookup?journal=Proc%20Natl%20Acad%20Sci%20U%20S%20A&title=Synthesis%20of%20Asymmetrical%20Multiantennary%20Human%20Milk%20Oligosaccharides&author=AR%20Prudden&author=L%20Liu&author=CJ%20Capicciotti&author=MA%20Wolfert&author=S%20Wang&volume=27&publication_year=2017&pages=6954-6959&pmid=28630345&doi=10.1073/pnas.1701785114&
+                    - text: "]"
+                  - listitem [ref=f6e535]:
+                    - generic [ref=f6e536]: "10."
+                    - text: Wang Z; Chinoy ZS; Ambre SG; Peng W; McBride R; de Vries RP; Glushka J; Paulson JC; Boons GJ A General Strategy for the Chemoenzymatic Synthesis of Asymmetrically Branched N-Glycans Science 2013, 6144, 379–383. [
+                    - link "External, opens in a new tab. DOI" [ref=f6e537] [cursor=pointer]:
+                      - /url: https://doi.org/10.1126/science.1236231
+                    - text: "] ["
+                    - link "PMC free article" [ref=f6e538] [cursor=pointer]:
+                      - /url: /articles/PMC3826785/
+                    - text: "] ["
+                    - link "PubMed" [ref=f6e539] [cursor=pointer]:
+                      - /url: https://pubmed.ncbi.nlm.nih.gov/23888036/
+                    - text: "] ["
+                    - link "External, opens in a new tab. Google Scholar" [ref=f6e540] [cursor=pointer]:
+                      - /url: https://scholar.google.com/scholar_lookup?journal=Science&title=A%20General%20Strategy%20for%20the%20Chemoenzymatic%20Synthesis%20of%20Asymmetrically%20Branched%20N-Glycans&author=Z%20Wang&author=ZS%20Chinoy&author=SG%20Ambre&author=W%20Peng&author=R%20McBride&volume=6144&publication_year=2013&pages=379-383&pmid=23888036&doi=10.1126/science.1236231&
+                    - text: "]"
+                  - listitem [ref=f6e541]:
+                    - generic [ref=f6e542]: "11."
+                    - text: Wu Z; Liu Y; Li L; Wan XF; Zhu H; Guo Y; Wei M; Guan W; Wang PG Decoding Glycan Protein Interactions by a New Class of Asymmetric N-Glycans Org Biomol Chem 2017, 42, 8946–8951. [
+                    - link "External, opens in a new tab. DOI" [ref=f6e543] [cursor=pointer]:
+                      - /url: https://doi.org/10.1039/c7ob02303k
+                    - text: "] ["
+                    - link "PMC free article" [ref=f6e544] [cursor=pointer]:
+                      - /url: /articles/PMC5971091/
+                    - text: "] ["
+                    - link "PubMed" [ref=f6e545] [cursor=pointer]:
+                      - /url: https://pubmed.ncbi.nlm.nih.gov/29043371/
+                    - text: "] ["
+                    - link "External, opens in a new tab. Google Scholar" [ref=f6e546] [cursor=pointer]:
+                      - /url: https://scholar.google.com/scholar_lookup?journal=Org%20Biomol%20Chem&title=Decoding%20Glycan%20Protein%20Interactions%20by%20a%20New%20Class%20of%20Asymmetric%20N-Glycans&author=Z%20Wu&author=Y%20Liu&author=L%20Li&author=XF%20Wan&author=H%20Zhu&volume=42&publication_year=2017&pages=8946-8951&pmid=29043371&doi=10.1039/c7ob02303k&
+                    - text: "]"
+                  - listitem [ref=f6e547]:
+                    - generic [ref=f6e548]: "12."
+                    - text: Geissner A; Reinhardt A; Rademacher C; Johannssen T; Monteiro J; Lepenies B; Thepaut M; Fieschi F; Mrazkova J; Wimmerova M; Schuhmacher F; Gotze S; Grunstein D; Guo X; Hahm HS; Kandasamy J; Leonori D; Martin CE; Parameswarappa SG; Pasari S; Schlegel MK; Tanaka H; Xiao G; Yang Y; Pereira CL; Anish C; Seeberger PH Microbe-Focused Glycan Array Screening Platform Proc Natl Acad Sci U S A 2019, 6, 1958–1967. [
+                    - link "External, opens in a new tab. DOI" [ref=f6e549] [cursor=pointer]:
+                      - /url: https://doi.org/10.1073/pnas.1800853116
+                    - text: "] ["
+                    - link "PMC free article" [ref=f6e550] [cursor=pointer]:
+                      - /url: /articles/PMC6369816/
+                    - text: "] ["
+                    - link "PubMed" [ref=f6e551] [cursor=pointer]:
+                      - /url: https://pubmed.ncbi.nlm.nih.gov/30670663/
+                    - text: "] ["
+                    - link "External, opens in a new tab. Google Scholar" [ref=f6e552] [cursor=pointer]:
+                      - /url: https://scholar.google.com/scholar_lookup?journal=Proc%20Natl%20Acad%20Sci%20U%20S%20A&title=Microbe-Focused%20Glycan%20Array%20Screening%20Platform&author=A%20Geissner&author=A%20Reinhardt&author=C%20Rademacher&author=T%20Johannssen&author=J%20Monteiro&volume=6&publication_year=2019&pages=1958-1967&pmid=30670663&doi=10.1073/pnas.1800853116&
+                    - text: "]"
+                  - listitem [ref=f6e553]:
+                    - generic [ref=f6e554]: "13."
+                    - text: Ruprecht C; Bartetzko MP; Senf D; Dallabernadina P; Boos I; Andersen MCF; Kotake T; Knox JP; Hahn MG; Clausen MH; Pfrengle F A Synthetic Glycan Microarray Enables Epitope Mapping of Plant Cell Wall Glycan-Directed Antibodies Plant Physiol 2017, 3, 1094–1104. [
+                    - link "External, opens in a new tab. DOI" [ref=f6e555] [cursor=pointer]:
+                      - /url: https://doi.org/10.1104/pp.17.00737
+                    - text: "] ["
+                    - link "PMC free article" [ref=f6e556] [cursor=pointer]:
+                      - /url: /articles/PMC5664464/
+                    - text: "] ["
+                    - link "PubMed" [ref=f6e557] [cursor=pointer]:
+                      - /url: https://pubmed.ncbi.nlm.nih.gov/28924016/
+                    - text: "] ["
+                    - link "External, opens in a new tab. Google Scholar" [ref=f6e558] [cursor=pointer]:
+                      - /url: https://scholar.google.com/scholar_lookup?journal=Plant%20Physiol&title=A%20Synthetic%20Glycan%20Microarray%20Enables%20Epitope%20Mapping%20of%20Plant%20Cell%20Wall%20Glycan-Directed%20Antibodies&author=C%20Ruprecht&author=MP%20Bartetzko&author=D%20Senf&author=P%20Dallabernadina&author=I%20Boos&volume=3&publication_year=2017&pages=1094-1104&pmid=28924016&doi=10.1104/pp.17.00737&
+                    - text: "]"
+                  - listitem [ref=f6e559]:
+                    - generic [ref=f6e560]: "14."
+                    - text: Horton M; Su G; Yi L; Wang Z; Xu Y; Pagadala V; Zhang F; Zaharoff DA; Pearce K; Linhardt RJ; Liu J Construction of Heparan Sulfate Microarray for Investigating the Binding of Specific Saccharide Sequences to Proteins Glycobiology 2020, 3, 188–199. [
+                    - link "External, opens in a new tab. DOI" [ref=f6e561] [cursor=pointer]:
+                      - /url: https://doi.org/10.1093/glycob/cwaa068
+                    - text: "] ["
+                    - link "PMC free article" [ref=f6e562] [cursor=pointer]:
+                      - /url: /articles/PMC8022954/
+                    - text: "] ["
+                    - link "PubMed" [ref=f6e563] [cursor=pointer]:
+                      - /url: https://pubmed.ncbi.nlm.nih.gov/32681173/
+                    - text: "] ["
+                    - link "External, opens in a new tab. Google Scholar" [ref=f6e564] [cursor=pointer]:
+                      - /url: https://scholar.google.com/scholar_lookup?journal=Glycobiology&title=Construction%20of%20Heparan%20Sulfate%20Microarray%20for%20Investigating%20the%20Binding%20of%20Specific%20Saccharide%20Sequences%20to%20Proteins&author=M%20Horton&author=G%20Su&author=L%20Yi&author=Z%20Wang&author=Y%20Xu&volume=3&publication_year=2020&pages=188-199&pmid=32681173&doi=10.1093/glycob/cwaa068&
+                    - text: "]"
+                  - listitem [ref=f6e565]:
+                    - generic [ref=f6e566]: "15."
+                    - text: Purohit S; Li T; Guan W; Song X; Song J; Tian Y; Li L; Sharma A; Dun B; Mysona D; Ghamande S; Rungruang B; Cummings RD; Wang PG; She JX Multiplex Glycan Bead Array for High Throughput and High Content Analyses of Glycan Binding Proteins Nat Commun 2018, 1, 258. [
+                    - link "External, opens in a new tab. DOI" [ref=f6e567] [cursor=pointer]:
+                      - /url: https://doi.org/10.1038/s41467-017-02747-y
+                    - text: "] ["
+                    - link "PMC free article" [ref=f6e568] [cursor=pointer]:
+                      - /url: /articles/PMC5772357/
+                    - text: "] ["
+                    - link "PubMed" [ref=f6e569] [cursor=pointer]:
+                      - /url: https://pubmed.ncbi.nlm.nih.gov/29343722/
+                    - text: "] ["
+                    - link "External, opens in a new tab. Google Scholar" [ref=f6e570] [cursor=pointer]:
+                      - /url: https://scholar.google.com/scholar_lookup?journal=Nat%20Commun&title=Multiplex%20Glycan%20Bead%20Array%20for%20High%20Throughput%20and%20High%20Content%20Analyses%20of%20Glycan%20Binding%20Proteins&author=S%20Purohit&author=T%20Li&author=W%20Guan&author=X%20Song&author=J%20Song&volume=1&publication_year=2018&pages=258&pmid=29343722&doi=10.1038/s41467-017-02747-y&
+                    - text: "]"
+                  - listitem [ref=f6e571]:
+                    - generic [ref=f6e572]: "16."
+                    - text: Yan M; Zhu Y; Liu X; Lasanajak Y; Xiong J; Lu J; Lin X; Ashline D; Reinhold V; Smith DF; Song X Next-Generation Glycan Microarray Enabled by DNA-Coded Glycan Library and Next-Generation Sequencing Technology Anal Chem 2019, 14, 9221–9228. [
+                    - link "External, opens in a new tab. DOI" [ref=f6e573] [cursor=pointer]:
+                      - /url: https://doi.org/10.1021/acs.analchem.9b01988
+                    - text: "] ["
+                    - link "PMC free article" [ref=f6e574] [cursor=pointer]:
+                      - /url: /articles/PMC13016201/
+                    - text: "] ["
+                    - link "PubMed" [ref=f6e575] [cursor=pointer]:
+                      - /url: https://pubmed.ncbi.nlm.nih.gov/31187982/
+                    - text: "] ["
+                    - link "External, opens in a new tab. Google Scholar" [ref=f6e576] [cursor=pointer]:
+                      - /url: https://scholar.google.com/scholar_lookup?journal=Anal%20Chem&title=Next-Generation%20Glycan%20Microarray%20Enabled%20by%20DNA-Coded%20Glycan%20Library%20and%20Next-Generation%20Sequencing%20Technology&author=M%20Yan&author=Y%20Zhu&author=X%20Liu&author=Y%20Lasanajak&author=J%20Xiong&volume=14&publication_year=2019&pages=9221-9228&pmid=31187982&doi=10.1021/acs.analchem.9b01988&
+                    - text: "]"
+                  - listitem [ref=f6e577]:
+                    - generic [ref=f6e578]: "17."
+                    - text: Kitov PI; Kitova EN; Han L; Li Z; Jung J; Rodrigues E; Hunter CD; Cairo CW; Macauley MS; Klassen JS A Quantitative, High-Throughput Method Identifies Protein-Glycan Interactions Via Mass Spectrometry Commun Biol 2019, 268. [
+                    - link "External, opens in a new tab. DOI" [ref=f6e579] [cursor=pointer]:
+                      - /url: https://doi.org/10.1038/s42003-019-0507-2
+                    - text: "] ["
+                    - link "PMC free article" [ref=f6e580] [cursor=pointer]:
+                      - /url: /articles/PMC6646405/
+                    - text: "] ["
+                    - link "PubMed" [ref=f6e581] [cursor=pointer]:
+                      - /url: https://pubmed.ncbi.nlm.nih.gov/31341967/
+                    - text: "] ["
+                    - link "External, opens in a new tab. Google Scholar" [ref=f6e582] [cursor=pointer]:
+                      - /url: https://scholar.google.com/scholar_lookup?journal=Commun%20Biol&title=A%20Quantitative,%20High-Throughput%20Method%20Identifies%20Protein-Glycan%20Interactions%20Via%20Mass%20Spectrometry&author=PI%20Kitov&author=EN%20Kitova&author=L%20Han&author=Z%20Li&author=J%20Jung&publication_year=2019&pages=268&pmid=31341967&doi=10.1038/s42003-019-0507-2&
+                    - text: "]"
+                  - listitem [ref=f6e583]:
+                    - generic [ref=f6e584]: "18."
+                    - text: Han L; Kitov PI; Li J; Kitova EN; Klassen JS Probing Heteromultivalent Protein-Glycosphingolipid Interactions Using Native Mass Spectrometry and Nanodiscs Anal Chem 2020, 5, 3923–3931. [
+                    - link "External, opens in a new tab. DOI" [ref=f6e585] [cursor=pointer]:
+                      - /url: https://doi.org/10.1021/acs.analchem.9b05419
+                    - text: "] ["
+                    - link "PubMed" [ref=f6e586] [cursor=pointer]:
+                      - /url: https://pubmed.ncbi.nlm.nih.gov/31944669/
+                    - text: "] ["
+                    - link "External, opens in a new tab. Google Scholar" [ref=f6e587] [cursor=pointer]:
+                      - /url: https://scholar.google.com/scholar_lookup?journal=Anal%20Chem&title=Probing%20Heteromultivalent%20Protein-Glycosphingolipid%20Interactions%20Using%20Native%20Mass%20Spectrometry%20and%20Nanodiscs&author=L%20Han&author=PI%20Kitov&author=J%20Li&author=EN%20Kitova&author=JS%20Klassen&volume=5&publication_year=2020&pages=3923-3931&pmid=31944669&doi=10.1021/acs.analchem.9b05419&
+                    - text: "]"
+                  - listitem [ref=f6e588]:
+                    - generic [ref=f6e589]: "19."
+                    - text: "Aoki KF; Yamaguchi A; Ueda N; Akutsu T; Mamitsuka H; Goto S; Kanehisa M Kcam (Kegg Carbohydrate Matcher): A Software Tool for Analyzing the Structures of Carbohydrate Sugar Chains Nucleic Acids Res 2004, Web Server issue, W267–272. ["
+                    - link "External, opens in a new tab. DOI" [ref=f6e590] [cursor=pointer]:
+                      - /url: https://doi.org/10.1093/nar/gkh473
+                    - text: "] ["
+                    - link "PMC free article" [ref=f6e591] [cursor=pointer]:
+                      - /url: /articles/PMC441611/
+                    - text: "] ["
+                    - link "PubMed" [ref=f6e592] [cursor=pointer]:
+                      - /url: https://pubmed.ncbi.nlm.nih.gov/15215393/
+                    - text: "] ["
+                    - link "External, opens in a new tab. Google Scholar" [ref=f6e593] [cursor=pointer]:
+                      - /url: https://scholar.google.com/scholar_lookup?journal=Nucleic%20Acids%20Res&title=Kcam%20(Kegg%20Carbohydrate%20Matcher):%20A%20Software%20Tool%20for%20Analyzing%20the%20Structures%20of%20Carbohydrate%20Sugar%20Chains&author=KF%20Aoki&author=A%20Yamaguchi&author=N%20Ueda&author=T%20Akutsu&author=H%20Mamitsuka&publication_year=2004&pages=W267-272&pmid=15215393&doi=10.1093/nar/gkh473&
+                    - text: "]"
+                  - listitem [ref=f6e594]:
+                    - generic [ref=f6e595]: "20."
+                    - text: Porter A; Yue T; Heeringa L; Day S; Suh E; Haab BB A Motif-Based Analysis of Glycan Array Data to Determine the Specificities of Glycan-Binding Proteins Glycobiology 2010, 3, 369–380. [
+                    - link "External, opens in a new tab. DOI" [ref=f6e596] [cursor=pointer]:
+                      - /url: https://doi.org/10.1093/glycob/cwp187
+                    - text: "] ["
+                    - link "PMC free article" [ref=f6e597] [cursor=pointer]:
+                      - /url: /articles/PMC2815654/
+                    - text: "] ["
+                    - link "PubMed" [ref=f6e598] [cursor=pointer]:
+                      - /url: https://pubmed.ncbi.nlm.nih.gov/19946132/
+                    - text: "] ["
+                    - link "External, opens in a new tab. Google Scholar" [ref=f6e599] [cursor=pointer]:
+                      - /url: https://scholar.google.com/scholar_lookup?journal=Glycobiology&title=A%20Motif-Based%20Analysis%20of%20Glycan%20Array%20Data%20to%20Determine%20the%20Specificities%20of%20Glycan-Binding%20Proteins&author=A%20Porter&author=T%20Yue&author=L%20Heeringa&author=S%20Day&author=E%20Suh&volume=3&publication_year=2010&pages=369-380&pmid=19946132&doi=10.1093/glycob/cwp187&
+                    - text: "]"
+                  - listitem [ref=f6e600]:
+                    - generic [ref=f6e601]: "21."
+                    - text: "Cholleti SR; Agravat S; Morris T; Saltz JH; Song X; Cummings RD; Smith DF Automated Motif Discovery from Glycan Array Data Omics : a journal of integrative biology 2012, 10, 497–512. ["
+                    - link "External, opens in a new tab. DOI" [ref=f6e602] [cursor=pointer]:
+                      - /url: https://doi.org/10.1089/omi.2012.0013
+                    - text: "] ["
+                    - link "PMC free article" [ref=f6e603] [cursor=pointer]:
+                      - /url: /articles/PMC3459425/
+                    - text: "] ["
+                    - link "PubMed" [ref=f6e604] [cursor=pointer]:
+                      - /url: https://pubmed.ncbi.nlm.nih.gov/22877213/
+                    - text: "] ["
+                    - link "External, opens in a new tab. Google Scholar" [ref=f6e605] [cursor=pointer]:
+                      - /url: https://scholar.google.com/scholar_lookup?journal=Omics%20:%20a%20journal%20of%20integrative%20biology&title=Automated%20Motif%20Discovery%20from%20Glycan%20Array%20Data&author=SR%20Cholleti&author=S%20Agravat&author=T%20Morris&author=JH%20Saltz&author=X%20Song&volume=10&publication_year=2012&pages=497-512&pmid=22877213&doi=10.1089/omi.2012.0013&
+                    - text: "]"
+                  - listitem [ref=f6e606]:
+                    - generic [ref=f6e607]: "22."
+                    - text: Xuan P; Zhang Y; Tzeng TR; Wan XF; Luo F A Quantitative Structure-Activity Relationship (Qsar) Study on Glycan Array Data to Determine the Specificities of Glycan-Binding Proteins Glycobiology 2011, 4, 552–560. [
+                    - link "External, opens in a new tab. DOI" [ref=f6e608] [cursor=pointer]:
+                      - /url: https://doi.org/10.1093/glycob/cwr163
+                    - text: "] ["
+                    - link "PMC free article" [ref=f6e609] [cursor=pointer]:
+                      - /url: /articles/PMC3409798/
+                    - text: "] ["
+                    - link "PubMed" [ref=f6e610] [cursor=pointer]:
+                      - /url: https://pubmed.ncbi.nlm.nih.gov/22156918/
+                    - text: "] ["
+                    - link "External, opens in a new tab. Google Scholar" [ref=f6e611] [cursor=pointer]:
+                      - /url: https://scholar.google.com/scholar_lookup?journal=Glycobiology&title=A%20Quantitative%20Structure-Activity%20Relationship%20(Qsar)%20Study%20on%20Glycan%20Array%20Data%20to%20Determine%20the%20Specificities%20of%20Glycan-Binding%20Proteins&author=P%20Xuan&author=Y%20Zhang&author=TR%20Tzeng&author=XF%20Wan&author=F%20Luo&volume=4&publication_year=2011&pages=552-560&pmid=22156918&doi=10.1093/glycob/cwr163&
+                    - text: "]"
+                  - listitem [ref=f6e612]:
+                    - generic [ref=f6e613]: "23."
+                    - text: Hosoda M; Akune Y; Aoki-Kinoshita KF Development and Application of an Algorithm to Compute Weighted Multiple Glycan Alignments Bioinformatics 2017, 9, 1317–1323. [
+                    - link "External, opens in a new tab. DOI" [ref=f6e614] [cursor=pointer]:
+                      - /url: https://doi.org/10.1093/bioinformatics/btw827
+                    - text: "] ["
+                    - link "PMC free article" [ref=f6e615] [cursor=pointer]:
+                      - /url: /articles/PMC5408794/
+                    - text: "] ["
+                    - link "PubMed" [ref=f6e616] [cursor=pointer]:
+                      - /url: https://pubmed.ncbi.nlm.nih.gov/28093404/
+                    - text: "] ["
+                    - link "External, opens in a new tab. Google Scholar" [ref=f6e617] [cursor=pointer]:
+                      - /url: https://scholar.google.com/scholar_lookup?journal=Bioinformatics&title=Development%20and%20Application%20of%20an%20Algorithm%20to%20Compute%20Weighted%20Multiple%20Glycan%20Alignments&author=M%20Hosoda&author=Y%20Akune&author=KF%20Aoki-Kinoshita&volume=9&publication_year=2017&pages=1317-1323&pmid=28093404&doi=10.1093/bioinformatics/btw827&
+                    - text: "]"
+                  - listitem [ref=f6e618]:
+                    - generic [ref=f6e619]: "24."
+                    - text: "Klamer Z; Staal B; Prudden AR; Liu L; Smith DF; Boons GJ; Haab BB Mining High-Complexity Motifs in Glycans: A New Language to Uncover the Fine-Specificities of Lectins and Glycosidases Analytical Chemistry 2017, 22, 12342–12350. ["
+                    - link "External, opens in a new tab. DOI" [ref=f6e620] [cursor=pointer]:
+                      - /url: https://doi.org/10.1021/acs.analchem.7b04293
+                    - text: "] ["
+                    - link "PMC free article" [ref=f6e621] [cursor=pointer]:
+                      - /url: /articles/PMC5700451/
+                    - text: "] ["
+                    - link "PubMed" [ref=f6e622] [cursor=pointer]:
+                      - /url: https://pubmed.ncbi.nlm.nih.gov/29058413/
+                    - text: "] ["
+                    - link "External, opens in a new tab. Google Scholar" [ref=f6e623] [cursor=pointer]:
+                      - /url: https://scholar.google.com/scholar_lookup?journal=Analytical%20Chemistry&title=Mining%20High-Complexity%20Motifs%20in%20Glycans:%20A%20New%20Language%20to%20Uncover%20the%20Fine-Specificities%20of%20Lectins%20and%20Glycosidases&author=Z%20Klamer&author=B%20Staal&author=AR%20Prudden&author=L%20Liu&author=DF%20Smith&volume=22&publication_year=2017&pages=12342-12350&pmid=29058413&doi=10.1021/acs.analchem.7b04293&
+                    - text: "]"
+                  - listitem [ref=f6e624]:
+                    - generic [ref=f6e625]: "25."
+                    - text: Coff L; Chan J; Ramsland PA; Guy AJ Identifying Glycan Motifs Using a Novel Subtree Mining Approach BMC Bioinformatics 2020, 1, 42. [
+                    - link "External, opens in a new tab. DOI" [ref=f6e626] [cursor=pointer]:
+                      - /url: https://doi.org/10.1186/s12859-020-3374-4
+                    - text: "] ["
+                    - link "PMC free article" [ref=f6e627] [cursor=pointer]:
+                      - /url: /articles/PMC7001330/
+                    - text: "] ["
+                    - link "PubMed" [ref=f6e628] [cursor=pointer]:
+                      - /url: https://pubmed.ncbi.nlm.nih.gov/32019496/
+                    - text: "] ["
+                    - link "External, opens in a new tab. Google Scholar" [ref=f6e629] [cursor=pointer]:
+                      - /url: https://scholar.google.com/scholar_lookup?journal=BMC%20Bioinformatics&title=Identifying%20Glycan%20Motifs%20Using%20a%20Novel%20Subtree%20Mining%20Approach&author=L%20Coff&author=J%20Chan&author=PA%20Ramsland&author=AJ%20Guy&volume=1&publication_year=2020&pages=42&pmid=32019496&doi=10.1186/s12859-020-3374-4&
+                    - text: "]"
+                  - listitem [ref=f6e630]:
+                    - generic [ref=f6e631]: "26."
+                    - text: "Agravat SB; Saltz JH; Cummings RD; Smith DF Glycopattern: A Web Platform for Glycan Array Mining Bioinformatics 2014, 23, 3417–3418. ["
+                    - link "External, opens in a new tab. DOI" [ref=f6e632] [cursor=pointer]:
+                      - /url: https://doi.org/10.1093/bioinformatics/btu559
+                    - text: "] ["
+                    - link "PMC free article" [ref=f6e633] [cursor=pointer]:
+                      - /url: /articles/PMC4296152/
+                    - text: "] ["
+                    - link "PubMed" [ref=f6e634] [cursor=pointer]:
+                      - /url: https://pubmed.ncbi.nlm.nih.gov/25143288/
+                    - text: "] ["
+                    - link "External, opens in a new tab. Google Scholar" [ref=f6e635] [cursor=pointer]:
+                      - /url: https://scholar.google.com/scholar_lookup?journal=Bioinformatics&title=Glycopattern:%20A%20Web%20Platform%20for%20Glycan%20Array%20Mining&author=SB%20Agravat&author=JH%20Saltz&author=RD%20Cummings&author=DF%20Smith&volume=23&publication_year=2014&pages=3417-3418&pmid=25143288&doi=10.1093/bioinformatics/btu559&
+                    - text: "]"
+                  - listitem [ref=f6e636]:
+                    - generic [ref=f6e637]: "27."
+                    - text: Akune Y; Hosoda M; Kaiya S; Shinmachi D; Aoki-Kinoshita KF The Rings Resource for Glycome Informatics Analysis and Data Mining on the Web Omics 2010, 4, 475–486. [
+                    - link "External, opens in a new tab. DOI" [ref=f6e638] [cursor=pointer]:
+                      - /url: https://doi.org/10.1089/omi.2009.0129
+                    - text: "] ["
+                    - link "PubMed" [ref=f6e639] [cursor=pointer]:
+                      - /url: https://pubmed.ncbi.nlm.nih.gov/20726803/
+                    - text: "] ["
+                    - link "External, opens in a new tab. Google Scholar" [ref=f6e640] [cursor=pointer]:
+                      - /url: https://scholar.google.com/scholar_lookup?journal=Omics&title=The%20Rings%20Resource%20for%20Glycome%20Informatics%20Analysis%20and%20Data%20Mining%20on%20the%20Web&author=Y%20Akune&author=M%20Hosoda&author=S%20Kaiya&author=D%20Shinmachi&author=KF%20Aoki-Kinoshita&volume=4&publication_year=2010&pages=475-486&pmid=20726803&doi=10.1089/omi.2009.0129&
+                    - text: "]"
+                  - listitem [ref=f6e641]:
+                    - generic [ref=f6e642]: "28."
+                    - text: "Hosoda M; Takahashi Y; Shiota M; Shinmachi D; Inomoto R; Higashimoto S; Aoki-Kinoshita KF Mcaw-Db: A Glycan Profile Database Capturing the Ambiguity of Glycan Recognition Patterns Carbohydr Res 2018, 44–56. ["
+                    - link "External, opens in a new tab. DOI" [ref=f6e643] [cursor=pointer]:
+                      - /url: https://doi.org/10.1016/j.carres.2018.05.003
+                    - text: "] ["
+                    - link "PubMed" [ref=f6e644] [cursor=pointer]:
+                      - /url: https://pubmed.ncbi.nlm.nih.gov/29859376/
+                    - text: "] ["
+                    - link "External, opens in a new tab. Google Scholar" [ref=f6e645] [cursor=pointer]:
+                      - /url: https://scholar.google.com/scholar_lookup?journal=Carbohydr%20Res&title=Mcaw-Db:%20A%20Glycan%20Profile%20Database%20Capturing%20the%20Ambiguity%20of%20Glycan%20Recognition%20Patterns&author=M%20Hosoda&author=Y%20Takahashi&author=M%20Shiota&author=D%20Shinmachi&author=R%20Inomoto&publication_year=2018&pages=44-56&pmid=29859376&doi=10.1016/j.carres.2018.05.003&
+                    - text: "]"
+                  - listitem [ref=f6e646]:
+                    - generic [ref=f6e647]: "29."
+                    - text: "Mehta AY; Cummings RD Glad: Glycan Array Dashboard, a Visual Analytics Tool for Glycan Microarrays Bioinformatics 2019, 18, 3536–3537. ["
+                    - link "External, opens in a new tab. DOI" [ref=f6e648] [cursor=pointer]:
+                      - /url: https://doi.org/10.1093/bioinformatics/btz075
+                    - text: "] ["
+                    - link "PMC free article" [ref=f6e649] [cursor=pointer]:
+                      - /url: /articles/PMC6748710/
+                    - text: "] ["
+                    - link "PubMed" [ref=f6e650] [cursor=pointer]:
+                      - /url: https://pubmed.ncbi.nlm.nih.gov/30715201/
+                    - text: "] ["
+                    - link "External, opens in a new tab. Google Scholar" [ref=f6e651] [cursor=pointer]:
+                      - /url: https://scholar.google.com/scholar_lookup?journal=Bioinformatics&title=Glad:%20Glycan%20Array%20Dashboard,%20a%20Visual%20Analytics%20Tool%20for%20Glycan%20Microarrays&author=AY%20Mehta&author=RD%20Cummings&volume=18&publication_year=2019&pages=3536-3537&pmid=30715201&doi=10.1093/bioinformatics/btz075&
+                    - text: "]"
+                  - listitem [ref=f6e652]:
+                    - generic [ref=f6e653]: "30."
+                    - text: "Cao Y; Park SJ; Mehta AY; Cummings RD; Im W Glymdb: Glycan Microarray Database and Analysis Toolset Bioinformatics 2019, 8, 2438–2442. ["
+                    - link "External, opens in a new tab. DOI" [ref=f6e654] [cursor=pointer]:
+                      - /url: https://doi.org/10.1093/bioinformatics/btz934
+                    - text: "] ["
+                    - link "PMC free article" [ref=f6e655] [cursor=pointer]:
+                      - /url: /articles/PMC7178435/
+                    - text: "] ["
+                    - link "PubMed" [ref=f6e656] [cursor=pointer]:
+                      - /url: https://pubmed.ncbi.nlm.nih.gov/31841142/
+                    - text: "] ["
+                    - link "External, opens in a new tab. Google Scholar" [ref=f6e657] [cursor=pointer]:
+                      - /url: https://scholar.google.com/scholar_lookup?journal=Bioinformatics&title=Glymdb:%20Glycan%20Microarray%20Database%20and%20Analysis%20Toolset&author=Y%20Cao&author=SJ%20Park&author=AY%20Mehta&author=RD%20Cummings&author=W%20Im&volume=8&publication_year=2019&pages=2438-2442&pmid=31841142&doi=10.1093/bioinformatics/btz934&
+                    - text: "]"
+                  - listitem [ref=f6e658]:
+                    - generic [ref=f6e659]: "31."
+                    - text: "Cheng K; Zhou Y; Neelamegham S Drawglycan-Snfg: A Robust Tool to Render Glycans and Glycopeptides with Fragmentation Information Glycobiology 2017, 3, 200–205. ["
+                    - link "External, opens in a new tab. DOI" [ref=f6e660] [cursor=pointer]:
+                      - /url: https://doi.org/10.1093/glycob/cww115
+                    - text: "] ["
+                    - link "PMC free article" [ref=f6e661] [cursor=pointer]:
+                      - /url: /articles/PMC6410959/
+                    - text: "] ["
+                    - link "PubMed" [ref=f6e662] [cursor=pointer]:
+                      - /url: https://pubmed.ncbi.nlm.nih.gov/28177454/
+                    - text: "] ["
+                    - link "External, opens in a new tab. Google Scholar" [ref=f6e663] [cursor=pointer]:
+                      - /url: https://scholar.google.com/scholar_lookup?journal=Glycobiology&title=Drawglycan-Snfg:%20A%20Robust%20Tool%20to%20Render%20Glycans%20and%20Glycopeptides%20with%20Fragmentation%20Information&author=K%20Cheng&author=Y%20Zhou&author=S%20Neelamegham&volume=3&publication_year=2017&pages=200-205&pmid=28177454&doi=10.1093/glycob/cww115&
+                    - text: "]"
+                  - listitem [ref=f6e664]:
+                    - generic [ref=f6e665]: "32."
+                    - text: "Klamer Z; Haab B Automated Identification of Lectin Fine Specificities from Glycan-Array Data; Glycan-Based Cellular Communication: Techniques for Carbohydrate-Protein Interactions American Chemical Society 2020, 67–82. ["
+                    - link "External, opens in a new tab. Google Scholar" [ref=f6e666] [cursor=pointer]:
+                      - /url: https://scholar.google.com/scholar_lookup?journal=American%20Chemical%20Society&title=Automated%20Identification%20of%20Lectin%20Fine%20Specificities%20from%20Glycan-Array%20Data;%20Glycan-Based%20Cellular%20Communication:%20Techniques%20for%20Carbohydrate-Protein%20Interactions&author=Z%20Klamer&author=B%20Haab&publication_year=2020&pages=67-82&
+                    - text: "]"
+                  - listitem [ref=f6e667]:
+                    - generic [ref=f6e668]: "33."
+                    - text: Sastry MV; Banarjee P; Patanjali SR; Swamy MJ; Swarnalatha GV; Surolia A Analysis of Saccharide Binding to Artocarpus Integrifolia Lectin Reveals Specific Recognition of T-Antigen (Beta-D-Gal(1----3)D-Galnac) J Biol Chem 1986, 25, 11726–11733. [
+                    - link "PubMed" [ref=f6e669] [cursor=pointer]:
+                      - /url: https://pubmed.ncbi.nlm.nih.gov/3745164/
+                    - text: "] ["
+                    - link "External, opens in a new tab. Google Scholar" [ref=f6e670] [cursor=pointer]:
+                      - /url: https://scholar.google.com/scholar_lookup?journal=J%20Biol%20Chem&title=Analysis%20of%20Saccharide%20Binding%20to%20Artocarpus%20Integrifolia%20Lectin%20Reveals%20Specific%20Recognition%20of%20T-Antigen%20(Beta-D-Gal(1----3)D-Galnac)&author=MV%20Sastry&author=P%20Banarjee&author=SR%20Patanjali&author=MJ%20Swamy&author=GV%20Swarnalatha&volume=25&publication_year=1986&pages=11726-11733&pmid=3745164&
+                    - text: "]"
+                  - listitem [ref=f6e671]:
+                    - generic [ref=f6e672]: "34."
+                    - text: Crowley JF; Goldstein IJ; Arnarp J; Lönngren J Carbohydrate Binding Studies on the Lectin from Datura Stramonium Seeds Arch Biochem Biophys 1984, 2, 524–533. [
+                    - link "External, opens in a new tab. DOI" [ref=f6e673] [cursor=pointer]:
+                      - /url: https://doi.org/10.1016/0003-9861(84)90417-x
+                    - text: "] ["
+                    - link "PubMed" [ref=f6e674] [cursor=pointer]:
+                      - /url: https://pubmed.ncbi.nlm.nih.gov/6203486/
+                    - text: "] ["
+                    - link "External, opens in a new tab. Google Scholar" [ref=f6e675] [cursor=pointer]:
+                      - /url: https://scholar.google.com/scholar_lookup?journal=Arch%20Biochem%20Biophys&title=Carbohydrate%20Binding%20Studies%20on%20the%20Lectin%20from%20Datura%20Stramonium%20Seeds&author=JF%20Crowley&author=IJ%20Goldstein&author=J%20Arnarp&author=J%20L%C3%B6nngren&volume=2&publication_year=1984&pages=524-533&pmid=6203486&doi=10.1016/0003-9861(84)90417-x&
+                    - text: "]"
+                  - listitem [ref=f6e676]:
+                    - generic [ref=f6e677]: "35."
+                    - text: Geisler C; Jarvis DL Effective Glycoanalysis with Maackia Amurensis Lectins Requires a Clear Understanding of Their Binding Specificities Glycobiology 2011, 8, 988–993. [
+                    - link "External, opens in a new tab. DOI" [ref=f6e678] [cursor=pointer]:
+                      - /url: https://doi.org/10.1093/glycob/cwr080
+                    - text: "] ["
+                    - link "PMC free article" [ref=f6e679] [cursor=pointer]:
+                      - /url: /articles/PMC3130539/
+                    - text: "] ["
+                    - link "PubMed" [ref=f6e680] [cursor=pointer]:
+                      - /url: https://pubmed.ncbi.nlm.nih.gov/21863598/
+                    - text: "] ["
+                    - link "External, opens in a new tab. Google Scholar" [ref=f6e681] [cursor=pointer]:
+                      - /url: https://scholar.google.com/scholar_lookup?journal=Glycobiology&title=Effective%20Glycoanalysis%20with%20Maackia%20Amurensis%20Lectins%20Requires%20a%20Clear%20Understanding%20of%20Their%20Binding%20Specificities&author=C%20Geisler&author=DL%20Jarvis&volume=8&publication_year=2011&pages=988-993&pmid=21863598&doi=10.1093/glycob/cwr080&
+                    - text: "]"
+                  - listitem [ref=f6e682]:
+                    - generic [ref=f6e683]: "36."
+                    - text: Marchetti R; Malinovska L; Lameignère E; Adamova L; de Castro C; Cioci G; Stanetty C; Kosma P; Molinaro A; Wimmerova M; Imberty A; Silipo A Burkholderia Cenocepacia Lectin a Binding to Heptoses from the Bacterial Lipopolysaccharide Glycobiology 2012, 10, 1387–1398. [
+                    - link "External, opens in a new tab. DOI" [ref=f6e684] [cursor=pointer]:
+                      - /url: https://doi.org/10.1093/glycob/cws105
+                    - text: "] ["
+                    - link "PubMed" [ref=f6e685] [cursor=pointer]:
+                      - /url: https://pubmed.ncbi.nlm.nih.gov/22763039/
+                    - text: "] ["
+                    - link "External, opens in a new tab. Google Scholar" [ref=f6e686] [cursor=pointer]:
+                      - /url: https://scholar.google.com/scholar_lookup?journal=Glycobiology&title=Burkholderia%20Cenocepacia%20Lectin%20a%20Binding%20to%20Heptoses%20from%20the%20Bacterial%20Lipopolysaccharide&author=R%20Marchetti&author=L%20Malinovska&author=E%20Lameign%C3%A8re&author=L%20Adamova&author=C%20de%20Castro&volume=10&publication_year=2012&pages=1387-1398&pmid=22763039&doi=10.1093/glycob/cws105&
+                    - text: "]"
+                  - listitem [ref=f6e687]:
+                    - generic [ref=f6e688]: "37."
+                    - text: Grant OC; Tessier MB; Meche L; Mahal LK; Foley BL; Woods RJ Combining 3d Structure with Glycan Array Data Provides Insight into the Origin of Glycan Specificity Glycobiology 2016, 7, 772–783. [
+                    - link "External, opens in a new tab. DOI" [ref=f6e689] [cursor=pointer]:
+                      - /url: https://doi.org/10.1093/glycob/cww020
+                    - text: "] ["
+                    - link "PMC free article" [ref=f6e690] [cursor=pointer]:
+                      - /url: /articles/PMC4976521/
+                    - text: "] ["
+                    - link "PubMed" [ref=f6e691] [cursor=pointer]:
+                      - /url: https://pubmed.ncbi.nlm.nih.gov/26911287/
+                    - text: "] ["
+                    - link "External, opens in a new tab. Google Scholar" [ref=f6e692] [cursor=pointer]:
+                      - /url: https://scholar.google.com/scholar_lookup?journal=Glycobiology&title=Combining%203d%20Structure%20with%20Glycan%20Array%20Data%20Provides%20Insight%20into%20the%20Origin%20of%20Glycan%20Specificity&author=OC%20Grant&author=MB%20Tessier&author=L%20Meche&author=LK%20Mahal&author=BL%20Foley&volume=7&publication_year=2016&pages=772-783&pmid=26911287&doi=10.1093/glycob/cww020&
+                    - text: "]"
+                  - listitem [ref=f6e693]:
+                    - generic [ref=f6e694]: "38."
+                    - text: Temme JS; Campbell CT; Gildersleeve JC Factors Contributing to Variability of Glycan Microarray Binding Profiles Faraday Discuss 2019, 0, 90–111. [
+                    - link "External, opens in a new tab. DOI" [ref=f6e695] [cursor=pointer]:
+                      - /url: https://doi.org/10.1039/c9fd00021f
+                    - text: "] ["
+                    - link "PMC free article" [ref=f6e696] [cursor=pointer]:
+                      - /url: /articles/PMC9335900/
+                    - text: "] ["
+                    - link "PubMed" [ref=f6e697] [cursor=pointer]:
+                      - /url: https://pubmed.ncbi.nlm.nih.gov/31338503/
+                    - text: "] ["
+                    - link "External, opens in a new tab. Google Scholar" [ref=f6e698] [cursor=pointer]:
+                      - /url: https://scholar.google.com/scholar_lookup?journal=Faraday%20Discuss&title=Factors%20Contributing%20to%20Variability%20of%20Glycan%20Microarray%20Binding%20Profiles&author=JS%20Temme&author=CT%20Campbell&author=JC%20Gildersleeve&volume=0&publication_year=2019&pages=90-111&pmid=31338503&doi=10.1039/c9fd00021f&
+                    - text: "]"
+                  - listitem [ref=f6e699]:
+                    - generic [ref=f6e700]: "39."
+                    - text: Wu AM; Wu JH; Tsai MS; Yang Z; Sharon N; Herp A Differential Affinities of Erythrina Cristagalli Lectin (Ecl) toward Monosaccharides and Polyvalent Mammalian Structural Units Glycoconj J 2007, 9, 591–604. [
+                    - link "External, opens in a new tab. DOI" [ref=f6e701] [cursor=pointer]:
+                      - /url: https://doi.org/10.1007/s10719-007-9063-y
+                    - text: "] ["
+                    - link "PubMed" [ref=f6e702] [cursor=pointer]:
+                      - /url: https://pubmed.ncbi.nlm.nih.gov/17805962/
+                    - text: "] ["
+                    - link "External, opens in a new tab. Google Scholar" [ref=f6e703] [cursor=pointer]:
+                      - /url: https://scholar.google.com/scholar_lookup?journal=Glycoconj%20J&title=Differential%20Affinities%20of%20Erythrina%20Cristagalli%20Lectin%20(Ecl)%20toward%20Monosaccharides%20and%20Polyvalent%20Mammalian%20Structural%20Units&author=AM%20Wu&author=JH%20Wu&author=MS%20Tsai&author=Z%20Yang&author=N%20Sharon&volume=9&publication_year=2007&pages=591-604&pmid=17805962&doi=10.1007/s10719-007-9063-y&
+                    - text: "]"
+                  - listitem [ref=f6e704]:
+                    - generic [ref=f6e705]: "40."
+                    - text: "Itakura Y; Nakamura-Tsuruta S; Kominami J; Sharon N; Kasai K; Hirabayashi J Systematic Comparison of Oligosaccharide Specificity of Ricinus Communis Agglutinin I and Erythrina Lectins: A Search by Frontal Affinity Chromatography J Biochem 2007, 4, 459–469. ["
+                    - link "External, opens in a new tab. DOI" [ref=f6e706] [cursor=pointer]:
+                      - /url: https://doi.org/10.1093/jb/mvm153
+                    - text: "] ["
+                    - link "PubMed" [ref=f6e707] [cursor=pointer]:
+                      - /url: https://pubmed.ncbi.nlm.nih.gov/17652328/
+                    - text: "] ["
+                    - link "External, opens in a new tab. Google Scholar" [ref=f6e708] [cursor=pointer]:
+                      - /url: https://scholar.google.com/scholar_lookup?journal=J%20Biochem&title=Systematic%20Comparison%20of%20Oligosaccharide%20Specificity%20of%20Ricinus%20Communis%20Agglutinin%20I%20and%20Erythrina%20Lectins:%20A%20Search%20by%20Frontal%20Affinity%20Chromatography&author=Y%20Itakura&author=S%20Nakamura-Tsuruta&author=J%20Kominami&author=N%20Sharon&author=K%20Kasai&volume=4&publication_year=2007&pages=459-469&pmid=17652328&doi=10.1093/jb/mvm153&
+                    - text: "]"
+                  - listitem [ref=f6e709]:
+                    - generic [ref=f6e710]: "41."
+                    - text: Wang Y; Yu G; Han Z; Yang B; Hu Y; Zhao X; Wu J; Lv Y; Chai W Specificities of Ricinus Communis Agglutinin 120 Interaction with Sulfated Galactose FEBS Lett 2011, 24, 3927–3934. [
+                    - link "External, opens in a new tab. DOI" [ref=f6e711] [cursor=pointer]:
+                      - /url: https://doi.org/10.1016/j.febslet.2011.10.035
+                    - text: "] ["
+                    - link "PubMed" [ref=f6e712] [cursor=pointer]:
+                      - /url: https://pubmed.ncbi.nlm.nih.gov/22079878/
+                    - text: "] ["
+                    - link "External, opens in a new tab. Google Scholar" [ref=f6e713] [cursor=pointer]:
+                      - /url: https://scholar.google.com/scholar_lookup?journal=FEBS%20Lett&title=Specificities%20of%20Ricinus%20Communis%20Agglutinin%20120%20Interaction%20with%20Sulfated%20Galactose&author=Y%20Wang&author=G%20Yu&author=Z%20Han&author=B%20Yang&author=Y%20Hu&volume=24&publication_year=2011&pages=3927-3934&pmid=22079878&doi=10.1016/j.febslet.2011.10.035&
+                    - text: "]"
+                  - listitem [ref=f6e714]:
+                    - generic [ref=f6e715]: "42."
+                    - text: Wang L; Cummings RD; Smith DF; Huflejt M; Campbell CT; Gildersleeve JC; Gerlach JQ; Kilcoyne M; Joshi L; Serna S; Reichardt NC; Parera Pera N; Pieters RJ; Eng W; Mahal LK Cross-Platform Comparison of Glycan Microarray Formats Glycobiology 2014, 6, 507–517. [
+                    - link "External, opens in a new tab. DOI" [ref=f6e716] [cursor=pointer]:
+                      - /url: https://doi.org/10.1093/glycob/cwu019
+                    - text: "] ["
+                    - link "PMC free article" [ref=f6e717] [cursor=pointer]:
+                      - /url: /articles/PMC4001710/
+                    - text: "] ["
+                    - link "PubMed" [ref=f6e718] [cursor=pointer]:
+                      - /url: https://pubmed.ncbi.nlm.nih.gov/24658466/
+                    - text: "] ["
+                    - link "External, opens in a new tab. Google Scholar" [ref=f6e719] [cursor=pointer]:
+                      - /url: https://scholar.google.com/scholar_lookup?journal=Glycobiology&title=Cross-Platform%20Comparison%20of%20Glycan%20Microarray%20Formats&author=L%20Wang&author=RD%20Cummings&author=DF%20Smith&author=M%20Huflejt&author=CT%20Campbell&volume=6&publication_year=2014&pages=507-517&pmid=24658466&doi=10.1093/glycob/cwu019&
+                    - text: "]"
+                  - listitem [ref=f6e720]:
+                    - generic [ref=f6e721]: "43."
+                    - text: Klamer Z; Hsueh P; Ayala-Talavera D; Haab B Deciphering Protein Glycosylation by Computational Integration of on-Chip Profiling, Glycan-Array Data, and Mass Spectrometry Mol Cell Proteomics 2019, 1, 29–40. [
+                    - link "External, opens in a new tab. DOI" [ref=f6e722] [cursor=pointer]:
+                      - /url: https://doi.org/10.1074/mcp.RA118.000906
+                    - text: "] ["
+                    - link "PMC free article" [ref=f6e723] [cursor=pointer]:
+                      - /url: /articles/PMC6317472/
+                    - text: "] ["
+                    - link "PubMed" [ref=f6e724] [cursor=pointer]:
+                      - /url: https://pubmed.ncbi.nlm.nih.gov/30257876/
+                    - text: "] ["
+                    - link "External, opens in a new tab. Google Scholar" [ref=f6e725] [cursor=pointer]:
+                      - /url: https://scholar.google.com/scholar_lookup?journal=Mol%20Cell%20Proteomics&title=Deciphering%20Protein%20Glycosylation%20by%20Computational%20Integration%20of%20on-Chip%20Profiling,%20Glycan-Array%20Data,%20and%20Mass%20Spectrometry&author=Z%20Klamer&author=P%20Hsueh&author=D%20Ayala-Talavera&author=B%20Haab&volume=1&publication_year=2019&pages=29-40&pmid=30257876&doi=10.1074/mcp.RA118.000906&
+                    - text: "]"
+                  - listitem [ref=f6e726]:
+                    - generic [ref=f6e727]: "44."
+                    - text: Grant OC; Smith HM; Firsova D; Fadda E; Woods RJ Presentation, Presentation, Presentation! Molecular-Level Insight into Linker Effects on Glycan Array Screening Data Glycobiology 2014, 1, 17–25. [
+                    - link "External, opens in a new tab. DOI" [ref=f6e728] [cursor=pointer]:
+                      - /url: https://doi.org/10.1093/glycob/cwt083
+                    - text: "] ["
+                    - link "PMC free article" [ref=f6e729] [cursor=pointer]:
+                      - /url: /articles/PMC3854501/
+                    - text: "] ["
+                    - link "PubMed" [ref=f6e730] [cursor=pointer]:
+                      - /url: https://pubmed.ncbi.nlm.nih.gov/24056723/
+                    - text: "] ["
+                    - link "External, opens in a new tab. Google Scholar" [ref=f6e731] [cursor=pointer]:
+                      - /url: https://scholar.google.com/scholar_lookup?journal=Glycobiology&title=Presentation,%20Presentation,%20Presentation!%20Molecular-Level%20Insight%20into%20Linker%20Effects%20on%20Glycan%20Array%20Screening%20Data&author=OC%20Grant&author=HM%20Smith&author=D%20Firsova&author=E%20Fadda&author=RJ%20Woods&volume=1&publication_year=2014&pages=17-25&pmid=24056723&doi=10.1093/glycob/cwt083&
+                    - text: "]"
+                  - listitem [ref=f6e732]:
+                    - generic [ref=f6e733]: "45."
+                    - text: Wandall HH; Blixt O; Tarp MA; Pedersen JW; Bennett EP; Mandel U; Ragupathi G; Livingston PO; Hollingsworth MA; Taylor-Papadimitriou J; Burchell J; Clausen H Cancer Biomarkers Defined by Autoantibody Signatures to Aberrant O-Glycopeptide Epitopes Cancer Res 2010, 4, 1306–1313. [
+                    - link "External, opens in a new tab. DOI" [ref=f6e734] [cursor=pointer]:
+                      - /url: https://doi.org/10.1158/0008-5472.CAN-09-2893
+                    - text: "] ["
+                    - link "PMC free article" [ref=f6e735] [cursor=pointer]:
+                      - /url: /articles/PMC5538776/
+                    - text: "] ["
+                    - link "PubMed" [ref=f6e736] [cursor=pointer]:
+                      - /url: https://pubmed.ncbi.nlm.nih.gov/20124478/
+                    - text: "] ["
+                    - link "External, opens in a new tab. Google Scholar" [ref=f6e737] [cursor=pointer]:
+                      - /url: https://scholar.google.com/scholar_lookup?journal=Cancer%20Res&title=Cancer%20Biomarkers%20Defined%20by%20Autoantibody%20Signatures%20to%20Aberrant%20O-Glycopeptide%20Epitopes&author=HH%20Wandall&author=O%20Blixt&author=MA%20Tarp&author=JW%20Pedersen&author=EP%20Bennett&volume=4&publication_year=2010&pages=1306-1313&pmid=20124478&doi=10.1158/0008-5472.CAN-09-2893&
+                    - text: "]"
+                  - listitem [ref=f6e738]:
+                    - generic [ref=f6e739]: "46."
+                    - text: Oyelaran O; Li Q; Farnsworth DW; Gildersleeve JC Microarrays with Varying Carbohydrate Density Reveal Distinct Subpopulations of Serum Antibodies J Proteome Res 2009, 3529–3538. [
+                    - link "External, opens in a new tab. DOI" [ref=f6e740] [cursor=pointer]:
+                      - /url: https://doi.org/10.1021/pr9002245
+                    - text: "] ["
+                    - link "PMC free article" [ref=f6e741] [cursor=pointer]:
+                      - /url: /articles/PMC2730745/
+                    - text: "] ["
+                    - link "PubMed" [ref=f6e742] [cursor=pointer]:
+                      - /url: https://pubmed.ncbi.nlm.nih.gov/19366269/
+                    - text: "] ["
+                    - link "External, opens in a new tab. Google Scholar" [ref=f6e743] [cursor=pointer]:
+                      - /url: https://scholar.google.com/scholar_lookup?journal=J%20Proteome%20Res&title=Microarrays%20with%20Varying%20Carbohydrate%20Density%20Reveal%20Distinct%20Subpopulations%20of%20Serum%20Antibodies&author=O%20Oyelaran&author=Q%20Li&author=DW%20Farnsworth&author=JC%20Gildersleeve&publication_year=2009&pages=3529-3538&pmid=19366269&doi=10.1021/pr9002245&
+                    - text: "]"
+                  - listitem [ref=f6e744]:
+                    - generic [ref=f6e745]: "47."
+                    - text: Godula K; Bertozzi CR Density Variant Glycan Microarray for Evaluating CrossLinking of Mucin-Like Glycoconjugates by Lectins J Am Chem Soc 2012, 38, 15732–15742. [
+                    - link "External, opens in a new tab. DOI" [ref=f6e746] [cursor=pointer]:
+                      - /url: https://doi.org/10.1021/ja302193u
+                    - text: "] ["
+                    - link "PMC free article" [ref=f6e747] [cursor=pointer]:
+                      - /url: /articles/PMC3458438/
+                    - text: "] ["
+                    - link "PubMed" [ref=f6e748] [cursor=pointer]:
+                      - /url: https://pubmed.ncbi.nlm.nih.gov/22967056/
+                    - text: "] ["
+                    - link "External, opens in a new tab. Google Scholar" [ref=f6e749] [cursor=pointer]:
+                      - /url: https://scholar.google.com/scholar_lookup?journal=J%20Am%20Chem%20Soc&title=Density%20Variant%20Glycan%20Microarray%20for%20Evaluating%20CrossLinking%20of%20Mucin-Like%20Glycoconjugates%20by%20Lectins&author=K%20Godula&author=CR%20Bertozzi&volume=38&publication_year=2012&pages=15732-15742&pmid=22967056&doi=10.1021/ja302193u&
+                    - text: "]"
+                  - listitem [ref=f6e750]:
+                    - generic [ref=f6e751]: "48."
+                    - text: "Song X; Lasanajak Y; Xia B; Heimburg-Molinaro J; Rhea JM; Ju H; Zhao C; Molinaro RJ; Cummings RD; Smith DF Shotgun Glycomics: A Microarray Strategy for Functional Glycomics Nat Methods 2011, 1, 85–90. ["
+                    - link "External, opens in a new tab. DOI" [ref=f6e752] [cursor=pointer]:
+                      - /url: https://doi.org/10.1038/nmeth.1540
+                    - text: "] ["
+                    - link "PMC free article" [ref=f6e753] [cursor=pointer]:
+                      - /url: /articles/PMC3074519/
+                    - text: "] ["
+                    - link "PubMed" [ref=f6e754] [cursor=pointer]:
+                      - /url: https://pubmed.ncbi.nlm.nih.gov/21131969/
+                    - text: "] ["
+                    - link "External, opens in a new tab. Google Scholar" [ref=f6e755] [cursor=pointer]:
+                      - /url: https://scholar.google.com/scholar_lookup?journal=Nat%20Methods&title=Shotgun%20Glycomics:%20A%20Microarray%20Strategy%20for%20Functional%20Glycomics&author=X%20Song&author=Y%20Lasanajak&author=B%20Xia&author=J%20Heimburg-Molinaro&author=JM%20Rhea&volume=1&publication_year=2011&pages=85-90&pmid=21131969&doi=10.1038/nmeth.1540&
+                    - text: "]"
+              - generic [ref=f6e756]:
+                - heading "Associated Data" [level=2] [ref=f6e757]
+                - paragraph [ref=f6e758]:
+                  - emphasis [ref=f6e759]: This section collects any data citations, data availability statements, or supplementary materials included in this article.
+                - generic [ref=f6e760]:
+                  - heading "Supplementary Materials" [level=3] [ref=f6e761]
+                  - generic [ref=f6e762]:
+                    - generic [ref=f6e763]: Klamer and Haab, Supporting Information
+                    - generic [ref=f6e765]:
+                      - link "NIHMS1776577-supplement-Klamer_and_Haab__Supporting_Information.pdf" [ref=f6e766] [cursor=pointer]:
+                        - /url: /articles/instance/8862541/bin/NIHMS1776577-supplement-Klamer_and_Haab__Supporting_Information.pdf
+                      - superscript [ref=f6e767]: (5.5MB, pdf)
+                  - generic [ref=f6e768]:
+                    - generic [ref=f6e769]: Klamer and Haab, Table S2
+                    - generic [ref=f6e771]:
+                      - link "NIHMS1776577-supplement-Klamer_and_Haab__Table_S2.xlsx" [ref=f6e772] [cursor=pointer]:
+                        - /url: /articles/instance/8862541/bin/NIHMS1776577-supplement-Klamer_and_Haab__Table_S2.xlsx
+                      - superscript [ref=f6e773]: (26.8KB, xlsx)
+                  - generic [ref=f6e774]:
+                    - generic [ref=f6e775]: Klamer and Haab, Supplementary Data
+                    - generic [ref=f6e777]:
+                      - link "NIHMS1776577-supplement-Klamer_and_Haab__Supplementary_Data.zip" [ref=f6e778] [cursor=pointer]:
+                        - /url: /articles/instance/8862541/bin/NIHMS1776577-supplement-Klamer_and_Haab__Supplementary_Data.zip
+                      - superscript [ref=f6e779]: (25.8MB, zip)
+                - generic [ref=f6e780]:
+                  - heading "Data Availability Statement" [level=3] [ref=f6e781]
+                  - paragraph [ref=f6e782]:
+                    - text: The input data (
+                    - link "Table S2" [ref=f6e783] [cursor=pointer]:
+                      - /url: "#SD2"
+                    - text: ) were obtained through publicly accessible sources. The output files that were presented in the current study are available in the
+                    - link "Supporting Data" [ref=f6e784] [cursor=pointer]:
+                      - /url: "#SD3"
+                    - text: ". The CCARL source code was downloaded from its source:"
+                    - link "External, opens in a new tab. https://github.com/andrewguy/CCARL" [ref=f6e785] [cursor=pointer]:
+                      - /url: https://github.com/andrewguy/CCARL
+                    - text: ". The results for GlyMDB and MCAW-DB were accessed from their respective websites:"
+                    - link "External, opens in a new tab. http://www.glycanstructure.org/glymdb/" [ref=f6e786] [cursor=pointer]:
+                      - /url: http://www.glycanstructure.org/glymdb/
+                    - text: and
+                    - link "External, opens in a new tab. https://mcawdb.glycoinfo.org/" [ref=f6e787] [cursor=pointer]:
+                      - /url: https://mcawdb.glycoinfo.org/
+                    - text: ". The MotifFinder software is available for download for Windows, MacOS, and Linux at our laboratory website:"
+                    - link "External, opens in a new tab. https://haablab.vai.org/tools/" [ref=f6e788] [cursor=pointer]:
+                      - /url: https://haablab.vai.org/tools/
+                    - text: . The download package includes a User’s Manual and tutorials.
+    - region "Article resources and navigation" [ref=f6e790]:
+      - generic [ref=f6e792]:
+        - heading "ACTIONS" [level=2] [ref=f6e793]
+        - list [ref=f6e794]:
+          - listitem [ref=f6e795]:
+            - link "View on publisher site icon View on publisher site" [ref=f6e796] [cursor=pointer]:
+              - /url: https://doi.org/10.1021/acs.analchem.1c01739
+              - img "View on publisher site icon"
+              - generic [ref=f6e797]: View on publisher site
+          - listitem [ref=f6e798]:
+            - link "Download PDF icon PDF (1.7 MB)" [ref=f6e799] [cursor=pointer]:
+              - /url: pdf/nihms-1776577.pdf
+              - img "Download PDF icon"
+              - generic [ref=f6e800]: PDF (1.7 MB)
+          - listitem [ref=f6e801]:
+            - button "Open dialog with citation text in different styles" [ref=f6e802] [cursor=pointer]:
+              - img "Cite icon"
+              - generic [ref=f6e803]: Cite
+          - listitem [ref=f6e804]:
+            - button "Save article in MyNCBI collections." [ref=f6e805] [cursor=pointer]:
+              - img "Collections icon"
+              - generic [ref=f6e806]: Collections
+          - listitem [ref=f6e807]:
+            - button "Show article permalink" [ref=f6e808] [cursor=pointer]:
+              - img "Permalink icon"
+              - generic [ref=f6e809]: Permalink
+      - generic [ref=f6e810]:
+        - heading "RESOURCES" [level=2] [ref=f6e811]
+        - generic [ref=f6e812]:
+          - heading [level=3] [ref=f6e813]:
+            - button "Similar articles" [ref=f6e814] [cursor=pointer]
+          - heading [level=3] [ref=f6e815]:
+            - button "Cited by other articles" [ref=f6e816] [cursor=pointer]
+          - heading [level=3] [ref=f6e817]:
+            - button "Links to NCBI Databases" [ref=f6e818] [cursor=pointer]
+      - navigation "On this page" [ref=f6e820]:
+        - heading "On this page" [level=2] [ref=f6e821]
+        - list [ref=f6e822]:
+          - listitem [ref=f6e823]:
+            - link "Abstract" [ref=f6e824] [cursor=pointer]:
+              - /url: "#ABS1"
+          - listitem [ref=f6e825]:
+            - link "Introduction" [ref=f6e826] [cursor=pointer]:
+              - /url: "#S1"
+          - listitem [ref=f6e827]:
+            - link "Experimental Section" [ref=f6e828] [cursor=pointer]:
+              - /url: "#S2"
+          - listitem [ref=f6e829]:
+            - link "Results" [ref=f6e830] [cursor=pointer]:
+              - /url: "#S8"
+          - listitem [ref=f6e831]:
+            - link "Discussion" [ref=f6e832] [cursor=pointer]:
+              - /url: "#S14"
+          - listitem [ref=f6e833]:
+            - link "Conclusions" [ref=f6e834] [cursor=pointer]:
+              - /url: "#S15"
+          - listitem [ref=f6e835]:
+            - link "Supplementary Material" [ref=f6e836] [cursor=pointer]:
+              - /url: "#SM1"
+          - listitem [ref=f6e837]:
+            - link "Acknowledgements" [ref=f6e838] [cursor=pointer]:
+              - /url: "#S17"
+          - listitem [ref=f6e839]:
+            - link "Abbreviations" [ref=f6e840] [cursor=pointer]:
+              - /url: "#glossary1"
+          - listitem [ref=f6e841]:
+            - link "Footnotes" [ref=f6e842] [cursor=pointer]:
+              - /url: "#fn-group1"
+          - listitem [ref=f6e843]:
+            - link "Data Availability" [ref=f6e844] [cursor=pointer]:
+              - /url: "#S16"
+          - listitem [ref=f6e845]:
+            - link "References" [ref=f6e846] [cursor=pointer]:
+              - /url: "#ref-list1"
+          - listitem [ref=f6e847]:
+            - link "Associated Data" [ref=f6e848] [cursor=pointer]:
+              - /url: "#_ad93_"
+  - contentinfo [ref=f6e849]:
+    - generic [ref=f6e850]:
+      - generic [ref=f6e851]: Follow NCBI
+      - generic [ref=f6e852]:
+        - link "NCBI on X (formerly known as Twitter)" [ref=f6e853] [cursor=pointer]:
+          - /url: https://twitter.com/ncbi
+        - link "NCBI on Facebook" [ref=f6e856] [cursor=pointer]:
+          - /url: https://www.facebook.com/ncbi.nlm
+        - link "NCBI on LinkedIn" [ref=f6e859] [cursor=pointer]:
+          - /url: https://www.linkedin.com/company/ncbinlm
+        - link "NCBI on GitHub" [ref=f6e862] [cursor=pointer]:
+          - /url: https://github.com/ncbi
+        - link "NCBI RSS feed" [ref=f6e865] [cursor=pointer]:
+          - /url: https://ncbiinsights.ncbi.nlm.nih.gov/
+    - generic [ref=f6e868]:
+      - generic [ref=f6e869]:
+        - generic [ref=f6e870]:
+          - paragraph [ref=f6e871]: Connect with NLM
+          - generic [ref=f6e872]:
+            - link "NLM on X (formerly known as Twitter)" [ref=f6e873] [cursor=pointer]:
+              - /url: https://twitter.com/nlm_nih
+            - link "NLM on Facebook" [ref=f6e876] [cursor=pointer]:
+              - /url: https://www.facebook.com/nationallibraryofmedicine
+            - link "NLM on YouTube" [ref=f6e879] [cursor=pointer]:
+              - /url: https://www.youtube.com/user/NLMNIH
+        - paragraph [ref=f6e884]:
+          - link "External, opens in a new tab. National Library of Medicine 8600 Rockville Pike Bethesda, MD 20894" [ref=f6e885] [cursor=pointer]:
+            - /url: "https://www.google.com/maps/place/8600+Rockville+Pike,+Bethesda,+MD+20894/%4038.9959508,\n            -77.101021,17z/data%3D!3m1!4b1!4m5!3m4!1s0x89b7c95e25765ddb%3A0x19156f88b27635b8!8m2!3d38.9959508!\n            4d-77.0988323"
+        - list [ref=f6e886]:
+          - listitem [ref=f6e887]:
+            - link "Web Policies" [ref=f6e888] [cursor=pointer]:
+              - /url: https://www.nlm.nih.gov/web_policies.html
+          - listitem [ref=f6e889]:
+            - link "FOIA" [ref=f6e890] [cursor=pointer]:
+              - /url: https://www.nih.gov/institutes-nih/nih-office-director/office-communications-public-liaison/freedom-information-act-office
+          - listitem [ref=f6e891]:
+            - link "External, opens in a new tab. HHS Vulnerability Disclosure" [ref=f6e892] [cursor=pointer]:
+              - /url: https://www.hhs.gov/vulnerability-disclosure-policy/index.html
+        - list [ref=f6e893]:
+          - listitem [ref=f6e894]:
+            - link "Help" [ref=f6e895] [cursor=pointer]:
+              - /url: https://support.nlm.nih.gov/?pagename=cloudpmc-viewer%3Apmc%3Aarticle%3Amanuscript
+          - listitem [ref=f6e896]:
+            - link "Accessibility" [ref=f6e897] [cursor=pointer]:
+              - /url: https://www.nlm.nih.gov/accessibility.html
+          - listitem [ref=f6e898]:
+            - link "Careers" [ref=f6e899] [cursor=pointer]:
+              - /url: https://www.nlm.nih.gov/careers/careers.html
+      - list [ref=f6e901]:
+        - listitem [ref=f6e902]:
+          - link "NLM" [ref=f6e903] [cursor=pointer]:
+            - /url: https://www.nlm.nih.gov/
+        - listitem [ref=f6e904]:
+          - link "NIH" [ref=f6e905] [cursor=pointer]:
+            - /url: https://www.nih.gov/
+        - listitem [ref=f6e906]:
+          - link "External, opens in a new tab. HHS" [ref=f6e907] [cursor=pointer]:
+            - /url: https://www.hhs.gov/
+        - listitem [ref=f6e908]:
+          - link "External, opens in a new tab. USA.gov" [ref=f6e909] [cursor=pointer]:
+            - /url: https://www.usa.gov/
+  - button "Tell us what you think!" [ref=f6e910] [cursor=pointer]:
+    - img "Tell us what you think!" [ref=f6e911]

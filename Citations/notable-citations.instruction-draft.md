@@ -292,6 +292,39 @@ Order of preference, cheapest and least intrusive first:
 A throttled or failed look-up must never be recorded as "not indexed" (§5.6). Access outcomes are
 about access.
 
+**Getting the bytes out of the browser.** The MCP's Playwright context runs with
+`acceptDownloads: false`, so `download.saveAs()` and `download.path()` both throw *"canceled"* no
+matter what the applicant sets in Chrome's own download settings, and no `downloadsPath`,
+safe-browsing flag, or "ask where to save" change fixes it. Two routes work, in this order:
+
+1. **Let Chrome write the file itself, over CDP.** On the page's CDP session send
+   `Browser.setDownloadBehavior` with `{behavior: 'allow', downloadPath: '<absolute folder>',
+   eventsEnabled: true}`, then navigate. Chrome saves to that folder on its own and Playwright
+   never intercepts, so there is nothing to cancel. Re-assert it on each new CDP session. This is
+   how the JHU and RUN UNL dissertation bitstreams and the ScienceDirect article came through.
+2. **Fetch inside the page and return base64.** `browser_evaluate` with a `filename` writing
+   `STATUS=… SIZE=… B64=…`, then `scripts/decode-capture.js`, which refuses unless the status is
+   200, the bytes start `%PDF`, the length matches `SIZE=`, and `%%EOF` is present. Use
+   `fetch(url, {credentials: 'include'})` **inside** the page — `page.request.get` does not share
+   the browser's cookies, so a gated host answers 403 to it and 200 to the page. This is how
+   PMC7214107 (`cit-000541`) came through.
+
+PMC guards a PDF with a proof-of-work plus reCAPTCHA that the page's own JavaScript passes; drive
+the click through the browser rather than fetching the URL. As of 2026-11-09 these hosts sit behind
+a Cloudflare interstitial (page title *"Just a moment…"*, HTTP 403) and need the applicant:
+`pubs.acs.org`, `academic.oup.com`, `mcponline.org`, `journals.sagepub.com`, `rpthjournal.org`.
+
+**A repository deposit is not the row's title.** A bitstream's own `<meta citation_title>` decides
+what the file is; the landing-page title may name a different article. `cit-000560`'s record reads
+*"CarbArrayART – An update…"* while its deposited file is `cwac018`, which is `cit-000543`'s paper —
+and `cit-000562` holds the same bytes under a third title. Always run the identity check in
+`file-pdf.js` before filing, and file the copy under the row whose title it actually matches.
+
+**A typeset PDF can break a title probe.** Ligatures extract with a space inserted, so *filarial*
+arrives as `fi larial` and a spaced six-word title probe rejects the correct paper. `file-pdf.js`
+therefore compares twice, once with all spaces removed; that widens the match without weakening it,
+since the probe is still six words of the title.
+
 ---
 
 ## 3. Do not repeat what was already filed
@@ -950,14 +983,18 @@ with the database without any of them failing.
 node scripts/discover-pdfs.js --seed      # queue candidates from the record (§5.6)
 node scripts/discover-pdfs.js --resolve   # OpenAlex: DOI + open-access link
 node scripts/discover-pdfs.js --fetch     # download open copies -> pending-papers/
+node scripts/fetch-downloads.js           # plain-HTTP try for the rest (§2.2) -> downloads/
+node scripts/record-retrieval.js --spec=… # what a browser attempt found, per row (§2.2)
+node scripts/file-pdf.js --folder=… --src=… --write   # the only sanctioned way into a folder
+node scripts/sync-candidate-state.js --write  # queue states must match the shelf
 node scripts/promote-candidates.js --write # queue -> table citation (screened if not independent)
 node scripts/screen-dependents.js         # re-read every non-included row against the record
 node scripts/relocate-pdfs.js --write     # move each folder to the root its status implies (§5.1)
 node scripts/scan-mentions.js --write     # where the tools appear (scan_tier only; never tier)
 node scripts/scan-refs.js --mentions=f.json # where the work is credited without naming it (§2.1)
-node scripts/merge-ref-mentions.js --from=f.json --write  # append those, keeping the named ones
+node scripts/merge-ref-mentions.js --from=f.json --out=g.json  # only if the spec would overwrite
+node scripts/record-mentions.js --from=g.json --write  # occurrences, one row each (`mention`)
 node scripts/record-evidence.js --write   # file tier/section/page/quote, each verified in the PDF
-node scripts/record-mentions.js --write   # every occurrence, one row each (table `mention`)
 node scripts/narrative-intake.js --write  # the four prose sections (table `narrative`)
 node scripts/build-status.js --write      # PACKET-STATUS.md — open items, disagreements
 node scripts/render-packet.js --write     # packet.html + the three CSVs
@@ -965,6 +1002,18 @@ node scripts/print-packet.js              # print/packet.pdf
 node scripts/build-potential.js --write   # potential_notable_citations.html (§5.6), separate page
 node scripts/validate-packet.js --deep    # every mechanical §7 check, plus re-read the PDFs
 ```
+
+`merge-ref-mentions.js` writes a merged **spec file**, not the database — it has no `--write`. It is
+needed only when the spec being applied would replace mentions the row already holds: `record-mentions.js
+--from=X` replaces the whole set for a row, which is right for the named-tool scanner and wrong for the
+§2.1 resolver, whose spec carries only the citations that name no tool. When the rows a spec touches hold
+no mentions yet, applying it directly loses nothing — check with `record-mentions.js --list <uid>` before
+skipping the merge, rather than assuming either way.
+
+`sync-candidate-state.js` exists because the queue is where the applicant decides what to chase, and a
+row reading "Paywalled" beside a folder that already holds the PDF sends someone to fetch a paper that is
+on the shelf. `file-pdf.js` now moves its own rows to `has-pdf`; the sync tool catches the states written
+before that, and `validate-packet.js` fails if any row drifts again.
 
 `screen-dependents.js` and `relocate-pdfs.js` run as a pair whenever a status changes: the first
 removes a row the record shows is not independent (§1.2), the second moves whatever PDF it left behind

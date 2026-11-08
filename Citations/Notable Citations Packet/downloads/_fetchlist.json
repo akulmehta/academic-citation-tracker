@@ -1,0 +1,18 @@
+[
+  { "row_uid": "cit-000531", "url": "https://www.biorxiv.org/content/10.1101/2024.05.18.594815v1.full.pdf", "source": "bioRxiv (preprint, open)" },
+  { "row_uid": "cit-000566", "url": "https://www.scitepress.org/PublishedPapers/2020/89601/89601.pdf", "source": "SciTePress (open)" },
+  { "row_uid": "cit-000564", "url": "https://freidok.uni-freiburg.de/files/166648/Qf-K5JUjPFmyT68-/Peter+NjengaThesis.pdf", "source": "FreiDok thesis repository (open)" },
+  { "row_uid": "cit-000532", "url": "https://www.frontiersin.org/articles/10.3389/fimmu.2023.1102344/full", "source": "Frontiers (open)", "html": true },
+  { "row_uid": "cit-000523", "url": "https://www.frontiersin.org/articles/10.3389/fimmu.2022.952104/full", "source": "Frontiers (open)", "html": true },
+  { "row_uid": "cit-000541", "url": "http://eymj.org/Synapse/Data/PDFData/0069YMJ/ymj-61-416.pdf", "source": "Yonsei Med J (open)" },
+  { "row_uid": "cit-000554", "url": "https://www.dattaconsultinggroup.com/akdsite/assets/publications/glycocodearticle.pdf", "source": "publisher PDF link from record" },
+  { "row_uid": "cit-000549", "url": "https://jscholarship.library.jhu.edu/items/0dbcacaf-9e37-49c3-8a95-a3f55b8ae645", "source": "JHU repository (HTML)", "html": true },
+  { "row_uid": "cit-000555", "url": "https://scholarlypublications.universiteitleiden.nl/access/item%3A4212215/download", "source": "Leiden repository (open)" },
+  { "row_uid": "cit-000560", "url": "https://spiral.imperial.ac.uk/entities/publication/6ebd01fb-2687-4761-a614-c85c1a192b24", "source": "Spiral Imperial (HTML)", "html": true },
+  { "row_uid": "cit-000562", "url": "https://run.unl.pt/entities/publication/48e256d4-d5a1-4fde-a8a0-ec184408ff34", "source": "RUN UNL repository (HTML)", "html": true },
+  { "row_uid": "cit-000512", "url": "https://pubs.acs.org/doi/pdf/10.1021/jacsau.2c00477", "source": "ACS JACS-Au (open access)" },
+  { "row_uid": "cit-000514", "url": "https://www.mcponline.org/article/S1535-9476(22)00009-3/pdf", "source": "MCP (open access)" },
+  { "row_uid": "cit-000525", "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC8862541/", "source": "PMC (open)", "html": true },
+  { "row_uid": "cit-000538", "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC10214521/", "source": "PMC (open)", "html": true },
+  { "row_uid": "cit-000546", "url": "https://pubs.rsc.org/ra/article-abstract/10/56/34099/702166", "source": "RSC Advances (open)", "html": true }
+]
