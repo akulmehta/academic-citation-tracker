@@ -16,19 +16,19 @@ decision that only a person can make.
 | Citations in the packet (in `packet.html`) | 22 |
 | Works those citations are filed as (§5.1 folders) | 14 |
 | PDFs filed under `papers/` (in the packet) | 16 |
-| PDFs under `pending-papers/` (awaiting a decision) | 75 |
-| PDFs under `screened-papers/` (kept, not filed) | 33 |
-| Held — open items, listed below | 387 |
-| Screened out — decided, kept for the record (§4.5) | 137 |
-| **Rows in table `citation`** | **546** |
+| PDFs under `pending-papers/` (awaiting a decision) | 83 |
+| PDFs under `screened-papers/` (kept, not filed) | 35 |
+| Held — open items, listed below | 414 |
+| Screened out — decided, kept for the record (§4.5) | 144 |
+| **Rows in table `citation`** | **580** |
 
-`packet.csv` holds the 22 included rows. `screened-out.csv` holds the other 524,
+`packet.csv` holds the 22 included rows. `screened-out.csv` holds the other 558,
 because §4.5 exports `screened-out` and `held` together — counsel is entitled to see that the
 work was screened and on what grounds. A screened-out row is not missing work: it is the
 record of what was looked at and rejected, with the reason beside it. A held row is open, and
 every held row appears in §2 below.
 
-## 2. Held rows — 387 open items
+## 2. Held rows — 414 open items
 
 
 ### 2.1 `read` — 17 row(s)
@@ -55,7 +55,7 @@ The PDF is filed and the applicant's tool appears in a section of the paper. Wha
 | `cit-000614` | GlycoGlyph | 2026 | Subramaniam | Loss of α2, 3-linked sialoside in the receptor-binding site of a H5N1 influ… | [open](https://www.biorxiv.org/content/10.64898/2026.01.19.700419.abstract) |
 | `cit-000633` | GlycoGlyph | 2026 | Schäfer | Engineering Functional CLA-Targeting CAR Approaches for Pancreatic Ductal A… | [open](https://www.biorxiv.org/content/10.64898/2026.07.03.736395.abstract) |
 
-### 2.2 `unread` — 56 row(s)
+### 2.2 `unread` — 65 row(s)
 
 The PDF is filed. Nobody has read it yet.
 
@@ -88,6 +88,7 @@ The PDF is filed. Nobody has read it yet.
 | `cit-000757` | — | 2023 | Wessels | The GlycoPaSER prototype as a real-time N-glycopeptide identification tool … | [open](https://www.mdpi.com/1422-0067/24/9/7869) |
 | `cit-000770` | — | 2023 | Butterick | RNAseq analysis of FABP4 knockout mouse hippocampal transcriptome suggests … | [open](https://www.mdpi.com/1422-0067/24/4/3381) |
 | `cit-000844` | — | 2023 | Heisterkamp | Glycosylation as regulator of human B-cell leukaemias in bone marrow | [open](https://www.frontiersin.org/journals/hematology/articles/10.3389/frhem.2023.1279863/full) |
+| `cit-001050` | — | 2023 | Li | A Mannose Receptor from Litopenaeus vannamei Involved in Innate Immunity by… | [open](https://www.mdpi.com/1422-0067/24/13/10665) |
 | `cit-000202` | — | 2024 | de Vries | Complex N-glycans are important for interspecies transmission of H7 influen… | [open](https://journals.asm.org/doi/abs/10.1128/jvi.01941-23) |
 | `cit-000442` | — | 2024 | Wolters-Eisfeld | GalNT2-mediated O-glycosylation affects pancreas development and function i… | [open](https://www.nature.com/articles/s41598-024-80276-7) |
 | `cit-000454` | — | 2024 | Zhong | Tyrosine sulfation at antibody light chain CDR-1 increases binding affinity… | [open](https://www.mdpi.com/1422-0067/25/3/1931) |
@@ -97,6 +98,7 @@ The PDF is filed. Nobody has read it yet.
 | `cit-000727` | — | 2024 | R Li | Multivalent interactions between fully glycosylated influenza virus hemaggl… | [open](https://www.nature.com/articles/s44298-024-00059-9) |
 | `cit-000767` | — | 2024 | Poon | CHHM: a manually curated catalogue of human histone modifications revealing… | [open](https://pmc.ncbi.nlm.nih.gov/articles/PMC11302869/) |
 | `cit-000831` | — | 2024 | Vafaee | Multifaceted representation of genes via deep learning of gene expression n… | [open](https://www.biorxiv.org/content/10.1101/2024.03.07.583777.abstract) |
+| `cit-001044` | — | 2024 | Escobedo | Neu1 deficiency and fibrotic lymph node microenvironment lead to imbalance … | [open](https://www.frontiersin.org/journals/immunology/articles/10.3389/fimmu.2024.1462853/full) |
 | `cit-000108` | — | 2025 | Balaji | Sustained ROS scavenging and pericellular oxygenation by lignin composites … | [open](https://www.sciencedirect.com/science/article/pii/S1742706125003009) |
 | `cit-000449` | — | 2025 | Wolters-Eisfeld | Overexpression of Tn antigen induces chronic pancreatitis in mice | [open](https://www.nature.com/articles/s41598-025-96060-0) |
 | `cit-000689` | — | 2025 | Pandolfini | METTL9 sustains vertebrate neural development primarily via non-catalytic f… | [open](https://www.nature.com/articles/s41467-025-62414-5) |
@@ -109,6 +111,10 @@ The PDF is filed. Nobody has read it yet.
 | `cit-000737` | — | 2025 | Kontoravdi | GlyCompute: towards the automated analysis of protein N-linked glycosylatio… | [open](https://link.springer.com/article/10.1007/s00216-024-05522-3) |
 | `cit-000804` | — | 2025 | Mihăilescu | Mapping O-and N-glycosylation in transmembrane and interface regions of pro… | [open](https://www.mdpi.com/1422-0067/26/1/327) |
 | `cit-000824` | — | 2025 | Karstens | Complex carbohydrates catabolism capacity of bladder microbiota inhabiting … | [open](https://europepmc.org/article/med/40236069) |
+| `cit-001041` | — | 2025 | SI | Subcellular glycan-mannose receptor binding kinetics correlate with myeloid… | [open](https://www.nature.com/articles/s41467-025-67602-x) |
+| `cit-001048` | — | 2025 | He | The role of ladderlectin in spermatogenesis and ovarian sperm storage in th… | [open](https://www.nature.com/articles/s42003-025-08055-2) |
+| `cit-001057` | — | 2025 | Asteggiano | In vitro cell model to dilucidate the underlying molecular mechanism associ… | [open](https://www.frontiersin.org/journals/genetics/articles/10.3389/fgene.2025.1678103/full) |
+| `cit-001070` | — | 2025 | He | spermatogenesis and ovarian sperm storage in the black rockfish (Sebastes | [open](https://www.researchgate.net/profile/Yan-He-32/publication/390893517_The_role_of_ladderlectin_in_spermatogenesis_and_ovarian_sperm_storage_in_the_black_rockfish_Sebastes_schlegelii/links/6802efd2d1054b0207d524c1/The-role-of-ladderlectin-in-spermatogenesis-and-ovarian-sperm-storage-in-the-black-rockfish-Sebastes-schlegelii.pdf) |
 | `cit-000182` | — | 2026 | RP | The receptor binding properties of H5Ny influenza A viruses have evolved to… | [open](https://journals.plos.org/plospathogens/article?id=10.1371/journal.ppat.1013812) |
 | `cit-000465` | — | 2026 | Benesch | An integrated mass spectrometry strategy for quantifying the proteoform div… | [open](https://www.biorxiv.org/content/10.64898/2026.09.07.749945.abstract) |
 | `cit-000780` | — | 2026 | Brand | Diagnosis of Congenital Disorders of Glycosylation Type II Subtypes Through… | [open](https://www.mdpi.com/1422-0067/27/14/6309) |
@@ -117,6 +123,9 @@ The PDF is filed. Nobody has read it yet.
 | `cit-000832` | — | 2026 | L'opez | Multi-timescale PTM architecture in human RNA polymerase II | [open](https://www.biorxiv.org/content/10.64898/2026.06.27.734958.abstract) |
 | `cit-000833` | — | 2026 | A Kitani | GlycoMeSH: linking glycan structures to biomedical context for systematic e… | [open](https://www.biorxiv.org/content/10.64898/2026.08.18.745318.abstract) |
 | `cit-000843` | — | 2026 | K Himori | GlyEnzEA: reaction-informed enrichment of enzyme-centered glycan sets from … | [open](https://www.biorxiv.org/content/10.64898/2026.10.14.759156.abstract) |
+| `cit-001051` | — | 2026 | Asciutto | Deglycosylation induces a novel distal conformation in the mannose receptor… | [open](https://www.nature.com/articles/s41598-026-35240-y) |
+| `cit-001055` | — | 2026 | Li | Associations of polymorphisms in the myeloid immunoregulatory receptor gene… | [open](https://www.frontiersin.org/journals/immunology/articles/10.3389/fimmu.2026.1949691/full) |
+| `cit-001071` | — | 2026 | S Alkami | Pengembangan Tablet Isap Imunostimulan yang Mengandung Kombinasi Ekstrak Bu… | [open](https://medicinus.co/journal/article/view/medicinus-vol39-no9-27-41) |
 
 ### 2.3 `unsupported` — 8 row(s)
 
@@ -208,12 +217,13 @@ A copy exists behind a paywall. If the applicant can obtain the PDF through an i
 | `cit-000512` | GLAD | — | Aoki-Kinoshita | Worldwide glycoscience informatics infrastructure: the GlySpace Alliance | [open](https://pubs.acs.org/jaaucr/article-abstract/3/1/4/1253251) |
 | `cit-000556` | GLAD | — | — | Phenotyping murine and human platelet-derived extracellular vesicles gives … | [open](https://www.rpthjournal.org/cms/10.1016/j.rpth.2026.103414/attachment/5e1ef181-290b-47ad-a0b6-2820746565cf/mmc1.pdf) |
 
-### 2.5 `no-open-copy` — 174 row(s)
+### 2.5 `no-open-copy` — 187 row(s)
 
 No openly accessible copy was found. The publisher's landing page is given so the applicant can check institutional access.
 
 | row_uid | tool | year | senior author | citing title | link |
 |---|---|---|---|---|---|
+| `cit-001065` | — | 2005 | Schep | Bakker | [open](https://scholarlypublications.universiteitleiden.nl/access/item%3A4282475/download) |
 | `cit-000138` | — | 2009 | Bell | Future Medicinal Chemistry | [open](https://www.researchgate.net/profile/Marta-Correia-Da-Silva/publication/310424258_Structure-activity_relationship_studies_for_multitarget_antithrombotic_drugs/links/5c44de49299bf12be3d79095/Structure-Activity-Relationship-Studies-for-Multitarget-Antithrombotic-Drugs.pdf) |
 | `cit-001200` | — | 2011 | Mosberg | Conformationally restricted analogs of the direct thrombin inhibitor FM 19 | [open](https://www.sciencedirect.com/science/article/pii/S0968089611008546) |
 | `cit-001225` | — | 2012 | — | Design, synthesis, and biological evaluation of novel MCAK and 14-3-3 prote… | [open](https://search.proquest.com/openview/626099758e4991c2edd32359acff072a/1?pq-origsite=gscholar&cbl=18750) |
@@ -328,6 +338,7 @@ No openly accessible copy was found. The publisher's landing page is given so th
 | `cit-000823` | — | 2023 | Lewis | Preparing glycomics data for robust statistical analysis with GlyCompareCT | [open](https://www.cell.com/star-protocols/fulltext/S2666-1667(23)00120-X) |
 | `cit-000864` | — | 2023 | Wessels | Maximizing glycoproteomics results through an integrated PASEF workflow | [open](https://www.biorxiv.org/content/10.1101/2023.12.21.570555.abstract) |
 | `cit-000865` | — | 2023 | — | Spin labelling via metabolic glycoengineering for studying post-translation… | [open](https://kops.uni-konstanz.de/bitstreams/163864b1-50d4-4b78-b18b-0d8a6a39b419/download) |
+| `cit-001063` | — | 2023 | Chemtob | Disentangling the nonmetabolic roles of metabolites: lactate as a case study | [open](https://www.cell.com/trends/endocrinology-metabolism/abstract/S1043-2760(23)00169-8) |
 | `cit-001196` | — | 2023 | Guo | An Overview of Thrombin Inhibitors in the Perspective of Structureactivity … | [open](https://www.benthamdirect.com/content/journals/cmc/10.2174/0929867329666220906105200) |
 | `cit-000091` | — | 2024 | Ullah | Lignin-derived bionanocomposites as functional food packaging materials | [open](https://pubs.rsc.org/fb/article-abstract/2/4/945/850400) |
 | `cit-000100` | — | 2024 | Kocheva | Structure and biomedical properties of lignins (a review) | [open](https://link.springer.com/article/10.1134/S106816202407001X) |
@@ -367,6 +378,10 @@ No openly accessible copy was found. The publisher's landing page is given so th
 | `cit-000785` | — | 2025 | — | Unraveling the diversity of protein-carbohydrate interfaces: Insights from … | [open](https://www.sciencedirect.com/science/article/pii/S0008621525000035) |
 | `cit-000793` | — | 2025 | Przybyło | MGAT3 and MGAT5 overexpression alters the protein cargo of extracellular ve… | [open](https://www.sciencedirect.com/science/article/pii/S0006291X25004632) |
 | `cit-000814` | — | 2025 | Battaglia | A computational analysis of the glycoprotein LRP1 structure and the role of… | [open](https://www.biorxiv.org/content/10.1101/2025.06.10.658798.abstract) |
+| `cit-001045` | — | 2025 | Li | Activation of mannose receptor C type 1 in macrophages improves renal fibro… | [open](https://www.sciencedirect.com/science/article/pii/S0024320525002279) |
+| `cit-001060` | — | 2025 | Lee | Inactivated rabies vaccine activates inflammasome signaling in raccoon dog … | [open](https://vetsci.org/DOIx.php?id=10.4142/jvs.26130) |
+| `cit-001064` | — | 2025 | — | A multiscale study on multivalence targeting | [open](https://www.tdx.cat/handle/10803/696315) |
+| `cit-001068` | — | 2025 | — | Metabolic and glycomic insights into macrophages in innate immunity | [open](https://figshare.mq.edu.au/articles/thesis/Metabolic_and_glycomic_insights_into_macrophages_in_innate_immunity/29251238) |
 | `cit-000205` | — | 2026 | Pu | Dominant HA motif 131/132-NT shapes the phenotype of avian H9N2 influenza v… | [open](https://www.sciencedirect.com/science/article/pii/S1995820X26000969) |
 | `cit-000208` | — | 2026 | Bovin | Antibody-free detection of influenza viruses on a microarray to study their… | [open](https://link.springer.com/article/10.1007/s00705-026-06578-5) |
 | `cit-000630` | GlycoGlyph | 2026 | Thattai | Pareto-optimal synthesis of multiple glycans in Golgi compartments | [open](https://www.cell.com/biophysj/abstract/S0006-3495(26)00445-5) |
@@ -381,6 +396,13 @@ No openly accessible copy was found. The publisher's landing page is given so th
 | `cit-000820` | — | 2026 | Riley | GlycoDiveR: a modular R framework to analyze and visualize highly dimension… | [open](https://pmc.ncbi.nlm.nih.gov/articles/PMC13041813/) |
 | `cit-000822` | — | 2026 | Avci | Molecular mechanisms of immune evasion by host protein glycosylation of a b… | [open](https://www.jbc.org/article/S0021-9258(26)00293-0/fulltext) |
 | `cit-000868` | — | 2026 | — | Glycomics and Maternity | [open](https://api.taylorfrancis.com/content/chapters/edit/download?identifierName=doi&identifierValue=10.1201/9781003635901-7&type=chapterpdf) |
+| `cit-001046` | — | 2026 | Li | Fluorescent probes for intraoperative navigation in glioma resection: recen… | [open](https://www.sciencedirect.com/science/article/pii/S001085452600857X) |
+| `cit-001047` | — | 2026 | Qi | Microbial Rhamnolipid‐Stabilized mRNA Nanovaccines Enhance Adaptive Immunit… | [open](https://advanced.onlinelibrary.wiley.com/doi/abs/10.1002/adfm.202531454) |
+| `cit-001049` | — | 2026 | Kim | Spatiotemporal targeting of miR-125b-5p regulatory hub via dual-ligand nano… | [open](https://www.sciencedirect.com/science/article/pii/S1385894726043901) |
+| `cit-001053` | — | 2026 | Wang | A macrophage mannose receptor 1 with dual CTLDs played a crucial role in de… | [open](https://www.sciencedirect.com/science/article/pii/S1050464826002500) |
+| `cit-001054` | — | 2026 | Reusch | Mannose receptor contributes to preferential oligomannosidic glycoform clea… | [open](https://www.tandfonline.com/doi/abs/10.1080/19420862.2026.2652119) |
+| `cit-001058` | — | 2026 | Kondo | Development and In Vitro Evaluation of Near-Infrared Dye-Conjugated Pullula… | [open](https://www.mdpi.com/2624-845x/7/3/20) |
+| `cit-001061` | — | 2026 | Werling | Analysis of genetic variation in the bovine Mannose Receptor gene (MRC1), i… | [open](https://www.biorxiv.org/content/10.64898/2026.06.27.734952.abstract) |
 | `cit-001323` | — | 2026 | Zhang | AlphaFold3 assisted screening strategy identifying novel coagulation factor… | [open](https://www.sciencedirect.com/science/article/pii/S0960852426015798) |
 | `cit-001325` | — | 2026 | Yue | Discovery of Novel FXIa Inhibitory Peptides from Deep-Sea Gigantidas platif… | [open](https://pubs.acs.org/jafcau/article/74/25/19936/5165424) |
 | `cit-001332` | — | 2026 | Zhang | Peptidomic characterization and evaluation of in vitro and in vivo anticoag… | [open](https://www.sciencedirect.com/science/article/pii/S2212429226007790) |
@@ -389,7 +411,7 @@ No openly accessible copy was found. The publisher's landing page is given so th
 | `cit-000560` | GLAD | — | Feizi | CarbArrayART-An update on the software tool for carbohydrate microarray dat… | [open](https://spiral.imperial.ac.uk/entities/publication/6ebd01fb-2687-4761-a614-c85c1a192b24) |
 | `cit-000562` | GLAD | — | Feizi | CarbArrayART | [open](https://run.unl.pt/entities/publication/48e256d4-d5a1-4fde-a8a0-ec184408ff34) |
 
-### 2.6 `not-in-indexes` — 64 row(s)
+### 2.6 `not-in-indexes` — 68 row(s)
 
 Neither PubMed nor OpenAlex returned the work, so there was nothing to fetch. These tend to be theses, book chapters, or commercial pages.
 
@@ -412,10 +434,12 @@ Neither PubMed nor OpenAlex returned the work, so there was nothing to fetch. Th
 | `cit-000661` | — | 2023 | — | RCSB Protein Data Bank (RCSB. org): delivery of experimentally-determined P… | [open](https://academic.oup.com/nar/article-abstract/51/D1/D488/6845439) |
 | `cit-000466` | — | 2024 | Lucchini | Metabolomic and Lipidomic Analysis of Manganese-Associated Parkinsonism: a … | [open](https://pmc.ncbi.nlm.nih.gov/articles/PMC11398432/) |
 | `cit-000779` | — | 2024 | — | Protein structure, a genetic encoding for glycosylation | [open](https://www.biorxiv.org/content/10.1101/2024.05.15.594261.abstract) |
+| `cit-001059` | — | 2025 | van Kasteren | Quantification of single molecule glycan-mannose receptor binding kinetics … | [open](https://www.biorxiv.org/content/10.1101/2025.01.24.634682.abstract) |
 | `cit-000211` | — | 2026 | — | Biological Characteristics of the Epidemic Influenza A/Singapore/GP20238/20… | [open](https://iimmun.ru/iimm/article/view/18211) |
 | `cit-000338` | — | 2026 | Yadav | Novel furo [2, 3-d] pyrimidinones as direct thrombin inhibitors: Design, sy… | [open](https://www.sciencedirect.com/science/article/pii/S0968089626002208) |
 | `cit-000829` | — | 2026 | Doering | Two closely related β-1, 2-xylosyltransferases differentially impact fungal… | [open](https://pmc.ncbi.nlm.nih.gov/articles/PMC13131615/) |
 | `cit-000839` | — | 2026 | Panneerselvam | Glycomics and Infection Progress: Exploring the Role of Mucuna pruriens (L.… | [open](https://api.taylorfrancis.com/content/chapters/edit/download?identifierName=doi&identifierValue=10.1201/9781003635901-6&type=chapterpdf) |
+| `cit-001056` | — | 2026 | Yu | Pinellia ternata lectin induces mitochondrial damage and inflammation in RA… | [open](https://www.sciencedirect.com/science/article/pii/S0041008X26002668) |
 | `cit-000135` | — | — | — | ASSESSING DRUG DEVELOPMENT PROPORTIES OF ANTITHROMBOTIC AND ANTI-CANCER AGE… | [open](https://scholarscompass.vcu.edu/etd/7203/?gathStatIcon=true/) |
 | `cit-000209` | — | — | — | CHARACTERIZATION OF IN VITRO FITNESS AND ANTIGENIC DRIFT DIFFERENCES BETWEE… | [open](https://jscholarship.library.jhu.edu/items/0dbcacaf-9e37-49c3-8a95-a3f55b8ae645) |
 | `cit-000218` | — | — | — | Identifying Host Genetic Targets for Limiting Susceptibility to Respiratory… | [open](https://search.proquest.com/openview/2292ead2556a4b653c9bd29643bc58b8/1?pq-origsite=gscholar&cbl=18750&diss=y) |
@@ -452,6 +476,8 @@ Neither PubMed nor OpenAlex returned the work, so there was nothing to fetch. Th
 | `cit-000894` | — | — | — | Developing New Informatics Approaches for Investigating Sequence-Structure-… | [open](https://search.proquest.com/openview/b8f980898ab0e04568e7f98978fc4d4d/1?pq-origsite=gscholar&cbl=18750&diss=y) |
 | `cit-000895` | — | — | — | Method Development for O-glycan Analysis and its Application to Parkinson's… | [open](https://researchrepository.ucd.ie/server/api/core/bitstreams/1bd49382-5e9d-4e1e-9336-0020d5145fef/content) |
 | `cit-000896` | — | — | — | Integration and Functional Evaluation of Text-Mining and Manually Curated D… | [open](https://search.proquest.com/openview/a5ba1e35ded3967118bbef0231dc3621/1?pq-origsite=gscholar&cbl=18750&diss=y) |
+| `cit-001067` | — | — | van Kasteren | Correlating mannose binding to myeloid cell function | [open](https://scholarlypublications.universiteitleiden.nl/access/item%3A4307278/download) |
+| `cit-001069` | — | — | — | Un estudio multiescala sobre la focalización multivalencia | [open](https://diposit.ub.edu/bitstreams/b7d5aa9b-05f0-4e84-8895-688efb06481f/download) |
 | `cit-001207` | — | — | — | ASSESSING DRUG DEVELOPMENT PROPORTIES OF ANTITHROMBOTIC AND ANTI-CANCER AGE… | [open](https://scholarscompass.vcu.edu/etd/7203/?gathStatIcon=true/) |
 | `cit-001215` | — | — | — | This article has been accepted for publication and undergone full peer revi… | [open](https://boris-portal.unibe.ch/bitstreams/b2d903ec-cab8-40a8-b807-ce8129002e65/download) |
 | `cit-001229` | — | — | — | Arimidex clotting trt prevent thrombosis Endocrine Abstracts | — |
@@ -479,7 +505,7 @@ counsel relies on them:
 | GlycoGlyph | 2 |
 | MAWE | 3 |
 
-Distribution over all 546 rows: `2` = 108, `3` = 10, `(blank)` = 428.
+Distribution over all 580 rows: `2` = 108, `3` = 10, `(blank)` = 462.
 
 If a number is wrong, the single place to change it is `toolForCitedPaper` /
 `projectForCitedPaper` in [`scripts/lib.js`](./scripts/lib.js), then re-run the importer and
@@ -637,9 +663,9 @@ quietly re-merging. This is the only place the advice is written down.
 
 ## 4. Potential citations not in the packet
 
-[`potential_notable_citations.html`](./potential_notable_citations.html) lists **379**
+[`potential_notable_citations.html`](./potential_notable_citations.html) lists **406**
 independent citations of the works in the candidate queue that are **not** in `packet.html`.
-They appear as **347 rows**
+They appear as **374 rows**
 because 32 citations sit on a row already held by
 another of my works. One article that cites two of them is one row with two judgements
 in it, one per work, so the row says where GLAD sits and where GlycoGlyph sits separately.
@@ -657,14 +683,15 @@ with it, and nothing on it is evidence until a person has read the article and f
 | **Other** — Designing allosteric regulators of thrombin. … (2013) | 65 | 0 | 29 | 1 | 0 | 0 | 0 | 9 | **26** | 1 |
 | **Other** — Emerging patterns of tyrosine sulfation and O… (2020) | 46 | 0 | 8 | 2 | 0 | 0 | 0 | 11 | **25** | 7 |
 | **Other** — GlyGen: computational and informatics resourc… (2020) | 248 | 0 | 51 | 14 | 0 | 0 | 0 | 37 | **146** | 36 |
+| **Other** — N-glycosylation of mannose receptor (CD206) r… (2022) | 35 | 0 | 1 | 0 | 0 | 0 | 0 | 7 | **27** | 9 |
 | **Other** — Rational design of potent, small, synthetic a… (2011) | 74 | 0 | 28 | 2 | 0 | 0 | 2 | 10 | **32** | 0 |
 | **Other** — Sulfated pentagalloylglucoside is a potent, a… (2013) | 110 | 0 | 54 | 4 | 0 | 0 | 2 | 16 | **34** | 1 |
-| **all works** | | | | | | | | | **379** | 80 |
+| **all works** | | | | | | | | | **406** | 89 |
 
 Each work's own arithmetic is printed on the review page beside its name; the row above
 is the same screen, not a second tally.
 
-80 citations already have a PDF on file, held under `pending-papers/` until a
+89 citations already have a PDF on file, held under `pending-papers/` until a
 decision is made. The rest sit at
 `no-open-copy`, `paywalled`, or `not-in-indexes` — findings about access, not about
 whether the paper exists. **A tier appears only for an article that has actually been read:**
@@ -1110,6 +1137,40 @@ To bring one in, name its `row_uid` and run `discover-pdfs.js` → `file-pdf.js`
 | `cit-000380` | Designing allosteric regulators of thrombin. Exosite 2 features multiple subsites that can be targeted by sul… |
 | `cit-000382` | Designing allosteric regulators of thrombin. Exosite 2 features multiple subsites that can be targeted by sul… |
 | `cit-000383` | Designing allosteric regulators of thrombin. Exosite 2 features multiple subsites that can be targeted by sul… |
+| `cit-001037` | N-glycosylation of mannose receptor (CD206) regulates glycan binding by C-type lectin domains |
+| `cit-001039` | N-glycosylation of mannose receptor (CD206) regulates glycan binding by C-type lectin domains |
+| `cit-001040` | N-glycosylation of mannose receptor (CD206) regulates glycan binding by C-type lectin domains |
+| `cit-001041` | N-glycosylation of mannose receptor (CD206) regulates glycan binding by C-type lectin domains |
+| `cit-001042` | N-glycosylation of mannose receptor (CD206) regulates glycan binding by C-type lectin domains |
+| `cit-001043` | N-glycosylation of mannose receptor (CD206) regulates glycan binding by C-type lectin domains |
+| `cit-001044` | N-glycosylation of mannose receptor (CD206) regulates glycan binding by C-type lectin domains |
+| `cit-001045` | N-glycosylation of mannose receptor (CD206) regulates glycan binding by C-type lectin domains |
+| `cit-001046` | N-glycosylation of mannose receptor (CD206) regulates glycan binding by C-type lectin domains |
+| `cit-001047` | N-glycosylation of mannose receptor (CD206) regulates glycan binding by C-type lectin domains |
+| `cit-001048` | N-glycosylation of mannose receptor (CD206) regulates glycan binding by C-type lectin domains |
+| `cit-001049` | N-glycosylation of mannose receptor (CD206) regulates glycan binding by C-type lectin domains |
+| `cit-001050` | N-glycosylation of mannose receptor (CD206) regulates glycan binding by C-type lectin domains |
+| `cit-001051` | N-glycosylation of mannose receptor (CD206) regulates glycan binding by C-type lectin domains |
+| `cit-001052` | N-glycosylation of mannose receptor (CD206) regulates glycan binding by C-type lectin domains |
+| `cit-001053` | N-glycosylation of mannose receptor (CD206) regulates glycan binding by C-type lectin domains |
+| `cit-001054` | N-glycosylation of mannose receptor (CD206) regulates glycan binding by C-type lectin domains |
+| `cit-001055` | N-glycosylation of mannose receptor (CD206) regulates glycan binding by C-type lectin domains |
+| `cit-001056` | N-glycosylation of mannose receptor (CD206) regulates glycan binding by C-type lectin domains |
+| `cit-001057` | N-glycosylation of mannose receptor (CD206) regulates glycan binding by C-type lectin domains |
+| `cit-001058` | N-glycosylation of mannose receptor (CD206) regulates glycan binding by C-type lectin domains |
+| `cit-001059` | N-glycosylation of mannose receptor (CD206) regulates glycan binding by C-type lectin domains |
+| `cit-001060` | N-glycosylation of mannose receptor (CD206) regulates glycan binding by C-type lectin domains |
+| `cit-001061` | N-glycosylation of mannose receptor (CD206) regulates glycan binding by C-type lectin domains |
+| `cit-001062` | N-glycosylation of mannose receptor (CD206) regulates glycan binding by C-type lectin domains |
+| `cit-001063` | N-glycosylation of mannose receptor (CD206) regulates glycan binding by C-type lectin domains |
+| `cit-001064` | N-glycosylation of mannose receptor (CD206) regulates glycan binding by C-type lectin domains |
+| `cit-001065` | N-glycosylation of mannose receptor (CD206) regulates glycan binding by C-type lectin domains |
+| `cit-001066` | N-glycosylation of mannose receptor (CD206) regulates glycan binding by C-type lectin domains |
+| `cit-001067` | N-glycosylation of mannose receptor (CD206) regulates glycan binding by C-type lectin domains |
+| `cit-001068` | N-glycosylation of mannose receptor (CD206) regulates glycan binding by C-type lectin domains |
+| `cit-001069` | N-glycosylation of mannose receptor (CD206) regulates glycan binding by C-type lectin domains |
+| `cit-001070` | N-glycosylation of mannose receptor (CD206) regulates glycan binding by C-type lectin domains |
+| `cit-001071` | N-glycosylation of mannose receptor (CD206) regulates glycan binding by C-type lectin domains |
 
 The tier and project columns are **blank** on this row on purpose. Its `cited_paper` is a
 different work, so a tier recorded for GLAD or MAWE would describe a paper this row does not
@@ -1169,7 +1230,7 @@ evidence looks like something and is not.
 
 | basis of a recorded mention | mentions | rows |
 |---|---:|---:|
-| reference-number resolution | 99 | 69 |
+| reference-number resolution | 103 | 73 |
 | extracted text | 4 | 3 |
 
 A resolved citation is held to the same bar as one that names the tool: it must sit in
@@ -1178,7 +1239,7 @@ that names the applicant's paper — a reference list proves only that the autho
 work, not where or how. Where a row's tier rests on such a citation, that is said in the
 report rather than left for a reader to infer from a section heading alone.
 
-99 mentions across 69 citing works rest on resolution or on a person’s
+103 mentions across 73 citing works rest on resolution or on a person’s
 reading, not on a named-tool scan. `scan-mentions.js` reports those rows separately and
 leaves their tier alone — it is not built to find them, so its silence is not evidence
 against them.
@@ -1195,20 +1256,21 @@ Every PDF in the storage roots (`papers/`, `pending-papers/`, `screened-papers/`
 one of three ways, and the distinction matters because only the first two are reproducible
 from a script.
 
-**Fetched by `discover-pdfs.js`** — 118 candidate row(s) across 109 distinct file(s), each recorded with the host it came from:
+**Fetched by `discover-pdfs.js`** — 129 candidate row(s) across 119 distinct file(s), each recorded with the host it came from:
 
 | host | rows | row_uid(s) |
 |---|---:|---|
-| www.mdpi.com | 27 | `cit-000513`, `cit-000550`, `cit-000592`, `cit-000606`, `cit-000626`, `cit-000660`, `cit-000706`, `cit-000721`, `cit-000757`, `cit-000770`, `cit-000780`, `cit-000795`, `cit-000800`, `cit-000804`, `cit-000821`, `cit-001303`, `cit-001186`, `cit-000092`, `cit-000093`, `cit-000112`, `cit-000116`, `cit-000193`, `cit-000206`, `cit-000432`, `cit-000454`, `cit-000459`, `cit-000352` |
-| www.nature.com | 21 | `cit-000510`, `cit-000511`, `cit-000596`, `cit-000600`, `cit-000654`, `cit-000665`, `cit-000666`, `cit-000689`, `cit-000693`, `cit-000695`, `cit-000696`, `cit-000727`, `cit-000744`, `cit-000799`, `cit-000185`, `cit-000188`, `cit-000191`, `cit-000442`, `cit-000449`, `cit-000460`, `cit-000330` |
+| www.mdpi.com | 28 | `cit-000513`, `cit-000550`, `cit-000592`, `cit-000606`, `cit-000626`, `cit-000660`, `cit-000706`, `cit-000721`, `cit-000757`, `cit-000770`, `cit-000780`, `cit-000795`, `cit-000800`, `cit-000804`, `cit-000821`, `cit-001303`, `cit-001186`, `cit-000092`, `cit-000093`, `cit-000112`, `cit-000116`, `cit-000193`, `cit-000206`, `cit-000432`, `cit-000454`, `cit-000459`, `cit-000352`, `cit-001050` |
+| www.nature.com | 25 | `cit-000510`, `cit-000511`, `cit-000596`, `cit-000600`, `cit-000654`, `cit-000665`, `cit-000666`, `cit-000689`, `cit-000693`, `cit-000695`, `cit-000696`, `cit-000727`, `cit-000744`, `cit-000799`, `cit-000185`, `cit-000188`, `cit-000191`, `cit-000442`, `cit-000449`, `cit-000460`, `cit-000330`, `cit-001041`, `cit-001048`, `cit-001051`, `cit-001070` |
 | (no source recorded) | 15 | `cit-000507`, `cit-000523`, `cit-000525`, `cit-000531`, `cit-000532`, `cit-000534`, `cit-000549`, `cit-000554`, `cit-000564`, `cit-000566`, `cit-000581`, `cit-000614`, `cit-000621`, `cit-000623`, `cit-001263` |
 | www.biorxiv.org | 13 | `cit-000631`, `cit-000633`, `cit-000683`, `cit-000742`, `cit-000824`, `cit-000832`, `cit-000833`, `cit-000843`, `cit-000845`, `cit-000108`, `cit-000202`, `cit-000217`, `cit-000465` |
-| www.frontiersin.org | 9 | `cit-000520`, `cit-000593`, `cit-000607`, `cit-000715`, `cit-000730`, `cit-000731`, `cit-000844`, `cit-001287`, `cit-000455` |
+| www.frontiersin.org | 12 | `cit-000520`, `cit-000593`, `cit-000607`, `cit-000715`, `cit-000730`, `cit-000731`, `cit-000844`, `cit-001287`, `cit-000455`, `cit-001042`, `cit-001055`, `cit-001057` |
 | link.springer.com | 9 | `cit-000589`, `cit-000605`, `cit-000622`, `cit-000707`, `cit-000713`, `cit-000737`, `cit-000782`, `cit-000802`, `cit-001302` |
 | www.intechopen.com | 2 | `cit-000536`, `cit-000129` |
 | genomebiology.biomedcentral.com | 2 | `cit-000704`, `cit-000831` |
 | arxiv.org | 2 | `cit-000705`, `cit-000726` |
 | journals.plos.org | 2 | `cit-000741`, `cit-000182` |
+| public-pages-files-2025.frontiersin.org | 2 | `cit-001044`, `cit-001062` |
 | www.mcponline.org | 1 | `cit-000514` |
 | pubs.acs.org | 1 | `cit-000538` |
 | eymj.org | 1 | `cit-000541` |
@@ -1225,6 +1287,7 @@ from a script.
 | www.aginganddisease.org | 1 | `cit-001307` |
 | repository.nottingham.ac.uk | 1 | `cit-001378` |
 | www.jstage.jst.go.jp | 1 | `cit-000458` |
+| medicinus.co | 1 | `cit-001071` |
 
 All of them are open-access copies resolved through OpenAlex and taken from the publisher.
 
@@ -1244,19 +1307,20 @@ These came from the `In Methods` / `In Acknowledgements` imports and were regist
 all, so the NCBI key in `.env` is used for author corroboration, not for fetching. Any statement
 that these papers came from PubMed Central would be wrong.
 
-Discovery state of all 543 GLAD candidates, from `candidate.discover_state`:
+Discovery state of all 577 GLAD candidates, from `candidate.discover_state`:
 
 | state | rows | meaning |
 |---|---:|---|
-| `no-open-copy` | 246 | looked, nothing retrievable found |
-| `has-pdf` | 127 | a PDF is on file for the row — seeded that way, fetched by a script, or filed with `file-pdf.js` |
-| `paywalled` | 87 | located behind a paywall — the applicant may be able to obtain these |
-| `not-in-indexes` | 74 | not found in the open-access indexes consulted |
-| `open-copy` | 9 | an open-access copy was located; the row is only `has-pdf` once the file is on disk |
+| `no-open-copy` | 263 | looked, nothing retrievable found |
+| `has-pdf` | 137 | a PDF is on file for the row — seeded that way, fetched by a script, or filed with `file-pdf.js` |
+| `paywalled` | 88 | located behind a paywall — the applicant may be able to obtain these |
+| `not-in-indexes` | 78 | not found in the open-access indexes consulted |
+| `open-copy` | 10 | an open-access copy was located; the row is only `has-pdf` once the file is on disk |
+| `lookup-failed` | 1 | — |
 
 **Still open:** 0 row(s) sit at `open-copy` with no file on disk — a copy was
 located and never fetched. Chasing them is a decision, not a defect: a row must be independent
-(§1.2) before it is worth a download, and 121 candidate(s) are already held — check why before spending effort on a PDF for a row that
+(§1.2) before it is worth a download, and 129 candidate(s) are already held — check why before spending effort on a PDF for a row that
 cannot be filed.
 
 ## 6. Before handing the packet over

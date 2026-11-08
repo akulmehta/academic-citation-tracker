@@ -1,0 +1,62 @@
+[
+  {
+    "row_uid": "cit-001041",
+    "mentions": [
+      {
+        "section": "Results",
+        "tier": "B",
+        "page": "5",
+        "quote": "glycans 8-13, potentially originating from modestly altered physical- chemical properties of the peptide cargo. **** ns",
+        "use_type": null,
+        "basis": "reference-number resolution",
+        "verified": 0,
+        "note": "cited as orphan superscript line: 24"
+      }
+    ]
+  },
+  {
+    "row_uid": "cit-001044",
+    "mentions": [
+      {
+        "section": "Discussion",
+        "tier": "C",
+        "page": "14",
+        "quote": "mannose-containing CD206 structures (68, 69).",
+        "use_type": null,
+        "basis": "reference-number resolution",
+        "verified": 0,
+        "note": "cited as bracketed jointly with 69: (68, 69)"
+      }
+    ]
+  },
+  {
+    "row_uid": "cit-001050",
+    "mentions": [
+      {
+        "section": "Discussion",
+        "tier": "C",
+        "page": "12",
+        "quote": "fucose and N-acetyl-glucosamine that are frequently found on the pathogen surfaces [22, 23 ].",
+        "use_type": null,
+        "basis": "reference-number resolution",
+        "verified": 0,
+        "note": "cited as bracketed jointly with 23: [22, 23 ]"
+      }
+    ]
+  },
+  {
+    "row_uid": "cit-001055",
+    "mentions": [
+      {
+        "section": "Introduction",
+        "tier": "C",
+        "page": "2",
+        "quote": "processing (4).",
+        "use_type": null,
+        "basis": "reference-number resolution",
+        "verified": 0,
+        "note": "cited as bracketed: (4)"
+      }
+    ]
+  }
+]

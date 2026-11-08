@@ -13,7 +13,7 @@
 const fs = require("fs");
 const path = require("path");
 const { execFileSync } = require("child_process");
-const { PKT, REPO, openPacket, openCatalog, headlineTier, originalApplicationUids, folderRoots, STORAGE_ROOTS, ROOT_PENDING, ROOT_SCREENED, toolForCitedPaper } = require("./lib.js");
+const { PKT, REPO, openPacket, openCatalog, headlineTier, originalApplicationUids, folderRoots, STORAGE_ROOTS, ROOT_PENDING, ROOT_SCREENED, toolForCitedPaper, surnameSlug } = require("./lib.js");
 
 const QUIET = process.argv.includes("--quiet");
 const DEEP = process.argv.includes("--deep");
@@ -169,7 +169,12 @@ const ROOTS = STORAGE_ROOTS;
     const rows = cits.filter(c => c.folder_uid === f.folder_uid);
     const names = rows.map(c => c.citing_senior_author).filter(Boolean);
     if (names.length) {
-      const flat = s => s.normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[^A-Za-z]/g, "").toLowerCase();
+      // Fold the surname the same way the file name was built. `lib.surnameSlug`
+      // is what named the file, and NFD alone is not enough: `ł` (U+0142) has no
+      // decomposition, so stripping combining marks deleted it and turned
+      // "Zasłona" into "Zasona", which no file name can contain. That reported a
+      // correctly named PDF as a defect.
+      const flat = s => surnameSlug(s).replace(/[^A-Za-z]/g, "").toLowerCase();
       const hit = names.some(n => base.toLowerCase().includes(flat(n)));
       if (!hit) fail("pdf-name", `${f.file} does not contain the citing senior author's surname (${names.join(" / ")})`);
     }
