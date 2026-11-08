@@ -1,0 +1,17 @@
+[
+  {
+    "row_uid": "cit-000006",
+    "mentions": [
+      {
+        "section": "Discussion",
+        "tier": "C",
+        "page": "9",
+        "quote": "phated benzofurans have been reported to be lead compounds for the design of small molecule FXIa inhibitors42.",
+        "use_type": null,
+        "basis": "reference-number resolution",
+        "verified": 0,
+        "note": "cited as superscript (glued to word): 42"
+      }
+    ]
+  }
+]
