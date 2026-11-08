@@ -64,7 +64,7 @@ const TOOLS = [
 // citation a person had recorded as Results. That is the exact error this packet
 // cannot afford: a tier is a claim about how the tool was used.
 const SECTIONS = [
-  { id: "Methods", rank: "A", re: /materials\s+and\s+methods?|methods?\s*(?:and|&)\s*materials|experimental(?:\s+section|\s+procedures?)|methods?|computational\s+(?:methods?|details)|star.{0,6}\s?methods?|author[s']?\s+methods?/i },
+  { id: "Methods", rank: "A", re: /materials?\s+and\s+methods?|methods?\s*(?:and|&)\s*materials?|experimental(?:\s+section|\s+procedures?)|methods?|computational\s+(?:methods?|details)|star.{0,6}\s?methods?|author[s']?\s+methods?/i },
   { id: "Results", rank: "B", re: /results?(?:\s*(?:and|&)\s*discussion)?|findings?/i },
   { id: "Introduction", rank: "C", re: /introduction|background|significance/i },
   { id: "Discussion", rank: "C", re: /discussion|conclusions?|outlook|perspectives?|concluding\s+remarks?/i },
@@ -152,6 +152,16 @@ function headingOf(line) {
   const text = untrack(line);
   const alone = STANDALONE.find(s => s.test.test(text));
   if (alone) return { section: alone, number: leadingNumber(text) };
+  // A manuscript with continuous line numbering prints the number flush against
+  // the heading, so pdf.js extracts "Material and Methods139" and the anchored
+  // test above sees nothing. Stripping a trailing digit run cannot invent a
+  // heading: STANDALONE still requires the whole remainder to be the section
+  // name, and no section name ends in a digit.
+  const glued = text.replace(/\s*\d+$/, "");
+  if (glued !== text) {
+    const g = STANDALONE.find(s => s.test.test(glued));
+    if (g) return { section: g, number: leadingNumber(glued) };
+  }
   const inl = INLINE.find(s => s.test.test(text));
   if (inl) return { section: inl, number: leadingNumber(text) };
   if (trackedSyllables(line)) {
