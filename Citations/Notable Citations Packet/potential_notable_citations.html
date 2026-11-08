@@ -111,7 +111,7 @@
     Citation columns carry what that reading found; where it is not, they say so and claim nothing.
   </div>
   <div class="cited">
-    <strong>My works covered — 5</strong>
+    <strong>My works covered — 6</strong>
     <ol>
       <li><strong>GLAD</strong> — GLAD: GLycan Array Dashboard, a visual analytics tool for glycan microarrays (2019):
         30 citations listed</li>
@@ -121,17 +121,19 @@
         1 citation listed</li>
       <li><strong>GlyGen: computational and…</strong> — GlyGen: computational and informatics resources for glycoscience (2020):
         146 citations listed</li>
+      <li><strong>Rational design of potent, small,…</strong> — Rational design of potent, small, synthetic allosteric inhibitors of thrombin (2011):
+        32 citations listed</li>
       <li><strong>Sulfated pentagalloylglucoside is…</strong> — Sulfated pentagalloylglucoside is a potent, allosteric, and selective inhibitor of factor XIa (2013):
         34 citations listed</li>
     </ol>
   </div>
-  <p>238 independent citations of these works are not in the packet and were not used in the
+  <p>270 independent citations of these works are not in the packet and were not used in the
      original application. Each is a real, independently authored citation. They appear as
-     <strong>231 rows</strong> below, because 7 articles cite
+     <strong>259 rows</strong> below, because 11 articles cite
      more than one of my works and is shown once, with a separate tier and quotation for each work it
      cites. 40 citations have been read and the sentence that cites the
      tool is recorded; 24 have been read and the tool does not appear anywhere the
-     article ranks as a section; 174 have no PDF yet, so where the citation sits is still
+     article ranks as a section; 206 have no PDF yet, so where the citation sits is still
      unknown &mdash; and that is what decides a tier.</p>
   <p class="sub">The screen below counts <em>citations</em>, not articles: independence and tier are
      both judgements about one citing paper against one cited work, so a paper that cites two of my
@@ -185,6 +187,18 @@
     <tr><td><strong>listed here for review</strong></td><td class="n"><strong>146</strong></td></tr>
   </table>
 
+  <h3 class="scrk">Rational design of potent, small, synthetic allosteric inhibitors of thrombin (2011)</h3>
+  <table class="screen">
+    <tr><td>Citing works the record lists for this paper</td><td class="n">74</td></tr>
+    <tr><td>less not independent (shares an author with the cited work, or names a PI)</td><td class="n">&minus;28</td></tr>
+    <tr><td>less copies that do not stand for their work (preprint / repository twin)</td><td class="n">&minus;2</td></tr>
+    <tr><td>less not listed in English</td><td class="n">&minus;0</td></tr>
+    <tr><td>less already confirmed in the packet</td><td class="n">&minus;0</td></tr>
+    <tr><td>less already used in the original application</td><td class="n">&minus;2</td></tr>
+    <tr><td>less already decided against on review (kept in <code>screened-out.csv</code>)</td><td class="n">&minus;10</td></tr>
+    <tr><td><strong>listed here for review</strong></td><td class="n"><strong>32</strong></td></tr>
+  </table>
+
   <h3 class="scrk">Sulfated pentagalloylglucoside is a potent, allosteric, and selective inhibitor of factor XIa (2013)</h3>
   <table class="screen">
     <tr><td>Citing works the record lists for this paper</td><td class="n">110</td></tr>
@@ -198,8 +212,8 @@
   </table>
 </header>
 
-<h2>The 231 candidates</h2>
-<p>64 of the 238 citations have a PDF on file and have
+<h2>The 259 candidates</h2>
+<p>64 of the 270 citations have a PDF on file and have
    been read by the scanner; those carry a tier and the sentence it rests on. The rest have no tier
    because nothing has been read, which is a statement about the file, not about the paper.</p>
 
@@ -208,17 +222,17 @@
     <label for="f-q">Search (title, author, venue, quote, uid, doi, my work)</label>
     <input type="search" id="f-q" placeholder="e.g. glycan array, Heras, cit-000544, MAWE" autocomplete="off">
   </div>
-  <div class="fld"><label for="f-work">My work</label><select id="f-work"><option value="">any</option><option value="GLAD">GLAD</option><option value="GlycoGlyph">GlycoGlyph</option><option value="MAWE">MAWE</option><option value="GlyGen: computational and…">GlyGen: computational and…</option><option value="Sulfated pentagalloylglucoside is…">Sulfated pentagalloylglucoside is…</option></select></div>
+  <div class="fld"><label for="f-work">My work</label><select id="f-work"><option value="">any</option><option value="GLAD">GLAD</option><option value="GlycoGlyph">GlycoGlyph</option><option value="MAWE">MAWE</option><option value="GlyGen: computational and…">GlyGen: computational and…</option><option value="Rational design of potent, small,…">Rational design of potent, small,…</option><option value="Sulfated pentagalloylglucoside is…">Sulfated pentagalloylglucoside is…</option></select></div>
   <div class="fld"><label for="f-works">Works cited by it</label><select id="f-works"><option value="">any</option><option value="1">one work only</option><option value="2">two or more works</option></select></div>
   <div class="fld"><label for="f-tier">Tier</label><select id="f-tier"><option value="">any</option><option value="A">Tier A</option><option value="B">Tier B</option><option value="C">Tier C</option><option value="D">Tier D</option><option value="resolved">any tier, found by reference</option><option value="untiered">read, no tier</option><option value="unread">not read</option></select></div>
   <div class="fld"><label for="f-disc">Open copy</label><select id="f-disc"><option value="">any</option><option value="has-pdf">PDF on file</option><option value="open-copy">Open copy found</option><option value="paywalled">Paywalled</option><option value="no-open-copy">No open copy</option><option value="not-in-indexes">Not in OpenAlex</option><option value="not-queued">Not yet looked up</option></select></div>
   <div class="fld"><label for="f-pdf">PDF on file</label><select id="f-pdf"><option value="">any</option><option value="1">yes</option><option value="0">no</option></select></div>
-  <div class="fld"><label for="f-year">Year</label><select id="f-year"><option value="">any</option><option value="2026">2026</option><option value="2025">2025</option><option value="2024">2024</option><option value="2023">2023</option><option value="2022">2022</option><option value="2021">2021</option><option value="2020">2020</option><option value="2019">2019</option><option value="2018">2018</option><option value="2017">2017</option><option value="2016">2016</option><option value="2015">2015</option><option value="2014">2014</option><option value="2013">2013</option><option value="2010">2010</option></select></div>
+  <div class="fld"><label for="f-year">Year</label><select id="f-year"><option value="">any</option><option value="2026">2026</option><option value="2025">2025</option><option value="2024">2024</option><option value="2023">2023</option><option value="2022">2022</option><option value="2021">2021</option><option value="2020">2020</option><option value="2019">2019</option><option value="2018">2018</option><option value="2017">2017</option><option value="2016">2016</option><option value="2015">2015</option><option value="2014">2014</option><option value="2013">2013</option><option value="2012">2012</option><option value="2011">2011</option><option value="2010">2010</option></select></div>
   <div class="spacer"></div>
   <div class="fld"><label>&nbsp;</label><button type="button" id="f-reset">Reset</button></div>
   <div class="fld"><label>&nbsp;</label><span id="shown"></span></div>
 </div>
-<p id="no-hits">No row matches those filters. Reset to see all 231.</p>
+<p id="no-hits">No row matches those filters. Reset to see all 259.</p>
 
 <table id="cand">
   <thead><tr>
@@ -3167,6 +3181,486 @@
       <td class="cite"><div class="workcell" data-uid="cit-000906" data-work="GlyGen: computational and…"><span class="none">no PDF, so nothing has been quoted</span></div></td>
       <td class="pick"><label><input type="checkbox"> include</label></td>
     </tr>
+    <tr data-uid="cit-001164" data-uids="cit-001164" data-tier="none" data-disc="no-open-copy" data-pdf="0" data-year="2015" data-work="Rational design of potent, small,…" data-works="1" data-text="cit-001164 · structure-guided design and optimization of dipeptidyl inhibitors of norovirus 3cl protease. structure–activity relationships and biochemical, x‑ray crystallographic · ac galasiti kankanamalage, y kim… - journal of medicinal …, 2015 - acs publications · groutas ·  · rational design of potent, small,… ·  · 10.1021/jm5019934">
+      <td class="uid">cit-001164</td>
+      <td class="work"><div class="workcell" data-uid="cit-001164" data-work="Rational design of potent, small,…"><span class="wname">Rational design of potent, small,…</span><div class="sub">2011</div></div></td>
+      <td class="title">Structure-Guided Design and Optimization of Dipeptidyl Inhibitors of Norovirus 3CL Protease. Structure–Activity Relationships and Biochemical, X‑ray Crystallographic <span class="sub">[title as Scholar shows it continues]</span>
+        <div class="byline">AC Galasiti Kankanamalage, Y Kim… - Journal of medicinal …, 2015 - ACS Publications</div></td>
+      <td>Groutas</td>
+      <td>2015</td>
+      <td>—</td>
+      <td class="src"><a href="https://pubs.acs.org/jmcmar/article-abstract/58/7/3144/1300753" target="_blank" rel="noopener noreferrer">pubs.acs.org</a><div class="sub"><a href="https://doi.org/10.1021/jm5019934" target="_blank" rel="noopener noreferrer">10.1021/jm5019934</a></div></td>
+      <td class="disc"><span class="pill warn">No open copy</span><div class="sub">OpenAlex has the work (10.1021/jm5019934), no open-access PDF location</div></td>
+      <td class="pdf"><span class="none">not retrieved</span></td>
+      <td class="tier"><div class="workcell" data-uid="cit-001164" data-work="Rational design of potent, small,…"><span class="none">not read</span></div></td>
+      <td class="cite"><div class="workcell" data-uid="cit-001164" data-work="Rational design of potent, small,…"><span class="none">no PDF, so nothing has been quoted</span></div></td>
+      <td class="pick"><label><input type="checkbox"> include</label></td>
+    </tr>
+    <tr data-uid="cit-001169" data-uids="cit-001169" data-tier="none" data-disc="no-open-copy" data-pdf="0" data-year="2016" data-work="Rational design of potent, small,…" data-works="1" data-text="cit-001169 · potent inhibition of enterovirus d68 and human rhinoviruses by dipeptidyl aldehydes and α-ketoamides · y kim, acg kankanamalage, vc damalanka… - antiviral research, 2016 - elsevier · chang · antiviral research · rational design of potent, small,… ·  · 10.1016/j.antiviral.2015.11.010">
+      <td class="uid">cit-001169</td>
+      <td class="work"><div class="workcell" data-uid="cit-001169" data-work="Rational design of potent, small,…"><span class="wname">Rational design of potent, small,…</span><div class="sub">2011</div></div></td>
+      <td class="title">Potent inhibition of enterovirus D68 and human rhinoviruses by dipeptidyl aldehydes and α-ketoamides
+        <div class="byline">Y Kim, ACG Kankanamalage, VC Damalanka… - Antiviral research, 2016 - Elsevier</div></td>
+      <td>Chang</td>
+      <td>2016</td>
+      <td>Antiviral research</td>
+      <td class="src"><a href="https://www.sciencedirect.com/science/article/pii/S0166354215300322" target="_blank" rel="noopener noreferrer">www.sciencedirect.com</a><div class="sub"><a href="https://doi.org/10.1016/j.antiviral.2015.11.010" target="_blank" rel="noopener noreferrer">10.1016/j.antiviral.2015.11.010</a></div></td>
+      <td class="disc"><span class="pill warn">No open copy</span><div class="sub">OpenAlex has the work (10.1016/j.antiviral.2015.11.010), no open-access PDF location</div></td>
+      <td class="pdf"><span class="none">not retrieved</span></td>
+      <td class="tier"><div class="workcell" data-uid="cit-001169" data-work="Rational design of potent, small,…"><span class="none">not read</span></div></td>
+      <td class="cite"><div class="workcell" data-uid="cit-001169" data-work="Rational design of potent, small,…"><span class="none">no PDF, so nothing has been quoted</span></div></td>
+      <td class="pick"><label><input type="checkbox"> include</label></td>
+    </tr>
+    <tr data-uid="cit-001171" data-uids="cit-001171" data-tier="none" data-disc="no-open-copy" data-pdf="0" data-year="2013" data-work="Rational design of potent, small,…" data-works="1" data-text="cit-001171 · ligand binding to anion-binding exosites regulates conformational properties of thrombin · mv malovichko, tm sabo, mc maurer - journal of biological chemistry, 2013 - jbc.org ·  · journal of biological chemistry · rational design of potent, small,… ·  · 10.1074/jbc.m112.410829">
+      <td class="uid">cit-001171</td>
+      <td class="work"><div class="workcell" data-uid="cit-001171" data-work="Rational design of potent, small,…"><span class="wname">Rational design of potent, small,…</span><div class="sub">2011</div></div></td>
+      <td class="title">Ligand binding to anion-binding exosites regulates conformational properties of thrombin
+        <div class="byline">MV Malovichko, TM Sabo, MC Maurer - Journal of Biological Chemistry, 2013 - jbc.org</div></td>
+      <td>—</td>
+      <td>2013</td>
+      <td>Journal of Biological Chemistry</td>
+      <td class="src"><a href="https://www.jbc.org/article/S0021-9258(19)33516-1/fulltext" target="_blank" rel="noopener noreferrer">www.jbc.org</a><div class="sub"><a href="https://doi.org/10.1074/jbc.m112.410829" target="_blank" rel="noopener noreferrer">10.1074/jbc.m112.410829</a></div></td>
+      <td class="disc"><span class="pill warn">No open copy</span><div class="sub">OpenAlex has the work (10.1074/jbc.m112.410829), no open-access PDF location</div></td>
+      <td class="pdf"><span class="none">not retrieved</span></td>
+      <td class="tier"><div class="workcell" data-uid="cit-001171" data-work="Rational design of potent, small,…"><span class="none">not read</span></div></td>
+      <td class="cite"><div class="workcell" data-uid="cit-001171" data-work="Rational design of potent, small,…"><span class="none">no PDF, so nothing has been quoted</span></div></td>
+      <td class="pick"><label><input type="checkbox"> include</label></td>
+    </tr>
+    <tr data-uid="cit-001175" data-uids="cit-001175" data-tier="none" data-disc="no-open-copy" data-pdf="0" data-year="2013" data-work="Rational design of potent, small,…" data-works="1" data-text="cit-001175 · palladium-catalyzed cascade reactions of 1‑(3-arylprop-2-ynyloxy)-2-bromo benzene derivatives with organoboron compounds · a arcadi, f blesi, s cacchi, g fabrizi… - the journal of …, 2013 - acs publications · marinelli ·  · rational design of potent, small,… ·  · 10.1021/jo400503f">
+      <td class="uid">cit-001175</td>
+      <td class="work"><div class="workcell" data-uid="cit-001175" data-work="Rational design of potent, small,…"><span class="wname">Rational design of potent, small,…</span><div class="sub">2011</div></div></td>
+      <td class="title">Palladium-Catalyzed Cascade Reactions of 1‑(3-Arylprop-2-ynyloxy)-2-bromo Benzene Derivatives with Organoboron Compounds
+        <div class="byline">A Arcadi, F Blesi, S Cacchi, G Fabrizi… - The Journal of …, 2013 - ACS Publications</div></td>
+      <td>Marinelli</td>
+      <td>2013</td>
+      <td>—</td>
+      <td class="src"><a href="https://pubs.acs.org/joceah/article-abstract/78/9/4490/1339822" target="_blank" rel="noopener noreferrer">pubs.acs.org</a><div class="sub"><a href="https://doi.org/10.1021/jo400503f" target="_blank" rel="noopener noreferrer">10.1021/jo400503f</a></div></td>
+      <td class="disc"><span class="pill warn">No open copy</span><div class="sub">OpenAlex has the work (10.1021/jo400503f), no open-access PDF location</div></td>
+      <td class="pdf"><span class="none">not retrieved</span></td>
+      <td class="tier"><div class="workcell" data-uid="cit-001175" data-work="Rational design of potent, small,…"><span class="none">not read</span></div></td>
+      <td class="cite"><div class="workcell" data-uid="cit-001175" data-work="Rational design of potent, small,…"><span class="none">no PDF, so nothing has been quoted</span></div></td>
+      <td class="pick"><label><input type="checkbox"> include</label></td>
+    </tr>
+    <tr data-uid="cit-001178" data-uids="cit-001178" data-tier="none" data-disc="no-open-copy" data-pdf="0" data-year="2020" data-work="Rational design of potent, small,…" data-works="1" data-text="cit-001178 · allosteric inhibition and kinetic characterization of klebsiella pneumoniae cyse: an emerging drug target · d verma, s gupta, r saxena, p kaur… - international journal of …, 2020 - elsevier · gupta · international journal of · rational design of potent, small,… ·  · 10.1016/j.ijbiomac.2019.10.170">
+      <td class="uid">cit-001178</td>
+      <td class="work"><div class="workcell" data-uid="cit-001178" data-work="Rational design of potent, small,…"><span class="wname">Rational design of potent, small,…</span><div class="sub">2011</div></div></td>
+      <td class="title">Allosteric inhibition and kinetic characterization of Klebsiella pneumoniae CysE: An emerging drug target
+        <div class="byline">D Verma, S Gupta, R Saxena, P Kaur… - International Journal of …, 2020 - Elsevier</div></td>
+      <td>Gupta</td>
+      <td>2020</td>
+      <td>International Journal of</td>
+      <td class="src"><a href="https://www.sciencedirect.com/science/article/pii/S0141813019365778" target="_blank" rel="noopener noreferrer">www.sciencedirect.com</a><div class="sub"><a href="https://doi.org/10.1016/j.ijbiomac.2019.10.170" target="_blank" rel="noopener noreferrer">10.1016/j.ijbiomac.2019.10.170</a></div></td>
+      <td class="disc"><span class="pill warn">No open copy</span><div class="sub">OpenAlex has the work (10.1016/j.ijbiomac.2019.10.170), no open-access PDF location</div></td>
+      <td class="pdf"><span class="none">not retrieved</span></td>
+      <td class="tier"><div class="workcell" data-uid="cit-001178" data-work="Rational design of potent, small,…"><span class="none">not read</span></div></td>
+      <td class="cite"><div class="workcell" data-uid="cit-001178" data-work="Rational design of potent, small,…"><span class="none">no PDF, so nothing has been quoted</span></div></td>
+      <td class="pick"><label><input type="checkbox"> include</label></td>
+    </tr>
+    <tr data-uid="cit-001181" data-uids="cit-001181" data-tier="none" data-disc="no-open-copy" data-pdf="0" data-year="2013" data-work="Rational design of potent, small,…" data-works="1" data-text="cit-001181 · potent inhibition of norovirus by dipeptidyl α-hydroxyphosphonate transition state mimics · sr mandadapu, mr gunnam… - bioorganic &amp; medicinal …, 2013 - elsevier · groutas · bioorganic &amp; medicinal · rational design of potent, small,… ·  · 10.1016/j.bmcl.2013.08.073">
+      <td class="uid">cit-001181</td>
+      <td class="work"><div class="workcell" data-uid="cit-001181" data-work="Rational design of potent, small,…"><span class="wname">Rational design of potent, small,…</span><div class="sub">2011</div></div></td>
+      <td class="title">Potent inhibition of norovirus by dipeptidyl α-hydroxyphosphonate transition state mimics
+        <div class="byline">SR Mandadapu, MR Gunnam… - Bioorganic &amp; medicinal …, 2013 - Elsevier</div></td>
+      <td>Groutas</td>
+      <td>2013</td>
+      <td>Bioorganic &amp; medicinal</td>
+      <td class="src"><a href="https://www.sciencedirect.com/science/article/pii/S0960894X13010135" target="_blank" rel="noopener noreferrer">www.sciencedirect.com</a><div class="sub"><a href="https://doi.org/10.1016/j.bmcl.2013.08.073" target="_blank" rel="noopener noreferrer">10.1016/j.bmcl.2013.08.073</a></div></td>
+      <td class="disc"><span class="pill warn">No open copy</span><div class="sub">OpenAlex has the work (10.1016/j.bmcl.2013.08.073), no open-access PDF location</div></td>
+      <td class="pdf"><span class="none">not retrieved</span></td>
+      <td class="tier"><div class="workcell" data-uid="cit-001181" data-work="Rational design of potent, small,…"><span class="none">not read</span></div></td>
+      <td class="cite"><div class="workcell" data-uid="cit-001181" data-work="Rational design of potent, small,…"><span class="none">no PDF, so nothing has been quoted</span></div></td>
+      <td class="pick"><label><input type="checkbox"> include</label></td>
+    </tr>
+    <tr data-uid="cit-001187" data-uids="cit-001187" data-tier="none" data-disc="no-open-copy" data-pdf="0" data-year="2013" data-work="Rational design of potent, small,…" data-works="1" data-text="cit-001187 · multisubstituted benzo [b] furans through a copper-and/or palladium-catalyzed assembly and functionalization process · a arcadi, f blesi, s cacchi, g fabrizi, a goggiamani… - tetrahedron, 2013 - elsevier · marinelli · tetrahedron · rational design of potent, small,… ·  · 10.1016/j.tet.2012.12.058">
+      <td class="uid">cit-001187</td>
+      <td class="work"><div class="workcell" data-uid="cit-001187" data-work="Rational design of potent, small,…"><span class="wname">Rational design of potent, small,…</span><div class="sub">2011</div></div></td>
+      <td class="title">Multisubstituted benzo [b] furans through a copper-and/or palladium-catalyzed assembly and functionalization process
+        <div class="byline">A Arcadi, F Blesi, S Cacchi, G Fabrizi, A Goggiamani… - Tetrahedron, 2013 - Elsevier</div></td>
+      <td>Marinelli</td>
+      <td>2013</td>
+      <td>Tetrahedron</td>
+      <td class="src"><a href="https://www.sciencedirect.com/science/article/pii/S004040201201914X" target="_blank" rel="noopener noreferrer">www.sciencedirect.com</a><div class="sub"><a href="https://doi.org/10.1016/j.tet.2012.12.058" target="_blank" rel="noopener noreferrer">10.1016/j.tet.2012.12.058</a></div></td>
+      <td class="disc"><span class="pill warn">No open copy</span><div class="sub">OpenAlex has the work (10.1016/j.tet.2012.12.058), no open-access PDF location</div></td>
+      <td class="pdf"><span class="none">not retrieved</span></td>
+      <td class="tier"><div class="workcell" data-uid="cit-001187" data-work="Rational design of potent, small,…"><span class="none">not read</span></div></td>
+      <td class="cite"><div class="workcell" data-uid="cit-001187" data-work="Rational design of potent, small,…"><span class="none">no PDF, so nothing has been quoted</span></div></td>
+      <td class="pick"><label><input type="checkbox"> include</label></td>
+    </tr>
+    <tr data-uid="cit-001189" data-uids="cit-001189" data-tier="none" data-disc="no-open-copy" data-pdf="0" data-year="2019" data-work="Rational design of potent, small,…" data-works="1" data-text="cit-001189 · de novo synthesis of benzofurans via trifluoroacetic acid catalyzed cyclization/oxidative aromatization cascade reaction of 2-hydroxy-1,4-diones · q sha, h liu - organic &amp; biomolecular chemistry, 2019 - pubs.rsc.org · liu · organic &amp; biomolecular chemistry · rational design of potent, small,… ·  · 10.1039/c9ob01422e">
+      <td class="uid">cit-001189</td>
+      <td class="work"><div class="workcell" data-uid="cit-001189" data-work="Rational design of potent, small,…"><span class="wname">Rational design of potent, small,…</span><div class="sub">2011</div></div></td>
+      <td class="title">De novo synthesis of benzofurans via trifluoroacetic acid catalyzed cyclization/oxidative aromatization cascade reaction of 2-hydroxy-1,4-diones
+        <div class="byline">Q Sha, H Liu - Organic &amp; Biomolecular Chemistry, 2019 - pubs.rsc.org</div></td>
+      <td>Liu</td>
+      <td>2019</td>
+      <td>Organic &amp; Biomolecular Chemistry</td>
+      <td class="src"><a href="https://pubs.rsc.org/ob/article-abstract/17/32/7547/654942" target="_blank" rel="noopener noreferrer">pubs.rsc.org</a><div class="sub"><a href="https://doi.org/10.1039/c9ob01422e" target="_blank" rel="noopener noreferrer">10.1039/c9ob01422e</a></div></td>
+      <td class="disc"><span class="pill warn">No open copy</span><div class="sub">OpenAlex has the work (10.1039/c9ob01422e), no open-access PDF location</div></td>
+      <td class="pdf"><span class="none">not retrieved</span></td>
+      <td class="tier"><div class="workcell" data-uid="cit-001189" data-work="Rational design of potent, small,…"><span class="none">not read</span></div></td>
+      <td class="cite"><div class="workcell" data-uid="cit-001189" data-work="Rational design of potent, small,…"><span class="none">no PDF, so nothing has been quoted</span></div></td>
+      <td class="pick"><label><input type="checkbox"> include</label></td>
+    </tr>
+    <tr data-uid="cit-001191" data-uids="cit-001191" data-tier="none" data-disc="no-open-copy" data-pdf="0" data-year="2016" data-work="Rational design of potent, small,…" data-works="1" data-text="cit-001191 · blood compatibility of heparin-inspired, lactose containing, polyureas depends on the chemistry of the polymer backbone · y huang, ma shaw, mr warmin, es mullins… - polymer …, 2016 - pubs.rsc.org · ayres · polymer · rational design of potent, small,… ·  · 10.1039/c6py00616g">
+      <td class="uid">cit-001191</td>
+      <td class="work"><div class="workcell" data-uid="cit-001191" data-work="Rational design of potent, small,…"><span class="wname">Rational design of potent, small,…</span><div class="sub">2011</div></div></td>
+      <td class="title">Blood compatibility of heparin-inspired, lactose containing, polyureas depends on the chemistry of the polymer backbone
+        <div class="byline">Y Huang, MA Shaw, MR Warmin, ES Mullins… - Polymer …, 2016 - pubs.rsc.org</div></td>
+      <td>Ayres</td>
+      <td>2016</td>
+      <td>Polymer</td>
+      <td class="src"><a href="https://pubs.rsc.org/py/article-abstract/7/23/3897/532089" target="_blank" rel="noopener noreferrer">pubs.rsc.org</a><div class="sub"><a href="https://doi.org/10.1039/c6py00616g" target="_blank" rel="noopener noreferrer">10.1039/c6py00616g</a></div></td>
+      <td class="disc"><span class="pill warn">No open copy</span><div class="sub">OpenAlex has the work (10.1039/c6py00616g), no open-access PDF location</div></td>
+      <td class="pdf"><span class="none">not retrieved</span></td>
+      <td class="tier"><div class="workcell" data-uid="cit-001191" data-work="Rational design of potent, small,…"><span class="none">not read</span></div></td>
+      <td class="cite"><div class="workcell" data-uid="cit-001191" data-work="Rational design of potent, small,…"><span class="none">no PDF, so nothing has been quoted</span></div></td>
+      <td class="pick"><label><input type="checkbox"> include</label></td>
+    </tr>
+    <tr data-uid="cit-001192" data-uids="cit-001192" data-tier="none" data-disc="paywalled" data-pdf="0" data-year="2015" data-work="Rational design of potent, small,…" data-works="1" data-text="cit-001192 · synthesis and biological evaluation of some dibenzofuran-piperazine derivatives · l yurttaş, u abu mohsen, y ozkan… - journal of enzyme …, 2016 - taylor &amp; francis · yurttacs ·  · rational design of potent, small,… ·  · 10.3109/14756366.2015.1108971">
+      <td class="uid">cit-001192</td>
+      <td class="work"><div class="workcell" data-uid="cit-001192" data-work="Rational design of potent, small,…"><span class="wname">Rational design of potent, small,…</span><div class="sub">2011</div></div></td>
+      <td class="title">Synthesis and biological evaluation of some dibenzofuran-piperazine derivatives
+        <div class="byline">L Yurttaş, U Abu Mohsen, Y Ozkan… - Journal of Enzyme …, 2016 - Taylor &amp; Francis</div></td>
+      <td>Yurttacs</td>
+      <td>2015</td>
+      <td>—</td>
+      <td class="src"><a href="https://www.tandfonline.com/doi/abs/10.3109/14756366.2015.1108971" target="_blank" rel="noopener noreferrer">www.tandfonline.com</a><div class="sub"><a href="https://doi.org/10.3109/14756366.2015.1108971" target="_blank" rel="noopener noreferrer">10.3109/14756366.2015.1108971</a></div></td>
+      <td class="disc"><span class="pill warn">Paywalled</span><div class="sub">OpenAlex offered a PDF but the host answered 403</div></td>
+      <td class="pdf"><span class="none">not retrieved</span></td>
+      <td class="tier"><div class="workcell" data-uid="cit-001192" data-work="Rational design of potent, small,…"><span class="none">not read</span></div></td>
+      <td class="cite"><div class="workcell" data-uid="cit-001192" data-work="Rational design of potent, small,…"><span class="none">no PDF, so nothing has been quoted</span></div></td>
+      <td class="pick"><label><input type="checkbox"> include</label></td>
+    </tr>
+    <tr data-uid="cit-001196" data-uids="cit-001196" data-tier="none" data-disc="no-open-copy" data-pdf="0" data-year="2023" data-work="Rational design of potent, small,…" data-works="1" data-text="cit-001196 · an overview of thrombin inhibitors in the perspective of structureactivity relationships · j wang, x sun, n li, r sheng… - current medicinal …, 2023 - benthamdirect.com · guo · current medicinal · rational design of potent, small,… ·  · 10.2174/0929867329666220906105200">
+      <td class="uid">cit-001196</td>
+      <td class="work"><div class="workcell" data-uid="cit-001196" data-work="Rational design of potent, small,…"><span class="wname">Rational design of potent, small,…</span><div class="sub">2011</div></div></td>
+      <td class="title">An Overview of Thrombin Inhibitors in the Perspective of Structureactivity Relationships
+        <div class="byline">J Wang, X Sun, N Li, R Sheng… - Current Medicinal …, 2023 - benthamdirect.com</div></td>
+      <td>Guo</td>
+      <td>2023</td>
+      <td>Current Medicinal</td>
+      <td class="src"><a href="https://www.benthamdirect.com/content/journals/cmc/10.2174/0929867329666220906105200" target="_blank" rel="noopener noreferrer">www.benthamdirect.com</a><div class="sub"><a href="https://doi.org/10.2174/0929867329666220906105200" target="_blank" rel="noopener noreferrer">10.2174/0929867329666220906105200</a></div></td>
+      <td class="disc"><span class="pill warn">No open copy</span><div class="sub">OpenAlex has the work (10.2174/0929867329666220906105200), no open-access PDF location</div></td>
+      <td class="pdf"><span class="none">not retrieved</span></td>
+      <td class="tier"><div class="workcell" data-uid="cit-001196" data-work="Rational design of potent, small,…"><span class="none">not read</span></div></td>
+      <td class="cite"><div class="workcell" data-uid="cit-001196" data-work="Rational design of potent, small,…"><span class="none">no PDF, so nothing has been quoted</span></div></td>
+      <td class="pick"><label><input type="checkbox"> include</label></td>
+    </tr>
+    <tr data-uid="cit-001197" data-uids="cit-001197" data-tier="none" data-disc="not-in-indexes" data-pdf="0" data-year="2018" data-work="Rational design of potent, small,…" data-works="1" data-text="cit-001197 · inhibition of thrombin by functionalized c60 nanoparticles revealed via in vitro assays and in silico studies · y liu, j fu, w pan, q xue, x liu, a zhang - journal of environmental …, 2018 - elsevier · zhang · journal of environmental · rational design of potent, small,… ·  · ">
+      <td class="uid">cit-001197</td>
+      <td class="work"><div class="workcell" data-uid="cit-001197" data-work="Rational design of potent, small,…"><span class="wname">Rational design of potent, small,…</span><div class="sub">2011</div></div></td>
+      <td class="title">Inhibition of thrombin by functionalized C60 nanoparticles revealed via in vitro assays and in silico studies
+        <div class="byline">Y Liu, J Fu, W Pan, Q Xue, X Liu, A Zhang - Journal of Environmental …, 2018 - Elsevier</div></td>
+      <td>Zhang</td>
+      <td>2018</td>
+      <td>Journal of Environmental</td>
+      <td class="src"><a href="https://www.sciencedirect.com/science/article/pii/S1001074217311762" target="_blank" rel="noopener noreferrer">www.sciencedirect.com</a></td>
+      <td class="disc"><span class="pill warn">Not in OpenAlex</span><div class="sub">no OpenAlex record by title</div></td>
+      <td class="pdf"><span class="none">not retrieved</span></td>
+      <td class="tier"><div class="workcell" data-uid="cit-001197" data-work="Rational design of potent, small,…"><span class="none">not read</span></div></td>
+      <td class="cite"><div class="workcell" data-uid="cit-001197" data-work="Rational design of potent, small,…"><span class="none">no PDF, so nothing has been quoted</span></div></td>
+      <td class="pick"><label><input type="checkbox"> include</label></td>
+    </tr>
+    <tr data-uid="cit-001200" data-uids="cit-001200" data-tier="none" data-disc="no-open-copy" data-pdf="0" data-year="2011" data-work="Rational design of potent, small,…" data-works="1" data-text="cit-001200 · conformationally restricted analogs of the direct thrombin inhibitor fm 19 · ea girnys, vr porter, hi mosberg - bioorganic &amp; medicinal chemistry, 2011 - elsevier · mosberg · bioorganic &amp; medicinal chemistry · rational design of potent, small,… ·  · 10.1016/j.bmc.2011.10.045">
+      <td class="uid">cit-001200</td>
+      <td class="work"><div class="workcell" data-uid="cit-001200" data-work="Rational design of potent, small,…"><span class="wname">Rational design of potent, small,…</span><div class="sub">2011</div></div></td>
+      <td class="title">Conformationally restricted analogs of the direct thrombin inhibitor FM 19
+        <div class="byline">EA Girnys, VR Porter, HI Mosberg - Bioorganic &amp; medicinal chemistry, 2011 - Elsevier</div></td>
+      <td>Mosberg</td>
+      <td>2011</td>
+      <td>Bioorganic &amp; medicinal chemistry</td>
+      <td class="src"><a href="https://www.sciencedirect.com/science/article/pii/S0968089611008546" target="_blank" rel="noopener noreferrer">www.sciencedirect.com</a><div class="sub"><a href="https://doi.org/10.1016/j.bmc.2011.10.045" target="_blank" rel="noopener noreferrer">10.1016/j.bmc.2011.10.045</a></div></td>
+      <td class="disc"><span class="pill warn">No open copy</span><div class="sub">OpenAlex has the work (10.1016/j.bmc.2011.10.045), no open-access PDF location</div></td>
+      <td class="pdf"><span class="none">not retrieved</span></td>
+      <td class="tier"><div class="workcell" data-uid="cit-001200" data-work="Rational design of potent, small,…"><span class="none">not read</span></div></td>
+      <td class="cite"><div class="workcell" data-uid="cit-001200" data-work="Rational design of potent, small,…"><span class="none">no PDF, so nothing has been quoted</span></div></td>
+      <td class="pick"><label><input type="checkbox"> include</label></td>
+    </tr>
+    <tr data-uid="cit-001203" data-uids="cit-001203" data-tier="none" data-disc="paywalled" data-pdf="0" data-year="2012" data-work="Rational design of potent, small,…" data-works="1" data-text="cit-001203 · allosteric activation of human α-thrombin through exosite 2 by suramin analogs · mt cargnelutti, af marques, d esser… - archives of biochemistry …, 2012 - elsevier · lima · archives of biochemistry · rational design of potent, small,… ·  · 10.1016/j.abb.2012.02.001">
+      <td class="uid">cit-001203</td>
+      <td class="work"><div class="workcell" data-uid="cit-001203" data-work="Rational design of potent, small,…"><span class="wname">Rational design of potent, small,…</span><div class="sub">2011</div></div></td>
+      <td class="title">Allosteric activation of human α-thrombin through exosite 2 by suramin analogs
+        <div class="byline">MT Cargnelutti, AF Marques, D Esser… - Archives of biochemistry …, 2012 - Elsevier</div></td>
+      <td>Lima</td>
+      <td>2012</td>
+      <td>Archives of biochemistry</td>
+      <td class="src"><a href="https://www.sciencedirect.com/science/article/pii/S0003986112000434" target="_blank" rel="noopener noreferrer">www.sciencedirect.com</a><div class="sub"><a href="https://doi.org/10.1016/j.abb.2012.02.001" target="_blank" rel="noopener noreferrer">10.1016/j.abb.2012.02.001</a></div></td>
+      <td class="disc"><span class="pill warn">Paywalled</span><div class="sub">OpenAlex offered a PDF but the host answered 403</div></td>
+      <td class="pdf"><span class="none">not retrieved</span></td>
+      <td class="tier"><div class="workcell" data-uid="cit-001203" data-work="Rational design of potent, small,…"><span class="none">not read</span></div></td>
+      <td class="cite"><div class="workcell" data-uid="cit-001203" data-work="Rational design of potent, small,…"><span class="none">no PDF, so nothing has been quoted</span></div></td>
+      <td class="pick"><label><input type="checkbox"> include</label></td>
+    </tr>
+    <tr data-uid="cit-001204" data-uids="cit-001204" data-tier="none" data-disc="no-open-copy" data-pdf="0" data-year="2019" data-work="Rational design of potent, small,…" data-works="1" data-text="cit-001204 · synthesis, characterization and antibacterial screening of fluorinated benzofuran containing heterocycles · sg kundlikar, pv randhavane, hn akolkar… - indian j chem …, 2019 - academia.edu · karale · indian j chem · rational design of potent, small,… ·  · ">
+      <td class="uid">cit-001204</td>
+      <td class="work"><div class="workcell" data-uid="cit-001204" data-work="Rational design of potent, small,…"><span class="wname">Rational design of potent, small,…</span><div class="sub">2011</div></div></td>
+      <td class="title">Synthesis, characterization and antibacterial screening of fluorinated benzofuran containing heterocycles
+        <div class="byline">SG Kundlikar, PV Randhavane, HN Akolkar… - Indian J Chem …, 2019 - academia.edu</div></td>
+      <td>Karale</td>
+      <td>2019</td>
+      <td>Indian J Chem</td>
+      <td class="src"><a href="https://www.academia.edu/download/101958191/IJCB_2058B4_20504-510.pdf" target="_blank" rel="noopener noreferrer">www.academia.edu</a></td>
+      <td class="disc"><span class="pill warn">No open copy</span><div class="sub">OpenAlex has the work (no DOI), no open-access PDF location</div></td>
+      <td class="pdf"><span class="none">not retrieved</span></td>
+      <td class="tier"><div class="workcell" data-uid="cit-001204" data-work="Rational design of potent, small,…"><span class="none">not read</span></div></td>
+      <td class="cite"><div class="workcell" data-uid="cit-001204" data-work="Rational design of potent, small,…"><span class="none">no PDF, so nothing has been quoted</span></div></td>
+      <td class="pick"><label><input type="checkbox"> include</label></td>
+    </tr>
+    <tr data-uid="cit-001207" data-uids="cit-001207 cit-001371" data-tier="none none" data-disc="not-in-indexes" data-pdf="0" data-year="" data-work="Rational design of potent, small,… Sulfated pentagalloylglucoside is…" data-works="2" data-text="cit-001207 cit-001371 · assessing drug development proporties of antithrombotic and anti-cancer agents · ei abdelfadiel - 2023 - scholarscompass.vcu.edu ·  ·  · rational design of potent, small,… sulfated pentagalloylglucoside is… ·  ·  · ">
+      <td class="uid">cit-001207<div class="uid2">cit-001371</div></td>
+      <td class="work"><div class="workcell" data-uid="cit-001207" data-work="Rational design of potent, small,…"><span class="wname">Rational design of potent, small,…</span><div class="sub">2011</div></div><div class="workcell" data-uid="cit-001371" data-work="Sulfated pentagalloylglucoside is…"><span class="wname">Sulfated pentagalloylglucoside is…</span><div class="sub">2013</div></div></td>
+      <td class="title">ASSESSING DRUG DEVELOPMENT PROPORTIES OF ANTITHROMBOTIC AND ANTI-CANCER AGENTS
+        <div class="byline">EI Abdelfadiel - 2023 - scholarscompass.vcu.edu</div><div class="sub">2 citations of my work in this one article</div></td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+      <td class="src"><a href="https://scholarscompass.vcu.edu/etd/7203/?gathStatIcon=true/" target="_blank" rel="noopener noreferrer">scholarscompass.vcu.edu</a></td>
+      <td class="disc"><span class="pill warn">Not in OpenAlex</span><div class="sub">no OpenAlex record by title</div></td>
+      <td class="pdf"><span class="none">not retrieved</span></td>
+      <td class="tier"><div class="workcell" data-uid="cit-001207" data-work="Rational design of potent, small,…"><div class="wt">Rational design of potent, small,…</div><span class="none">not read</span></div><div class="workcell" data-uid="cit-001371" data-work="Sulfated pentagalloylglucoside is…"><div class="wt">Sulfated pentagalloylglucoside is…</div><span class="none">not read</span></div></td>
+      <td class="cite"><div class="workcell" data-uid="cit-001207" data-work="Rational design of potent, small,…"><div class="wt">Rational design of potent, small,…</div><span class="none">no PDF, so nothing has been quoted</span></div><div class="workcell" data-uid="cit-001371" data-work="Sulfated pentagalloylglucoside is…"><div class="wt">Sulfated pentagalloylglucoside is…</div><span class="none">no PDF, so nothing has been quoted</span></div></td>
+      <td class="pick"><label><input type="checkbox"> include</label></td>
+    </tr>
+    <tr data-uid="cit-001208" data-uids="cit-001208" data-tier="none" data-disc="paywalled" data-pdf="0" data-year="2012" data-work="Rational design of potent, small,…" data-works="1" data-text="cit-001208 · discovery and biophysical characterization of allosteric inhibitors of factor xia (fxia) · m argade - 2012 - scholarscompass.vcu.edu ·  ·  · rational design of potent, small,… ·  · 10.25772/3gdk-qq25">
+      <td class="uid">cit-001208</td>
+      <td class="work"><div class="workcell" data-uid="cit-001208" data-work="Rational design of potent, small,…"><span class="wname">Rational design of potent, small,…</span><div class="sub">2011</div></div></td>
+      <td class="title">Discovery and Biophysical Characterization of Allosteric Inhibitors of Factor XIa (FXIa)
+        <div class="byline">M Argade - 2012 - scholarscompass.vcu.edu</div></td>
+      <td>—</td>
+      <td>2012</td>
+      <td>—</td>
+      <td class="src"><a href="https://scholarscompass.vcu.edu/etd/418/" target="_blank" rel="noopener noreferrer">scholarscompass.vcu.edu</a><div class="sub"><a href="https://doi.org/10.25772/3gdk-qq25" target="_blank" rel="noopener noreferrer">10.25772/3gdk-qq25</a></div></td>
+      <td class="disc"><span class="pill warn">Paywalled</span><div class="sub">host returned text/html; charset=UTF-8, not a PDF body</div></td>
+      <td class="pdf"><span class="none">not retrieved</span></td>
+      <td class="tier"><div class="workcell" data-uid="cit-001208" data-work="Rational design of potent, small,…"><span class="none">not read</span></div></td>
+      <td class="cite"><div class="workcell" data-uid="cit-001208" data-work="Rational design of potent, small,…"><span class="none">no PDF, so nothing has been quoted</span></div></td>
+      <td class="pick"><label><input type="checkbox"> include</label></td>
+    </tr>
+    <tr data-uid="cit-001209" data-uids="cit-001209" data-tier="none" data-disc="paywalled" data-pdf="0" data-year="2013" data-work="Rational design of potent, small,…" data-works="1" data-text="cit-001209 · reverse-phase ion-pairing ultra performance liquid chromatography-mass spectrometry in characterization and fingerprinting of diverse sulfated · p ponnusamy - 2013 - scholarscompass.vcu.edu ·  ·  · rational design of potent, small,… ·  · 10.25772/nv7h-cs15">
+      <td class="uid">cit-001209</td>
+      <td class="work"><div class="workcell" data-uid="cit-001209" data-work="Rational design of potent, small,…"><span class="wname">Rational design of potent, small,…</span><div class="sub">2011</div></div></td>
+      <td class="title">Reverse-phase Ion-Pairing Ultra Performance Liquid Chromatography-Mass Spectrometry In Characterization And Fingerprinting Of Diverse Sulfated <span class="sub">[title as Scholar shows it continues]</span>
+        <div class="byline">P Ponnusamy - 2013 - scholarscompass.vcu.edu</div></td>
+      <td>—</td>
+      <td>2013</td>
+      <td>—</td>
+      <td class="src"><a href="https://scholarscompass.vcu.edu/etd/3031/?show=full" target="_blank" rel="noopener noreferrer">scholarscompass.vcu.edu</a><div class="sub"><a href="https://doi.org/10.25772/nv7h-cs15" target="_blank" rel="noopener noreferrer">10.25772/nv7h-cs15</a></div></td>
+      <td class="disc"><span class="pill warn">Paywalled</span><div class="sub">OpenAlex offered a PDF but the host answered 403</div></td>
+      <td class="pdf"><span class="none">not retrieved</span></td>
+      <td class="tier"><div class="workcell" data-uid="cit-001209" data-work="Rational design of potent, small,…"><span class="none">not read</span></div></td>
+      <td class="cite"><div class="workcell" data-uid="cit-001209" data-work="Rational design of potent, small,…"><span class="none">no PDF, so nothing has been quoted</span></div></td>
+      <td class="pick"><label><input type="checkbox"> include</label></td>
+    </tr>
+    <tr data-uid="cit-001211" data-uids="cit-001211" data-tier="none" data-disc="paywalled" data-pdf="0" data-year="2018" data-work="Rational design of potent, small,…" data-works="1" data-text="cit-001211 · biophysical exploration of conformational environments in zymogen prothrombin and blood coagulant thrombin. · r billur - 2018 - ir.library.louisville.edu ·  ·  · rational design of potent, small,… ·  · 10.18297/etd/2904">
+      <td class="uid">cit-001211</td>
+      <td class="work"><div class="workcell" data-uid="cit-001211" data-work="Rational design of potent, small,…"><span class="wname">Rational design of potent, small,…</span><div class="sub">2011</div></div></td>
+      <td class="title">Biophysical exploration of conformational environments in zymogen prothrombin and blood coagulant thrombin.
+        <div class="byline">R Billur - 2018 - ir.library.louisville.edu</div></td>
+      <td>—</td>
+      <td>2018</td>
+      <td>—</td>
+      <td class="src"><a href="https://ir.library.louisville.edu/etd/2904/" target="_blank" rel="noopener noreferrer">ir.library.louisville.edu</a><div class="sub"><a href="https://doi.org/10.18297/etd/2904" target="_blank" rel="noopener noreferrer">10.18297/etd/2904</a></div></td>
+      <td class="disc"><span class="pill warn">Paywalled</span><div class="sub">OpenAlex offered a PDF but the host answered 403</div></td>
+      <td class="pdf"><span class="none">not retrieved</span></td>
+      <td class="tier"><div class="workcell" data-uid="cit-001211" data-work="Rational design of potent, small,…"><span class="none">not read</span></div></td>
+      <td class="cite"><div class="workcell" data-uid="cit-001211" data-work="Rational design of potent, small,…"><span class="none">no PDF, so nothing has been quoted</span></div></td>
+      <td class="pick"><label><input type="checkbox"> include</label></td>
+    </tr>
+    <tr data-uid="cit-001212" data-uids="cit-001212 cit-001381" data-tier="none none" data-disc="no-open-copy" data-pdf="0" data-year="2017" data-work="Rational design of potent, small,… Sulfated pentagalloylglucoside is…" data-works="2" data-text="cit-001212 cit-001381 · study of molecular interactions of glycosaminoglycans and glycosaminoglycan mimetics with their protein targets · dk afosah - 2017 - scholarscompass.vcu.edu ·  ·  · rational design of potent, small,… sulfated pentagalloylglucoside is… ·  ·  · 10.25772/dw2f-b659">
+      <td class="uid">cit-001212<div class="uid2">cit-001381</div></td>
+      <td class="work"><div class="workcell" data-uid="cit-001212" data-work="Rational design of potent, small,…"><span class="wname">Rational design of potent, small,…</span><div class="sub">2011</div></div><div class="workcell" data-uid="cit-001381" data-work="Sulfated pentagalloylglucoside is…"><span class="wname">Sulfated pentagalloylglucoside is…</span><div class="sub">2013</div></div></td>
+      <td class="title">Study of Molecular Interactions of Glycosaminoglycans and Glycosaminoglycan Mimetics with Their Protein Targets
+        <div class="byline">DK Afosah - 2017 - scholarscompass.vcu.edu</div><div class="sub">2 citations of my work in this one article</div></td>
+      <td>—</td>
+      <td>2017</td>
+      <td>—</td>
+      <td class="src"><a href="https://scholarscompass.vcu.edu/etd/4968/" target="_blank" rel="noopener noreferrer">scholarscompass.vcu.edu</a><div class="sub"><a href="https://doi.org/10.25772/dw2f-b659" target="_blank" rel="noopener noreferrer">10.25772/dw2f-b659</a></div></td>
+      <td class="disc"><span class="pill warn">No open copy</span><div class="sub">OpenAlex has the work (10.25772/dw2f-b659), no open-access PDF location</div></td>
+      <td class="pdf"><span class="none">not retrieved</span></td>
+      <td class="tier"><div class="workcell" data-uid="cit-001212" data-work="Rational design of potent, small,…"><div class="wt">Rational design of potent, small,…</div><span class="none">not read</span></div><div class="workcell" data-uid="cit-001381" data-work="Sulfated pentagalloylglucoside is…"><div class="wt">Sulfated pentagalloylglucoside is…</div><span class="none">not read</span></div></td>
+      <td class="cite"><div class="workcell" data-uid="cit-001212" data-work="Rational design of potent, small,…"><div class="wt">Rational design of potent, small,…</div><span class="none">no PDF, so nothing has been quoted</span></div><div class="workcell" data-uid="cit-001381" data-work="Sulfated pentagalloylglucoside is…"><div class="wt">Sulfated pentagalloylglucoside is…</div><span class="none">no PDF, so nothing has been quoted</span></div></td>
+      <td class="pick"><label><input type="checkbox"> include</label></td>
+    </tr>
+    <tr data-uid="cit-001213" data-uids="cit-001213 cit-001383" data-tier="none none" data-disc="no-open-copy" data-pdf="0" data-year="2016" data-work="Rational design of potent, small,… Sulfated pentagalloylglucoside is…" data-works="2" data-text="cit-001213 cit-001383 · [book] probing allosteric, partial inhibition of thrombin using novel anticoagulants · ss verespy iii - 2016 - search.proquest.com ·  ·  · rational design of potent, small,… sulfated pentagalloylglucoside is… ·  ·  · 10.25772/2e1m-ck22">
+      <td class="uid">cit-001213<div class="uid2">cit-001383</div></td>
+      <td class="work"><div class="workcell" data-uid="cit-001213" data-work="Rational design of potent, small,…"><span class="wname">Rational design of potent, small,…</span><div class="sub">2011</div></div><div class="workcell" data-uid="cit-001383" data-work="Sulfated pentagalloylglucoside is…"><span class="wname">Sulfated pentagalloylglucoside is…</span><div class="sub">2013</div></div></td>
+      <td class="title">[BOOK] Probing allosteric, partial inhibition of thrombin using novel anticoagulants
+        <div class="byline">SS Verespy III - 2016 - search.proquest.com</div><div class="sub">2 citations of my work in this one article</div></td>
+      <td>—</td>
+      <td>2016</td>
+      <td>—</td>
+      <td class="src"><a href="https://search.proquest.com/openview/197f86fac0d2accd9f82fc809da0fdaa/1?pq-origsite=gscholar&amp;cbl=18750&amp;diss=y" target="_blank" rel="noopener noreferrer">search.proquest.com</a><div class="sub"><a href="https://doi.org/10.25772/2e1m-ck22" target="_blank" rel="noopener noreferrer">10.25772/2e1m-ck22</a></div></td>
+      <td class="disc"><span class="pill warn">No open copy</span><div class="sub">OpenAlex has the work (10.25772/2e1m-ck22), no open-access PDF location</div></td>
+      <td class="pdf"><span class="none">not retrieved</span></td>
+      <td class="tier"><div class="workcell" data-uid="cit-001213" data-work="Rational design of potent, small,…"><div class="wt">Rational design of potent, small,…</div><span class="none">not read</span></div><div class="workcell" data-uid="cit-001383" data-work="Sulfated pentagalloylglucoside is…"><div class="wt">Sulfated pentagalloylglucoside is…</div><span class="none">not read</span></div></td>
+      <td class="cite"><div class="workcell" data-uid="cit-001213" data-work="Rational design of potent, small,…"><div class="wt">Rational design of potent, small,…</div><span class="none">no PDF, so nothing has been quoted</span></div><div class="workcell" data-uid="cit-001383" data-work="Sulfated pentagalloylglucoside is…"><div class="wt">Sulfated pentagalloylglucoside is…</div><span class="none">no PDF, so nothing has been quoted</span></div></td>
+      <td class="pick"><label><input type="checkbox"> include</label></td>
+    </tr>
+    <tr data-uid="cit-001215" data-uids="cit-001215" data-tier="none" data-disc="not-in-indexes" data-pdf="0" data-year="" data-work="Rational design of potent, small,…" data-works="1" data-text="cit-001215 · this article has been accepted for publication and undergone full peer review but has not been through the copyediting, typesetting, pagination and · sm rudman, j heavyside, dj rennison, d schluter - boris-portal.unibe.ch ·  ·  · rational design of potent, small,… ·  · ">
+      <td class="uid">cit-001215</td>
+      <td class="work"><div class="workcell" data-uid="cit-001215" data-work="Rational design of potent, small,…"><span class="wname">Rational design of potent, small,…</span><div class="sub">2011</div></div></td>
+      <td class="title">This article has been accepted for publication and undergone full peer review but has not been through the copyediting, typesetting, pagination and <span class="sub">[title as Scholar shows it continues]</span>
+        <div class="byline">SM Rudman, J Heavyside, DJ Rennison, D Schluter - boris-portal.unibe.ch</div></td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+      <td class="src"><a href="https://boris-portal.unibe.ch/bitstreams/b2d903ec-cab8-40a8-b807-ce8129002e65/download" target="_blank" rel="noopener noreferrer">boris-portal.unibe.ch</a></td>
+      <td class="disc"><span class="pill warn">Not in OpenAlex</span><div class="sub">no OpenAlex record by title</div></td>
+      <td class="pdf"><span class="none">not retrieved</span></td>
+      <td class="tier"><div class="workcell" data-uid="cit-001215" data-work="Rational design of potent, small,…"><span class="none">not read</span></div></td>
+      <td class="cite"><div class="workcell" data-uid="cit-001215" data-work="Rational design of potent, small,…"><span class="none">no PDF, so nothing has been quoted</span></div></td>
+      <td class="pick"><label><input type="checkbox"> include</label></td>
+    </tr>
+    <tr data-uid="cit-001216" data-uids="cit-001216" data-tier="none" data-disc="paywalled" data-pdf="0" data-year="2014" data-work="Rational design of potent, small,…" data-works="1" data-text="cit-001216 · [citation] design, synthesis, and biochemical evaluation of novel inhibitors of norwalk virus 3cl protease · sr mandadapu - 2014 - wichita state university ·  ·  · rational design of potent, small,… ·  · ">
+      <td class="uid">cit-001216</td>
+      <td class="work"><div class="workcell" data-uid="cit-001216" data-work="Rational design of potent, small,…"><span class="wname">Rational design of potent, small,…</span><div class="sub">2011</div></div></td>
+      <td class="title">[CITATION] Design, synthesis, and biochemical evaluation of novel inhibitors of Norwalk virus 3CL protease
+        <div class="byline">SR Mandadapu - 2014 - Wichita State University</div></td>
+      <td>—</td>
+      <td>2014</td>
+      <td>—</td>
+      <td class="src">—</td>
+      <td class="disc"><span class="pill warn">Paywalled</span><div class="sub">host returned text/html; charset=UTF-8, not a PDF body</div></td>
+      <td class="pdf"><span class="none">not retrieved</span></td>
+      <td class="tier"><div class="workcell" data-uid="cit-001216" data-work="Rational design of potent, small,…"><span class="none">not read</span></div></td>
+      <td class="cite"><div class="workcell" data-uid="cit-001216" data-work="Rational design of potent, small,…"><span class="none">no PDF, so nothing has been quoted</span></div></td>
+      <td class="pick"><label><input type="checkbox"> include</label></td>
+    </tr>
+    <tr data-uid="cit-001217" data-uids="cit-001217 cit-001384" data-tier="none none" data-disc="no-open-copy" data-pdf="0" data-year="2014" data-work="Rational design of potent, small,… Sulfated pentagalloylglucoside is…" data-works="2" data-text="cit-001217 cit-001384 · [book] studies on rationally designed, allosteric, coagulation inhibitors · r boothello - 2014 - search.proquest.com ·  ·  · rational design of potent, small,… sulfated pentagalloylglucoside is… ·  ·  · 10.25772/ypz2-bv95">
+      <td class="uid">cit-001217<div class="uid2">cit-001384</div></td>
+      <td class="work"><div class="workcell" data-uid="cit-001217" data-work="Rational design of potent, small,…"><span class="wname">Rational design of potent, small,…</span><div class="sub">2011</div></div><div class="workcell" data-uid="cit-001384" data-work="Sulfated pentagalloylglucoside is…"><span class="wname">Sulfated pentagalloylglucoside is…</span><div class="sub">2013</div></div></td>
+      <td class="title">[BOOK] Studies on rationally designed, allosteric, coagulation inhibitors
+        <div class="byline">R Boothello - 2014 - search.proquest.com</div><div class="sub">2 citations of my work in this one article</div></td>
+      <td>—</td>
+      <td>2014</td>
+      <td>—</td>
+      <td class="src"><a href="https://search.proquest.com/openview/1e39143b98382b38c71074a9313f8722/1?pq-origsite=gscholar&amp;cbl=18750" target="_blank" rel="noopener noreferrer">search.proquest.com</a><div class="sub"><a href="https://doi.org/10.25772/ypz2-bv95" target="_blank" rel="noopener noreferrer">10.25772/ypz2-bv95</a></div></td>
+      <td class="disc"><span class="pill warn">No open copy</span><div class="sub">OpenAlex has the work (10.25772/ypz2-bv95), no open-access PDF location</div></td>
+      <td class="pdf"><span class="none">not retrieved</span></td>
+      <td class="tier"><div class="workcell" data-uid="cit-001217" data-work="Rational design of potent, small,…"><div class="wt">Rational design of potent, small,…</div><span class="none">not read</span></div><div class="workcell" data-uid="cit-001384" data-work="Sulfated pentagalloylglucoside is…"><div class="wt">Sulfated pentagalloylglucoside is…</div><span class="none">not read</span></div></td>
+      <td class="cite"><div class="workcell" data-uid="cit-001217" data-work="Rational design of potent, small,…"><div class="wt">Rational design of potent, small,…</div><span class="none">no PDF, so nothing has been quoted</span></div><div class="workcell" data-uid="cit-001384" data-work="Sulfated pentagalloylglucoside is…"><div class="wt">Sulfated pentagalloylglucoside is…</div><span class="none">no PDF, so nothing has been quoted</span></div></td>
+      <td class="pick"><label><input type="checkbox"> include</label></td>
+    </tr>
+    <tr data-uid="cit-001220" data-uids="cit-001220" data-tier="none" data-disc="no-open-copy" data-pdf="0" data-year="2013" data-work="Rational design of potent, small,…" data-works="1" data-text="cit-001220 · in-silico drug design approach to discover novel anti-coagulants · kr methuku - journal of postdoctoral research december, 2013 - scholar.archive.org ·  · journal of postdoctoral research december · rational design of potent, small,… ·  · 10.14304/surya.jpr.v1n12.7">
+      <td class="uid">cit-001220</td>
+      <td class="work"><div class="workcell" data-uid="cit-001220" data-work="Rational design of potent, small,…"><span class="wname">Rational design of potent, small,…</span><div class="sub">2011</div></div></td>
+      <td class="title">In-silico drug design approach to discover novel anti-coagulants
+        <div class="byline">KR Methuku - Journal of Postdoctoral Research December, 2013 - scholar.archive.org</div></td>
+      <td>—</td>
+      <td>2013</td>
+      <td>Journal of Postdoctoral Research December</td>
+      <td class="src"><a href="https://scholar.archive.org/work/bwxyho4sf5bddevjoax57rcehq/access/wayback/http://www.postdocjournal.com/file_journal/655_58122119.pdf" target="_blank" rel="noopener noreferrer">scholar.archive.org</a><div class="sub"><a href="https://doi.org/10.14304/surya.jpr.v1n12.7" target="_blank" rel="noopener noreferrer">10.14304/surya.jpr.v1n12.7</a></div></td>
+      <td class="disc"><span class="pill warn">No open copy</span><div class="sub">OpenAlex has the work (10.14304/surya.jpr.v1n12.7), no open-access PDF location</div></td>
+      <td class="pdf"><span class="none">not retrieved</span></td>
+      <td class="tier"><div class="workcell" data-uid="cit-001220" data-work="Rational design of potent, small,…"><span class="none">not read</span></div></td>
+      <td class="cite"><div class="workcell" data-uid="cit-001220" data-work="Rational design of potent, small,…"><span class="none">no PDF, so nothing has been quoted</span></div></td>
+      <td class="pick"><label><input type="checkbox"> include</label></td>
+    </tr>
+    <tr data-uid="cit-001221" data-uids="cit-001221" data-tier="none" data-disc="paywalled" data-pdf="0" data-year="2014" data-work="Rational design of potent, small,…" data-works="1" data-text="cit-001221 · [citation] structure-based design and optimization of dipeptidyl inhibitors of norovirus 3cl protease · raz uy - 2014 - wichita state university ·  ·  · rational design of potent, small,… ·  · ">
+      <td class="uid">cit-001221</td>
+      <td class="work"><div class="workcell" data-uid="cit-001221" data-work="Rational design of potent, small,…"><span class="wname">Rational design of potent, small,…</span><div class="sub">2011</div></div></td>
+      <td class="title">[CITATION] Structure-based design and optimization of dipeptidyl inhibitors of norovirus 3CL protease
+        <div class="byline">RAZ Uy - 2014 - Wichita State University</div></td>
+      <td>—</td>
+      <td>2014</td>
+      <td>—</td>
+      <td class="src">—</td>
+      <td class="disc"><span class="pill warn">Paywalled</span><div class="sub">host returned text/html; charset=UTF-8, not a PDF body</div></td>
+      <td class="pdf"><span class="none">not retrieved</span></td>
+      <td class="tier"><div class="workcell" data-uid="cit-001221" data-work="Rational design of potent, small,…"><span class="none">not read</span></div></td>
+      <td class="cite"><div class="workcell" data-uid="cit-001221" data-work="Rational design of potent, small,…"><span class="none">no PDF, so nothing has been quoted</span></div></td>
+      <td class="pick"><label><input type="checkbox"> include</label></td>
+    </tr>
+    <tr data-uid="cit-001224" data-uids="cit-001224" data-tier="none" data-disc="paywalled" data-pdf="0" data-year="2012" data-work="Rational design of potent, small,…" data-works="1" data-text="cit-001224 · [book] designing direct and indirect factor xa inhibitors · ra al-horani - 2012 - search.proquest.com ·  ·  · rational design of potent, small,… ·  · 10.25772/9qcy-0g37">
+      <td class="uid">cit-001224</td>
+      <td class="work"><div class="workcell" data-uid="cit-001224" data-work="Rational design of potent, small,…"><span class="wname">Rational design of potent, small,…</span><div class="sub">2011</div></div></td>
+      <td class="title">[BOOK] Designing direct and indirect factor Xa inhibitors
+        <div class="byline">RA Al-Horani - 2012 - search.proquest.com</div></td>
+      <td>—</td>
+      <td>2012</td>
+      <td>—</td>
+      <td class="src"><a href="https://search.proquest.com/openview/69367e48ed50250dfb2bc51b5e13c73e/1?pq-origsite=gscholar&amp;cbl=18750" target="_blank" rel="noopener noreferrer">search.proquest.com</a><div class="sub"><a href="https://doi.org/10.25772/9qcy-0g37" target="_blank" rel="noopener noreferrer">10.25772/9qcy-0g37</a></div></td>
+      <td class="disc"><span class="pill warn">Paywalled</span><div class="sub">OpenAlex offered a PDF but the host answered 403</div></td>
+      <td class="pdf"><span class="none">not retrieved</span></td>
+      <td class="tier"><div class="workcell" data-uid="cit-001224" data-work="Rational design of potent, small,…"><span class="none">not read</span></div></td>
+      <td class="cite"><div class="workcell" data-uid="cit-001224" data-work="Rational design of potent, small,…"><span class="none">no PDF, so nothing has been quoted</span></div></td>
+      <td class="pick"><label><input type="checkbox"> include</label></td>
+    </tr>
+    <tr data-uid="cit-001225" data-uids="cit-001225" data-tier="none" data-disc="no-open-copy" data-pdf="0" data-year="2012" data-work="Rational design of potent, small,…" data-works="1" data-text="cit-001225 · design, synthesis, and biological evaluation of novel mcak and 14-3-3 protein family inhibitors. · aa arrendale - 2012 - search.proquest.com ·  ·  · rational design of potent, small,… ·  · ">
+      <td class="uid">cit-001225</td>
+      <td class="work"><div class="workcell" data-uid="cit-001225" data-work="Rational design of potent, small,…"><span class="wname">Rational design of potent, small,…</span><div class="sub">2011</div></div></td>
+      <td class="title">Design, synthesis, and biological evaluation of novel MCAK and 14-3-3 protein family inhibitors.
+        <div class="byline">AA Arrendale - 2012 - search.proquest.com</div></td>
+      <td>—</td>
+      <td>2012</td>
+      <td>—</td>
+      <td class="src"><a href="https://search.proquest.com/openview/626099758e4991c2edd32359acff072a/1?pq-origsite=gscholar&amp;cbl=18750" target="_blank" rel="noopener noreferrer">search.proquest.com</a></td>
+      <td class="disc"><span class="pill warn">No open copy</span><div class="sub">OpenAlex has the work (no DOI), no open-access PDF location</div></td>
+      <td class="pdf"><span class="none">not retrieved</span></td>
+      <td class="tier"><div class="workcell" data-uid="cit-001225" data-work="Rational design of potent, small,…"><span class="none">not read</span></div></td>
+      <td class="cite"><div class="workcell" data-uid="cit-001225" data-work="Rational design of potent, small,…"><span class="none">no PDF, so nothing has been quoted</span></div></td>
+      <td class="pick"><label><input type="checkbox"> include</label></td>
+    </tr>
+    <tr data-uid="cit-001227" data-uids="cit-001227" data-tier="none" data-disc="no-open-copy" data-pdf="0" data-year="2013" data-work="Rational design of potent, small,…" data-works="1" data-text="cit-001227 · interazioni tra acidi nucleici, proteine e potenziali farmaci antitumorali: un approccio chimico-fisico · a cummaro - 2013 - tesidottorato.depositolegale.it ·  ·  · rational design of potent, small,… ·  · ">
+      <td class="uid">cit-001227</td>
+      <td class="work"><div class="workcell" data-uid="cit-001227" data-work="Rational design of potent, small,…"><span class="wname">Rational design of potent, small,…</span><div class="sub">2011</div></div></td>
+      <td class="title">Interazioni tra acidi nucleici, proteine e potenziali farmaci antitumorali: un approccio chimico-fisico
+        <div class="byline">A Cummaro - 2013 - tesidottorato.depositolegale.it</div></td>
+      <td>—</td>
+      <td>2013</td>
+      <td>—</td>
+      <td class="src"><a href="https://tesidottorato.depositolegale.it/handle/20.500.14242/338305" target="_blank" rel="noopener noreferrer">tesidottorato.depositolegale.it</a></td>
+      <td class="disc"><span class="pill warn">No open copy</span><div class="sub">OpenAlex has the work (no DOI), no open-access PDF location</div></td>
+      <td class="pdf"><span class="none">not retrieved</span></td>
+      <td class="tier"><div class="workcell" data-uid="cit-001227" data-work="Rational design of potent, small,…"><span class="none">not read</span></div></td>
+      <td class="cite"><div class="workcell" data-uid="cit-001227" data-work="Rational design of potent, small,…"><span class="none">no PDF, so nothing has been quoted</span></div></td>
+      <td class="pick"><label><input type="checkbox"> include</label></td>
+    </tr>
+    <tr data-uid="cit-001229" data-uids="cit-001229" data-tier="none" data-disc="not-in-indexes" data-pdf="0" data-year="" data-work="Rational design of potent, small,…" data-works="1" data-text="cit-001229 · [citation] arimidex clotting trt prevent thrombosis endocrine abstracts · f ianni, ca rota, sm corsello, a de rosa, f gallo… ·  ·  · rational design of potent, small,… ·  · ">
+      <td class="uid">cit-001229</td>
+      <td class="work"><div class="workcell" data-uid="cit-001229" data-work="Rational design of potent, small,…"><span class="wname">Rational design of potent, small,…</span><div class="sub">2011</div></div></td>
+      <td class="title">[CITATION] Arimidex clotting trt prevent thrombosis Endocrine Abstracts
+        <div class="byline">F Ianni, CA Rota, SM Corsello, A De Rosa, F Gallo…</div></td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+      <td class="src">—</td>
+      <td class="disc"><span class="pill warn">Not in OpenAlex</span><div class="sub">no OpenAlex record by title</div></td>
+      <td class="pdf"><span class="none">not retrieved</span></td>
+      <td class="tier"><div class="workcell" data-uid="cit-001229" data-work="Rational design of potent, small,…"><span class="none">not read</span></div></td>
+      <td class="cite"><div class="workcell" data-uid="cit-001229" data-work="Rational design of potent, small,…"><span class="none">no PDF, so nothing has been quoted</span></div></td>
+      <td class="pick"><label><input type="checkbox"> include</label></td>
+    </tr>
+    <tr data-uid="cit-001230" data-uids="cit-001230" data-tier="none" data-disc="no-open-copy" data-pdf="0" data-year="2015" data-work="Rational design of potent, small,…" data-works="1" data-text="cit-001230 · [citation] potent inhibition of enterovirus d68 and human rhinoviruses by dipeptidyl aldehydes and a-ketoamides · y kim, acg kankanamalage, vc damalanka… - antiviral research, 2016 · chang ·  · rational design of potent, small,… ·  · 10.1016/j.antiviral.2015.11.010">
+      <td class="uid">cit-001230</td>
+      <td class="work"><div class="workcell" data-uid="cit-001230" data-work="Rational design of potent, small,…"><span class="wname">Rational design of potent, small,…</span><div class="sub">2011</div></div></td>
+      <td class="title">[CITATION] Potent inhibition of enterovirus D68 and human rhinoviruses by dipeptidyl aldehydes and a-ketoamides
+        <div class="byline">Y Kim, ACG Kankanamalage, VC Damalanka… - Antiviral Research, 2016</div></td>
+      <td>Chang</td>
+      <td>2015</td>
+      <td>—</td>
+      <td class="src">—<div class="sub"><a href="https://doi.org/10.1016/j.antiviral.2015.11.010" target="_blank" rel="noopener noreferrer">10.1016/j.antiviral.2015.11.010</a></div></td>
+      <td class="disc"><span class="pill warn">No open copy</span><div class="sub">OpenAlex has the work (10.1016/j.antiviral.2015.11.010), no open-access PDF location</div></td>
+      <td class="pdf"><span class="none">not retrieved</span></td>
+      <td class="tier"><div class="workcell" data-uid="cit-001230" data-work="Rational design of potent, small,…"><span class="none">not read</span></div></td>
+      <td class="cite"><div class="workcell" data-uid="cit-001230" data-work="Rational design of potent, small,…"><span class="none">no PDF, so nothing has been quoted</span></div></td>
+      <td class="pick"><label><input type="checkbox"> include</label></td>
+    </tr>
+    <tr data-uid="cit-001231" data-uids="cit-001231" data-tier="none" data-disc="not-in-indexes" data-pdf="0" data-year="2015" data-work="Rational design of potent, small,…" data-works="1" data-text="cit-001231 · [citation] 5.2. 18.8 imidoylstannanes, diazoalkylstannanes, tin isocyanates, and tin isothiocyanates (update 2014) · pb wyatt - science of synthesis knowledge updates 2014 vol. 4, 2015 - thieme ·  · science of synthesis knowledge updates 2014 vol. 4 · rational design of potent, small,… ·  · ">
+      <td class="uid">cit-001231</td>
+      <td class="work"><div class="workcell" data-uid="cit-001231" data-work="Rational design of potent, small,…"><span class="wname">Rational design of potent, small,…</span><div class="sub">2011</div></div></td>
+      <td class="title">[CITATION] 5.2. 18.8 Imidoylstannanes, Diazoalkylstannanes, Tin Isocyanates, and Tin Isothiocyanates (Update 2014)
+        <div class="byline">PB Wyatt - Science of Synthesis Knowledge Updates 2014 Vol. 4, 2015 - Thieme</div></td>
+      <td>—</td>
+      <td>2015</td>
+      <td>Science of Synthesis Knowledge Updates 2014 Vol. 4</td>
+      <td class="src">—</td>
+      <td class="disc"><span class="pill warn">Not in OpenAlex</span><div class="sub">no OpenAlex record by title</div></td>
+      <td class="pdf"><span class="none">not retrieved</span></td>
+      <td class="tier"><div class="workcell" data-uid="cit-001231" data-work="Rational design of potent, small,…"><span class="none">not read</span></div></td>
+      <td class="cite"><div class="workcell" data-uid="cit-001231" data-work="Rational design of potent, small,…"><span class="none">no PDF, so nothing has been quoted</span></div></td>
+      <td class="pick"><label><input type="checkbox"> include</label></td>
+    </tr>
     <tr data-uid="cit-001254" data-uids="cit-001254" data-tier="none" data-disc="paywalled" data-pdf="0" data-year="2026" data-work="MAWE" data-works="1" data-text="cit-001254 · using synthetic glycans to investigate anti‐glycan antibodies and explore their medical potential · f weber, a valenti, j ledvinka… - angewandte chemie …, 2026 - wiley online library · seeberger ·  · mawe ·  · 10.1002/anie.7795967">
       <td class="uid">cit-001254</td>
       <td class="work"><div class="workcell" data-uid="cit-001254" data-work="MAWE"><span class="wname">MAWE</span><div class="sub">2024</div></div></td>
@@ -3512,21 +4006,6 @@
       <td class="cite"><div class="workcell" data-uid="cit-001370" data-work="Sulfated pentagalloylglucoside is…"><span class="none">no PDF, so nothing has been quoted</span></div></td>
       <td class="pick"><label><input type="checkbox"> include</label></td>
     </tr>
-    <tr data-uid="cit-001371" data-uids="cit-001371" data-tier="none" data-disc="not-in-indexes" data-pdf="0" data-year="" data-work="Sulfated pentagalloylglucoside is…" data-works="1" data-text="cit-001371 · assessing drug development proporties of antithrombotic and anti-cancer agents · ei abdelfadiel - 2023 - scholarscompass.vcu.edu ·  ·  · sulfated pentagalloylglucoside is… ·  · ">
-      <td class="uid">cit-001371</td>
-      <td class="work"><div class="workcell" data-uid="cit-001371" data-work="Sulfated pentagalloylglucoside is…"><span class="wname">Sulfated pentagalloylglucoside is…</span><div class="sub">2013</div></div></td>
-      <td class="title">ASSESSING DRUG DEVELOPMENT PROPORTIES OF ANTITHROMBOTIC AND ANTI-CANCER AGENTS
-        <div class="byline">EI Abdelfadiel - 2023 - scholarscompass.vcu.edu</div></td>
-      <td>—</td>
-      <td>—</td>
-      <td>—</td>
-      <td class="src"><a href="https://scholarscompass.vcu.edu/etd/7203/?gathStatIcon=true/" target="_blank" rel="noopener noreferrer">scholarscompass.vcu.edu</a></td>
-      <td class="disc"><span class="pill warn">Not in OpenAlex</span><div class="sub">no OpenAlex record by title</div></td>
-      <td class="pdf"><span class="none">not retrieved</span></td>
-      <td class="tier"><div class="workcell" data-uid="cit-001371" data-work="Sulfated pentagalloylglucoside is…"><span class="none">not read</span></div></td>
-      <td class="cite"><div class="workcell" data-uid="cit-001371" data-work="Sulfated pentagalloylglucoside is…"><span class="none">no PDF, so nothing has been quoted</span></div></td>
-      <td class="pick"><label><input type="checkbox"> include</label></td>
-    </tr>
     <tr data-uid="cit-001372" data-uids="cit-001372" data-tier="none" data-disc="not-in-indexes" data-pdf="0" data-year="" data-work="Sulfated pentagalloylglucoside is…" data-works="1" data-text="cit-001372 · polycationic inhibitors to target prothrombotic nucleic acids in vitro and in mouse models · s vappala - 2023 - open.library.ubc.ca ·  ·  · sulfated pentagalloylglucoside is… ·  · ">
       <td class="uid">cit-001372</td>
       <td class="work"><div class="workcell" data-uid="cit-001372" data-work="Sulfated pentagalloylglucoside is…"><span class="wname">Sulfated pentagalloylglucoside is…</span><div class="sub">2013</div></div></td>
@@ -3587,21 +4066,6 @@
       <td class="cite"><div class="workcell" data-uid="cit-001379" data-work="Sulfated pentagalloylglucoside is…"><span class="none">no PDF, so nothing has been quoted</span></div></td>
       <td class="pick"><label><input type="checkbox"> include</label></td>
     </tr>
-    <tr data-uid="cit-001381" data-uids="cit-001381" data-tier="none" data-disc="no-open-copy" data-pdf="0" data-year="2017" data-work="Sulfated pentagalloylglucoside is…" data-works="1" data-text="cit-001381 · study of molecular interactions of glycosaminoglycans and glycosaminoglycan mimetics with their protein targets · dk afosah - 2017 - scholarscompass.vcu.edu ·  ·  · sulfated pentagalloylglucoside is… ·  · 10.25772/dw2f-b659">
-      <td class="uid">cit-001381</td>
-      <td class="work"><div class="workcell" data-uid="cit-001381" data-work="Sulfated pentagalloylglucoside is…"><span class="wname">Sulfated pentagalloylglucoside is…</span><div class="sub">2013</div></div></td>
-      <td class="title">Study of Molecular Interactions of Glycosaminoglycans and Glycosaminoglycan Mimetics with Their Protein Targets
-        <div class="byline">DK Afosah - 2017 - scholarscompass.vcu.edu</div></td>
-      <td>—</td>
-      <td>2017</td>
-      <td>—</td>
-      <td class="src"><a href="https://scholarscompass.vcu.edu/etd/4968/" target="_blank" rel="noopener noreferrer">scholarscompass.vcu.edu</a><div class="sub"><a href="https://doi.org/10.25772/dw2f-b659" target="_blank" rel="noopener noreferrer">10.25772/dw2f-b659</a></div></td>
-      <td class="disc"><span class="pill warn">No open copy</span><div class="sub">OpenAlex has the work (10.25772/dw2f-b659), no open-access PDF location</div></td>
-      <td class="pdf"><span class="none">not retrieved</span></td>
-      <td class="tier"><div class="workcell" data-uid="cit-001381" data-work="Sulfated pentagalloylglucoside is…"><span class="none">not read</span></div></td>
-      <td class="cite"><div class="workcell" data-uid="cit-001381" data-work="Sulfated pentagalloylglucoside is…"><span class="none">no PDF, so nothing has been quoted</span></div></td>
-      <td class="pick"><label><input type="checkbox"> include</label></td>
-    </tr>
     <tr data-uid="cit-001382" data-uids="cit-001382" data-tier="none" data-disc="no-open-copy" data-pdf="0" data-year="2018" data-work="Sulfated pentagalloylglucoside is…" data-works="1" data-text="cit-001382 · atvb named lecture review · xi factor - 2017 - academia.edu ·  ·  · sulfated pentagalloylglucoside is… ·  · 10.1161/atvbaha.118.310970">
       <td class="uid">cit-001382</td>
       <td class="work"><div class="workcell" data-uid="cit-001382" data-work="Sulfated pentagalloylglucoside is…"><span class="wname">Sulfated pentagalloylglucoside is…</span><div class="sub">2013</div></div></td>
@@ -3615,36 +4079,6 @@
       <td class="pdf"><span class="none">not retrieved</span></td>
       <td class="tier"><div class="workcell" data-uid="cit-001382" data-work="Sulfated pentagalloylglucoside is…"><span class="none">not read</span></div></td>
       <td class="cite"><div class="workcell" data-uid="cit-001382" data-work="Sulfated pentagalloylglucoside is…"><span class="none">no PDF, so nothing has been quoted</span></div></td>
-      <td class="pick"><label><input type="checkbox"> include</label></td>
-    </tr>
-    <tr data-uid="cit-001383" data-uids="cit-001383" data-tier="none" data-disc="no-open-copy" data-pdf="0" data-year="2016" data-work="Sulfated pentagalloylglucoside is…" data-works="1" data-text="cit-001383 · [book] probing allosteric, partial inhibition of thrombin using novel anticoagulants · ss verespy iii - 2016 - search.proquest.com ·  ·  · sulfated pentagalloylglucoside is… ·  · 10.25772/2e1m-ck22">
-      <td class="uid">cit-001383</td>
-      <td class="work"><div class="workcell" data-uid="cit-001383" data-work="Sulfated pentagalloylglucoside is…"><span class="wname">Sulfated pentagalloylglucoside is…</span><div class="sub">2013</div></div></td>
-      <td class="title">[BOOK] Probing allosteric, partial inhibition of thrombin using novel anticoagulants
-        <div class="byline">SS Verespy III - 2016 - search.proquest.com</div></td>
-      <td>—</td>
-      <td>2016</td>
-      <td>—</td>
-      <td class="src"><a href="https://search.proquest.com/openview/197f86fac0d2accd9f82fc809da0fdaa/1?pq-origsite=gscholar&amp;cbl=18750&amp;diss=y" target="_blank" rel="noopener noreferrer">search.proquest.com</a><div class="sub"><a href="https://doi.org/10.25772/2e1m-ck22" target="_blank" rel="noopener noreferrer">10.25772/2e1m-ck22</a></div></td>
-      <td class="disc"><span class="pill warn">No open copy</span><div class="sub">OpenAlex has the work (10.25772/2e1m-ck22), no open-access PDF location</div></td>
-      <td class="pdf"><span class="none">not retrieved</span></td>
-      <td class="tier"><div class="workcell" data-uid="cit-001383" data-work="Sulfated pentagalloylglucoside is…"><span class="none">not read</span></div></td>
-      <td class="cite"><div class="workcell" data-uid="cit-001383" data-work="Sulfated pentagalloylglucoside is…"><span class="none">no PDF, so nothing has been quoted</span></div></td>
-      <td class="pick"><label><input type="checkbox"> include</label></td>
-    </tr>
-    <tr data-uid="cit-001384" data-uids="cit-001384" data-tier="none" data-disc="no-open-copy" data-pdf="0" data-year="2014" data-work="Sulfated pentagalloylglucoside is…" data-works="1" data-text="cit-001384 · [book] studies on rationally designed, allosteric, coagulation inhibitors · r boothello - 2014 - search.proquest.com ·  ·  · sulfated pentagalloylglucoside is… ·  · 10.25772/ypz2-bv95">
-      <td class="uid">cit-001384</td>
-      <td class="work"><div class="workcell" data-uid="cit-001384" data-work="Sulfated pentagalloylglucoside is…"><span class="wname">Sulfated pentagalloylglucoside is…</span><div class="sub">2013</div></div></td>
-      <td class="title">[BOOK] Studies on rationally designed, allosteric, coagulation inhibitors
-        <div class="byline">R Boothello - 2014 - search.proquest.com</div></td>
-      <td>—</td>
-      <td>2014</td>
-      <td>—</td>
-      <td class="src"><a href="https://search.proquest.com/openview/1e39143b98382b38c71074a9313f8722/1?pq-origsite=gscholar&amp;cbl=18750" target="_blank" rel="noopener noreferrer">search.proquest.com</a><div class="sub"><a href="https://doi.org/10.25772/ypz2-bv95" target="_blank" rel="noopener noreferrer">10.25772/ypz2-bv95</a></div></td>
-      <td class="disc"><span class="pill warn">No open copy</span><div class="sub">OpenAlex has the work (10.25772/ypz2-bv95), no open-access PDF location</div></td>
-      <td class="pdf"><span class="none">not retrieved</span></td>
-      <td class="tier"><div class="workcell" data-uid="cit-001384" data-work="Sulfated pentagalloylglucoside is…"><span class="none">not read</span></div></td>
-      <td class="cite"><div class="workcell" data-uid="cit-001384" data-work="Sulfated pentagalloylglucoside is…"><span class="none">no PDF, so nothing has been quoted</span></div></td>
       <td class="pick"><label><input type="checkbox"> include</label></td>
     </tr>
     <tr data-uid="cit-001386" data-uids="cit-001386" data-tier="none" data-disc="no-open-copy" data-pdf="0" data-year="2013" data-work="Sulfated pentagalloylglucoside is…" data-works="1" data-text="cit-001386 · newer oral anticoagulants · de joseph - the coagulation consult: a case-based guide, 2013 - springer · sankar · the coagulation consult: a case-based guide · sulfated pentagalloylglucoside is… ·  · 10.1007/978-1-4614-9560-4_16">
@@ -3700,7 +4134,7 @@
 
 <h2>Notes on the list</h2>
 <p><strong>One row is one citing article; the &ldquo;My work&rdquo; column says which of my papers it
-   cites.</strong> 238 citations appear as 231 rows. An article that cites two of my works is
+   cites.</strong> 270 citations appear as 259 rows. An article that cites two of my works is
    one row with two blocks in the &ldquo;My work&rdquo;, Tier and Citation columns, and each block is
    judged on its own: a tier for GLAD in that article says nothing about where GlycoGlyph sits in it,
    and one work can be filed while the other is not. The row leads with every
@@ -9251,6 +9685,870 @@
      <code>packet.html</code> and not evidence until the row is confirmed and the packet re-rendered</p>
 </article>
 
+<article class="report" id="rep-cit-001164">
+  <h3>Structure-Guided Design and Optimization of Dipeptidyl Inhibitors of Norovirus 3CL Protease. Structure–Activity Relationships and Biochemical, X‑ray Crystallographic</h3>
+  <p class="byline">Anushka C. Galasiti Kankanamalage, Yunjeong Kim, Pathum M. Weerawarna, Roxanne Adeline Z. Uy, Vishnu C. Damalanka, Sivakoteswara Rao Mandadapu, Kevin R. Alliston, Nurjahan Mehzabeen, Kevin P. Battaile, Scott Lovell, Kyeong-Ok Chang, William C. Groutas<br>
+     <span class="venue">, 2015</span> &middot; <a href="https://pubs.acs.org/jmcmar/article-abstract/58/7/3144/1300753" target="_blank" rel="noopener noreferrer">pubs.acs.org</a> &middot; <a href="https://doi.org/10.1021/jm5019934" target="_blank" rel="noopener noreferrer">10.1021/jm5019934</a></p>
+  <dl>
+    <dt>My work cited</dt>
+    <dd>Rational design of potent, small, synthetic allosteric inhibitors of thrombin (2011) <span class="sub">[Rational design of potent, small,…]</span></dd>
+    <dt>row_uid</dt>
+    <dd><code>cit-001164</code></dd>
+    <dt>Where the citation appears</dt>
+    <dd><span class="none">not read — no PDF on file, so no claim about where the citation sits</span></dd>
+    <dt>Citing authors&rsquo; institutions</dt>
+    <dd><span class="none">Not recorded — confirm from the PDF&rsquo;s affiliation block.</span></dd>
+    <dt>Article type</dt>
+    <dd>article</dd>
+    <dt>Independence</dt>
+    <dd>Re-checked against the citation record: complete author lists of both papers, no shared
+        author, neither PI named on the citing paper; basis on the record: confirmed.</dd>
+  </dl>
+  <h4>What the text says</h4>
+  <p class="none">No verbatim sentence recorded.</p>
+  <h4>Files</h4>
+  <p class="none">No PDF on file. No open copy — OpenAlex has the work (10.1021/jm5019934), no open-access PDF location.</p>
+  <p class="trace"><code>cit-001164</code> &middot; review note only — not part of
+     <code>packet.html</code> and not evidence until the row is confirmed and the packet re-rendered</p>
+</article>
+
+<article class="report" id="rep-cit-001169">
+  <h3>Potent inhibition of enterovirus D68 and human rhinoviruses by dipeptidyl aldehydes and α-ketoamides</h3>
+  <p class="byline">Kim, Yunjeong; Kankanamalage, Anushka C Galasiti; Damalanka, Vishnu C; Weerawarna, Pathum M; Groutas, William C; Chang, Kyeong-Ok<br>
+     <span class="venue">Antiviral research, 2016</span> &middot; <a href="https://www.sciencedirect.com/science/article/pii/S0166354215300322" target="_blank" rel="noopener noreferrer">www.sciencedirect.com</a> &middot; <a href="https://doi.org/10.1016/j.antiviral.2015.11.010" target="_blank" rel="noopener noreferrer">10.1016/j.antiviral.2015.11.010</a></p>
+  <dl>
+    <dt>My work cited</dt>
+    <dd>Rational design of potent, small, synthetic allosteric inhibitors of thrombin (2011) <span class="sub">[Rational design of potent, small,…]</span></dd>
+    <dt>row_uid</dt>
+    <dd><code>cit-001169</code></dd>
+    <dt>Where the citation appears</dt>
+    <dd><span class="none">not read — no PDF on file, so no claim about where the citation sits</span></dd>
+    <dt>Citing authors&rsquo; institutions</dt>
+    <dd><span class="none">Not recorded — confirm from the PDF&rsquo;s affiliation block.</span></dd>
+    <dt>Article type</dt>
+    <dd>article</dd>
+    <dt>Independence</dt>
+    <dd>Re-checked against the citation record: complete author lists of both papers, no shared
+        author, neither PI named on the citing paper; basis on the record: unverified-coverage.</dd>
+  </dl>
+  <h4>What the text says</h4>
+  <p class="none">No verbatim sentence recorded.</p>
+  <h4>Files</h4>
+  <p class="none">No PDF on file. No open copy — OpenAlex has the work (10.1016/j.antiviral.2015.11.010), no open-access PDF location.</p>
+  <p class="trace"><code>cit-001169</code> &middot; review note only — not part of
+     <code>packet.html</code> and not evidence until the row is confirmed and the packet re-rendered</p>
+</article>
+
+<article class="report" id="rep-cit-001171">
+  <h3>Ligand binding to anion-binding exosites regulates conformational properties of thrombin</h3>
+  <p class="byline">MV Malovichko, TM Sabo, MC Maurer<br>
+     <span class="venue">Journal of Biological Chemistry, 2013</span> &middot; <a href="https://www.jbc.org/article/S0021-9258(19)33516-1/fulltext" target="_blank" rel="noopener noreferrer">www.jbc.org</a> &middot; <a href="https://doi.org/10.1074/jbc.m112.410829" target="_blank" rel="noopener noreferrer">10.1074/jbc.m112.410829</a></p>
+  <dl>
+    <dt>My work cited</dt>
+    <dd>Rational design of potent, small, synthetic allosteric inhibitors of thrombin (2011) <span class="sub">[Rational design of potent, small,…]</span></dd>
+    <dt>row_uid</dt>
+    <dd><code>cit-001171</code></dd>
+    <dt>Where the citation appears</dt>
+    <dd><span class="none">not read — no PDF on file, so no claim about where the citation sits</span></dd>
+    <dt>Citing authors&rsquo; institutions</dt>
+    <dd><span class="none">Not recorded — confirm from the PDF&rsquo;s affiliation block.</span></dd>
+    <dt>Article type</dt>
+    <dd>article</dd>
+    <dt>Independence</dt>
+    <dd>Re-checked against the citation record: complete author lists of both papers, no shared
+        author, neither PI named on the citing paper; basis on the record: unverified-coverage.</dd>
+  </dl>
+  <h4>What the text says</h4>
+  <p class="none">No verbatim sentence recorded.</p>
+  <h4>Files</h4>
+  <p class="none">No PDF on file. No open copy — OpenAlex has the work (10.1074/jbc.m112.410829), no open-access PDF location.</p>
+  <p class="trace"><code>cit-001171</code> &middot; review note only — not part of
+     <code>packet.html</code> and not evidence until the row is confirmed and the packet re-rendered</p>
+</article>
+
+<article class="report" id="rep-cit-001175">
+  <h3>Palladium-Catalyzed Cascade Reactions of 1‑(3-Arylprop-2-ynyloxy)-2-bromo Benzene Derivatives with Organoboron Compounds</h3>
+  <p class="byline">Arcadi, Antonio; Blesi, Federico; Cacchi, Sandro; Fabrizi, Giancarlo; Goggiamani, Antonella; Marinelli, Fabio<br>
+     <span class="venue">, 2013</span> &middot; <a href="https://pubs.acs.org/joceah/article-abstract/78/9/4490/1339822" target="_blank" rel="noopener noreferrer">pubs.acs.org</a> &middot; <a href="https://doi.org/10.1021/jo400503f" target="_blank" rel="noopener noreferrer">10.1021/jo400503f</a></p>
+  <dl>
+    <dt>My work cited</dt>
+    <dd>Rational design of potent, small, synthetic allosteric inhibitors of thrombin (2011) <span class="sub">[Rational design of potent, small,…]</span></dd>
+    <dt>row_uid</dt>
+    <dd><code>cit-001175</code></dd>
+    <dt>Where the citation appears</dt>
+    <dd><span class="none">not read — no PDF on file, so no claim about where the citation sits</span></dd>
+    <dt>Citing authors&rsquo; institutions</dt>
+    <dd><span class="none">Not recorded — confirm from the PDF&rsquo;s affiliation block.</span></dd>
+    <dt>Article type</dt>
+    <dd>article</dd>
+    <dt>Independence</dt>
+    <dd>Re-checked against the citation record: complete author lists of both papers, no shared
+        author, neither PI named on the citing paper; basis on the record: unverified-coverage.</dd>
+  </dl>
+  <h4>What the text says</h4>
+  <p class="none">No verbatim sentence recorded.</p>
+  <h4>Files</h4>
+  <p class="none">No PDF on file. No open copy — OpenAlex has the work (10.1021/jo400503f), no open-access PDF location.</p>
+  <p class="trace"><code>cit-001175</code> &middot; review note only — not part of
+     <code>packet.html</code> and not evidence until the row is confirmed and the packet re-rendered</p>
+</article>
+
+<article class="report" id="rep-cit-001178">
+  <h3>Allosteric inhibition and kinetic characterization of Klebsiella pneumoniae CysE: An emerging drug target</h3>
+  <p class="byline">Verma D, Gupta S, Saxena R, Kaur P, R R, Srivastava S, Gupta V<br>
+     <span class="venue">International Journal of …, 2020</span> &middot; <a href="https://www.sciencedirect.com/science/article/pii/S0141813019365778" target="_blank" rel="noopener noreferrer">www.sciencedirect.com</a> &middot; <a href="https://doi.org/10.1016/j.ijbiomac.2019.10.170" target="_blank" rel="noopener noreferrer">10.1016/j.ijbiomac.2019.10.170</a></p>
+  <dl>
+    <dt>My work cited</dt>
+    <dd>Rational design of potent, small, synthetic allosteric inhibitors of thrombin (2011) <span class="sub">[Rational design of potent, small,…]</span></dd>
+    <dt>row_uid</dt>
+    <dd><code>cit-001178</code></dd>
+    <dt>Where the citation appears</dt>
+    <dd><span class="none">not read — no PDF on file, so no claim about where the citation sits</span></dd>
+    <dt>Citing authors&rsquo; institutions</dt>
+    <dd><span class="none">Not recorded — confirm from the PDF&rsquo;s affiliation block.</span></dd>
+    <dt>Article type</dt>
+    <dd>article</dd>
+    <dt>Independence</dt>
+    <dd>Re-checked against the citation record: complete author lists of both papers, no shared
+        author, neither PI named on the citing paper; basis on the record: confirmed.</dd>
+  </dl>
+  <h4>What the text says</h4>
+  <p class="none">No verbatim sentence recorded.</p>
+  <h4>Files</h4>
+  <p class="none">No PDF on file. No open copy — OpenAlex has the work (10.1016/j.ijbiomac.2019.10.170), no open-access PDF location.</p>
+  <p class="trace"><code>cit-001178</code> &middot; review note only — not part of
+     <code>packet.html</code> and not evidence until the row is confirmed and the packet re-rendered</p>
+</article>
+
+<article class="report" id="rep-cit-001181">
+  <h3>Potent inhibition of norovirus by dipeptidyl α-hydroxyphosphonate transition state mimics</h3>
+  <p class="byline">Mandadapu SR, Gunnam MR, Galasiti Kankanamalage AC, Uy RA, Alliston KR, Lushington GH, Kim Y, Chang KO, Groutas WC<br>
+     <span class="venue">Bioorganic &amp; medicinal …, 2013</span> &middot; <a href="https://www.sciencedirect.com/science/article/pii/S0960894X13010135" target="_blank" rel="noopener noreferrer">www.sciencedirect.com</a> &middot; <a href="https://doi.org/10.1016/j.bmcl.2013.08.073" target="_blank" rel="noopener noreferrer">10.1016/j.bmcl.2013.08.073</a></p>
+  <dl>
+    <dt>My work cited</dt>
+    <dd>Rational design of potent, small, synthetic allosteric inhibitors of thrombin (2011) <span class="sub">[Rational design of potent, small,…]</span></dd>
+    <dt>row_uid</dt>
+    <dd><code>cit-001181</code></dd>
+    <dt>Where the citation appears</dt>
+    <dd><span class="none">not read — no PDF on file, so no claim about where the citation sits</span></dd>
+    <dt>Citing authors&rsquo; institutions</dt>
+    <dd><span class="none">Not recorded — confirm from the PDF&rsquo;s affiliation block.</span></dd>
+    <dt>Article type</dt>
+    <dd>article</dd>
+    <dt>Independence</dt>
+    <dd>Re-checked against the citation record: complete author lists of both papers, no shared
+        author, neither PI named on the citing paper; basis on the record: confirmed.</dd>
+  </dl>
+  <h4>What the text says</h4>
+  <p class="none">No verbatim sentence recorded.</p>
+  <h4>Files</h4>
+  <p class="none">No PDF on file. No open copy — OpenAlex has the work (10.1016/j.bmcl.2013.08.073), no open-access PDF location.</p>
+  <p class="trace"><code>cit-001181</code> &middot; review note only — not part of
+     <code>packet.html</code> and not evidence until the row is confirmed and the packet re-rendered</p>
+</article>
+
+<article class="report" id="rep-cit-001187">
+  <h3>Multisubstituted benzo [b] furans through a copper-and/or palladium-catalyzed assembly and functionalization process</h3>
+  <p class="byline">Arcadi, Antonio; Blesi, Federico; Cacchi, Sandro; Fabrizi, Giancarlo; Goggiamani, Antonella; Marinelli, Fabio<br>
+     <span class="venue">Tetrahedron, 2013</span> &middot; <a href="https://www.sciencedirect.com/science/article/pii/S004040201201914X" target="_blank" rel="noopener noreferrer">www.sciencedirect.com</a> &middot; <a href="https://doi.org/10.1016/j.tet.2012.12.058" target="_blank" rel="noopener noreferrer">10.1016/j.tet.2012.12.058</a></p>
+  <dl>
+    <dt>My work cited</dt>
+    <dd>Rational design of potent, small, synthetic allosteric inhibitors of thrombin (2011) <span class="sub">[Rational design of potent, small,…]</span></dd>
+    <dt>row_uid</dt>
+    <dd><code>cit-001187</code></dd>
+    <dt>Where the citation appears</dt>
+    <dd><span class="none">not read — no PDF on file, so no claim about where the citation sits</span></dd>
+    <dt>Citing authors&rsquo; institutions</dt>
+    <dd><span class="none">Not recorded — confirm from the PDF&rsquo;s affiliation block.</span></dd>
+    <dt>Article type</dt>
+    <dd>article</dd>
+    <dt>Independence</dt>
+    <dd>Re-checked against the citation record: complete author lists of both papers, no shared
+        author, neither PI named on the citing paper; basis on the record: unverified-coverage.</dd>
+  </dl>
+  <h4>What the text says</h4>
+  <p class="none">No verbatim sentence recorded.</p>
+  <h4>Files</h4>
+  <p class="none">No PDF on file. No open copy — OpenAlex has the work (10.1016/j.tet.2012.12.058), no open-access PDF location.</p>
+  <p class="trace"><code>cit-001187</code> &middot; review note only — not part of
+     <code>packet.html</code> and not evidence until the row is confirmed and the packet re-rendered</p>
+</article>
+
+<article class="report" id="rep-cit-001189">
+  <h3>De novo synthesis of benzofurans via trifluoroacetic acid catalyzed cyclization/oxidative aromatization cascade reaction of 2-hydroxy-1,4-diones</h3>
+  <p class="byline">Sha Q, Liu H<br>
+     <span class="venue">Organic &amp; Biomolecular Chemistry, 2019</span> &middot; <a href="https://pubs.rsc.org/ob/article-abstract/17/32/7547/654942" target="_blank" rel="noopener noreferrer">pubs.rsc.org</a> &middot; <a href="https://doi.org/10.1039/c9ob01422e" target="_blank" rel="noopener noreferrer">10.1039/c9ob01422e</a></p>
+  <dl>
+    <dt>My work cited</dt>
+    <dd>Rational design of potent, small, synthetic allosteric inhibitors of thrombin (2011) <span class="sub">[Rational design of potent, small,…]</span></dd>
+    <dt>row_uid</dt>
+    <dd><code>cit-001189</code></dd>
+    <dt>Where the citation appears</dt>
+    <dd><span class="none">not read — no PDF on file, so no claim about where the citation sits</span></dd>
+    <dt>Citing authors&rsquo; institutions</dt>
+    <dd><span class="none">Not recorded — confirm from the PDF&rsquo;s affiliation block.</span></dd>
+    <dt>Article type</dt>
+    <dd>article</dd>
+    <dt>Independence</dt>
+    <dd>Re-checked against the citation record: complete author lists of both papers, no shared
+        author, neither PI named on the citing paper; basis on the record: confirmed.</dd>
+  </dl>
+  <h4>What the text says</h4>
+  <p class="none">No verbatim sentence recorded.</p>
+  <h4>Files</h4>
+  <p class="none">No PDF on file. No open copy — OpenAlex has the work (10.1039/c9ob01422e), no open-access PDF location.</p>
+  <p class="trace"><code>cit-001189</code> &middot; review note only — not part of
+     <code>packet.html</code> and not evidence until the row is confirmed and the packet re-rendered</p>
+</article>
+
+<article class="report" id="rep-cit-001191">
+  <h3>Blood compatibility of heparin-inspired, lactose containing, polyureas depends on the chemistry of the polymer backbone</h3>
+  <p class="byline">Huang, Y; Shaw, MA; Warmin, MR; Mullins, ES; Ayres, N<br>
+     <span class="venue">Polymer …, 2016</span> &middot; <a href="https://pubs.rsc.org/py/article-abstract/7/23/3897/532089" target="_blank" rel="noopener noreferrer">pubs.rsc.org</a> &middot; <a href="https://doi.org/10.1039/c6py00616g" target="_blank" rel="noopener noreferrer">10.1039/c6py00616g</a></p>
+  <dl>
+    <dt>My work cited</dt>
+    <dd>Rational design of potent, small, synthetic allosteric inhibitors of thrombin (2011) <span class="sub">[Rational design of potent, small,…]</span></dd>
+    <dt>row_uid</dt>
+    <dd><code>cit-001191</code></dd>
+    <dt>Where the citation appears</dt>
+    <dd><span class="none">not read — no PDF on file, so no claim about where the citation sits</span></dd>
+    <dt>Citing authors&rsquo; institutions</dt>
+    <dd><span class="none">Not recorded — confirm from the PDF&rsquo;s affiliation block.</span></dd>
+    <dt>Article type</dt>
+    <dd>article</dd>
+    <dt>Independence</dt>
+    <dd>Re-checked against the citation record: complete author lists of both papers, no shared
+        author, neither PI named on the citing paper; basis on the record: unverified-coverage.</dd>
+  </dl>
+  <h4>What the text says</h4>
+  <p class="none">No verbatim sentence recorded.</p>
+  <h4>Files</h4>
+  <p class="none">No PDF on file. No open copy — OpenAlex has the work (10.1039/c6py00616g), no open-access PDF location.</p>
+  <p class="trace"><code>cit-001191</code> &middot; review note only — not part of
+     <code>packet.html</code> and not evidence until the row is confirmed and the packet re-rendered</p>
+</article>
+
+<article class="report" id="rep-cit-001192">
+  <h3>Synthesis and biological evaluation of some dibenzofuran-piperazine derivatives</h3>
+  <p class="byline">Yurtta{\c{s}<br>
+     <span class="venue">, 2015</span> &middot; <a href="https://www.tandfonline.com/doi/abs/10.3109/14756366.2015.1108971" target="_blank" rel="noopener noreferrer">www.tandfonline.com</a> &middot; <a href="https://doi.org/10.3109/14756366.2015.1108971" target="_blank" rel="noopener noreferrer">10.3109/14756366.2015.1108971</a></p>
+  <dl>
+    <dt>My work cited</dt>
+    <dd>Rational design of potent, small, synthetic allosteric inhibitors of thrombin (2011) <span class="sub">[Rational design of potent, small,…]</span></dd>
+    <dt>row_uid</dt>
+    <dd><code>cit-001192</code></dd>
+    <dt>Where the citation appears</dt>
+    <dd><span class="none">not read — no PDF on file, so no claim about where the citation sits</span></dd>
+    <dt>Citing authors&rsquo; institutions</dt>
+    <dd><span class="none">Not recorded — confirm from the PDF&rsquo;s affiliation block.</span></dd>
+    <dt>Article type</dt>
+    <dd>article</dd>
+    <dt>Independence</dt>
+    <dd>Re-checked against the citation record: complete author lists of both papers, no shared
+        author, neither PI named on the citing paper; basis on the record: unverified-coverage.</dd>
+  </dl>
+  <h4>What the text says</h4>
+  <p class="none">No verbatim sentence recorded.</p>
+  <h4>Files</h4>
+  <p class="none">No PDF on file. Paywalled — OpenAlex offered a PDF but the host answered 403.</p>
+  <p class="trace"><code>cit-001192</code> &middot; review note only — not part of
+     <code>packet.html</code> and not evidence until the row is confirmed and the packet re-rendered</p>
+</article>
+
+<article class="report" id="rep-cit-001196">
+  <h3>An Overview of Thrombin Inhibitors in the Perspective of Structureactivity Relationships</h3>
+  <p class="byline">Wang J, Sun X, Li N, Sheng R, Guo R<br>
+     <span class="venue">Current Medicinal …, 2023</span> &middot; <a href="https://www.benthamdirect.com/content/journals/cmc/10.2174/0929867329666220906105200" target="_blank" rel="noopener noreferrer">www.benthamdirect.com</a> &middot; <a href="https://doi.org/10.2174/0929867329666220906105200" target="_blank" rel="noopener noreferrer">10.2174/0929867329666220906105200</a></p>
+  <dl>
+    <dt>My work cited</dt>
+    <dd>Rational design of potent, small, synthetic allosteric inhibitors of thrombin (2011) <span class="sub">[Rational design of potent, small,…]</span></dd>
+    <dt>row_uid</dt>
+    <dd><code>cit-001196</code></dd>
+    <dt>Where the citation appears</dt>
+    <dd><span class="none">not read — no PDF on file, so no claim about where the citation sits</span></dd>
+    <dt>Citing authors&rsquo; institutions</dt>
+    <dd><span class="none">Not recorded — confirm from the PDF&rsquo;s affiliation block.</span></dd>
+    <dt>Article type</dt>
+    <dd>article</dd>
+    <dt>Independence</dt>
+    <dd>Re-checked against the citation record: complete author lists of both papers, no shared
+        author, neither PI named on the citing paper; basis on the record: confirmed.</dd>
+  </dl>
+  <h4>What the text says</h4>
+  <p class="none">No verbatim sentence recorded.</p>
+  <h4>Files</h4>
+  <p class="none">No PDF on file. No open copy — OpenAlex has the work (10.2174/0929867329666220906105200), no open-access PDF location.</p>
+  <p class="trace"><code>cit-001196</code> &middot; review note only — not part of
+     <code>packet.html</code> and not evidence until the row is confirmed and the packet re-rendered</p>
+</article>
+
+<article class="report" id="rep-cit-001197">
+  <h3>Inhibition of thrombin by functionalized C60 nanoparticles revealed via in vitro assays and in silico studies</h3>
+  <p class="byline">Liu Y, Fu J, Pan W, Xue Q, Liu X, Zhang A<br>
+     <span class="venue">Journal of Environmental …, 2018</span> &middot; <a href="https://www.sciencedirect.com/science/article/pii/S1001074217311762" target="_blank" rel="noopener noreferrer">www.sciencedirect.com</a></p>
+  <dl>
+    <dt>My work cited</dt>
+    <dd>Rational design of potent, small, synthetic allosteric inhibitors of thrombin (2011) <span class="sub">[Rational design of potent, small,…]</span></dd>
+    <dt>row_uid</dt>
+    <dd><code>cit-001197</code></dd>
+    <dt>Where the citation appears</dt>
+    <dd><span class="none">not read — no PDF on file, so no claim about where the citation sits</span></dd>
+    <dt>Citing authors&rsquo; institutions</dt>
+    <dd><span class="none">Not recorded — confirm from the PDF&rsquo;s affiliation block.</span></dd>
+    <dt>Article type</dt>
+    <dd>article</dd>
+    <dt>Independence</dt>
+    <dd>Re-checked against the citation record: complete author lists of both papers, no shared
+        author, neither PI named on the citing paper; basis on the record: confirmed.</dd>
+  </dl>
+  <h4>What the text says</h4>
+  <p class="none">No verbatim sentence recorded.</p>
+  <h4>Files</h4>
+  <p class="none">No PDF on file. Not in OpenAlex — no OpenAlex record by title.</p>
+  <p class="trace"><code>cit-001197</code> &middot; review note only — not part of
+     <code>packet.html</code> and not evidence until the row is confirmed and the packet re-rendered</p>
+</article>
+
+<article class="report" id="rep-cit-001200">
+  <h3>Conformationally restricted analogs of the direct thrombin inhibitor FM 19</h3>
+  <p class="byline">Girnys EA, Porter VR, Mosberg HI<br>
+     <span class="venue">Bioorganic &amp; medicinal chemistry, 2011</span> &middot; <a href="https://www.sciencedirect.com/science/article/pii/S0968089611008546" target="_blank" rel="noopener noreferrer">www.sciencedirect.com</a> &middot; <a href="https://doi.org/10.1016/j.bmc.2011.10.045" target="_blank" rel="noopener noreferrer">10.1016/j.bmc.2011.10.045</a></p>
+  <dl>
+    <dt>My work cited</dt>
+    <dd>Rational design of potent, small, synthetic allosteric inhibitors of thrombin (2011) <span class="sub">[Rational design of potent, small,…]</span></dd>
+    <dt>row_uid</dt>
+    <dd><code>cit-001200</code></dd>
+    <dt>Where the citation appears</dt>
+    <dd><span class="none">not read — no PDF on file, so no claim about where the citation sits</span></dd>
+    <dt>Citing authors&rsquo; institutions</dt>
+    <dd><span class="none">Not recorded — confirm from the PDF&rsquo;s affiliation block.</span></dd>
+    <dt>Article type</dt>
+    <dd>article</dd>
+    <dt>Independence</dt>
+    <dd>Re-checked against the citation record: complete author lists of both papers, no shared
+        author, neither PI named on the citing paper; basis on the record: confirmed.</dd>
+  </dl>
+  <h4>What the text says</h4>
+  <p class="none">No verbatim sentence recorded.</p>
+  <h4>Files</h4>
+  <p class="none">No PDF on file. No open copy — OpenAlex has the work (10.1016/j.bmc.2011.10.045), no open-access PDF location.</p>
+  <p class="trace"><code>cit-001200</code> &middot; review note only — not part of
+     <code>packet.html</code> and not evidence until the row is confirmed and the packet re-rendered</p>
+</article>
+
+<article class="report" id="rep-cit-001203">
+  <h3>Allosteric activation of human α-thrombin through exosite 2 by suramin analogs</h3>
+  <p class="byline">Cargnelutti, Maria Thereza; Marques, Adriana Fonseca; Esser, Daniel; Monteiro, Robson Q; Kassack, Matthias U; Lima, Luis Mauricio TR<br>
+     <span class="venue">Archives of biochemistry …, 2012</span> &middot; <a href="https://www.sciencedirect.com/science/article/pii/S0003986112000434" target="_blank" rel="noopener noreferrer">www.sciencedirect.com</a> &middot; <a href="https://doi.org/10.1016/j.abb.2012.02.001" target="_blank" rel="noopener noreferrer">10.1016/j.abb.2012.02.001</a></p>
+  <dl>
+    <dt>My work cited</dt>
+    <dd>Rational design of potent, small, synthetic allosteric inhibitors of thrombin (2011) <span class="sub">[Rational design of potent, small,…]</span></dd>
+    <dt>row_uid</dt>
+    <dd><code>cit-001203</code></dd>
+    <dt>Where the citation appears</dt>
+    <dd><span class="none">not read — no PDF on file, so no claim about where the citation sits</span></dd>
+    <dt>Citing authors&rsquo; institutions</dt>
+    <dd><span class="none">Not recorded — confirm from the PDF&rsquo;s affiliation block.</span></dd>
+    <dt>Article type</dt>
+    <dd>article</dd>
+    <dt>Independence</dt>
+    <dd>Re-checked against the citation record: complete author lists of both papers, no shared
+        author, neither PI named on the citing paper; basis on the record: unverified-coverage.</dd>
+  </dl>
+  <h4>What the text says</h4>
+  <p class="none">No verbatim sentence recorded.</p>
+  <h4>Files</h4>
+  <p class="none">No PDF on file. Paywalled — OpenAlex offered a PDF but the host answered 403.</p>
+  <p class="trace"><code>cit-001203</code> &middot; review note only — not part of
+     <code>packet.html</code> and not evidence until the row is confirmed and the packet re-rendered</p>
+</article>
+
+<article class="report" id="rep-cit-001204">
+  <h3>Synthesis, characterization and antibacterial screening of fluorinated benzofuran containing heterocycles</h3>
+  <p class="byline">Kundlikar, SG; Randhavane, PV; Akolkar, HN; Karale, BK<br>
+     <span class="venue">Indian J Chem …, 2019</span> &middot; <a href="https://www.academia.edu/download/101958191/IJCB_2058B4_20504-510.pdf" target="_blank" rel="noopener noreferrer">www.academia.edu</a></p>
+  <dl>
+    <dt>My work cited</dt>
+    <dd>Rational design of potent, small, synthetic allosteric inhibitors of thrombin (2011) <span class="sub">[Rational design of potent, small,…]</span></dd>
+    <dt>row_uid</dt>
+    <dd><code>cit-001204</code></dd>
+    <dt>Where the citation appears</dt>
+    <dd><span class="none">not read — no PDF on file, so no claim about where the citation sits</span></dd>
+    <dt>Citing authors&rsquo; institutions</dt>
+    <dd><span class="none">Not recorded — confirm from the PDF&rsquo;s affiliation block.</span></dd>
+    <dt>Article type</dt>
+    <dd>article</dd>
+    <dt>Independence</dt>
+    <dd>Re-checked against the citation record: complete author lists of both papers, no shared
+        author, neither PI named on the citing paper; basis on the record: unverified-coverage.</dd>
+  </dl>
+  <h4>What the text says</h4>
+  <p class="none">No verbatim sentence recorded.</p>
+  <h4>Files</h4>
+  <p class="none">No PDF on file. No open copy — OpenAlex has the work (no DOI), no open-access PDF location.</p>
+  <p class="trace"><code>cit-001204</code> &middot; review note only — not part of
+     <code>packet.html</code> and not evidence until the row is confirmed and the packet re-rendered</p>
+</article>
+
+<article class="report" id="rep-cit-001207">
+  <h3>ASSESSING DRUG DEVELOPMENT PROPORTIES OF ANTITHROMBOTIC AND ANTI-CANCER AGENTS</h3>
+  <p class="byline">EI Abdelfadiel<br>
+     <span class="venue"></span> &middot; <a href="https://scholarscompass.vcu.edu/etd/7203/?gathStatIcon=true/" target="_blank" rel="noopener noreferrer">scholarscompass.vcu.edu</a></p>
+  <dl>
+    <dt>My work cited</dt>
+    <dd>Rational design of potent, small, synthetic allosteric inhibitors of thrombin (2011) <span class="sub">[Rational design of potent, small,…]</span></dd>
+    <dt>row_uid</dt>
+    <dd><code>cit-001207</code></dd>
+    <dt>Where the citation appears</dt>
+    <dd><span class="none">not read — no PDF on file, so no claim about where the citation sits</span></dd>
+    <dt>Citing authors&rsquo; institutions</dt>
+    <dd><span class="none">Not recorded — confirm from the PDF&rsquo;s affiliation block.</span></dd>
+    <dt>Article type</dt>
+    <dd>article</dd>
+    <dt>Independence</dt>
+    <dd>Re-checked against the citation record: complete author lists of both papers, no shared
+        author, neither PI named on the citing paper; basis on the record: unverified-coverage.</dd>
+  </dl>
+  <h4>What the text says</h4>
+  <p class="none">No verbatim sentence recorded.</p>
+  <h4>Files</h4>
+  <p class="none">No PDF on file. Not in OpenAlex — no OpenAlex record by title.</p>
+  <p class="trace"><code>cit-001207</code> &middot; review note only — not part of
+     <code>packet.html</code> and not evidence until the row is confirmed and the packet re-rendered</p>
+</article>
+
+<article class="report" id="rep-cit-001208">
+  <h3>Discovery and Biophysical Characterization of Allosteric Inhibitors of Factor XIa (FXIa)</h3>
+  <p class="byline">M Argade<br>
+     <span class="venue">, 2012</span> &middot; <a href="https://scholarscompass.vcu.edu/etd/418/" target="_blank" rel="noopener noreferrer">scholarscompass.vcu.edu</a> &middot; <a href="https://doi.org/10.25772/3gdk-qq25" target="_blank" rel="noopener noreferrer">10.25772/3gdk-qq25</a></p>
+  <dl>
+    <dt>My work cited</dt>
+    <dd>Rational design of potent, small, synthetic allosteric inhibitors of thrombin (2011) <span class="sub">[Rational design of potent, small,…]</span></dd>
+    <dt>row_uid</dt>
+    <dd><code>cit-001208</code></dd>
+    <dt>Where the citation appears</dt>
+    <dd><span class="none">not read — no PDF on file, so no claim about where the citation sits</span></dd>
+    <dt>Citing authors&rsquo; institutions</dt>
+    <dd><span class="none">Not recorded — confirm from the PDF&rsquo;s affiliation block.</span></dd>
+    <dt>Article type</dt>
+    <dd>article</dd>
+    <dt>Independence</dt>
+    <dd>Re-checked against the citation record: complete author lists of both papers, no shared
+        author, neither PI named on the citing paper; basis on the record: unverified-coverage.</dd>
+  </dl>
+  <h4>What the text says</h4>
+  <p class="none">No verbatim sentence recorded.</p>
+  <h4>Files</h4>
+  <p class="none">No PDF on file. Paywalled — host returned text/html; charset=UTF-8, not a PDF body.</p>
+  <p class="trace"><code>cit-001208</code> &middot; review note only — not part of
+     <code>packet.html</code> and not evidence until the row is confirmed and the packet re-rendered</p>
+</article>
+
+<article class="report" id="rep-cit-001209">
+  <h3>Reverse-phase Ion-Pairing Ultra Performance Liquid Chromatography-Mass Spectrometry In Characterization And Fingerprinting Of Diverse Sulfated</h3>
+  <p class="byline">P Ponnusamy<br>
+     <span class="venue">, 2013</span> &middot; <a href="https://scholarscompass.vcu.edu/etd/3031/?show=full" target="_blank" rel="noopener noreferrer">scholarscompass.vcu.edu</a> &middot; <a href="https://doi.org/10.25772/nv7h-cs15" target="_blank" rel="noopener noreferrer">10.25772/nv7h-cs15</a></p>
+  <dl>
+    <dt>My work cited</dt>
+    <dd>Rational design of potent, small, synthetic allosteric inhibitors of thrombin (2011) <span class="sub">[Rational design of potent, small,…]</span></dd>
+    <dt>row_uid</dt>
+    <dd><code>cit-001209</code></dd>
+    <dt>Where the citation appears</dt>
+    <dd><span class="none">not read — no PDF on file, so no claim about where the citation sits</span></dd>
+    <dt>Citing authors&rsquo; institutions</dt>
+    <dd><span class="none">Not recorded — confirm from the PDF&rsquo;s affiliation block.</span></dd>
+    <dt>Article type</dt>
+    <dd>article</dd>
+    <dt>Independence</dt>
+    <dd>Re-checked against the citation record: complete author lists of both papers, no shared
+        author, neither PI named on the citing paper; basis on the record: unverified-coverage.</dd>
+  </dl>
+  <h4>What the text says</h4>
+  <p class="none">No verbatim sentence recorded.</p>
+  <h4>Files</h4>
+  <p class="none">No PDF on file. Paywalled — OpenAlex offered a PDF but the host answered 403.</p>
+  <p class="trace"><code>cit-001209</code> &middot; review note only — not part of
+     <code>packet.html</code> and not evidence until the row is confirmed and the packet re-rendered</p>
+</article>
+
+<article class="report" id="rep-cit-001211">
+  <h3>Biophysical exploration of conformational environments in zymogen prothrombin and blood coagulant thrombin.</h3>
+  <p class="byline">R Billur<br>
+     <span class="venue">, 2018</span> &middot; <a href="https://ir.library.louisville.edu/etd/2904/" target="_blank" rel="noopener noreferrer">ir.library.louisville.edu</a> &middot; <a href="https://doi.org/10.18297/etd/2904" target="_blank" rel="noopener noreferrer">10.18297/etd/2904</a></p>
+  <dl>
+    <dt>My work cited</dt>
+    <dd>Rational design of potent, small, synthetic allosteric inhibitors of thrombin (2011) <span class="sub">[Rational design of potent, small,…]</span></dd>
+    <dt>row_uid</dt>
+    <dd><code>cit-001211</code></dd>
+    <dt>Where the citation appears</dt>
+    <dd><span class="none">not read — no PDF on file, so no claim about where the citation sits</span></dd>
+    <dt>Citing authors&rsquo; institutions</dt>
+    <dd><span class="none">Not recorded — confirm from the PDF&rsquo;s affiliation block.</span></dd>
+    <dt>Article type</dt>
+    <dd>article</dd>
+    <dt>Independence</dt>
+    <dd>Re-checked against the citation record: complete author lists of both papers, no shared
+        author, neither PI named on the citing paper; basis on the record: unverified-coverage.</dd>
+  </dl>
+  <h4>What the text says</h4>
+  <p class="none">No verbatim sentence recorded.</p>
+  <h4>Files</h4>
+  <p class="none">No PDF on file. Paywalled — OpenAlex offered a PDF but the host answered 403.</p>
+  <p class="trace"><code>cit-001211</code> &middot; review note only — not part of
+     <code>packet.html</code> and not evidence until the row is confirmed and the packet re-rendered</p>
+</article>
+
+<article class="report" id="rep-cit-001212">
+  <h3>Study of Molecular Interactions of Glycosaminoglycans and Glycosaminoglycan Mimetics with Their Protein Targets</h3>
+  <p class="byline">DK Afosah<br>
+     <span class="venue">, 2017</span> &middot; <a href="https://scholarscompass.vcu.edu/etd/4968/" target="_blank" rel="noopener noreferrer">scholarscompass.vcu.edu</a> &middot; <a href="https://doi.org/10.25772/dw2f-b659" target="_blank" rel="noopener noreferrer">10.25772/dw2f-b659</a></p>
+  <dl>
+    <dt>My work cited</dt>
+    <dd>Rational design of potent, small, synthetic allosteric inhibitors of thrombin (2011) <span class="sub">[Rational design of potent, small,…]</span></dd>
+    <dt>row_uid</dt>
+    <dd><code>cit-001212</code></dd>
+    <dt>Where the citation appears</dt>
+    <dd><span class="none">not read — no PDF on file, so no claim about where the citation sits</span></dd>
+    <dt>Citing authors&rsquo; institutions</dt>
+    <dd><span class="none">Not recorded — confirm from the PDF&rsquo;s affiliation block.</span></dd>
+    <dt>Article type</dt>
+    <dd>article</dd>
+    <dt>Independence</dt>
+    <dd>Re-checked against the citation record: complete author lists of both papers, no shared
+        author, neither PI named on the citing paper; basis on the record: unverified-coverage.</dd>
+  </dl>
+  <h4>What the text says</h4>
+  <p class="none">No verbatim sentence recorded.</p>
+  <h4>Files</h4>
+  <p class="none">No PDF on file. No open copy — OpenAlex has the work (10.25772/dw2f-b659), no open-access PDF location.</p>
+  <p class="trace"><code>cit-001212</code> &middot; review note only — not part of
+     <code>packet.html</code> and not evidence until the row is confirmed and the packet re-rendered</p>
+</article>
+
+<article class="report" id="rep-cit-001213">
+  <h3>[BOOK] Probing allosteric, partial inhibition of thrombin using novel anticoagulants</h3>
+  <p class="byline">SS Verespy III<br>
+     <span class="venue">, 2016</span> &middot; <a href="https://search.proquest.com/openview/197f86fac0d2accd9f82fc809da0fdaa/1?pq-origsite=gscholar&amp;cbl=18750&amp;diss=y" target="_blank" rel="noopener noreferrer">search.proquest.com</a> &middot; <a href="https://doi.org/10.25772/2e1m-ck22" target="_blank" rel="noopener noreferrer">10.25772/2e1m-ck22</a></p>
+  <dl>
+    <dt>My work cited</dt>
+    <dd>Rational design of potent, small, synthetic allosteric inhibitors of thrombin (2011) <span class="sub">[Rational design of potent, small,…]</span></dd>
+    <dt>row_uid</dt>
+    <dd><code>cit-001213</code></dd>
+    <dt>Where the citation appears</dt>
+    <dd><span class="none">not read — no PDF on file, so no claim about where the citation sits</span></dd>
+    <dt>Citing authors&rsquo; institutions</dt>
+    <dd><span class="none">Not recorded — confirm from the PDF&rsquo;s affiliation block.</span></dd>
+    <dt>Article type</dt>
+    <dd>article</dd>
+    <dt>Independence</dt>
+    <dd>Re-checked against the citation record: complete author lists of both papers, no shared
+        author, neither PI named on the citing paper; basis on the record: unverified-coverage.</dd>
+  </dl>
+  <h4>What the text says</h4>
+  <p class="none">No verbatim sentence recorded.</p>
+  <h4>Files</h4>
+  <p class="none">No PDF on file. No open copy — OpenAlex has the work (10.25772/2e1m-ck22), no open-access PDF location.</p>
+  <p class="trace"><code>cit-001213</code> &middot; review note only — not part of
+     <code>packet.html</code> and not evidence until the row is confirmed and the packet re-rendered</p>
+</article>
+
+<article class="report" id="rep-cit-001215">
+  <h3>This article has been accepted for publication and undergone full peer review but has not been through the copyediting, typesetting, pagination and</h3>
+  <p class="byline">SM Rudman, J Heavyside, DJ Rennison, D Schluter<br>
+     <span class="venue"></span> &middot; <a href="https://boris-portal.unibe.ch/bitstreams/b2d903ec-cab8-40a8-b807-ce8129002e65/download" target="_blank" rel="noopener noreferrer">boris-portal.unibe.ch</a></p>
+  <dl>
+    <dt>My work cited</dt>
+    <dd>Rational design of potent, small, synthetic allosteric inhibitors of thrombin (2011) <span class="sub">[Rational design of potent, small,…]</span></dd>
+    <dt>row_uid</dt>
+    <dd><code>cit-001215</code></dd>
+    <dt>Where the citation appears</dt>
+    <dd><span class="none">not read — no PDF on file, so no claim about where the citation sits</span></dd>
+    <dt>Citing authors&rsquo; institutions</dt>
+    <dd><span class="none">Not recorded — confirm from the PDF&rsquo;s affiliation block.</span></dd>
+    <dt>Article type</dt>
+    <dd>article</dd>
+    <dt>Independence</dt>
+    <dd>Re-checked against the citation record: complete author lists of both papers, no shared
+        author, neither PI named on the citing paper; basis on the record: unverified-coverage.</dd>
+  </dl>
+  <h4>What the text says</h4>
+  <p class="none">No verbatim sentence recorded.</p>
+  <h4>Files</h4>
+  <p class="none">No PDF on file. Not in OpenAlex — no OpenAlex record by title.</p>
+  <p class="trace"><code>cit-001215</code> &middot; review note only — not part of
+     <code>packet.html</code> and not evidence until the row is confirmed and the packet re-rendered</p>
+</article>
+
+<article class="report" id="rep-cit-001216">
+  <h3>[CITATION] Design, synthesis, and biochemical evaluation of novel inhibitors of Norwalk virus 3CL protease</h3>
+  <p class="byline">SR Mandadapu<br>
+     <span class="venue">, 2014</span></p>
+  <dl>
+    <dt>My work cited</dt>
+    <dd>Rational design of potent, small, synthetic allosteric inhibitors of thrombin (2011) <span class="sub">[Rational design of potent, small,…]</span></dd>
+    <dt>row_uid</dt>
+    <dd><code>cit-001216</code></dd>
+    <dt>Where the citation appears</dt>
+    <dd><span class="none">not read — no PDF on file, so no claim about where the citation sits</span></dd>
+    <dt>Citing authors&rsquo; institutions</dt>
+    <dd><span class="none">Not recorded — confirm from the PDF&rsquo;s affiliation block.</span></dd>
+    <dt>Article type</dt>
+    <dd>article</dd>
+    <dt>Independence</dt>
+    <dd>Re-checked against the citation record: complete author lists of both papers, no shared
+        author, neither PI named on the citing paper; basis on the record: unverified-coverage.</dd>
+  </dl>
+  <h4>What the text says</h4>
+  <p class="none">No verbatim sentence recorded.</p>
+  <h4>Files</h4>
+  <p class="none">No PDF on file. Paywalled — host returned text/html; charset=UTF-8, not a PDF body.</p>
+  <p class="trace"><code>cit-001216</code> &middot; review note only — not part of
+     <code>packet.html</code> and not evidence until the row is confirmed and the packet re-rendered</p>
+</article>
+
+<article class="report" id="rep-cit-001217">
+  <h3>[BOOK] Studies on rationally designed, allosteric, coagulation inhibitors</h3>
+  <p class="byline">R Boothello<br>
+     <span class="venue">, 2014</span> &middot; <a href="https://search.proquest.com/openview/1e39143b98382b38c71074a9313f8722/1?pq-origsite=gscholar&amp;cbl=18750" target="_blank" rel="noopener noreferrer">search.proquest.com</a> &middot; <a href="https://doi.org/10.25772/ypz2-bv95" target="_blank" rel="noopener noreferrer">10.25772/ypz2-bv95</a></p>
+  <dl>
+    <dt>My work cited</dt>
+    <dd>Rational design of potent, small, synthetic allosteric inhibitors of thrombin (2011) <span class="sub">[Rational design of potent, small,…]</span></dd>
+    <dt>row_uid</dt>
+    <dd><code>cit-001217</code></dd>
+    <dt>Where the citation appears</dt>
+    <dd><span class="none">not read — no PDF on file, so no claim about where the citation sits</span></dd>
+    <dt>Citing authors&rsquo; institutions</dt>
+    <dd><span class="none">Not recorded — confirm from the PDF&rsquo;s affiliation block.</span></dd>
+    <dt>Article type</dt>
+    <dd>article</dd>
+    <dt>Independence</dt>
+    <dd>Re-checked against the citation record: complete author lists of both papers, no shared
+        author, neither PI named on the citing paper; basis on the record: unverified-coverage.</dd>
+  </dl>
+  <h4>What the text says</h4>
+  <p class="none">No verbatim sentence recorded.</p>
+  <h4>Files</h4>
+  <p class="none">No PDF on file. No open copy — OpenAlex has the work (10.25772/ypz2-bv95), no open-access PDF location.</p>
+  <p class="trace"><code>cit-001217</code> &middot; review note only — not part of
+     <code>packet.html</code> and not evidence until the row is confirmed and the packet re-rendered</p>
+</article>
+
+<article class="report" id="rep-cit-001220">
+  <h3>In-silico drug design approach to discover novel anti-coagulants</h3>
+  <p class="byline">KR Methuku<br>
+     <span class="venue">Journal of Postdoctoral Research December, 2013</span> &middot; <a href="https://scholar.archive.org/work/bwxyho4sf5bddevjoax57rcehq/access/wayback/http://www.postdocjournal.com/file_journal/655_58122119.pdf" target="_blank" rel="noopener noreferrer">scholar.archive.org</a> &middot; <a href="https://doi.org/10.14304/surya.jpr.v1n12.7" target="_blank" rel="noopener noreferrer">10.14304/surya.jpr.v1n12.7</a></p>
+  <dl>
+    <dt>My work cited</dt>
+    <dd>Rational design of potent, small, synthetic allosteric inhibitors of thrombin (2011) <span class="sub">[Rational design of potent, small,…]</span></dd>
+    <dt>row_uid</dt>
+    <dd><code>cit-001220</code></dd>
+    <dt>Where the citation appears</dt>
+    <dd><span class="none">not read — no PDF on file, so no claim about where the citation sits</span></dd>
+    <dt>Citing authors&rsquo; institutions</dt>
+    <dd><span class="none">Not recorded — confirm from the PDF&rsquo;s affiliation block.</span></dd>
+    <dt>Article type</dt>
+    <dd>article</dd>
+    <dt>Independence</dt>
+    <dd>Re-checked against the citation record: complete author lists of both papers, no shared
+        author, neither PI named on the citing paper; basis on the record: unverified-coverage.</dd>
+  </dl>
+  <h4>What the text says</h4>
+  <p class="none">No verbatim sentence recorded.</p>
+  <h4>Files</h4>
+  <p class="none">No PDF on file. No open copy — OpenAlex has the work (10.14304/surya.jpr.v1n12.7), no open-access PDF location.</p>
+  <p class="trace"><code>cit-001220</code> &middot; review note only — not part of
+     <code>packet.html</code> and not evidence until the row is confirmed and the packet re-rendered</p>
+</article>
+
+<article class="report" id="rep-cit-001221">
+  <h3>[CITATION] Structure-based design and optimization of dipeptidyl inhibitors of norovirus 3CL protease</h3>
+  <p class="byline">RAZ Uy<br>
+     <span class="venue">, 2014</span></p>
+  <dl>
+    <dt>My work cited</dt>
+    <dd>Rational design of potent, small, synthetic allosteric inhibitors of thrombin (2011) <span class="sub">[Rational design of potent, small,…]</span></dd>
+    <dt>row_uid</dt>
+    <dd><code>cit-001221</code></dd>
+    <dt>Where the citation appears</dt>
+    <dd><span class="none">not read — no PDF on file, so no claim about where the citation sits</span></dd>
+    <dt>Citing authors&rsquo; institutions</dt>
+    <dd><span class="none">Not recorded — confirm from the PDF&rsquo;s affiliation block.</span></dd>
+    <dt>Article type</dt>
+    <dd>article</dd>
+    <dt>Independence</dt>
+    <dd>Re-checked against the citation record: complete author lists of both papers, no shared
+        author, neither PI named on the citing paper; basis on the record: unverified-coverage.</dd>
+  </dl>
+  <h4>What the text says</h4>
+  <p class="none">No verbatim sentence recorded.</p>
+  <h4>Files</h4>
+  <p class="none">No PDF on file. Paywalled — host returned text/html; charset=UTF-8, not a PDF body.</p>
+  <p class="trace"><code>cit-001221</code> &middot; review note only — not part of
+     <code>packet.html</code> and not evidence until the row is confirmed and the packet re-rendered</p>
+</article>
+
+<article class="report" id="rep-cit-001224">
+  <h3>[BOOK] Designing direct and indirect factor Xa inhibitors</h3>
+  <p class="byline">RA Al-Horani<br>
+     <span class="venue">, 2012</span> &middot; <a href="https://search.proquest.com/openview/69367e48ed50250dfb2bc51b5e13c73e/1?pq-origsite=gscholar&amp;cbl=18750" target="_blank" rel="noopener noreferrer">search.proquest.com</a> &middot; <a href="https://doi.org/10.25772/9qcy-0g37" target="_blank" rel="noopener noreferrer">10.25772/9qcy-0g37</a></p>
+  <dl>
+    <dt>My work cited</dt>
+    <dd>Rational design of potent, small, synthetic allosteric inhibitors of thrombin (2011) <span class="sub">[Rational design of potent, small,…]</span></dd>
+    <dt>row_uid</dt>
+    <dd><code>cit-001224</code></dd>
+    <dt>Where the citation appears</dt>
+    <dd><span class="none">not read — no PDF on file, so no claim about where the citation sits</span></dd>
+    <dt>Citing authors&rsquo; institutions</dt>
+    <dd><span class="none">Not recorded — confirm from the PDF&rsquo;s affiliation block.</span></dd>
+    <dt>Article type</dt>
+    <dd>article</dd>
+    <dt>Independence</dt>
+    <dd>Re-checked against the citation record: complete author lists of both papers, no shared
+        author, neither PI named on the citing paper; basis on the record: unverified-coverage.</dd>
+  </dl>
+  <h4>What the text says</h4>
+  <p class="none">No verbatim sentence recorded.</p>
+  <h4>Files</h4>
+  <p class="none">No PDF on file. Paywalled — OpenAlex offered a PDF but the host answered 403.</p>
+  <p class="trace"><code>cit-001224</code> &middot; review note only — not part of
+     <code>packet.html</code> and not evidence until the row is confirmed and the packet re-rendered</p>
+</article>
+
+<article class="report" id="rep-cit-001225">
+  <h3>Design, synthesis, and biological evaluation of novel MCAK and 14-3-3 protein family inhibitors.</h3>
+  <p class="byline">AA Arrendale<br>
+     <span class="venue">, 2012</span> &middot; <a href="https://search.proquest.com/openview/626099758e4991c2edd32359acff072a/1?pq-origsite=gscholar&amp;cbl=18750" target="_blank" rel="noopener noreferrer">search.proquest.com</a></p>
+  <dl>
+    <dt>My work cited</dt>
+    <dd>Rational design of potent, small, synthetic allosteric inhibitors of thrombin (2011) <span class="sub">[Rational design of potent, small,…]</span></dd>
+    <dt>row_uid</dt>
+    <dd><code>cit-001225</code></dd>
+    <dt>Where the citation appears</dt>
+    <dd><span class="none">not read — no PDF on file, so no claim about where the citation sits</span></dd>
+    <dt>Citing authors&rsquo; institutions</dt>
+    <dd><span class="none">Not recorded — confirm from the PDF&rsquo;s affiliation block.</span></dd>
+    <dt>Article type</dt>
+    <dd>article</dd>
+    <dt>Independence</dt>
+    <dd>Re-checked against the citation record: complete author lists of both papers, no shared
+        author, neither PI named on the citing paper; basis on the record: unverified-coverage.</dd>
+  </dl>
+  <h4>What the text says</h4>
+  <p class="none">No verbatim sentence recorded.</p>
+  <h4>Files</h4>
+  <p class="none">No PDF on file. No open copy — OpenAlex has the work (no DOI), no open-access PDF location.</p>
+  <p class="trace"><code>cit-001225</code> &middot; review note only — not part of
+     <code>packet.html</code> and not evidence until the row is confirmed and the packet re-rendered</p>
+</article>
+
+<article class="report" id="rep-cit-001227">
+  <h3>Interazioni tra acidi nucleici, proteine e potenziali farmaci antitumorali: un approccio chimico-fisico</h3>
+  <p class="byline">A Cummaro<br>
+     <span class="venue">, 2013</span> &middot; <a href="https://tesidottorato.depositolegale.it/handle/20.500.14242/338305" target="_blank" rel="noopener noreferrer">tesidottorato.depositolegale.it</a></p>
+  <dl>
+    <dt>My work cited</dt>
+    <dd>Rational design of potent, small, synthetic allosteric inhibitors of thrombin (2011) <span class="sub">[Rational design of potent, small,…]</span></dd>
+    <dt>row_uid</dt>
+    <dd><code>cit-001227</code></dd>
+    <dt>Where the citation appears</dt>
+    <dd><span class="none">not read — no PDF on file, so no claim about where the citation sits</span></dd>
+    <dt>Citing authors&rsquo; institutions</dt>
+    <dd><span class="none">Not recorded — confirm from the PDF&rsquo;s affiliation block.</span></dd>
+    <dt>Article type</dt>
+    <dd>article</dd>
+    <dt>Independence</dt>
+    <dd>Re-checked against the citation record: complete author lists of both papers, no shared
+        author, neither PI named on the citing paper; basis on the record: unverified-coverage.</dd>
+  </dl>
+  <h4>What the text says</h4>
+  <p class="none">No verbatim sentence recorded.</p>
+  <h4>Files</h4>
+  <p class="none">No PDF on file. No open copy — OpenAlex has the work (no DOI), no open-access PDF location.</p>
+  <p class="trace"><code>cit-001227</code> &middot; review note only — not part of
+     <code>packet.html</code> and not evidence until the row is confirmed and the packet re-rendered</p>
+</article>
+
+<article class="report" id="rep-cit-001229">
+  <h3>[CITATION] Arimidex clotting trt prevent thrombosis Endocrine Abstracts</h3>
+  <p class="byline">F Ianni, CA Rota, SM Corsello, A De Rosa, F Gallo<br>
+     <span class="venue"></span></p>
+  <dl>
+    <dt>My work cited</dt>
+    <dd>Rational design of potent, small, synthetic allosteric inhibitors of thrombin (2011) <span class="sub">[Rational design of potent, small,…]</span></dd>
+    <dt>row_uid</dt>
+    <dd><code>cit-001229</code></dd>
+    <dt>Where the citation appears</dt>
+    <dd><span class="none">not read — no PDF on file, so no claim about where the citation sits</span></dd>
+    <dt>Citing authors&rsquo; institutions</dt>
+    <dd><span class="none">Not recorded — confirm from the PDF&rsquo;s affiliation block.</span></dd>
+    <dt>Article type</dt>
+    <dd>article</dd>
+    <dt>Independence</dt>
+    <dd>Re-checked against the citation record: complete author lists of both papers, no shared
+        author, neither PI named on the citing paper; basis on the record: user-decided.</dd>
+  </dl>
+  <h4>What the text says</h4>
+  <p class="none">No verbatim sentence recorded.</p>
+  <h4>Files</h4>
+  <p class="none">No PDF on file. Not in OpenAlex — no OpenAlex record by title.</p>
+  <p class="trace"><code>cit-001229</code> &middot; review note only — not part of
+     <code>packet.html</code> and not evidence until the row is confirmed and the packet re-rendered</p>
+</article>
+
+<article class="report" id="rep-cit-001230">
+  <h3>[CITATION] Potent inhibition of enterovirus D68 and human rhinoviruses by dipeptidyl aldehydes and a-ketoamides</h3>
+  <p class="byline">Yunjeong Kim, Anushka C. Galasiti Kankanamalage, Vishnu C. Damalanka, Pathum M. Weerawarna, William C. Groutas, Kyeong-Ok Chang<br>
+     <span class="venue">, 2015</span> &middot; <a href="https://doi.org/10.1016/j.antiviral.2015.11.010" target="_blank" rel="noopener noreferrer">10.1016/j.antiviral.2015.11.010</a></p>
+  <dl>
+    <dt>My work cited</dt>
+    <dd>Rational design of potent, small, synthetic allosteric inhibitors of thrombin (2011) <span class="sub">[Rational design of potent, small,…]</span></dd>
+    <dt>row_uid</dt>
+    <dd><code>cit-001230</code></dd>
+    <dt>Where the citation appears</dt>
+    <dd><span class="none">not read — no PDF on file, so no claim about where the citation sits</span></dd>
+    <dt>Citing authors&rsquo; institutions</dt>
+    <dd><span class="none">Not recorded — confirm from the PDF&rsquo;s affiliation block.</span></dd>
+    <dt>Article type</dt>
+    <dd>article</dd>
+    <dt>Independence</dt>
+    <dd>Re-checked against the citation record: complete author lists of both papers, no shared
+        author, neither PI named on the citing paper; basis on the record: confirmed.</dd>
+  </dl>
+  <h4>What the text says</h4>
+  <p class="none">No verbatim sentence recorded.</p>
+  <h4>Files</h4>
+  <p class="none">No PDF on file. No open copy — OpenAlex has the work (10.1016/j.antiviral.2015.11.010), no open-access PDF location.</p>
+  <p class="trace"><code>cit-001230</code> &middot; review note only — not part of
+     <code>packet.html</code> and not evidence until the row is confirmed and the packet re-rendered</p>
+</article>
+
+<article class="report" id="rep-cit-001231">
+  <h3>[CITATION] 5.2. 18.8 Imidoylstannanes, Diazoalkylstannanes, Tin Isocyanates, and Tin Isothiocyanates (Update 2014)</h3>
+  <p class="byline">PB Wyatt<br>
+     <span class="venue">Science of Synthesis Knowledge Updates 2014 Vol. 4, 2015</span></p>
+  <dl>
+    <dt>My work cited</dt>
+    <dd>Rational design of potent, small, synthetic allosteric inhibitors of thrombin (2011) <span class="sub">[Rational design of potent, small,…]</span></dd>
+    <dt>row_uid</dt>
+    <dd><code>cit-001231</code></dd>
+    <dt>Where the citation appears</dt>
+    <dd><span class="none">not read — no PDF on file, so no claim about where the citation sits</span></dd>
+    <dt>Citing authors&rsquo; institutions</dt>
+    <dd><span class="none">Not recorded — confirm from the PDF&rsquo;s affiliation block.</span></dd>
+    <dt>Article type</dt>
+    <dd>article</dd>
+    <dt>Independence</dt>
+    <dd>Re-checked against the citation record: complete author lists of both papers, no shared
+        author, neither PI named on the citing paper; basis on the record: unverified-coverage.</dd>
+  </dl>
+  <h4>What the text says</h4>
+  <p class="none">No verbatim sentence recorded.</p>
+  <h4>Files</h4>
+  <p class="none">No PDF on file. Not in OpenAlex — no OpenAlex record by title.</p>
+  <p class="trace"><code>cit-001231</code> &middot; review note only — not part of
+     <code>packet.html</code> and not evidence until the row is confirmed and the packet re-rendered</p>
+</article>
+
 <article class="report" id="rep-cit-001254">
   <h3>Using Synthetic Glycans to Investigate Anti‐Glycan Antibodies and Explore Their Medical Potential</h3>
   <p class="byline">Weber F, Valenti A, Ledvinka J, Moscovitz O, Seeberger PH<br>
@@ -10174,8 +11472,8 @@
    <code>notable-citations.sqlite</code>. Not linked from <code>packet.html</code> and not printed
    with it. Independence screen: <code>status = INDEPENDENT</code> and
    <code>is_countable_independent = 1</code> on the active, standing, English row.
-   238 citations of 5 of my works, shown as
-   231 rows; 64 of the 238 read by <code>scan-mentions.js</code> on or
+   270 citations of 6 of my works, shown as
+   259 rows; 64 of the 270 read by <code>scan-mentions.js</code> on or
    before 2026-11-08.</p>
 </main>
 <script>
