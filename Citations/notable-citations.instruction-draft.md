@@ -151,12 +151,50 @@ candidate below still gets a row with its reason (§4.5).
     read `article` for every row in the packet database and neither column is validated, so a
     dissertation is indistinguishable from a journal article in the data. Judge the type from the
     source and the file, not from those fields.
-  - How to tell, cheapest first: the **source link** (`search.proquest.com/…&diss=y`,
-    `theses.hal.science`, `*.scholaris.ca`, `freidok.uni-freiburg.de`, `ediss.*`,
-    `open.leidenuniv.nl`, `jscholarship.library.jhu.edu`, a `/handle/` path); the **venue** (a
-    title that publishes only reviews, e.g. *Trends in Biochemical Sciences*); and the **file** —
-    a thesis title page says "A dissertation submitted to … in conformity with the requirements for
-    the degree of …", and a review has no Methods section at all, only prose overview headings.
+  - **The word "review" means two unrelated things here. Never conflate them.** In the Independent
+    Citation Record, `REVIEW` is a *status* meaning "a person has to look at this row" —
+    `candidate.status` can literally read `REVIEW` for an ordinary research article, and it says
+    nothing about article type. What this screen excludes is a **review article**: secondary
+    literature that surveys other people's work and reports no experimental Methods and Results of
+    its own. Applicant instruction, 2026-11-08. Write the reason as `review article`, never as a
+    bare `review`, and never classify a row from the word appearing anywhere in the record's data.
+  - **How to tell, with three routes — no single one covers every row.** Use
+    `node scripts/work-type-report.js [--cites=<id>] [--only=…]`, which is read-only, consults all
+    three, and prints the evidence per row.
+    1. **The filed PDF's own shape** (`scripts/article-shape.js`) — strongest, since it is the
+       document being filed: does it carry Methods *and* Results headings, does page 1 carry a
+       type label, is it a thesis. Only available for rows with a file on disk.
+    2. **OpenAlex `type`**, accepted only when the returned record is demonstrably the same work.
+       Measured 2026-11-08 on the GlycoGlyph queue: OpenAlex typed `review` on ten rows and was
+       right on all ten, including two published in ordinary research journals (*Glycobiology*,
+       *Biomacromolecules*) where the venue alone says nothing. It is reliable — but it indexes
+       only part of this corpus, so it cannot be the only route.
+    3. **PubMed MeSH publication types** (E-utilities `esearch` + `efetch`) — the alternative for
+       rows OpenAlex lacks, and the corroborating source for rows it has. Indexers assign `Review`
+       from the article itself. `esummary` returns no publication types; use `efetch` XML.
+       **A title search needs the same credibility guard OpenAlex needs**: searching
+       `FUT8 alpha-(1,6)-fucosyltransferase in cancer` returned a *different* article in *Int J
+       Surg* which is a review, and would have screened out the wrong paper.
+    4. **Where the link points and what the venue publishes** — dissertation repositories
+       (`theses.hal.science`, `repository.cam.ac.uk`, `ora.ox.ac.uk`, `*.scholaris.ca`, `freidok.`,
+       `ediss.*`), ProQuest `&diss=y`, `api.taylorfrancis.com/content/chapters`, a poster on a
+       vendor hub, and review-only journals (*Trends in…*, *Current Opinion…*, *…Research Reviews*).
+       Verify a repository host by reading its abstract page — "This thesis describes…" settles it,
+       and a repository can also hold an accepted manuscript of a real article.
+  - **What the PDF route can get wrong, and why it needs the checks it has.** A page-1 type label is
+    often the only signal (`REVIEW`, `INVITED REVIEW`, `Review Open Access`), and publishers set it
+    with letterspacing (`O R I G I N A L  A R T I C L E`) or an access badge appended, so labels are
+    matched with all whitespace removed and badges stripped. Manuscripts with continuous line
+    numbering print the number flush to the heading (`Material and Methods120`), and a page break can
+    land mid-line and bury it. Match `\bthesis\b` with word boundaries — without them the test
+    matched "hypo**thesis**" and "syn**thesis**" and called eight ordinary research articles theses,
+    six of them already in the packet. A heading is Title Case or capitals and short; a wrapped body
+    line that happens to break after the word ("…tools and methods.") is not one.
+  - **A heading called "Methods" is not proof of a research article.** `cit-000625` ("Computational
+    tools for drawing, building and displaying carbohydrates: a visual guide") has a `Methods`
+    heading, and OpenAlex, PubMed and the page-1 label all say review. Reading it settled it: the
+    heading sits under a *Review* section banner and describes how the authors searched for existing
+    tools. Where routes disagree, read the page; do not let a keyword decide.
   - Found this way on the MAWE queue: `cit-001263` is a Queen's University MSc thesis whose §2.6
     cites MAWE under "Materials and Methods" (tier A), and `cit-001262` is a *Human Immunology*
     review with no Methods section. Both are screened out on work type.

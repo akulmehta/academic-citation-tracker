@@ -50,6 +50,38 @@ function parseRanges(spec) {
   return set;
 }
 
+/**
+ * Extract text from a PDF. Returns the whole text with "\f" between pages, the
+ * page count, and per-page lines. Shared by the CLI below and by
+ * article-shape.js so the pdf.js setup lives in one place.
+ */
+async function extractPages(file, pages) {
+  const abs = path.isAbsolute(file) ? file : path.join(PKT, file);
+  const { lib, dirs } = await loadPdfjs();
+  const doc = await lib.getDocument({
+    data: new Uint8Array(fs.readFileSync(abs)),
+    useSystemFonts: true,
+    isEvalSupported: false,
+    standardFontDataUrl: dirs.standardFontDataUrl,
+    wasmUrl: dirs.wasmUrl,
+  }).promise;
+  const perPage = [];
+  const parts = [];
+  for (let i = 1; i <= doc.numPages; i++) {
+    const page = await doc.getPage(i);
+    const tc = await page.getTextContent();
+    const txt = toLines(tc.items);
+    perPage.push({ page: i, text: txt });
+    parts.push(txt);
+  }
+  const numPages = doc.numPages;
+  await doc.destroy();
+  return { text: parts.join("\f"), numPages, pages: perPage };
+}
+
+module.exports = { extractPages, toLines, parseRanges };
+
+if (require.main === module)
 (async () => {
   const argv = process.argv.slice(2);
   const file = argv.find((a) => !a.startsWith("--"));
