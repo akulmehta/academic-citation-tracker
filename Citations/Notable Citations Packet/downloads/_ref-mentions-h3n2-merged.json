@@ -1,0 +1,62 @@
+[
+  {
+    "row_uid": "cit-000182",
+    "mentions": [
+      {
+        "section": "Introduction",
+        "tier": "C",
+        "page": "2",
+        "quote": "linked SIAs as receptors [12,13].",
+        "use_type": null,
+        "basis": "reference-number resolution",
+        "verified": 0,
+        "note": "cited as bracketed jointly with 12: [12,13]"
+      },
+      {
+        "section": "Introduction",
+        "tier": "C",
+        "page": "2",
+        "quote": "N-glycan structural complexity can influence receptor specificity [13,19–22].",
+        "use_type": null,
+        "basis": "reference-number resolution",
+        "verified": 0,
+        "note": "cited as bracketed jointly with 19, 20, 21, 22: [13,19–22]"
+      },
+      {
+        "section": "Results",
+        "tier": "B",
+        "page": "4",
+        "quote": "tures (4-22) (B) Enzymatic synthesis of extended core 3 O-glycans (23- 26).",
+        "use_type": null,
+        "basis": "reference-number resolution",
+        "verified": 0,
+        "note": "cited as bracketed jointly with 4, 5, 6, 7, 8, 9, 10, 11, 12, 14, 15, 16, 17, 18, 19, 20, 21, 22: (4-22)"
+      },
+      {
+        "section": "Results",
+        "tier": "B",
+        "page": "5",
+        "quote": "with an α2,3-linked SIA on the β3-branch (12, 13) and to sulfated core 2 di-sialosides (14–16), and the results high-",
+        "use_type": null,
+        "basis": "reference-number resolution",
+        "verified": 0,
+        "note": "cited as bracketed jointly with 12: (12, 13)"
+      }
+    ]
+  },
+  {
+    "row_uid": "cit-000193",
+    "mentions": [
+      {
+        "section": "Introduction",
+        "tier": "C",
+        "page": "6",
+        "quote": "that affect the receptor binding properties of the viruses [71].",
+        "use_type": null,
+        "basis": "reference-number resolution",
+        "verified": 0,
+        "note": "cited as bracketed: [71]"
+      }
+    ]
+  }
+]
