@@ -17,3 +17,31 @@ Two of these are still part of the pipeline and are reached from here on purpose
 
 Run them with `node archived-scripts\_post.cjs …` from the repo root. The gate
 never overwrites an existing `downloads/<uid>.pdf`.
+
+## Retrieval helpers worth keeping
+
+These are the ones a later wave should reach for, in the order the work goes:
+
+- `title-gate.cjs` — **run after every download, before marking a row.** Verifies
+  the PDF really is the catalogued article: verbatim 45-char title prefix, else
+  ≥80% distinctive-word overlap. Never mark a row without it.
+- `repofetch.cjs` — node-side fetch for rows whose `citing_url` is already a direct
+  file endpoint. Asks `heldPdfIndex()` first and prints `already on file: <where>`,
+  which is what stops a wave re-fetching a paper the packet filed months ago.
+- `directurls.cjs` — lists the rows that `repofetch.cjs` can act on.
+- `residual-buckets.cjs` — categorises the residual `no-open-copy` rows **from
+  `download-queue.csv`**, i.e. from `classify()` itself. `--list` prints the
+  open-access and "other" rows.
+- `recover-temp.cjs` — decodes base64 out of an MCP temp-output file into
+  `downloads/<uid>.pdf`.
+- `_efetch3.cjs`, `_wileypd.cjs`, `_metapdf.cjs`, `_sameorig.cjs`, `_oa3.cjs` —
+  Playwright drivers. `_metapdf.cjs` reads the site's own `citation_pdf_url`, which
+  is the canonical PDF route; guessing publisher paths is what produced the false
+  `no-pdf-bytes` results.
+
+## Known-defective — kept so the mistake is not repeated
+
+- `never-tried.cjs` and `residual-report.cjs` **re-derive `classify()` instead of
+  reading the CSV**, so they pull in rows already routed to `skipped-thesis`,
+  `-book` and `-preprint` and report the pool as 360 when `download-queue.js`
+  reports 123. Do not size a wave from either. Use `residual-buckets.cjs`.

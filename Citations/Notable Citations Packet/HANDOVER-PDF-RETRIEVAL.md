@@ -172,6 +172,9 @@ Browser drivers, also in `archived-scripts/`: `_efetch3.cjs` (queue-per-tab +
 `archived-scripts/_q1.cjs` … `_q9.cjs`, `_pg1.cjs`, `_pg2.cjs`, `_schema.cjs` are
 read-only DB and PDF-first-page probes. Useful patterns to copy.
 
+`archived-scripts/README.md` (the one tracked file in that folder) lists the same
+helpers and marks the two defective probes. Read it before writing a new driver.
+
 ---
 
 ## 4. Hard-won rules — do not relearn these
