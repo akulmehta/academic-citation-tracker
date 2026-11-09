@@ -22,7 +22,7 @@
  */
 const path = require("path");
 const fs = require("fs");
-const { PKT, openPacket } = require("./lib.js");
+const { PKT, openPacket, heldPdfIndex } = require("./lib.js");
 const flag = (n) => {
   const a = process.argv.find((x) => x.startsWith(`--${n}=`));
   return a ? a.slice(n.length + 3) : "";
@@ -67,8 +67,8 @@ function kindOfLink(u) {
 
 const rows = db
   .prepare(
-    `SELECT c.row_uid, c.cited_tool, c.cited_paper, c.citing_title, c.citing_authors, c.citing_url,
-            c.citing_year, c.citing_article_type, c.status, c.pdf_file,
+    `SELECT c.row_uid, c.folder_uid, c.cited_tool, c.cited_paper, c.citing_title, c.citing_authors, c.citing_url,
+            c.citing_year, c.citing_article_type, c.status, c.pdf_file, c.source_pdf,
             d.discover_state, d.discover_note, d.pdf_url, d.doi
        FROM citation c
        LEFT JOIN candidate d ON d.row_uid = c.row_uid
@@ -84,10 +84,14 @@ function linkOf(r) {
   return r.citing_url || r.pdf_url || "";
 }
 
+const heldPdf = heldPdfIndex(db);
+
 function classify(r) {
   const a = attempts.get(r.row_uid);
   if (a) return a.status;
-  if (r.pdf_file && fs.existsSync(path.join(PKT, r.pdf_file))) return "downloaded";
+  // A PDF on file under any name or folder means this row is not work. Reading
+  // only `pdf_file` re-queued 146 rows we already held on 2026-11-13.
+  if (heldPdf(r.folder_uid, r).held) return "downloaded";
   const k = kindOfLink(linkOf(r));
   if (k === "preprint") return "skipped-preprint";
   if (k === "thesis") return "skipped-thesis";

@@ -254,6 +254,70 @@ function absFile(rel) {
 }
 
 /**
+ * Build a test for "we already hold a PDF for this citing work".
+ *
+ * The retrieval queue once decided this by looking only at `citation.pdf_file`,
+ * and re-fetched papers it already had. Three things were invisible to that test:
+ *
+ *   - a `file` row naming the folder, when `pdf_file` was never written back;
+ *   - a group folder under `papers/`, `pending-papers/` or `screened-papers/`
+ *     whose PDF belongs to a sibling row of the same citing work;
+ *   - a staged file in `downloads/` named `<uid>-Surname.pdf` rather than
+ *     `<uid>.pdf`, which an exact-path existence test cannot see.
+ *
+ * `cit-000182` was re-queued through all three routes on 2026-11-13 even though
+ * `pending-papers/cit-000182/01-article-RP-2026.pdf` had been on file since
+ * 2026-11-08. Measured then, 146 of the 412 rows the queue called untried were
+ * already on disk.
+ *
+ * Returns a function of `(folderUid, row)` giving `{ held, why }`, where `why`
+ * names the evidence so a caller can print it. Build it once per run: it reads
+ * the database and three directory listings up front.
+ */
+function heldPdfIndex(db) {
+  const filedFolders = new Set(
+    db.prepare("SELECT DISTINCT folder_uid FROM file WHERE lower(file) LIKE '%.pdf'").all().map(r => r.folder_uid)
+  );
+  const staged = new Map();
+  const dlDir = path.join(PKT, "downloads");
+  if (fs.existsSync(dlDir)) {
+    for (const f of fs.readdirSync(dlDir)) {
+      const m = f.match(/^(cit-\d{6})/i);
+      if (!m || !f.toLowerCase().endsWith(".pdf")) continue;
+      if (!staged.has(m[1])) staged.set(m[1], []);
+      staged.get(m[1]).push(f);
+    }
+  }
+  const grouped = new Map();
+  for (const root of STORAGE_ROOTS) {
+    const base = path.join(PKT, root);
+    if (!fs.existsSync(base)) continue;
+    for (const d of fs.readdirSync(base)) {
+      const m = d.match(/^(cit-\d{6})/i);
+      if (!m) continue;
+      let hasPdf = false;
+      try {
+        hasPdf = fs.readdirSync(path.join(base, d)).some(f => f.toLowerCase().endsWith(".pdf"));
+      } catch {
+        continue;
+      }
+      if (hasPdf && !grouped.has(m[1])) grouped.set(m[1], `${root}/${d}`);
+    }
+  }
+  return function heldPdf(folderUid, row) {
+    const uid = folderUid || (row && row.row_uid);
+    const why = [];
+    if (uid && filedFolders.has(uid)) why.push("`file` row");
+    if (uid && staged.has(uid)) why.push(`downloads/${staged.get(uid).join(", ")}`);
+    if (uid && grouped.has(uid)) why.push(grouped.get(uid));
+    for (const rel of row ? [row.pdf_file, row.source_pdf] : []) {
+      if (rel && /\.pdf$/i.test(rel) && fs.existsSync(absFile(rel))) why.push(`pdf_file ${rel}`);
+    }
+    return why.length ? { held: true, why: why.join(" + ") } : { held: false };
+  };
+}
+
+/**
  * The packet schema, from §4.6 of the instructions. Column names match the CSV
  * headers exactly so an export is a plain SELECT.
  */
@@ -660,4 +724,4 @@ function sameSentence(a, b) {
   return false;
 }
 
-module.exports = { PKT, REPO, CATALOG, SUMMARY_MD, PDF_ROOT, PACKET_DB, PAPERS, PENDING_PAPERS, SCREENED_PAPERS, ROOT_PAPERS, ROOT_PENDING, ROOT_SCREENED, STORAGE_ROOTS, openCatalog, openPacket, SCHEMA, surnameSlug, surnameOf, seniorAuthor, readEnv, rel, authorKeys, sharesAuthor, toolForCitedPaper, projectForCitedPaper, TIER_RANK, headlineTier, originalApplicationUids, potentialIndependent, ROOT_FOR_STATUS, folderRoots, storageDir, absFile, sameSentence };
+module.exports = { PKT, REPO, CATALOG, SUMMARY_MD, PDF_ROOT, PACKET_DB, PAPERS, PENDING_PAPERS, SCREENED_PAPERS, ROOT_PAPERS, ROOT_PENDING, ROOT_SCREENED, STORAGE_ROOTS, openCatalog, openPacket, SCHEMA, surnameSlug, surnameOf, seniorAuthor, readEnv, rel, authorKeys, sharesAuthor, toolForCitedPaper, projectForCitedPaper, TIER_RANK, headlineTier, originalApplicationUids, potentialIndependent, ROOT_FOR_STATUS, folderRoots, storageDir, absFile, heldPdfIndex, sameSentence };
