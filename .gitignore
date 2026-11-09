@@ -56,3 +56,14 @@ tools/.pdf-header-sample.*
 Thumbs.db
 desktop.ini
 *.tmp
+
+# --- Session scratch moved out of the repo root ------------------------------
+# archived-scripts/ holds the one-off .cjs drivers and probes used during PDF
+# retrieval; archived-logs/ holds their dumps, maps and notes. Kept on disk as
+# the record of what was fetched and why, but they are ~150 MB of near-identical
+# base64 captures and must not enter history. Nothing here is evidence.
+# The `*` form (not `archived-scripts/`) is required to re-include the README:
+# git cannot un-ignore a file inside a directory it has excluded wholesale.
+archived-scripts/*
+!archived-scripts/README.md
+archived-logs/
