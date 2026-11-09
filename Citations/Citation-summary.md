@@ -2,7 +2,7 @@
 
 > **Generated file — do not edit.** Rendered from [`Citation-summary.docx`](./Citation-summary.docx) by [`tools/parse-citation-summary.js`](../tools/parse-citation-summary.js). Edit the docx, then re-run `node tools/parse-citation-summary.js`; a re-run overwrites this file.
 >
-> Source: docx created by Akul Mehta, last modified 2026-11-04T02:04:00Z by Akul Mehta. Rendered 2026-11-07. Every sentence in the tables below is quoted from a cell of that document. Columns marked *(derived)* are computed, not written by the author, and say how.
+> Source: docx created by Akul Mehta, last modified 2026-11-04T02:04:00Z by Akul Mehta. Rendered 2026-11-09. Every sentence in the tables below is quoted from a cell of that document. Columns marked *(derived)* are computed, not written by the author, and say how.
 
 What this collection is for: finding the papers that use **GLAD**, **GlycoGlyph**, or the **MAWE** glycan-microarray method, and recording *where* in each paper the tool appears. A Methods-section use is stronger evidence of adoption than a passing reference. The "Where" column below is the first word of the author's own note, so it is that reading of the PDF, not an inference.
 
@@ -401,6 +401,10 @@ These 19 articles were cited in the original application. They are listed here s
 | [17_2022_J Am Chem Soc_A Tsouka.pdf](./Notable%20Citations%20in%20Original%20Application/17_2022_J%20Am%20Chem%20Soc_A%20Tsouka.pdf) | 4.0 MB | — unmatched |
 | [18_2022_J Am Chem Soc_W Ma.pdf](./Notable%20Citations%20in%20Original%20Application/18_2022_J%20Am%20Chem%20Soc_W%20Ma.pdf) | 4.1 MB | — unmatched |
 | [19_2023_Biochem Biophys Reports_R N Witt.pdf](./Notable%20Citations%20in%20Original%20Application/19_2023_Biochem%20Biophys%20Reports_R%20N%20Witt.pdf) | 2.0 MB | — unmatched |
+
+### Notable Citations Packet — 0 file(s)
+
+_empty_
 
 **6 of 21 PDFs match no row** on surname, and no near spelling was found either. That is a naming difference, not evidence that a paper is missing from the table: several files are named for the *first* author or after a DOI, and the `low-value` folder is deliberately not summarised in the docx. Check the file before concluding anything about it.
 

@@ -1151,6 +1151,7 @@ node scripts/scan-mentions.js --write     # where the tools appear (scan_tier on
 node scripts/scan-refs.js --mentions=f.json # where the work is credited without naming it (§2.1)
 node scripts/merge-ref-mentions.js --from=f.json --out=g.json  # only if the spec would overwrite
 node scripts/record-mentions.js --from=g.json --write  # occurrences, one row each (`mention`)
+node scripts/classify-citations.js        # read-only proposal: use type, negative flag, confidence per row (CLASSIFICATION-REPORT.md)
 node scripts/record-evidence.js --write   # file tier/section/page/quote, each verified in the PDF
 node scripts/narrative-intake.js --write  # the four prose sections (table `narrative`)
 node scripts/build-status.js --write      # PACKET-STATUS.md — open items, disagreements

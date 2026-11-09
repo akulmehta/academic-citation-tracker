@@ -20,7 +20,7 @@
 const fs = require("fs");
 const path = require("path");
 const { pathToFileURL } = require("url");
-const { PKT, REPO, PACKET_DB, PDF_ROOT, openPacket, folderRoots, storageDir } = require("./lib.js");
+const { surnameSlug, PKT, REPO, PACKET_DB, PDF_ROOT, openPacket, folderRoots, storageDir } = require("./lib.js");
 
 const argv = process.argv.slice(2);
 const DRY = !argv.includes("--write");
@@ -63,7 +63,7 @@ function targetName(rows, surname, year) {
     .map(m => Number(m[1])));
   let n = 1;
   while (used.has(n)) n++;
-  const slug = String(surname || "article").normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[^A-Za-z]/g, "");
+  const slug = surname ? surnameSlug(surname).replace(/[^A-Za-z]/g, "") || "article" : "article";
   const date = SHOWS || year;
   const tail = date ? `-${String(date).replace(/[^0-9-]/g, "").replace(/-+$/, "")}` : "";
   return `${String(n).padStart(2, "0")}-${ROLE}-${slug}${tail}.pdf`;
@@ -119,8 +119,18 @@ async function main() {
   // the correct paper. Comparing with the spaces removed cannot make a wrong
   // paper pass — the probe is still six words long — so it is a widening of the
   // match, not a weakening of it.
-  const ok = probe.length > 0 && (text.includes(probe) || text.replace(/ /g, "").includes(probe.replace(/ /g, "")));
-  console.log(`title check  "${probe}" ${ok ? "found in the extracted text" : "NOT FOUND"}`);
+  let ok = probe.length > 0 && (text.includes(probe) || text.replace(/ /g, "").includes(probe.replace(/ /g, "")));
+  let how = "found in the extracted text";
+  // Fallback: a Greek letter or symbol in a title (alpha-thrombin, CH-pi, YXX-Phi) is
+  // typeset as a different glyph, so no verbatim run survives. Require nearly every
+  // distinctive word (4+ letters) of the whole title to occur in the text instead.
+  if (!ok) {
+    const dw = [...new Set(words.filter(w => w.length >= 4))];
+    const flat = text.replace(/ /g, "");
+    const have = dw.filter(w => flat.includes(w)).length;
+    if (dw.length >= 5 && have / dw.length >= 0.9) { ok = true; how = `matched by word overlap (${have}/${dw.length} distinctive title words)`; }
+  }
+  console.log(`title check  "${probe}" ${ok ? how : "NOT FOUND"}`);
   if (!ok) {
     console.error(`\nrefusing to file: the extracted text does not contain the opening of\n  "${main.citing_title}"\nso this PDF is not the article the folder stands for.`);
     process.exitCode = 1;
