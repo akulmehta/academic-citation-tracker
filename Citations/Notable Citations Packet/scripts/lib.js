@@ -766,8 +766,13 @@ function linkKind(u) {
   if (/10\.1101\/|biorxiv|medrxiv|chemrxiv|arxiv|preprints\.org|osf\.io\/preprint/.test(s)) return "preprint";
   if (/scholarsportal|scholarsbank|vtechworks|etd|theses|dissert|proquest|vuir\.library|duepublico/.test(s)) return "thesis";
   const isbn = /97[89]\d{10,11}/.test(s.replace(/[-/]/g, ""));
+  // A Wiley reference work (Burger's Medicinal Chemistry, Encyclopedia of…) is a
+  // book whose chapters carry the 10-digit ISBN as the DOI stem:
+  // 10.1002/0471266949.bmc182.pub2. Journal DOIs never look like this - they are
+  // 10.1002/anie.202501234 - so a leading zero followed by nine digits is safe.
+  const wileyRefWork = /10\.1002\/0\d{9}\./.test(s);
   const chapterish = /\.ch\d/i.test(s) || /\/chapter\//i.test(s) || /bk-\d{4}-\d+/.test(s);
-  if ((isbn || chapterish) && !/springer\.com\/protocol\//.test(s)) return "book";
+  if ((isbn || chapterish || wileyRefWork) && !/springer\.com\/protocol\//.test(s)) return "book";
   return "article";
 }
 

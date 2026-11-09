@@ -30,6 +30,8 @@ is("https://www.worldscientific.com/doi/abs/10.1142/9781783269242_0003", "book")
 is("https://www.sciencedirect.com/science/chapter/edited-volume/pii/B9780128203033000011", "book");
 is("https://books.rsc.org/books/edited-volume/2232/chapter/8161746", "book");
 is("10.1016/b978-0-12-819475-1.00107-3", "book");
+// A Wiley reference work: the DOI stem is the 10-digit ISBN, not a 13-digit one.
+is("https://onlinelibrary.wiley.com/doi/abs/10.1002/0471266949.bmc182.pub2", "book");
 
 // The one exception the user asked for: a single protocol, not the whole book.
 is("https://link.springer.com/protocol/10.1007/978-1-0716-1398-6_10", "article");
