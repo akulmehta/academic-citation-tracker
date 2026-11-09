@@ -29,6 +29,13 @@ Working directory: `C:\Projects\EB1A`
 Repo: `akulmehta/academic-citation-tracker`, branch `main`.
 Packet folder: `C:\Projects\EB1A\Citations\Notable Citations Packet\`
 
+**Read §7.1 before acting.** It lists the three instruction files with absolute paths:
+`C:\Projects\EB1A\.github\copilot-instructions.md` (auto-loaded workspace rules),
+`C:\Projects\EB1A\Citations\notable-citations.instruction-draft.md` (the packet's playbook),
+and `C:\Projects\EB1A\Independent Citation Record\Independent Citation Record Guide.md`
+(read-only). Two of the rules quoted below come from the first file; if this document and
+that file disagree, that file wins and you should say so.
+
 ---
 
 ## 1. Where things stand (verified 2026-11-09)
@@ -135,7 +142,7 @@ These are not oversights; they are the two rows entitlement provably cannot reac
 | script | what it does |
 |---|---|
 | `download-queue.js` | the retrieval tracker. `--mark=<uid>=<status> --note="…"` is the **only** writer; `--export` rewrites `download-queue.csv`. `classify()` is the definition of whether a row is still work. |
-| `validate-packet.js` | all mechanical §7 checks. Run after every batch. |
+| `validate-packet.js` | all mechanical §7 checks of the draft instructions (§7.1). Run after every batch. |
 | `build-status.js --write` | regenerates `PACKET-STATUS.md`. **Never hand-edit that file.** |
 | `lib.js` | `DOWNLOAD_STATUSES`, `heldPdfIndex()`, `linkKind()`, `STORAGE_ROOTS`, `ROOT_FOR_STATUS` |
 | `pdf-text.js` | `extractPages(file, pages)` → `{ text, numPages, pages }`. **Use `r.text`**, not `r.pages` (that is an array of objects). |
@@ -291,13 +298,44 @@ Co-authored-by: Copilot <223556219+Copilot@users.noreply.github.com>
 
 ---
 
-## 7. Reference documents
+## 7. Instruction and reference documents
 
-- `Citations\Notable Citations Packet\PACKET-STATUS.md` — generated, 2 057 lines.
+Repo root is `C:\Projects\EB1A\`. The paths below are absolute for the instruction
+files, because getting the wrong one means working from rules that no longer apply.
+**Everything you write goes inside the packet folder**, `Citations\Notable Citations
+Packet\` — the record and everything above it are read-only (§0). The one exception is
+scratch: `archived-scripts\` and `archived-logs\` at the repo root are git-ignored
+holding areas for throwaway drivers and dumps (§3), and writing there is allowed
+precisely because nothing in them is evidence and nothing reads them.
+
+### 7.1 Instruction files — read before doing anything
+
+| File | Governs | Read/write |
+|---|---|---|
+| `C:\Projects\EB1A\.github\copilot-instructions.md` | The workspace rules auto-loaded into every agent's context: evidence accuracy, the record's citation rules, the packet/record separation, the `Citations/` PDF folders, access walls, browser conduct. 200 dense lines. The two sections that bind this stage are **"Notable-Citations Packet Is Separate From the Record"** (line 90) and **"Citing-Article PDFs (`Citations/`)"** (line 141). | Read. Propose changes to the applicant; discuss before editing an existing rule. |
+| `C:\Projects\EB1A\Citations\notable-citations.instruction-draft.md` | The packet's own playbook, 1 428 lines. §0 the separation, §1 selection and screening, §2 locate and read PDFs (**§2.2 "How a PDF gets fetched" is the retrieval layer this stage built** — the queue, `heldPdfIndex()`, `citation_pdf_url`, the OpenAthens status codes, the Wiley endpoint), §4 the database, §5 output and the pipeline order (§5.5), §7 the pre-handover checklist, §8 what exists. Updated 2026-11-09. | Read. Editable, but §0 forbids anything that writes to the record. |
+| `C:\Projects\EB1A\Independent Citation Record\Independent Citation Record Guide.md` | The *record's* guide — independence, translation, exhibit standards. | **Read-only from this side** (§0). Do not write to it or to `Independent Citation Record/Progress Tracker.json`. |
+
+When the two packet-facing files disagree, `.github\copilot-instructions.md` wins: it is what every
+agent loads automatically, so a rule stated only in the draft is a rule nobody follows. Say so rather
+than silently picking one.
+
+### 7.2 Reference documents
+
+- `Citations\Notable Citations Packet\PACKET-STATUS.md` — generated, 2 056 lines.
   §2 lists what is missing; §4 lists independent citations not in the packet.
-- `Citations\Notable Citations Packet\potential_notable_citations.html` — 699
-  candidates, searchable and filterable, 86 tier claims each backed by a PDF scan.
-- `Independent Citation Record/Independent Citation Record Guide.md` — the *record's*
-  guide. Read-only from this side.
+  Regenerate with `node scripts/build-status.js --write`; never hand-edit, or the
+  next build reverts the change and the stale claim survives.
+- `Citations\Notable Citations Packet\potential_notable_citations.html` — **699 candidate
+  citations** shown as **619 table rows** (one citing article that cites several of the applicant's
+  works occupies one row, §5.6 of the draft instructions), searchable and filterable, with **86 tier
+  claims** each backed by a scan of a PDF on file or a resolved mention. All three figures are what
+  `node scripts/validate-packet.js` reports; the page's own `<h2>` reads "The 619 candidates" because
+  it counts rows, not citations — that is not a discrepancy. Generated by
+  `node scripts/build-potential.js --write`.
+- `Citations\Notable Citations Packet\download-queue.csv` — the readable export of
+  `download_attempt`. Read this, not `candidate.discover_state`, for what was actually tried.
+- `archived-scripts\README.md` — the tracked index of the git-ignored scratch folder:
+  which helpers are worth keeping and which two are known defective.
 - Session checkpoints: `c:/Users/mehta/.copilot/session-state/a737903d-b676-433a-b642-38275839ef57/checkpoints/index.md`
   — 39 checkpoints, most recent first. Read `039-*`, `038-*`, `037-*`, `036-*`.

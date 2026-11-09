@@ -34,6 +34,15 @@ These are the ones a later wave should reach for, in the order the work goes:
   open-access and "other" rows.
 - `recover-temp.cjs` — decodes base64 out of an MCP temp-output file into
   `downloads/<uid>.pdf`.
+- `check-md.cjs` — read-only markdown sanity check for the documentation this effort
+  writes: unbalanced code fences, a UTF-8 BOM, and mojibake outside inline code.
+  `node archived-scripts\check-md.cjs <file> …`, exits 1 on any problem. It exists
+  because `Set-Content -Encoding utf8` writes a BOM that silently poisons the first
+  character of a commit subject, and because a `Get-Content` + `Set-Content`
+  round-trip turns every em dash into `â€”`.
+- `potential-count.cjs` — recounts what `potential_notable_citations.html` asserts
+  (candidate rows, tier claims) so a figure quoted in prose can be checked against
+  the generated page rather than trusted.
 - `_efetch3.cjs`, `_wileypd.cjs`, `_metapdf.cjs`, `_sameorig.cjs`, `_oa3.cjs` —
   Playwright drivers. `_metapdf.cjs` reads the site's own `citation_pdf_url`, which
   is the canonical PDF route; guessing publisher paths is what produced the false
