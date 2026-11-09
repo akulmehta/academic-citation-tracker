@@ -13,6 +13,10 @@
  * overrule it — a row is only skipped because its LINK says preprint or thesis,
  * never because a title sounds like one.
  *
+ * academia.edu is refused on the host alone, and not as a scope judgement: an
+ * upload there is one co-author's copy, Scholar indexes the citation under that
+ * single name, and the byline therefore cannot settle independence at all.
+ *
  * Usage:
  *   node scripts/download-queue.js                 # queue summary by host
  *   node scripts/download-queue.js --list          # every pending row

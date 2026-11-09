@@ -44,7 +44,7 @@ const SCREENED_PAPERS = path.join(PKT, ROOT_SCREENED);
  *
  * SQLite cannot widen a `CHECK` list, so this array is both the validation list
  * and the thing `migrate()` rebuilds the table against; a status added here and
- * not there silently fails on write. `skipped-academia` was added on 2026-11-03
+ * not there silently fails on write. `skipped-academia` was added on 2026-11-09
  * when the applicant directed that academia.edu citations be dropped.
  */
 const DOWNLOAD_STATUSES = [
@@ -145,7 +145,7 @@ function migrate(db) {
   // kept fetching them, so the tab wasted a paywalled request on a chapter nobody
   // will file. SQLite cannot widen a CHECK list, so the table is rebuilt.
   //
-  // The test is against the whole list, not one marker value: on 2026-11-03 the
+  // The test is against the whole list, not one marker value: on 2026-11-09 the
   // applicant directed that academia.edu citations be dropped, and a check written
   // as `includes("skipped-book")` would have let a table that already had the book
   // status keep a CHECK that refused the new one.
