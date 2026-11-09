@@ -98,7 +98,7 @@ So the ranking, from strongest to weakest:
 | B | Results / Figures | `Citations/In Results and Figures/` | The tool produced the reported data. |
 | C | Introduction / Discussion | `Citations/In high reputation Publication/` | The work is acknowledged as relevant; included when the venue or the substance justifies it. |
 | D | Acknowledgements | `Citations/In Acknowledgements/` | A courtesy, not a use. Not packet material. |
-| — | screened out | `Citations/low-value/` | Passing mentions and other weak rows. Not packet material. |
+| — | screened out | `screened-papers/` (packet root, §5.1) | Passing mentions and other weak rows. Not packet material. |
 
 The folder a PDF sits in records where its citation was found, so the tier can start from the
 folder — but confirm it against the article text before relying on it (§2).
@@ -198,8 +198,26 @@ candidate below still gets a row with its reason (§4.5).
   - Found this way on the MAWE queue: `cit-001263` is a Queen's University MSc thesis whose §2.6
     cites MAWE under "Materials and Methods" (tier A), and `cit-001262` is a *Human Immunology*
     review with no Methods section. Both are screened out on work type.
+  - **The download identity gate cannot catch a thesis, and never will.** A thesis and the journal
+    article it came from share a title, so the 45-char verbatim prefix test in
+    `archived-scripts/title-gate.cjs` passes a dissertation `VERBATIM` — which is exactly what it did
+    for all eight theses retrieved on 2026-11-09, every one of which Scholar had typed `article`.
+    Only **page 1** of the file reveals *"Dissertation zur Erlangung…"*, *"A thesis submitted"*, or
+    *"PhD thesis"*. Read page 1 before marking a row `downloaded`; `scripts/article-shape.js` does
+    this and is the tool to call.
   - Screening is not deleting. The row keeps its `status = 'screened-out'` and this reason, and
-    `node scripts/relocate-pdfs.js --write` moves its PDF to `Citations/low-value/`.
+    `node scripts/relocate-pdfs.js --write` moves its PDF to the packet's `screened-papers/` root
+    (§5.1) — **not** to `Citations/low-value/`. Those are two different places doing two different
+    jobs: `Citations/low-value/` is a folder in the manually filed `Citations/` tree and holds three
+    PDFs nobody cataloged into the packet, while `screened-papers/` is one of the packet's three
+    storage roots and is where `relocate-pdfs.js` and the `pdf-root` validator check put a
+    screened-out folder. Nothing in `scripts/` writes to `low-value/`.
+- **Citations from academia.edu are screened out and never downloaded** (applicant instruction,
+  2026-11-09). A single author uploads an academia.edu page naming only themselves, Google Scholar
+  indexes the citation with that one name, and the row therefore reads as independent when the real
+  paper shares an author with the cited work. `cit-000244` / PMC5248960 is the case that found it.
+  The status `skipped-academia` exists in `download_attempt` for exactly this; mark such a row and do
+  not spend a browser session on it.
 - **Citations that are not independent.** This is the first screen, before any reading of the
   article. A citation counts only when the citing paper and the cited paper share no author, and
   per the applicant's standing instruction any paper naming Richard D. Cummings or Umesh R. Desai
@@ -242,14 +260,15 @@ ambiguous, record what the sentence actually says and let counsel decide.
 For each candidate, parse the PDF and use your judgement to determine the **exact location and
 context** of every citation. Record the section and the page.
 
-Text extraction from these files works, but the library is not installed in the repository yet.
-**Install it under the packet folder, not under `tools/`** — adding a dependency to
-`tools/package.json` would change the toolchain the Independent Citation Record runs on (§0). Give
-the packet its own `package.json` in `Citations/Notable Citations Packet/`, run `npm install
-pdfjs-dist` there, and keep the packet's scripts beside it. `node_modules/` is already git-ignored
-repo-wide (`.gitignore`), so the install stays out of the commit. Use
+Text extraction from these files works and the library **is** installed: `pdfjs-dist` is a
+dependency of the packet's own `package.json` (4.10.38 as of 2026-11-09) and `node_modules/` sits in
+the packet folder. **Keep it there, not under `tools/`** — adding a dependency to
+`tools/package.json` would change the toolchain the Independent Citation Record runs on (§0).
+`node_modules/` is already git-ignored repo-wide (`.gitignore`), so the install stays out of the
+commit. Use `scripts/pdf-text.js`, which wraps
 `pdfjs-dist/legacy/build/pdf.mjs`, `getDocument({ data, useSystemFonts: true, isEvalSupported:
-false })`, and group each page's items by their y-ordinate into lines. The raw `zlib.inflateSync`
+false })`, and groups each page's items by their y-ordinate into lines; call it rather than
+re-implementing the grouping. The raw `zlib.inflateSync`
 shortcut does not work, because the journals embed subset fonts and it returns glyph indices instead
 of characters. `Required "glyf" table is not found` and `TT: undefined function` warnings during
 extraction are cosmetic.
@@ -378,7 +397,57 @@ safe-browsing flag, or "ask where to save" change fixes it. Two routes work, in 
 PMC guards a PDF with a proof-of-work plus reCAPTCHA that the page's own JavaScript passes; drive
 the click through the browser rather than fetching the URL. As of 2026-11-09 these hosts sit behind
 a Cloudflare interstitial (page title *"Just a moment…"*, HTTP 403) and need the applicant:
-`pubs.acs.org`, `academic.oup.com`, `mcponline.org`, `journals.sagepub.com`, `rpthjournal.org`.
+`pubs.acs.org`, `academic.oup.com`, `mcponline.org`, `journals.sagepub.com`, `rpthjournal.org`,
+`science.org`, `jbc.org`, `cell.com`, `ahajournals.org`, `ard.eular.org`, `thrombosisresearch.com`,
+`ingentaconnect`, `benthamdirect` (which reports *"restricted by your organization"*), and `ovid`
+(OpenAthens 400).
+
+**Every retrieval outcome goes into `scripts/download-queue.js` — it is the only writer of queue
+state.** The table is `download_attempt` (one row per `row_uid`: `url`, `host`, `status`, `note`,
+`attempted_on`), and its `CHECK` allows exactly `downloaded`, `walled`, `no-open-copy`,
+`skipped-preprint`, `skipped-thesis`, `skipped-book`, `skipped-academia`, `failed`. Mark with
+`node scripts/download-queue.js --mark=<uid>=<status> --note="…"` and re-export with `--export`.
+An attempt that is left unmarked is an attempt that did not happen: the next session repeats it.
+
+- **Check the shelf before fetching anything.** `heldPdfIndex(db)` in `scripts/lib.js` takes the
+  *open database handle* and returns a predicate; `held(uid, row)` answers whether a PDF for that row
+  is already filed somewhere. It is not enough to consult `download_attempt`, because a row can hold
+  a PDF and carry no mark at all — three papers were re-fetched on 2026-11-09 that way and were
+  caught only by comparing MD5s.
+- **Never delete a downloaded PDF — move it.** A thesis or preprint that gets screened out on work
+  type still goes to `pending-papers/<uid>/`, because the alternative is that a future wave downloads
+  it again. By the same logic `cit-000380` keeps a byte-identical copy of `cit-001220` **on
+  purpose**: delete it and `heldPdfIndex()` reports that row unheld, so the next session re-fetches
+  it and calls the duplicate a new find.
+- **`citation_pdf_url` is the canonical route to the file** — it is what a reader's "Download PDF"
+  follows. Guessing paths is what produced the false `no-pdf-bytes` results. Wiley is the trap: its
+  real endpoint is `/doi/pdfdirect/<doi>`, while `/doi/pdf/` and `/doi/epdf/` return `text/html`
+  shells, and Wiley rejects a bare DOI in the URL entirely — use `/doi/abs/<doi>`.
+- **OpenAthens status codes mean different things.** A **404** means the host is absent from its
+  knowledge base: fall back to the direct route. A **403 "The redirector is not enabled for the
+  specified customer domain"** and a **400** are genuine refusals — `nature.com` and `jove.com` are
+  the former and `ovid` the latter, so no amount of retrying or re-authenticating reaches them.
+  Record the reason verbatim in the `note` so nobody re-tries the same wall.
+- **A 403 names the host, not the platform.** `figshare.mq.edu.au` and RMIT's `ndownloader` refuse a
+  plain node GET while other hosts on the same platform serve the file. Probe the specific URL.
+- **A URL-fragment tab marker is destroyed by the first navigation.** Tags like `#sdrwork` added to
+  a tab's URL to label it are gone as soon as the page navigates, so a driver that re-filters tabs on
+  the marker silently finds zero tabs and reports success having done nothing. Select tabs by
+  exclusion, and use one worker per tab.
+- **`btoa(String.fromCharCode(...b))` stack-overflows on multi-MB arrays.** Chunk at `0x8000`.
+- **A look-up that did not complete is not a finding that no copy exists.** Never mark
+  `no-open-copy` after a throttled or failed request.
+
+The scratch helpers built for the 2026-11-08/09 wave live in `archived-scripts/` (git-ignored;
+`archived-scripts/README.md` is the tracked index of what is there and what is defective):
+`repofetch.cjs` fetches node-side the rows whose `citing_url` is already a direct file endpoint, and
+`title-gate.cjs` is the identity check to run after every download and before marking — a verbatim
+45-char prefix, else ≥80% distinctive-word overlap, reading `r.text` rather than `r.pages`.
+`residual-buckets.cjs` categorises the rows still sitting at `no-open-copy` **from
+`download-queue.csv`**; do not use `never-tried.cjs` or `residual-report.cjs`, which re-derive
+`classify()` instead of reading the queue and report the pool as 360 when it is 123. The full state
+of that stage, including which 319 rows gained a PDF and by what route, is in
+[`HANDOVER-PDF-RETRIEVAL.md`](./Notable%20Citations%20Packet/HANDOVER-PDF-RETRIEVAL.md).
 
 **A repository deposit is not the row's title.** A bitstream's own `<meta citation_title>` decides
 what the file is; the landing-page title may name a different article. `cit-000560`'s record reads
@@ -617,7 +686,7 @@ screened-out.csv   ← status = screened-out or held, with screen_reason
 
 ### 4.6 Schema
 
-Sketch of the two tables, for the file's own database. Keep the column names identical to the CSV
+Sketch of the tables, for the file's own database. Keep the column names identical to the CSV
 headers in §4.3 and §4.4 so an export is a plain `SELECT` and the two artifacts cannot drift apart.
 
 ```sql
@@ -724,7 +793,24 @@ CREATE TABLE narrative (
   written_on     TEXT,
   PRIMARY KEY (folder_uid)
 );
+
+-- The retrieval queue (§2.2). One row per row_uid, and `note` carries why a row
+-- could not be fetched, so a wall is documented rather than re-attempted.
+CREATE TABLE download_attempt (
+  row_uid      TEXT PRIMARY KEY,
+  url          TEXT,
+  host         TEXT,
+  status       TEXT NOT NULL CHECK (status IN ('downloaded','walled','no-open-copy',
+                  'skipped-preprint','skipped-thesis','skipped-book','skipped-academia','failed')),
+  note         TEXT,
+  attempted_on TEXT NOT NULL
+);
 ```
+
+A fifth table, `candidate`, is the discovery queue that `discover-pdfs.js` seeds from the record and
+`promote-candidates.js` moves into `citation`. It holds the per-row fetch state (`discover_state`,
+`pdf_url`, `pdf_source`, `pdf_file`, `has_pdf`) and the screening state (`screen_state`), each with
+its own `CHECK`. It is the queue a person works from; `citation` is what the packet reports on.
 
 Two tables carry the same idea at different grains, and mixing them up is the trap:
 
@@ -1050,6 +1136,9 @@ node scripts/discover-pdfs.js --seed      # queue candidates from the record (§
 node scripts/discover-pdfs.js --resolve   # OpenAlex: DOI + open-access link
 node scripts/discover-pdfs.js --fetch     # download open copies -> pending-papers/
 node scripts/fetch-downloads.js           # plain-HTTP try for the rest (§2.2) -> downloads/
+node scripts/recover-downloads.js         # pull what Chrome saved to Windows Downloads (§2.2)
+node scripts/download-queue.js --mark=…   # the only writer of `download_attempt` (§2.2)
+node scripts/download-queue.js --export   # download-queue.csv, the readable form
 node scripts/record-retrieval.js --spec=… # what a browser attempt found, per row (§2.2)
 node scripts/file-pdf.js --folder=… --src=… --write   # the only sanctioned way into a folder
 node scripts/sync-candidate-state.js --write  # queue states must match the shelf
@@ -1080,6 +1169,12 @@ skipping the merge, rather than assuming either way.
 row reading "Paywalled" beside a folder that already holds the PDF sends someone to fetch a paper that is
 on the shelf. `file-pdf.js` now moves its own rows to `has-pdf`; the sync tool catches the states written
 before that, and `validate-packet.js` fails if any row drifts again.
+
+`download-queue.js` sits beside that pair and answers a different question. `candidate` tracks whether a
+row *could* be fetched; `download_attempt` records what was actually tried and how it ended, which is the
+only thing that stops the next session re-attempting a wall. Keep both current: a row marked
+`no-open-copy` with no `download_attempt` row was never probed, and a `download_attempt` row with no PDF
+behind it is a claim, not a result.
 
 `screen-dependents.js` and `relocate-pdfs.js` run as a pair whenever a status changes: the first
 removes a row the record shows is not independent (§1.2), the second moves whatever PDF it left behind
@@ -1317,6 +1412,9 @@ Reuse these; do not rebuild them.
 | Scholar exhibits | `Independent Citation Record/Exhibits/PDFs/` | The highlighted-row proof. Read-only here (§0). |
 | d3 | `dashboard/vendor/d3.min.js` | Already vendored; copy into the packet rather than loading from a CDN. |
 | Print conventions for exhibits | `tools/print-settings.js` | For Scholar exhibits only — see §5.4. |
+| Retrieval-stage handover | `Citations/Notable Citations Packet/HANDOVER-PDF-RETRIEVAL.md` | State of the download stage as of 2026-11-09: which 319 rows gained a PDF and by what route, what is walled and why, and the rules that were paid for in wasted attempts. |
+| Retrieval helpers | `archived-scripts/` (git-ignored; `README.md` tracked) | `repofetch.cjs`, `title-gate.cjs`, `residual-buckets.cjs` are worth keeping. `never-tried.cjs` and `residual-report.cjs` are **known defective** — they re-derive `classify()` instead of reading `download-queue.csv`. |
+| Retrieved-uid list | `archived-logs/retrieved-uids.txt` | 319 `row_uid`s, one per line, that gained a PDF on 2026-11-08/09. |
 
 The packet's own scripts and `package.json` live in the packet folder, not in `tools/` (§0, §2), so
 nothing here changes the toolchain the citation record runs on.
