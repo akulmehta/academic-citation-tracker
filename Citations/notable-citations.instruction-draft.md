@@ -82,6 +82,8 @@ carry extra weight.
 Frequency and length matter. One sentence naming several papers is low value. Several of my
 studies discussed at length is high value.
 
+Full instructions are available as a PDF at `Citations\Citation Example Instructions.pdf`
+
 ### 1.1 Where the citation appears decides its value
 
 **A Methods-section use is the ideal evidence.** A tool named in Methods means the citing authors
