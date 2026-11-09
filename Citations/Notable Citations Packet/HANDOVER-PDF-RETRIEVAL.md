@@ -290,6 +290,14 @@ Then commit. Keep scratch in `archived-scripts/` and `archived-logs/` (both are
 git-ignored — that is deliberate, they are ~150 MB of base64 captures). Never leave
 `_*.cjs` or `_*.json` at the repository root.
 
+If you edited this file or the draft instructions, also run the two documentation
+checks — they are what keeps a handover's paths and figures true:
+
+```powershell
+node archived-scripts\check-md.cjs "Citations/Notable Citations Packet/HANDOVER-PDF-RETRIEVAL.md" "Citations/notable-citations.instruction-draft.md"
+node archived-scripts\check-handover-paths.cjs
+```
+
 Commit messages carry this trailer:
 
 ```
@@ -312,7 +320,7 @@ precisely because nothing in them is evidence and nothing reads them.
 
 | File | Governs | Read/write |
 |---|---|---|
-| `C:\Projects\EB1A\.github\copilot-instructions.md` | The workspace rules auto-loaded into every agent's context: evidence accuracy, the record's citation rules, the packet/record separation, the `Citations/` PDF folders, access walls, browser conduct. 200 dense lines. The two sections that bind this stage are **"Notable-Citations Packet Is Separate From the Record"** (line 90) and **"Citing-Article PDFs (`Citations/`)"** (line 141). | Read. Propose changes to the applicant; discuss before editing an existing rule. |
+| `C:\Projects\EB1A\.github\copilot-instructions.md` | The workspace rules auto-loaded into every agent's context: evidence accuracy, the record's citation rules, the packet/record separation, the `Citations/` PDF folders, access walls, browser conduct. 200 dense lines. The two sections that bind this stage are **"Notable-Citations Packet Is Separate From the Record"** (line 90) and **"Citing-Article PDFs (`Citations/`)"** (line 141) — line numbers as of 2026-11-09, so match on the heading if they have drifted. | Read. Propose changes to the applicant; discuss before editing an existing rule. |
 | `C:\Projects\EB1A\Citations\notable-citations.instruction-draft.md` | The packet's own playbook, 1 428 lines. §0 the separation, §1 selection and screening, §2 locate and read PDFs (**§2.2 "How a PDF gets fetched" is the retrieval layer this stage built** — the queue, `heldPdfIndex()`, `citation_pdf_url`, the OpenAthens status codes, the Wiley endpoint), §4 the database, §5 output and the pipeline order (§5.5), §7 the pre-handover checklist, §8 what exists. Updated 2026-11-09. | Read. Editable, but §0 forbids anything that writes to the record. |
 | `C:\Projects\EB1A\Independent Citation Record\Independent Citation Record Guide.md` | The *record's* guide — independence, translation, exhibit standards. | **Read-only from this side** (§0). Do not write to it or to `Independent Citation Record/Progress Tracker.json`. |
 
@@ -338,4 +346,6 @@ than silently picking one.
 - `archived-scripts\README.md` — the tracked index of the git-ignored scratch folder:
   which helpers are worth keeping and which two are known defective.
 - Session checkpoints: `c:/Users/mehta/.copilot/session-state/a737903d-b676-433a-b642-38275839ef57/checkpoints/index.md`
-  — 39 checkpoints, most recent first. Read `039-*`, `038-*`, `037-*`, `036-*`.
+  — one file per checkpoint, most recent first (40 as of 2026-11-09; `040-*` is the
+  handover commit itself). Read `040-*` down to `036-*` for this stage. The count grows,
+  so trust the index listing over the number here.

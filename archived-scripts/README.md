@@ -43,6 +43,10 @@ These are the ones a later wave should reach for, in the order the work goes:
 - `potential-count.cjs` — recounts what `potential_notable_citations.html` asserts
   (candidate rows, tier claims) so a figure quoted in prose can be checked against
   the generated page rather than trusted.
+- `check-handover-paths.cjs` — read-only: extracts every path cited in
+  `HANDOVER-PDF-RETRIEVAL.md` §7 and fails if one does not exist. A handover whose
+  paths are wrong sends the next agent to the wrong rules, which is worse than no
+  handover. Exits 1 naming the path.
 - `_efetch3.cjs`, `_wileypd.cjs`, `_metapdf.cjs`, `_sameorig.cjs`, `_oa3.cjs` —
   Playwright drivers. `_metapdf.cjs` reads the site's own `citation_pdf_url`, which
   is the canonical PDF route; guessing publisher paths is what produced the false
