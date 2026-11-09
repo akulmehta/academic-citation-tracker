@@ -140,14 +140,17 @@ function reportHref(uid) {
 }
 
 /**
- * Every external link opens in a new tab (§5.6): the page is a worklist someone
- * works down, and clicking a publisher link must not destroy the row they were
- * reading. Relative links — the PDFs inside this folder — stay in the tab.
+ * Links that open in a new tab (§5.6): the page is a worklist someone works down, and
+ * a click must not destroy the row they were reading. Every external link uses this,
+ * and so does every link in the table, including the report, PDF and "full report"
+ * links, so the list stays where it is while a PDF or report opens beside it.
  * `rel=noopener` so the opened page cannot reach back at this one through
  * `window.opener`.
  */
+const NEW_TAB = 'target="_blank" rel="noopener noreferrer"';
+
 function extLink(url, label) {
-  return `<a href="${esc(url)}" target="_blank" rel="noopener noreferrer">${esc(label)}</a>`;
+  return `<a href="${esc(url)}" ${NEW_TAB}>${esc(label)}</a>`;
 }
 
 /** Titles Scholar renders with a trailing ellipsis are still that work's title. */
@@ -462,7 +465,7 @@ function citationCell(c) {
   }
   if (c.hasPdf) {
     return `<span class="sub">${esc(shortNote(c.scanNote))}</span>`
-      + `<div class="sub"><a href="${reportHref(c.uid)}">full report</a></div>`;
+      + `<div class="sub"><a href="${reportHref(c.uid)}" ${NEW_TAB}>full report</a></div>`;
   }
   return `<span class="none">no PDF, so nothing has been quoted</span>`;
 }
@@ -470,7 +473,7 @@ function citationCell(c) {
 function quoteCell(text, where, c) {
   const q = text.length > 260 ? text.slice(0, 260).replace(/\s+\S*$/, "") + "\u2026" : text;
   return `<span class="q">&ldquo;${esc(q)}&rdquo;</span>`
-    + `<div class="sub">${where} \u00b7 <a href="${reportHref(c.uid)}">full report</a></div>`;
+    + `<div class="sub">${where} \u00b7 <a href="${reportHref(c.uid)}" ${NEW_TAB}>full report</a></div>`;
 }
 
 /**
@@ -486,9 +489,9 @@ function quoteCell(text, where, c) {
 function rowHtml(r) {
   const multi = r.entries.length > 1;
   const pdfCell = r.pdfs.length
-    ? r.pdfs.map(f => `<a href="${href(f.file)}">PDF</a>`).join(" ")
+    ? r.pdfs.map(f => `<a href="${href(f.file)}" ${NEW_TAB}>PDF</a>`).join(" ")
     : r.sharedPdf
-      ? `<a href="${href(r.sharedPdf)}">PDF</a> <span class="sub">(same work as another row)</span>`
+      ? `<a href="${href(r.sharedPdf)}" ${NEW_TAB}>PDF</a> <span class="sub">(same work as another row)</span>`
       : `<span class="none">not retrieved</span>`;
   // A row is "read" if any of its citations was read; the tier filter then behaves
   // per row, which is what someone narrowing the pile expects.
@@ -506,12 +509,12 @@ function rowHtml(r) {
     + `data-pdf="${anyPdf}" data-year="${esc(r.year || "")}" data-work="${esc(works)}" `
     + `data-works="${r.entries.length}" data-text="${esc(text)}">
       <td class="uid">${r.uids.map((u, i) => {
-        const a = `<a href="${reportHref(u)}">${esc(u)}</a>`;
+        const a = `<a href="${reportHref(u)}" ${NEW_TAB}>${esc(u)}</a>`;
         return i === 0 ? a : `<div class="uid2">${a}</div>`;
       }).join("")}</td>
       <td class="work">${r.entries.map(c => workCell(c,
           `<span class="wname">${esc(c.workName)}</span><div class="sub">${esc(c.workYear || "\u2014")}</div>`, false)).join("")}</td>
-      <td class="title"><a href="${reportHref(r.uids[0])}">${esc(r.title)}</a>${r.rawTitle !== r.title ? ' <span class="sub">[title as Scholar shows it continues]</span>' : ""}
+      <td class="title"><a href="${reportHref(r.uids[0])}" ${NEW_TAB}>${esc(r.title)}</a>${r.rawTitle !== r.title ? ' <span class="sub">[title as Scholar shows it continues]</span>' : ""}
         ${r.authors ? `<div class="byline">${esc(r.authors)}</div>` : ""}${multi ? `<div class="sub">${r.entries.length} citations of my work in this one article</div>` : ""}</td>
       <td>${esc(r.senior || "\u2014")}</td>
       <td>${esc(r.year || "\u2014")}</td>
@@ -551,10 +554,10 @@ function rowReport(r) {
 function articleHead(r) {
   const L = r.lead;
   const files = r.pdfs.length
-    ? `<ul class="files-list">${r.pdfs.map(f => `<li><a href="${href(f.file)}">${esc(f.file.split("/").pop())}</a>`
+    ? `<ul class="files-list">${r.pdfs.map(f => `<li><a href="${href(f.file)}" ${NEW_TAB}>${esc(f.file.split("/").pop())}</a>`
         + ` <span class="sub">${esc(f.role || "")}</span></li>`).join("")}</ul>`
     : r.sharedPdf
-      ? `<ul class="files-list"><li><a href="${href(r.sharedPdf)}">PDF</a>`
+      ? `<ul class="files-list"><li><a href="${href(r.sharedPdf)}" ${NEW_TAB}>PDF</a>`
         + ` <span class="sub">same work as another row</span></li></ul>`
       : `<p class="none">No PDF on file.</p>`;
   return `
@@ -693,6 +696,10 @@ const CSS = `
   .report .cite-of { border-top:1px dotted var(--rule); margin-top:1rem; padding:.5rem .6rem 0; }
   .report .cite-of.focus { background:#fdf7e3; border-left:3px solid #c9a227; }
   .foot { margin-top:2rem; font-size:.75rem; color:var(--muted); border-top:1px solid var(--rule); padding-top:.8rem; }
+  details.acc { border:1px solid var(--rule); background:#faf8f5; margin:.5rem 0; padding:0 .9rem; }
+  details.acc > summary { cursor:pointer; padding:.45rem 0; font-size:.86rem; font-weight:600; color:var(--accent); }
+  details.acc[open] > summary { border-bottom:1px solid var(--rule); margin-bottom:.5rem; }
+  details.acc > .notice, details.acc > .cited { margin:.5rem 0 .7rem; }
 
   /* Filter bar over the candidate table. Screen only. */
   .filters { display:flex; flex-wrap:wrap; gap:.6rem .9rem; align-items:flex-end;
@@ -761,7 +768,9 @@ function headerHtml(screens, cites, rows, today) {
 <header>
   <p class="kicker">Review page — not part of the packet</p>
   <h1>Potential notable citations</h1>
-  <div class="notice">
+  <details class="acc">
+    <summary>About this page, and how a candidate is read</summary>
+    <div class="notice">
     <strong>This page is for the applicant&rsquo;s review, not for counsel.</strong>
     <code>packet.html</code> holds only the citations confirmed for the filing; nothing on this
     page is in it. Tick a row, or send the <code>row_uid</code>s, and the pipeline
@@ -769,14 +778,23 @@ function headerHtml(screens, cites, rows, today) {
     &rarr; <code>record-evidence.js</code>) reads the full text, finds the section and page, and
     files it at the tier the text supports. Where a PDF is already on file, the Tier and
     Citation columns carry what that reading found; where it is not, they say so and claim nothing.
-  </div>
-  <div class="cited">
+    </div>
+  </details>
+  <details class="acc">
+    <summary>My works covered (${works.length})</summary>
+    <div class="cited">
     <strong>My works covered — ${works.length}</strong>
     <ol>
 ${works.map(w => `      <li><strong>${esc(w.label)}</strong> — ${esc(w.title)} (${esc(w.year)}):
         ${w.listed} citation${w.listed === 1 ? "" : "s"} listed</li>`).join("\n")}
     </ol>
   </div>
+  </details>
+  <details class="acc">
+    <summary>How the list was derived: the screen for each cited work</summary>
+  <p>${cites.filter(c => c.hasPdf).length} of the ${cites.length} citations have a PDF on file and have
+     been read by the scanner; those carry a tier and the sentence it rests on. The rest have no tier
+     because nothing has been read, which is a statement about the file, not about the paper.</p>
   <p>${nCit} independent citations of these works are not in the packet and were not used in the
      original application. Each is a real, independently authored citation. They appear as
      <strong>${nRows} rows</strong> below, because ${nMulti} article${nMulti === 1 ? "" : "s"} cite${nMulti === 1 ? "s" : ""}
@@ -789,6 +807,7 @@ ${works.map(w => `      <li><strong>${esc(w.label)}</strong> — ${esc(w.title)}
      both judgements about one citing paper against one cited work, so a paper that cites two of my
      works is screened twice and decides twice. The table then folds those onto one row.</p>
 ${screenTables(screens)}
+  </details>
 </header>`;
 }
 
@@ -834,10 +853,11 @@ function filterHtml(rows, cites) {
 function notesHtml(rows, cites) {
   const nRows = rows.length, nCit = cites.length;
   return `
+<details class="acc">
+<summary>Notes on the list, and how the table is read</summary>
 <p class="sub">Filtering is screen only: a printed or PDF copy of this page always shows every
    candidate, so what is on screen cannot silently decide what gets filed.</p>
 
-<h2>Notes on the list</h2>
 <p><strong>One row is one citing article; the &ldquo;My work&rdquo; column says which of my papers it
    cites.</strong> ${nCit} citations appear as ${nRows} rows. An article that cites two of my works is
    one row with two blocks in the &ldquo;My work&rdquo;, Tier and Citation columns, and each block is
@@ -877,7 +897,9 @@ function notesHtml(rows, cites) {
    under a heading the citing paper printed, in prose, not a table cell and not the reference list.
    The colour only says how the citation was found, not that it is weaker.</p>
 
-<h2>How a candidate becomes part of the packet</h2>
+</details>
+<details class="acc">
+<summary>How a candidate becomes part of the packet</summary>
 <p><strong>This page is read-only, deliberately.</strong> There is no checkbox and no button, because a
    tick on a screen belongs to nobody: it is lost on reload, it cannot be inspected by anyone else, and
    nothing downstream could tell whether you meant it. A decision is recorded in
@@ -893,13 +915,16 @@ function notesHtml(rows, cites) {
 <p>What the page is for, then, is the reading: filter to a work or a tier, open the PDF from the
    &ldquo;PDF on file&rdquo; column, judge the sentence, and quote it back.</p>
 
-<h2>Citation reports</h2>
+</details>
+<details class="acc">
+<summary>Citation reports</summary>
 <p>Each <code>row_uid</code> and each citing-paper title links to that article&rsquo;s report in
    <code>citation-report.html</code>, which opens on the uid (<code>?uid=cit-000544</code>). The report shows
    the article once, with its authors, senior author, open copy and files, and then every citation of my work
    the article holds, with the one you opened highlighted. Each citation section gives the work it cites,
    where the citation sits, and the quotation. A report is a review note, not evidence: nothing in it reaches
-   counsel unless the row is confirmed and the packet is re-rendered.</p>`;}
+   counsel unless the row is confirmed and the packet is re-rendered.</p>
+</details>`;}
 function footHtml(today, cites, rows) {
   const read = cites.filter(c => c.hasPdf).length;
   return `
@@ -1032,6 +1057,24 @@ const FILTER_JS = `
 })();
 `;
 
+/**
+ * Printing shows every accordion, whatever was folded on screen: a printed copy is the
+ * whole document. Each one is closed again afterwards, so the screen is as it was.
+ */
+const ACCORDION_JS = `
+window.addEventListener("beforeprint", function () {
+  document.querySelectorAll("details.acc").forEach(function (d) {
+    d.setAttribute("data-was-open", d.open ? "1" : "0");
+    d.open = true;
+  });
+});
+window.addEventListener("afterprint", function () {
+  document.querySelectorAll("details.acc").forEach(function (d) {
+    if (d.getAttribute("data-was-open") === "0") d.open = false;
+  });
+});
+`;
+
 function buildHtml(screens, cites, rows, today) {
   const body = rows.map(rowHtml).join("\n");
   return `<!DOCTYPE html>
@@ -1047,9 +1090,6 @@ function buildHtml(screens, cites, rows, today) {
 ${headerHtml(screens, cites, rows, today)}
 
 <h2>The ${rows.length} candidates</h2>
-<p>${cites.filter(c => c.hasPdf).length} of the ${cites.length} citations have a PDF on file and have
-   been read by the scanner; those carry a tier and the sentence it rests on. The rest have no tier
-   because nothing has been read, which is a statement about the file, not about the paper.</p>
 <p class="sub">Click a column heading to sort the table; click it again to reverse the order. The year
    filters take a range: set one or both of &ldquo;Year from&rdquo; and &ldquo;Year to&rdquo;.</p>
 ${filterHtml(rows, cites)}
@@ -1072,7 +1112,7 @@ ${body}
 ${notesHtml(rows, cites)}
 ${footHtml(today, cites, rows)}
 </main>
-<script>${FILTER_JS}</script>
+<script>${FILTER_JS}${ACCORDION_JS}</script>
 </body>
 </html>`;
 }

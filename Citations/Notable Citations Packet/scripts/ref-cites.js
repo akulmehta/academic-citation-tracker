@@ -44,7 +44,7 @@
  *
  * Returns { byNumber: Map<number,string>, refPages: Set<number> }.
  */
-function buildReferenceIndex(pages) {
+function buildReferenceIndexV1(pages) {
   const refPages = new Set();
   pages.forEach((lines, i) => {
     if (isReferencePage(lines)) refPages.add(i + 1);
@@ -93,6 +93,78 @@ function buildReferenceIndex(pages) {
   }
   for (const [k, v] of byNumber) if (v === null) byNumber.delete(k);
   return { byNumber, refPages };
+}
+
+
+/**
+ * Second bibliography reader: find the numbered list by its SEQUENCE, not by one entry shape.
+ *
+ * v1 only opens an entry at `12.` or `[12]`. ACS journals print `(12) Surname...`, some print
+ * `12) Surname`, and Springer prints `12 Surname AB`. v1 returned no entries for those, so every
+ * citation in them looked uncited. Here every line that could open an entry in any of those shapes is
+ * a candidate, and the bibliography is the LONGEST run of candidates numbered 1, 2, 3, ... in document
+ * order. A numbered Methods list or a figure legend makes a short run; a bibliography makes a long one,
+ * so the sequence is what says which list is the references — the shape of one line cannot.
+ */
+const ENTRY_OPENERS = [
+  /^\[\s*(\d{1,4})\s*\]\s*(.*)$/,
+  /^\(?(\d{1,4})[.)]\.?\s+(.*)$/,
+  /^(\d{1,4})\s+([A-Z][\p{L}'’-]+,?\s+(?:[A-Z]|et al).*)$/u,
+];
+function buildReferenceIndexV2(pages) {
+  const starts = [];
+  pages.forEach((lines, pi) => lines.forEach((L, li) => {
+    const t = String(L.text || "").trim();
+    for (const re of ENTRY_OPENERS) {
+      const m = t.match(re);
+      if (m) { starts.push({ n: Number(m[1]), page: pi + 1, li, rest: (m[2] || "").trim() }); break; }
+    }
+  }));
+  // longest chain n, n+1, n+2, ... in order; best[i] = length of the chain ending at starts[i]
+  const best = new Array(starts.length).fill(1), prev = new Array(starts.length).fill(-1);
+  const lastOf = new Map(); // number -> index of the latest start carrying it
+  starts.forEach((st, i) => {
+    const j = lastOf.get(st.n - 1);
+    if (j !== undefined) { best[i] = best[j] + 1; prev[i] = j; }
+    lastOf.set(st.n, i);
+  });
+  let end = -1;
+  best.forEach((b, i) => { if (end < 0 || b >= best[end]) end = i; });
+  const byNumber = new Map(), refPages = new Set();
+  if (end < 0 || best[end] < 5) return { byNumber, refPages };
+  const chain = [];
+  for (let i = end; i >= 0; i = prev[i]) chain.unshift(starts[i]);
+  chain.forEach((st, k) => {
+    const nxt = chain[k + 1];
+    const parts = [st.rest];
+    // run to the next entry, across a page break, capped so the last entry cannot swallow a footer
+    let p = st.page, li = st.li + 1, taken = 0;
+    while (taken < 14) {
+      if (nxt && p === nxt.page && li >= nxt.li) break;
+      if (nxt && p > nxt.page) break;
+      const lines = pages[p - 1] || [];
+      if (li >= lines.length) { p++; li = 0; if (p > pages.length) break; continue; }
+      parts.push(lines[li].text);
+      li++; taken++;
+    }
+    byNumber.set(st.n, parts.join(" ").replace(/\s+/g, " ").trim());
+  });
+  const firstP = chain[0].page, lastP = chain[chain.length - 1].page;
+  for (let p = firstP; p <= lastP; p++) refPages.add(p);
+  if (lastP < pages.length && (pages[lastP] || []).length < 30) refPages.add(lastP + 1);
+  return { byNumber, refPages, refLineStart: { page: firstP, li: chain[0].li } };
+}
+
+/** v1 and v2 side by side; whichever finds more entries leads and the other fills any gap. */
+function buildReferenceIndex(pages) {
+  const a = buildReferenceIndexV1(pages), b = buildReferenceIndexV2(pages);
+  const [lead, other] = b.byNumber.size > a.byNumber.size ? [b, a] : [a, b];
+  const byNumber = new Map(lead.byNumber);
+  for (const [k, v] of other.byNumber) if (!byNumber.has(k)) byNumber.set(k, v);
+  const refPages = new Set([...lead.refPages, ...other.refPages]);
+  const rs = b.refLineStart;
+  // the line-level start only holds while no other reader called an earlier page part of the list
+  return { byNumber, refPages, refLineStart: rs && Math.min(...refPages) === rs.page ? rs : undefined };
 }
 
 const BIB_ENTRY = /^(?:\[\s*\d+\s*\]|\d+\.\s+[A-Z][a-z]+\s*,?\s+[A-Z]\.?)/;
@@ -156,9 +228,13 @@ function matchReference(index, want) {
   const surname = want.surname ? norm(want.surname) : null;
   for (const [num, entry] of index.byNumber) {
     const e = norm(entry);
-    const ts = titleScore(entry, want.title);
+    // A wrapped title arrives as "resour- ces"; score the entry as printed and with the
+    // line-break hyphens removed, and take the better.
+    const ts = Math.max(titleScore(entry, want.title),
+      titleScore(String(entry).replace(/(\p{L})-\s+(?=\p{Ll})/gu, "$1"), want.title));
     if (ts < 0.6) continue;
-    const yearHit = !!wantYear && new RegExp(`\\b${wantYear}\\b`).test(entry);
+    // Online-first and print years differ by one (GlyGen: 2019 in the entry, 2020 in the catalog).
+    const yearHit = !!wantYear && [0, 1, -1].some(d => new RegExp(`\\b${Number(wantYear) + d}\\b`).test(entry));
     const authorHit = !!surname && e.includes(surname);
     out.push({
       num,
@@ -167,7 +243,9 @@ function matchReference(index, want) {
       yearHit,
       authorHit,
       // Two signals besides the title, or a near-complete title plus one, settle it.
-      certain: (ts >= 0.85 && (yearHit || authorHit)) || (ts >= 0.6 && yearHit && authorHit),
+      certain: (ts >= 0.85 && (yearHit || authorHit)) || (ts >= 0.6 && yearHit && authorHit)
+        // a near-complete title of six words needs no second signal: it is inside a reference list
+        || (ts >= 0.95 && titleCore(want.title).length >= 6),
     });
   }
   return out.sort((a, b) => (b.certain - a.certain) || (b.titleScore - a.titleScore) || (a.num - b.num));
@@ -187,16 +265,18 @@ function matchReference(index, want) {
  * citation list, and is refused for the same reason.
  */
 function expandRun(inner) {
-  const t = inner.trim();
+  // Some Elsevier fonts typeset the en dash of a range as the letter e, so "[37–39]" extracts as
+  // "[37e39]". Digit-e-digit inside a bracketed list is a range, not an exponent.
+  const t = inner.trim().replace(/(\d)e(?=\d)/g, "$1–");
   if (!t || t.length > 60) return null;
-  if (!/^[\d\s,;.–—-]+$/.test(t)) return null;
+  if (!/^[\d\s,;.–—−-]+$/.test(t)) return null;
   if (!/\d/.test(t)) return null;
   const nums = new Set();
   // Split on comma / semicolon, then read each piece as one number or a range.
   for (const piece of t.split(/[,;]/)) {
     const p = piece.trim();
     if (!p) continue;
-    const rng = p.match(/^(\d{1,4})\s*[–—-]\s*(\d{1,4})$/);
+    const rng = p.match(/^(\d{1,4})\s*[–—−-]\s*(\d{1,4})$/);
     if (rng) {
       const a = Number(rng[1]), b = Number(rng[2]);
       if (b < a || b - a > 40) return null;
@@ -225,7 +305,7 @@ function expandRun(inner) {
  */
 function findTextMarkers(text) {
   const out = [];
-  const re = /([\[(])\s*([\d\s,;.–—-]{1,60}?)\s*([\])])/g;
+  const re = /([\[(])\s*([\de\s,;.–—−-]{1,60}?)\s*([\])])/g;
   let m;
   while ((m = re.exec(text))) {
     const nums = expandRun(m[2]);
@@ -233,7 +313,7 @@ function findTextMarkers(text) {
     out.push({ numbers: nums, raw: m[0], start: m.index });
   }
   // A trailing run of numbers, no brackets: "…as described previously 45".
-  const tail = text.match(/(\d{1,4}(?:\s*[,\s–—-]\s*\d{1,4})*)\s*[.,;]?$/);
+  const tail = text.match(/(\d{1,4}(?:\s*[,\s–—−-]\s*\d{1,4})*)\s*[.,;]?$/);
   if (tail) {
     const before = text.slice(0, tail.index);
     // Require a real space before it, which is what excludes `OD550`, `CaCl2`,
@@ -251,7 +331,7 @@ function findTextMarkers(text) {
 
 /** The line holds nothing but numbers — an extracted superscript orphan. */
 function isOrphanNumberLine(text) {
-  return /^\d{1,4}(?:\s*[,\s–—-]\s*\d{1,4})*$/.test(String(text).trim());
+  return /^\d{1,4}(?:\s*[,\s–—−-]\s*\d{1,4})*$/.test(String(text).trim());
 }
 
 /**
@@ -326,7 +406,21 @@ function isProseLine(text) {
  *
  * `line.items` must carry { str, h, base, x, w } as `extractPages` builds them.
  */
-function findRaisedMarkers(line) {
+function findRaisedMarkers(rawLine) {
+  if (!rawLine.items || rawLine.items.length < 2) return [];
+  // A raised range is often extracted as three items ("19", "–", "23"). Join neighbours that share a
+  // size and baseline and hold only digits and separators, so the run reads as one marker.
+  const DIGITS_ONLY = /^[\d,;\s–—−-]+$/;
+  const merged = [];
+  for (const it of rawLine.items) {
+    const last = merged[merged.length - 1];
+    if (last && it.h > 0 && last.h > 0 && Math.abs(it.h - last.h) < 0.3 && Math.abs((it.base || 0) - (last.base || 0)) < 0.6
+      && DIGITS_ONLY.test(it.str) && DIGITS_ONLY.test(last.str) && /\d/.test(it.str + last.str)) {
+      last.str += it.str;
+      last.w = (last.w || 0) + (it.w || 0);
+    } else merged.push({ ...it });
+  }
+  const line = { ...rawLine, items: merged };
   if (!line.items || line.items.length < 2) return [];
   const heights = line.items.map(i => i.h).filter(h => h > 0);
   if (!heights.length) return [];
@@ -354,7 +448,7 @@ function findRaisedMarkers(line) {
   const out = [];
   for (let i = 0; i < line.items.length; i++) {
     const it = line.items[i];
-    if (!/^\s*\d{1,4}(?:\s*[,\s–—-]\s*\d{1,4})*\s*$/.test(it.str)) continue;
+    if (!/^\s*\d{1,4}(?:\s*[,\s–—−-]\s*\d{1,4})*\s*$/.test(it.str)) continue;
     if (!(it.h > 0 && it.h < body * 0.85)) continue;
     // Must sit clearly above the body's baseline. 0.15 of the body height is far
     // below the 0.42 measured on the Kiessling superscript and far above the
@@ -399,11 +493,14 @@ function findMarkers(pages, index, num, opts = {}) {
   const tablePages = (typeof opts === "function" ? null : opts.tablePages) || new Set();
   const flat = [];
   for (let p = 1; p <= pages.length; p++) {
-    for (const L of pages[p - 1]) flat.push({ page: p, ...L });
+    pages[p - 1].forEach((L, li) => flat.push({ page: p, li, ...L }));
   }
+  // The reference list often starts part-way down a page that still carries body text above it.
+  const inRefs = L => index.refPages.has(L.page)
+    && !(index.refLineStart && L.page === index.refLineStart.page && L.li < index.refLineStart.li);
   const hits = [];
   flat.forEach((L, i) => {
-    if (index.refPages.has(L.page)) return;
+    if (inRefs(L)) return;
     const orphan = isOrphanNumberLine(L.text);
     // An orphan digit line is matched once, as an orphan; findTextMarkers would
     // also see it as a trailing bare number and report the same mark twice.
@@ -416,13 +513,27 @@ function findMarkers(pages, index, num, opts = {}) {
       if (!mk.bare && !mk.superscript && new RegExp(`^\\[?\\s*${num}\\s*(?:\\]|\\.)`).test(L.text)) return;
       let context = L.text;
       let contextPage = L.page;
+      if (!mk.orphan) {
+        // A sentence wraps over several printed lines, and the marker often sits on the last, short one
+        // ("platelet aggregation [21]."). Quote the whole sentence: walk back over prose lines on the same
+        // page until one ends a sentence, at most four, never into the reference list or a heading.
+        const parts = [L.text];
+        for (let j = i - 1, k = 0; j >= 0 && k < 4; j--, k++) {
+          const q = flat[j];
+          if (q.page !== L.page || inRefs(q)) break;
+          if (/[.?!:]\s*$/.test(q.text) && !/\bet al\.$/.test(q.text)) break;
+          if (!followsProse(q.text) || isOrphanNumberLine(q.text)) break;
+          parts.unshift(q.text);
+        }
+        if (parts.length > 1) context = parts.join(" ");
+      }
       if (mk.orphan) {
         // The digits sit alone, so the sentence is in the line above — but only if
         // the line above is prose. A digit line above means this is a chart axis or
         // a table column, and walking further back over it would quote a sentence
         // that has nothing to do with the number.
         const prev = i > 0 ? flat[i - 1] : null;
-        if (!prev || index.refPages.has(prev.page) || !followsProse(prev.text)) {
+        if (!prev || inRefs(prev) || !followsProse(prev.text)) {
           mk.rejected = "no prose above";
           return;
         }
@@ -433,7 +544,7 @@ function findMarkers(pages, index, num, opts = {}) {
         for (let j = i - 1; j >= 0 && parts.length < 3; j--) {
           const q = flat[j];
           if (q.page !== prev.page) break;
-          if (index.refPages.has(q.page)) break;
+          if (inRefs(q)) break;
           if (!followsProse(q.text)) break;
           parts.unshift(q.text);
         }
@@ -519,7 +630,7 @@ function findAuthorYearMarkers(text, want) {
     // a marker whose only content is numbers is a numbered citation, not this.
     if (!/[A-Za-z]/.test(raw)) continue;
     const coauthorHit = others.some(c => surnameRe(c).test(raw));
-    out.push({ raw: raw.trim(), surname, year, coauthorHit });
+    out.push({ raw: raw.trim(), surname, year, coauthorHit, index: m.index });
   }
   return out;
 }
@@ -530,10 +641,18 @@ function findAuthorYearMarkers(text, want) {
  * The catalog renders Scholar's byline as "AY Mehta, RD Cummings", so a comma
  * split gives one entry per author and the last word of each is the surname.
  */
+/** Generational suffixes Scholar leaves in a byline ("S Verespy III", "Doe Jr"): never a surname. */
+const NAME_SUFFIX = /^(?:i{1,3}|iv|v|jr|sr|2nd|3rd|4th|phd|md)\.?$/i;
+function surnameWord(chunk) {
+  const words = String(chunk || "").trim().split(/\s+/).filter(Boolean);
+  while (words.length > 1 && NAME_SUFFIX.test(words[words.length - 1])) words.pop();
+  return words.pop();
+}
+
 function coauthorSurnames(authors) {
   return String(authors || "")
     .split(/,(?=\s*[A-Z])/)
-    .map(s => s.trim().split(/\s+/).filter(Boolean).pop())
+    .map(s => surnameWord(s))
     .filter(Boolean)
     .slice(0, 8);
 }
@@ -592,21 +711,36 @@ function findAuthorYearCitations(pages, want, opts = {}) {
   const hits = [];
   for (let p = 1; p <= pages.length; p++) {
     if (skipPages.has(p)) continue;
-    for (const L of pages[p - 1]) {
-      for (const mk of findAuthorYearMarkers(L.text, want)) {
+    const lines = pages[p - 1];
+    lines.forEach((L, i) => {
+      // A marker can break across a printed line: "(Mehta" / "et al. 2016)". Search this line joined
+      // to the next, and keep only markers that START on this line so none is counted twice.
+      const next = lines[i + 1] ? lines[i + 1].text : "";
+      const joined = next ? `${L.text} ${next}` : L.text;
+      for (const mk of findAuthorYearMarkers(joined, want)) {
+        if (mk.index >= L.text.length) continue;
+        // The sentence wraps over lines too: take prose lines above until one ends a sentence.
+        const parts = [joined];
+        for (let j = i - 1, k = 0; j >= 0 && k < 4; j--, k++) {
+          const q = lines[j].text;
+          if (/[.?!:]\s*$/.test(q) && !/\bet al\.$/.test(q)) break;
+          if (!followsProse(q) || isOrphanNumberLine(q)) break;
+          parts.unshift(q);
+        }
+        const context = parts.join(" ");
         hits.push({
           page: p,
           marker: mk.raw,
           certain: mk.coauthorHit,
           style: "author-year",
           text: L.text,
-          context: L.text,
+          context,
           context_page: p,
-          context_is_prose: isProseLine(L.text),
-          quote: sentenceAround(L.text).slice(0, 600),
+          context_is_prose: isProseLine(context),
+          quote: sentenceAround(context).slice(0, 600),
         });
       }
-    }
+    });
   }
   return hits;
 }
@@ -630,7 +764,7 @@ function firstSurname(authors) {
   if (!words.length) return null;
   // "Mehta, A.Y." is already surname-first; "AY Mehta" is not. Take the last word
   // unless a comma already did the work.
-  const last = words[words.length - 1];
+  const last = surnameWord(first);
   return /[A-Za-z]/.test(last) ? norm(last) : null;
 }
 

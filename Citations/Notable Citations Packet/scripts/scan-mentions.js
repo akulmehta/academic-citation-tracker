@@ -367,7 +367,14 @@ function sectionMap(pages) {
   const ctx = pages.map(ls => {
     const refPage = isReferencePage(ls);
     const cap = earlyCaption(ls);
-    return { refPage, earlyCaption: cap, toolAtLeft: toolAtLeftFor(ls) };
+    // Where the list begins on this page: the first "References" heading or numbered entry. Body text
+    // above it on the page that opens the list is not bibliography.
+    let firstRefLine = 0;
+    if (refPage) {
+      const k = ls.findIndex(l => /^(?:references?|bibliography|literature cited|works cited)\s*$/i.test(untrack(l.text).trim()) || /^(?:\[\s*\d{1,3}\s*\]|\(?\d{1,3}[.)])\s+\S/.test(l.text.trim()));
+      firstRefLine = k > 0 ? k : 0;
+    }
+    return { refPage, firstRefLine, earlyCaption: cap, toolAtLeft: toolAtLeftFor(ls) };
   });
 
   // Pass 1 — number -> section, from headings that name both. Also collect the
@@ -393,9 +400,29 @@ function sectionMap(pages) {
   // "1 Status of proteins" (cit-000536 p.7) both match the shape and neither is
   // a heading. A number with "N.M" lines under it is a section; a bare number in
   // a results table is not.
+  // A running header or footer is not a heading. "Mol Cell Proteomics (2022) 21(5) 100201" is printed
+  // on every page with the page number in front ("4 Mol Cell Proteomics …"), which has the shape of a
+  // numbered heading, and read as one it REPLACED "Methods" on the pages it sat on: cit-000514's
+  // "GLycan Array Dashboard (53) … was used for data visualization" was filed under "Section 4: Mol
+  // Cell Proteomics" (unranked) and the paper came out as Tier C on its abbreviation list instead of
+  // Tier A. A line whose text is the same once its digits are masked, on three or more pages, is
+  // furniture and can never open a section.
+  const furniturePages = new Map();
+  for (const L of flat) {
+    if (L.text.length > 80) continue;
+    const key = L.text.replace(/\d+/g, "#").replace(/\s+/g, " ").trim().toLowerCase();
+    if (!key) continue;
+    if (!furniturePages.has(key)) furniturePages.set(key, new Set());
+    furniturePages.get(key).add(L.page);
+  }
+  const isFurniture = text => {
+    const pagesSeen = furniturePages.get(String(text).replace(/\d+/g, "#").replace(/\s+/g, " ").trim().toLowerCase());
+    return !!pagesSeen && pagesSeen.size >= 3;
+  };
   const genericHeads = new Map();
   for (const L of flat) {
     if (L.text.length > 60 || headingOf(L.text)) continue;
+    if (isFurniture(L.text)) continue;
     const t = untrack(L.text);
     const m = t.match(/^(\d+)\.?(?:\s*\|\s*|\s+)([A-Z][^.]*)$/);
     if (!m || !hasSubsections.has(m[1])) continue;
@@ -413,7 +440,10 @@ function sectionMap(pages) {
     if (h) cur = { id: h.section.id, rank: h.section.rank };
     else {
       const g = genericHeads.get(`${L.page}:${L.line}`);
-      if (g) cur = g;
+      // An unlisted numbered heading ("Section 5: Glycan-Protein Interaction Databases") keeps its own
+      // name but sits inside whatever ranked section is open, so it takes that rank. Leaving it "?"
+      // dropped real Methods and Results citations (cit-000129 and nine others) as unranked.
+      if (g) cur = ["A", "B", "C"].includes(cur.rank) ? { id: g.id, rank: cur.rank } : g;
       else if (L.text.length <= 60) {
         // A numbered subsection inherits its parent's section.
         const t = untrack(L.text);
@@ -425,8 +455,9 @@ function sectionMap(pages) {
     }
     // A page that is a reference list settles the section regardless of what
     // heading was last seen, and outranks it: the heading may be pages away.
-    const section = c.refPage ? "References" : cur.id;
-    const rank = c.refPage ? "REF" : cur.rank;
+    const inRefList = c.refPage && !(L.line < c.firstRefLine && !(ctx[L.page - 2] && ctx[L.page - 2].refPage));
+    const section = inRefList ? "References" : cur.id;
+    const rank = inRefList ? "REF" : cur.rank;
     out.push({ ...L, section, rank, inTable: isTableLine(L, c) });
   }
   return out;
@@ -469,9 +500,22 @@ function sentenceAround(text, pats) {
     : /\bGLAD\b|glyco\s*glyph|glycoglyph|\bMAWE\b|glyco[- ]?spot/i;
   const i = text.search(re);
   if (i < 0) return text.slice(0, 300);
-  const start = Math.max(0, text.lastIndexOf(". ", Math.max(0, i - 2)));
-  const endRel = text.slice(i).search(/\.\s|\.$/);
-  const end = endRel < 0 ? text.length : i + endRel + 1;
+  // A period ends a sentence unless it closes an abbreviation ("et al.", "Fig.", "e.g.").
+  const ABBR = /(?:\bet al|\bFigs?|\be\.g|\bi\.e|\bvs|\bca|\bapprox|\bno|\bcf|\bref|\brefs)\.$/i;
+  let start = 0;
+  for (const m of text.slice(0, i).matchAll(/[.?!]\s+/g)) {
+    if (ABBR.test(text.slice(0, m.index + 1))) continue;
+    start = m.index + m[0].length;
+  }
+  let end = text.length;
+  const endRe = /[.?!](?=\s|$)/g;
+  endRe.lastIndex = i;
+  let em;
+  while ((em = endRe.exec(text))) {
+    if (ABBR.test(text.slice(0, em.index + 1))) continue;
+    end = em.index + 1;
+    break;
+  }
   return text.slice(start, end).trim();
 }
 
@@ -505,7 +549,14 @@ async function scanFile(abs, signatures) {
     // quote is a readable sentence rather than a wrapped fragment. Neighbours on
     // a different page are excluded — a page break is not a paragraph join.
     const samePage = n => lines[n] && lines[n].page === L.page;
-    const para = [samePage(i - 1) && lines[i - 1].text, L.text, samePage(i + 1) && lines[i + 1].text].filter(Boolean).join(" ");
+    // A sentence wraps over several printed lines. Take lines back until the previous one ends a sentence
+    // and forward until one does, so the quote is the whole sentence ("…was used for data visualization,
+    // data mining, generation of heatmaps, and boxplot graphs.") and not a fragment ending "hosted by".
+    const endsSentence = t => /[.?!]["”')\]]*\s*$/.test(t) && !/\b(?:et al|Fig|Figs|vs|approx|ca|no)\.\s*$/i.test(t);
+    let a = i, b = i;
+    while (a > i - 4 && samePage(a - 1) && !endsSentence(lines[a - 1].text)) a--;
+    while (b < i + 6 && samePage(b + 1) && !endsSentence(lines[b].text)) b++;
+    const para = lines.slice(a, b + 1).map(x => x.text).filter(Boolean).join(" ");
     // One quote per tool the line names, each keyed on that tool, so a row citing
     // GlycoGlyph never inherits the sentence that names GLAD.
     const quotes = {};

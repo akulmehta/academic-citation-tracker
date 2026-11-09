@@ -35,6 +35,7 @@ const argv = process.argv.slice(2);
 const opt = n => (argv.find(a => a.startsWith(`--${n}=`)) || "").split("=").slice(1).join("=") || null;
 const OUT = opt("out") || path.join(REPO, "archived-logs");
 const REFS = opt("refs") || path.join(OUT, "ref-mentions.json");
+const REPORT = opt("report") || path.join(OUT, "ref-report.json");
 
 /* ---------- 1. is the "mention" really a citation? ---------- */
 // Data that a bare reference number collides with.
@@ -81,6 +82,8 @@ async function main() {
     FROM citation WHERE pdf_file IS NOT NULL AND status='held' AND is_main=1 ORDER BY row_uid`).all();
   const refSpec = fs.existsSync(REFS) ? JSON.parse(fs.readFileSync(REFS, "utf8")) : [];
   const refBy = new Map(refSpec.map(e => [e.row_uid, e.mentions]));
+  // Everything the resolver saw, usable or not: a hit in an unranked section is still a citation.
+  const repBy = new Map(((fs.existsSync(REPORT) ? JSON.parse(fs.readFileSync(REPORT, "utf8")).results : [])).map(e => [e.row_uid, e.files || []]));
 
   const out = [];
   const filtered = [];
@@ -126,7 +129,7 @@ async function main() {
     const bestUse = (uniq.find(m => m.tier === headline && m.use) || uniq.find(m => m.use) || {}).use || null;
 
     // confidence: what a person still has to do
-    let confidence, why;
+    let confidence, why, unranked = null;
     if (!uniq.length) {
       // No in-text marker was resolved. That is not the same as "does not cite": the resolver
       // misses ranges, odd numbering and split lines. Look for the cited paper in the text at all.
@@ -136,7 +139,16 @@ async function main() {
         const T = flat((await extractText(abs, null)).text);
         inList = flat(r.cited_paper).length >= 20 && T.includes(flat(r.cited_paper).slice(0, 40));
       } catch { /* leave false */ }
+      const seen = (repBy.get(r.row_uid) || []).filter(f => f.outcome === "found" && f.hit);
+      const entryOnly = (repBy.get(r.row_uid) || []).find(f => f.outcome === "entry-not-cited-in-text");
       if (scanErr) { confidence = "none"; why = `scan failed: ${scanErr}`; }
+      else if (seen.length) {
+        const h = seen[0].hit;
+        confidence = "cited-unranked";
+        why = `cited in text (${seen.length} place(s)) but the section could not be ranked (${h.section || "no heading"}; ${h.inTable ? "inside a table" : h.contextIsProse === false ? "no full sentence" : "unranked"}) — read p.${h.page}`;
+        unranked = { page: String(h.page), section: h.section || "", quote: String(h.quote || h.line || "").slice(0, 300), count: seen.length };
+      }
+      else if (entryOnly) { confidence = "entry-no-marker"; why = `reference ${entryOnly.num} is the applicant's paper but no in-text marker for it was readable — read the PDF`; }
       else if (inList) { confidence = "listed-only"; why = "the applicant's paper is in the reference list but no in-text marker was resolved — read the PDF to place it"; }
       else { confidence = "none"; why = "the applicant's paper was not found in the text"; }
     }
@@ -149,6 +161,7 @@ async function main() {
       cited_paper: r.cited_paper, tool, work_type: verdict, review: isReview, thesis: isThesis,
       headline_tier: headline, use_type: bestUse, negative: anyNeg,
       mentions: uniq.length, named: named.length, sections, confidence, why,
+      unranked,
       best: best ? { tier: best.tier, section: best.section, page: best.page, use: best.use, quote: (best.quote || "").slice(0, 400) } : null,
     });
   }
