@@ -110,6 +110,8 @@ const ENTRY_OPENERS = [
   /^\[\s*(\d{1,4})\s*\]\s*(.*)$/,
   /^\(?(\d{1,4})[.)]\.?\s+(.*)$/,
   /^(\d{1,4})\s+([A-Z][\p{L}'’-]+,?\s+(?:[A-Z]|et al).*)$/u,
+  // RSC style prints initials first: "11 A. Y. Mehta, Y. Jin and U. R. Desai, Expert Opin..."
+  /^(\d{1,4})\s+((?:[A-Z]\.\s?){1,3}[A-Z][\p{L}'’-]+.*)$/u,
 ];
 function buildReferenceIndexV2(pages) {
   const starts = [];
@@ -124,8 +126,12 @@ function buildReferenceIndexV2(pages) {
   const best = new Array(starts.length).fill(1), prev = new Array(starts.length).fill(-1);
   const lastOf = new Map(); // number -> index of the latest start carrying it
   starts.forEach((st, i) => {
-    const j = lastOf.get(st.n - 1);
-    if (j !== undefined) { best[i] = best[j] + 1; prev[i] = j; }
+    // Allow up to two missing numbers: an entry whose number prints on its own line, or in a column
+    // the extractor reads out of order, is not a reason to throw away the rest of the list.
+    for (let d = 1; d <= 3; d++) {
+      const j = lastOf.get(st.n - d);
+      if (j !== undefined && best[j] + 1 > best[i]) { best[i] = best[j] + 1; prev[i] = j; }
+    }
     lastOf.set(st.n, i);
   });
   let end = -1;
@@ -232,10 +238,21 @@ function matchReference(index, want) {
     // line-break hyphens removed, and take the better.
     const ts = Math.max(titleScore(entry, want.title),
       titleScore(String(entry).replace(/(\p{L})-\s+(?=\p{Ll})/gu, "$1"), want.title));
-    if (ts < 0.6) continue;
     // Online-first and print years differ by one (GlyGen: 2019 in the entry, 2020 in the catalog).
     const yearHit = !!wantYear && [0, 1, -1].some(d => new RegExp(`\\b${Number(wantYear) + d}\\b`).test(entry));
     const authorHit = !!surname && e.includes(surname);
+    if (ts < 0.6) {
+      // RSC, Nature-family and many chemistry journals print NO title: "M. D. Argade, A. Y. Mehta, A.
+      // Sarkar and U. R. Desai, J. Med. Chem., 2014, 57, 6." With no title to compare, the entry is the
+      // paper only when the first author, the year and at least two more of its authors all appear.
+      const others = (want.coauthors || []).map(c => norm(c)).filter(c => c.length > 2);
+      const hits = others.filter(c => new RegExp(`\\b${c.replace(/ +/g, "[ -]?")}\\b`).test(e)).length;
+      if (authorHit && yearHit && others.length >= 2 && hits >= Math.min(3, others.length)) {
+        out.push({ num, entry: String(entry).replace(/\s+/g, " ").trim(), titleScore: 0, yearHit, authorHit,
+          byAuthors: true, certain: true });
+      }
+      continue;
+    }
     out.push({
       num,
       entry: String(entry).replace(/\s+/g, " ").trim(),
@@ -620,7 +637,7 @@ function findAuthorYearMarkers(text, want) {
   const others = (want.coauthors || []).map(c => norm(c)).filter(Boolean);
   const out = [];
   // Anything bracketed, or a bare "Surname ... (year)" in narrative position.
-  const re = /[[(][^\]()[\]]{0,120}?[)\]]|\b[A-Z][A-Za-z'’-]+(?:\s+(?:et\s+al\.|and|&)\s+[A-Za-z'’&.\s-]{0,40})?\s*\(\d{4}[a-z]?\)/g;
+  const re = /[[(][^\]()[\]]{0,260}?[)\]]|\b[A-Z][A-Za-z'’-]+(?:\s+(?:et\s+al\.|and|&)\s+[A-Za-z'’&.\s-]{0,40})?\s*\(\d{4}[a-z]?\)/g;
   let m;
   while ((m = re.exec(text))) {
     const raw = m[0];
@@ -715,7 +732,7 @@ function findAuthorYearCitations(pages, want, opts = {}) {
     lines.forEach((L, i) => {
       // A marker can break across a printed line: "(Mehta" / "et al. 2016)". Search this line joined
       // to the next, and keep only markers that START on this line so none is counted twice.
-      const next = lines[i + 1] ? lines[i + 1].text : "";
+      const next = [1, 2, 3].map(d => (lines[i + d] ? lines[i + d].text : "")).filter(Boolean).join(" ");
       const joined = next ? `${L.text} ${next}` : L.text;
       for (const mk of findAuthorYearMarkers(joined, want)) {
         if (mk.index >= L.text.length) continue;

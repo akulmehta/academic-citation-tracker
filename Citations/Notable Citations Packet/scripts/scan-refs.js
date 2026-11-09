@@ -214,7 +214,29 @@ async function scanFolder(db, cat, folder) {
       // ── style 1: the paper has a reference NUMBER ──
       const cands = rc.matchReference(art.index, want);
       const certain = cands.filter(c => c.certain);
-      const nums = [...new Set(certain.map(c => c.num))];
+      let nums = [...new Set(certain.map(c => c.num))];
+      // Two entries can both match when a bibliography lists one paper twice, or two papers share a
+      // title. Prefer the entry whose author list opens with the cited paper's first author; if that
+      // does not single one out, they are the same paper for our purposes and all are followed.
+      if (nums.length > 1 && want.surname) {
+        const lead = certain.filter(c => rc.norm(c.entry).slice(0, 60).includes(rc.norm(want.surname)));
+        const leadNums = [...new Set(lead.map(c => c.num))];
+        if (leadNums.length >= 1 && leadNums.length < nums.length) nums = leadNums;
+      }
+      if (nums.length > 1 && certain.every(c => c.titleScore >= 0.95)) {
+        // same title, followed together: markers for any of them credit the paper
+        const seenHits = [];
+        for (const num of nums) {
+          for (const h of rc.findMarkers(art.pages, art.index, num, { sentenceAround: t => t, tablePages })) {
+            if (seenHits.some(x => x.page === h.page && x.marker === h.marker)) continue;
+            seenHits.push(h);
+            perFile.push({ file: art.file, style: "numbered", outcome: "found", num,
+              entry: certain.find(c => c.num === num).entry.slice(0, 300), titleScore: certain[0].titleScore, hit: locate(art, h) });
+          }
+        }
+        if (!seenHits.length) perFile.push({ file: art.file, style: "numbered", outcome: "entry-not-cited-in-text", num: nums[0], entry: certain[0].entry.slice(0, 300) });
+        nums = [];
+      }
       if (nums.length > 1) {
         // Two entries could both be the paper. Picking one would attach a sentence
         // to the wrong work, so the row is reported as ambiguous.

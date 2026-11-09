@@ -246,5 +246,26 @@ ok(ay("(Mehta et al. 2019)")[0].coauthorHit === false,
  eq(found[0].page, 1, "the one in-text author-year citation is the prose line");
 }
 
+// ── regressions found on the 2026-11 re-scan: each of these once hid a real citation ──
+{
+  ok(JSON.stringify(rc.expandRun("37e39")) === JSON.stringify([37, 38, 39]), "Elsevier's 'e' for the en dash reads as a range");
+  ok(JSON.stringify(rc.expandRun("34−37")) === JSON.stringify([34, 35, 36, 37]), "ACS's U+2212 minus reads as a range");
+  eq(rc.firstSurname("S Verespy III, AY Mehta"), "verespy", "a generational suffix is not the surname");
+  const L = (t) => ({ text: t });
+  // ACS-style "(37) Surname" list, with entry 38 missing from the extraction
+  const bib = [[L("(36) Smith, A.; Jones, B. Paper one. J. 2014, 1, 1."), L("(37) Argade, M. D.; Mehta, A. Y. Allosteric inhibition of human factor XIa. J. Med. Chem. 2014, 57, 3559."),
+    L("(39) Lee, C. Another. J. 2015, 2, 2."), L("(40) Kim, D. More. J. 2016, 3, 3."), L("(41) Roe, E. Last. J. 2017, 4, 4.")]];
+  const idx = rc.buildReferenceIndex(bib);
+  ok(idx.byNumber.has(37) && idx.byNumber.has(41), "a parenthesised numbered list is read even with a gap");
+  const m = rc.matchReference(idx, { title: "Allosteric inhibition of human factor XIa", year: "2014", surname: "argade", coauthors: ["mehta"] });
+  ok(m.length && m[0].num === 37 && m[0].certain, "the entry is matched to the paper");
+  // an entry with no title at all is matched on first author + year + two more authors
+  const noTitle = { byNumber: new Map([[11, "A. Y. Mehta, Y. Jin and U. R. Desai, Expert Opin. Ther. Pat., 2014, 24, 47."]]), refPages: new Set() };
+  const nm = rc.matchReference(noTitle, { title: "An update on recent patents on thrombin inhibitors", year: "2014", surname: "mehta", coauthors: ["jin", "desai"] });
+  ok(nm.length === 1 && nm[0].byAuthors && nm[0].certain, "a titleless entry is matched on authors and year");
+  const other = rc.matchReference(noTitle, { title: "An update on recent patents on thrombin inhibitors", year: "2014", surname: "mehta", coauthors: ["smith", "jones"] });
+  ok(other.length === 0, "a titleless entry sharing only the first author is not the paper");
+}
+
 console.log(`\n${pass} passed, ${fail} failed`);
 process.exitCode = fail ? 1 : 0;

@@ -1199,6 +1199,8 @@ silently revert the *report*, not the database, which is how a stale claim survi
 Printing comes before the final validation because the validator is what proves the PDF exists and
 is non-empty — validating first and printing second leaves the last step unchecked.
 
+**Why a tier can be wrong, and how the readers were hardened (2026-11-09).** `cit-000514` named GLAD in Methods and was filed Tier C from its abbreviation list: the journal's running header (`4 Mol Cell Proteomics (2022) 21(5) 100201`) looked like a numbered heading and replaced "Methods" on that page. `sectionMap()` now ignores any line that repeats, digits masked, on three or more pages, and an unlisted numbered heading inherits the open ranked section. `ref-cites.js` reads `(37)`, `37)` and initials-first numbered lists, tolerates gaps in the numbering, reads `37e39` and `34−37` ranges and split superscripts, and matches a titleless entry on first author + year + two more authors. `classify-citations.js` reports what is still unplaced and why. Re-run `scan-mentions.js --write` and `scan-refs.js` after any change to either reader, because a section-map change moves tiers on rows that were never touched.
+
 ### 5.6 Potential citations go on their one page, never in `packet.html`
 
 `packet.html` is the document counsel receives, and it contains **only the citations the applicant

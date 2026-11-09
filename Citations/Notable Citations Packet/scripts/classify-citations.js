@@ -109,6 +109,21 @@ async function main() {
     const kept = [];
     for (const m of refs) { if (isNoise(m)) rejected++; else { kept.push(m); mentions.push({ ...m, source: "ref" }); } }
     if (kept.length) filtered.push({ row_uid: r.row_uid, mentions: kept });
+    // Citations the resolver saw but would not record: a fragment instead of a sentence, or a section
+    // the paper never headed (front matter). The citation is real; only its quote is weak. Rank it by the
+    // section it sits in — front matter is the abstract/introduction, so Tier C — and mark it inferred so
+    // a person reads it before relying on it. Never in a table.
+    for (const f of repBy.get(r.row_uid) || []) {
+      const h = f.outcome === "found" && f.hit;
+      if (!h || h.inTable) continue;
+      const usable = ["A", "B", "C"].includes(h.rank) && h.contextIsProse !== false;
+      if (usable) continue; // already counted above, or rejected as data on purpose
+      const tier = ["A", "B", "C"].includes(h.rank) ? h.rank : (/front matter/i.test(h.section || "") ? "C" : null);
+      if (!tier) continue;
+      const q = String(h.quote || h.line || "").trim();
+      if (q.length < 8) continue;
+      mentions.push({ section: h.section || "front matter", tier, page: String(h.page), quote: q, basis: "reference-number resolution", source: "ref-inferred", inferred: true });
+    }
 
     let shp = null;
     try { shp = await shape(r.pdf_file); } catch { /* extraction failure says nothing about the paper */ }
@@ -154,7 +169,7 @@ async function main() {
     }
     else if (uniq.length && named.length && (headline === "A" || headline === "B") && bestUse === "Implemented" && !anyNeg) { confidence = "high"; why = "tool named in a ranked section in a sentence that reads as use"; }
     else if (uniq.length && named.length) { confidence = "medium"; why = anyNeg ? "tool named, but a sentence carries hedging/negative wording — read it" : "tool named; use type not clear from the sentence"; }
-    else if (uniq.length) { confidence = headline === "C" ? "low" : "medium-low"; why = "cited by reference number/author-year only; sentence must be read to confirm it is the applicant's work"; }
+    else if (uniq.length) { confidence = headline === "C" ? "low" : "medium-low"; why = uniq.every(m => m.inferred) ? "cited in text, but the quote is a fragment or sits in front matter, so the tier is inferred — read it" : "cited by reference number/author-year only; sentence must be read to confirm it is the applicant's work"; }
 
     out.push({
       row_uid: r.row_uid, title: (r.citing_title || "").slice(0, 110), year: r.citing_year, pdf: r.pdf_file,
