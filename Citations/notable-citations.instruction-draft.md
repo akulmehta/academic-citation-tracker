@@ -1339,6 +1339,9 @@ worse than no packet.
 - [ ] Every screened-out row has a `screen_reason`, and every `held` row appears as an open item in
       `PACKET-STATUS.md`. A row the record shows shares an author with the cited work is screened out
       with `not independent` (§4.3), not held — `node scripts/screen-dependents.js` re-checks this.
+- [ ] Every row the retrieval stage touched has a `download_attempt` row naming the URL, the host,
+      the status and the reason (§2.2). A row with no mark was never probed, and a `no-open-copy`
+      recorded after a throttled request is a claim about access that the evidence does not support.
 - [ ] Every PDF in the three storage roots is named `NN-role-Surname[-date].pdf` with the citing
       senior author's surname in it (§5.1), and every such file is listed in `packet-files.csv`.
 - [ ] Every `file` in `packet-files.csv` exists at the path it records, starts with `%PDF`, and its

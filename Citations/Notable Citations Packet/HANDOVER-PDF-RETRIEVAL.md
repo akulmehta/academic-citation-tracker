@@ -1,10 +1,3 @@
-# Handover prompt — PDF retrieval for the Notable Citations Packet
-
-Paste this to the next agent as its first message. It is self-contained: it states
-where the work stands, what is finished, what is left, and which scripts to use.
-
----
-
 ## 0. Read this first
 
 You are continuing the **PDF-retrieval stage** of the notable-citations packet.
@@ -14,11 +7,13 @@ The goal of this stage, in the applicant's own words:
 > Our first step is download any PDFs we can of publications which have cited my
 > work. Once we have downloaded these PDFs we will add it to the
 > `potential_notable_citations.html` list after parsing and cataloging them for my
-> citations. Then I will choose what reaches `packet.html`.
+> citations. You stop at this stage and then I will choose what
+> reaches `packet.html` one by one and let you know and you can add them to the packet.html
 
-So the pipeline is: **retrieve PDF → parse and catalog → potential list → applicant
-picks → packet.** Retrieval is done. **Parsing and cataloging the retrieved PDFs has
-NOT started and is the next stage.** Do not start it without the applicant saying go.
+So the pipeline is: **retrieve PDF → parse and catalog → potential list, then report
+to me; I pick what goes into `packet.html`.** Retrieval is done. **Parsing and
+cataloging the retrieved PDFs has NOT started and is the next stage.** Do not start it
+without the applicant saying go.
 
 Two hard rules from the project instructions that govern everything here:
 
@@ -78,7 +73,7 @@ missing some is acceptable.
 
 ---
 
-## 2. What this session achieved
+## 2. What the previous session achieved
 
 Commits, oldest first:
 
