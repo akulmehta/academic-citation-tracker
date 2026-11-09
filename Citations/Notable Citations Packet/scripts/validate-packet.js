@@ -630,7 +630,7 @@ for (const r of cits) {
     const list = fs.readFileSync(path.join(PKT, "potential_notable_citations.html"), "utf8");
     const rep = fs.readFileSync(path.join(PKT, REPORT), "utf8");
     const linked = new Set([...list.matchAll(/href="citation-report\.html\?uid=(cit-\d{6})"/g)].map(m => m[1]));
-    const reported = new Set([...rep.matchAll(/<template id="tpl-(cit-\d{6})">/g)].map(m => m[1]));
+    const reported = new Set([...rep.matchAll(/<section class="cite-of" data-uid="(cit-\d{6})"/g)].map(m => m[1]));
     const noReport = [...linked].filter(u => !reported.has(u));
     const noLink = [...reported].filter(u => !linked.has(u));
     if (noReport.length) failAny("potential", `${noReport.length} row link(s) on potential_notable_citations.html have no report in ${REPORT}: ${noReport.slice(0, 6).join(", ")}`);

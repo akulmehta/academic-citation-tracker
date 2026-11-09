@@ -25,9 +25,17 @@
   th, td { border-bottom:1px solid var(--rule); padding:.4rem .35rem; vertical-align:top; text-align:left; }
   thead th { border-bottom:2px solid var(--ink); font-size:.7rem; text-transform:uppercase;
              letter-spacing:.05em; color:var(--muted); position:sticky; top:0; background:#fff; }
-  .uid { font-family:"SFMono-Regular",Consolas,monospace; font-size:.74rem; white-space:nowrap; }
-  .uid2 { font-family:"SFMono-Regular",Consolas,monospace; font-size:.74rem; white-space:nowrap; color:var(--muted); }
-  .title { min-width:15rem; }
+  .uid { font-family:"SFMono-Regular",Consolas,monospace; font-size:.74rem; overflow-wrap:anywhere; }
+  .uid2 { font-family:"SFMono-Regular",Consolas,monospace; font-size:.74rem; overflow-wrap:anywhere; color:var(--muted); }
+  /* The table is laid out to the width of the screen, never wider: columns take their
+     share from the colgroup and long words (uids, DOIs, URLs) wrap inside their cell.
+     Without fixed layout the browser sizes the table to its content and it overflows. */
+  #cand { table-layout:fixed; width:100%; }
+  #cand th, #cand td { overflow-wrap:anywhere; }
+  #cand thead th { cursor:pointer; user-select:none; }
+  #cand thead th:focus-visible { outline:2px solid var(--accent); outline-offset:-2px; }
+  #cand thead th[aria-sort="ascending"]::after { content:" \25B2"; }
+  #cand thead th[aria-sort="descending"]::after { content:" \25BC"; }
   .byline { color:var(--muted); font-size:.74rem; margin-top:.15rem; }
   .sub { color:var(--muted); font-size:.7rem; }
   .src, .disc { font-size:.74rem; }
@@ -39,9 +47,9 @@
   .workcell { border-top:1px dotted var(--rule); padding-top:.3rem; margin-top:.3rem; }
   .workcell:first-child { border-top:none; padding-top:0; margin-top:0; }
   .workcell .wt { font-size:.66rem; text-transform:uppercase; letter-spacing:.05em; color:var(--accent); }
-  .work { font-size:.74rem; white-space:nowrap; }
+  .work { font-size:.74rem; }
   .wname { font-weight:600; }
-  .pill { display:inline-block; padding:.05rem .4rem; border-radius:9px; font-size:.68rem; white-space:nowrap; }
+  .pill { display:inline-block; padding:.05rem .4rem; border-radius:9px; font-size:.68rem; }
   .pill.ok { background:#e3f0e4; color:#26562a; }
   .pill.warn { background:#f6ecd9; color:#7a5c00; }
   .pill.bad { background:#f7e0e0; color:#7a1f1f; }
@@ -50,7 +58,7 @@
   .screen td { border:none; padding:.12rem .35rem; }
   .screen td.n { font-variant-numeric:tabular-nums; color:var(--ink); }
   .tier { font-size:.74rem; }
-  .cite { font-size:.74rem; min-width:13rem; }
+  .cite { font-size:.74rem; }
   .cite .q { display:block; margin-bottom:.15rem; }
   .report { border:1px solid var(--rule); border-left:3px solid var(--accent); padding:.9rem 1.1rem; margin:1.4rem 0; }
   .report h3 { font-size:1.02rem; margin:.1rem 0 .2rem; }
@@ -63,6 +71,8 @@
   .report .cite-page { font-size:.72rem; color:var(--muted); margin:.1rem 0 0; }
   .report .files-list { margin:.3rem 0; padding-left:1.2rem; font-size:.82rem; }
   .report .trace { font-size:.72rem; color:var(--muted); border-top:1px solid var(--rule); padding-top:.4rem; margin:.9rem 0 0; }
+  .report .cite-of { border-top:1px dotted var(--rule); margin-top:1rem; padding:.5rem .6rem 0; }
+  .report .cite-of.focus { background:#fdf7e3; border-left:3px solid #c9a227; }
   .foot { margin-top:2rem; font-size:.75rem; color:var(--muted); border-top:1px solid var(--rule); padding-top:.8rem; }
 
   /* Filter bar over the candidate table. Screen only. */
@@ -115,11 +125,11 @@
         25 citations listed</li>
       <li><strong>GlycoGlyph</strong> — GlycoGlyph: a glycan visualizing, drawing and naming application (2020):
         25 citations listed</li>
-      <li><strong>MAWE</strong> — GlyMDB: Glycan Microarray Database and analysis toolset (2020):
+      <li><strong>GlyMDB: microarray database</strong> — GlyMDB: Glycan Microarray Database and analysis toolset (2020):
         13 citations listed</li>
-      <li><strong>MAWE</strong> — Reusable glycan microarrays using a microwave assisted wet-erase (MAWE) process (2024):
+      <li><strong>MAWE: reusable microarrays</strong> — Reusable glycan microarrays using a microwave assisted wet-erase (MAWE) process (2024):
         0 citations listed</li>
-      <li><strong>MAWE</strong> — Tools for generating and analyzing glycan microarray data (2020):
+      <li><strong>Microarray data tools</strong> — Tools for generating and analyzing glycan microarray data (2020):
         9 citations listed</li>
       <li><strong>Allosteric inhibition of human…</strong> — Allosteric inhibition of human factor XIa: discovery of monosulfated benzofurans as a class of promising inhibitors (2014):
         22 citations listed</li>
@@ -594,18 +604,21 @@
 <p>138 of the 699 citations have a PDF on file and have
    been read by the scanner; those carry a tier and the sentence it rests on. The rest have no tier
    because nothing has been read, which is a statement about the file, not about the paper.</p>
+<p class="sub">Click a column heading to sort the table; click it again to reverse the order. The year
+   filters take a range: set one or both of &ldquo;Year from&rdquo; and &ldquo;Year to&rdquo;.</p>
 
 <div class="filters">
   <div class="fld">
     <label for="f-q">Search (title, author, venue, quote, uid, doi, my work)</label>
     <input type="search" id="f-q" placeholder="e.g. glycan array, Heras, cit-000544, MAWE" autocomplete="off">
   </div>
-  <div class="fld"><label for="f-work">My work</label><select id="f-work"><option value="">any</option><option value="GLAD">GLAD</option><option value="GlycoGlyph">GlycoGlyph</option><option value="MAWE">MAWE</option><option value="Allosteric inhibition of human…">Allosteric inhibition of human…</option><option value="Allosteric partial inhibition of…">Allosteric partial inhibition of…</option><option value="Allosterism‐based simultaneous,…">Allosterism‐based simultaneous,…</option><option value="An update on recent patents on…">An update on recent patents on…</option><option value="Antigenic pressure on H3N2…">Antigenic pressure on H3N2…</option><option value="Chemoenzymatically Prepared…">Chemoenzymatically Prepared…</option><option value="Chemokine binding to PSGL-1 is…">Chemokine binding to PSGL-1 is…</option><option value="Comparative analysis of…">Comparative analysis of…</option><option value="Design, Synthesis, and…">Design, Synthesis, and…</option><option value="Designing allosteric regulators…">Designing allosteric regulators…</option><option value="Differential recognition of…">Differential recognition of…</option><option value="Emerging patterns of tyrosine…">Emerging patterns of tyrosine…</option><option value="Galectin-3 Decreases 4-1BBL…">Galectin-3 Decreases 4-1BBL…</option><option value="GlyGen: computational and…">GlyGen: computational and…</option><option value="Heparan sulfate glycomimetics via…">Heparan sulfate glycomimetics via…</option><option value="Increased Galectin-9 Levels…">Increased Galectin-9 Levels…</option><option value="Interaction of thrombin with…">Interaction of thrombin with…</option><option value="N-glycosylation of mannose…">N-glycosylation of mannose…</option><option value="Novel reversible fluorescent…">Novel reversible fluorescent…</option><option value="Glyco-SPOT">Glyco-SPOT</option><option value="Potent direct inhibitors of…">Potent direct inhibitors of…</option><option value="Rational design of potent, small,…">Rational design of potent, small,…</option><option value="Structural modification of…">Structural modification of…</option><option value="Substantial non-electrostatic…">Substantial non-electrostatic…</option><option value="Sulfated pentagalloylglucoside is…">Sulfated pentagalloylglucoside is…</option><option value="Targeting the GPIbα Binding Site…">Targeting the GPIbα Binding Site…</option><option value="Tumor cells express pauci-and…">Tumor cells express pauci-and…</option><option value="Unique repertoire of…">Unique repertoire of…</option></select></div>
+  <div class="fld"><label for="f-work">My work</label><select id="f-work"><option value="">any</option><option value="GLAD">GLAD</option><option value="GlycoGlyph">GlycoGlyph</option><option value="GlyMDB: microarray database">GlyMDB: microarray database</option><option value="Microarray data tools">Microarray data tools</option><option value="Allosteric inhibition of human…">Allosteric inhibition of human…</option><option value="Allosteric partial inhibition of…">Allosteric partial inhibition of…</option><option value="Allosterism‐based simultaneous,…">Allosterism‐based simultaneous,…</option><option value="An update on recent patents on…">An update on recent patents on…</option><option value="Antigenic pressure on H3N2…">Antigenic pressure on H3N2…</option><option value="Chemoenzymatically Prepared…">Chemoenzymatically Prepared…</option><option value="Chemokine binding to PSGL-1 is…">Chemokine binding to PSGL-1 is…</option><option value="Comparative analysis of…">Comparative analysis of…</option><option value="Design, Synthesis, and…">Design, Synthesis, and…</option><option value="Designing allosteric regulators…">Designing allosteric regulators…</option><option value="Differential recognition of…">Differential recognition of…</option><option value="Emerging patterns of tyrosine…">Emerging patterns of tyrosine…</option><option value="Galectin-3 Decreases 4-1BBL…">Galectin-3 Decreases 4-1BBL…</option><option value="GlyGen: computational and…">GlyGen: computational and…</option><option value="Heparan sulfate glycomimetics via…">Heparan sulfate glycomimetics via…</option><option value="Increased Galectin-9 Levels…">Increased Galectin-9 Levels…</option><option value="Interaction of thrombin with…">Interaction of thrombin with…</option><option value="N-glycosylation of mannose…">N-glycosylation of mannose…</option><option value="Novel reversible fluorescent…">Novel reversible fluorescent…</option><option value="Glyco-SPOT">Glyco-SPOT</option><option value="Potent direct inhibitors of…">Potent direct inhibitors of…</option><option value="Rational design of potent, small,…">Rational design of potent, small,…</option><option value="Structural modification of…">Structural modification of…</option><option value="Substantial non-electrostatic…">Substantial non-electrostatic…</option><option value="Sulfated pentagalloylglucoside is…">Sulfated pentagalloylglucoside is…</option><option value="Targeting the GPIbα Binding Site…">Targeting the GPIbα Binding Site…</option><option value="Tumor cells express pauci-and…">Tumor cells express pauci-and…</option><option value="Unique repertoire of…">Unique repertoire of…</option></select></div>
   <div class="fld"><label for="f-works">Works cited by it</label><select id="f-works"><option value="">any</option><option value="1">one work only</option><option value="2">two or more works</option></select></div>
   <div class="fld"><label for="f-tier">Tier</label><select id="f-tier"><option value="">any</option><option value="A">Tier A</option><option value="B">Tier B</option><option value="C">Tier C</option><option value="D">Tier D</option><option value="resolved">any tier, found by reference</option><option value="untiered">read, no tier</option><option value="unread">not read</option></select></div>
   <div class="fld"><label for="f-disc">Open copy</label><select id="f-disc"><option value="">any</option><option value="has-pdf">PDF on file</option><option value="open-copy">Open copy found</option><option value="paywalled">Paywalled</option><option value="no-open-copy">No open copy</option><option value="not-in-indexes">Not in OpenAlex</option><option value="lookup-failed">Look-up failed</option></select></div>
   <div class="fld"><label for="f-pdf">PDF on file</label><select id="f-pdf"><option value="">any</option><option value="1">yes</option><option value="0">no</option></select></div>
-  <div class="fld"><label for="f-year">Year</label><select id="f-year"><option value="">any</option><option value="2026">2026</option><option value="2025">2025</option><option value="2024">2024</option><option value="2023">2023</option><option value="2022">2022</option><option value="2021">2021</option><option value="2020">2020</option><option value="2019">2019</option><option value="2018">2018</option><option value="2017">2017</option><option value="2016">2016</option><option value="2015">2015</option><option value="2014">2014</option><option value="2013">2013</option><option value="2012">2012</option><option value="2011">2011</option><option value="2010">2010</option><option value="2009">2009</option><option value="2005">2005</option><option value="2004">2004</option><option value="2003">2003</option></select></div>
+  <div class="fld"><label for="f-year-min">Year from</label><select id="f-year-min"><option value="">any</option><option value="2003">2003</option><option value="2004">2004</option><option value="2005">2005</option><option value="2009">2009</option><option value="2010">2010</option><option value="2011">2011</option><option value="2012">2012</option><option value="2013">2013</option><option value="2014">2014</option><option value="2015">2015</option><option value="2016">2016</option><option value="2017">2017</option><option value="2018">2018</option><option value="2019">2019</option><option value="2020">2020</option><option value="2021">2021</option><option value="2022">2022</option><option value="2023">2023</option><option value="2024">2024</option><option value="2025">2025</option><option value="2026">2026</option></select></div>
+  <div class="fld"><label for="f-year-max">Year to</label><select id="f-year-max"><option value="">any</option><option value="2003">2003</option><option value="2004">2004</option><option value="2005">2005</option><option value="2009">2009</option><option value="2010">2010</option><option value="2011">2011</option><option value="2012">2012</option><option value="2013">2013</option><option value="2014">2014</option><option value="2015">2015</option><option value="2016">2016</option><option value="2017">2017</option><option value="2018">2018</option><option value="2019">2019</option><option value="2020">2020</option><option value="2021">2021</option><option value="2022">2022</option><option value="2023">2023</option><option value="2024">2024</option><option value="2025">2025</option><option value="2026">2026</option></select></div>
   <div class="spacer"></div>
   <div class="fld"><label>&nbsp;</label><button type="button" id="f-reset">Reset</button></div>
   <div class="fld"><label>&nbsp;</label><span id="shown"></span></div>
@@ -613,6 +626,11 @@
 <p id="no-hits">No row matches those filters. Reset to see all 619.</p>
 
 <table id="cand">
+  <colgroup>
+    <col style="width:7.5%"><col style="width:9%"><col style="width:17%"><col style="width:7%">
+    <col style="width:4.5%"><col style="width:10%"><col style="width:8%"><col style="width:9%">
+    <col style="width:5%"><col style="width:10%"><col style="width:13%">
+  </colgroup>
   <thead><tr>
     <th>row_uid</th><th>My work</th><th>Citing paper</th><th>Senior author</th><th>Year</th><th>Venue</th>
     <th>Where it is</th><th>Open copy</th><th>PDF on file</th><th>Tier</th><th>Citation</th>
@@ -3278,9 +3296,9 @@
       <td class="tier"><div class="workcell" data-uid="cit-000427" data-work="Differential recognition of…"><span class="none">not read</span></div></td>
       <td class="cite"><div class="workcell" data-uid="cit-000427" data-work="Differential recognition of…"><span class="none">no PDF, so nothing has been quoted</span></div></td>
     </tr>
-    <tr data-uid="cit-000428" data-uids="cit-000428 cit-000743 cit-000914 cit-001462" data-tier="C-resolved C-resolved none B-resolved" data-disc="has-pdf" data-pdf="1" data-year="2021" data-work="MAWE Differential recognition of… GlyGen: computational and…" data-works="4" data-text="cit-000428 cit-000743 cit-000914 cit-001462 · carbogrove: a resource of glycan-binding specificities through analyzed glycan-array datasets from all platforms · zl klamer, cm harris, jm beirne, je kelly, j zhang… - biorxiv, 2021 - biorxiv.org · haab · biorxiv · mawe differential recognition of… glygen: computational and… ·  ·  ·  ·  · 10.1101/2021.11.12.468378.abstract">
+    <tr data-uid="cit-000428" data-uids="cit-000428 cit-000743 cit-000914 cit-001462" data-tier="C-resolved C-resolved none B-resolved" data-disc="has-pdf" data-pdf="1" data-year="2021" data-work="GlyMDB: microarray database Microarray data tools Differential recognition of… GlyGen: computational and…" data-works="4" data-text="cit-000428 cit-000743 cit-000914 cit-001462 · carbogrove: a resource of glycan-binding specificities through analyzed glycan-array datasets from all platforms · zl klamer, cm harris, jm beirne, je kelly, j zhang… - biorxiv, 2021 - biorxiv.org · haab · biorxiv · glymdb: microarray database microarray data tools differential recognition of… glygen: computational and… ·  ·  ·  ·  · 10.1101/2021.11.12.468378.abstract">
       <td class="uid"><a href="citation-report.html?uid=cit-000428">cit-000428</a><div class="uid2"><a href="citation-report.html?uid=cit-000743">cit-000743</a></div><div class="uid2"><a href="citation-report.html?uid=cit-000914">cit-000914</a></div><div class="uid2"><a href="citation-report.html?uid=cit-001462">cit-001462</a></div></td>
-      <td class="work"><div class="workcell" data-uid="cit-000914" data-work="MAWE"><span class="wname">MAWE</span><div class="sub">2020</div></div><div class="workcell" data-uid="cit-001462" data-work="MAWE"><span class="wname">MAWE</span><div class="sub">2020</div></div><div class="workcell" data-uid="cit-000428" data-work="Differential recognition of…"><span class="wname">Differential recognition of…</span><div class="sub">2021</div></div><div class="workcell" data-uid="cit-000743" data-work="GlyGen: computational and…"><span class="wname">GlyGen: computational and…</span><div class="sub">2020</div></div></td>
+      <td class="work"><div class="workcell" data-uid="cit-000914" data-work="GlyMDB: microarray database"><span class="wname">GlyMDB: microarray database</span><div class="sub">2020</div></div><div class="workcell" data-uid="cit-001462" data-work="Microarray data tools"><span class="wname">Microarray data tools</span><div class="sub">2020</div></div><div class="workcell" data-uid="cit-000428" data-work="Differential recognition of…"><span class="wname">Differential recognition of…</span><div class="sub">2021</div></div><div class="workcell" data-uid="cit-000743" data-work="GlyGen: computational and…"><span class="wname">GlyGen: computational and…</span><div class="sub">2020</div></div></td>
       <td class="title"><a href="citation-report.html?uid=cit-000428">CarboGrove: a resource of glycan-binding specificities through analyzed glycan-array datasets from all platforms</a>
         <div class="byline">ZL Klamer, CM Harris, JM Beirne, JE Kelly, J Zhang… - bioRxiv, 2021 - biorxiv.org</div><div class="sub">4 citations of my work in this one article</div></td>
       <td>Haab</td>
@@ -3289,8 +3307,8 @@
       <td class="src"><a href="https://www.biorxiv.org/content/10.1101/2021.11.12.468378.abstract" target="_blank" rel="noopener noreferrer">www.biorxiv.org</a><div class="sub"><a href="https://doi.org/10.1101/2021.11.12.468378.abstract" target="_blank" rel="noopener noreferrer">10.1101/2021.11.12.468378.abstract</a></div></td>
       <td class="disc"><span class="pill ok">PDF on file</span><div class="sub">OpenAlex offered a PDF but the host answered 403</div></td>
       <td class="pdf"><a href="pending-papers/cit-000914/01-article-Haab-2022.pdf">PDF</a></td>
-      <td class="tier"><div class="workcell" data-uid="cit-000914" data-work="MAWE"><div class="wt">MAWE</div><span class="pill warn resolved">Tier C &mdash; resolved</span><div class="sub">Introduction, p. 2, named by a person reading the page</div></div><div class="workcell" data-uid="cit-001462" data-work="MAWE"><div class="wt">MAWE</div><span class="pill warn resolved">Tier C &mdash; resolved</span><div class="sub">Discussion, p. 7, named by a person reading the page</div></div><div class="workcell" data-uid="cit-000428" data-work="Differential recognition of…"><div class="wt">Differential recognition of…</div><span class="none">not read</span></div><div class="workcell" data-uid="cit-000743" data-work="GlyGen: computational and…"><div class="wt">GlyGen: computational and…</div><span class="pill ok resolved">Tier B &mdash; resolved</span><div class="sub">Results, p. 2, named by a person reading the page</div></div></td>
-      <td class="cite"><div class="workcell" data-uid="cit-000914" data-work="MAWE"><div class="wt">MAWE</div><span class="q">&ldquo;One limitation is that each provides data for only a single type of array, either CFG (CFG, MCAW-DB, and GlyMDB) or frontal-affinity chromatography (LFDB).&rdquo;</span><div class="sub">Introduction, p. 2 · resolved 2026-11-08 · <a href="citation-report.html?uid=cit-000914">full report</a></div></div><div class="workcell" data-uid="cit-001462" data-work="MAWE"><div class="wt">MAWE</div><span class="q">&ldquo;Tools designed to standardize the design, processing, and storage of glycan array data like the in-development CarbArrayArt and GlyGen glycan array database will further improve the accessibility of glycan array metadata (Mehta et al. 2020).&rdquo;</span><div class="sub">Discussion, p. 7 · resolved 2026-11-08 · <a href="citation-report.html?uid=cit-001462">full report</a></div></div><div class="workcell" data-uid="cit-000428" data-work="Differential recognition of…"><div class="wt">Differential recognition of…</div><span class="none">no PDF, so nothing has been quoted</span></div><div class="workcell" data-uid="cit-000743" data-work="GlyGen: computational and…"><div class="wt">GlyGen: computational and…</div><span class="q">&ldquo;To evaluate the scope of the database, we defined 118 different motifs from 11 families based on a set obtained from the GlyGen resource (York et al. 2019) with the addition of motifs covering the major core types&rdquo;</span><div class="sub">Results, p. 2 · resolved 2026-11-08 · <a href="citation-report.html?uid=cit-000743">full report</a></div></div></td>
+      <td class="tier"><div class="workcell" data-uid="cit-000914" data-work="GlyMDB: microarray database"><div class="wt">GlyMDB: microarray database</div><span class="pill warn resolved">Tier C &mdash; resolved</span><div class="sub">Introduction, p. 2, named by a person reading the page</div></div><div class="workcell" data-uid="cit-001462" data-work="Microarray data tools"><div class="wt">Microarray data tools</div><span class="pill warn resolved">Tier C &mdash; resolved</span><div class="sub">Discussion, p. 7, named by a person reading the page</div></div><div class="workcell" data-uid="cit-000428" data-work="Differential recognition of…"><div class="wt">Differential recognition of…</div><span class="none">not read</span></div><div class="workcell" data-uid="cit-000743" data-work="GlyGen: computational and…"><div class="wt">GlyGen: computational and…</div><span class="pill ok resolved">Tier B &mdash; resolved</span><div class="sub">Results, p. 2, named by a person reading the page</div></div></td>
+      <td class="cite"><div class="workcell" data-uid="cit-000914" data-work="GlyMDB: microarray database"><div class="wt">GlyMDB: microarray database</div><span class="q">&ldquo;One limitation is that each provides data for only a single type of array, either CFG (CFG, MCAW-DB, and GlyMDB) or frontal-affinity chromatography (LFDB).&rdquo;</span><div class="sub">Introduction, p. 2 · resolved 2026-11-08 · <a href="citation-report.html?uid=cit-000914">full report</a></div></div><div class="workcell" data-uid="cit-001462" data-work="Microarray data tools"><div class="wt">Microarray data tools</div><span class="q">&ldquo;Tools designed to standardize the design, processing, and storage of glycan array data like the in-development CarbArrayArt and GlyGen glycan array database will further improve the accessibility of glycan array metadata (Mehta et al. 2020).&rdquo;</span><div class="sub">Discussion, p. 7 · resolved 2026-11-08 · <a href="citation-report.html?uid=cit-001462">full report</a></div></div><div class="workcell" data-uid="cit-000428" data-work="Differential recognition of…"><div class="wt">Differential recognition of…</div><span class="none">no PDF, so nothing has been quoted</span></div><div class="workcell" data-uid="cit-000743" data-work="GlyGen: computational and…"><div class="wt">GlyGen: computational and…</div><span class="q">&ldquo;To evaluate the scope of the database, we defined 118 different motifs from 11 families based on a set obtained from the GlyGen resource (York et al. 2019) with the addition of motifs covering the major core types&rdquo;</span><div class="sub">Results, p. 2 · resolved 2026-11-08 · <a href="citation-report.html?uid=cit-000743">full report</a></div></div></td>
     </tr>
     <tr data-uid="cit-000429" data-uids="cit-000429" data-tier="none" data-disc="no-open-copy" data-pdf="0" data-year="2026" data-work="Differential recognition of…" data-works="1" data-text="cit-000429 · glycoproteomics and immunity · sk gautam - functional glycomics - api.taylorfrancis.com · gautam ·  · differential recognition of… ·  · 10.1201/9781003635901-8&amp;type=chapterpdf">
       <td class="uid"><a href="citation-report.html?uid=cit-000429">cit-000429</a></td>
@@ -3782,9 +3800,9 @@
       <td class="tier"><div class="workcell" data-uid="cit-000524" data-work="GLAD"><span class="none">not read</span></div></td>
       <td class="cite"><div class="workcell" data-uid="cit-000524" data-work="GLAD"><span class="none">no PDF, so nothing has been quoted</span></div></td>
     </tr>
-    <tr data-uid="cit-000525" data-uids="cit-000525 cit-000916" data-tier="C none" data-disc="has-pdf" data-pdf="1" data-year="2021" data-work="GLAD MAWE" data-works="2" data-text="cit-000525 cit-000916 · combined analysis of multiple glycan-array datasets: new explorations of protein-glycan interactions · z klamer, b haab - analytical chemistry, 2021 - pmc.ncbi.nlm.nih.gov ·  · analytical chemistry · glad mawe · the methods accessible to non-bioinformaticians include glycopattern26, glycan miner27, the mcaw database28, the glycan array dashboard (glad)29, and the glycan microarray database (glymdb)30. ·  · ">
+    <tr data-uid="cit-000525" data-uids="cit-000525 cit-000916" data-tier="C none" data-disc="has-pdf" data-pdf="1" data-year="2021" data-work="GLAD GlyMDB: microarray database" data-works="2" data-text="cit-000525 cit-000916 · combined analysis of multiple glycan-array datasets: new explorations of protein-glycan interactions · z klamer, b haab - analytical chemistry, 2021 - pmc.ncbi.nlm.nih.gov ·  · analytical chemistry · glad glymdb: microarray database · the methods accessible to non-bioinformaticians include glycopattern26, glycan miner27, the mcaw database28, the glycan array dashboard (glad)29, and the glycan microarray database (glymdb)30. ·  · ">
       <td class="uid"><a href="citation-report.html?uid=cit-000525">cit-000525</a><div class="uid2"><a href="citation-report.html?uid=cit-000916">cit-000916</a></div></td>
-      <td class="work"><div class="workcell" data-uid="cit-000525" data-work="GLAD"><span class="wname">GLAD</span><div class="sub">2019</div></div><div class="workcell" data-uid="cit-000916" data-work="MAWE"><span class="wname">MAWE</span><div class="sub">2020</div></div></td>
+      <td class="work"><div class="workcell" data-uid="cit-000525" data-work="GLAD"><span class="wname">GLAD</span><div class="sub">2019</div></div><div class="workcell" data-uid="cit-000916" data-work="GlyMDB: microarray database"><span class="wname">GlyMDB: microarray database</span><div class="sub">2020</div></div></td>
       <td class="title"><a href="citation-report.html?uid=cit-000525">Combined analysis of multiple glycan-array datasets: new explorations of protein-glycan interactions</a>
         <div class="byline">Z Klamer, B Haab - Analytical chemistry, 2021 - pmc.ncbi.nlm.nih.gov</div><div class="sub">2 citations of my work in this one article</div></td>
       <td>—</td>
@@ -3793,8 +3811,8 @@
       <td class="src"><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC8862541/" target="_blank" rel="noopener noreferrer">pmc.ncbi.nlm.nih.gov</a></td>
       <td class="disc"><span class="pill ok">PDF on file</span><div class="sub">already filed in the packet</div></td>
       <td class="pdf"><a href="pending-papers/cit-000525/01-article-Haab-2021.pdf">PDF</a></td>
-      <td class="tier"><div class="workcell" data-uid="cit-000525" data-work="GLAD"><div class="wt">GLAD</div><span class="pill warn">Tier C</span><div class="sub">Introduction, p. 2</div></div><div class="workcell" data-uid="cit-000916" data-work="MAWE"><div class="wt">MAWE</div><span class="none">not read</span></div></td>
-      <td class="cite"><div class="workcell" data-uid="cit-000525" data-work="GLAD"><div class="wt">GLAD</div><span class="q">&ldquo;the methods accessible to non-bioinformaticians include GlycoPattern26, Glycan Miner27, the MCAW database28, the Glycan Array Dashboard (GLAD)29, and the Glycan Microarray Database (GlyMDB)30.&rdquo;</span><div class="sub">Introduction, p. 2 · scanned 2026-11-08 · <a href="citation-report.html?uid=cit-000525">full report</a></div></div><div class="workcell" data-uid="cit-000916" data-work="MAWE"><div class="wt">MAWE</div><span class="none">no PDF, so nothing has been quoted</span></div></td>
+      <td class="tier"><div class="workcell" data-uid="cit-000525" data-work="GLAD"><div class="wt">GLAD</div><span class="pill warn">Tier C</span><div class="sub">Introduction, p. 2</div></div><div class="workcell" data-uid="cit-000916" data-work="GlyMDB: microarray database"><div class="wt">GlyMDB: microarray database</div><span class="none">not read</span></div></td>
+      <td class="cite"><div class="workcell" data-uid="cit-000525" data-work="GLAD"><div class="wt">GLAD</div><span class="q">&ldquo;the methods accessible to non-bioinformaticians include GlycoPattern26, Glycan Miner27, the MCAW database28, the Glycan Array Dashboard (GLAD)29, and the Glycan Microarray Database (GlyMDB)30.&rdquo;</span><div class="sub">Introduction, p. 2 · scanned 2026-11-08 · <a href="citation-report.html?uid=cit-000525">full report</a></div></div><div class="workcell" data-uid="cit-000916" data-work="GlyMDB: microarray database"><div class="wt">GlyMDB: microarray database</div><span class="none">no PDF, so nothing has been quoted</span></div></td>
     </tr>
     <tr data-uid="cit-000532" data-uids="cit-000532" data-tier="A" data-disc="has-pdf" data-pdf="1" data-year="2023" data-work="GLAD" data-works="1" data-text="cit-000532 · unraveling cross-reactivity of anti-glycan igg responses in filarial nematode infections · lmc petralia, a van diepen, dl nguyen… - frontiers in …, 2023 - frontiersin.org · hokke · frontiers in · glad · . glycan array dashboard (glad) (37), from the glycotoolkit website (glycotoolkit.com/tools/glad/) hosted by the national · 10.3389/fimmu.2023.1102344/full">
       <td class="uid"><a href="citation-report.html?uid=cit-000532">cit-000532</a></td>
@@ -3852,9 +3870,9 @@
       <td class="tier"><div class="workcell" data-uid="cit-000541" data-work="GLAD"><span class="pill warn resolved">Tier C &mdash; resolved</span><div class="sub">Introduction, p. 2, named by its reference number or author-year citation</div></div></td>
       <td class="cite"><div class="workcell" data-uid="cit-000541" data-work="GLAD"><span class="q">&ldquo;let devices.14,15 These features hold more importance when ap-&rdquo;</span><div class="sub">Introduction, p. 2 · resolved 2026-11-08 · <a href="citation-report.html?uid=cit-000541">full report</a></div></div></td>
     </tr>
-    <tr data-uid="cit-000543" data-uids="cit-000543 cit-000920" data-tier="C none" data-disc="has-pdf" data-pdf="1" data-year="2022" data-work="GLAD MAWE" data-works="2" data-text="cit-000543 cit-000920 · carbarrayart: a new software tool for carbohydrate microarray data storage, processing, presentation, and reporting · y akune, s arpinar, lm silva, as palma… - …, 2022 - academic.oup.com · feizi ·  · glad mawe · . glycan array dashboard (glad) (mehta and cummings 2019) provides online tools ·  · ">
+    <tr data-uid="cit-000543" data-uids="cit-000543 cit-000920" data-tier="C none" data-disc="has-pdf" data-pdf="1" data-year="2022" data-work="GLAD GlyMDB: microarray database" data-works="2" data-text="cit-000543 cit-000920 · carbarrayart: a new software tool for carbohydrate microarray data storage, processing, presentation, and reporting · y akune, s arpinar, lm silva, as palma… - …, 2022 - academic.oup.com · feizi ·  · glad glymdb: microarray database · . glycan array dashboard (glad) (mehta and cummings 2019) provides online tools ·  · ">
       <td class="uid"><a href="citation-report.html?uid=cit-000543">cit-000543</a><div class="uid2"><a href="citation-report.html?uid=cit-000920">cit-000920</a></div></td>
-      <td class="work"><div class="workcell" data-uid="cit-000543" data-work="GLAD"><span class="wname">GLAD</span><div class="sub">2019</div></div><div class="workcell" data-uid="cit-000920" data-work="MAWE"><span class="wname">MAWE</span><div class="sub">2020</div></div></td>
+      <td class="work"><div class="workcell" data-uid="cit-000543" data-work="GLAD"><span class="wname">GLAD</span><div class="sub">2019</div></div><div class="workcell" data-uid="cit-000920" data-work="GlyMDB: microarray database"><span class="wname">GlyMDB: microarray database</span><div class="sub">2020</div></div></td>
       <td class="title"><a href="citation-report.html?uid=cit-000543">CarbArrayART: a new software tool for carbohydrate microarray data storage, processing, presentation, and reporting</a>
         <div class="byline">Y Akune, S Arpinar, LM Silva, AS Palma… - …, 2022 - academic.oup.com</div><div class="sub">2 citations of my work in this one article</div></td>
       <td>Feizi</td>
@@ -3863,8 +3881,8 @@
       <td class="src"><a href="https://academic.oup.com/glycob/article-abstract/32/7/552/6555547" target="_blank" rel="noopener noreferrer">academic.oup.com</a></td>
       <td class="disc"><span class="pill ok">PDF on file</span><div class="sub">already filed in the packet</div></td>
       <td class="pdf"><a href="pending-papers/cit-000543/01-article-Feizi-2022.pdf">PDF</a></td>
-      <td class="tier"><div class="workcell" data-uid="cit-000543" data-work="GLAD"><div class="wt">GLAD</div><span class="pill warn">Tier C</span><div class="sub">Introduction, p. 3</div></div><div class="workcell" data-uid="cit-000920" data-work="MAWE"><div class="wt">MAWE</div><span class="none">not read</span></div></td>
-      <td class="cite"><div class="workcell" data-uid="cit-000543" data-work="GLAD"><div class="wt">GLAD</div><span class="q">&ldquo;. Glycan Array Dashboard (GLAD) (Mehta and Cummings 2019) provides online tools&rdquo;</span><div class="sub">Introduction, p. 3 · scanned 2026-11-08 · <a href="citation-report.html?uid=cit-000543">full report</a></div></div><div class="workcell" data-uid="cit-000920" data-work="MAWE"><div class="wt">MAWE</div><span class="none">no PDF, so nothing has been quoted</span></div></td>
+      <td class="tier"><div class="workcell" data-uid="cit-000543" data-work="GLAD"><div class="wt">GLAD</div><span class="pill warn">Tier C</span><div class="sub">Introduction, p. 3</div></div><div class="workcell" data-uid="cit-000920" data-work="GlyMDB: microarray database"><div class="wt">GlyMDB: microarray database</div><span class="none">not read</span></div></td>
+      <td class="cite"><div class="workcell" data-uid="cit-000543" data-work="GLAD"><div class="wt">GLAD</div><span class="q">&ldquo;. Glycan Array Dashboard (GLAD) (Mehta and Cummings 2019) provides online tools&rdquo;</span><div class="sub">Introduction, p. 3 · scanned 2026-11-08 · <a href="citation-report.html?uid=cit-000543">full report</a></div></div><div class="workcell" data-uid="cit-000920" data-work="GlyMDB: microarray database"><div class="wt">GlyMDB: microarray database</div><span class="none">no PDF, so nothing has been quoted</span></div></td>
     </tr>
     <tr data-uid="cit-000546" data-uids="cit-000546" data-tier="none" data-disc="no-open-copy" data-pdf="0" data-year="2020" data-work="GLAD" data-works="1" data-text="cit-000546 · decoding glycans: deciphering the sugary secrets to be coherent on the implication · s sharma, s shekhar, b sharma, p jain - rsc advances, 2020 - pubs.rsc.org ·  · rsc advances · glad ·  · ">
       <td class="uid"><a href="citation-report.html?uid=cit-000546">cit-000546</a></td>
@@ -3894,9 +3912,9 @@
       <td class="tier"><div class="workcell" data-uid="cit-000547" data-work="GLAD"><span class="none">not read</span></div></td>
       <td class="cite"><div class="workcell" data-uid="cit-000547" data-work="GLAD"><span class="none">no PDF, so nothing has been quoted</span></div></td>
     </tr>
-    <tr data-uid="cit-000548" data-uids="cit-000548 cit-000825 cit-000922" data-tier="none none none" data-disc="paywalled" data-pdf="0" data-year="" data-work="GLAD MAWE GlyGen: computational and…" data-works="3" data-text="cit-000548 cit-000825 cit-000922 · cbmcarb-db: interface of the three-dimensional landscape of carbohydrate-binding modules · do ribeiro, f bonnardel, as palma, alm carvalho… - 2024 - books.rsc.org · perez ·  · glad mawe glygen: computational and… ·  ·  ·  · ">
+    <tr data-uid="cit-000548" data-uids="cit-000548 cit-000825 cit-000922" data-tier="none none none" data-disc="paywalled" data-pdf="0" data-year="" data-work="GLAD GlyMDB: microarray database GlyGen: computational and…" data-works="3" data-text="cit-000548 cit-000825 cit-000922 · cbmcarb-db: interface of the three-dimensional landscape of carbohydrate-binding modules · do ribeiro, f bonnardel, as palma, alm carvalho… - 2024 - books.rsc.org · perez ·  · glad glymdb: microarray database glygen: computational and… ·  ·  ·  · ">
       <td class="uid"><a href="citation-report.html?uid=cit-000548">cit-000548</a><div class="uid2"><a href="citation-report.html?uid=cit-000825">cit-000825</a></div><div class="uid2"><a href="citation-report.html?uid=cit-000922">cit-000922</a></div></td>
-      <td class="work"><div class="workcell" data-uid="cit-000548" data-work="GLAD"><span class="wname">GLAD</span><div class="sub">2019</div></div><div class="workcell" data-uid="cit-000922" data-work="MAWE"><span class="wname">MAWE</span><div class="sub">2020</div></div><div class="workcell" data-uid="cit-000825" data-work="GlyGen: computational and…"><span class="wname">GlyGen: computational and…</span><div class="sub">2020</div></div></td>
+      <td class="work"><div class="workcell" data-uid="cit-000548" data-work="GLAD"><span class="wname">GLAD</span><div class="sub">2019</div></div><div class="workcell" data-uid="cit-000922" data-work="GlyMDB: microarray database"><span class="wname">GlyMDB: microarray database</span><div class="sub">2020</div></div><div class="workcell" data-uid="cit-000825" data-work="GlyGen: computational and…"><span class="wname">GlyGen: computational and…</span><div class="sub">2020</div></div></td>
       <td class="title"><a href="citation-report.html?uid=cit-000548">CBMcarb-DB: interface of the three-dimensional landscape of carbohydrate-binding modules</a>
         <div class="byline">DO Ribeiro, F Bonnardel, AS Palma, ALM Carvalho… - 2024 - books.rsc.org</div><div class="sub">3 citations of my work in this one article</div></td>
       <td>Perez</td>
@@ -3905,8 +3923,8 @@
       <td class="src"><a href="https://books.rsc.org/books/edited-volume/2205/chapter/8051227" target="_blank" rel="noopener noreferrer">books.rsc.org</a></td>
       <td class="disc"><span class="pill warn">Paywalled</span><div class="sub">OpenAlex offered a PDF but the host answered 403 | 2026-11-08: attempted 2026-11-09: RSC edited-volume chapter (books.rsc.org); subscription-only and no PDF is exposed on the chapter page.</div></td>
       <td class="pdf"><span class="none">not retrieved</span></td>
-      <td class="tier"><div class="workcell" data-uid="cit-000548" data-work="GLAD"><div class="wt">GLAD</div><span class="none">not read</span></div><div class="workcell" data-uid="cit-000922" data-work="MAWE"><div class="wt">MAWE</div><span class="none">not read</span></div><div class="workcell" data-uid="cit-000825" data-work="GlyGen: computational and…"><div class="wt">GlyGen: computational and…</div><span class="none">not read</span></div></td>
-      <td class="cite"><div class="workcell" data-uid="cit-000548" data-work="GLAD"><div class="wt">GLAD</div><span class="none">no PDF, so nothing has been quoted</span></div><div class="workcell" data-uid="cit-000922" data-work="MAWE"><div class="wt">MAWE</div><span class="none">no PDF, so nothing has been quoted</span></div><div class="workcell" data-uid="cit-000825" data-work="GlyGen: computational and…"><div class="wt">GlyGen: computational and…</div><span class="none">no PDF, so nothing has been quoted</span></div></td>
+      <td class="tier"><div class="workcell" data-uid="cit-000548" data-work="GLAD"><div class="wt">GLAD</div><span class="none">not read</span></div><div class="workcell" data-uid="cit-000922" data-work="GlyMDB: microarray database"><div class="wt">GlyMDB: microarray database</div><span class="none">not read</span></div><div class="workcell" data-uid="cit-000825" data-work="GlyGen: computational and…"><div class="wt">GlyGen: computational and…</div><span class="none">not read</span></div></td>
+      <td class="cite"><div class="workcell" data-uid="cit-000548" data-work="GLAD"><div class="wt">GLAD</div><span class="none">no PDF, so nothing has been quoted</span></div><div class="workcell" data-uid="cit-000922" data-work="GlyMDB: microarray database"><div class="wt">GlyMDB: microarray database</div><span class="none">no PDF, so nothing has been quoted</span></div><div class="workcell" data-uid="cit-000825" data-work="GlyGen: computational and…"><div class="wt">GlyGen: computational and…</div><span class="none">no PDF, so nothing has been quoted</span></div></td>
     </tr>
     <tr data-uid="cit-000552" data-uids="cit-000552" data-tier="none" data-disc="not-in-indexes" data-pdf="0" data-year="" data-work="GLAD" data-works="1" data-text="cit-000552 · [citation] metabolite multipro/synbiotics: approaches for constructing · mv lakhtin, vm lakhtin… - news of …, 2019 - publishing house «education and … ·  ·  · glad ·  · ">
       <td class="uid"><a href="citation-report.html?uid=cit-000552">cit-000552</a></td>
@@ -3950,9 +3968,9 @@
       <td class="tier"><div class="workcell" data-uid="cit-000556" data-work="GLAD"><span class="none">not read</span></div></td>
       <td class="cite"><div class="workcell" data-uid="cit-000556" data-work="GLAD"><span class="none">no PDF, so nothing has been quoted</span></div></td>
     </tr>
-    <tr data-uid="cit-000559" data-uids="cit-000559 cit-000928 cit-001472" data-tier="none none none" data-disc="no-open-copy" data-pdf="0" data-year="" data-work="GLAD MAWE" data-works="3" data-text="cit-000559 cit-000928 cit-001472 · glycan microarray data analysis: from raw data to public database integration · wtwmb you - creative-proteomics.com ·  ·  · glad mawe ·  ·  ·  · ">
+    <tr data-uid="cit-000559" data-uids="cit-000559 cit-000928 cit-001472" data-tier="none none none" data-disc="no-open-copy" data-pdf="0" data-year="" data-work="GLAD GlyMDB: microarray database Microarray data tools" data-works="3" data-text="cit-000559 cit-000928 cit-001472 · glycan microarray data analysis: from raw data to public database integration · wtwmb you - creative-proteomics.com ·  ·  · glad glymdb: microarray database microarray data tools ·  ·  ·  · ">
       <td class="uid"><a href="citation-report.html?uid=cit-000559">cit-000559</a><div class="uid2"><a href="citation-report.html?uid=cit-000928">cit-000928</a></div><div class="uid2"><a href="citation-report.html?uid=cit-001472">cit-001472</a></div></td>
-      <td class="work"><div class="workcell" data-uid="cit-000559" data-work="GLAD"><span class="wname">GLAD</span><div class="sub">2019</div></div><div class="workcell" data-uid="cit-000928" data-work="MAWE"><span class="wname">MAWE</span><div class="sub">2020</div></div><div class="workcell" data-uid="cit-001472" data-work="MAWE"><span class="wname">MAWE</span><div class="sub">2020</div></div></td>
+      <td class="work"><div class="workcell" data-uid="cit-000559" data-work="GLAD"><span class="wname">GLAD</span><div class="sub">2019</div></div><div class="workcell" data-uid="cit-000928" data-work="GlyMDB: microarray database"><span class="wname">GlyMDB: microarray database</span><div class="sub">2020</div></div><div class="workcell" data-uid="cit-001472" data-work="Microarray data tools"><span class="wname">Microarray data tools</span><div class="sub">2020</div></div></td>
       <td class="title"><a href="citation-report.html?uid=cit-000559">Glycan Microarray Data Analysis: From Raw Data to Public Database Integration</a>
         <div class="byline">WTWMB You - creative-proteomics.com</div><div class="sub">3 citations of my work in this one article</div></td>
       <td>—</td>
@@ -3961,8 +3979,8 @@
       <td class="src"><a href="https://www.creative-proteomics.com/resource/glycan-microarray-analysis-and-database-integration.htm" target="_blank" rel="noopener noreferrer">www.creative-proteomics.com</a></td>
       <td class="disc"><span class="pill warn">No open copy</span><div class="sub">no OpenAlex record by title | 2026-11-08: attempted 2026-11-09: the only link is a creative-proteomics.com marketing page, not a published article. A vendor web page is not a citing work counsel can file; needs a person to decide whether the row stands at all.</div></td>
       <td class="pdf"><span class="none">not retrieved</span></td>
-      <td class="tier"><div class="workcell" data-uid="cit-000559" data-work="GLAD"><div class="wt">GLAD</div><span class="none">not read</span></div><div class="workcell" data-uid="cit-000928" data-work="MAWE"><div class="wt">MAWE</div><span class="none">not read</span></div><div class="workcell" data-uid="cit-001472" data-work="MAWE"><div class="wt">MAWE</div><span class="none">not read</span></div></td>
-      <td class="cite"><div class="workcell" data-uid="cit-000559" data-work="GLAD"><div class="wt">GLAD</div><span class="none">no PDF, so nothing has been quoted</span></div><div class="workcell" data-uid="cit-000928" data-work="MAWE"><div class="wt">MAWE</div><span class="none">no PDF, so nothing has been quoted</span></div><div class="workcell" data-uid="cit-001472" data-work="MAWE"><div class="wt">MAWE</div><span class="none">no PDF, so nothing has been quoted</span></div></td>
+      <td class="tier"><div class="workcell" data-uid="cit-000559" data-work="GLAD"><div class="wt">GLAD</div><span class="none">not read</span></div><div class="workcell" data-uid="cit-000928" data-work="GlyMDB: microarray database"><div class="wt">GlyMDB: microarray database</div><span class="none">not read</span></div><div class="workcell" data-uid="cit-001472" data-work="Microarray data tools"><div class="wt">Microarray data tools</div><span class="none">not read</span></div></td>
+      <td class="cite"><div class="workcell" data-uid="cit-000559" data-work="GLAD"><div class="wt">GLAD</div><span class="none">no PDF, so nothing has been quoted</span></div><div class="workcell" data-uid="cit-000928" data-work="GlyMDB: microarray database"><div class="wt">GlyMDB: microarray database</div><span class="none">no PDF, so nothing has been quoted</span></div><div class="workcell" data-uid="cit-001472" data-work="Microarray data tools"><div class="wt">Microarray data tools</div><span class="none">no PDF, so nothing has been quoted</span></div></td>
     </tr>
     <tr data-uid="cit-000560" data-uids="cit-000560" data-tier="none" data-disc="no-open-copy" data-pdf="0" data-year="" data-work="GLAD" data-works="1" data-text="cit-000560 · carbarrayart-an update on the software tool for carbohydrate microarray data, storage, processing, presentation and reporting · y akune, s arpinar, lm silva, as palma, y liu… - 2022 - spiral.imperial.ac.uk · feizi ·  · glad ·  · ">
       <td class="uid"><a href="citation-report.html?uid=cit-000560">cit-000560</a></td>
@@ -3978,9 +3996,9 @@
       <td class="tier"><div class="workcell" data-uid="cit-000560" data-work="GLAD"><span class="none">not read</span></div></td>
       <td class="cite"><div class="workcell" data-uid="cit-000560" data-work="GLAD"><span class="none">no PDF, so nothing has been quoted</span></div></td>
     </tr>
-    <tr data-uid="cit-000561" data-uids="cit-000561 cit-000929" data-tier="none none" data-disc="no-open-copy" data-pdf="0" data-year="2021" data-work="GLAD MAWE" data-works="2" data-text="cit-000561 cit-000929 · carbohydrate microarray technology · gj gerwig - the art of carbohydrate analysis, 2021 - springer · willats · the art of carbohydrate analysis · glad mawe ·  ·  · 10.1007/978-3-030-77791-3_10">
+    <tr data-uid="cit-000561" data-uids="cit-000561 cit-000929" data-tier="none none" data-disc="no-open-copy" data-pdf="0" data-year="2021" data-work="GLAD GlyMDB: microarray database" data-works="2" data-text="cit-000561 cit-000929 · carbohydrate microarray technology · gj gerwig - the art of carbohydrate analysis, 2021 - springer · willats · the art of carbohydrate analysis · glad glymdb: microarray database ·  ·  · 10.1007/978-3-030-77791-3_10">
       <td class="uid"><a href="citation-report.html?uid=cit-000561">cit-000561</a><div class="uid2"><a href="citation-report.html?uid=cit-000929">cit-000929</a></div></td>
-      <td class="work"><div class="workcell" data-uid="cit-000561" data-work="GLAD"><span class="wname">GLAD</span><div class="sub">2019</div></div><div class="workcell" data-uid="cit-000929" data-work="MAWE"><span class="wname">MAWE</span><div class="sub">2020</div></div></td>
+      <td class="work"><div class="workcell" data-uid="cit-000561" data-work="GLAD"><span class="wname">GLAD</span><div class="sub">2019</div></div><div class="workcell" data-uid="cit-000929" data-work="GlyMDB: microarray database"><span class="wname">GlyMDB: microarray database</span><div class="sub">2020</div></div></td>
       <td class="title"><a href="citation-report.html?uid=cit-000561">Carbohydrate Microarray Technology</a>
         <div class="byline">GJ Gerwig - The Art of Carbohydrate Analysis, 2021 - Springer</div><div class="sub">2 citations of my work in this one article</div></td>
       <td>Willats</td>
@@ -3989,8 +4007,8 @@
       <td class="src"><a href="https://link.springer.com/chapter/10.1007/978-3-030-77791-3_10" target="_blank" rel="noopener noreferrer">link.springer.com</a><div class="sub"><a href="https://doi.org/10.1007/978-3-030-77791-3_10" target="_blank" rel="noopener noreferrer">10.1007/978-3-030-77791-3_10</a></div></td>
       <td class="disc"><span class="pill warn">No open copy</span><div class="sub">OpenAlex has the work (10.1007/978-3-030-77791-3_10), no open-access PDF location | 2026-11-08: attempted 2026-11-09: Springer book chapter, no citation_pdf_url and no bitstream on the landing page.</div></td>
       <td class="pdf"><span class="none">not retrieved</span></td>
-      <td class="tier"><div class="workcell" data-uid="cit-000561" data-work="GLAD"><div class="wt">GLAD</div><span class="none">not read</span></div><div class="workcell" data-uid="cit-000929" data-work="MAWE"><div class="wt">MAWE</div><span class="none">not read</span></div></td>
-      <td class="cite"><div class="workcell" data-uid="cit-000561" data-work="GLAD"><div class="wt">GLAD</div><span class="none">no PDF, so nothing has been quoted</span></div><div class="workcell" data-uid="cit-000929" data-work="MAWE"><div class="wt">MAWE</div><span class="none">no PDF, so nothing has been quoted</span></div></td>
+      <td class="tier"><div class="workcell" data-uid="cit-000561" data-work="GLAD"><div class="wt">GLAD</div><span class="none">not read</span></div><div class="workcell" data-uid="cit-000929" data-work="GlyMDB: microarray database"><div class="wt">GlyMDB: microarray database</div><span class="none">not read</span></div></td>
+      <td class="cite"><div class="workcell" data-uid="cit-000561" data-work="GLAD"><div class="wt">GLAD</div><span class="none">no PDF, so nothing has been quoted</span></div><div class="workcell" data-uid="cit-000929" data-work="GlyMDB: microarray database"><div class="wt">GlyMDB: microarray database</div><span class="none">no PDF, so nothing has been quoted</span></div></td>
     </tr>
     <tr data-uid="cit-000562" data-uids="cit-000562" data-tier="none" data-disc="no-open-copy" data-pdf="0" data-year="" data-work="GLAD" data-works="1" data-text="cit-000562 · carbarrayart · y akune, s arpinar, lm silva, as palma… - 2022 - run.unl.pt · feizi ·  · glad ·  · ">
       <td class="uid"><a href="citation-report.html?uid=cit-000562">cit-000562</a></td>
@@ -5770,9 +5788,9 @@
       <td class="tier"><div class="workcell" data-uid="cit-000834" data-work="GlyGen: computational and…"><span class="none">not read</span></div></td>
       <td class="cite"><div class="workcell" data-uid="cit-000834" data-work="GlyGen: computational and…"><span class="none">no PDF, so nothing has been quoted</span></div></td>
     </tr>
-    <tr data-uid="cit-000837" data-uids="cit-000837 cit-000925" data-tier="none none" data-disc="no-open-copy" data-pdf="0" data-year="2021" data-work="MAWE GlyGen: computational and…" data-works="2" data-text="cit-000837 cit-000925 · bioinformatics study of lectins: new classification and prediction in genomes · f bonnardel - 2021 - theses.hal.science ·  ·  · mawe glygen: computational and… ·  ·  · 10.70675/f89ebb4cz27b2z4416z903azc528f76d3540">
+    <tr data-uid="cit-000837" data-uids="cit-000837 cit-000925" data-tier="none none" data-disc="no-open-copy" data-pdf="0" data-year="2021" data-work="GlyMDB: microarray database GlyGen: computational and…" data-works="2" data-text="cit-000837 cit-000925 · bioinformatics study of lectins: new classification and prediction in genomes · f bonnardel - 2021 - theses.hal.science ·  ·  · glymdb: microarray database glygen: computational and… ·  ·  · 10.70675/f89ebb4cz27b2z4416z903azc528f76d3540">
       <td class="uid"><a href="citation-report.html?uid=cit-000837">cit-000837</a><div class="uid2"><a href="citation-report.html?uid=cit-000925">cit-000925</a></div></td>
-      <td class="work"><div class="workcell" data-uid="cit-000925" data-work="MAWE"><span class="wname">MAWE</span><div class="sub">2020</div></div><div class="workcell" data-uid="cit-000837" data-work="GlyGen: computational and…"><span class="wname">GlyGen: computational and…</span><div class="sub">2020</div></div></td>
+      <td class="work"><div class="workcell" data-uid="cit-000925" data-work="GlyMDB: microarray database"><span class="wname">GlyMDB: microarray database</span><div class="sub">2020</div></div><div class="workcell" data-uid="cit-000837" data-work="GlyGen: computational and…"><span class="wname">GlyGen: computational and…</span><div class="sub">2020</div></div></td>
       <td class="title"><a href="citation-report.html?uid=cit-000837">Bioinformatics study of lectins: new classification and prediction in genomes</a>
         <div class="byline">F Bonnardel - 2021 - theses.hal.science</div><div class="sub">2 citations of my work in this one article</div></td>
       <td>—</td>
@@ -5781,8 +5799,8 @@
       <td class="src"><a href="https://theses.hal.science/tel-03331649/" target="_blank" rel="noopener noreferrer">theses.hal.science</a><div class="sub"><a href="https://doi.org/10.70675/f89ebb4cz27b2z4416z903azc528f76d3540" target="_blank" rel="noopener noreferrer">10.70675/f89ebb4cz27b2z4416z903azc528f76d3540</a></div></td>
       <td class="disc"><span class="pill warn">No open copy</span><div class="sub">OpenAlex has the work (10.70675/f89ebb4cz27b2z4416z903azc528f76d3540), no open-access PDF location</div></td>
       <td class="pdf"><span class="none">not retrieved</span></td>
-      <td class="tier"><div class="workcell" data-uid="cit-000925" data-work="MAWE"><div class="wt">MAWE</div><span class="none">not read</span></div><div class="workcell" data-uid="cit-000837" data-work="GlyGen: computational and…"><div class="wt">GlyGen: computational and…</div><span class="none">not read</span></div></td>
-      <td class="cite"><div class="workcell" data-uid="cit-000925" data-work="MAWE"><div class="wt">MAWE</div><span class="none">no PDF, so nothing has been quoted</span></div><div class="workcell" data-uid="cit-000837" data-work="GlyGen: computational and…"><div class="wt">GlyGen: computational and…</div><span class="none">no PDF, so nothing has been quoted</span></div></td>
+      <td class="tier"><div class="workcell" data-uid="cit-000925" data-work="GlyMDB: microarray database"><div class="wt">GlyMDB: microarray database</div><span class="none">not read</span></div><div class="workcell" data-uid="cit-000837" data-work="GlyGen: computational and…"><div class="wt">GlyGen: computational and…</div><span class="none">not read</span></div></td>
+      <td class="cite"><div class="workcell" data-uid="cit-000925" data-work="GlyMDB: microarray database"><div class="wt">GlyMDB: microarray database</div><span class="none">no PDF, so nothing has been quoted</span></div><div class="workcell" data-uid="cit-000837" data-work="GlyGen: computational and…"><div class="wt">GlyGen: computational and…</div><span class="none">no PDF, so nothing has been quoted</span></div></td>
     </tr>
     <tr data-uid="cit-000839" data-uids="cit-000839" data-tier="none" data-disc="not-in-indexes" data-pdf="0" data-year="2026" data-work="GlyGen: computational and…" data-works="1" data-text="cit-000839 · glycomics and infection progress: exploring the role of mucuna pruriens (l.) dc., in modulating host-pathogen interactions · p prakash, b deepan, n ganesh, s balaji… - functional …, 2026 - api.taylorfrancis.com · panneerselvam · functional · glygen: computational and… ·  · 10.1201/9781003635901-6&amp;type=chapterpdf">
       <td class="uid"><a href="citation-report.html?uid=cit-000839">cit-000839</a></td>
@@ -6316,9 +6334,9 @@
       <td class="tier"><div class="workcell" data-uid="cit-000906" data-work="GlyGen: computational and…"><span class="none">not read</span></div></td>
       <td class="cite"><div class="workcell" data-uid="cit-000906" data-work="GlyGen: computational and…"><span class="none">no PDF, so nothing has been quoted</span></div></td>
     </tr>
-    <tr data-uid="cit-000910" data-uids="cit-000910" data-tier="none" data-disc="paywalled" data-pdf="0" data-year="2022" data-work="MAWE" data-works="1" data-text="cit-000910 · glynet: a multi-task neural network for predicting protein–glycan interactions · ej carpenter, s seth, n yue, r greiner, r derda - chemical science, 2022 - pubs.rsc.org · derda · chemical science · mawe ·  · 10.1039/d1sc05681f">
+    <tr data-uid="cit-000910" data-uids="cit-000910" data-tier="none" data-disc="paywalled" data-pdf="0" data-year="2022" data-work="GlyMDB: microarray database" data-works="1" data-text="cit-000910 · glynet: a multi-task neural network for predicting protein–glycan interactions · ej carpenter, s seth, n yue, r greiner, r derda - chemical science, 2022 - pubs.rsc.org · derda · chemical science · glymdb: microarray database ·  · 10.1039/d1sc05681f">
       <td class="uid"><a href="citation-report.html?uid=cit-000910">cit-000910</a></td>
-      <td class="work"><div class="workcell" data-uid="cit-000910" data-work="MAWE"><span class="wname">MAWE</span><div class="sub">2020</div></div></td>
+      <td class="work"><div class="workcell" data-uid="cit-000910" data-work="GlyMDB: microarray database"><span class="wname">GlyMDB: microarray database</span><div class="sub">2020</div></div></td>
       <td class="title"><a href="citation-report.html?uid=cit-000910">GlyNet: a multi-task neural network for predicting protein–glycan interactions</a>
         <div class="byline">EJ Carpenter, S Seth, N Yue, R Greiner, R Derda - Chemical science, 2022 - pubs.rsc.org</div></td>
       <td>Derda</td>
@@ -6327,12 +6345,12 @@
       <td class="src"><a href="https://pubs.rsc.org/sc/article-abstract/13/22/6669/746899" target="_blank" rel="noopener noreferrer">pubs.rsc.org</a><div class="sub"><a href="https://doi.org/10.1039/d1sc05681f" target="_blank" rel="noopener noreferrer">10.1039/d1sc05681f</a></div></td>
       <td class="disc"><span class="pill warn">Paywalled</span><div class="sub">OpenAlex offered a PDF but the host answered 403</div></td>
       <td class="pdf"><span class="none">not retrieved</span></td>
-      <td class="tier"><div class="workcell" data-uid="cit-000910" data-work="MAWE"><span class="none">not read</span></div></td>
-      <td class="cite"><div class="workcell" data-uid="cit-000910" data-work="MAWE"><span class="none">no PDF, so nothing has been quoted</span></div></td>
+      <td class="tier"><div class="workcell" data-uid="cit-000910" data-work="GlyMDB: microarray database"><span class="none">not read</span></div></td>
+      <td class="cite"><div class="workcell" data-uid="cit-000910" data-work="GlyMDB: microarray database"><span class="none">no PDF, so nothing has been quoted</span></div></td>
     </tr>
-    <tr data-uid="cit-000915" data-uids="cit-000915" data-tier="none" data-disc="paywalled" data-pdf="0" data-year="2025" data-work="MAWE" data-works="1" data-text="cit-000915 · tools for investigating host-microbe crosstalk using glycan analysis probes inspired by human lectins · s ghosh, r chorghade, rc diehl, gj dodge… - …, 2025 - academic.oup.com · imperiali ·  · mawe ·  · 10.1093/glycob/cwaf031">
+    <tr data-uid="cit-000915" data-uids="cit-000915" data-tier="none" data-disc="paywalled" data-pdf="0" data-year="2025" data-work="GlyMDB: microarray database" data-works="1" data-text="cit-000915 · tools for investigating host-microbe crosstalk using glycan analysis probes inspired by human lectins · s ghosh, r chorghade, rc diehl, gj dodge… - …, 2025 - academic.oup.com · imperiali ·  · glymdb: microarray database ·  · 10.1093/glycob/cwaf031">
       <td class="uid"><a href="citation-report.html?uid=cit-000915">cit-000915</a></td>
-      <td class="work"><div class="workcell" data-uid="cit-000915" data-work="MAWE"><span class="wname">MAWE</span><div class="sub">2020</div></div></td>
+      <td class="work"><div class="workcell" data-uid="cit-000915" data-work="GlyMDB: microarray database"><span class="wname">GlyMDB: microarray database</span><div class="sub">2020</div></div></td>
       <td class="title"><a href="citation-report.html?uid=cit-000915">Tools for investigating host-microbe crosstalk using glycan analysis probes inspired by human lectins</a>
         <div class="byline">S Ghosh, R Chorghade, RC Diehl, GJ Dodge… - …, 2025 - academic.oup.com</div></td>
       <td>Imperiali</td>
@@ -6341,12 +6359,12 @@
       <td class="src"><a href="https://academic.oup.com/glycob/article-abstract/35/7/cwaf031/8151373" target="_blank" rel="noopener noreferrer">academic.oup.com</a><div class="sub"><a href="https://doi.org/10.1093/glycob/cwaf031" target="_blank" rel="noopener noreferrer">10.1093/glycob/cwaf031</a></div></td>
       <td class="disc"><span class="pill warn">Paywalled</span><div class="sub">OpenAlex offered a PDF but the host answered 403</div></td>
       <td class="pdf"><span class="none">not retrieved</span></td>
-      <td class="tier"><div class="workcell" data-uid="cit-000915" data-work="MAWE"><span class="none">not read</span></div></td>
-      <td class="cite"><div class="workcell" data-uid="cit-000915" data-work="MAWE"><span class="none">no PDF, so nothing has been quoted</span></div></td>
+      <td class="tier"><div class="workcell" data-uid="cit-000915" data-work="GlyMDB: microarray database"><span class="none">not read</span></div></td>
+      <td class="cite"><div class="workcell" data-uid="cit-000915" data-work="GlyMDB: microarray database"><span class="none">no PDF, so nothing has been quoted</span></div></td>
     </tr>
-    <tr data-uid="cit-000918" data-uids="cit-000918" data-tier="none" data-disc="no-open-copy" data-pdf="0" data-year="2026" data-work="MAWE" data-works="1" data-text="cit-000918 · artificial intelligence empowering polysaccharide research in drug development · j yu, n liu, h xu, c luo - targetome, 2026 - journal.hep.com.cn · luo · targetome · mawe ·  · 10.48130/targetome-0026-0026">
+    <tr data-uid="cit-000918" data-uids="cit-000918" data-tier="none" data-disc="no-open-copy" data-pdf="0" data-year="2026" data-work="GlyMDB: microarray database" data-works="1" data-text="cit-000918 · artificial intelligence empowering polysaccharide research in drug development · j yu, n liu, h xu, c luo - targetome, 2026 - journal.hep.com.cn · luo · targetome · glymdb: microarray database ·  · 10.48130/targetome-0026-0026">
       <td class="uid"><a href="citation-report.html?uid=cit-000918">cit-000918</a></td>
-      <td class="work"><div class="workcell" data-uid="cit-000918" data-work="MAWE"><span class="wname">MAWE</span><div class="sub">2020</div></div></td>
+      <td class="work"><div class="workcell" data-uid="cit-000918" data-work="GlyMDB: microarray database"><span class="wname">GlyMDB: microarray database</span><div class="sub">2020</div></div></td>
       <td class="title"><a href="citation-report.html?uid=cit-000918">Artificial intelligence empowering polysaccharide research in drug development</a>
         <div class="byline">J Yu, N Liu, H Xu, C Luo - Targetome, 2026 - journal.hep.com.cn</div></td>
       <td>Luo</td>
@@ -6355,12 +6373,12 @@
       <td class="src"><a href="https://journal.hep.com.cn/targetome/EN/10.48130/targetome-0026-0026" target="_blank" rel="noopener noreferrer">journal.hep.com.cn</a><div class="sub"><a href="https://doi.org/10.48130/targetome-0026-0026" target="_blank" rel="noopener noreferrer">10.48130/targetome-0026-0026</a></div></td>
       <td class="disc"><span class="pill warn">No open copy</span><div class="sub">OpenAlex has the work (10.48130/targetome-0026-0026), no open-access PDF location</div></td>
       <td class="pdf"><span class="none">not retrieved</span></td>
-      <td class="tier"><div class="workcell" data-uid="cit-000918" data-work="MAWE"><span class="none">not read</span></div></td>
-      <td class="cite"><div class="workcell" data-uid="cit-000918" data-work="MAWE"><span class="none">no PDF, so nothing has been quoted</span></div></td>
+      <td class="tier"><div class="workcell" data-uid="cit-000918" data-work="GlyMDB: microarray database"><span class="none">not read</span></div></td>
+      <td class="cite"><div class="workcell" data-uid="cit-000918" data-work="GlyMDB: microarray database"><span class="none">no PDF, so nothing has been quoted</span></div></td>
     </tr>
-    <tr data-uid="cit-000923" data-uids="cit-000923" data-tier="none" data-disc="has-pdf" data-pdf="1" data-year="2024" data-work="MAWE" data-works="1" data-text="cit-000923 · glycan analysis probes inspired by human lectins for investigating host-microbe crosstalk · s ghosh, r chorghade, rc diehl, gj dodge, s bae… - …, 2024 - pmc.ncbi.nlm.nih.gov · imperiali ·  · mawe ·  · 10.1093/glycob/cwaf031">
+    <tr data-uid="cit-000923" data-uids="cit-000923" data-tier="none" data-disc="has-pdf" data-pdf="1" data-year="2024" data-work="GlyMDB: microarray database" data-works="1" data-text="cit-000923 · glycan analysis probes inspired by human lectins for investigating host-microbe crosstalk · s ghosh, r chorghade, rc diehl, gj dodge, s bae… - …, 2024 - pmc.ncbi.nlm.nih.gov · imperiali ·  · glymdb: microarray database ·  · 10.1093/glycob/cwaf031">
       <td class="uid"><a href="citation-report.html?uid=cit-000923">cit-000923</a></td>
-      <td class="work"><div class="workcell" data-uid="cit-000923" data-work="MAWE"><span class="wname">MAWE</span><div class="sub">2020</div></div></td>
+      <td class="work"><div class="workcell" data-uid="cit-000923" data-work="GlyMDB: microarray database"><span class="wname">GlyMDB: microarray database</span><div class="sub">2020</div></div></td>
       <td class="title"><a href="citation-report.html?uid=cit-000923">Glycan analysis probes inspired by human lectins for investigating host-microbe crosstalk</a>
         <div class="byline">S Ghosh, R Chorghade, RC Diehl, GJ Dodge, S Bae… - …, 2024 - pmc.ncbi.nlm.nih.gov</div></td>
       <td>Imperiali</td>
@@ -6369,12 +6387,12 @@
       <td class="src"><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC11703188/" target="_blank" rel="noopener noreferrer">pmc.ncbi.nlm.nih.gov</a><div class="sub"><a href="https://doi.org/10.1093/glycob/cwaf031" target="_blank" rel="noopener noreferrer">10.1093/glycob/cwaf031</a></div></td>
       <td class="disc"><span class="pill ok">PDF on file</span><div class="sub">OpenAlex offered a PDF but the host answered 403</div></td>
       <td class="pdf"><a href="pending-papers/cit-000923/01-article-Imperiali-2024.pdf">PDF</a></td>
-      <td class="tier"><div class="workcell" data-uid="cit-000923" data-work="MAWE"><span class="pill bad">no tier</span><div class="sub">read —, but no mention in a section that earns one</div></div></td>
-      <td class="cite"><div class="workcell" data-uid="cit-000923" data-work="MAWE"><span class="sub">no usable mention of the cited tool was found in the text</span><div class="sub"><a href="citation-report.html?uid=cit-000923">full report</a></div></div></td>
+      <td class="tier"><div class="workcell" data-uid="cit-000923" data-work="GlyMDB: microarray database"><span class="pill bad">no tier</span><div class="sub">read —, but no mention in a section that earns one</div></div></td>
+      <td class="cite"><div class="workcell" data-uid="cit-000923" data-work="GlyMDB: microarray database"><span class="sub">no usable mention of the cited tool was found in the text</span><div class="sub"><a href="citation-report.html?uid=cit-000923">full report</a></div></div></td>
     </tr>
-    <tr data-uid="cit-000924" data-uids="cit-000924" data-tier="none" data-disc="has-pdf" data-pdf="1" data-year="2022" data-work="MAWE" data-works="1" data-text="cit-000924 · simple and practical sialoglycan encoding system reveals vast diversity in nature and identifies a universal sialoglycan-recognizing probe derived from ab5 toxin b · a sasmal, n khan, z khedri, bp kellman… - …, 2022 - academic.oup.com · varki ·  · mawe ·  · 10.1093/glycob/cwac057">
+    <tr data-uid="cit-000924" data-uids="cit-000924" data-tier="none" data-disc="has-pdf" data-pdf="1" data-year="2022" data-work="GlyMDB: microarray database" data-works="1" data-text="cit-000924 · simple and practical sialoglycan encoding system reveals vast diversity in nature and identifies a universal sialoglycan-recognizing probe derived from ab5 toxin b · a sasmal, n khan, z khedri, bp kellman… - …, 2022 - academic.oup.com · varki ·  · glymdb: microarray database ·  · 10.1093/glycob/cwac057">
       <td class="uid"><a href="citation-report.html?uid=cit-000924">cit-000924</a></td>
-      <td class="work"><div class="workcell" data-uid="cit-000924" data-work="MAWE"><span class="wname">MAWE</span><div class="sub">2020</div></div></td>
+      <td class="work"><div class="workcell" data-uid="cit-000924" data-work="GlyMDB: microarray database"><span class="wname">GlyMDB: microarray database</span><div class="sub">2020</div></div></td>
       <td class="title"><a href="citation-report.html?uid=cit-000924">Simple and practical sialoglycan encoding system reveals vast diversity in nature and identifies a universal sialoglycan-recognizing probe derived from AB5 toxin B</a> <span class="sub">[title as Scholar shows it continues]</span>
         <div class="byline">A Sasmal, N Khan, Z Khedri, BP Kellman… - …, 2022 - academic.oup.com</div></td>
       <td>Varki</td>
@@ -6383,12 +6401,12 @@
       <td class="src"><a href="https://academic.oup.com/glycob/article-abstract/32/12/1101/6682810" target="_blank" rel="noopener noreferrer">academic.oup.com</a><div class="sub"><a href="https://doi.org/10.1093/glycob/cwac057" target="_blank" rel="noopener noreferrer">10.1093/glycob/cwac057</a></div></td>
       <td class="disc"><span class="pill ok">PDF on file</span><div class="sub">downloaded from www.biorxiv.org</div></td>
       <td class="pdf"><a href="pending-papers/cit-000924/01-article-Varki-2022.pdf">PDF</a></td>
-      <td class="tier"><div class="workcell" data-uid="cit-000924" data-work="MAWE"><span class="pill bad">no tier</span><div class="sub">read —, but no mention in a section that earns one</div></div></td>
-      <td class="cite"><div class="workcell" data-uid="cit-000924" data-work="MAWE"><span class="sub">no usable mention of the cited tool was found in the text</span><div class="sub"><a href="citation-report.html?uid=cit-000924">full report</a></div></div></td>
+      <td class="tier"><div class="workcell" data-uid="cit-000924" data-work="GlyMDB: microarray database"><span class="pill bad">no tier</span><div class="sub">read —, but no mention in a section that earns one</div></div></td>
+      <td class="cite"><div class="workcell" data-uid="cit-000924" data-work="GlyMDB: microarray database"><span class="sub">no usable mention of the cited tool was found in the text</span><div class="sub"><a href="citation-report.html?uid=cit-000924">full report</a></div></div></td>
     </tr>
-    <tr data-uid="cit-000926" data-uids="cit-000926" data-tier="none" data-disc="no-open-copy" data-pdf="0" data-year="2020" data-work="MAWE" data-works="1" data-text="cit-000926 · automated identification of lectin fine specificities from glycan-array data · z klamer, b haab - glycan-based cellular communication …, 2020 - acs publications · haab ·  · mawe ·  · 10.1021/bk-2019-1346.ch005">
+    <tr data-uid="cit-000926" data-uids="cit-000926" data-tier="none" data-disc="no-open-copy" data-pdf="0" data-year="2020" data-work="GlyMDB: microarray database" data-works="1" data-text="cit-000926 · automated identification of lectin fine specificities from glycan-array data · z klamer, b haab - glycan-based cellular communication …, 2020 - acs publications · haab ·  · glymdb: microarray database ·  · 10.1021/bk-2019-1346.ch005">
       <td class="uid"><a href="citation-report.html?uid=cit-000926">cit-000926</a></td>
-      <td class="work"><div class="workcell" data-uid="cit-000926" data-work="MAWE"><span class="wname">MAWE</span><div class="sub">2020</div></div></td>
+      <td class="work"><div class="workcell" data-uid="cit-000926" data-work="GlyMDB: microarray database"><span class="wname">GlyMDB: microarray database</span><div class="sub">2020</div></div></td>
       <td class="title"><a href="citation-report.html?uid=cit-000926">Automated identification of lectin fine specificities from glycan-array data</a>
         <div class="byline">Z Klamer, B Haab - Glycan-Based Cellular Communication …, 2020 - ACS Publications</div></td>
       <td>Haab</td>
@@ -6397,8 +6415,8 @@
       <td class="src"><a href="https://pubs.acs.org/doi/abs/10.1021/bk-2019-1346.ch005" target="_blank" rel="noopener noreferrer">pubs.acs.org</a><div class="sub"><a href="https://doi.org/10.1021/bk-2019-1346.ch005" target="_blank" rel="noopener noreferrer">10.1021/bk-2019-1346.ch005</a></div></td>
       <td class="disc"><span class="pill warn">No open copy</span><div class="sub">OpenAlex has the work (10.1021/bk-2019-1346.ch005), no open-access PDF location</div></td>
       <td class="pdf"><span class="none">not retrieved</span></td>
-      <td class="tier"><div class="workcell" data-uid="cit-000926" data-work="MAWE"><span class="none">not read</span></div></td>
-      <td class="cite"><div class="workcell" data-uid="cit-000926" data-work="MAWE"><span class="none">no PDF, so nothing has been quoted</span></div></td>
+      <td class="tier"><div class="workcell" data-uid="cit-000926" data-work="GlyMDB: microarray database"><span class="none">not read</span></div></td>
+      <td class="cite"><div class="workcell" data-uid="cit-000926" data-work="GlyMDB: microarray database"><span class="none">no PDF, so nothing has been quoted</span></div></td>
     </tr>
     <tr data-uid="cit-000933" data-uids="cit-000933" data-tier="none" data-disc="paywalled" data-pdf="0" data-year="2025" data-work="Heparan sulfate glycomimetics via…" data-works="1" data-text="cit-000933 · unraveling the potential of small molecule heparin glycomimetics in neuroregenerative therapeutics · m özkan, g cellot, s pawar, d sardana… - journal of the …, 2025 - acs publications · stellacci ·  · heparan sulfate glycomimetics via… ·  · 10.1021/jacs.5c13142">
       <td class="uid"><a href="citation-report.html?uid=cit-000933">cit-000933</a></td>
@@ -8598,9 +8616,9 @@
       <td class="tier"><div class="workcell" data-uid="cit-001452" data-work="Targeting the GPIbα Binding Site…"><span class="none">not read</span></div></td>
       <td class="cite"><div class="workcell" data-uid="cit-001452" data-work="Targeting the GPIbα Binding Site…"><span class="none">no PDF, so nothing has been quoted</span></div></td>
     </tr>
-    <tr data-uid="cit-001460" data-uids="cit-001460" data-tier="none" data-disc="has-pdf" data-pdf="1" data-year="2025" data-work="MAWE" data-works="1" data-text="cit-001460 · identification and characterisation of vaginal bacteria-glycan interactions implicated in reproductive tract health and pregnancy outcomes · v tajadura-ortega, w chai, la roberts… - nature …, 2025 - nature.com · macintyre · ortega, w chai, la roberts… - nature · mawe ·  · 10.1038/s41467-025-60404-1">
+    <tr data-uid="cit-001460" data-uids="cit-001460" data-tier="none" data-disc="has-pdf" data-pdf="1" data-year="2025" data-work="Microarray data tools" data-works="1" data-text="cit-001460 · identification and characterisation of vaginal bacteria-glycan interactions implicated in reproductive tract health and pregnancy outcomes · v tajadura-ortega, w chai, la roberts… - nature …, 2025 - nature.com · macintyre · ortega, w chai, la roberts… - nature · microarray data tools ·  · 10.1038/s41467-025-60404-1">
       <td class="uid"><a href="citation-report.html?uid=cit-001460">cit-001460</a></td>
-      <td class="work"><div class="workcell" data-uid="cit-001460" data-work="MAWE"><span class="wname">MAWE</span><div class="sub">2020</div></div></td>
+      <td class="work"><div class="workcell" data-uid="cit-001460" data-work="Microarray data tools"><span class="wname">Microarray data tools</span><div class="sub">2020</div></div></td>
       <td class="title"><a href="citation-report.html?uid=cit-001460">Identification and characterisation of vaginal bacteria-glycan interactions implicated in reproductive tract health and pregnancy outcomes</a>
         <div class="byline">V Tajadura-Ortega, W Chai, LA Roberts… - Nature …, 2025 - nature.com</div></td>
       <td>MacIntyre</td>
@@ -8609,12 +8627,12 @@
       <td class="src"><a href="https://www.nature.com/articles/s41467-025-60404-1" target="_blank" rel="noopener noreferrer">www.nature.com</a><div class="sub"><a href="https://doi.org/10.1038/s41467-025-60404-1" target="_blank" rel="noopener noreferrer">10.1038/s41467-025-60404-1</a></div></td>
       <td class="disc"><span class="pill ok">PDF on file</span><div class="sub">downloaded from www.nature.com</div></td>
       <td class="pdf"><a href="pending-papers/cit-001460/01-article-MacIntyre-2025.pdf">PDF</a></td>
-      <td class="tier"><div class="workcell" data-uid="cit-001460" data-work="MAWE"><span class="pill bad">no tier</span><div class="sub">read —, but no mention in a section that earns one</div></div></td>
-      <td class="cite"><div class="workcell" data-uid="cit-001460" data-work="MAWE"><span class="sub">no usable mention of the cited tool was found in the text</span><div class="sub"><a href="citation-report.html?uid=cit-001460">full report</a></div></div></td>
+      <td class="tier"><div class="workcell" data-uid="cit-001460" data-work="Microarray data tools"><span class="pill bad">no tier</span><div class="sub">read —, but no mention in a section that earns one</div></div></td>
+      <td class="cite"><div class="workcell" data-uid="cit-001460" data-work="Microarray data tools"><span class="sub">no usable mention of the cited tool was found in the text</span><div class="sub"><a href="citation-report.html?uid=cit-001460">full report</a></div></div></td>
     </tr>
-    <tr data-uid="cit-001468" data-uids="cit-001468" data-tier="none" data-disc="no-open-copy" data-pdf="0" data-year="2026" data-work="MAWE" data-works="1" data-text="cit-001468 · defining the specificity of blood-group-binding lectins through microarray analysis · a paul, hm jan, s muthusamy, cj stowell… - methods in transfusion …, 2026 - springer · arthur · methods in transfusion · mawe ·  · 10.1007/978-1-0716-5376-0_34">
+    <tr data-uid="cit-001468" data-uids="cit-001468" data-tier="none" data-disc="no-open-copy" data-pdf="0" data-year="2026" data-work="Microarray data tools" data-works="1" data-text="cit-001468 · defining the specificity of blood-group-binding lectins through microarray analysis · a paul, hm jan, s muthusamy, cj stowell… - methods in transfusion …, 2026 - springer · arthur · methods in transfusion · microarray data tools ·  · 10.1007/978-1-0716-5376-0_34">
       <td class="uid"><a href="citation-report.html?uid=cit-001468">cit-001468</a></td>
-      <td class="work"><div class="workcell" data-uid="cit-001468" data-work="MAWE"><span class="wname">MAWE</span><div class="sub">2020</div></div></td>
+      <td class="work"><div class="workcell" data-uid="cit-001468" data-work="Microarray data tools"><span class="wname">Microarray data tools</span><div class="sub">2020</div></div></td>
       <td class="title"><a href="citation-report.html?uid=cit-001468">Defining the Specificity of Blood-Group-Binding Lectins Through Microarray Analysis</a>
         <div class="byline">A Paul, HM Jan, S Muthusamy, CJ Stowell… - Methods in Transfusion …, 2026 - Springer</div></td>
       <td>Arthur</td>
@@ -8623,12 +8641,12 @@
       <td class="src"><a href="https://link.springer.com/protocol/10.1007/978-1-0716-5376-0_34" target="_blank" rel="noopener noreferrer">link.springer.com</a><div class="sub"><a href="https://doi.org/10.1007/978-1-0716-5376-0_34" target="_blank" rel="noopener noreferrer">10.1007/978-1-0716-5376-0_34</a></div></td>
       <td class="disc"><span class="pill warn">No open copy</span><div class="sub">OpenAlex has the work (10.1007/978-1-0716-5376-0_34), no open-access PDF location</div></td>
       <td class="pdf"><span class="none">not retrieved</span></td>
-      <td class="tier"><div class="workcell" data-uid="cit-001468" data-work="MAWE"><span class="none">not read</span></div></td>
-      <td class="cite"><div class="workcell" data-uid="cit-001468" data-work="MAWE"><span class="none">no PDF, so nothing has been quoted</span></div></td>
+      <td class="tier"><div class="workcell" data-uid="cit-001468" data-work="Microarray data tools"><span class="none">not read</span></div></td>
+      <td class="cite"><div class="workcell" data-uid="cit-001468" data-work="Microarray data tools"><span class="none">no PDF, so nothing has been quoted</span></div></td>
     </tr>
-    <tr data-uid="cit-001470" data-uids="cit-001470" data-tier="none" data-disc="no-open-copy" data-pdf="0" data-year="2021" data-work="MAWE" data-works="1" data-text="cit-001470 · glycobioinformatics · kf aoki-kinoshita, f lisacek… - beilstein journal of …, 2021 - beilstein-journals.org · packer · kinoshita, f lisacek… - beilstein journal of · mawe ·  · 10.69645/uwiu9523">
+    <tr data-uid="cit-001470" data-uids="cit-001470" data-tier="none" data-disc="no-open-copy" data-pdf="0" data-year="2021" data-work="Microarray data tools" data-works="1" data-text="cit-001470 · glycobioinformatics · kf aoki-kinoshita, f lisacek… - beilstein journal of …, 2021 - beilstein-journals.org · packer · kinoshita, f lisacek… - beilstein journal of · microarray data tools ·  · 10.69645/uwiu9523">
       <td class="uid"><a href="citation-report.html?uid=cit-001470">cit-001470</a></td>
-      <td class="work"><div class="workcell" data-uid="cit-001470" data-work="MAWE"><span class="wname">MAWE</span><div class="sub">2020</div></div></td>
+      <td class="work"><div class="workcell" data-uid="cit-001470" data-work="Microarray data tools"><span class="wname">Microarray data tools</span><div class="sub">2020</div></div></td>
       <td class="title"><a href="citation-report.html?uid=cit-001470">GlycoBioinformatics</a>
         <div class="byline">KF Aoki-Kinoshita, F Lisacek… - Beilstein Journal of …, 2021 - beilstein-journals.org</div></td>
       <td>Packer</td>
@@ -8637,12 +8655,12 @@
       <td class="src"><a href="https://www.beilstein-journals.org/bjoc/articles/17/184" target="_blank" rel="noopener noreferrer">www.beilstein-journals.org</a><div class="sub"><a href="https://doi.org/10.69645/uwiu9523" target="_blank" rel="noopener noreferrer">10.69645/uwiu9523</a></div></td>
       <td class="disc"><span class="pill warn">No open copy</span><div class="sub">OpenAlex has the work (10.69645/uwiu9523), no open-access PDF location</div></td>
       <td class="pdf"><span class="none">not retrieved</span></td>
-      <td class="tier"><div class="workcell" data-uid="cit-001470" data-work="MAWE"><span class="none">not read</span></div></td>
-      <td class="cite"><div class="workcell" data-uid="cit-001470" data-work="MAWE"><span class="none">no PDF, so nothing has been quoted</span></div></td>
+      <td class="tier"><div class="workcell" data-uid="cit-001470" data-work="Microarray data tools"><span class="none">not read</span></div></td>
+      <td class="cite"><div class="workcell" data-uid="cit-001470" data-work="Microarray data tools"><span class="none">no PDF, so nothing has been quoted</span></div></td>
     </tr>
-    <tr data-uid="cit-001471" data-uids="cit-001471" data-tier="none" data-disc="open-copy" data-pdf="1" data-year="2022" data-work="MAWE" data-works="1" data-text="cit-001471 · simple and practical sialoglycan encoding system reveals vast diversity in nature and identifies a universal sialoglycan-recognizing probe derived from ab5 toxin b · a sasmal, n khan, z khedri, bp kellman… - …, 2022 - academic.oup.com · varki ·  · mawe ·  · 10.1093/glycob/cwac057">
+    <tr data-uid="cit-001471" data-uids="cit-001471" data-tier="none" data-disc="open-copy" data-pdf="1" data-year="2022" data-work="Microarray data tools" data-works="1" data-text="cit-001471 · simple and practical sialoglycan encoding system reveals vast diversity in nature and identifies a universal sialoglycan-recognizing probe derived from ab5 toxin b · a sasmal, n khan, z khedri, bp kellman… - …, 2022 - academic.oup.com · varki ·  · microarray data tools ·  · 10.1093/glycob/cwac057">
       <td class="uid"><a href="citation-report.html?uid=cit-001471">cit-001471</a></td>
-      <td class="work"><div class="workcell" data-uid="cit-001471" data-work="MAWE"><span class="wname">MAWE</span><div class="sub">2020</div></div></td>
+      <td class="work"><div class="workcell" data-uid="cit-001471" data-work="Microarray data tools"><span class="wname">Microarray data tools</span><div class="sub">2020</div></div></td>
       <td class="title"><a href="citation-report.html?uid=cit-001471">Simple and practical sialoglycan encoding system reveals vast diversity in nature and identifies a universal sialoglycan-recognizing probe derived from AB5 toxin B</a> <span class="sub">[title as Scholar shows it continues]</span>
         <div class="byline">A Sasmal, N Khan, Z Khedri, BP Kellman… - …, 2022 - academic.oup.com</div></td>
       <td>Varki</td>
@@ -8651,12 +8669,12 @@
       <td class="src"><a href="https://academic.oup.com/glycob/article-abstract/32/12/1101/6682810" target="_blank" rel="noopener noreferrer">academic.oup.com</a><div class="sub"><a href="https://doi.org/10.1093/glycob/cwac057" target="_blank" rel="noopener noreferrer">10.1093/glycob/cwac057</a></div></td>
       <td class="disc"><span class="pill ok">Open copy found</span><div class="sub">same file as cit-000924 (www.biorxiv.org); filed once under cit-000924</div></td>
       <td class="pdf"><a href="pending-papers/cit-000924/01-article-Varki-2022.pdf">PDF</a> <span class="sub">(same work as another row)</span></td>
-      <td class="tier"><div class="workcell" data-uid="cit-001471" data-work="MAWE"><span class="pill bad">no tier</span><div class="sub">read —, but no mention in a section that earns one</div></div></td>
-      <td class="cite"><div class="workcell" data-uid="cit-001471" data-work="MAWE"><span class="sub">no usable mention of the cited tool was found in the text</span><div class="sub"><a href="citation-report.html?uid=cit-001471">full report</a></div></div></td>
+      <td class="tier"><div class="workcell" data-uid="cit-001471" data-work="Microarray data tools"><span class="pill bad">no tier</span><div class="sub">read —, but no mention in a section that earns one</div></div></td>
+      <td class="cite"><div class="workcell" data-uid="cit-001471" data-work="Microarray data tools"><span class="sub">no usable mention of the cited tool was found in the text</span><div class="sub"><a href="citation-report.html?uid=cit-001471">full report</a></div></div></td>
     </tr>
-    <tr data-uid="cit-001473" data-uids="cit-001473" data-tier="none" data-disc="not-in-indexes" data-pdf="0" data-year="2021" data-work="MAWE" data-works="1" data-text="cit-001473 · kiyoko f. aoki-kinoshita1, frédérique lisacek2, niclas karlsson3, 4, daniel kolarich5 and nicolle h. packer · nh packer - beilstein j. org. chem, 2021 - research-management.mq.edu.au ·  · beilstein j. org. chem · mawe ·  · ">
+    <tr data-uid="cit-001473" data-uids="cit-001473" data-tier="none" data-disc="not-in-indexes" data-pdf="0" data-year="2021" data-work="Microarray data tools" data-works="1" data-text="cit-001473 · kiyoko f. aoki-kinoshita1, frédérique lisacek2, niclas karlsson3, 4, daniel kolarich5 and nicolle h. packer · nh packer - beilstein j. org. chem, 2021 - research-management.mq.edu.au ·  · beilstein j. org. chem · microarray data tools ·  · ">
       <td class="uid"><a href="citation-report.html?uid=cit-001473">cit-001473</a></td>
-      <td class="work"><div class="workcell" data-uid="cit-001473" data-work="MAWE"><span class="wname">MAWE</span><div class="sub">2020</div></div></td>
+      <td class="work"><div class="workcell" data-uid="cit-001473" data-work="Microarray data tools"><span class="wname">Microarray data tools</span><div class="sub">2020</div></div></td>
       <td class="title"><a href="citation-report.html?uid=cit-001473">Kiyoko F. Aoki-Kinoshita1, Frédérique Lisacek2, Niclas Karlsson3, 4, Daniel Kolarich5 and Nicolle H. Packer</a>
         <div class="byline">NH Packer - Beilstein J. Org. Chem, 2021 - research-management.mq.edu.au</div></td>
       <td>—</td>
@@ -8665,12 +8683,12 @@
       <td class="src"><a href="https://research-management.mq.edu.au/ws/portalfiles/portal/180735915/180733549.pdf" target="_blank" rel="noopener noreferrer">research-management.mq.edu.au</a></td>
       <td class="disc"><span class="pill warn">Not in OpenAlex</span><div class="sub">no OpenAlex record by title</div></td>
       <td class="pdf"><span class="none">not retrieved</span></td>
-      <td class="tier"><div class="workcell" data-uid="cit-001473" data-work="MAWE"><span class="none">not read</span></div></td>
-      <td class="cite"><div class="workcell" data-uid="cit-001473" data-work="MAWE"><span class="none">no PDF, so nothing has been quoted</span></div></td>
+      <td class="tier"><div class="workcell" data-uid="cit-001473" data-work="Microarray data tools"><span class="none">not read</span></div></td>
+      <td class="cite"><div class="workcell" data-uid="cit-001473" data-work="Microarray data tools"><span class="none">no PDF, so nothing has been quoted</span></div></td>
     </tr>
-    <tr data-uid="cit-001474" data-uids="cit-001474" data-tier="none" data-disc="not-in-indexes" data-pdf="0" data-year="" data-work="MAWE" data-works="1" data-text="cit-001474 · received 19 oct 2021, accepted 27 oct 2021, published 09 nov 2021 · kf aoki-kinoshita, f lisacek, n karlsson, d kolarich… - beilstein-journals.org ·  ·  · mawe ·  · ">
+    <tr data-uid="cit-001474" data-uids="cit-001474" data-tier="none" data-disc="not-in-indexes" data-pdf="0" data-year="" data-work="Microarray data tools" data-works="1" data-text="cit-001474 · received 19 oct 2021, accepted 27 oct 2021, published 09 nov 2021 · kf aoki-kinoshita, f lisacek, n karlsson, d kolarich… - beilstein-journals.org ·  ·  · microarray data tools ·  · ">
       <td class="uid"><a href="citation-report.html?uid=cit-001474">cit-001474</a></td>
-      <td class="work"><div class="workcell" data-uid="cit-001474" data-work="MAWE"><span class="wname">MAWE</span><div class="sub">2020</div></div></td>
+      <td class="work"><div class="workcell" data-uid="cit-001474" data-work="Microarray data tools"><span class="wname">Microarray data tools</span><div class="sub">2020</div></div></td>
       <td class="title"><a href="citation-report.html?uid=cit-001474">Received 19 Oct 2021, Accepted 27 Oct 2021, Published 09 Nov 2021</a>
         <div class="byline">KF Aoki-Kinoshita, F Lisacek, N Karlsson, D Kolarich… - beilstein-journals.org</div></td>
       <td>—</td>
@@ -8679,12 +8697,12 @@
       <td class="src"><a href="https://www.beilstein-journals.org/bjoc/content/html/1860-5397-17-184.html" target="_blank" rel="noopener noreferrer">www.beilstein-journals.org</a></td>
       <td class="disc"><span class="pill warn">Not in OpenAlex</span><div class="sub">no OpenAlex record by title</div></td>
       <td class="pdf"><span class="none">not retrieved</span></td>
-      <td class="tier"><div class="workcell" data-uid="cit-001474" data-work="MAWE"><span class="none">not read</span></div></td>
-      <td class="cite"><div class="workcell" data-uid="cit-001474" data-work="MAWE"><span class="none">no PDF, so nothing has been quoted</span></div></td>
+      <td class="tier"><div class="workcell" data-uid="cit-001474" data-work="Microarray data tools"><span class="none">not read</span></div></td>
+      <td class="cite"><div class="workcell" data-uid="cit-001474" data-work="Microarray data tools"><span class="none">no PDF, so nothing has been quoted</span></div></td>
     </tr>
-    <tr data-uid="cit-001475" data-uids="cit-001475" data-tier="none" data-disc="no-open-copy" data-pdf="0" data-year="2015" data-work="MAWE" data-works="1" data-text="cit-001475 · an accessible r-based exploratory toolbox to analyse plant glycomic microarray data · ks nissen, m fradera-soler… - available at ssrn …, 2015 - papers.ssrn.com · glazowska · soler… - available at ssrn · mawe ·  · 10.2139/ssrn.4359639">
+    <tr data-uid="cit-001475" data-uids="cit-001475" data-tier="none" data-disc="no-open-copy" data-pdf="0" data-year="2015" data-work="Microarray data tools" data-works="1" data-text="cit-001475 · an accessible r-based exploratory toolbox to analyse plant glycomic microarray data · ks nissen, m fradera-soler… - available at ssrn …, 2015 - papers.ssrn.com · glazowska · soler… - available at ssrn · microarray data tools ·  · 10.2139/ssrn.4359639">
       <td class="uid"><a href="citation-report.html?uid=cit-001475">cit-001475</a></td>
-      <td class="work"><div class="workcell" data-uid="cit-001475" data-work="MAWE"><span class="wname">MAWE</span><div class="sub">2020</div></div></td>
+      <td class="work"><div class="workcell" data-uid="cit-001475" data-work="Microarray data tools"><span class="wname">Microarray data tools</span><div class="sub">2020</div></div></td>
       <td class="title"><a href="citation-report.html?uid=cit-001475">An Accessible R-Based Exploratory Toolbox to Analyse Plant Glycomic Microarray Data</a>
         <div class="byline">KS Nissen, M Fradera-Soler… - Available at SSRN …, 2015 - papers.ssrn.com</div></td>
       <td>Glazowska</td>
@@ -8693,8 +8711,8 @@
       <td class="src"><a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=4359639" target="_blank" rel="noopener noreferrer">papers.ssrn.com</a><div class="sub"><a href="https://doi.org/10.2139/ssrn.4359639" target="_blank" rel="noopener noreferrer">10.2139/ssrn.4359639</a></div></td>
       <td class="disc"><span class="pill warn">No open copy</span><div class="sub">OpenAlex has the work (10.2139/ssrn.4359639), no open-access PDF location</div></td>
       <td class="pdf"><span class="none">not retrieved</span></td>
-      <td class="tier"><div class="workcell" data-uid="cit-001475" data-work="MAWE"><span class="none">not read</span></div></td>
-      <td class="cite"><div class="workcell" data-uid="cit-001475" data-work="MAWE"><span class="none">no PDF, so nothing has been quoted</span></div></td>
+      <td class="tier"><div class="workcell" data-uid="cit-001475" data-work="Microarray data tools"><span class="none">not read</span></div></td>
+      <td class="cite"><div class="workcell" data-uid="cit-001475" data-work="Microarray data tools"><span class="none">no PDF, so nothing has been quoted</span></div></td>
     </tr>
     <tr data-uid="cit-001476" data-uids="cit-001476" data-tier="none" data-disc="no-open-copy" data-pdf="0" data-year="2022" data-work="Tumor cells express pauci-and…" data-works="1" data-text="cit-001476 · glycoproteomics · i bagdonaite, sa malaker, da polasky… - nature reviews …, 2022 - nature.com · tang · nature reviews · tumor cells express pauci-and… ·  · 10.1038/s43586-022-00128-4">
       <td class="uid"><a href="citation-report.html?uid=cit-001476">cit-001476</a></td>
@@ -9347,12 +9365,12 @@
    &ldquo;PDF on file&rdquo; column, judge the sentence, and quote it back.</p>
 
 <h2>Citation reports</h2>
-<p>Each <code>row_uid</code> and each citing-paper title links to that citation&rsquo;s report in
-   <code>citation-report.html</code>, which opens on its uid (<code>?uid=cit-000544</code>). A report has
-   the same structure as <code>packet.html</code>: the citing paper, the work it cites, where the citation
-   sits, the quotation, and the files. A row that folds two of my works links to the first uid, and each of
-   its uids links to its own report. A report is a review note, not evidence: nothing in it reaches counsel
-   unless the row is confirmed and the packet is re-rendered.</p>
+<p>Each <code>row_uid</code> and each citing-paper title links to that article&rsquo;s report in
+   <code>citation-report.html</code>, which opens on the uid (<code>?uid=cit-000544</code>). The report shows
+   the article once, with its authors, senior author, open copy and files, and then every citation of my work
+   the article holds, with the one you opened highlighted. Each citation section gives the work it cites,
+   where the citation sits, and the quotation. A report is a review note, not evidence: nothing in it reaches
+   counsel unless the row is confirmed and the packet is re-rendered.</p>
 
 <p class="foot">Generated 2026-11-09 by <code>scripts/build-potential.js</code> from
    <code>Database/citation-catalog.sqlite</code> (read-only) and
@@ -9370,7 +9388,8 @@
   var rows = Array.prototype.slice.call(tbody.rows);
   var q = document.getElementById("f-q"), tier = document.getElementById("f-tier"),
       disc = document.getElementById("f-disc"), pdf = document.getElementById("f-pdf"),
-      year = document.getElementById("f-year"), work = document.getElementById("f-work"),
+      yearMin = document.getElementById("f-year-min"), yearMax = document.getElementById("f-year-max"),
+      work = document.getElementById("f-work"),
       works = document.getElementById("f-works"), shown = document.getElementById("shown"),
       none = document.getElementById("no-hits");
 
@@ -9391,7 +9410,14 @@
     if (works.value === "1" && Number(d.works) !== 1) return false;
     if (disc.value && d.disc !== disc.value) return false;
     if (pdf.value && d.pdf !== pdf.value) return false;
-    if (year.value && d.year !== year.value) return false;
+    // A year range needs a year: a row with no parseable year cannot fall inside one.
+    var lo = yearMin.value, hi = yearMax.value;
+    if (lo || hi) {
+      var y = parseInt(d.year, 10);
+      if (isNaN(y)) return false;
+      if (lo && y < Number(lo)) return false;
+      if (hi && y > Number(hi)) return false;
+    }
     var needle = q.value.trim().toLowerCase();
     if (needle) {
       // Every whitespace-separated term must appear; order does not matter.
@@ -9412,14 +9438,52 @@
     none.style.display = n ? "none" : "block";
   }
 
-  [q, tier, disc, pdf, year, work, works].forEach(function (el) {
+  [q, tier, disc, pdf, yearMin, yearMax, work, works].forEach(function (el) {
     el.addEventListener("input", apply);
     el.addEventListener("change", apply);
   });
   document.getElementById("f-reset").addEventListener("click", function () {
-    q.value = ""; tier.value = ""; disc.value = ""; pdf.value = ""; year.value = "";
+    q.value = ""; tier.value = ""; disc.value = ""; pdf.value = ""; yearMin.value = ""; yearMax.value = "";
     work.value = ""; works.value = "";
     apply();
+  });
+
+  // Column sort. Rows are reordered in place and the filter only toggles a class, so
+  // the two compose. A row with no year sorts last whichever way the year column runs.
+  var table = document.getElementById("cand");
+  var heads = table ? Array.prototype.slice.call(table.tHead.rows[0].cells) : [];
+  var sortCol = -1, sortDir = 1;
+  function sortKey(r, col) {
+    if (col === 0) return (r.dataset.uids || "").split(" ")[0];
+    if (col === 2) { var a = r.cells[2].querySelector("a"); return (a || r.cells[2]).textContent.trim(); }
+    if (col === 4) { var n = parseInt(r.dataset.year, 10); return isNaN(n) ? null : n; }
+    return r.cells[col].textContent.replace(/\s+/g, " ").trim();
+  }
+  function compare(a, b) {
+    if (a === null || b === null) return a === b ? 0 : (a === null ? 1 : -1);
+    if (typeof a === "number") return a - b;
+    return a.localeCompare(b, undefined, { numeric: true, sensitivity: "base" });
+  }
+  heads.forEach(function (th, col) {
+    th.tabIndex = 0;
+    th.title = "Click to sort; click again to reverse";
+    var go = function () {
+      sortDir = sortCol === col ? -sortDir : 1;
+      sortCol = col;
+      heads.forEach(function (h, i) {
+        h.setAttribute("aria-sort", i !== col ? "none" : (sortDir > 0 ? "ascending" : "descending"));
+      });
+      rows.sort(function (a, b) {
+        var ka = sortKey(a, col), kb = sortKey(b, col);
+        var c = (ka === null || kb === null) ? compare(ka, kb) : compare(ka, kb) * sortDir;
+        return c || compare(sortKey(a, 0), sortKey(b, 0));
+      });
+      rows.forEach(function (r) { tbody.appendChild(r); });
+    };
+    th.addEventListener("click", go);
+    th.addEventListener("keydown", function (e) {
+      if (e.key === "Enter" || e.key === " ") { e.preventDefault(); go(); }
+    });
   });
   apply();
 })();

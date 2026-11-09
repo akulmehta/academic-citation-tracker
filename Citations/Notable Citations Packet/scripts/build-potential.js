@@ -183,18 +183,30 @@ function citedWorks(db, cat) {
 }
 
 /**
+ * Labels for cited works whose title names no tool, or names one that
+ * `toolForCitedPaper` reads more broadly than the title does. Each label is the
+ * crux of the work, so the three glycan-microarray papers are not all "MAWE".
+ */
+const WORK_LABEL_OVERRIDES = [
+  [/^GlyMDB\b/i, "GlyMDB: microarray database"],
+  [/wet-erase|\bMAWE\b/i, "MAWE: reusable microarrays"],
+  [/^Tools for generating and analyzing glycan microarray data/i, "Microarray data tools"],
+];
+
+/**
  * Short label for a cited work, for the "My work" column.
  *
- * `toolForCitedPaper` returns null for a cited paper that is not one of the four
- * tools — a review of the field, an anticoagulant chapter — and null is a real
- * answer that must be shown, not borrowed from a sibling row. Such a work is
- * labelled by the first words of its own title, which is what identifies it.
+ * A tool is named only when the title itself names it. `toolForCitedPaper` also maps
+ * any "glycan microarray" title to MAWE, so the tool is checked against the title
+ * before it is used. A work that names no tool is labelled by the override above or,
+ * failing that, by the first words of its own title, which is what identifies it.
  */
 function workLabel(pub) {
+  const title = stripTrailingEllipsis(pub.title);
+  for (const [re, label] of WORK_LABEL_OVERRIDES) if (re.test(title)) return label;
   const tool = toolForCitedPaper(pub.title);
-  if (tool) return tool;
-  const t = stripTrailingEllipsis(pub.title);
-  return t.length > 34 ? t.slice(0, 34).replace(/\s+\S*$/, "") + "\u2026" : t;
+  if (tool && new RegExp(tool.replace("-", "[- ]?"), "i").test(title)) return tool;
+  return title.length > 34 ? title.slice(0, 34).replace(/\s+\S*$/, "") + "\u2026" : title;
 }
 
 /**
@@ -513,25 +525,63 @@ function rowHtml(r) {
 }
 
 /**
- * The report for ONE citation (not per work), in the same shape as an entry in
- * `packet.html`: the citing paper, the work it cites, where the citation sits, the
- * quotation, and the files. It is embedded in citation-report.html, one per uid.
+ * The report for ONE ARTICLE (one table row), in the shape of an entry in `packet.html`.
  *
- * Reports stay per citation even though the table folds works onto one row, because
- * a report answers a question about one citation: where does GLAD sit, versus where
- * does GlycoGlyph sit. The page is keyed by uid, which is what every link in the
- * table points at.
+ * The article is shown once, with the facts that belong to the paper: its authors,
+ * venue, senior author, open-copy state and files. Each citation of my work that the
+ * article holds follows as its own section, because "where the citation sits" and the
+ * quotation are judgements about one cited work. A row folds several citations, and a
+ * report that showed only one of them would hide the evidence the row exists for.
+ *
+ * The template carries every uid the row holds, so any of them opens this report, and
+ * each section carries its own `data-uid` so the page can bring the opened one into view.
  */
-function reportBlock(c) {
-  const files = c.pdfs.length
-    ? `<ul class="files-list">${c.pdfs.map(f => `<li><a href="${href(f.file)}">${esc(f.file.split("/").pop())}</a>`
-        + ` <span class="sub">${esc(f.role || "")}</span></li>`).join("")}</ul>`
-    : c.sharedPdf
-      ? `<ul class="files-list"><li><a href="${href(c.sharedPdf)}">PDF</a>`
-        + ` <span class="sub">same work as another row</span></li></ul>`
-      : `<p class="none">No PDF on file. ${esc(DISCOVER_LABEL[c.discover] || c.discover)}`
-        + `${c.discoverNote ? ` — ${esc(c.discoverNote)}` : ""}.</p>`;
+function rowReport(r) {
+  return `
+<template data-uids="${esc(r.uids.join(" "))}"><article class="report">
+  <h3>${esc(r.title)}</h3>
+  ${articleHead(r)}
+  ${r.entries.map(citationSection).join("\n")}
+  <p class="trace">${r.uids.map(u => `<code>${esc(u)}</code>`).join(" ")} &middot; review note only — not part of
+     <code>packet.html</code> and not evidence until the row is confirmed and the packet re-rendered</p>
+</article></template>`;
+}
 
+/** The article-level facts: who wrote it, where it appears, what open copy exists, and its files. */
+function articleHead(r) {
+  const L = r.lead;
+  const files = r.pdfs.length
+    ? `<ul class="files-list">${r.pdfs.map(f => `<li><a href="${href(f.file)}">${esc(f.file.split("/").pop())}</a>`
+        + ` <span class="sub">${esc(f.role || "")}</span></li>`).join("")}</ul>`
+    : r.sharedPdf
+      ? `<ul class="files-list"><li><a href="${href(r.sharedPdf)}">PDF</a>`
+        + ` <span class="sub">same work as another row</span></li></ul>`
+      : `<p class="none">No PDF on file.</p>`;
+  return `
+  <p class="byline">${esc(L.authorsFull || r.authors || "")}<br>
+     <span class="venue">${esc(L.venueFull || r.venue || "")}${r.year ? `, ${esc(r.year)}` : ""}</span>`
+     + `${r.link ? ` &middot; ${extLink(r.link, hostOf(r.link))}` : ""}`
+     + `${r.doi ? ` &middot; ${extLink(`https://doi.org/${r.doi}`, r.doi)}` : ""}</p>
+  <dl>
+    <dt>Senior author</dt>
+    <dd>${esc(r.senior || "\u2014")}</dd>
+    <dt>Citing authors&rsquo; institutions</dt>
+    <dd>${L.institutions ? esc(L.institutions) : `<span class="none">Not recorded — confirm from the PDF&rsquo;s affiliation block.</span>`}</dd>
+    <dt>Article type</dt>
+    <dd>${esc(L.articleType || "\u2014")}</dd>
+    <dt>Open copy</dt>
+    <dd><span class="pill ${DISCOVER_CLASS[r.discover] || "warn"}">${esc(DISCOVER_LABEL[r.discover] || r.discover)}</span>${r.discoverNote ? ` <span class="sub">${esc(r.discoverNote)}</span>` : ""}</dd>
+  </dl>
+  <h4>Files</h4>
+  ${files}`;
+}
+
+/**
+ * One citation of my work inside the article: the work it cites, where the citation
+ * sits, the quotation, and the independence basis. Every value comes from this
+ * citation's own row, never from a sibling in the same article.
+ */
+function citationSection(c) {
   const res = bestResolved(c);
   const where = c.scanTier
     ? `<strong>${esc(c.section || "")}</strong>${c.page ? `, page ${esc(c.page)}` : ""} — ${esc(TIER_LABEL[c.scanTier] || c.scanTier)}`
@@ -555,12 +605,8 @@ function reportBlock(c) {
       : `<p class="none">No verbatim sentence recorded.</p>`;
 
   return `
-<article class="report" data-uid="${esc(c.uid)}">
-  <h3>${esc(c.title)}</h3>
-  <p class="byline">${esc(c.authorsFull || c.authors || "")}<br>
-     <span class="venue">${esc(c.venueFull || c.venue || "")}${c.year ? `, ${esc(c.year)}` : ""}</span>`
-     + `${c.link ? ` &middot; ${extLink(c.link, hostOf(c.link))}` : ""}`
-     + `${c.doi ? ` &middot; ${extLink(`https://doi.org/${c.doi}`, c.doi)}` : ""}</p>
+<section class="cite-of" data-uid="${esc(c.uid)}">
+  <h4>Citation of ${esc(c.workName)}</h4>
   <dl>
     <dt>My work cited</dt>
     <dd>${esc(c.workTitle)}${c.workYear ? ` (${esc(c.workYear)})` : ""} <span class="sub">[${esc(c.workName)}]</span></dd>
@@ -568,21 +614,13 @@ function reportBlock(c) {
     <dd><code>${esc(c.uid)}</code></dd>
     <dt>Where the citation appears</dt>
     <dd>${where}</dd>
-    <dt>Citing authors&rsquo; institutions</dt>
-    <dd>${c.institutions ? esc(c.institutions) : `<span class="none">Not recorded — confirm from the PDF&rsquo;s affiliation block.</span>`}</dd>
-    <dt>Article type</dt>
-    <dd>${esc(c.articleType || "—")}</dd>
     <dt>Independence</dt>
     <dd>Re-checked against the citation record: complete author lists of both papers, no shared
         author, neither PI named on the citing paper${c.confirm ? `; basis on the record: ${esc(c.confirm)}` : ""}.</dd>
   </dl>
   <h4>What the text says</h4>
   ${quote}
-  <h4>Files</h4>
-  ${files}
-  <p class="trace"><code>${esc(c.uid)}</code> &middot; review note only — not part of
-     <code>packet.html</code> and not evidence until the row is confirmed and the packet re-rendered</p>
-</article>`;
+</section>`;
 }
 
 const CSS = `
@@ -606,9 +644,17 @@ const CSS = `
   th, td { border-bottom:1px solid var(--rule); padding:.4rem .35rem; vertical-align:top; text-align:left; }
   thead th { border-bottom:2px solid var(--ink); font-size:.7rem; text-transform:uppercase;
              letter-spacing:.05em; color:var(--muted); position:sticky; top:0; background:#fff; }
-  .uid { font-family:"SFMono-Regular",Consolas,monospace; font-size:.74rem; white-space:nowrap; }
-  .uid2 { font-family:"SFMono-Regular",Consolas,monospace; font-size:.74rem; white-space:nowrap; color:var(--muted); }
-  .title { min-width:15rem; }
+  .uid { font-family:"SFMono-Regular",Consolas,monospace; font-size:.74rem; overflow-wrap:anywhere; }
+  .uid2 { font-family:"SFMono-Regular",Consolas,monospace; font-size:.74rem; overflow-wrap:anywhere; color:var(--muted); }
+  /* The table is laid out to the width of the screen, never wider: columns take their
+     share from the colgroup and long words (uids, DOIs, URLs) wrap inside their cell.
+     Without fixed layout the browser sizes the table to its content and it overflows. */
+  #cand { table-layout:fixed; width:100%; }
+  #cand th, #cand td { overflow-wrap:anywhere; }
+  #cand thead th { cursor:pointer; user-select:none; }
+  #cand thead th:focus-visible { outline:2px solid var(--accent); outline-offset:-2px; }
+  #cand thead th[aria-sort="ascending"]::after { content:" \\25B2"; }
+  #cand thead th[aria-sort="descending"]::after { content:" \\25BC"; }
   .byline { color:var(--muted); font-size:.74rem; margin-top:.15rem; }
   .sub { color:var(--muted); font-size:.7rem; }
   .src, .disc { font-size:.74rem; }
@@ -620,9 +666,9 @@ const CSS = `
   .workcell { border-top:1px dotted var(--rule); padding-top:.3rem; margin-top:.3rem; }
   .workcell:first-child { border-top:none; padding-top:0; margin-top:0; }
   .workcell .wt { font-size:.66rem; text-transform:uppercase; letter-spacing:.05em; color:var(--accent); }
-  .work { font-size:.74rem; white-space:nowrap; }
+  .work { font-size:.74rem; }
   .wname { font-weight:600; }
-  .pill { display:inline-block; padding:.05rem .4rem; border-radius:9px; font-size:.68rem; white-space:nowrap; }
+  .pill { display:inline-block; padding:.05rem .4rem; border-radius:9px; font-size:.68rem; }
   .pill.ok { background:#e3f0e4; color:#26562a; }
   .pill.warn { background:#f6ecd9; color:#7a5c00; }
   .pill.bad { background:#f7e0e0; color:#7a1f1f; }
@@ -631,7 +677,7 @@ const CSS = `
   .screen td { border:none; padding:.12rem .35rem; }
   .screen td.n { font-variant-numeric:tabular-nums; color:var(--ink); }
   .tier { font-size:.74rem; }
-  .cite { font-size:.74rem; min-width:13rem; }
+  .cite { font-size:.74rem; }
   .cite .q { display:block; margin-bottom:.15rem; }
   .report { border:1px solid var(--rule); border-left:3px solid var(--accent); padding:.9rem 1.1rem; margin:1.4rem 0; }
   .report h3 { font-size:1.02rem; margin:.1rem 0 .2rem; }
@@ -644,6 +690,8 @@ const CSS = `
   .report .cite-page { font-size:.72rem; color:var(--muted); margin:.1rem 0 0; }
   .report .files-list { margin:.3rem 0; padding-left:1.2rem; font-size:.82rem; }
   .report .trace { font-size:.72rem; color:var(--muted); border-top:1px solid var(--rule); padding-top:.4rem; margin:.9rem 0 0; }
+  .report .cite-of { border-top:1px dotted var(--rule); margin-top:1rem; padding:.5rem .6rem 0; }
+  .report .cite-of.focus { background:#fdf7e3; border-left:3px solid #c9a227; }
   .foot { margin-top:2rem; font-size:.75rem; color:var(--muted); border-top:1px solid var(--rule); padding-top:.8rem; }
 
   /* Filter bar over the candidate table. Screen only. */
@@ -757,7 +805,7 @@ function filterHtml(rows, cites) {
   const discOpts = ["", ...Object.keys(DISCOVER_LABEL).filter(k => discSeen.has(k))]
     .map(k => k === "" ? opt("", "any") : opt(k, DISCOVER_LABEL[k])).join("");
   const yearSeen = [...new Set(rows.map(r => String(r.year || "").trim()).filter(Boolean))]
-    .sort((a, b) => b.localeCompare(a));
+    .sort((a, b) => a.localeCompare(b, undefined, { numeric: true }));
   const yearOpts = [opt("", "any"), ...yearSeen.map(y => opt(y, y))].join("");
   // "My work" options come from the citations, in the order the works were screened.
   const workSeen = [];
@@ -775,7 +823,8 @@ function filterHtml(rows, cites) {
   <div class="fld"><label for="f-tier">Tier</label><select id="f-tier">${tierOpts}</select></div>
   <div class="fld"><label for="f-disc">Open copy</label><select id="f-disc">${discOpts}</select></div>
   <div class="fld"><label for="f-pdf">PDF on file</label><select id="f-pdf">${opt("", "any")}${opt("1", "yes")}${opt("0", "no")}</select></div>
-  <div class="fld"><label for="f-year">Year</label><select id="f-year">${yearOpts}</select></div>
+  <div class="fld"><label for="f-year-min">Year from</label><select id="f-year-min">${yearOpts}</select></div>
+  <div class="fld"><label for="f-year-max">Year to</label><select id="f-year-max">${yearOpts}</select></div>
   <div class="spacer"></div>
   <div class="fld"><label>&nbsp;</label><button type="button" id="f-reset">Reset</button></div>
   <div class="fld"><label>&nbsp;</label><span id="shown"></span></div>
@@ -845,13 +894,12 @@ function notesHtml(rows, cites) {
    &ldquo;PDF on file&rdquo; column, judge the sentence, and quote it back.</p>
 
 <h2>Citation reports</h2>
-<p>Each <code>row_uid</code> and each citing-paper title links to that citation&rsquo;s report in
-   <code>citation-report.html</code>, which opens on its uid (<code>?uid=cit-000544</code>). A report has
-   the same structure as <code>packet.html</code>: the citing paper, the work it cites, where the citation
-   sits, the quotation, and the files. A row that folds two of my works links to the first uid, and each of
-   its uids links to its own report. A report is a review note, not evidence: nothing in it reaches counsel
-   unless the row is confirmed and the packet is re-rendered.</p>`;}
-
+<p>Each <code>row_uid</code> and each citing-paper title links to that article&rsquo;s report in
+   <code>citation-report.html</code>, which opens on the uid (<code>?uid=cit-000544</code>). The report shows
+   the article once, with its authors, senior author, open copy and files, and then every citation of my work
+   the article holds, with the one you opened highlighted. Each citation section gives the work it cites,
+   where the citation sits, and the quotation. A report is a review note, not evidence: nothing in it reaches
+   counsel unless the row is confirmed and the packet is re-rendered.</p>`;}
 function footHtml(today, cites, rows) {
   const read = cites.filter(c => c.hasPdf).length;
   return `
@@ -883,7 +931,8 @@ const FILTER_JS = `
   var rows = Array.prototype.slice.call(tbody.rows);
   var q = document.getElementById("f-q"), tier = document.getElementById("f-tier"),
       disc = document.getElementById("f-disc"), pdf = document.getElementById("f-pdf"),
-      year = document.getElementById("f-year"), work = document.getElementById("f-work"),
+      yearMin = document.getElementById("f-year-min"), yearMax = document.getElementById("f-year-max"),
+      work = document.getElementById("f-work"),
       works = document.getElementById("f-works"), shown = document.getElementById("shown"),
       none = document.getElementById("no-hits");
 
@@ -904,7 +953,14 @@ const FILTER_JS = `
     if (works.value === "1" && Number(d.works) !== 1) return false;
     if (disc.value && d.disc !== disc.value) return false;
     if (pdf.value && d.pdf !== pdf.value) return false;
-    if (year.value && d.year !== year.value) return false;
+    // A year range needs a year: a row with no parseable year cannot fall inside one.
+    var lo = yearMin.value, hi = yearMax.value;
+    if (lo || hi) {
+      var y = parseInt(d.year, 10);
+      if (isNaN(y)) return false;
+      if (lo && y < Number(lo)) return false;
+      if (hi && y > Number(hi)) return false;
+    }
     var needle = q.value.trim().toLowerCase();
     if (needle) {
       // Every whitespace-separated term must appear; order does not matter.
@@ -925,14 +981,52 @@ const FILTER_JS = `
     none.style.display = n ? "none" : "block";
   }
 
-  [q, tier, disc, pdf, year, work, works].forEach(function (el) {
+  [q, tier, disc, pdf, yearMin, yearMax, work, works].forEach(function (el) {
     el.addEventListener("input", apply);
     el.addEventListener("change", apply);
   });
   document.getElementById("f-reset").addEventListener("click", function () {
-    q.value = ""; tier.value = ""; disc.value = ""; pdf.value = ""; year.value = "";
+    q.value = ""; tier.value = ""; disc.value = ""; pdf.value = ""; yearMin.value = ""; yearMax.value = "";
     work.value = ""; works.value = "";
     apply();
+  });
+
+  // Column sort. Rows are reordered in place and the filter only toggles a class, so
+  // the two compose. A row with no year sorts last whichever way the year column runs.
+  var table = document.getElementById("cand");
+  var heads = table ? Array.prototype.slice.call(table.tHead.rows[0].cells) : [];
+  var sortCol = -1, sortDir = 1;
+  function sortKey(r, col) {
+    if (col === 0) return (r.dataset.uids || "").split(" ")[0];
+    if (col === 2) { var a = r.cells[2].querySelector("a"); return (a || r.cells[2]).textContent.trim(); }
+    if (col === 4) { var n = parseInt(r.dataset.year, 10); return isNaN(n) ? null : n; }
+    return r.cells[col].textContent.replace(/\\s+/g, " ").trim();
+  }
+  function compare(a, b) {
+    if (a === null || b === null) return a === b ? 0 : (a === null ? 1 : -1);
+    if (typeof a === "number") return a - b;
+    return a.localeCompare(b, undefined, { numeric: true, sensitivity: "base" });
+  }
+  heads.forEach(function (th, col) {
+    th.tabIndex = 0;
+    th.title = "Click to sort; click again to reverse";
+    var go = function () {
+      sortDir = sortCol === col ? -sortDir : 1;
+      sortCol = col;
+      heads.forEach(function (h, i) {
+        h.setAttribute("aria-sort", i !== col ? "none" : (sortDir > 0 ? "ascending" : "descending"));
+      });
+      rows.sort(function (a, b) {
+        var ka = sortKey(a, col), kb = sortKey(b, col);
+        var c = (ka === null || kb === null) ? compare(ka, kb) : compare(ka, kb) * sortDir;
+        return c || compare(sortKey(a, 0), sortKey(b, 0));
+      });
+      rows.forEach(function (r) { tbody.appendChild(r); });
+    };
+    th.addEventListener("click", go);
+    th.addEventListener("keydown", function (e) {
+      if (e.key === "Enter" || e.key === " ") { e.preventDefault(); go(); }
+    });
   });
   apply();
 })();
@@ -956,10 +1050,17 @@ ${headerHtml(screens, cites, rows, today)}
 <p>${cites.filter(c => c.hasPdf).length} of the ${cites.length} citations have a PDF on file and have
    been read by the scanner; those carry a tier and the sentence it rests on. The rest have no tier
    because nothing has been read, which is a statement about the file, not about the paper.</p>
+<p class="sub">Click a column heading to sort the table; click it again to reverse the order. The year
+   filters take a range: set one or both of &ldquo;Year from&rdquo; and &ldquo;Year to&rdquo;.</p>
 ${filterHtml(rows, cites)}
 <p id="no-hits">No row matches those filters. Reset to see all ${rows.length}.</p>
 
 <table id="cand">
+  <colgroup>
+    <col style="width:7.5%"><col style="width:9%"><col style="width:17%"><col style="width:7%">
+    <col style="width:4.5%"><col style="width:10%"><col style="width:8%"><col style="width:9%">
+    <col style="width:5%"><col style="width:10%"><col style="width:13%">
+  </colgroup>
   <thead><tr>
     <th>row_uid</th><th>My work</th><th>Citing paper</th><th>Senior author</th><th>Year</th><th>Venue</th>
     <th>Where it is</th><th>Open copy</th><th>PDF on file</th><th>Tier</th><th>Citation</th>
@@ -988,7 +1089,7 @@ ${footHtml(today, cites, rows)}
 const REPORT_JS = `
 (function () {
   var uid = new URLSearchParams(window.location.search).get("uid") || "";
-  var tpl = /^cit-\\d{6}$/.test(uid) ? document.getElementById("tpl-" + uid) : null;
+  var tpl = /^cit-\\d{6}$/.test(uid) ? document.querySelector('template[data-uids~="' + uid + '"]') : null;
   var miss = document.getElementById("missing");
   if (!tpl) {
     miss.hidden = false;
@@ -997,19 +1098,26 @@ const REPORT_JS = `
       : "Open a citation from the candidate list. This page needs a row_uid in its address, for example ?uid=cit-000544.";
     return;
   }
-  document.getElementById("report").appendChild(tpl.content.cloneNode(true));
+  var holder = document.getElementById("report");
+  holder.appendChild(tpl.content.cloneNode(true));
+  var opened = holder.querySelector('[data-uid="' + uid + '"]');
+  if (opened) { opened.classList.add("focus"); opened.scrollIntoView(); }
   document.title = uid + " \\u2014 citation report";
 })();
 `;
 
-function buildReportHtml(cites, today) {
-  const sorted = [...cites].sort((a, b) => a.uid.localeCompare(b.uid));
+/**
+ * One template per table row, so the page holds one entry for each article and the
+ * uids it folds. `rows` is the table's own grouping, which keeps a report and its row
+ * in step: the page cannot show a citation the list does not.
+ */
+function buildReportHtml(rows, cites, today) {
   const seen = new Set();
-  for (const c of sorted) {
-    if (seen.has(c.uid)) throw new Error(`${c.uid} has two reports; a uid must name one citation`);
+  for (const c of cites) {
+    if (seen.has(c.uid)) throw new Error(`${c.uid} is in two rows; a uid must name one citation`);
     seen.add(c.uid);
   }
-  const templates = sorted.map(c => `<template id="tpl-${esc(c.uid)}">${reportBlock(c)}</template>`).join("\n");
+  const templates = rows.map(rowReport).join("\n");
   return `<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -1024,15 +1132,16 @@ function buildReportHtml(cites, today) {
   <p class="kicker">Review page — not part of the packet</p>
   <h1>Citation report</h1>
   <p><a href="potential_notable_citations.html">&larr; Back to the candidate list</a></p>
-  <p class="sub">One citation, opened from the candidate list by its row_uid. A review note, not evidence:
-     nothing here reaches counsel unless the row is confirmed and the packet re-rendered.</p>
+  <p class="sub">One article from the candidate list, opened by a row_uid. It shows every citation of my work
+     that the article holds; the one you opened is highlighted. A review note, not evidence: nothing here
+     reaches counsel unless the row is confirmed and the packet re-rendered.</p>
 </header>
-<noscript><p>This page needs JavaScript to choose which citation to show.</p></noscript>
+<noscript><p>This page needs JavaScript to choose which article to show.</p></noscript>
 <p id="missing" hidden></p>
 <div id="report"></div>
 <p class="foot">Generated ${esc(today)} by <code>scripts/build-potential.js</code> from
    <code>Database/citation-catalog.sqlite</code> (read-only) and <code>notable-citations.sqlite</code>.
-   ${sorted.length} citation reports, one per row_uid.</p>
+   ${rows.length} articles holding ${cites.length} citation reports, one per row_uid.</p>
 </main>
 ${templates}
 <script>${REPORT_JS}</script>
@@ -1052,7 +1161,7 @@ function main() {
   const rows = foldRows(cat, cites);
   const today = new Date().toISOString().slice(0, 10);
   const html = buildHtml(screens, cites, rows, today);
-  const reportHtml = buildReportHtml(cites, today);
+  const reportHtml = buildReportHtml(rows, cites, today);
   const withPdf = cites.filter(c => c.hasPdf).length;
   const merged = rows.filter(r => r.entries.length > 1).length;
   if (!WRITE) {
