@@ -22,14 +22,14 @@
  */
 const path = require("path");
 const fs = require("fs");
-const { PKT, openPacket, heldPdfIndex, linkKind } = require("./lib.js");
+const { PKT, openPacket, heldPdfIndex, linkKind, DOWNLOAD_STATUSES } = require("./lib.js");
 const flag = (n) => {
   const a = process.argv.find((x) => x.startsWith(`--${n}=`));
   return a ? a.slice(n.length + 3) : "";
 };
 const has = (n) => process.argv.includes(`--${n}`);
 
-const STATUS = ["downloaded", "walled", "no-open-copy", "skipped-preprint", "skipped-thesis", "skipped-book", "failed"];
+const STATUS = DOWNLOAD_STATUSES;
 
 const db = openPacket();
 db.exec(`
@@ -37,7 +37,7 @@ CREATE TABLE IF NOT EXISTS download_attempt (
   row_uid      TEXT PRIMARY KEY,
   url          TEXT,
   host         TEXT,
-  status       TEXT NOT NULL CHECK (status IN ('downloaded','walled','no-open-copy','skipped-preprint','skipped-thesis','skipped-book','failed')),
+  status       TEXT NOT NULL CHECK (status IN ('downloaded','walled','no-open-copy','skipped-preprint','skipped-thesis','skipped-book','skipped-academia','failed')),
   note         TEXT,
   attempted_on TEXT NOT NULL
 );`);
@@ -90,6 +90,7 @@ function classify(r) {
   if (k === "preprint") return "skipped-preprint";
   if (k === "thesis") return "skipped-thesis";
   if (k === "book") return "skipped-book";
+  if (k === "academia") return "skipped-academia";
   if (r.discover_state === "no-open-copy" || r.discover_state === "not-in-indexes") return "no-open-copy";
   return "pending";
 }

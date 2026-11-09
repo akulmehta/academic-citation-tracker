@@ -77,6 +77,15 @@ const WRITE = argv.includes("--write");
 const OUT = path.join(PKT, "potential_notable_citations.html");
 
 /**
+ * The per-citation reports, all on one page. It is opened as
+ * `citation-report.html?uid=cit-000544` and shows that citation's block. The blocks
+ * are embedded as inert <template>s rather than fetched, because a browser refuses
+ * fetch() from a file:// page and this folder is opened that way.
+ */
+const REPORT_PAGE = "citation-report.html";
+const REPORT_OUT = path.join(PKT, REPORT_PAGE);
+
+/**
  * Same wording as `render-packet.js`, deliberately: a tier shown on the review
  * page has to mean exactly what it means in the packet, or a candidate looks
  * stronger or weaker here than it will once it is filed.
@@ -123,6 +132,11 @@ function esc(s) {
 /** Encode each path segment but keep the slashes, so a relative link still resolves. */
 function href(p) {
   return esc(String(p).split("/").map(seg => encodeURIComponent(seg)).join("/"));
+}
+
+/** The link from the candidate list to one citation's report. */
+function reportHref(uid) {
+  return esc(`${REPORT_PAGE}?uid=${encodeURIComponent(uid)}`);
 }
 
 /**
@@ -421,8 +435,8 @@ function tierCell(c) {
 
 /**
  * Citation for ONE citation — the words the tier came from, so the judgement in the
- * column beside it can be checked without opening the PDF. The full sentence is at
- * the foot of the page; this is a working excerpt.
+ * column beside it can be checked without opening the PDF. The full report is on its
+ * own page; this is a working excerpt.
  */
 function citationCell(c) {
   if (c.scanTier && c.quote) {
@@ -436,7 +450,7 @@ function citationCell(c) {
   }
   if (c.hasPdf) {
     return `<span class="sub">${esc(shortNote(c.scanNote))}</span>`
-      + `<div class="sub"><a href="#rep-${esc(c.uid)}">full report</a></div>`;
+      + `<div class="sub"><a href="${reportHref(c.uid)}">full report</a></div>`;
   }
   return `<span class="none">no PDF, so nothing has been quoted</span>`;
 }
@@ -444,7 +458,7 @@ function citationCell(c) {
 function quoteCell(text, where, c) {
   const q = text.length > 260 ? text.slice(0, 260).replace(/\s+\S*$/, "") + "\u2026" : text;
   return `<span class="q">&ldquo;${esc(q)}&rdquo;</span>`
-    + `<div class="sub">${where} \u00b7 <a href="#rep-${esc(c.uid)}">full report</a></div>`;
+    + `<div class="sub">${where} \u00b7 <a href="${reportHref(c.uid)}">full report</a></div>`;
 }
 
 /**
@@ -479,10 +493,13 @@ function rowHtml(r) {
     + `data-tier="${esc(tierKeys.join(" ")).trim()}" data-disc="${esc(r.discover)}" `
     + `data-pdf="${anyPdf}" data-year="${esc(r.year || "")}" data-work="${esc(works)}" `
     + `data-works="${r.entries.length}" data-text="${esc(text)}">
-      <td class="uid">${r.uids.map((u, i) => i === 0 ? esc(u) : `<div class="uid2">${esc(u)}</div>`).join("")}</td>
+      <td class="uid">${r.uids.map((u, i) => {
+        const a = `<a href="${reportHref(u)}">${esc(u)}</a>`;
+        return i === 0 ? a : `<div class="uid2">${a}</div>`;
+      }).join("")}</td>
       <td class="work">${r.entries.map(c => workCell(c,
           `<span class="wname">${esc(c.workName)}</span><div class="sub">${esc(c.workYear || "\u2014")}</div>`, false)).join("")}</td>
-      <td class="title">${esc(r.title)}${r.rawTitle !== r.title ? ' <span class="sub">[title as Scholar shows it continues]</span>' : ""}
+      <td class="title"><a href="${reportHref(r.uids[0])}">${esc(r.title)}</a>${r.rawTitle !== r.title ? ' <span class="sub">[title as Scholar shows it continues]</span>' : ""}
         ${r.authors ? `<div class="byline">${esc(r.authors)}</div>` : ""}${multi ? `<div class="sub">${r.entries.length} citations of my work in this one article</div>` : ""}</td>
       <td>${esc(r.senior || "\u2014")}</td>
       <td>${esc(r.year || "\u2014")}</td>
@@ -496,14 +513,14 @@ function rowHtml(r) {
 }
 
 /**
- * One report block per CITATION (not per work), at the foot of the page, in the same
- * shape as an entry in `packet.html`: the citing paper, the work it cites, where the
- * citation sits, the quotation, and the files.
+ * The report for ONE citation (not per work), in the same shape as an entry in
+ * `packet.html`: the citing paper, the work it cites, where the citation sits, the
+ * quotation, and the files. It is embedded in citation-report.html, one per uid.
  *
  * Reports stay per citation even though the table folds works onto one row, because
  * a report answers a question about one citation: where does GLAD sit, versus where
- * does GlycoGlyph sit. The anchor is the uid, which is what every `full report` link
- * in the table points at, so folding the blocks would break those links.
+ * does GlycoGlyph sit. The page is keyed by uid, which is what every link in the
+ * table points at.
  */
 function reportBlock(c) {
   const files = c.pdfs.length
@@ -538,7 +555,7 @@ function reportBlock(c) {
       : `<p class="none">No verbatim sentence recorded.</p>`;
 
   return `
-<article class="report" id="rep-${esc(c.uid)}">
+<article class="report" data-uid="${esc(c.uid)}">
   <h3>${esc(c.title)}</h3>
   <p class="byline">${esc(c.authorsFull || c.authors || "")}<br>
      <span class="venue">${esc(c.venueFull || c.venue || "")}${c.year ? `, ${esc(c.year)}` : ""}</span>`
@@ -827,11 +844,13 @@ function notesHtml(rows, cites) {
 <p>What the page is for, then, is the reading: filter to a work or a tier, open the PDF from the
    &ldquo;PDF on file&rdquo; column, judge the sentence, and quote it back.</p>
 
-<h2>Report on each citation</h2>
-<p>The same structure as <code>packet.html</code>, one block per citation, so a row above can be
-   judged on its background and its quotation together. A block is a review note, not evidence:
-   nothing here reaches counsel unless the row is confirmed and the packet is re-rendered.</p>`;
-}
+<h2>Citation reports</h2>
+<p>Each <code>row_uid</code> and each citing-paper title links to that citation&rsquo;s report in
+   <code>citation-report.html</code>, which opens on its uid (<code>?uid=cit-000544</code>). A report has
+   the same structure as <code>packet.html</code>: the citing paper, the work it cites, where the citation
+   sits, the quotation, and the files. A row that folds two of my works links to the first uid, and each of
+   its uids links to its own report. A report is a review note, not evidence: nothing in it reaches counsel
+   unless the row is confirmed and the packet is re-rendered.</p>`;}
 
 function footHtml(today, cites, rows) {
   const read = cites.filter(c => c.hasPdf).length;
@@ -950,12 +969,73 @@ ${body}
   </tbody>
 </table>
 ${notesHtml(rows, cites)}
-${rows.map(r => r.entries).flat()
-  .sort((a, b) => (Number(b.hasPdf) - Number(a.hasPdf)) || a.uid.localeCompare(b.uid))
-  .map(reportBlock).join("\n")}
 ${footHtml(today, cites, rows)}
 </main>
 <script>${FILTER_JS}</script>
+</body>
+</html>`;
+}
+
+/**
+ * The single report page. It shows one citation's block, chosen by the `uid` query
+ * parameter. Every block is in the page as a <template>, so nothing is fetched and
+ * the page works when opened straight from the folder.
+ *
+ * The uid is checked against the row_uid shape before it is used as an id, and the
+ * text of a missing uid is written with textContent, so a crafted address cannot
+ * inject markup into the page.
+ */
+const REPORT_JS = `
+(function () {
+  var uid = new URLSearchParams(window.location.search).get("uid") || "";
+  var tpl = /^cit-\\d{6}$/.test(uid) ? document.getElementById("tpl-" + uid) : null;
+  var miss = document.getElementById("missing");
+  if (!tpl) {
+    miss.hidden = false;
+    miss.textContent = uid
+      ? "No citation with row_uid " + uid + " is on this page."
+      : "Open a citation from the candidate list. This page needs a row_uid in its address, for example ?uid=cit-000544.";
+    return;
+  }
+  document.getElementById("report").appendChild(tpl.content.cloneNode(true));
+  document.title = uid + " \\u2014 citation report";
+})();
+`;
+
+function buildReportHtml(cites, today) {
+  const sorted = [...cites].sort((a, b) => a.uid.localeCompare(b.uid));
+  const seen = new Set();
+  for (const c of sorted) {
+    if (seen.has(c.uid)) throw new Error(`${c.uid} has two reports; a uid must name one citation`);
+    seen.add(c.uid);
+  }
+  const templates = sorted.map(c => `<template id="tpl-${esc(c.uid)}">${reportBlock(c)}</template>`).join("\n");
+  return `<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Citation report</title>
+<style>${CSS}</style>
+</head>
+<body>
+<main>
+<header>
+  <p class="kicker">Review page — not part of the packet</p>
+  <h1>Citation report</h1>
+  <p><a href="potential_notable_citations.html">&larr; Back to the candidate list</a></p>
+  <p class="sub">One citation, opened from the candidate list by its row_uid. A review note, not evidence:
+     nothing here reaches counsel unless the row is confirmed and the packet re-rendered.</p>
+</header>
+<noscript><p>This page needs JavaScript to choose which citation to show.</p></noscript>
+<p id="missing" hidden></p>
+<div id="report"></div>
+<p class="foot">Generated ${esc(today)} by <code>scripts/build-potential.js</code> from
+   <code>Database/citation-catalog.sqlite</code> (read-only) and <code>notable-citations.sqlite</code>.
+   ${sorted.length} citation reports, one per row_uid.</p>
+</main>
+${templates}
+<script>${REPORT_JS}</script>
 </body>
 </html>`;
 }
@@ -972,10 +1052,11 @@ function main() {
   const rows = foldRows(cat, cites);
   const today = new Date().toISOString().slice(0, 10);
   const html = buildHtml(screens, cites, rows, today);
+  const reportHtml = buildReportHtml(cites, today);
   const withPdf = cites.filter(c => c.hasPdf).length;
   const merged = rows.filter(r => r.entries.length > 1).length;
   if (!WRITE) {
-    console.log(`dry run [${path.basename(OUT)}] — ${cites.length} citations of ${works.length} works, `
+    console.log(`dry run [${path.basename(OUT)}, ${REPORT_PAGE}] — ${cites.length} citations of ${works.length} works, `
       + `${rows.length} rows (${merged} citing more than one work), ${withPdf} citations with a PDF on file. Add --write.`);
     return;
   }
@@ -985,10 +1066,12 @@ function main() {
   const stale = fs.readdirSync(PKT)
     .filter(f => /^potential_notable_citations-.+\.html$/.test(f));
   fs.writeFileSync(OUT, html, "utf8");
+  fs.writeFileSync(REPORT_OUT, reportHtml, "utf8");
   for (const f of stale) fs.unlinkSync(path.join(PKT, f));
   console.log(`wrote ${path.relative(PKT, OUT)} — ${(html.length / 1024).toFixed(0)} KB | `
     + `${cites.length} citations of ${works.length} works, ${rows.length} rows (${merged} merged), `
     + `${withPdf} with a PDF on file`);
+  console.log(`wrote ${REPORT_PAGE} — ${(reportHtml.length / 1024).toFixed(0)} KB | ${cites.length} citation reports`);
   if (stale.length) console.log(`removed ${stale.length} superseded per-work page(s): ${stale.join(", ")}`);
 }
 

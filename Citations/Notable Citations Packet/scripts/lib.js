@@ -39,6 +39,25 @@ const PAPERS = path.join(PKT, ROOT_PAPERS);
 const PENDING_PAPERS = path.join(PKT, ROOT_PENDING);
 const SCREENED_PAPERS = path.join(PKT, ROOT_SCREENED);
 
+/**
+ * Every retrieval outcome the queue may record, in one place.
+ *
+ * SQLite cannot widen a `CHECK` list, so this array is both the validation list
+ * and the thing `migrate()` rebuilds the table against; a status added here and
+ * not there silently fails on write. `skipped-academia` was added on 2026-11-03
+ * when the applicant directed that academia.edu citations be dropped.
+ */
+const DOWNLOAD_STATUSES = [
+  "downloaded",
+  "walled",
+  "no-open-copy",
+  "skipped-preprint",
+  "skipped-thesis",
+  "skipped-book",
+  "skipped-academia",
+  "failed",
+];
+
 /** Open the record's catalog store. Read-only by construction, with no way to opt out. */
 function openCatalog() {
   return new DatabaseSync(CATALOG, { readOnly: true });
@@ -125,15 +144,21 @@ function migrate(db) {
   // 10.1201/9781003635901-6, 10.1021/bk-2019-1346.ch005) and the retrieval driver
   // kept fetching them, so the tab wasted a paywalled request on a chapter nobody
   // will file. SQLite cannot widen a CHECK list, so the table is rebuilt.
+  //
+  // The test is against the whole list, not one marker value: on 2026-11-03 the
+  // applicant directed that academia.edu citations be dropped, and a check written
+  // as `includes("skipped-book")` would have let a table that already had the book
+  // status keep a CHECK that refused the new one.
+  const want = DOWNLOAD_STATUSES.map((s) => `'${s}'`).join(",");
   const daSql = db.prepare(`SELECT sql FROM sqlite_master WHERE name = 'download_attempt'`).get()?.sql || "";
-  if (daSql && !daSql.includes("skipped-book")) {
+  if (daSql && !DOWNLOAD_STATUSES.every((s) => daSql.includes(`'${s}'`))) {
     db.exec(`
       BEGIN;
       CREATE TABLE download_attempt_new (
         row_uid      TEXT PRIMARY KEY,
         url          TEXT,
         host         TEXT,
-        status       TEXT NOT NULL CHECK (status IN ('downloaded','walled','no-open-copy','skipped-preprint','skipped-thesis','skipped-book','failed')),
+        status       TEXT NOT NULL CHECK (status IN (${want})),
         note         TEXT,
         attempted_on TEXT NOT NULL
       );
@@ -763,6 +788,13 @@ function sameSentence(a, b) {
 function linkKind(u) {
   if (!u) return "unknown";
   const s = String(u).toLowerCase();
+  // A academia.edu upload is not the published article and its byline is not the
+  // article's: one co-author uploads the file and Scholar indexes only that name,
+  // so the independence test sees a byline sharing nobody and calls a self-citation
+  // independent. That is what happened to cit-000244 (record row INDEPENDENT, its
+  // twin cit-000237 DEPENDENT, and the PDF's own page 1 naming Desai). No reading
+  // of such a row can be trusted, so the host is refused outright.
+  if (/academia\.edu/.test(s)) return "academia";
   if (/10\.1101\/|biorxiv|medrxiv|chemrxiv|arxiv|preprints\.org|osf\.io\/preprint/.test(s)) return "preprint";
   if (/scholarsportal|scholarsbank|vtechworks|etd|theses|dissert|proquest|vuir\.library|duepublico/.test(s)) return "thesis";
   const isbn = /97[89]\d{10,11}/.test(s.replace(/[-/]/g, ""));
@@ -776,4 +808,4 @@ function linkKind(u) {
   return "article";
 }
 
-module.exports = { PKT, REPO, CATALOG, SUMMARY_MD, PDF_ROOT, PACKET_DB, PAPERS, PENDING_PAPERS, SCREENED_PAPERS, ROOT_PAPERS, ROOT_PENDING, ROOT_SCREENED, STORAGE_ROOTS, openCatalog, openPacket, SCHEMA, surnameSlug, surnameOf, seniorAuthor, readEnv, rel, authorKeys, sharesAuthor, toolForCitedPaper, projectForCitedPaper, TIER_RANK, headlineTier, originalApplicationUids, potentialIndependent, ROOT_FOR_STATUS, folderRoots, storageDir, absFile, heldPdfIndex, linkKind, sameSentence };
+module.exports = { PKT, REPO, CATALOG, SUMMARY_MD, PDF_ROOT, PACKET_DB, PAPERS, PENDING_PAPERS, SCREENED_PAPERS, ROOT_PAPERS, ROOT_PENDING, ROOT_SCREENED, STORAGE_ROOTS, DOWNLOAD_STATUSES, openCatalog, openPacket, SCHEMA, surnameSlug, surnameOf, seniorAuthor, readEnv, rel, authorKeys, sharesAuthor, toolForCitedPaper, projectForCitedPaper, TIER_RANK, headlineTier, originalApplicationUids, potentialIndependent, ROOT_FOR_STATUS, folderRoots, storageDir, absFile, heldPdfIndex, linkKind, sameSentence };

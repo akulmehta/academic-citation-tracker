@@ -41,6 +41,12 @@ is("https://www.biorxiv.org/content/10.1101/2023.05.01.539123v1", "preprint");
 is("http://duepublico2.uni-due.de/servlets/MCRFileNodeServlet/duepublico_derivate_00045482/Diss_Schoeneweiss.pdf", "thesis");
 is("https://vtechworks.lib.vt.edu/handle/10919/123456", "thesis");
 
+// academia.edu: one co-author uploads, Scholar indexes only that name, so the
+// byline cannot settle independence. Refused on the host alone.
+is("https://www.academia.edu/download/63163721/Zheng_AJRCMB_2016_ODSH_block_p300_and_HMGB1_release20200501-105723-18j80.pdf", "academia");
+is("https://www.academia.edu/12345/Some_Paper_Title", "academia");
+is("http://independent.academia.edu/JSmith", "academia");
+
 // Ordinary journal articles must never be screened out by these patterns.
 is("https://pmc.ncbi.nlm.nih.gov/articles/PMC12345678/", "article");
 is("https://pubs.acs.org/doi/10.1021/jacs.5c01234", "article");

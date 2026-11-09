@@ -621,6 +621,27 @@ for (const r of cits) {
       }
     }
   }
+  // The per-citation reports live on one page, opened by uid. Every link from the
+  // candidate list must reach a report, and every PDF a report links must be on disk
+  // and not screened out. The list checks neither, so a broken link would otherwise
+  // show as an empty page rather than as a failure.
+  const REPORT = "citation-report.html";
+  if (pageNames.includes("potential_notable_citations.html") && fs.existsSync(path.join(PKT, REPORT))) {
+    const list = fs.readFileSync(path.join(PKT, "potential_notable_citations.html"), "utf8");
+    const rep = fs.readFileSync(path.join(PKT, REPORT), "utf8");
+    const linked = new Set([...list.matchAll(/href="citation-report\.html\?uid=(cit-\d{6})"/g)].map(m => m[1]));
+    const reported = new Set([...rep.matchAll(/<template id="tpl-(cit-\d{6})">/g)].map(m => m[1]));
+    const noReport = [...linked].filter(u => !reported.has(u));
+    const noLink = [...reported].filter(u => !linked.has(u));
+    if (noReport.length) failAny("potential", `${noReport.length} row link(s) on potential_notable_citations.html have no report in ${REPORT}: ${noReport.slice(0, 6).join(", ")}`);
+    if (noLink.length) failAny("potential", `${noLink.length} report(s) in ${REPORT} are not linked from the candidate list: ${noLink.slice(0, 6).join(", ")}`);
+    const reportPdfs = [...rep.matchAll(/href="((?:papers|pending-papers|screened-papers)\/[^"]+)"/g)].map(m => m[1]);
+    const badReportPdf = reportPdfs.filter(h => !fs.existsSync(path.join(PKT, decodeURIComponent(h))));
+    if (badReportPdf.length) failAny("potential", `PDF link(s) in ${REPORT} do not resolve: ${badReportPdf.slice(0, 4).join(", ")}`);
+    const screenedReportPdf = reportPdfs.filter(h => h.startsWith(ROOT_SCREENED + "/"));
+    if (screenedReportPdf.length) failAny("potential", `${REPORT} links ${screenedReportPdf.length} screened-out PDF(s) (§4.5): ${screenedReportPdf.slice(0, 4).join(", ")}`);
+    if (!QUIET) note("potential", `${REPORT}: ${reported.size} citation report(s), every one reached from the candidate list`);
+  }
   for (const name of pageNames) {
     const POT = path.join(PKT, name);
     // Prefix every finding with the page it came from, so a finding names the file

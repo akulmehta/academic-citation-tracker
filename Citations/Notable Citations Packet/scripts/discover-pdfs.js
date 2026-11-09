@@ -18,7 +18,7 @@
 
 const fs = require("fs");
 const path = require("path");
-const { PKT, ROOT_PENDING, openCatalog, openPacket, readEnv, surnameOf, seniorAuthor, surnameSlug } = require("./lib");
+const { PKT, ROOT_PENDING, openCatalog, openPacket, readEnv, surnameOf, seniorAuthor, surnameSlug, linkKind } = require("./lib");
 const { get, getJson, sleep } = require("./http");
 
 const stripMarker = require(path.join(PKT, "..", "..", "tools", "scholar-marker.js")).stripScholarMarker;
@@ -196,6 +196,10 @@ function pickOa(work) {
     const url = l.pdf_url || (/pdf/.test(l.url || "") ? l.url : null);
     if (!url || seen.has(url)) continue;
     seen.add(url);
+    // An OpenAlex "open access location" hosted on academia.edu is a co-author's
+    // upload, not the article, and its byline is only the uploader's name — the
+    // exact defect that made cit-000244 read independent. Skip it and keep looking.
+    if (linkKind(url) === "academia" || linkKind(l.landing_page_url || "") === "academia") continue;
     return { url, source: l.source_display_name || new URL(url).host, landing: l.landing_page_url || null };
   }
   return null;

@@ -29,6 +29,10 @@ const FIXES = {
   "cit-000564": ["Ng'ang'a", "Sole author on the title page: Peter Njenga Ng'ang'a, Freiburg dissertation, July 2020"],
   "cit-000566": ["Garín-Muga", "Last author on p.1: Aurora Sucre, Raquel Pazos, Niels-Christian Reichardt, Alba Garín-Muga"],
   "cit-000636": ["Baud", "Last and corresponding author on p.1 of the retrieved article: Rajas M. Rao, Manuel Dauchez, Stéphanie Baud (stephanie.baud@univ-reims.fr)"],
+  // The row is screened-out (academia.edu byline, and dependent on its twin
+  // cit-000237), but the PDF is kept per §4.5 and §5.1 still wants it named for a
+  // person rather than for the word "article".
+  "cit-000244": ["Voynow", "Last author on p.1 of the retrieved article: Shuo Zheng, Apparao B. Kummarapurugu, Daniel K. Afosah, Nehru Viji Sankaranarayanan, Rio S. Boothello, Umesh R. Desai, Thomas Kennedy, Judith A. Voynow"],
 };
 
 function main() {

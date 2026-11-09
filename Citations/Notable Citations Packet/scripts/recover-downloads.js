@@ -15,7 +15,7 @@
  * PDF is filed for the group and the siblings record a pointer rather than a
  * second multi-megabyte copy. A row whose only prior verdict was failed / walled /
  * no-open-copy is open again - this file supersedes it. A skipped-preprint /
- * -thesis / -book verdict is a screening decision and is left alone.
+ * -thesis / -book / -academia verdict is a screening decision and is left alone.
  *
  *   node scripts/recover-downloads.js            dry run
  *   node scripts/recover-downloads.js --write    file + mark
@@ -157,7 +157,7 @@ async function printedTitle(f) {
     if (o.v !== "MATCH") continue;
     // A row nobody touched, or one whose only verdict was "couldn't get it"
     // (failed / walled / no-open-copy), is open: this file supersedes that.
-    // skipped-preprint / -thesis / -book are screening decisions and stay put.
+    // skipped-preprint / -thesis / -book / -academia are screening decisions and stay put.
     const fresh = o.group.filter(u => !att.has(u) || ["failed", "walled", "no-open-copy"].includes(att.get(u)));
     if (o.group.length > 1) console.log(`     group (one article, ${o.group.length} citations): ${o.group.join(", ")}`);
     // One PDF can stand for the whole group: give the bytes to the first row that
