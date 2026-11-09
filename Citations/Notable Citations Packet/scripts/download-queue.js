@@ -22,14 +22,14 @@
  */
 const path = require("path");
 const fs = require("fs");
-const { PKT, openPacket, heldPdfIndex } = require("./lib.js");
+const { PKT, openPacket, heldPdfIndex, linkKind } = require("./lib.js");
 const flag = (n) => {
   const a = process.argv.find((x) => x.startsWith(`--${n}=`));
   return a ? a.slice(n.length + 3) : "";
 };
 const has = (n) => process.argv.includes(`--${n}`);
 
-const STATUS = ["downloaded", "walled", "no-open-copy", "skipped-preprint", "skipped-thesis", "failed"];
+const STATUS = ["downloaded", "walled", "no-open-copy", "skipped-preprint", "skipped-thesis", "skipped-book", "failed"];
 
 const db = openPacket();
 db.exec(`
@@ -37,7 +37,7 @@ CREATE TABLE IF NOT EXISTS download_attempt (
   row_uid      TEXT PRIMARY KEY,
   url          TEXT,
   host         TEXT,
-  status       TEXT NOT NULL CHECK (status IN ('downloaded','walled','no-open-copy','skipped-preprint','skipped-thesis','failed')),
+  status       TEXT NOT NULL CHECK (status IN ('downloaded','walled','no-open-copy','skipped-preprint','skipped-thesis','skipped-book','failed')),
   note         TEXT,
   attempted_on TEXT NOT NULL
 );`);
@@ -52,18 +52,12 @@ function hostOf(u) {
 }
 
 /**
- * A link that points at a preprint server or a thesis repository. Only the URL
- * is consulted: the same article often has both a journal DOI and a server copy,
- * and it is the copy we are about to fetch that decides whether it is worth
- * fetching.
+ * A link that points at a preprint server, a thesis repository or a book chapter.
+ * Only the URL is consulted: the same article often has both a journal DOI and a
+ * server copy, and it is the copy we are about to fetch that decides whether it is
+ * worth fetching. The rule itself lives in lib.js so the tests can reach it.
  */
-function kindOfLink(u) {
-  if (!u) return "unknown";
-  const s = String(u).toLowerCase();
-  if (/10\.1101\/|biorxiv|medrxiv|chemrxiv|arxiv|preprints\.org|osf\.io\/preprint/.test(s)) return "preprint";
-  if (/scholarsportal|scholarsbank|vtechworks|etd|theses|dissert|proquest|vuir\.library/.test(s)) return "thesis";
-  return "article";
-}
+const kindOfLink = linkKind;
 
 const rows = db
   .prepare(
@@ -95,6 +89,7 @@ function classify(r) {
   const k = kindOfLink(linkOf(r));
   if (k === "preprint") return "skipped-preprint";
   if (k === "thesis") return "skipped-thesis";
+  if (k === "book") return "skipped-book";
   if (r.discover_state === "no-open-copy" || r.discover_state === "not-in-indexes") return "no-open-copy";
   return "pending";
 }

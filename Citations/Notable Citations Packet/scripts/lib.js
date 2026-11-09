@@ -118,6 +118,31 @@ function migrate(db) {
     db.exec(`ALTER TABLE citation ADD COLUMN tier_decided_on TEXT`);
     db.exec(`ALTER TABLE citation ADD COLUMN tier_decided_note TEXT`);
   }
+  // A book or a book chapter is out of scope for the packet (research articles
+  // only), but until now the queue had no way to say so: `skipped-preprint` and
+  // `skipped-thesis` are the only refusals, and neither is true of a chapter.
+  // Twelve rows carry an ISBN in the DOI (10.1002/9781119865452.ch13,
+  // 10.1201/9781003635901-6, 10.1021/bk-2019-1346.ch005) and the retrieval driver
+  // kept fetching them, so the tab wasted a paywalled request on a chapter nobody
+  // will file. SQLite cannot widen a CHECK list, so the table is rebuilt.
+  const daSql = db.prepare(`SELECT sql FROM sqlite_master WHERE name = 'download_attempt'`).get()?.sql || "";
+  if (daSql && !daSql.includes("skipped-book")) {
+    db.exec(`
+      BEGIN;
+      CREATE TABLE download_attempt_new (
+        row_uid      TEXT PRIMARY KEY,
+        url          TEXT,
+        host         TEXT,
+        status       TEXT NOT NULL CHECK (status IN ('downloaded','walled','no-open-copy','skipped-preprint','skipped-thesis','skipped-book','failed')),
+        note         TEXT,
+        attempted_on TEXT NOT NULL
+      );
+      INSERT INTO download_attempt_new SELECT row_uid, url, host, status, note, attempted_on FROM download_attempt;
+      DROP TABLE download_attempt;
+      ALTER TABLE download_attempt_new RENAME TO download_attempt;
+      COMMIT;
+    `);
+  }
 }
 
 /**
@@ -724,4 +749,26 @@ function sameSentence(a, b) {
   return false;
 }
 
-module.exports = { PKT, REPO, CATALOG, SUMMARY_MD, PDF_ROOT, PACKET_DB, PAPERS, PENDING_PAPERS, SCREENED_PAPERS, ROOT_PAPERS, ROOT_PENDING, ROOT_SCREENED, STORAGE_ROOTS, openCatalog, openPacket, SCHEMA, surnameSlug, surnameOf, seniorAuthor, readEnv, rel, authorKeys, sharesAuthor, toolForCitedPaper, projectForCitedPaper, TIER_RANK, headlineTier, originalApplicationUids, potentialIndependent, ROOT_FOR_STATUS, folderRoots, storageDir, absFile, heldPdfIndex, sameSentence };
+/**
+ * What a link we are about to fetch actually points at, so the queue can refuse
+ * the kinds the packet does not take. `article` means "worth fetching".
+ *
+ * Book and chapter DOIs carry the book's ISBN (10.1002/9781119865452.ch13,
+ * 10.1201/9781003635901-6, 10.1021/bk-2019-1346.ch005) and often a `.chN`,
+ * `_00NN` or `/chapter/` suffix. A Springer `/protocol/` URL is the one exception
+ * under an ISBN: it is the item-level PDF of a single Methods-in-Molecular-Biology
+ * protocol, which the user asked for by name on 2026-11-13 — "only this protocol",
+ * not the full book.
+ */
+function linkKind(u) {
+  if (!u) return "unknown";
+  const s = String(u).toLowerCase();
+  if (/10\.1101\/|biorxiv|medrxiv|chemrxiv|arxiv|preprints\.org|osf\.io\/preprint/.test(s)) return "preprint";
+  if (/scholarsportal|scholarsbank|vtechworks|etd|theses|dissert|proquest|vuir\.library|duepublico/.test(s)) return "thesis";
+  const isbn = /97[89]\d{10,11}/.test(s.replace(/[-/]/g, ""));
+  const chapterish = /\.ch\d/i.test(s) || /\/chapter\//i.test(s) || /bk-\d{4}-\d+/.test(s);
+  if ((isbn || chapterish) && !/springer\.com\/protocol\//.test(s)) return "book";
+  return "article";
+}
+
+module.exports = { PKT, REPO, CATALOG, SUMMARY_MD, PDF_ROOT, PACKET_DB, PAPERS, PENDING_PAPERS, SCREENED_PAPERS, ROOT_PAPERS, ROOT_PENDING, ROOT_SCREENED, STORAGE_ROOTS, openCatalog, openPacket, SCHEMA, surnameSlug, surnameOf, seniorAuthor, readEnv, rel, authorKeys, sharesAuthor, toolForCitedPaper, projectForCitedPaper, TIER_RANK, headlineTier, originalApplicationUids, potentialIndependent, ROOT_FOR_STATUS, folderRoots, storageDir, absFile, heldPdfIndex, linkKind, sameSentence };
