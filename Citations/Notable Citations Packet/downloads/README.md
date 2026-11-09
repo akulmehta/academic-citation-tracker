@@ -72,3 +72,32 @@ would present one citing paper as two.
 Whether the record should fold the other two rows is the applicant's call through the
 record's own `tools/apply-decision.js --same-work-as`, not something to change from the
 packet side.
+
+## Springer item-level PDFs (2026-11-09)
+
+A Springer chapter, protocol or reference-work entry downloads on its own at
+`https://link.springer.com/content/pdf/<id>.pdf?pdf=inline%20link` — the route the
+applicant identified. The landing page's own `Download PDF` control serves the **whole
+volume** instead, which is why an earlier Springer pass returned 386-, 382- and 1135-page
+files. The driver now derives the item URL from the landing page id and ranks an
+ISBN-only `/content/pdf/978-…pdf` below it, so a book cannot win by being the largest
+file on the page. Every file below is page-count-checked on save (8-30 pp).
+
+Filed: `cit-000298` (9 pp), `cit-000303` (17), `cit-000524` (14), `cit-000561` +
+`cit-000929` (8, one article under two rows), `cit-000815` (19), `cit-000834` (30),
+`cit-000882` (29), `cit-001386` (12), `cit-001468` (10), `cit-001545` (13),
+`cit-001552` (8), plus the journal articles `cit-001130` (21) and `cit-001148` (18).
+
+Not retrievable through Harvard, recorded rather than left untried:
+
+| row | why |
+|---|---|
+| `cit-001149`, `cit-001500` | item URL redirects to the landing page showing **Buy article PDF USD 39.95** — no Harvard subscription to the journal |
+| `cit-000500`, `cit-000547`, `cit-001099`, `cit-001503` | page loads, but Springer publishes no `Download PDF` control and no purchase link for the item |
+
+**Open scope question for the applicant.** Nine of the fourteen rows above are Springer
+*chapters or protocols* — book series such as Methods in Molecular Biology. They were
+retrieved because the applicant asked for the protocol PDF specifically, but the
+2026-11-08 work-type screen excludes books and chapters. Nothing here screens them out:
+that is a downstream decision, and a protocol chapter is arguably a primary methods
+paper rather than a book chapter. They are marked `downloaded` so the choice stays open.
