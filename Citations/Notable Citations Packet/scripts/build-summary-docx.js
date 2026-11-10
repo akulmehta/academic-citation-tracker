@@ -18,6 +18,7 @@ const L = require("./lib");
 const { META, PETITION_DATE, fmt, showPre, period, datesList } = require("./citing-meta");
 const { orderedFolders } = require("./packet-order");
 const SUM = require("./docx-summary-text");
+const { buildQuotes } = require("./quotes");
 
 const outArg = process.argv.find(a => a.startsWith("--out="));
 const OUT = outArg ? outArg.slice(6) : path.join(L.REPO, "Citations", "Notable Citations - Summary Table.docx");
@@ -27,8 +28,8 @@ const PROJECTS = {
   3: "Advancing Glycan Research with Microarray Innovations",
   4: "Advancing Glycopeptide Synthesis with Glyco-SPOT",
 };
-const WIDTHS = [420, 2750, 2300, 1550, 700, 1200, 3000, 2480];      // twips, 14,400 in all (landscape Letter, 0.5" margins)
-const HEAD = ["#", "Citing article", "Dates (earliest public first)", "My work cited", "Project", "Where it is cited", "How my work was used", "Why it matters"];
+const WIDTHS = [400, 2300, 1900, 1350, 780, 3870, 2300, 1500];      // twips, 14,400 in all (landscape Letter, 0.5" margins)
+const HEAD = ["#", "Citing article", "Dates (earliest public first)", "My work cited", "Project", "Exact quote(s) from the article, with page", "How my work was used", "Why it matters"];
 
 const esc = s => String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 const FONT = '<w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman" w:eastAsia="Times New Roman" w:cs="Times New Roman"/>';
@@ -40,12 +41,10 @@ function cell(w, paras, o = {}) {
 const row = (cells, o = {}) => `<w:tr><w:trPr><w:cantSplit/>${o.header ? "<w:tblHeader/>" : ""}</w:trPr>${cells.join("")}</w:tr>`;
 
 function shortSection(s) { return String(s || "").replace(/\s*\(.*\)\s*$/, "").replace(/^Materials and Methods$/i, "Methods").trim(); }
-function citedLabel(r) {
-  const y = r.cited_earliest_date ? ` (${String(r.cited_earliest_date).slice(0, 4)})` : "";
-  if (r.cited_tool) return r.cited_tool + y;
-  const w = String(r.cited_paper || "").split(/\s+/).filter(Boolean);
-  return w.slice(0, 7).join(" ") + (w.length > 7 ? "…" : "") + y;
-}
+// One short name per publication of mine, used both in the list above the table and in the "My work cited" column, so the two match.
+const SHORT = { "GLAD:": "GLAD", "GlycoGlyph:": "GlycoGlyph", "Reusable": "MAWE", "Antigenic": "H3N2 receptor-binding paper (2019)", "Rational": "Thrombin inhibitor paper (2011)", "Insights": "Glycan microarray technologies review (2024)", "Differential": "Oligomannose recognition paper (2021)", "GlyGen:": "GlyGen paper (2020)" };
+const shortName = p => SHORT[String(p.title).split(" ")[0]] || p.tool || p.title.split(" ").slice(0, 5).join(" ");
+function citedLabel(r) { return shortName({ title: r.cited_paper, tool: r.cited_tool }); }
 function firstAuthor(r) {
   if (r.folder_uid === "cit-000613") return "Schüßler et al.";
   const raw = String(r.citing_authors || "");
@@ -99,11 +98,12 @@ async function main() {
       cell(WIDTHS[2], [
         ...(showPre(uid) ? [para(run(`${m.pre[0]} preprint (public): ${fmt(m.pre[1])}`, { b: true }))] : []),
         ...(showPre(uid) ? [para(run("Final article is after the petition date, but the preprint was public before it.", { i: true }))] : []),
+        ...(showPre(uid) && m.preCites === false ? [para(run("The preprint does not itself cite my work; only the final article does.", { i: true }))] : []),
         ...datesList(uid).filter(([k]) => !/preprint/.test(k)).map(([k, v]) => para(run(`${k}: ${v}`))),
       ]),
       cell(WIDTHS[3], cited.map(c => para(run(c)))),
       cell(WIDTHS[4], [para(run(projects.length ? projects.map(p => `Project ${p}`).join(", ") : "—"))]),
-      cell(WIDTHS[5], where.map(w => para(run(w)))),
+      cell(WIDTHS[5], buildQuotes(db, uid, rows).map(q => para(run(`“${q.q}”`, { i: true }) + run(` (${String(q.sec || "").replace(/\s+/g, " ")}, p.${q.pg})`)))),
       cell(WIDTHS[6], [para(run(s ? s.use : ""))]),
       cell(WIDTHS[7], [para(run(s ? s.why : ""))]),
     ]));
@@ -111,8 +111,6 @@ async function main() {
   if (problems.length) console.log("NOTES:\n  " + problems.join("\n  "));
 
   // ---- my publications that are cited, listed first
-  const SHORT = { "GLAD:": "GLAD", "GlycoGlyph:": "GlycoGlyph", "Reusable": "MAWE", "Antigenic": "H3N2 receptor-binding paper (2019)", "Rational": "Thrombin inhibitor paper (2011)", "Insights": "Glycan microarray technologies review (2024)", "Differential": "Oligomannose recognition paper (2021)", "GlyGen:": "GlyGen paper (2020)" };
-  const shortName = p => SHORT[String(p.title).split(" ")[0]] || p.tool || p.title.split(" ").slice(0, 5).join(" ");
   const GLYGEN = "WS York, R Mazumder, R Ranzinger, N Edwards, R Kahsay, KF Aoki-Kinoshita, MP Campbell, RD Cummings, T Feizi, M Martin, DA Natale, NH Packer, RJ Woods, G Agarwal, S Arpinar, S Bhat, J Blake, LJG Castro, B Fochtman, J Gildersleeve, R Goldman, X Holmes, V Jain, S Kulkarni, R Mahadik, AY Mehta, R Mousavi, S Nakarakommula, R Navelkar, N Pattabiraman, MJ Pierce, K Ross, P Vasudev, J Vora, T Williamson, W Zhang";
   const formal = p => {
     const c = cat.prepare("SELECT authors, title, venue, year FROM publications WHERE cites_id=?").get(p.cites_id) || cat.prepare("SELECT authors, title, venue, year FROM publications WHERE title=?").get(p.title);
@@ -143,12 +141,13 @@ async function main() {
   const nBefore = order.filter(u => period(u) === "before").length;
   const title = para(run("Notable Citations — Summary Table", { b: true, sz: 32 }), { after: 80 });
   const sub = para(run(`${order.length} citing articles, ${rowsAll.length} citations of my work. ${nBefore} first became public before the petition date (April 25, 2024) and ${order.length - nBefore} after it. `
-    + "An article counts as public from the earlier of its preprint (if one was posted) and its final journal publication; within each group the articles are in that order, oldest first. This table summarises “Notable Citations - Completed.docx”, where the full description of each citation is given.", { sz: 20 }), { after: 120 });
+    + "An article counts as public from the earlier of its preprint (if one was posted) and its final journal publication; within each group the articles are in that order, oldest first. This table summarizes “Notable Citations - Completed.docx”, where the full description of each citation is given.", { sz: 20 }), { after: 120 });
   const notes = [
     para(run("Notes.", { b: true, sz: 18 }), { after: 40, keep: true }),
     para(run("Dates: every date found for each article is shown. Preprint dates are those of the first version posted. Articles are placed in the “before” group if a preprint or the final article was public before April 25, 2024, so an article whose final version appeared later is still shown as before the petition date when its preprint was public by then. ", { sz: 18 })
       + run("Sources: the first pages of each PDF, PubMed, Europe PMC (which indexes bioRxiv, medRxiv and Research Square), Crossref and OpenAlex, checked November 10, 2026. Where no preprint is listed, none was found in those sources.", { sz: 18 })),
-    para(run("My works cited: GLAD = GLycan Array Dashboard, a tool for visualising and analysing glycan microarray data (2019); GlycoGlyph = an application for drawing and naming glycan structures (2020); MAWE = the microwave-assisted wet-erase method for reusing glycan microarrays (2024). A glycan is a chain of sugar molecules; a glycan microarray is a glass slide printed with many different glycans, used to test which of them a protein, antibody or virus binds.", { sz: 18 })),
+    para(run("My works cited: GLAD = GLycan Array Dashboard, a tool for visualizing and analyzing glycan microarray data (2019); GlycoGlyph = an application for drawing and naming glycan structures (2020); MAWE = the microwave-assisted wet-erase method for reusing glycan microarrays (2024). A glycan is a chain of sugar molecules; a glycan microarray is a glass slide printed with many different glycans, used to test which of them a protein, antibody or virus binds.", { sz: 18 })),
+    para(run("Evidence for No. 10 (Wang et al.): the GlyGen portal release notes (https://wiki.glygen.org/index.php/Portal_release_notes), Version 1.12, released April 28, 2022, state “Added GlycoGlyph tool support in structure and substructure search.” The structure search on GlyGen’s Glycan Search page has a “draw” function that opens GlycoGlyph. A print of that page (first page and the Version 1.12 page, each showing the URL, with the line highlighted in yellow) is filed beside the citing article as “10_Wang_2024_cit-000752_GlyGen-release-notes.pdf”.", { sz: 18 })),
     para(run("Projects: " + Object.entries(PROJECTS).map(([k, v]) => `${k} = ${v}`).join("; ") + ".", { sz: 18 })),
   ];
   const sect = `<w:sectPr><w:pgSz w:w="15840" w:h="12240" w:orient="landscape"/><w:pgMar w:top="720" w:right="720" w:bottom="720" w:left="720" w:header="360" w:footer="360" w:gutter="0"/></w:sectPr>`;

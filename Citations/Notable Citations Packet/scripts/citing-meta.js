@@ -3,19 +3,20 @@
  * Facts about each citing article that the harvested database does not hold: journal as printed, the citing authors'
  * institutions, and every date found for the article — preprint, received, accepted, final article online, issue.
  * Sources: the first pages of each PDF, PubMed, Europe PMC (which indexes bioRxiv, medRxiv, Research Square,
- * SSRN and Preprints.org), Crossref (including its has-preprint relation) and OpenAlex; checked 10 November 2026.
+ * SSRN and Preprints.org), Crossref (including its has-preprint relation) and OpenAlex; checked November 10, 2026.
  *
+ *   preCites false when the preprint does NOT contain the citation of my work (only the final article does)
  *   pre     [server, date, note?]  an earlier public preprint, if one was found (shown only where it bears on the petition date)
  *   rec/acc received / accepted dates printed by the journal
  *   on      date the final article first appeared online
  *   issue   issue / print date, where there is one
  *
  * The article counts as public on the EARLIEST of the preprint and the final article; that date decides whether it
- * falls before or after the petition date (25 April 2024) and sets the order of the citations.
+ * falls before or after the petition date (April 25, 2024) and sets the order of the citations.
  */
 const PETITION_DATE = "2024-04-25";
-const MON = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
-const fmt = iso => { const [y, m, d] = iso.split("-"); return `${+d} ${MON[+m - 1]} ${y}`; };
+const MON = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+const fmt = iso => { const [y, m, d] = iso.split("-"); return `${MON[+m - 1]} ${+d}, ${y}`; };
 
 const META = {
  "cit-000544": {
@@ -24,7 +25,7 @@ const META = {
   "pre": [
    "bioRxiv",
    "2023-04-29",
-   "version 1; version 2 posted 10 November 2023"
+   "version 1; version 2 posted November 10, 2023"
   ],
   "rec": "2024-01-18",
   "acc": "2024-07-08",
@@ -41,7 +42,7 @@ const META = {
   ],
   "rec": "2025-08-25",
   "acc": "2026-05-28",
-  "on": "2026-06-04",
+  "preCites": false, "on": "2026-06-04",
   "issue": "July 2026 (volume 302, issue 7)"
  },
  "cit-000594": {
@@ -55,7 +56,7 @@ const META = {
   "rec": "2025-06-27",
   "acc": "2026-01-18",
   "on": "2026-01-23",
-  "issue": "5 February 2026 (volume 54, issue 4)"
+  "issue": "February 5, 2026 (volume 54, issue 4)"
  },
  "cit-001253": {
   "venue": "Nature Communications 17: 231",
@@ -100,7 +101,7 @@ const META = {
   "rec": "2025-07-31",
   "acc": "2025-10-13",
   "on": "2025-11-10",
-  "issue": "23 December 2025 (volume 99, issue 12)"
+  "issue": "December 23, 2025 (volume 99, issue 12)"
  },
  "cit-000619": {
   "venue": "Protein Science",
@@ -163,7 +164,7 @@ const META = {
   "rec": "2025-12-08",
   "acc": "2026-09-09",
   "on": "2026-09-29",
-  "issue": "5 November 2026"
+  "issue": "November 5, 2026"
  },
  "cit-000196": {
   "venue": "Vaccine 39: 3225–3235",
@@ -184,7 +185,7 @@ const META = {
   "rec": "2022-05-20",
   "acc": "2023-02-15",
   "on": "2023-04-17",
-  "issue": "25 April 2023 (volume 120, issue 17)"
+  "issue": "April 25, 2023 (volume 120, issue 17)"
  },
  "cit-000510": {
   "venue": "Scientific Reports 13: 10223",
@@ -205,7 +206,7 @@ const META = {
   "issue": null
  },
  "cit-001230": {
-  "venue": "Antiviral Research 125: 84–91 (2016; available online 30 November 2015)",
+  "venue": "Antiviral Research 125: 84–91 (2016; available online November 30, 2015)",
   "inst": "Kansas State University (College of Veterinary Medicine); Wichita State University (Department of Chemistry)",
   "pre": null,
   "rec": "2015-09-04",
@@ -232,11 +233,11 @@ const META = {
   "rec": "2023-06-14",
   "acc": "2023-11-28",
   "on": "2023-12-22",
-  "issue": "1 April 2024 (volume 34, issue 3)"
+  "issue": "April 1, 2024 (volume 34, issue 3)"
  },
   "cit-000514": { "venue": "Molecular & Cellular Proteomics 21(5): 100201", "inst": "Leiden University Medical Center (Department of Parasitology, Leiden University Center of Infectious Diseases); New England Biolabs, Ipswich, Massachusetts; University of Illinois College of Medicine at Rockford (Department of Biomedical Sciences)", "pre": null, "rec": "2021-10-29", "rev": "2022-01-03", "acc": null, "on": "2022-01-20", "issue": "May 2022 (volume 21, issue 5)" },
-  "cit-000749": { "venue": "Journal of Proteome Research 21(8): 1974–1985", "inst": "University of Alberta (Department of Chemistry; corresponding author Lara K. Mahal); New York University (Center for Genomics and Systems Biology, Department of Biology); University of Georgia (Center for Vaccines and Immunology)", "pre": null, "rec": "2022-05-03", "acc": null, "on": "2022-06-27", "issue": "5 August 2022 (volume 21, issue 8)" },
-  "cit-000752": { "venue": "ACS Infectious Diseases 10(6): 2032–2046", "inst": "Centers for Disease Control and Prevention, Atlanta (National Center for Environmental Health; National Center for Immunization and Respiratory Diseases); Georgia Institute of Technology (School of Physics)", "pre": ["bioRxiv", "2023-11-23"], "rec": "2024-01-08", "rev": "2024-04-27", "acc": "2024-04-30", "on": "2024-05-10", "issue": "14 June 2024 (volume 10, issue 6)" }
+  "cit-000749": { "venue": "Journal of Proteome Research 21(8): 1974–1985", "inst": "University of Alberta (Department of Chemistry; corresponding author Lara K. Mahal); New York University (Center for Genomics and Systems Biology, Department of Biology); University of Georgia (Center for Vaccines and Immunology)", "pre": null, "rec": "2022-05-03", "acc": null, "on": "2022-06-27", "issue": "August 5, 2022 (volume 21, issue 8)" },
+  "cit-000752": { "venue": "ACS Infectious Diseases 10(6): 2032–2046", "inst": "Centers for Disease Control and Prevention, Atlanta (National Center for Environmental Health; National Center for Immunization and Respiratory Diseases); Georgia Institute of Technology (School of Physics)", "pre": ["bioRxiv", "2023-11-23"], "rec": "2024-01-08", "rev": "2024-04-27", "acc": "2024-04-30", "on": "2024-05-10", "issue": "June 14, 2024 (volume 10, issue 6)" }
 };
 
 /** the date the article first became public: the preprint if there is one, otherwise the final article */

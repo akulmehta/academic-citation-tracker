@@ -26,7 +26,6 @@ const KEY = {
   "cit-000544": "PpaPV1 glycan microarray data were compared with PsSC (Ituarte et al., 2018) and PdPV1 (Brola et al., 2020) microarrays using the Glycan Array Dashboard (glycotoolkit.com/GLAD/) (Mehta & Cummings, 2019).",
   // line numbers in the margin of this preprint break the sentence finder, so the sentence is given by its first and last words
   "cit-000752": { start: "Among the possible glycan", end: "www.glygen.org/glycan-search)( 68 )" },
-  "cit-000621": "The glycan structures were drawn using GlycoGlyph",
 };
 const GREEN = [0.45, 0.9, 0.45];
 
@@ -35,8 +34,9 @@ async function main() {
   const lib = await H.loadPdfjs();
   const outdir = H.OUTDIR;
   const made = [];
-  for (const uid of Object.keys(META).filter(showPre)) {
-    const f = db.prepare("SELECT file FROM file WHERE folder_uid=? AND role='preprint' AND cited=1 ORDER BY file").get(uid);
+  const included = new Set(db.prepare("SELECT DISTINCT folder_uid FROM citation WHERE status='included'").all().map(r => r.folder_uid));
+  for (const uid of Object.keys(META).filter(u => showPre(u) && included.has(u))) {
+    const f = db.prepare("SELECT file FROM file WHERE folder_uid=? AND role='preprint' ORDER BY file").get(uid);
     const art = fs.readdirSync(outdir).find(n => n.endsWith(`_${uid}.pdf`));
     if (!art) { console.log(`${uid}: no highlighted article copy found in the folder`); continue; }
     if (!f) { console.log(`${uid}: NO PREPRINT PDF filed in papers/${uid}/ — not made`); continue; }
@@ -51,8 +51,9 @@ async function main() {
     const done = [];
 
     // 1. the sentence that cites my work
+    const cites = m.preCites !== false;   // false: the preprint does not contain the citation, so only its first page (the date) is kept
     let found = false;
-    for (let p = 1; p <= doc.numPages && KEY[uid]; p++) {
+    for (let p = 1; cites && p <= doc.numPages && KEY[uid]; p++) {
       const mdl = await model(p);
       let a, b;
       if (typeof KEY[uid] === "object") {
@@ -70,12 +71,13 @@ async function main() {
       done.push({ page: p, kind: "text", text: mdl.S.slice(a, b + 1).replace(/\s+/g, " ") });
       found = true; break;
     }
-    if (!found) notes.push("the citing sentence was not found in the preprint");
+    if (!found && cites) notes.push("the citing sentence was not found in the preprint");
+    if (!cites) notes.push("the preprint does not cite my work; only page 1 (the posted date) is kept");
 
     // 2. my paper in the preprint's reference list
     const rows = db.prepare("SELECT * FROM citation WHERE folder_uid=? AND status='included'").all(uid);
     const seen = new Set();
-    for (const r of rows) {
+    for (const r of cites ? rows : []) {
       const pub = H.myPub(cat, r);
       if (!pub || seen.has(pub.title)) continue;
       seen.add(pub.title);
@@ -100,6 +102,7 @@ async function main() {
     } else notes.push(`the line "${phrase}" was not found on page 1`);
 
     await doc.destroy();
+    if (!cites) for (let i = pdf.getPageCount() - 1; i >= 1; i--) pdf.removePage(i);
     const name = art.replace(/\.pdf$/, "_biorxiv.pdf");
     fs.writeFileSync(path.join(outdir, name), await pdf.save());
     console.log(`${name}: ${done.map(d => `${d.kind} p.${d.page}`).join(", ")}${notes.length ? "  NOTES: " + notes.join("; ") : ""}`);

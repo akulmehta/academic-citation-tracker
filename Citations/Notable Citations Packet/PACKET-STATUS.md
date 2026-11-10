@@ -13,25 +13,25 @@ decision that only a person can make.
 
 | | count |
 |---|---:|
-| Citations in the packet (in `packet.html`) | 32 |
-| Works those citations are filed as (§5.1 folders) | 24 |
-| PDFs filed under `papers/` (in the packet) | 27 |
-| PDFs under `pending-papers/` (awaiting a decision) | 443 |
+| Citations in the packet (in `packet.html`) | 24 |
+| Works those citations are filed as (§5.1 folders) | 16 |
+| PDFs filed under `papers/` (in the packet) | 19 |
+| PDFs under `pending-papers/` (awaiting a decision) | 452 |
 | PDFs under `screened-papers/` (kept, not filed) | 62 |
-| Held — open items, listed below | 771 |
+| Held — open items, listed below | 779 |
 | Screened out — decided, kept for the record (§4.5) | 254 |
 | **Rows in table `citation`** | **1057** |
 
-`packet.csv` holds the 32 included rows. `screened-out.csv` holds the other 1025,
+`packet.csv` holds the 24 included rows. `screened-out.csv` holds the other 1033,
 because §4.5 exports `screened-out` and `held` together — counsel is entitled to see that the
 work was screened and on what grounds. A screened-out row is not missing work: it is the
 record of what was looked at and rejected, with the reason beside it. A held row is open, and
 every held row appears in §2 below.
 
-## 2. Held rows — 771 open items
+## 2. Held rows — 779 open items
 
 
-### 2.1 `read` — 24 row(s)
+### 2.1 `read` — 31 row(s)
 
 The PDF is filed and the applicant's tool appears in a section of the paper. What is missing is the applicant's reading: a location on its own is not a claim about how the tool was used (§1.1).
 
@@ -52,12 +52,19 @@ The PDF is filed and the applicant's tool appears in a section of the paper. Wha
 | `cit-000531` | GLAD | 2024 | Pekosz | Clade-defining mutations in human H1N1 hemagglutinin protein from 2021-2023… | [open](https://www.biorxiv.org/content/10.1101/2024.05.18.594815.abstract) |
 | `cit-000636` | GlycoGlyph | 2024 | Baud | Towards a Better Understanding of the Influence of Carbohydrates on the Str… | [open](https://onlinelibrary.wiley.com/doi/abs/10.1002/pgr2.70013) |
 | `cit-000520` | GLAD | 2025 | Vasta | A “proto” type galectin expressed in striped bass (Morone saxatilis) tissue… | [open](https://www.frontiersin.org/journals/cellular-and-infection-microbiology/articles/10.3389/fcimb.2025.1572734/full) |
+| `cit-000521` | GLAD | 2025 | Wilson | Enzymatic tailoring of anionic glycans for characterizing lectin and antibo… | [open](https://www.jbc.org/article/S0021-9258(25)02767-X/fulltext) |
 | `cit-000596` | GlycoGlyph | 2025 | Eichler | Identification of the D-glucuronyl C5-epimerase that introduces iduronic ac… | [open](https://www.nature.com/articles/s42003-025-08987-9) |
 | `cit-000604` | GlycoGlyph | 2025 | Muddiman | A Strategy to Achieve Sub‐Parts‐per‐Million Mass Measurement Accuracy of N‐… | [open](https://analyticalsciencejournals.onlinelibrary.wiley.com/doi/abs/10.1002/jms.5184) |
 | `cit-000607` | GlycoGlyph | 2025 | Vasta | A “proto” type galectin expressed in striped bass (Morone saxatilis) tissue… | [open](https://www.frontiersin.org/journals/cellular-and-infection-microbiology/articles/10.3389/fcimb.2025.1572734/full) |
 | `cit-000616` | GlycoGlyph | 2025 | Wozniak-Knopp | Trispecific SEED antibodies engineered for neutrophil-mediated cell killing | [open](https://www.tandfonline.com/doi/abs/10.1080/19420862.2025.2532851) |
 | `cit-000631` | GlycoGlyph | 2025 | Karstens | Complex carbohydrates catabolism capacity of bladder microbiota inhabiting … | [open](https://europepmc.org/article/med/40236069) |
+| `cit-000518` | GLAD | 2026 | Hokke | Major human schistosome species express different glycans with immunologica… | [open](https://www.nature.com/articles/s41467-026-70850-0) |
+| `cit-000594` | GlycoGlyph | 2026 | Knight | AquIRE reveals the mechanisms of clinically induced RNA damage and the cons… | [open](https://academic.oup.com/nar/article-abstract/54/4/gkag080/8462606) |
+| `cit-000602` | GlycoGlyph | 2026 | Subramaniam | Diminished sialoside binding in novel H5N1 influenza hemagglutinin variants… | [open](https://www.nature.com/articles/s41467-026-77829-x) |
+| `cit-000613` | GlycoGlyph | 2026 | Maares | Transcriptome, glycome, and mucinome analysis reveal zinc is essential for … | [open](https://www.nature.com/articles/s41598-026-66227-4) |
 | `cit-000614` | GlycoGlyph | 2026 | Subramaniam | Loss of α2, 3-linked sialoside in the receptor-binding site of a H5N1 influ… | [open](https://www.biorxiv.org/content/10.64898/2026.01.19.700419.abstract) |
+| `cit-000619` | GlycoGlyph | 2026 | Grossman-Haham | Structural basis of secreted acid phosphatase polymerization in the Leishma… | [open](https://onlinelibrary.wiley.com/doi/abs/10.1002/pro.70591) |
+| `cit-000621` | GlycoGlyph | 2026 | Lewis | LeGenD: High-throughput N-glycan profiling using explainable AI and lectin … | [open](https://www.jbc.org/article/S0021-9258(26)02106-X/fulltext) |
 | `cit-000633` | GlycoGlyph | 2026 | Schäfer | Engineering Functional CLA-Targeting CAR Approaches for Pancreatic Ductal A… | [open](https://www.biorxiv.org/content/10.64898/2026.07.03.736395.abstract) |
 | `cit-000512` | GLAD | — | Aoki-Kinoshita | Worldwide glycoscience informatics infrastructure: the GlySpace Alliance | [open](https://pubs.acs.org/jaaucr/article-abstract/3/1/4/1253251) |
 | `cit-000556` | GLAD | — | — | Phenotyping murine and human platelet-derived extracellular vesicles gives … | [open](https://www.rpthjournal.org/cms/10.1016/j.rpth.2026.103414/attachment/5e1ef181-290b-47ad-a0b6-2820746565cf/mmc1.pdf) |
@@ -470,7 +477,7 @@ The PDF is filed. Nobody has read it yet.
 | `cit-001236` | — | — | Cao | Diversity-Oriented Enzymatic Modular Synthesis of N-Glycans Bearing LacdiNA… | [open](https://pubs.acs.org/doi/abs/10.1021/acs.orglett.5c04338) |
 | `cit-001242` | — | — | Tian | Integrative Quantitative Proteomics and N‐Glycoproteomics Reveal Age‐Proces… | [open](https://analyticalsciencejournals.onlinelibrary.wiley.com/doi/abs/10.1002/pmic.70133) |
 
-### 2.3 `unsupported` — 24 row(s)
+### 2.3 `unsupported` — 25 row(s)
 
 The PDF is filed, but the extracted text does not support a use in any section — the mentions sit in the reference list, in a table, or under a heading the paper did not print. Either re-read the page and record what it says, or screen the row out.
 
@@ -499,6 +506,7 @@ The PDF is filed, but the extracted text does not support a use in any section �
 | `cit-000734` | — | 2025 | Muddiman | A Strategy to Achieve Sub‐Parts‐per‐Million Mass Measurement Accuracy of N‐… | [open](https://analyticalsciencejournals.onlinelibrary.wiley.com/doi/abs/10.1002/jms.5184) |
 | `cit-001079` | — | 2026 | Lane | Establishing “Glycoantigens” as a cross-field concept in Glycobiology, tran… | [open](https://www.sciencedirect.com/science/article/pii/S0198885926001588) |
 | `cit-001116` | Glyco-SPOT | 2026 | Hurevich | Stirring glycopeptides away from the constraints of solid-phase synthesis m… | [open](https://www.frontiersin.org/journals/molecular-biosciences/articles/10.3389/fmolb.2026.1863326/full) |
+| `cit-001253` | MAWE | 2026 | Kiessling | Intelectin-2 is a broad-spectrum antimicrobial lectin | [open](https://www.nature.com/articles/s41467-025-67099-4) |
 | `cit-001468` | MAWE | 2026 | Arthur | Defining the Specificity of Blood-Group-Binding Lectins Through Microarray … | [open](https://link.springer.com/protocol/10.1007/978-1-0716-5376-0_34) |
 
 ### 2.4 `paywalled` — 35 row(s)
@@ -898,7 +906,6 @@ quotation was checked against the filed PDF by `record-evidence.js --check`, and
 
 | row_uid | recorded | how the citation appears | basis |
 |---|---|---|---|
-| `cit-001253` | tier A, Materials and Methods p.15 | 1 appearance(s) of MAWE, none in a section the paper ranked: References p.19 | extracted text |
 | `cit-000976` | tier A, Materials and Methods p.21 | 1 appearance(s) of MAWE, none in a section the paper ranked: References p.31 | reference-number resolution |
 | `cit-001252` | tier A, Materials and Methods p.21 | 1 appearance(s) of MAWE, none in a section the paper ranked: References p.31 | reference-number resolution |
 | `cit-000416` | tier C, Discussion p.19 | this row cites "Differential recognition of oligomannose isomers by glycan-binding protei… | extracted text |
@@ -945,7 +952,7 @@ None. Every citation in `packet.html` has the article filed beside it.
 
 ### 3.7 The narrative fields are a preparer's draft awaiting the applicant's approval
 
-The 24 narrative(s) on file are written into the `narrative` table by
+The 16 narrative(s) on file are written into the `narrative` table by
 `scripts/narrative-intake.js`, which refuses a paragraph that names no page number or a
 page beyond the length of the filed PDF. Who wrote each one is recorded in that table's
 `written_by` and `written_on` columns; it is deliberately **not** printed in `packet.html`,
@@ -977,7 +984,7 @@ quietly re-merging. This is the only place the advice is written down.
 : Selected by the applicant on 2026-11-10 as a clear use of glycan microarrays citing a method the applicant developed. The citing authors do not name a tool; they cite the applicant's 2019 paper as ref. 31 inside the range [30–33], with three other references, for the array procedure (Methods, p.2). Project 3 assigned on that reading; confirm.
 
 **`cit-000197`** — Epistasis reduces fitness costs of influenza A virus escape from stem…
-: Chosen by the applicant on 2026-11-10. The citing authors do not name a tool; they cite the applicant's 2019 paper as ref. 64, with ref. 63, for the virus labelling and CFG glycan array procedure (Methods, p.11). Same pattern as cit-000196. Project 3 assigned on that reading; confirm.
+: Chosen by the applicant on 2026-11-10. The citing authors do not name a tool; they cite the applicant's 2019 paper as ref. 64, with ref. 63, for the virus labeling and CFG glycan array procedure (Methods, p.11). Same pattern as cit-000196. Project 3 assigned on that reading; confirm.
 
 **`cit-000199`** — Expression of influenza A virus glycan receptor candidates in mallard…
 : Chosen by the applicant on 2026-11-10 as a positive citation in multiple locations. Only two locations cite the applicant's paper (Byrd-Leotis et al. 2019a, Results p.4 and p.8, each paired with 2019b). The four other Byrd-Leotis sentences cite 2019b (Sci Adv, a different paper) alone or with other papers; the earlier automatic record wrongly credited them and was corrected. No use type filed: the paper is cited as the basis for a candidate-receptor concept and a search target, which fits none of the four use categories cleanly (closest: Built upon or Verified). Project 3 assigned; confirm.
@@ -989,64 +996,40 @@ quietly re-merging. This is the only place the advice is written down.
 : Chosen by the applicant on 2026-11-10 as a use of GLAD, which is named in the Methods (p.10) and cited as ref. 63. The article also cites the applicant's Byrd-Leotis et al. 2019 paper (ref. 9, within 7–11, p.1 and p.5); that second citation is cit-000188, which is not folded into this entry and stays a separate held row.
 
 **`cit-000514`** — Mass spectrometric and glycan microarray–based characterization of th…
-: A Tier A Methods use of GLAD (Hokke group, Mol Cell Proteomics, online 20 Jan 2022, so before the petition date). Chosen by the applicant on 2026-11-10. The same group cites GLAD in the same words in cit-000532 (2023) and cit-000518 (2026), which are separate articles.
+: A Tier A Methods use of GLAD (Hokke group, Mol Cell Proteomics, online January 20, 2022, so before the petition date). Chosen by the applicant on 2026-11-10. The same group cites GLAD in the same words in cit-000532 (2023) and cit-000518 (2026), which are separate articles.
 
 **`cit-000516`** — A Zebrafish Galectin-1 Isoform Is Expressed in Skin and Gills and Bin…
 : Cite this folder for the density of use rather than any single sentence - MAWE as an established procedure, GLAD for analysis and GlycoGlyph for the glycan models, all inside section 4.9.5 on p.21.
-
-**`cit-000518`** — Major human schistosome species express different glycans with immuno…
-: The p.16 sentence is a clean Methods use - the tool is named, versioned, and given the analytical role - from a Nature Communications article on a species with clinical relevance. Because the version is stated, counsel can see the authors worked with a released build rather than a private script.
-
-**`cit-000521`** — Enzymatic tailoring of anionic glycans for characterizing lectin and …
-: File this row at tier A.
 
 **`cit-000532`** — Unraveling cross-reactivity of anti-glycan IgG responses in filarial …
 : Chosen by the applicant on 2026-11-10. GLAD is named in the Methods (p.4) and cited as ref. 37 (listed p.16). Published Frontiers in Immunology 2023 article, not a preprint. No other rows cite this article.
 
 **`cit-000542`** — Comparative phenotyping of surface markers and glycans in murine and …
-: Keep the Methods p.5 sentence as the evidence and treat the p.12 acknowledgment as corroboration of the applicant’s role, not as a second use; both statements are recorded so they can be read side by side. OPEN DECISION FOR THE APPLICANT: the headline tier for this row is Methods (tier A) on the strength of the p.5 sentence. If you consider the Acknowledgments thanks to be the more accurate characterisation of the relationship, say so, because tier D would place this article outside the packet entirely.
+: Keep the Methods p.5 sentence as the evidence and treat the p.12 acknowledgment as corroboration of the applicant’s role, not as a second use; both statements are recorded so they can be read side by side. OPEN DECISION FOR THE APPLICANT: the headline tier for this row is Methods (tier A) on the strength of the p.5 sentence. If you consider the Acknowledgments thanks to be the more accurate characterization of the relationship, say so, because tier D would place this article outside the packet entirely.
 
 **`cit-000544`** — Phylogenetic variations in a novel family of hyperstable apple snail …
 : The p.4 sentence is a Methods use for comparison, and the folder’s multiple dated files exist precisely to place that statement in time; point counsel at the file list rather than asking them to take the date on trust.
-
-**`cit-000594`** — AquIRE reveals the mechanisms of clinically induced RNA damage and th…
-: This is a single-sentence Methods use in a high-visibility journal, and it is best presented as evidence of routine adoption for a standard task rather than as a load-bearing methodological dependence.
-
-**`cit-000602`** — Diminished sialoside binding in novel H5N1 influenza hemagglutinin va…
-: A Methods use in a Nature Communications article on a matter of public-health urgency; present it as the applicant’s tool being used to render the glycan structures in a high-profile receptor-binding study.
-
-**`cit-000613`** — Transcriptome, glycome, and mucinome analysis reveal zinc is essentia…
-: A tier B use: the applicant’s tool is the source of the glycan structures in the figures, twice named, but not described in the Methods prose. The mentions sit in figure content rather than in the Materials and Methods text, which is why the row is recorded at tier B rather than tier A.
-
-**`cit-000619`** — Structural basis of secreted acid phosphatase polymerization in the L…
-: A Methods use in a Journal of Biological Chemistry structural study; the GlycoGlyph sentence is specific about which structure was generated, which makes it verifiable at a glance.
-
-**`cit-000621`** — LeGenD: High-throughput N-glycan profiling using explainable AI and l…
-: A tier A use in a Journal of Biological Chemistry methods paper by a group that includes a co-author of the applicant’s field; useful as evidence that tool developers in glycomics use GlycoGlyph for structure representation.
 
 **`cit-000629`** — Glycan-reactive antibodies isolated from human HIV-1 vaccine trial pa…
 : One of the strongest folders in the packet: the applicant’s MAWE protocol is the assay method behind a Nature-family-tier HIV vaccine immunology study, and GlycoGlyph supplied the structure diagrams, both named in Methods and in a figure legend.
 
 **`cit-000749`** — Prevaccination glycan markers of response to an influenza vaccine imp…
-: Methods use of GlyGen (the applicant contributed to GlyGen; the cited paper York et al. 2020 lists the applicant as an author). J Proteome Res, published online 27 Jun 2022, so before the petition date. This is a database search step, not a use of GLAD, GlycoGlyph or MAWE. Chosen by the applicant on 2026-11-10. Project 2 is the preparer's proposal.
+: Methods use of GlyGen (the applicant contributed to GlyGen; the cited paper York et al. 2020 lists the applicant as an author). J Proteome Res, published online June 27, 2022, so before the petition date. This is a database search step, not a use of GLAD, GlycoGlyph or MAWE. Chosen by the applicant on 2026-11-10. Project 2 is the preparer's proposal.
 
 **`cit-000752`** — Enhanced surface accessibility of SARS-CoV-2 Omicron spike protein du…
-: Eligibility rests on the bioRxiv preprint of 23 Nov 2023 (doi 10.1101/2023.11.22.568381), which contains the same GlyGen sentence (its ref 68); the journal article (ACS Infect Dis 10, 2032) was published 10 May 2024, after the petition date of 25 Apr 2024. The paper does not say which option on the GlyGen Glycan Search page was used, or that GlycoGlyph itself was used; the GlycoGlyph link rests on the GlyGen release notes and on the applicant's statement that the structure-search draw option shows GlycoGlyph. Present it as use of GlyGen, a resource the applicant contributed to, not as a direct use of GlycoGlyph. Project 2 is the preparer's proposal.
+: Eligibility rests on the bioRxiv preprint of November 23, 2023 (doi 10.1101/2023.11.22.568381), which contains the same GlyGen sentence (its ref 68); the journal article (ACS Infect Dis 10, 2032) was published May 10, 2024, after the petition date of April 25, 2024. The paper does not say which option on the GlyGen Glycan Search page was used, or that GlycoGlyph itself was used; the GlycoGlyph link rests on the GlyGen release notes and on the applicant's statement that the structure-search draw option shows GlycoGlyph. Present it as use of GlyGen, a resource the applicant contributed to, not as a direct use of GlycoGlyph. Project 2 is the preparer's proposal.
 
 **`cit-001230`** — Potent inhibition of enterovirus D68 and human rhinoviruses by dipept…
 : Chosen by the applicant on 2026-11-10. The applicant's thrombin paper (Sidhu et al. 2011) is one of five references, in a single Methods sentence about the protease selectivity panel (p.4); it is not a use of the applicant's compounds. Project 1 assigned because the cited paper is the thrombin allosteric inhibitor work (no default project for this work); confirm. The journal name was missing from the record and was filled in from the PDF header (Antiviral Research, 2016 volume, available online 2015).
-
-**`cit-001253`** — Intelectin-2 is a broad-spectrum antimicrobial lectin
-: Do not present this citation as an instance of the tool being adopted. Keep the row, and keep the hedge quoted. The applicant’s own earlier summary of this paper recorded the same doubt. If the applicant knows from the authors or the NCFG that the array work was in fact run on reusable arrays made by MAWE, that fact should be recorded through the decision tool with its basis, not inferred from this sentence.
 
 **`cit-001257`** — Evaluating the role of non-HIV antigens in the initiation of QA013. 2…
 : A tier A Methods use of MAWE in a Scientific Reports article from a well-known HIV vaccine laboratory, presented as the analysis method for the array data. Where other folders name the applicant’s work in a hedge or a figure legend, this one assigns the analysis to the method in a Methods sentence, which is the form of use this packet is built to collect.
 
 ## 4. Potential citations not in the packet
 
-[`potential_notable_citations.html`](./potential_notable_citations.html) lists **748**
+[`potential_notable_citations.html`](./potential_notable_citations.html) lists **756**
 independent citations of the works in the candidate queue that are **not** in `packet.html`.
-They appear as **663 rows**
+They appear as **671 rows**
 because 85 citations sit on a row already held by
 another of my works. One article that cites two of them is one row with two judgements
 in it, one per work, so the row says where GLAD sits and where GlycoGlyph sits separately.
@@ -1056,11 +1039,11 @@ with it, and nothing on it is evidence until a person has read the article and f
 
 | my work | citing works the record lists | less retired | less not independent | less copies | less not English | less in packet | less in original app. | less decided | listed | PDF on file |
 |---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-| **GLAD** — GLAD: GLycan Array Dashboard, a visual analyt… (2019) | 64 | 0 | 18 | 2 | 0 | 10 | 2 | 10 | **22** | 15 |
-| **GlycoGlyph** — GlycoGlyph: a glycan visualizing, drawing and… (2020) | 78 | 0 | 9 | 4 | 0 | 7 | 3 | 30 | **25** | 21 |
+| **GLAD** — GLAD: GLycan Array Dashboard, a visual analyt… (2019) | 64 | 0 | 18 | 2 | 0 | 8 | 2 | 10 | **24** | 15 |
+| **GlycoGlyph** — GlycoGlyph: a glycan visualizing, drawing and… (2020) | 78 | 0 | 9 | 4 | 0 | 2 | 3 | 30 | **30** | 22 |
 | **MAWE** — GlyMDB: Glycan Microarray Database and analys… (2020) | 24 | 0 | 4 | 1 | 0 | 0 | 0 | 6 | **13** | 10 |
 | **MAWE** — Insights into glycobiology and the protein-gl… (2024) | 33 | 0 | 4 | 1 | 0 | 2 | 0 | 0 | **26** | 8 |
-| **MAWE** — Reusable glycan microarrays using a microwave… (2024) | 15 | 0 | 6 | 1 | 0 | 5 | 0 | 3 | **0** | 0 |
+| **MAWE** — Reusable glycan microarrays using a microwave… (2024) | 15 | 0 | 6 | 1 | 0 | 4 | 0 | 3 | **1** | 0 |
 | **MAWE** — Tools for generating and analyzing glycan mic… (2020) | 18 | 0 | 3 | 0 | 0 | 0 | 1 | 5 | **9** | 5 |
 | **Other** — Allosteric inhibition of human factor XIa: di… (2014) | 41 | 0 | 8 | 3 | 0 | 0 | 2 | 6 | **22** | 9 |
 | **Other** — Allosteric partial inhibition of monomeric pr… (2016) | 47 | 0 | 15 | 1 | 0 | 0 | 0 | 7 | **24** | 14 |
@@ -1096,12 +1079,12 @@ with it, and nothing on it is evidence until a person has read the article and f
 | **Other** — Tumor cells express pauci-and oligomannosidic… (2021) | 35 | 0 | 4 | 1 | 0 | 0 | 2 | 6 | **22** | 12 |
 | **Other** — Unique Glycans in Synaptic Glycoproteins in M… (2024) | 4 | 0 | 2 | 0 | 0 | 0 | 0 | 0 | **2** | 1 |
 | **Other** — Unique repertoire of anti-carbohydrate antibo… (2020) | 44 | 0 | 12 | 1 | 0 | 0 | 1 | 7 | **23** | 18 |
-| **all works** | | | | | | | | | **748** | 433 |
+| **all works** | | | | | | | | | **756** | 434 |
 
 Each work's own arithmetic is printed on the review page beside its name; the row above
 is the same screen, not a second tally.
 
-433 citations already have a PDF on file, held under `pending-papers/` until a
+434 citations already have a PDF on file, held under `pending-papers/` until a
 decision is made. The rest sit at
 `no-open-copy`, `paywalled`, or `not-in-indexes` — findings about access, not about
 whether the paper exists. **A tier appears only for an article that has actually been read:**
@@ -2129,8 +2112,8 @@ These are subscription or repository copies the script route could not reach; th
 including the CDP download route and the hosts still behind Cloudflare, are in §2.2 of the
 packet instructions.
 
-**Placed in the folder by the applicant** — 14 folder(s) hold a file that
-no candidate row claims as its fetch: `cit-000544`, `cit-000594`, `cit-001253`, `cit-000518`, `cit-000521`, `cit-000629`, `cit-000619`, `cit-000542`, `cit-000602`, `cit-000516`, `cit-000613`, `cit-001257`, `cit-000416`, `cit-000752`.
+**Placed in the folder by the applicant** — 15 folder(s) hold a file that
+no candidate row claims as its fetch: `cit-000544`, `cit-000594`, `cit-001253`, `cit-000518`, `cit-000521`, `cit-000629`, `cit-000619`, `cit-000542`, `cit-000602`, `cit-000516`, `cit-000613`, `cit-001257`, `cit-000416`, `cit-000752`, `cit-000621`.
 These came from the `In Methods` / `In Acknowledgements` imports and were registered into table
 `file`; nothing downloaded them.
 

@@ -31,25 +31,12 @@ const PROJECTS = {
 
 const { META, PETITION_DATE, fmt, earliest, showPre, period, datesList } = require("./citing-meta");
 const PETITION_LONG = "April 25, 2024";
-// Full author list of the GlyGen paper as printed in its reference entries (the catalogue stops after five names).
+// Full author list of the GlyGen paper as printed in its reference entries (the catalog stops after five names).
 const GLYGEN_AUTHORS = "WS York, R Mazumder, R Ranzinger, N Edwards, R Kahsay, KF Aoki-Kinoshita, MP Campbell, RD Cummings, T Feizi, M Martin, DA Natale, NH Packer, RJ Woods, G Agarwal, S Arpinar, S Bhat, J Blake, LJG Castro, B Fochtman, J Gildersleeve, R Goldman, X Holmes, V Jain, S Kulkarni, R Mahadik, AY Mehta, R Mousavi, S Nakarakommula, R Navelkar, N Pattabiraman, MJ Pierce, K Ross, P Vasudev, J Vora, T Williamson, W Zhang";
 const TEXT = require("./docx-text");
+const { buildQuotes } = require("./quotes");
 
 // Order of the citations: see scripts/packet-order.js (oldest citing article first).
-
-// Sentences the database holds only as a fragment, or with extraction debris in front.
-const EXTRA_QUOTES = {
-  "cit-000629": [{ q: "Diagrams of glycan structures were generated using GlycoGlyph (49). Glycan microarray protocol was followed using the microwave-assisted wet-erase process by Mehta et al. (50).", sec: "Results (figure legend)", pg: 6 }],
-  "cit-000542": [{ q: "We also thank Akul Mehta (Harvard University) for valuable discussions and help with the glycan tool Glycan Array Dashboard and Consortium for Functional Glycomics (CFG) names", sec: "Acknowledgments", pg: 12 }],
-  "cit-000602": [{ q: "We produced glycan schematics using GlycoGlyph then adjusted them on Inkscape", sec: "Materials and Methods", pg: 11 }],
-};
-const QUOTE_FIX = {
-  "cit-000516": [["(accessed on 25 November 2025) ", ""], ["Glycan Microarray Analysis Glycan microarray analysis", "Glycan microarray analysis"]],
-  "cit-000619": [["ing two N-acetylglucosamine (GlcNac) units", "A model of the N-linked glycan containing two N-acetylglucosamine (GlcNac) units"]],
-  "cit-000602": [["3 and 4 and produced on GlycoGlyph with adjustments on Inkscape for Fig.", "Glycan schematics adapted from Z Biotech for Figs. 3 and 4 and produced on GlycoGlyph with adjustments on Inkscape for Fig. 5"]],
-  "cit-000518": [["Finally, GLycan Array Dashboard (GLAD) 93", "Finally, GLycan Array Dashboard (GLAD) 93, version 3.1, from the glycotoolkit website (glycotoolkit.com/Tools/GLAD/) hosted by the National Center for Functional Glycomics, was used for data visualization, data mining, generation of heatmaps and boxplot graphs"]],
-};
-const SECTION_FIX = { "cit-000613:11": "Figure legend" };
 
 // ---------- xml ----------
 const esc = s => String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
@@ -69,6 +56,7 @@ function setText(p, text) { return p.replace(/<w:t>[^<]*<\/w:t>/, `<w:t>${esc(te
 // ---------- data ----------
 function authorsOf(r) {
   let a = (r.citing_authors || "").trim();
+  if (a.includes(";")) a = a.split(/;\s*/).map(x => { const p = x.split(/,\s*/); return p.length === 2 ? `${p[1]} ${p[0]}` : x; }).join(", ");   // "Surname, Given; ..." -> "Given Surname, ..."
   const n = a.split(/,\s*/).length;
   if (n >= 10 && !/et al/.test(a) && n <= 10) a += ", et al.";
   return a;
@@ -109,6 +97,7 @@ async function main() {
     const m = META[uid], per = period(uid), runs = [];
     runs.push({ b: true, t: per === "before" ? "Public BEFORE the petition date (April 25, 2024). " : "Public AFTER the petition date (April 25, 2024). " });
     if (per === "before" && showPre(uid)) runs.push({ b: true, t: `The ${m.pre[0]} preprint was public on ${fmt(m.pre[1])}; the final journal article went online only on ${fmt(m.on)}. ` });
+    if (showPre(uid) && m.preCites === false) runs.push({ b: true, t: "Note: the preprint itself does not cite my work (I searched its full text); the citation of my work appears only in the final article. " });
     runs.push({ t: "Dates: " + datesList(uid).map(([k, v]) => `${k} ${v}`).join("; ") + "." });
     return runs;
   };
@@ -130,7 +119,7 @@ async function main() {
     }
     if (before) {
       const late = list.filter(x => META[x.f.uid].on >= PETITION_DATE);
-      if (late.length) out.push(answer("Placed in this section because of an earlier preprint: " + late.map(x => `Citation #${x.i + 1} (${META[x.f.uid].pre[0]} preprint ${fmt(META[x.f.uid].pre[1])}; final article online ${fmt(META[x.f.uid].on)})`).join("; ") + ". In each case the preprint was publicly available before the petition date and the final journal article appeared after it."));
+      if (late.length) out.push(answer("Placed in this section because of an earlier preprint: " + late.map(x => `Citation #${x.i + 1} (${META[x.f.uid].pre[0]} preprint ${fmt(META[x.f.uid].pre[1])}; final article online ${fmt(META[x.f.uid].on)})`).join("; ") + ". In each case the preprint was publicly available before the petition date and the final journal article appeared after it." + (late.some(x => META[x.f.uid].preCites === false) ? " The preprint of " + late.filter(x => META[x.f.uid].preCites === false).map(x => `Citation #${x.i + 1}`).join(", ") + " does not itself cite my work; the citation appears only in the final article." : "")));
     } else {
       out.push(answer("Every article in this group, including its earliest preprint where there was one, first became public after the petition date."));
     }
@@ -159,33 +148,7 @@ async function main() {
     }
     const projects = [...new Set(f.rows.map(r => r.project).filter(Boolean))].sort();
 
-    // quotes: each row's verified quote, then any mention not already inside one of them
-    const quotes = [];
-    const seen = new Set();
-    const strip = s => s.toLowerCase().replace(/[^a-z0-9]/g, "");
-    const dup = (k, pg) => {
-      const a = strip(k);
-      return [...seen].some(([s, spg]) => {
-        if (String(spg) !== String(pg)) return false;     // the same words on another page are another instance
-        if (s.includes(a) || a.includes(s)) return true;
-        for (let i = 0; i + 40 <= a.length; i += 10) if (s.includes(a.slice(i, i + 40))) return true;
-        return false;
-      });
-    };
-    const push = (q, sec, pg, whole) => {
-      const k = q.replace(/\s+/g, " ").trim().replace(/^[.,;:\s]+/, "");
-      if (!k) return;
-      if (!whole && (k.length < 30 || !/^[A-Z(“"]/.test(k))) return;   // a snippet that starts mid-sentence is not quotable
-      if (dup(k, pg)) return;
-      seen.add([strip(k), pg]); quotes.push({ q: k, sec: (SECTION_FIX[f.uid + ":" + pg] || sec), pg });
-    };
-    for (const r of f.rows) if (r.quote) push(r.quote, r.section, r.page, true);
-    for (const r of f.rows) {
-      for (const m of db.prepare("SELECT * FROM mention WHERE row_uid=? ORDER BY page").all(r.row_uid)) push(m.quote || "", m.section, m.page, false);
-    }
-    for (const x of (EXTRA_QUOTES[f.uid] || [])) push(x.q, x.sec, x.pg, true);
-    for (const x of quotes) for (const [a, b] of (QUOTE_FIX[f.uid] || [])) x.q = x.q.replace(a, b);
-    quotes.sort((a, b) => parseInt(a.pg, 10) - parseInt(b.pg, 10));
+    const quotes = buildQuotes(db, f.uid, f.rows);
 
     const out = [];
     out.push(setText(T(0), `CITATION #${idx + 1}`));
@@ -195,7 +158,7 @@ async function main() {
     label(3, cited.map(c => {
       const p = c.pub;
       let authors = p ? p.authors.replace(/,?\s*\.\.\.+\s*$/, ", et al") : "";
-      if (p && /^GlyGen:/i.test(p.title)) authors = GLYGEN_AUTHORS;   // the catalogue stops the list before my name
+      if (p && /^GlyGen:/i.test(p.title)) authors = GLYGEN_AUTHORS;   // the catalog stops the list before my name
       const formal = p ? `${authors}. ${p.title}. ${p.venue}${/\b(19|20)\d\d\b/.test(p.venue) ? "" : ` (${p.year})`}.` : c.title;
       return answer(formal.replace(/\s+,/g, ","));
     }));
