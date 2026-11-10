@@ -429,5 +429,6 @@ q.addEventListener("input",apply);apply()})();</script>
   console.log("headline tiers:", JSON.stringify(tiers));
 }
 
-if (argv.includes("--html")) require("./render-catalog-v2.js");
+if (require.main !== module) module.exports = { catalogRow };
+else if (argv.includes("--html")) require("./render-catalog-v2.js");
 else runAll().then(() => { if (argv.includes("--and-html")) require("./render-catalog-v2.js"); }).catch(e => { console.error(e); process.exit(1); });

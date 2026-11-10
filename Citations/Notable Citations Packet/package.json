@@ -4,7 +4,9 @@
   "private": true,
   "description": "Standalone tooling for the notable-citations packet for counsel. Deliberately separate from the Independent Citation Record: reads the record read-only, writes only inside Citations/Notable Citations Packet/.",
   "type": "commonjs",
-  "engines": { "node": ">=22" },
+  "engines": {
+    "node": ">=22"
+  },
   "scripts": {
     "init-db": "node scripts/init-db.js",
     "import": "node scripts/import-existing.js",
@@ -14,6 +16,8 @@
     "build": "node scripts/init-db.js && node scripts/import-existing.js && node scripts/render-packet.js && node scripts/validate-packet.js"
   },
   "dependencies": {
+    "jszip": "^3.10.2",
+    "pdf-lib": "^1.17.1",
     "pdfjs-dist": "^4.10.38"
   }
 }
