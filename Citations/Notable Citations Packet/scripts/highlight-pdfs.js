@@ -218,6 +218,32 @@ function trimHeadings(model, a, b, anchorB) {
  * My paper's entry in the reference list, found by its title: from the first author's surname (and the number
  * or bracket in front of it) to the end of the page range / DOI / link tokens that close the entry.
  */
+/** Extend a sentence range [a,b] over the citation number that follows its full stop ("efficacy. 13 To evaluate"): superscript digits, "[53]", "(13)", "13,14", "13-15". */
+function withMarker(model, a, b) {
+  const S = model.S;
+  const rest = S.slice(b + 1, b + 40);
+  const m = /^\s*(?:\(\s*\d{1,3}(?:\s*[,–-]\s*\d{1,3})*\s*\)|\[\s*\d{1,3}(?:\s*[,–-]\s*\d{1,3})*\s*\]|\d{1,3}(?:\s*[,–-]\s*\d{1,3})*)(?=\s+[A-Z“"(]|\s*$|\s*[.;])/.exec(rest);
+  if (!m) return [a, b];
+  let e = b + m[0].length;
+  while (e > b && /\s/.test(S[e])) e--;
+  // the number must sit right after the last word on the same line (a superscript), not be a margin line number
+  let f = b + 1; while (f <= e && /\s/.test(S[f])) f++;
+  const mk = model.map[f], lk = model.map[b];
+  if (!mk || !lk || mk.c < 0 || lk.c < 0) return [a, b];
+  const mi = model.items[mk.i], li = model.items[lk.i];
+  const gap = mi.x - (li.x + li.w);
+  if (mi !== li && !(Math.abs(mi.y - li.y) < li.h * 0.9 && gap > -li.h * 0.3 && gap < li.h * 1.6)) return [a, b];
+  return [a, e];
+}
+/** Extend a reference-entry start backwards over its list label: "[53] ", "(13) ", "51. ", or a bare "19 ". */
+function withLabel(S, a) {
+  if (/^(\[\s*\d|\(\s*\d|\d{1,3}\.\s)/.test(S.slice(a, a + 8))) return a;   // the entry already starts at its label
+  const before = S.slice(Math.max(0, a - 12), a);
+  const m = /(\[\s*\d{1,3}\s*\]\s*|\(\s*\d{1,3}\s*\)\s*|\b\d{1,3}\.\s+)$/.exec(before);
+  if (m) return a - m[1].length;
+  const m2 = /(?<=[.\d])\s\d{1,3}\s+$/.exec(before);
+  return m2 ? a - (m2[0].length - 1) : a;
+}
 function refByTitle(model, title, surname, from) {
   const hit = locate(model, title.slice(0, 70));
   if (!hit) return null;
@@ -340,7 +366,7 @@ async function main() {
     const name = `${String(idx + 1).padStart(2, "0")}_${surname}_${main.citing_year}_${uid}.pdf`;
     const dest = path.join(OUTDIR, name);
 
-    const NO_RESOLVER = new Set(["cit-000749", "cit-000752", "cit-000044"]);
+    const NO_RESOLVER = new Set(["cit-000749", "cit-000752", "cit-000044", "cit-000423"]);
     // where my work is cited: resolver for each cited paper of this folder, then the filed sentences
     const places = [];    // {page, quote, kind, why}
     const refs = [];      // {page, entry, why}
@@ -376,7 +402,8 @@ async function main() {
       if (!hit) { entry.notes.push(`not found on p.${pl.page}: ${pl.quote.slice(0, 70)} [${pl.why}]`); continue; }
       let [a, b] = sentenceRange(mdl.S, hit[0], hit[1]);
       [a, b] = trimHeadings(mdl, a, b, hit[1]);
-      if (pl.ref) { const h0 = locate(mdl, pl.quote.slice(0, 40)), h1 = locate(mdl, pl.quote.slice(-40)); if (h0 && h1) { a = h0[0]; b = h1[1]; } }
+      if (!pl.ref) [a, b] = withMarker(mdl, a, b);
+      if (pl.ref) { const h0 = locate(mdl, pl.quote.slice(0, 40)), h1 = locate(mdl, pl.quote.slice(-40)); if (h0 && h1) { a = withLabel(mdl.S, h0[0]); b = h1[1]; } }
       if (pl.marker) {
         // The resolver's quote can be the sentence BEFORE the one that carries the marker. Highlight the sentence
         // that actually holds the marker: look at the next two sentences when this one does not.
@@ -416,7 +443,7 @@ async function main() {
         if (r2) { found = { p, mdl, r: r2 }; break; }
       }
       if (!found) { entry.notes.push(`no reference-list entry found for "${rf.pub.title.slice(0, 50)}"`); continue; }
-      const [a, b] = found.r;
+      const a = withLabel(found.mdl.S, found.r[0]), b = found.r[1];
       const key = found.p + ":" + a;
       if (seenRef.has(key) || overlaps(found.p, a, b)) continue;
       seenRef.add(key); done.push({ page: found.p, a, b });

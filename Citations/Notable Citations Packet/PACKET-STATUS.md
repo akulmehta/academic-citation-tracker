@@ -2017,7 +2017,7 @@ evidence looks like something and is not.
 
 | basis of a recorded mention | mentions | rows |
 |---|---:|---:|
-| reference-number resolution | 755 | 454 |
+| reference-number resolution | 752 | 453 |
 | human reading | 23 | 16 |
 | extracted text | 20 | 15 |
 
@@ -2027,7 +2027,7 @@ that names the applicant's paper — a reference list proves only that the autho
 work, not where or how. Where a row's tier rests on such a citation, that is said in the
 report rather than left for a reader to infer from a section heading alone.
 
-778 mentions across 469 citing works rest on resolution or on a person’s
+775 mentions across 468 citing works rest on resolution or on a person’s
 reading, not on a named-tool scan. `scan-mentions.js` reports those rows separately and
 leaves their tier alone — it is not built to find them, so its silence is not evidence
 against them.
