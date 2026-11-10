@@ -222,7 +222,7 @@ function refByTitle(model, title, surname, from) {
   const hit = locate(model, title.slice(0, 70));
   if (!hit) return null;
   const S = model.S;
-  const lo = Math.max(0, hit[0] - 320);
+  const lo = Math.max(0, hit[0] - 1300);   // a 35-author entry (GlyGen) puts the first author far before the title
   const seg = S.slice(lo, hit[0]);
   const re = new RegExp(surname.replace(/[-]/g, "[-‐ ]"), "gi");
   let m, pos = -1;
@@ -235,7 +235,7 @@ function refByTitle(model, title, surname, from) {
   if (pre) a -= pre[1].length;
   // end: after the title, the first page range / article id, then the closing tokens
   const after = S.slice(hit[1] + 1, hit[1] + 1 + 320);
-  const close = /(\d{1,6}\s*[–‐-]\s*\d{1,6}|\d{1,6}e\d{1,6}\b|\b[a-z]{1,6}\d{3,6}\b[-\w]*|\b(?:19|20)\d\d,\s*\d+,\s*\d{3,6}(?:\s*[–‐-]\s*\d{1,6})?|\b\d{4};\d+[:\d–-]*|\d+\(\d+\):\d+[–-]?\d*)/.exec(after);
+  const close = /(\d{1,6}\s*[–‐−-]\s*\d{1,6}|\d{1,6}e\d{1,6}\b|\b[a-z]{1,6}\d{3,6}\b[-\w]*|\b(?:19|20)\d\d,\s*\d+,\s*\d{3,6}(?:\s*[–‐−-]\s*\d{1,6})?|\b\d{4};\d+[:\d–-]*|\d+\(\d+\):\d+[–-]?\d*)/.exec(after);
   const doi = /https?:\/\/\s*d\s*oi\.?\s*org\/\S+|d\s*oi:\s*\S+/i.exec(after);
   let end = null;
   if (close) end = hit[1] + 1 + close.index + close[0].length;
@@ -287,12 +287,13 @@ function rectsFor(model, a, b) {
   return out;
 }
 
-function addHighlight(pdf, pageNo, rects, note) {
+function addHighlight(pdf, pageNo, rects, note, color) {
   if (!rects.length) return false;
   const ctx = pdf.context;
   const page = pdf.getPage(pageNo - 1);
   const quad = [], rect = [Infinity, Infinity, -Infinity, -Infinity];
-  let ap = "/GS0 gs 1 0.93 0 rg\n";
+  const col = color || [1, 0.93, 0];
+  let ap = `/GS0 gs ${col.join(" ")} rg\n`;
   for (const r of rects) {
     quad.push(r.x0, r.y1, r.x1, r.y1, r.x0, r.y0, r.x1, r.y0);
     rect[0] = Math.min(rect[0], r.x0); rect[1] = Math.min(rect[1], r.y0);
@@ -304,7 +305,7 @@ function addHighlight(pdf, pageNo, rects, note) {
     Resources: { ExtGState: { GS0: { Type: "ExtGState", BM: "Multiply" } } },
   });
   const annot = ctx.obj({
-    Type: "Annot", Subtype: "Highlight", Rect: rect, QuadPoints: quad, C: [1, 0.93, 0], CA: 1, F: 4,
+    Type: "Annot", Subtype: "Highlight", Rect: rect, QuadPoints: quad, C: col, CA: 1, F: 4,
     Contents: PDFString.of(note || ""), T: PDFString.of("citation"),
     AP: { N: ctx.register(form) },
   });
@@ -339,15 +340,19 @@ async function main() {
     const name = `${String(idx + 1).padStart(2, "0")}_${surname}_${main.citing_year}_${uid}.pdf`;
     const dest = path.join(OUTDIR, name);
 
+    const NO_RESOLVER = new Set(["cit-000749", "cit-000752"]);
     // where my work is cited: resolver for each cited paper of this folder, then the filed sentences
     const places = [];    // {page, quote, kind, why}
     const refs = [];      // {page, entry, why}
     for (const r of frows) {
       try {
+        // The GlyGen rows are not in the catalogue's tool/marker model (the paper is cited by number, not by a tool
+        // name), so its resolver guesses wrong sentences; their locations are the filed, human-read quotes only.
+        if (NO_RESOLVER.has(uid)) { refs.push({ hint: null, pub: myPub(cat, r), why: r.cited_paper.slice(0, 40) }); throw null; }
         const c = await catalogRow(db, cat, { row_uid: r.row_uid, cites_id: r.cites_id, cited_paper: r.cited_paper, citing_title: r.citing_title, pdf_file: srcRel });
         for (const m of c.mentions) places.push({ page: m.page, quote: m.quote, kind: "text", marker: m.marker, why: `resolver ${m.marker} (${r.cited_paper.slice(0, 30)})` });
         refs.push({ hint: c.entryPage, pub: myPub(cat, r), why: r.cited_paper.slice(0, 40) });
-      } catch (e) { places.push({ error: `resolver failed for ${r.row_uid}: ${String(e.message).slice(0, 80)}` }); }
+      } catch (e) { if (e === null) { /* resolver skipped on purpose */ } else places.push({ error: `resolver failed for ${r.row_uid}: ${String(e.message).slice(0, 80)}` }); }
       if (r.quote && r.page) places.push({ page: Number(String(r.page).match(/\d+/)), quote: r.quote, kind: "text", why: `filed quote ${r.row_uid}` });
       for (const m of db.prepare("SELECT page, quote FROM mention WHERE row_uid=?").all(r.row_uid))
         if (m.quote && m.page) places.push({ page: Number(String(m.page).match(/\d+/)), quote: m.quote, kind: "text", why: `filed mention ${r.row_uid}` });
@@ -455,4 +460,5 @@ const EXTRA = {
   "cit-000629": [{ page: 6, quote: "Diagrams of glycan structures were generated using GlycoGlyph (49). Glycan microarray protocol was followed using the microwave-assisted wet-erase process by Mehta et al. (50)." }],
 };
 
-main().catch(e => { console.error(e); process.exit(1); });
+if (require.main === module) main().catch(e => { console.error(e); process.exit(1); });
+module.exports = { loadPdfjs, pageModel, locate, sentenceRange, trimHeadings, refByTitle, rectsFor, addHighlight, myPub, getDirs: () => DIRS, OUTDIR };

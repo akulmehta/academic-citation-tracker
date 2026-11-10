@@ -1,0 +1,43 @@
+"use strict";
+/** Section II prose of the Word document, part 3: citations added on 10 November 2026 (see docx-text-a.js for the style notes). */
+module.exports = {
+  // ------------------------------------------------------------ cit-000514
+  "cit-000514": {
+    objectives:
+      "The authors studied Brugia malayi, a parasitic worm that causes lymphatic filariasis, a disease that leaves people with chronic disablement. They worked out the structures of the sugar chains (glycans) that the worm carries, printed the purified glycans on glycan microarrays, which are glass slides carrying many different sugar structures, and used the slides to measure the antibodies made against these sugars by infected monkeys and by people living in an area where the disease is endemic. This was complementary to my research on tools for analysing glycan array data: the authors used GLAD, the analysis tool that I developed, to visualise and mine their array results.",
+    importance:
+      "Elimination programmes have greatly reduced infection in some regions, which creates a need for better tests to monitor the population and to prevent the disease from returning. Sugar chains from parasitic worms are emerging as molecules that could be used in such tests, but the sugars of this worm had hardly been characterised. Knowing which of them the immune system recognises is the first step towards designing a diagnostic test around them.",
+    how: [
+      "After the arrays were scanned and the measurements of the replicate spots had been averaged and corrected for background, the authors wrote that “GLycan Array Dashboard (53) … hosted by the National Center for Functional Glycomics (NCFG), was used for data visualization, data mining, generation of heatmaps, and boxplot graphs”. Reference 53 in their bibliography is my 2019 paper that describes GLAD.",
+      "My tool was therefore the means by which the antibody measurements on the arrays were turned into the heat maps and box plots that present the results, and by which they were explored for patterns.",
+    ],
+    findings:
+      "The authors defined the structures of the worm’s sugar chains and found that infection of rhesus macaques induced antibodies (IgG and IgM) to a subset of them, that chronically infected people had a preferential IgG response to the worm’s sugars, and that this IgG dropped markedly after treatment with an anthelmintic drug. They concluded that sugar motifs carrying a negative charge (anionic) or both charges (zwitterionic) are major antibody targets.",
+  },
+  // ------------------------------------------------------------ cit-000749
+  "cit-000749": {
+    objectives:
+      "The authors asked why some people respond better than others to the flu vaccine, and whether the sugar chains (glycans) in a person’s blood before vaccination are linked to the response. They profiled the sugars on the blood proteins of 160 adults before and after the 2019–2020 flu vaccine, using lectin microarrays (slides carrying sugar-binding proteins), and then identified the proteins that carry the sugars that differ between people who respond well and those who do not. This was complementary to my research: to decide which of the proteins they found really are glycoproteins, they searched GlyGen, the glycoscience data resource to which I contributed and whose 2020 description lists me as an author.",
+    importance:
+      "Flu vaccination is given every year to millions of people, yet how well it works differs from person to person in ways that are not understood. Sugar chains play many roles in the immune system but had hardly been examined as a factor in how people respond to the vaccine. The authors found that a particular sugar (Lewis A) was already higher before vaccination in people who responded poorly, on proteins of the complement system, which is part of the body’s defences, and this may point to a way of predicting or improving the response.",
+    how: [
+      "In the part of the Methods that describes the proteomic analysis, the authors first identified the proteins bound in their pulldown experiments. They then wrote that “the remaining proteins were searched in GlyGen, a database that compiles the experimental evidence for glycosylation of proteins”, and cited the GlyGen paper (reference 27), on which I am an author.",
+      "They used the database to remove proteins that had no experimental evidence of carrying sugar chains, or only evidence for a simple sugar modification inside cells (O-GlcNAc), because these were not the targets of the experiment. The list of glycoproteins that remained was the input for the pathway analysis that led to their finding that the sugar is found on complement proteins.",
+    ],
+    findings:
+      "The authors found that the Lewis A sugar was significantly higher before vaccination in people who responded poorly than in good responders, that the proteins carrying it were enriched in the complement pathway, and that after vaccination good responders showed an increase in another sugar (sialyl Lewis X) and a decrease in high-mannose sugars that poor responders did not show. They suggested that the immune system may actively adjust its sugar patterns as part of building protection after vaccination.",
+  },
+  // ------------------------------------------------------------ cit-000752
+  "cit-000752": {
+    objectives:
+      "The authors studied the spike protein of the Omicron variant of the COVID-19 virus, the protein the virus uses to enter cells. The spike is covered with sugar chains (glycans), and they used mass spectrometry to determine which sugars sit at each site and then ran computer simulations of the protein, with its sugars, to see how the sugars change its shape and how exposed its surface is. This was complementary to my research: to build the sugars into the simulations they used the glycan search of the GlyGen website, GlyGen being the glycoscience resource to which I contributed, whose structure search includes a drawing option that is my GlycoGlyph tool.",
+    importance:
+      "Omicron carries an unusually large number of mutations in its spike protein, which is the target of vaccines and antibody treatments, and the sugar chains also help the virus to hide from the immune system. Showing how the sugars of Omicron differ from those of the earlier variant, and how this changes the exposure of the protein’s surface, helps to explain how the virus behaves and supports the design of vaccines and treatments.",
+    how: [
+      "In the Methods the authors described how the sugars were added to their computer model of the spike protein. For each site they took the sugar structure that was most common in their mass spectrometry data, and since mass spectrometry cannot always tell which exact structure is present, they wrote that “among the possible glycan structures with the same constitution according to mass spectroscopy, we selected the most populous one with the highest ‘hit score’ from the GlyGen Web site (https://www.glygen.org/glycan-search)”, and cited the GlyGen paper (reference 70), on which I am an author.",
+      "The page they cite is the glycan search page of GlyGen. Its structure search lets a user draw a glycan, and the drawing window it opens is my GlycoGlyph tool; GlyGen’s release notes record that GlycoGlyph support was added to its structure and substructure search in release 1.12 on April 28, 2022, before this study. The sugar structures in the authors’ simulations, on which their conclusions about the surface of the spike rest, were therefore taken from GlyGen’s glycan search.",
+    ],
+    findings:
+      "The authors found that the Omicron spike resembles the earlier variant in the way its sugars are made and its disulfide bonds are formed, but that the sugars differ at certain sites, and that these differences, together with the mutations, make more of the spike’s surface exposed, including the part that binds the cell receptor. Experiments also showed that the sugar at one particular site (N149) matters. They concluded that this adds to our understanding of how the spike’s structure relates to its function, which helps to develop effective vaccines and treatments.",
+  },
+};

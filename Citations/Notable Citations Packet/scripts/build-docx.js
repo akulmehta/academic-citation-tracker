@@ -29,30 +29,11 @@ const PROJECTS = {
   4: "Advancing Glycopeptide Synthesis with Glyco-SPOT",
 };
 
-// Facts the database does not hold (read from each PDF's first pages).
-const META = {
-  "cit-000544": { venue: "Journal of Experimental Biology 227(15): jeb247277", inst: "Universidad Nacional de La Plata and CONICET (INIBIOLP), La Plata, Argentina; Universidad Nacional Autónoma de México" },
-  "cit-000621": { venue: "Journal of Biological Chemistry", inst: "University of California San Diego (Departments of Bioengineering and Pediatrics; Glycobiology Research and Training Center); Technical University of Denmark; Brigham Young University; Augusta University; Complex Carbohydrate Research Center" },
-  "cit-000594": { venue: "Nucleic Acids Research 54(4): gkag080", inst: "The University of Manchester (Faculty of Biology, Medicine and Health); The Christie NHS Foundation Trust, Manchester; McGill University" },
-  "cit-001253": { venue: "Nature Communications", inst: "Massachusetts Institute of Technology (Departments of Chemistry, Biology and Biological Engineering; Koch Institute); Broad Institute of MIT and Harvard; Massachusetts General Hospital and Harvard Medical School; University of California, Davis; University of Wisconsin-Madison" },
-  "cit-000518": { venue: "Nature Communications 17: 4312", inst: "Leiden University Medical Center (Leiden University Center for Infectious Diseases; Center for Proteomics and Metabolomics); New England Biolabs; Centre de Recherches Médicales de Lambaréné, Gabon; Universitätsklinikum Tübingen and the German Center for Infection Research (DZIF)" },
-  "cit-000521": { venue: "Journal of Biological Chemistry", inst: "Institut für Biochemie, Universität für Bodenkultur (BOKU), Vienna, Austria" },
-  "cit-000629": { venue: "Journal of Virology (e01256-25)", inst: "Vanderbilt University Medical Center (corresponding author Ivelin S. Georgiev); the remaining collaborating institutions are listed in the article" },
-  "cit-000619": { venue: "Protein Science", inst: "Ben-Gurion University of the Negev (Department of Life Sciences; Ilse Katz Institute for Nanoscale Science and Technology), Israel" },
-  "cit-000542": { venue: "Research and Practice in Thrombosis and Haemostasis", inst: "University Medical Center of the Johannes Gutenberg University Mainz (Center for Thrombosis and Hemostasis; Research Center for Immunotherapy); ANZAC Research Institute, Concord Repatriation Hospital; University of Sydney" },
-  "cit-000602": { venue: "Nature Communications 17: 9972", inst: "University of British Columbia (Departments of Biochemistry and Molecular Biology, and of Microbiology and Immunology)" },
-  "cit-000516": { venue: "International Journal of Molecular Sciences 27(9): 3827", inst: "University of Maryland School of Medicine, Baltimore; University of Maryland, College Park; University of Maryland Baltimore County; Sun Yat-sen University; Northeastern University" },
-  "cit-000613": { venue: "Scientific Reports", inst: "University of Potsdam; Yale University; Université de Lille and CNRS (UMR 8576 UGSF); German Federal Institute for Risk Assessment (BfR), a federal government agency; Technische Universität Berlin" },
-  "cit-001257": { venue: "Scientific Reports", inst: "Fred Hutchinson Cancer Center, Seattle" },
-  "cit-000416": { venue: "Glycobiology (cwag085)", inst: "Mahidol University; CNRS UMR 8576 UGSF (Université de Lille); Srinakharinwirot University; Gifu University (Institute for Glyco-core Research, iGCORE); Nagoya University (GlycoMIRAI, CNRS IRL 2045)" },
-  "cit-000196": { venue: "Vaccine", inst: "Johns Hopkins University Bloomberg School of Public Health (W. Harry Feinstone Department of Molecular Microbiology and Immunology)" },
-  "cit-000197": { venue: "Proceedings of the National Academy of Sciences 120(17): e2208718120", inst: "Emory University School of Medicine (corresponding author Anice C. Lowen); Emory-University of Georgia Center of Excellence for Influenza Research and Surveillance; the remaining collaborating institutions are listed in the article" },
-  "cit-000510": { venue: "Scientific Reports 13: 10223", inst: "Johns Hopkins University Bloomberg School of Public Health (W. Harry Feinstone Department of Molecular Microbiology and Immunology); Johns Hopkins University School of Medicine (Department of Emergency Medicine)" },
-  "cit-000532": { venue: "Frontiers in Immunology 14: 1102344", inst: "Leiden University Medical Center; New England Biolabs; National Institutes of Health, Bethesda (Laboratory of Parasitic Diseases), a US government institution; University Hospital Bonn and the German Center for Infection Research (DZIF); University of Buea, Cameroon" },
-  "cit-001230": { venue: "Antiviral Research (2016 volume; available online 30 November 2015)", inst: "Kansas State University (College of Veterinary Medicine); Wichita State University (Department of Chemistry)" },
-  "cit-000195": { venue: "Journal of Virology 97(10): e00906-23", inst: "University of Iowa (corresponding author Balaji Manicassamy); the remaining collaborating institutions are listed in the article" },
-  "cit-000199": { venue: "Glycobiology 34(3): cwad098", inst: "University of Gothenburg and Sahlgrenska University Hospital; Uppsala University (Zoonosis Science Center); Max Planck Institute of Animal Behavior" },
-};
+const { META, PETITION_DATE, fmt, earliest, showPre, period, datesList } = require("./citing-meta");
+const PETITION_LONG = "April 25, 2024";
+// Full author list of the GlyGen paper as printed in its reference entries (the catalogue stops after five names).
+const GLYGEN_AUTHORS = "WS York, R Mazumder, R Ranzinger, N Edwards, R Kahsay, KF Aoki-Kinoshita, MP Campbell, RD Cummings, T Feizi, M Martin, DA Natale, NH Packer, RJ Woods, G Agarwal, S Arpinar, S Bhat, J Blake, LJG Castro, B Fochtman, J Gildersleeve, R Goldman, X Holmes, V Jain, S Kulkarni, R Mahadik, AY Mehta, R Mousavi, S Nakarakommula, R Navelkar, N Pattabiraman, MJ Pierce, K Ross, P Vasudev, J Vora, T Williamson, W Zhang";
+const TEXT = require("./docx-text");
 
 // Order of the citations: see scripts/packet-order.js (oldest citing article first).
 
@@ -70,84 +51,10 @@ const QUOTE_FIX = {
 };
 const SECTION_FIX = { "cit-000613:11": "Figure legend" };
 
-// Third objectives sentence: how the citing article relates to my work generally.
-const RELATION = {
-  "cit-000544": "It relates to my work because the glycan-specificity comparison across related proteins is made with GLAD, the glycan array analysis tool that I developed.",
-  "cit-000621": "It relates to my work because the glycan structures that present its profiling results are drawn with GlycoGlyph, the glycan drawing and naming application that I created.",
-  "cit-000594": "It relates to my work because the glycan structures in its figures are drawn with GlycoGlyph, my glycan drawing and naming application.",
-  "cit-001253": "It relates to my work through its glycan microarray experiments, where the authors cite my reusable glycan microarray method (MAWE).",
-  "cit-000518": "It relates to my work because the glycan array results are visualised and mined with GLAD, my glycan array analysis tool.",
-  "cit-000521": "It relates to my work because the heat maps that present its binding data are generated with GLAD, my glycan array analysis tool.",
-  "cit-000629": "It relates to my work in two ways: its glycan array assay follows my MAWE protocol, and its glycan structure diagrams are drawn with my application GlycoGlyph.",
-  "cit-000619": "It relates to my work because a glycan model used in the structural analysis was generated with GlycoGlyph, my glycan drawing application.",
-  "cit-000542": "It relates to my work because the glycan array data are analysed and visualised with GLAD, my glycan array analysis tool.",
-  "cit-000602": "It relates to my work because the glycan schematics in its figures were produced with GlycoGlyph, my glycan drawing application.",
-  "cit-000516": "It relates to my work because its glycan microarray analysis follows my reusable-array procedure (MAWE), analyses the data with my tool GLAD and draws the glycan models with my application GlycoGlyph.",
-  "cit-000613": "It relates to my work because the glycan structures in its figures are drawn with GlycoGlyph, my glycan drawing application.",
-  "cit-001257": "It relates to my work because the authors analyse their glycan array data with my MAWE method.",
-  "cit-000416": "It relates to my work because its glycan microarray data were processed with my MAWE workflow and analysed with my tool GLAD, and because its discussion cites my study of oligomannose recognition.",
-  "cit-000196": "It relates to my work because the glycan array assay used to define each virus's receptor specificity is cited to my 2019 study of H3N2 receptor binding.",
-  "cit-000197": "It relates to my work because the virus labelling and glycan array procedure used to measure receptor binding is cited to my 2019 study of H3N2 receptor binding.",
-  "cit-000510": "It relates to my work because the glycan array data for the three clades were organised and compared with GLAD, my glycan array analysis tool.",
-  "cit-000532": "It relates to my work because the glycan microarray data were visualised and mined with GLAD, my glycan array analysis tool.",
-  "cit-001230": "It relates to my work because the thrombin component of its protease selectivity panel cites my 2011 paper on allosteric thrombin inhibitors.",
-  "cit-000195": "It relates to my work because its experiments are motivated in part by my 2019 finding on the receptor specificity of circulating H3N2 viruses.",
-  "cit-000199": "It relates to my work because it searches bird tissues for the phosphorylated glycan receptor candidates described in my 2019 study.",
-};
-
-// Text edits applied after the first-person conversion: [folder, find, replace]. Every find must match once.
-const EDITS = [
-  ["cit-000416", "and my personal name appears", "and my name appears"],
-  ["cit-000518", "The named tool is my, cited", "The named tool is mine, cited"],
-  ["cit-000542", "The article's use of my work is recorded twice, in two different registers.", "My work appears in this article twice, in two different forms."],
-  ["cit-000542", "That second sentence is a courtesy and is not counted as a use of the tool; it is included because it shows the authors went to I for help with the tool by name.", "The authors thus consulted me directly about the tool, and credit the help they received from me by name."],
-  ["cit-000542", " — an honest limitation stated in the paper's own words", ""],
-  ["cit-000544", " This folder also holds the earlier version of the work, which matters because the date of the statement relative to my petition date is what the extra files were collected to establish.", ""],
-  ["cit-000613", " The mentions sit in figure content rather than in the Materials and Methods text.", ""],
-  ["cit-000621", "the argument my own tools were built to answer", "the need that my own tools were built to address"],
-  ["cit-000629", "with the authors stating their deviations honestly,", "with the authors listing the modifications they made,"],
-  ["cit-001257", " Where other citing articles name my work in a hedge or a figure legend, this one assigns the analysis of the array data to my method in a Methods sentence.", ""],
-  ["cit-001257", ", which is a candid limit on what their screens can conclude", ""],
-  ["cit-000195", "; they do not report using my methods", ""],
-  ["cit-000199", "not of my.", "not of mine."],
-  ["cit-001230", " The citation supports one assay in a panel and is shared with four other papers.", ""],
-];
-// Replaced wholesale (the stored paragraph is written as a drafting note).
-const REWRITE = {
-  "cit-001253": {
-    how_used: "The Materials and Methods on p.15 describe how the microbial glycan arrays were probed and scanned and how replicate values were reduced. In the passage explaining why fluorescence intensities differ between experiments, the authors write that \"in 2024, the core facility also changed protocols and began regenerating and reusing slides\", and they cite my MAWE paper (reference 69, listed on p.19 as \"Mehta, A. Y. et al. Reusable glycan microarrays using a microwave assisted wet-erase (MAWE) process. Glycobiology 34, cwad091 (2024)\") at the end of that sentence. Regenerating and reusing slides is the practice my paper describes, so the authors point their readers to my work as the published method for it. The reference sits in the Methods description of the array experiments, which is where the other methods behind the study's microbial binding data are given.",
-  },
-};
-
-// ---------- first-person conversion ----------
-function fp(t) {
-  return t
-    .replace(/the applicant[’']s own/g, "my own")
-    .replace(/\bThe applicant[’']s\b/g, "My").replace(/\bthe applicant[’']s\b/g, "my")
-    .replace(/\bthe applicant\b/g, "I").replace(/\bThe applicant\b/g, "I");
-}
-function applyEdits(uid, text) {
-  let t = text;
-  for (const [f, a, b] of EDITS) {
-    if (f !== uid) continue;
-    if (!t.includes(a)) continue;      // the edit belongs to another field of the same folder
-    t = t.replace(a, b);
-  }
-  return t;
-}
-function unmatchedEdits(narr) {
-  const bad = [];
-  for (const [f, a] of EDITS) {
-    const n = narr[f];
-    if (!n) { bad.push([f, a]); continue; }
-    if (!["objectives", "importance", "how_used", "findings"].some(k => n[k] && fp(n[k]).includes(a))) bad.push([f, a]);
-  }
-  return bad;
-}
-
 // ---------- xml ----------
 const esc = s => String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 const RPR = '<w:rPr><w:rFonts w:eastAsia="Times New Roman" w:cs="Times New Roman" w:ascii="Times New Roman" w:hAnsi="Times New Roman"/><w:sz w:val="24"/><w:szCs w:val="24"/></w:rPr>';
+const RPR_B = '<w:rPr><w:rFonts w:eastAsia="Times New Roman" w:cs="Times New Roman" w:ascii="Times New Roman" w:hAnsi="Times New Roman"/><w:b/><w:bCs/><w:sz w:val="24"/><w:szCs w:val="24"/></w:rPr>';
 const RPR_I = '<w:rPr><w:rFonts w:eastAsia="Times New Roman" w:cs="Times New Roman" w:ascii="Times New Roman" w:hAnsi="Times New Roman"/><w:i/><w:iCs/><w:sz w:val="24"/><w:szCs w:val="24"/></w:rPr>';
 function answer(text) {
   return '<w:p><w:pPr><w:pStyle w:val="Normal"/><w:widowControl w:val="false"/><w:spacing w:lineRule="auto" w:line="240" w:before="0" w:after="160"/><w:jc w:val="both"/><w:rPr><w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman" w:eastAsia="Times New Roman" w:cs="Times New Roman"/><w:sz w:val="24"/><w:szCs w:val="24"/></w:rPr></w:pPr>'
@@ -155,7 +62,7 @@ function answer(text) {
 }
 function answerRuns(parts) { // [{t, i}]
   return '<w:p><w:pPr><w:pStyle w:val="Normal"/><w:widowControl w:val="false"/><w:spacing w:lineRule="auto" w:line="240" w:before="0" w:after="160"/><w:jc w:val="both"/></w:pPr>'
-    + parts.map(p => `<w:r>${p.i ? RPR_I : RPR}<w:t xml:space="preserve">${esc(p.t)}</w:t></w:r>`).join("") + "</w:p>";
+    + parts.map(p => `<w:r>${p.b ? RPR_B : p.i ? RPR_I : RPR}<w:t xml:space="preserve">${esc(p.t)}</w:t></w:r>`).join("") + "</w:p>";
 }
 function setText(p, text) { return p.replace(/<w:t>[^<]*<\/w:t>/, `<w:t>${esc(text)}</w:t>`); }
 
@@ -170,7 +77,7 @@ function citingFormal(r) {
   const m = META[r.folder_uid] || {};
   const venue = m.venue || r.citing_venue || "";
   const url = r.citing_url && r.citing_url !== "null" ? ` ${r.citing_url}` : "";
-  return `${authorsOf(r)}. ${r.citing_title}. ${venue} (${r.citing_year}).${url}`;
+  return `${authorsOf(r)}. ${r.citing_title}. ${venue}${/\b(19|20)\d\d\b/.test(venue) ? "" : ` (${r.citing_year})`}.${url}`;
 }
 function yearOf(p) { return p.year; }
 
@@ -185,10 +92,6 @@ async function main() {
   }
   { const order = require("./packet-order").orderedFolders(folders.map(f => f.uid));
     folders.sort((a, b) => order.indexOf(a.uid) - order.indexOf(b.uid)); }
-  const narr = {};
-  for (const n of db.prepare("SELECT * FROM narrative").all()) narr[n.folder_uid] = n;
-  const bad = unmatchedEdits(narr);
-  if (bad.length) { console.error("edits that match nothing:", bad); process.exit(1); }
 
   const orig = L.originalApplicationUids();
   const zip = await JSZip.loadAsync(fs.readFileSync(TEMPLATE));
@@ -201,10 +104,47 @@ async function main() {
   const blocks = [];
   const problems = [];
 
+  // Dates of one citing article, as runs: where it stands against the petition date, then every date found.
+  const dateRuns = uid => {
+    const m = META[uid], per = period(uid), runs = [];
+    runs.push({ b: true, t: per === "before" ? "Public BEFORE the petition date (April 25, 2024). " : "Public AFTER the petition date (April 25, 2024). " });
+    if (per === "before" && showPre(uid)) runs.push({ b: true, t: `The ${m.pre[0]} preprint was public on ${fmt(m.pre[1])}; the final journal article went online only on ${fmt(m.on)}. ` });
+    runs.push({ t: "Dates: " + datesList(uid).map(([k, v]) => `${k} ${v}`).join("; ") + "." });
+    return runs;
+  };
+  // Divider pages: citing articles that became public before / after the petition date (25 April 2024).
+  const divider = (which) => {
+    const before = which === "before";
+    const list = folders.map((f, i) => ({ f, i })).filter(x => period(x.f.uid) === which);
+    const first = list[0].i + 1, last = list[list.length - 1].i + 1;
+    const out = [];
+    out.push(setText(T(0), before ? "CITING ARTICLES PUBLIC BEFORE THE PETITION DATE" : "CITING ARTICLES PUBLIC AFTER THE PETITION DATE"));
+    out.push(answer(`Petition date: ${PETITION_LONG}.`));
+    out.push(answer(`The ${list.length} citing articles that follow (Citations #${first} to #${last}) first became public ${before ? "before" : "after"} the petition date. An article counts as public from the earliest of its preprint (if one was posted) and its final journal publication, and the articles are listed in that order, oldest first.`));
+    for (const x of list) {
+      const m = META[x.f.uid], r = x.f.rows.find(r => r.is_main) || x.f.rows[0];
+      const parts = [{ t: `Citation #${x.i + 1}: ` }, { t: r.citing_title, i: true }, { t: `. ${m.venue}. ` }];
+      if (showPre(x.f.uid)) parts.push({ b: true, t: `${m.pre[0]} preprint public ${fmt(m.pre[1])}; ` });
+      parts.push({ t: `${showPre(x.f.uid) ? "final" : "Final"} article online ${fmt(m.on)}.` });
+      out.push(answerRuns(parts));
+    }
+    if (before) {
+      const late = list.filter(x => META[x.f.uid].on >= PETITION_DATE);
+      if (late.length) out.push(answer("Placed in this section because of an earlier preprint: " + late.map(x => `Citation #${x.i + 1} (${META[x.f.uid].pre[0]} preprint ${fmt(META[x.f.uid].pre[1])}; final article online ${fmt(META[x.f.uid].on)})`).join("; ") + ". In each case the preprint was publicly available before the petition date and the final journal article appeared after it."));
+    } else {
+      out.push(answer("Every article in this group, including its earliest preprint where there was one, first became public after the petition date."));
+    }
+    out.push(answer("Dates were taken from the first pages of each PDF and checked against PubMed, Europe PMC (which indexes bioRxiv, medRxiv and Research Square preprints), Crossref and OpenAlex on November 10, 2026."));
+    out.push(T(25));
+    return out.join("");
+  };
+
   folders.forEach((f, idx) => {
+    if (idx === 0) blocks.push(divider(period(f.uid)));
+    else if (period(f.uid) !== period(folders[idx - 1].uid)) blocks.push(divider(period(f.uid)));
     const main = f.rows.find(r => r.is_main) || f.rows[0];
-    const n = narr[f.uid];
-    if (!n) problems.push(`${f.uid}: no narrative`);
+    const txt = TEXT[f.uid];
+    if (!txt) problems.push(`${f.uid}: no Section II text in scripts/docx-text-*.js`);
     if (orig && f.rows.some(r => orig.has(r.row_uid))) problems.push(`${f.uid}: in original application`);
     const meta = META[f.uid];
     if (!meta) problems.push(`${f.uid}: no META`);
@@ -254,11 +194,12 @@ async function main() {
 
     label(3, cited.map(c => {
       const p = c.pub;
-      const authors = p ? p.authors.replace(/,?\s*\.\.\.+\s*$/, ", et al") : "";
+      let authors = p ? p.authors.replace(/,?\s*\.\.\.+\s*$/, ", et al") : "";
+      if (p && /^GlyGen:/i.test(p.title)) authors = GLYGEN_AUTHORS;   // the catalogue stops the list before my name
       const formal = p ? `${authors}. ${p.title}. ${p.venue}${/\b(19|20)\d\d\b/.test(p.venue) ? "" : ` (${p.year})`}.` : c.title;
       return answer(formal.replace(/\s+,/g, ","));
     }));
-    label(5, [answer(citingFormal(main))]);
+    label(5, [answer(citingFormal(main)), answerRuns(dateRuns(f.uid))]);
     label(7, [answer(projects.length ? projects.map(p => `Project ${p}: ${PROJECTS[p]}`).join("; ") : "Project not yet assigned")]);
     label(9, [answer(meta ? meta.inst : "")]);
     label(11, [answer("Original research article")]);
@@ -266,18 +207,10 @@ async function main() {
 
     label(15, quotes.map(q => answerRuns([{ t: `“${q.q}”`, i: true }, { t: ` (${String(q.sec || "").replace(/\s+/g, " ")}, p.${q.pg})` }])));
 
-    const sect2 = k => {
-      let t = n ? n[k] : "";
-      const rw = REWRITE[f.uid] && REWRITE[f.uid][k];
-      t = rw ? rw : applyEdits(f.uid, fp(t));
-      return t;
-    };
-    let obj = sect2("objectives");
-    if (RELATION[f.uid]) obj += " " + RELATION[f.uid]; else problems.push(`${f.uid}: no relation sentence`);
-    label(17, [answer(obj)]);
-    label(19, [answer(sect2("importance"))]);
-    label(21, [answer(sect2("how_used"))]);
-    label(23, [answer(sect2("findings"))]);
+    label(17, [answer(txt.objectives)]);
+    label(19, [answer(txt.importance)]);
+    label(21, txt.how.map(answer));
+    label(23, [answer(txt.findings)]);
     if (idx < folders.length - 1) out.push(T(25));
     blocks.push(out.join(""));
   });
@@ -290,7 +223,7 @@ async function main() {
   console.log(`wrote ${OUT} — ${folders.length} citations (${rowsAll.length} database rows)`);
   // leftovers a reader would trip on
   const text = newXml.replace(/<[^>]+>/g, " ");
-  for (const w of ["applicant", "preparer", "folder", "petition", "counsel", "packet"]) {
+  for (const w of ["applicant", "preparer", "folder", "counsel", "packet"]) {
     const m = text.match(new RegExp(".{40}\\b" + w + "\\b.{40}", "gi"));
     if (m) console.log(`LEFTOVER '${w}':`, m.slice(0, 5));
   }

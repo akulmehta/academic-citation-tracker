@@ -13,25 +13,25 @@ decision that only a person can make.
 
 | | count |
 |---|---:|
-| Citations in the packet (in `packet.html`) | 29 |
-| Works those citations are filed as (§5.1 folders) | 21 |
-| PDFs filed under `papers/` (in the packet) | 23 |
-| PDFs under `pending-papers/` (awaiting a decision) | 446 |
+| Citations in the packet (in `packet.html`) | 32 |
+| Works those citations are filed as (§5.1 folders) | 24 |
+| PDFs filed under `papers/` (in the packet) | 27 |
+| PDFs under `pending-papers/` (awaiting a decision) | 443 |
 | PDFs under `screened-papers/` (kept, not filed) | 62 |
-| Held — open items, listed below | 774 |
+| Held — open items, listed below | 771 |
 | Screened out — decided, kept for the record (§4.5) | 254 |
 | **Rows in table `citation`** | **1057** |
 
-`packet.csv` holds the 29 included rows. `screened-out.csv` holds the other 1028,
+`packet.csv` holds the 32 included rows. `screened-out.csv` holds the other 1025,
 because §4.5 exports `screened-out` and `held` together — counsel is entitled to see that the
 work was screened and on what grounds. A screened-out row is not missing work: it is the
 record of what was looked at and rejected, with the reason beside it. A held row is open, and
 every held row appears in §2 below.
 
-## 2. Held rows — 774 open items
+## 2. Held rows — 771 open items
 
 
-### 2.1 `read` — 25 row(s)
+### 2.1 `read` — 24 row(s)
 
 The PDF is filed and the applicant's tool appears in a section of the paper. What is missing is the applicant's reading: a location on its own is not a claim about how the tool was used (§1.1).
 
@@ -42,7 +42,6 @@ The PDF is filed and the applicant's tool appears in a section of the paper. Wha
 | `cit-000525` | GLAD | 2021 | Haab | Combined analysis of multiple glycan-array datasets: new explorations of pr… | [open](https://pmc.ncbi.nlm.nih.gov/articles/PMC8862541/) |
 | `cit-000620` | GlycoGlyph | 2021 | Toukach | CSDB/SNFG structure editor: An online glycan builder with 2D and 3D structu… | [open](https://pubs.acs.org/doi/abs/10.1021/acs.jcim.1c00917) |
 | `cit-000626` | GlycoGlyph | 2021 | Yamada | SugarDrawer: a web-based database search tool with editing glycan structures | [open](https://www.mdpi.com/1420-3049/26/23/7149) |
-| `cit-000514` | GLAD | 2022 | Hokke | Mass spectrometric and glycan microarray–based characterization of the fila… | [open](https://www.mcponline.org/article/S1535-9476(22)00009-3/fulltext) |
 | `cit-000543` | GLAD | 2022 | Feizi | CarbArrayART: a new software tool for carbohydrate microarray data storage,… | [open](https://academic.oup.com/glycob/article-abstract/32/7/552/6555547) |
 | `cit-000600` | GlycoGlyph | 2022 | Prasad | Novel fold of rotavirus glycan-binding domain predicted by AlphaFold2 and d… | [open](https://www.nature.com/articles/s42003-022-03357-1) |
 | `cit-000617` | GlycoGlyph | 2022 | Gildersleeve | Abnormal antibodies to self-carbohydrates in SARS-CoV-2-infected patients | [open](https://academic.oup.com/pnasnexus/article-abstract/1/3/pgac062/6609787) |
@@ -63,7 +62,7 @@ The PDF is filed and the applicant's tool appears in a section of the paper. Wha
 | `cit-000512` | GLAD | — | Aoki-Kinoshita | Worldwide glycoscience informatics infrastructure: the GlySpace Alliance | [open](https://pubs.acs.org/jaaucr/article-abstract/3/1/4/1253251) |
 | `cit-000556` | GLAD | — | — | Phenotyping murine and human platelet-derived extracellular vesicles gives … | [open](https://www.rpthjournal.org/cms/10.1016/j.rpth.2026.103414/attachment/5e1ef181-290b-47ad-a0b6-2820746565cf/mmc1.pdf) |
 
-### 2.2 `unread` — 403 row(s)
+### 2.2 `unread` — 401 row(s)
 
 The PDF is filed. Nobody has read it yet.
 
@@ -220,7 +219,6 @@ The PDF is filed. Nobody has read it yet.
 | `cit-000719` | — | 2022 | Kohler | A photo-cross-linking GlcNAc analog enables covalent capture of N-linked gl… | [open](https://www.cell.com/cell-chemical-biology/fulltext/S2451-9456(21)00347-0) |
 | `cit-000733` | — | 2022 | Neelamegham | GlycoEnzOnto: a GlycoEnzyme pathway and molecular function ontology | [open](https://academic.oup.com/bioinformatics/article-abstract/38/24/5413/6772808) |
 | `cit-000743` | — | 2022 | Haab | CarboGrove: a resource of glycan-binding specificities through analyzed gly… | [open](https://academic.oup.com/glycob/article-abstract/32/8/679/6555550) |
-| `cit-000749` | — | 2022 | Mahal | Prevaccination glycan markers of response to an influenza vaccine implicate… | [open](https://pmc.ncbi.nlm.nih.gov/articles/PMC9361353/) |
 | `cit-000769` | — | 2022 | Lammi | Identification of proteins and N-glycosylation sites of knee cartilage in K… | [open](https://www.sciencedirect.com/science/article/pii/S0141813022009692) |
 | `cit-000776` | — | 2022 | — | RCSB Protein Data Bank resources for structure-facilitated design of mRNA v… | [open](https://www.cell.com/structure/fulltext/S0969-2126(21)00376-2) |
 | `cit-000778` | — | 2022 | Neelamegham | Forward genetic screens of human glycosylation pathways using the GlycoGene… | [open](https://currentprotocols.onlinelibrary.wiley.com/doi/abs/10.1002/cpz1.402) |
@@ -313,7 +311,6 @@ The PDF is filed. Nobody has read it yet.
 | `cit-000736` | — | 2024 | Wessels | Maximizing glycoproteomics results through an integrated parallel accumulat… | [open](https://pmc.ncbi.nlm.nih.gov/articles/PMC11154686/) |
 | `cit-000739` | — | 2024 | Pandey | Global O-glycoproteome enrichment and analysis enabled by a combinatorial e… | [open](https://www.cell.com/cell-reports-methods/fulltext/S2667-2375(24)00069-9) |
 | `cit-000745` | — | 2024 | S | Studying the O-GlcNAcome of human placentas using banked tissue samples | [open](https://academic.oup.com/glycob/article-abstract/34/4/cwae005/7585290) |
-| `cit-000752` | — | 2024 | Gumbart | Enhanced surface accessibility of SARS-CoV-2 Omicron spike protein due to a… | [open](https://pmc.ncbi.nlm.nih.gov/articles/PMC11184558/) |
 | `cit-000755` | — | 2024 | Postlerova | The correlation between human seminal plasma sialoproteins and ejaculate pa… | [open](https://www.sciencedirect.com/science/article/pii/S0141813024021469) |
 | `cit-000767` | — | 2024 | Poon | CHHM: a manually curated catalogue of human histone modifications revealing… | [open](https://pmc.ncbi.nlm.nih.gov/articles/PMC11302869/) |
 | `cit-000819` | — | 2024 | Gromiha | CarbDisMut: database on neutral and disease-causing mutations in human carb… | [open](https://academic.oup.com/glycob/article-abstract/34/4/cwae011/7604449) |
@@ -859,7 +856,7 @@ counsel relies on them:
 | GlycoGlyph | 2 |
 | MAWE | 3 |
 
-Distribution over all 1057 rows: `1` = 1, `2` = 110, `3` = 74, `4` = 18, `(blank)` = 854.
+Distribution over all 1057 rows: `1` = 1, `2` = 112, `3` = 74, `4` = 18, `(blank)` = 852.
 
 If a number is wrong, the single place to change it is `toolForCitedPaper` /
 `projectForCitedPaper` in [`scripts/lib.js`](./scripts/lib.js), then re-run the importer and
@@ -948,7 +945,7 @@ None. Every citation in `packet.html` has the article filed beside it.
 
 ### 3.7 The narrative fields are a preparer's draft awaiting the applicant's approval
 
-The 21 narrative(s) on file are written into the `narrative` table by
+The 24 narrative(s) on file are written into the `narrative` table by
 `scripts/narrative-intake.js`, which refuses a paragraph that names no page number or a
 page beyond the length of the filed PDF. Who wrote each one is recorded in that table's
 `written_by` and `written_on` columns; it is deliberately **not** printed in `packet.html`,
@@ -991,6 +988,9 @@ quietly re-merging. This is the only place the advice is written down.
 **`cit-000510`** — 2019–2020 H1N1 clade A5a.1 viruses have better in vitro fitness compa…
 : Chosen by the applicant on 2026-11-10 as a use of GLAD, which is named in the Methods (p.10) and cited as ref. 63. The article also cites the applicant's Byrd-Leotis et al. 2019 paper (ref. 9, within 7–11, p.1 and p.5); that second citation is cit-000188, which is not folded into this entry and stays a separate held row.
 
+**`cit-000514`** — Mass spectrometric and glycan microarray–based characterization of th…
+: A Tier A Methods use of GLAD (Hokke group, Mol Cell Proteomics, online 20 Jan 2022, so before the petition date). Chosen by the applicant on 2026-11-10. The same group cites GLAD in the same words in cit-000532 (2023) and cit-000518 (2026), which are separate articles.
+
 **`cit-000516`** — A Zebrafish Galectin-1 Isoform Is Expressed in Skin and Gills and Bin…
 : Cite this folder for the density of use rather than any single sentence - MAWE as an established procedure, GLAD for analysis and GlycoGlyph for the glycan models, all inside section 4.9.5 on p.21.
 
@@ -1027,6 +1027,12 @@ quietly re-merging. This is the only place the advice is written down.
 **`cit-000629`** — Glycan-reactive antibodies isolated from human HIV-1 vaccine trial pa…
 : One of the strongest folders in the packet: the applicant’s MAWE protocol is the assay method behind a Nature-family-tier HIV vaccine immunology study, and GlycoGlyph supplied the structure diagrams, both named in Methods and in a figure legend.
 
+**`cit-000749`** — Prevaccination glycan markers of response to an influenza vaccine imp…
+: Methods use of GlyGen (the applicant contributed to GlyGen; the cited paper York et al. 2020 lists the applicant as an author). J Proteome Res, published online 27 Jun 2022, so before the petition date. This is a database search step, not a use of GLAD, GlycoGlyph or MAWE. Chosen by the applicant on 2026-11-10. Project 2 is the preparer's proposal.
+
+**`cit-000752`** — Enhanced surface accessibility of SARS-CoV-2 Omicron spike protein du…
+: Eligibility rests on the bioRxiv preprint of 23 Nov 2023 (doi 10.1101/2023.11.22.568381), which contains the same GlyGen sentence (its ref 68); the journal article (ACS Infect Dis 10, 2032) was published 10 May 2024, after the petition date of 25 Apr 2024. The paper does not say which option on the GlyGen Glycan Search page was used, or that GlycoGlyph itself was used; the GlycoGlyph link rests on the GlyGen release notes and on the applicant's statement that the structure-search draw option shows GlycoGlyph. Present it as use of GlyGen, a resource the applicant contributed to, not as a direct use of GlycoGlyph. Project 2 is the preparer's proposal.
+
 **`cit-001230`** — Potent inhibition of enterovirus D68 and human rhinoviruses by dipept…
 : Chosen by the applicant on 2026-11-10. The applicant's thrombin paper (Sidhu et al. 2011) is one of five references, in a single Methods sentence about the protease selectivity panel (p.4); it is not a use of the applicant's compounds. Project 1 assigned because the cited paper is the thrombin allosteric inhibitor work (no default project for this work); confirm. The journal name was missing from the record and was filled in from the PDF header (Antiviral Research, 2016 volume, available online 2015).
 
@@ -1038,9 +1044,9 @@ quietly re-merging. This is the only place the advice is written down.
 
 ## 4. Potential citations not in the packet
 
-[`potential_notable_citations.html`](./potential_notable_citations.html) lists **751**
+[`potential_notable_citations.html`](./potential_notable_citations.html) lists **748**
 independent citations of the works in the candidate queue that are **not** in `packet.html`.
-They appear as **666 rows**
+They appear as **663 rows**
 because 85 citations sit on a row already held by
 another of my works. One article that cites two of them is one row with two judgements
 in it, one per work, so the row says where GLAD sits and where GlycoGlyph sits separately.
@@ -1050,7 +1056,7 @@ with it, and nothing on it is evidence until a person has read the article and f
 
 | my work | citing works the record lists | less retired | less not independent | less copies | less not English | less in packet | less in original app. | less decided | listed | PDF on file |
 |---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-| **GLAD** — GLAD: GLycan Array Dashboard, a visual analyt… (2019) | 64 | 0 | 18 | 2 | 0 | 9 | 2 | 10 | **23** | 16 |
+| **GLAD** — GLAD: GLycan Array Dashboard, a visual analyt… (2019) | 64 | 0 | 18 | 2 | 0 | 10 | 2 | 10 | **22** | 15 |
 | **GlycoGlyph** — GlycoGlyph: a glycan visualizing, drawing and… (2020) | 78 | 0 | 9 | 4 | 0 | 7 | 3 | 30 | **25** | 21 |
 | **MAWE** — GlyMDB: Glycan Microarray Database and analys… (2020) | 24 | 0 | 4 | 1 | 0 | 0 | 0 | 6 | **13** | 10 |
 | **MAWE** — Insights into glycobiology and the protein-gl… (2024) | 33 | 0 | 4 | 1 | 0 | 2 | 0 | 0 | **26** | 8 |
@@ -1072,7 +1078,7 @@ with it, and nothing on it is evidence until a person has read the article and f
 | **Other** — Emerging patterns of tyrosine sulfation and O… (2020) | 46 | 0 | 8 | 2 | 0 | 0 | 0 | 11 | **25** | 17 |
 | **Other** — Functional implications of glycans and their … (2024) | 12 | 6 | 3 | 0 | 0 | 0 | 0 | 0 | **3** | 2 |
 | **Other** — Galectin-3 Decreases 4-1BBL Bioactivity by Cr… (2022) | 27 | 10 | 6 | 2 | 0 | 0 | 0 | 5 | **4** | 2 |
-| **Other** — GlyGen: computational and informatics resourc… (2020) | 248 | 0 | 51 | 14 | 0 | 0 | 0 | 37 | **146** | 100 |
+| **Other** — GlyGen: computational and informatics resourc… (2020) | 248 | 0 | 51 | 14 | 0 | 2 | 0 | 37 | **144** | 98 |
 | **Other** — Heparan sulfate glycomimetics via iterative a… (2023) | 18 | 0 | 3 | 0 | 0 | 0 | 0 | 2 | **13** | 9 |
 | **Other** — Increased Galectin-9 Levels Correlate with Di… (2023) | 18 | 0 | 0 | 1 | 0 | 0 | 0 | 4 | **13** | 9 |
 | **Other** — Interaction of thrombin with sucrose octasulf… (2011) | 37 | 0 | 11 | 2 | 0 | 0 | 0 | 3 | **21** | 9 |
@@ -1090,12 +1096,12 @@ with it, and nothing on it is evidence until a person has read the article and f
 | **Other** — Tumor cells express pauci-and oligomannosidic… (2021) | 35 | 0 | 4 | 1 | 0 | 0 | 2 | 6 | **22** | 12 |
 | **Other** — Unique Glycans in Synaptic Glycoproteins in M… (2024) | 4 | 0 | 2 | 0 | 0 | 0 | 0 | 0 | **2** | 1 |
 | **Other** — Unique repertoire of anti-carbohydrate antibo… (2020) | 44 | 0 | 12 | 1 | 0 | 0 | 1 | 7 | **23** | 18 |
-| **all works** | | | | | | | | | **751** | 436 |
+| **all works** | | | | | | | | | **748** | 433 |
 
 Each work's own arithmetic is printed on the review page beside its name; the row above
 is the same screen, not a second tally.
 
-436 citations already have a PDF on file, held under `pending-papers/` until a
+433 citations already have a PDF on file, held under `pending-papers/` until a
 decision is made. The rest sit at
 `no-open-copy`, `paywalled`, or `not-in-indexes` — findings about access, not about
 whether the paper exists. **A tier appears only for an article that has actually been read:**
@@ -2031,9 +2037,9 @@ evidence looks like something and is not.
 
 | basis of a recorded mention | mentions | rows |
 |---|---:|---:|
-| reference-number resolution | 762 | 458 |
-| extracted text | 22 | 16 |
-| human reading | 18 | 12 |
+| reference-number resolution | 755 | 454 |
+| human reading | 23 | 16 |
+| extracted text | 20 | 15 |
 
 A resolved citation is held to the same bar as one that names the tool: it must sit in
 prose, under a heading the citing paper itself printed, and not in the bibliography entry
@@ -2041,7 +2047,7 @@ that names the applicant's paper — a reference list proves only that the autho
 work, not where or how. Where a row's tier rests on such a citation, that is said in the
 report rather than left for a reader to infer from a section heading alone.
 
-780 mentions across 469 citing works rest on resolution or on a person’s
+778 mentions across 469 citing works rest on resolution or on a person’s
 reading, not on a named-tool scan. `scan-mentions.js` reports those rows separately and
 leaves their tier alone — it is not built to find them, so its silence is not evidence
 against them.
@@ -2123,8 +2129,8 @@ These are subscription or repository copies the script route could not reach; th
 including the CDP download route and the hosts still behind Cloudflare, are in §2.2 of the
 packet instructions.
 
-**Placed in the folder by the applicant** — 13 folder(s) hold a file that
-no candidate row claims as its fetch: `cit-000544`, `cit-000594`, `cit-001253`, `cit-000518`, `cit-000521`, `cit-000629`, `cit-000619`, `cit-000542`, `cit-000602`, `cit-000516`, `cit-000613`, `cit-001257`, `cit-000416`.
+**Placed in the folder by the applicant** — 14 folder(s) hold a file that
+no candidate row claims as its fetch: `cit-000544`, `cit-000594`, `cit-001253`, `cit-000518`, `cit-000521`, `cit-000629`, `cit-000619`, `cit-000542`, `cit-000602`, `cit-000516`, `cit-000613`, `cit-001257`, `cit-000416`, `cit-000752`.
 These came from the `In Methods` / `In Acknowledgements` imports and were registered into table
 `file`; nothing downloaded them.
 

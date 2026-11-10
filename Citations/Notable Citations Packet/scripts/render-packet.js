@@ -90,16 +90,28 @@ function read(db) {
  * a row nobody has re-read still prints what the database holds rather than
  * nothing. The fallback is marked with a dagger so the two are not confused.
  */
+/** "Materials and Methods (3.2 CFG glycan array)" -> "Methods": one short, uniform label for the index. */
+function shortSection(s) {
+  return String(s || "—").replace(/\s*\(.*\)\s*$/, "").replace(/^Materials and Methods$/i, "Methods").trim();
+}
 function whereList(c, byRow) {
   const ms = byRow.get(c.row_uid) || [];
   if (!ms.length) {
-    const one = `${c.section || "—"}${c.page ? `, p.${c.page}` : ""}`;
-    return { text: `${one} †`, many: false, mentions: [] };
+    return { text: `${shortSection(c.section)}${c.page ? ` p.${c.page}` : ""} †`, many: false, mentions: [] };
   }
-  if (ms.length === 1) {
-    return { text: `${ms[0].section}, p.${ms[0].page}`, many: false, mentions: ms };
+  const seen = new Set(), parts = [];
+  for (const m of ms) {
+    const k = `${shortSection(m.section)} p.${m.page}`;
+    if (!seen.has(k)) { seen.add(k); parts.push(k); }
   }
-  return { text: ms.map(m => `${m.section} p.${m.page}`).join("; "), many: true, mentions: ms };
+  return { text: parts.join("; "), many: parts.length > 1, mentions: ms };
+}
+/** The cited work as the index shows it: the tool's name, or the first words of the paper's title. */
+function citedLabel(c) {
+  if (c.cited_tool) return c.cited_tool;
+  const w = String(c.cited_paper || "").split(/\s+/).filter(Boolean);
+  if (!w.length) return "—";
+  return w.slice(0, 6).join(" ") + (w.length > 6 ? "…" : "") + (c.cited_earliest_date ? ` (${c.cited_earliest_date})` : "");
 }
 
 /* ------------------------------------------------------------------ */
@@ -161,9 +173,7 @@ function summarySection(data) {
 /* ------------------------------------------------------------------ */
 function indexSection(data) {
   const rows = [];
-  let n = 0;
   for (const c of data.included) {
-    n++;
     const w = data.works.find(x => x.folder === c.folder_uid);
     const lead = c.is_main;
     const pdfs = w.files;
@@ -172,14 +182,14 @@ function indexSection(data) {
       : `<span class="missing">PDF pending</span>`;
     rows.push(`
       <tr class="${lead ? "lead" : "sub"}" data-search="${esc(`${c.row_uid} ${c.citing_title} ${c.citing_senior_author} ${c.cited_tool}`)}">
-        <td class="num">${lead ? n : ""}</td>
+        <td class="num">${lead ? esc(c.n) : ""}</td>
         <td class="uid">${esc(c.row_uid)}</td>
         <td class="title">${lead
           ? `<a href="#c-${esc(c.folder_uid)}">${esc(c.citing_title)}</a>${w.rows.length > 1 ? ` <span class="tag">${w.rows.length} citations</span>` : ""}`
           : `<span class="same">as above</span>`}</td>
         <td>${esc(c.cited_earliest_date || "—")}${c.cited_was_preprint ? ' <span class="tag">preprint</span>' : ""}</td>
-        <td>${esc(c.citing_published_date || c.citing_year || "—")}${c.citing_earliest_date && c.citing_earliest_date !== (c.citing_published_date || c.citing_year) ? `<br><span class="sub">earliest public: ${esc(c.citing_earliest_date)}</span>` : ""}</td>
-        <td>${esc(c.cited_tool || "—")}</td>
+        <td>${esc(c.citing_published_date || c.citing_year || "—")}${c.citing_earliest_date ? `<br><span class="sub">earliest public: ${esc(c.citing_earliest_date)}</span>` : ""}</td>
+        <td>${esc(citedLabel(c))}</td>
         <td>${esc(whereList(c, data.byRow).text)}</td>
         <td>${esc(c.citing_senior_author || "—")}</td>
         <td>${esc(c.citing_article_type || "—")}</td>
@@ -193,14 +203,16 @@ function indexSection(data) {
   <table class="index" id="index-table">
     <thead><tr>
       <th>#</th><th>row_uid</th><th>Citing paper</th><th>Earliest date of cited paper</th>
-      <th>Citing paper published</th><th>Applicant's tool</th><th>Section &amp; page</th>
+      <th>Citing paper published</th><th>My work cited</th><th>Section &amp; page</th>
       <th>Senior author</th><th>Article type</th><th>PDF in packet</th>
     </tr></thead>
     <tbody>${rows.join("")}</tbody>
   </table>
-  <p class="note">One numbered row is one citation. Where a single citing article cites more than
-     one of the applicant's papers, it is numbered once and the additional citations are listed
-     beneath it as “as above”, each with its own <code>row_uid</code>.</p>
+  <p class="note">The number is the citing article's number in this packet, given once per article.
+     Where a citing article cites more than one of the applicant's papers, the additional citations
+     are listed beneath it as “as above”, each with its own <code>row_uid</code>. The date shown
+     for each citing paper is when its final article went online; an earlier preprint is shown
+     (“earliest public”) only where it bears on the petition date.</p>
   <p class="note">A citation that appears in more than one place in the article lists every place,
      strongest first. A dagger (&dagger;) marks a row whose locations have not yet been re-read
      page by page, so only the single best-known location is shown.</p>
