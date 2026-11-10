@@ -29,6 +29,7 @@ module.exports = {
   "cit-000044": { topic: "Vorasidenib, a brain-penetrant drug candidate for glioma", use: "Cited my 2016 finding on partial allosteric inhibition to explain why two of their compounds only partly block the mutated cancer enzyme.", why: "Helps drug developers choose which compounds to take forward for a hard-to-treat brain cancer." },
   "cit-000396": { topic: "AI model that predicts which sugars a lectin binds", use: "Used my oligomannose glycan array data as an independent test set to validate the model, because the closely related sugars made it a challenging case.", why: "Shows that the model works on real laboratory data it was not trained on." },
   "cit-000423": { topic: "Simulations of how DC-SIGN recognizes sugars on the COVID-19 spike", use: "Checked the simulation results against my oligomannose glycan array findings and reported that they agreed.", why: "Gives confidence in the simulations used to search for compounds that block DC-SIGN." },
+  "cit-000600": { topic: "Shape and sugar binding of a group B rotavirus protein", use: "Used my GlycoGlyph tool, citing my 2020 paper, to draw the structures of the sugars that bound best in the glycan array figure.", why: "Shows how the virus recognizes sugars, the starting point for understanding and blocking infection." },
 };
 
 Object.assign(module.exports, {

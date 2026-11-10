@@ -44,4 +44,17 @@ module.exports = {
     findings:
       "The authors found that the simulated binding preferences of DC-SIGN agreed with the laboratory findings from my glycan microarray study, which gave them confidence in their model. On that basis they predicted the sugar structures on the virus spike that DC-SIGN could recognize and identified two plant compounds, saikosaponin A and liquiritin, as promising blockers in the computer model.",
   },
+  // ------------------------------------------------------------ cit-000600
+  "cit-000600": {
+    objectives:
+      "The authors studied rotaviruses, viruses that cause severe diarrhea (gastroenteritis) in children and, in the case of group B rotavirus, in adults. The part of the group B virus that attaches to cells (a domain called VP8*B) looks nothing like the corresponding part of the other rotavirus groups, so nobody knew its shape or which sugars it recognizes. They used AlphaFold2, an artificial-intelligence program that predicts the three-dimensional shape of a protein, to predict the shape, confirmed it by determining the crystal structure at very high resolution, and tested which sugars the domain binds on a glycan array (a glass slide printed with many different sugar structures). This was complementary to my research on glycan arrays and on tools for presenting their results.",
+    importance:
+      "Rotaviruses enter cells by attaching to sugars on the cell surface, so the shape of the part that recognizes the sugar, and the sugars it prefers, are the starting point for understanding how the virus infects and how infection might be blocked. The authors showed that group B rotavirus uses a new protein fold (a new three-dimensional shape) to recognize sugars, unlike the fold used by groups A and C, which shows that evolution can reach the same function with a very different shape.",
+    how: [
+      "The authors tested the protein on a glycan array of 600 sugar structures and showed the results in Figure 4, together with the sugar structures that bound most strongly. The legend of that figure states: “The glycan structures with the highest binding signals were drawn using GlycoGlyph,” and the authors cited my 2020 GlycoGlyph paper in their reference list.",
+      "The sugar structures in that figure, which show the reader exactly which sugars the new protein fold recognizes, were therefore drawn with my application. These results led the authors to their conclusion that the domain binds sugars containing N-acetyllactosamine, the sugar they went on to place on the protein by computer docking.",
+    ],
+    findings:
+      "The predicted shape agreed with the crystal structure, showing that the group B domain has a new fold, a β-sheet clasping an α-helix, which is different from the fold in groups A and C. The glycan array showed that the domain recognizes sugars containing N-acetyllactosamine, and docking placed this sugar on the protein.",
+  },
 };

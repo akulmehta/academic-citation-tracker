@@ -24,4 +24,5 @@ module.exports = {
   "cit-000044": "Relied on and cited my 2016 finding that allosteric binding can give partial rather than full inhibition, to explain why two of their compounds only partly block the mutated cancer enzyme.",
   "cit-000396": "Used my oligomannose glycan array data, citing my 2021 paper, as an independent test set to validate their model for predicting lectin–sugar binding.",
   "cit-000423": "Used my oligomannose glycan array results, citing my 2021 paper, to validate their molecular simulations, which they reported agreed with my findings.",
+  "cit-000600": "Used my GlycoGlyph tool, citing my 2020 paper, to draw the structures of the sugars that bound best to the new protein in the study’s glycan array figure.",
 };

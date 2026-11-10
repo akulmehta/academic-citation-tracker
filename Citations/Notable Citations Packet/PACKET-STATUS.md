@@ -13,25 +13,25 @@ decision that only a person can make.
 
 | | count |
 |---|---:|
-| Citations in the packet (in `packet.html`) | 27 |
-| Works those citations are filed as (§5.1 folders) | 19 |
-| PDFs filed under `papers/` (in the packet) | 22 |
-| PDFs under `pending-papers/` (awaiting a decision) | 449 |
+| Citations in the packet (in `packet.html`) | 28 |
+| Works those citations are filed as (§5.1 folders) | 20 |
+| PDFs filed under `papers/` (in the packet) | 23 |
+| PDFs under `pending-papers/` (awaiting a decision) | 447 |
 | PDFs under `screened-papers/` (kept, not filed) | 62 |
-| Held — open items, listed below | 776 |
+| Held — open items, listed below | 774 |
 | Screened out — decided, kept for the record (§4.5) | 254 |
-| **Rows in table `citation`** | **1057** |
+| **Rows in table `citation`** | **1056** |
 
-`packet.csv` holds the 27 included rows. `screened-out.csv` holds the other 1030,
+`packet.csv` holds the 28 included rows. `screened-out.csv` holds the other 1028,
 because §4.5 exports `screened-out` and `held` together — counsel is entitled to see that the
 work was screened and on what grounds. A screened-out row is not missing work: it is the
 record of what was looked at and rejected, with the reason beside it. A held row is open, and
 every held row appears in §2 below.
 
-## 2. Held rows — 776 open items
+## 2. Held rows — 774 open items
 
 
-### 2.1 `read` — 31 row(s)
+### 2.1 `read` — 29 row(s)
 
 The PDF is filed and the applicant's tool appears in a section of the paper. What is missing is the applicant's reading: a location on its own is not a claim about how the tool was used (§1.1).
 
@@ -43,10 +43,8 @@ The PDF is filed and the applicant's tool appears in a section of the paper. Wha
 | `cit-000620` | GlycoGlyph | 2021 | Toukach | CSDB/SNFG structure editor: An online glycan builder with 2D and 3D structu… | [open](https://pubs.acs.org/doi/abs/10.1021/acs.jcim.1c00917) |
 | `cit-000626` | GlycoGlyph | 2021 | Yamada | SugarDrawer: a web-based database search tool with editing glycan structures | [open](https://www.mdpi.com/1420-3049/26/23/7149) |
 | `cit-000543` | GLAD | 2022 | Feizi | CarbArrayART: a new software tool for carbohydrate microarray data storage,… | [open](https://academic.oup.com/glycob/article-abstract/32/7/552/6555547) |
-| `cit-000600` | GlycoGlyph | 2022 | Prasad | Novel fold of rotavirus glycan-binding domain predicted by AlphaFold2 and d… | [open](https://www.nature.com/articles/s42003-022-03357-1) |
 | `cit-000617` | GlycoGlyph | 2022 | Gildersleeve | Abnormal antibodies to self-carbohydrates in SARS-CoV-2-infected patients | [open](https://academic.oup.com/pnasnexus/article-abstract/1/3/pgac062/6609787) |
 | `cit-000627` | GlycoGlyph | 2022 | Owonikoko | Serum glycomic profile as a predictive biomarker of recurrence in patients … | [open](https://onlinelibrary.wiley.com/doi/abs/10.1002/cam4.5465) |
-| `cit-000654` | GlycoGlyph | 2022 | Prasad | Novel fold of rotavirus glycan-binding domain predicted by AlphaFold2 and d… | [open](https://escholarship.org/content/qt77j1n0fs/qt77j1n0fs.pdf?v=lg) |
 | `cit-000538` | GLAD | 2023 | Kiessling | Lectin fingerprinting distinguishes antibody neutralization in SARS-CoV-2 | [open](https://pmc.ncbi.nlm.nih.gov/articles/PMC10214521/) |
 | `cit-000595` | GlycoGlyph | 2023 | Bojar | GlycoDraw: a python implementation for generating high-quality glycan figur… | [open](https://academic.oup.com/glycob/article-abstract/33/11/927/7232175) |
 | `cit-000531` | GLAD | 2024 | Pekosz | Clade-defining mutations in human H1N1 hemagglutinin protein from 2021-2023… | [open](https://www.biorxiv.org/content/10.1101/2024.05.18.594815.abstract) |
@@ -861,7 +859,7 @@ counsel relies on them:
 | GlycoGlyph | 2 |
 | MAWE | 3 |
 
-Distribution over all 1057 rows: `1` = 2, `2` = 112, `3` = 76, `4` = 18, `(blank)` = 849.
+Distribution over all 1056 rows: `1` = 2, `2` = 111, `3` = 76, `4` = 18, `(blank)` = 849.
 
 If a number is wrong, the single place to change it is `toolForCitedPaper` /
 `projectForCitedPaper` in [`scripts/lib.js`](./scripts/lib.js), then re-run the importer and
@@ -894,6 +892,12 @@ The scanner reports what it read in a separate column (`scan_tier`) and never ov
 applicant's `tier`. It cannot see a figure or judge prose the way a reader can, so a
 disagreement is a prompt to re-read the page, not a correction. These rows stay in the
 packet until a person says otherwise:
+
+**The tool is in a section, but a different one than recorded:**
+
+| row_uid | recorded | scanner read | where the scanner looked |
+|---|---|---|---|
+| `cit-000600` | tier B, Results (Figure 4 legend) p.6 | tier A | Methods p.6: b The glycan structures with the highest binding signals were drawn using GlycoGlyph49 . |
 
 **The row's quotation is verified in the PDF, but the scanner could not find the tool's NAME:**
 
@@ -949,7 +953,7 @@ None. Every citation in `packet.html` has the article filed beside it.
 
 ### 3.7 The narrative fields are a preparer's draft awaiting the applicant's approval
 
-The 19 narrative(s) on file are written into the `narrative` table by
+The 20 narrative(s) on file are written into the `narrative` table by
 `scripts/narrative-intake.js`, which refuses a paragraph that names no page number or a
 page beyond the length of the filed PDF. Who wrote each one is recorded in that table's
 `written_by` and `written_on` columns; it is deliberately **not** printed in `packet.html`,
@@ -1024,9 +1028,9 @@ quietly re-merging. This is the only place the advice is written down.
 
 ## 4. Potential citations not in the packet
 
-[`potential_notable_citations.html`](./potential_notable_citations.html) lists **753**
+[`potential_notable_citations.html`](./potential_notable_citations.html) lists **752**
 independent citations of the works in the candidate queue that are **not** in `packet.html`.
-They appear as **668 rows**
+They appear as **667 rows**
 because 85 citations sit on a row already held by
 another of my works. One article that cites two of them is one row with two judgements
 in it, one per work, so the row says where GLAD sits and where GlycoGlyph sits separately.
@@ -1037,7 +1041,7 @@ with it, and nothing on it is evidence until a person has read the article and f
 | my work | citing works the record lists | less retired | less not independent | less copies | less not English | less in packet | less in original app. | less decided | listed | PDF on file |
 |---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
 | **GLAD** — GLAD: GLycan Array Dashboard, a visual analyt… (2019) | 64 | 0 | 18 | 2 | 0 | 8 | 2 | 10 | **24** | 15 |
-| **GlycoGlyph** — GlycoGlyph: a glycan visualizing, drawing and… (2020) | 78 | 0 | 9 | 4 | 0 | 2 | 3 | 30 | **30** | 22 |
+| **GlycoGlyph** — GlycoGlyph: a glycan visualizing, drawing and… (2020) | 78 | 0 | 9 | 4 | 0 | 3 | 3 | 30 | **29** | 20 |
 | **MAWE** — GlyMDB: Glycan Microarray Database and analys… (2020) | 24 | 0 | 4 | 1 | 0 | 0 | 0 | 6 | **13** | 10 |
 | **MAWE** — Insights into glycobiology and the protein-gl… (2024) | 33 | 0 | 4 | 1 | 0 | 2 | 0 | 0 | **26** | 8 |
 | **MAWE** — Reusable glycan microarrays using a microwave… (2024) | 15 | 0 | 6 | 1 | 0 | 4 | 0 | 3 | **1** | 0 |
@@ -1076,12 +1080,12 @@ with it, and nothing on it is evidence until a person has read the article and f
 | **Other** — Tumor cells express pauci-and oligomannosidic… (2021) | 35 | 0 | 4 | 1 | 0 | 0 | 2 | 6 | **22** | 12 |
 | **Other** — Unique Glycans in Synaptic Glycoproteins in M… (2024) | 4 | 0 | 2 | 0 | 0 | 0 | 0 | 0 | **2** | 1 |
 | **Other** — Unique repertoire of anti-carbohydrate antibo… (2020) | 44 | 0 | 12 | 1 | 0 | 0 | 1 | 7 | **23** | 18 |
-| **all works** | | | | | | | | | **753** | 431 |
+| **all works** | | | | | | | | | **752** | 429 |
 
 Each work's own arithmetic is printed on the review page beside its name; the row above
 is the same screen, not a second tally.
 
-431 citations already have a PDF on file, held under `pending-papers/` until a
+429 citations already have a PDF on file, held under `pending-papers/` until a
 decision is made. The rest sit at
 `no-open-copy`, `paywalled`, or `not-in-indexes` — findings about access, not about
 whether the paper exists. **A tier appears only for an article that has actually been read:**
@@ -2017,9 +2021,9 @@ evidence looks like something and is not.
 
 | basis of a recorded mention | mentions | rows |
 |---|---:|---:|
-| reference-number resolution | 752 | 453 |
+| reference-number resolution | 751 | 452 |
 | human reading | 23 | 16 |
-| extracted text | 20 | 15 |
+| extracted text | 19 | 14 |
 
 A resolved citation is held to the same bar as one that names the tool: it must sit in
 prose, under a heading the citing paper itself printed, and not in the bibliography entry
@@ -2027,7 +2031,7 @@ that names the applicant's paper — a reference list proves only that the autho
 work, not where or how. Where a row's tier rests on such a citation, that is said in the
 report rather than left for a reader to infer from a section heading alone.
 
-775 mentions across 468 citing works rest on resolution or on a person’s
+774 mentions across 467 citing works rest on resolution or on a person’s
 reading, not on a named-tool scan. `scan-mentions.js` reports those rows separately and
 leaves their tier alone — it is not built to find them, so its silence is not evidence
 against them.
@@ -2044,13 +2048,13 @@ Every PDF in the storage roots (`papers/`, `pending-papers/`, `screened-papers/`
 one of three ways, and the distinction matters because only the first two are reproducible
 from a script.
 
-**Fetched by `discover-pdfs.js`** — 536 candidate row(s) across 516 distinct file(s), each recorded with the host it came from:
+**Fetched by `discover-pdfs.js`** — 535 candidate row(s) across 515 distinct file(s), each recorded with the host it came from:
 
 | host | rows | row_uid(s) |
 |---|---:|---|
 | (no source recorded) | 245 | `cit-000507`, `cit-000523`, `cit-000524`, `cit-000525`, `cit-000531`, `cit-000532`, `cit-000534`, `cit-000546`, `cit-000549`, `cit-000554`, `cit-000556`, `cit-000561`, `cit-000564`, `cit-000566`, `cit-000581`, `cit-000604`, `cit-000608`, `cit-000614`, `cit-000615`, `cit-000620`, `cit-000621`, `cit-000623`, `cit-000630`, `cit-000632`, `cit-001263`, `cit-000661`, `cit-000663`, `cit-000664`, `cit-000667`, `cit-000670`, `cit-000679`, `cit-000700`, `cit-000711`, `cit-000712`, `cit-000717`, `cit-000718`, `cit-000720`, `cit-000728`, `cit-000734`, `cit-000736`, `cit-000738`, `cit-000739`, `cit-000746`, `cit-000747`, `cit-000748`, `cit-000752`, `cit-000755`, `cit-000769`, `cit-000773`, `cit-000778`, `cit-000785`, `cit-000786`, `cit-000790`, `cit-000793`, `cit-000809`, `cit-000815`, `cit-000817`, `cit-000818`, `cit-000819`, `cit-000822`, `cit-000823`, `cit-000828`, `cit-000834`, `cit-000859`, `cit-000869`, `cit-000882`, `cit-000884`, `cit-001284`, `cit-001290`, `cit-001309`, `cit-001311`, `cit-001325`, `cit-001336`, `cit-001360`, `cit-001366`, `cit-001368`, `cit-001369`, `cit-001386`, `cit-001389`, `cit-001164`, `cit-001169`, `cit-001175`, `cit-001178`, `cit-001181`, `cit-001187`, `cit-001189`, `cit-001191`, `cit-001195`, `cit-001198`, `cit-001200`, `cit-001220`, `cit-001230`, `cit-000089`, `cit-000091`, `cit-000094`, `cit-000100`, `cit-000101`, `cit-000110`, `cit-000114`, `cit-000118`, `cit-000122`, `cit-000128`, `cit-000183`, `cit-000184`, `cit-000190`, `cit-000194`, `cit-000195`, `cit-000196`, `cit-000197`, `cit-000205`, `cit-000213`, `cit-000433`, `cit-000438`, `cit-000451`, `cit-000461`, `cit-000464`, `cit-000326`, `cit-000334`, `cit-000338`, `cit-000347`, `cit-000354`, `cit-000359`, `cit-000363`, `cit-000368`, `cit-000380`, `cit-001045`, `cit-001047`, `cit-001053`, `cit-001054`, `cit-001056`, `cit-001058`, `cit-001067`, `cit-000395`, `cit-000396`, `cit-000401`, `cit-000403`, `cit-000411`, `cit-000413`, `cit-000418`, `cit-000419`, `cit-001519`, `cit-001530`, `cit-001531`, `cit-001540`, `cit-001545`, `cit-001546`, `cit-001549`, `cit-001552`, `cit-000056`, `cit-000057`, `cit-000059`, `cit-000061`, `cit-000062`, `cit-000066`, `cit-000069`, `cit-000072`, `cit-000075`, `cit-000009`, `cit-000013`, `cit-000019`, `cit-000021`, `cit-000025`, `cit-001480`, `cit-001484`, `cit-001488`, `cit-001492`, `cit-001495`, `cit-001507`, `cit-000146`, `cit-000148`, `cit-000149`, `cit-000150`, `cit-000153`, `cit-000156`, `cit-000157`, `cit-000158`, `cit-000161`, `cit-001002`, `cit-001009`, `cit-001014`, `cit-001015`, `cit-001023`, `cit-001027`, `cit-001437`, `cit-001439`, `cit-001443`, `cit-001445`, `cit-001128`, `cit-001130`, `cit-001133`, `cit-001134`, `cit-001135`, `cit-001140`, `cit-001148`, `cit-000257`, `cit-000261`, `cit-000262`, `cit-000264`, `cit-000916`, `cit-000918`, `cit-000926`, `cit-000929`, `cit-001111`, `cit-001113`, `cit-001118`, `cit-000952`, `cit-000953`, `cit-000965`, `cit-001087`, `cit-001094`, `cit-001097`, `cit-001100`, `cit-000934`, `cit-000936`, `cit-000939`, `cit-000940`, `cit-000942`, `cit-001468`, `cit-001470`, `cit-001473`, `cit-000306`, `cit-000309`, `cit-000310`, `cit-000311`, `cit-000313`, `cit-000496`, `cit-000229`, `cit-000235`, `cit-000236`, `cit-000240`, `cit-000241`, `cit-000244`, `cit-000296`, `cit-000298`, `cit-000303`, `cit-000969`, `cit-000982`, `cit-000988`, `cit-000989`, `cit-000279`, `cit-000280`, `cit-000281`, `cit-000577`, `cit-001236`, `cit-001237` |
 | www.mdpi.com | 62 | `cit-000513`, `cit-000550`, `cit-000592`, `cit-000606`, `cit-000626`, `cit-000660`, `cit-000706`, `cit-000721`, `cit-000757`, `cit-000770`, `cit-000780`, `cit-000795`, `cit-000800`, `cit-000804`, `cit-000821`, `cit-001303`, `cit-001186`, `cit-000092`, `cit-000093`, `cit-000112`, `cit-000116`, `cit-000193`, `cit-000206`, `cit-000432`, `cit-000454`, `cit-000459`, `cit-000352`, `cit-001050`, `cit-000405`, `cit-000409`, `cit-000417`, `cit-000421`, `cit-000423`, `cit-001535`, `cit-001536`, `cit-001537`, `cit-001547`, `cit-001548`, `cit-001553`, `cit-000042`, `cit-000045`, `cit-000053`, `cit-001491`, `cit-001496`, `cit-001498`, `cit-000152`, `cit-001438`, `cit-001129`, `cit-001139`, `cit-000911`, `cit-000913`, `cit-000951`, `cit-000957`, `cit-000961`, `cit-000962`, `cit-001463`, `cit-001466`, `cit-000307`, `cit-000493`, `cit-000498`, `cit-001266`, `cit-001279` |
-| www.nature.com | 37 | `cit-000510`, `cit-000511`, `cit-000596`, `cit-000600`, `cit-000654`, `cit-000665`, `cit-000666`, `cit-000689`, `cit-000693`, `cit-000695`, `cit-000696`, `cit-000727`, `cit-000744`, `cit-000799`, `cit-000185`, `cit-000188`, `cit-000191`, `cit-000442`, `cit-000449`, `cit-000460`, `cit-000330`, `cit-001041`, `cit-001048`, `cit-001051`, `cit-001070`, `cit-001517`, `cit-000006`, `cit-001483`, `cit-000248`, `cit-000250`, `cit-001108`, `cit-001460`, `cit-000487`, `cit-000977`, `cit-000276`, `cit-000278`, `cit-001511` |
+| www.nature.com | 36 | `cit-000510`, `cit-000511`, `cit-000596`, `cit-000600`, `cit-000665`, `cit-000666`, `cit-000689`, `cit-000693`, `cit-000695`, `cit-000696`, `cit-000727`, `cit-000744`, `cit-000799`, `cit-000185`, `cit-000188`, `cit-000191`, `cit-000442`, `cit-000449`, `cit-000460`, `cit-000330`, `cit-001041`, `cit-001048`, `cit-001051`, `cit-001070`, `cit-001517`, `cit-000006`, `cit-001483`, `cit-000248`, `cit-000250`, `cit-001108`, `cit-001460`, `cit-000487`, `cit-000977`, `cit-000276`, `cit-000278`, `cit-001511` |
 | www.frontiersin.org | 22 | `cit-000520`, `cit-000593`, `cit-000607`, `cit-000715`, `cit-000730`, `cit-000731`, `cit-000844`, `cit-001287`, `cit-000455`, `cit-001042`, `cit-001055`, `cit-001057`, `cit-001515`, `cit-001525`, `cit-001534`, `cit-001116`, `cit-000955`, `cit-001090`, `cit-001467`, `cit-000305`, `cit-000967`, `cit-001238` |
 | pubs.acs.org | 19 | `cit-000512`, `cit-000538`, `cit-000688`, `cit-000749`, `cit-000783`, `cit-000098`, `cit-000187`, `cit-000457`, `cit-000462`, `cit-000400`, `cit-001523`, `cit-000044`, `cit-000010`, `cit-000015`, `cit-000029`, `cit-001018`, `cit-000933`, `cit-000970`, `cit-001244` |
 | www.biorxiv.org | 19 | `cit-000631`, `cit-000633`, `cit-000683`, `cit-000742`, `cit-000832`, `cit-000833`, `cit-000843`, `cit-000108`, `cit-000202`, `cit-000217`, `cit-000465`, `cit-000414`, `cit-000420`, `cit-000424`, `cit-000263`, `cit-000924`, `cit-001121`, `cit-001098`, `cit-001471` |
@@ -2118,11 +2122,11 @@ These came from the `In Methods` / `In Acknowledgements` imports and were regist
 all, so the NCBI key in `.env` is used for author corroboration, not for fetching. Any statement
 that these papers came from PubMed Central would be wrong.
 
-Discovery state of all 1057 GLAD candidates, from `candidate.discover_state`:
+Discovery state of all 1056 GLAD candidates, from `candidate.discover_state`:
 
 | state | rows | meaning |
 |---|---:|---|
-| `has-pdf` | 537 | a PDF is on file for the row — seeded that way, fetched by a script, or filed with `file-pdf.js` |
+| `has-pdf` | 536 | a PDF is on file for the row — seeded that way, fetched by a script, or filed with `file-pdf.js` |
 | `no-open-copy` | 305 | looked, nothing retrievable found |
 | `not-in-indexes` | 123 | not found in the open-access indexes consulted |
 | `paywalled` | 73 | located behind a paywall — the applicant may be able to obtain these |
@@ -2131,7 +2135,7 @@ Discovery state of all 1057 GLAD candidates, from `candidate.discover_state`:
 
 **Still open:** 0 row(s) sit at `open-copy` with no file on disk — a copy was
 located and never fetched. Chasing them is a decision, not a defect: a row must be independent
-(§1.2) before it is worth a download, and 529 candidate(s) are already held — check why before spending effort on a PDF for a row that
+(§1.2) before it is worth a download, and 528 candidate(s) are already held — check why before spending effort on a PDF for a row that
 cannot be filed.
 
 ## 6. Before handing the packet over

@@ -78,6 +78,13 @@ function normalize(S) {
 }
 
 /** raw index range of a quote on a page, or null */
+/** Index in model.S of the first letter of `quote` (locate() anchors on the END of what it is given, so give it exactly 28 letters). */
+function startOf(model, quote) {
+  let k = 1;
+  while (k <= quote.length && normalize(quote.slice(0, k)).n.length < 28) k++;
+  const hit = locate(model, quote.slice(0, k));
+  return hit ? hit[0] : null;
+}
 function locate(model, quote) {
   const q = normalize(quote).n;
   if (q.length < 12) return null;
@@ -366,7 +373,7 @@ async function main() {
     const name = `${String(idx + 1).padStart(2, "0")}_${surname}_${main.citing_year}_${uid}.pdf`;
     const dest = path.join(OUTDIR, name);
 
-    const NO_RESOLVER = new Set(["cit-000749", "cit-000752", "cit-000044", "cit-000423"]);
+    const NO_RESOLVER = new Set(["cit-000749", "cit-000752", "cit-000044", "cit-000423", "cit-000600"]);
     // where my work is cited: resolver for each cited paper of this folder, then the filed sentences
     const places = [];    // {page, quote, kind, why}
     const refs = [];      // {page, entry, why}
@@ -403,7 +410,10 @@ async function main() {
       let [a, b] = sentenceRange(mdl.S, hit[0], hit[1]);
       [a, b] = trimHeadings(mdl, a, b, hit[1]);
       if (!pl.ref) [a, b] = withMarker(mdl, a, b);
-      if (pl.ref) { const h0 = locate(mdl, pl.quote.slice(0, 40)), h1 = locate(mdl, pl.quote.slice(-40)); if (h0 && h1) { a = withLabel(mdl.S, h0[0]); b = h1[1]; } }
+      // A figure legend runs its panels (a, b, c) together, so the sentence finder would take all three: mark only the quoted words.
+      if (EXACT_UIDS.has(uid) && !pl.ref) { const s0 = startOf(mdl, pl.quote), h1 = locate(mdl, pl.quote.slice(-40)); if (s0 != null && h1) { a = s0; b = h1[1]; } }
+      if (!pl.ref) [a, b] = withMarker(mdl, a, b);
+      if (pl.ref) { const s0 = startOf(mdl, pl.quote), h1 = locate(mdl, pl.quote.slice(-40)); if (s0 != null && h1) { a = withLabel(mdl.S, s0); b = h1[1]; } }
       if (pl.marker) {
         // The resolver's quote can be the sentence BEFORE the one that carries the marker. Highlight the sentence
         // that actually holds the marker: look at the next two sentences when this one does not.
@@ -481,6 +491,9 @@ async function main() {
   fs.writeFileSync(LOG, JSON.stringify(log, null, 1));
   console.log(`log: ${LOG}`);
 }
+
+// Articles whose cited sentence sits in a figure legend with several panels: highlight only the quoted words.
+const EXACT_UIDS = new Set(["cit-000600"]);
 
 // Places the resolver cannot see because they are not a numbered or author-year marker.
 const EXTRA = {
