@@ -42,7 +42,9 @@ const PROJECTS = {
   "3": "Advancing Glycan Research with Microarray Innovations",
   "4": "Advancing Glycopeptide Synthesis with Glyco-SPOT",
 };
-const USE_TYPES = ["Implemented", "Compared", "Built upon", "Verified"];
+// "none" files the row with no use type, for a citation that is real but is background evidence rather than a use
+// of the method (the packet then prints the location and tier without a use word, which is the honest label).
+const USE_TYPES = ["Implemented", "Compared", "Built upon", "Verified", "none"];
 
 function backup() {
   const stamp = new Date().toISOString().replace(/[:.]/g, "-").slice(0, 19);
@@ -151,7 +153,7 @@ async function main() {
   try {
     d.prepare(`UPDATE citation SET status='included', n=?, project=?, tier=?, section=?, page=?, quote=?, use_type=?,
                evidence_basis='human reading', negative=0 WHERE row_uid=?`)
-      .run(nextN, project, tier, section, String(page), quote, useType, uid);
+      .run(nextN, project, tier, section, String(page), quote, useType === "none" ? null : useType, uid);
     d.exec("COMMIT");
   } catch (e) { d.exec("ROLLBACK"); throw e; }
   d.close();
