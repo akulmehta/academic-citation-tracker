@@ -483,7 +483,7 @@ function quoteCell(text, where, c) {
  * `data-*` carries what a filter needs in a form that does not depend on parsing
  * the rendered prose. Reading the pill text back would tie the filter to the label
  * wording, and a label reworded for a reader would silently change what a filter
- * matches. `data-work` is a space-joined list because a folded row can hold several
+ * matches. `data-work` is a "||"-joined list (work names contain spaces, so a space cannot be the separator) because a folded row can hold several
  * works and the "My work" filter must match a row that includes the chosen work.
  */
 function rowHtml(r) {
@@ -501,7 +501,7 @@ function rowHtml(r) {
     return res ? `${res.tier}-resolved` : "none";
   });
   const anyPdf = r.hasPdf ? 1 : 0;
-  const works = r.works.join(" ");
+  const works = r.works.join("||");
   const text = [r.uids.join(" "), r.title, r.authors, r.senior, r.venue, works,
     ...r.entries.map(e => e.quote || ""), r.doi].join(" \u00b7 ").toLowerCase();
   return `    <tr data-uid="${esc(r.uids[0])}" data-uids="${esc(r.uids.join(" "))}" `
@@ -973,7 +973,7 @@ const FILTER_JS = `
       if (t === "untiered" && d.pdf !== "1") return false;
       if (t === "unread" && d.pdf !== "0") return false;
     }
-    if (work.value && (d.work || "").split(" ").indexOf(work.value) < 0) return false;
+    if (work.value && (d.work || "").split("||").indexOf(work.value) < 0) return false;
     if (works.value === "2" && !(Number(d.works) >= 2)) return false;
     if (works.value === "1" && Number(d.works) !== 1) return false;
     if (disc.value && d.disc !== disc.value) return false;
