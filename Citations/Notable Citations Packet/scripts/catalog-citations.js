@@ -308,9 +308,29 @@ async function catalogRow(db, cat, r) {
   };
 }
 
+/**
+ * The rows the candidate list is allowed to show: the same potentialIndependent() screen that page and
+ * PACKET-STATUS.md use. A citation already filed in the original application (§3), already in the packet,
+ * decided against, dependent, superseded or non-English is not a candidate, and must not be catalogued either.
+ */
+function eligibleUids() {
+  const { openCatalog, potentialIndependent } = require("./lib");
+  const db = openPacket(), cat = openCatalog();
+  const ok = new Set();
+  for (const c of cat.prepare("SELECT DISTINCT cites_id FROM citations").all()) {
+    if (!c.cites_id) continue;
+    for (const r of potentialIndependent(cat, db, c.cites_id).rows) ok.add(r.row_uid);
+  }
+  return ok;
+}
+
 async function runAll() {
   const db = openPacket(), cat = openCatalog();
   let rows = db.prepare(`SELECT row_uid, cites_id, cited_paper, citing_title, pdf_file FROM citation WHERE status='held' AND is_main=1 AND pdf_file IS NOT NULL ORDER BY row_uid`).all();
+  const eligible = eligibleUids();
+  const before = rows.length;
+  rows = rows.filter(r => eligible.has(r.row_uid));
+  if (before !== rows.length) console.log(`  left out ${before - rows.length} row(s) the candidate list excludes (original application, in packet, dependent, ...)`);
   const only = opt("rows");
   if (only) { const s = new Set(only.split(",")); rows = rows.filter(r => s.has(r.row_uid)); }
   const from = Number(opt("from") || 0), to = Number(opt("to") || rows.length);
@@ -324,7 +344,7 @@ async function runAll() {
     if (++n % 25 === 0) console.log(`  ${n}/${rows.length}`);
   }
   fs.mkdirSync(OUTDIR, { recursive: true });
-  fs.writeFileSync(JSON_OUT, JSON.stringify([...byUid.values()].sort((a, b) => a.uid.localeCompare(b.uid)), null, 1));
+  fs.writeFileSync(JSON_OUT, JSON.stringify([...byUid.values()].filter(x => eligible.has(x.uid)).sort((a, b) => a.uid.localeCompare(b.uid)), null, 1));
   console.log(`catalogued ${rows.length} row(s) -> ${JSON_OUT}`);
 }
 
