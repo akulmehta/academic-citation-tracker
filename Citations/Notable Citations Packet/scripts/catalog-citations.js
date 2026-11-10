@@ -255,7 +255,31 @@ async function catalogRow(db, cat, r) {
     }
     if (entryPage != null) break;
   }
-  const hits = findHits(profile, body, num, want, pages, furn, index);
+  let hits = findHits(profile, body, num, want, pages, furn, index);
+  // Author-year lists disambiguate two papers by one first author in one year with a letter: "Byrd-Leotis 2019a"
+  // and "Byrd-Leotis 2019b" are DIFFERENT papers. Matching on surname and year alone credited this paper's
+  // "2019b" citations to the applicant's "2019a" one (cit-000199). Read the letter the reference list gives the
+  // cited work, and drop any author-year marker that carries a different letter for that year.
+  let yearSuffix = null;
+  if (want.year && hits.some(h => h.style === "authorYear")) {
+    const words = String(want.title || "").toLowerCase().replace(/[^a-z0-9 ]/g, " ").split(/\s+/).filter(Boolean).slice(0, 5);
+    if (words.length >= 3) {
+      const re = new RegExp(words.join("[^a-z0-9]+"), "i");
+      for (const ls of pages) {
+        const raw = ls.map(l => l.text).join(" ");
+        const m = re.exec(raw);
+        if (!m) continue;
+        const after = raw.slice(m.index + m[0].length, m.index + m[0].length + 320);
+        const y = new RegExp("\\b" + want.year + "([a-z])\\b").exec(after);
+        if (y) { yearSuffix = y[1]; break; }
+      }
+    }
+    if (yearSuffix) {
+      const ours = want.year + yearSuffix;
+      const anyLetter = new RegExp("\\b" + want.year + "[a-z]\\b");
+      hits = hits.filter(h => h.style !== "authorYear" || !anyLetter.test(h.marker) || h.marker.includes(ours));
+    }
+  }
   if (process.env.DBG) console.log("DBG", r.row_uid, profile.style, JSON.stringify(profile.counts), "num", num, "body lines", body.length, "hits", hits.length, hits.slice(0, 3).map(h => h.style + ":" + h.marker).join(" "));
 
   const mentions = [];
