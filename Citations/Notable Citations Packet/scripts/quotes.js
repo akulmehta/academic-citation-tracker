@@ -5,6 +5,7 @@
  */
 // Sentences the database holds only as a fragment, or with extraction debris in front.
 const EXTRA_QUOTES = {
+  "cit-000199": [{ q: "This would be in line with Man-6P N-glycopeptides (Čaval et al. 2019) and is of particular interest as such structures recently were proposed to serve as receptors for IAVs (Byrd-Leotis et al. 2019a; Byrd-Leotis et al. 2019b).", sec: "Results (Identification of oligomannose 6-phosphorylated (Man-6P) N-glycopeptides)", pg: 8 }],
   "cit-000629": [{ q: "Diagrams of glycan structures were generated using GlycoGlyph (49). Glycan microarray protocol was followed using the microwave-assisted wet-erase process by Mehta et al. (50).", sec: "Results (figure legend)", pg: 6 }],
   "cit-000542": [{ q: "We also thank Akul Mehta (Harvard University) for valuable discussions and help with the glycan tool Glycan Array Dashboard and Consortium for Functional Glycomics (CFG) names", sec: "Acknowledgments", pg: 12 }],
   "cit-000602": [{ q: "We produced glycan schematics using GlycoGlyph then adjusted them on Inkscape", sec: "Materials and Methods", pg: 11 }],

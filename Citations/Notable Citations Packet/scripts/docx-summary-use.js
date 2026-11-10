@@ -8,7 +8,7 @@ module.exports = {
   "cit-001230": "Used and cited my method for thrombin testing alongside a panel of other human enzyme tests, to show that the new drug candidate does not act on the body’s own enzymes.",
   "cit-000196": "Used my glycan array method, citing my 2019 paper, to define each vaccine virus’s receptor preference, and again for how the array was scanned and analyzed.",
   "cit-000514": "Used my GLAD tool to visualize and mine the glycan array data, producing the study’s heat maps and box plots.",
-  "cit-000749": "Used GlyGen, the resource I contributed to, and cited its paper, to decide which pulldown proteins are glycoproteins before the pathway analysis.",
+  "cit-000749": "Used GlyGen, the resource I contributed data to, and cited its paper, to decide which pulldown proteins are glycoproteins before the pathway analysis.",
   "cit-000532": "Used my GLAD tool to visualize and mine the glycan array data, producing the study’s heat maps and box plots.",
   "cit-000197": "Used and cited my virus-labeling and glycan array method (with one other paper) to measure the receptor binding of the viruses.",
   "cit-000544": "Used my GLAD tool to compare the sugar-binding results for the new protein with those of two related proteins.",

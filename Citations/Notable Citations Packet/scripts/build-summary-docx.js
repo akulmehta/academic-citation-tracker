@@ -33,7 +33,7 @@ const HEAD = ["#", "Citing article", "Dates (earliest public first)", "My work c
 
 const esc = s => String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 const FONT = '<w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman" w:eastAsia="Times New Roman" w:cs="Times New Roman"/>';
-const run = (t, o = {}) => `<w:r><w:rPr>${FONT}${o.b ? "<w:b/>" : ""}${o.i ? "<w:i/>" : ""}${o.color ? `<w:color w:val="${o.color}"/>` : ""}<w:sz w:val="${o.sz || 17}"/><w:szCs w:val="${o.sz || 17}"/></w:rPr><w:t xml:space="preserve">${esc(t)}</w:t></w:r>`;
+const run = (t, o = {}) => `<w:r><w:rPr>${FONT}${o.b ? "<w:b/>" : ""}${o.i ? "<w:i/>" : ""}${o.color ? `<w:color w:val="${o.color}"/>` : ""}<w:sz w:val="${o.sz || 17}"/><w:szCs w:val="${o.sz || 17}"/>${o.u ? '<w:u w:val="single"/>' : ""}</w:rPr><w:t xml:space="preserve">${esc(t)}</w:t></w:r>`;
 const para = (runs, o = {}) => `<w:p><w:pPr>${o.keep ? "<w:keepNext/>" : ""}<w:spacing w:before="0" w:after="${o.after ?? 40}" w:line="240" w:lineRule="auto"/>${o.jc ? `<w:jc w:val="${o.jc}"/>` : ""}</w:pPr>${runs}</w:p>`;
 function cell(w, paras, o = {}) {
   return `<w:tc><w:tcPr><w:tcW w:w="${w}" w:type="dxa"/>${o.span ? `<w:gridSpan w:val="${o.span}"/>` : ""}${o.fill ? `<w:shd w:val="clear" w:color="auto" w:fill="${o.fill}"/>` : ""}</w:tcPr>${paras.join("")}</w:tc>`;
@@ -42,7 +42,7 @@ const row = (cells, o = {}) => `<w:tr><w:trPr><w:cantSplit/>${o.header ? "<w:tbl
 
 function shortSection(s) { return String(s || "").replace(/\s*\(.*\)\s*$/, "").replace(/^Materials and Methods$/i, "Methods").trim(); }
 // One short name per publication of mine, used both in the list above the table and in the "My work cited" column, so the two match.
-const SHORT = { "GLAD:": "GLAD", "GlycoGlyph:": "GlycoGlyph", "Reusable": "MAWE", "Antigenic": "H3N2 receptor-binding paper (2019)", "Rational": "Thrombin inhibitor paper (2011)", "Insights": "Glycan microarray technologies review (2024)", "Differential": "Oligomannose recognition paper (2021)", "GlyGen:": "GlyGen paper (2020)" };
+const SHORT = { "GLAD:": "GLAD (Bioinformatics, 2019)", "GlycoGlyph:": "GlycoGlyph (Bioinformatics, 2020)", "Reusable": "MAWE (Glycobiology, 2024)", "Antigenic": "H3N2 receptor-binding paper (J Virol, 2019)", "Rational": "Thrombin inhibitor paper (J Med Chem, 2011)", "Insights": "Glycan microarray technologies review (Mol Cell Proteomics, 2024)", "Differential": "Oligomannose recognition paper (Sci Adv, 2021)", "GlyGen:": "GlyGen paper (Glycobiology, 2020)" };
 const shortName = p => SHORT[String(p.title).split(" ")[0]] || p.tool || p.title.split(" ").slice(0, 5).join(" ");
 function citedLabel(r) { return shortName({ title: r.cited_paper, tool: r.cited_tool }); }
 function firstAuthor(r) {
@@ -103,7 +103,7 @@ async function main() {
       ]),
       cell(WIDTHS[3], cited.map(c => para(run(c)))),
       cell(WIDTHS[4], [para(run(projects.length ? projects.map(p => `Project ${p}`).join(", ") : "—"))]),
-      cell(WIDTHS[5], buildQuotes(db, uid, rows).map(q => para(run(`“${q.q}”`, { i: true }) + run(` (${String(q.sec || "").replace(/\s+/g, " ")}, p.${q.pg})`)))),
+      cell(WIDTHS[5], buildQuotes(db, uid, rows).flatMap(q => [para(run(`${String(q.sec || "").replace(/\s+/g, " ")}, p.${q.pg}`, { u: true }), { after: 20, keep: true }), para(run(`“${q.q}”`, { i: true }))])),
       cell(WIDTHS[6], [para(run(s ? s.use : ""))]),
       cell(WIDTHS[7], [para(run(s ? s.why : ""))]),
     ]));
