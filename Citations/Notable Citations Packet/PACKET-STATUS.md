@@ -13,25 +13,25 @@ decision that only a person can make.
 
 | | count |
 |---|---:|
-| Citations in the packet (in `packet.html`) | 25 |
-| Works those citations are filed as (§5.1 folders) | 17 |
-| PDFs filed under `papers/` (in the packet) | 19 |
-| PDFs under `pending-papers/` (awaiting a decision) | 450 |
+| Citations in the packet (in `packet.html`) | 26 |
+| Works those citations are filed as (§5.1 folders) | 18 |
+| PDFs filed under `papers/` (in the packet) | 20 |
+| PDFs under `pending-papers/` (awaiting a decision) | 449 |
 | PDFs under `screened-papers/` (kept, not filed) | 62 |
-| Held — open items, listed below | 778 |
+| Held — open items, listed below | 777 |
 | Screened out — decided, kept for the record (§4.5) | 254 |
 | **Rows in table `citation`** | **1057** |
 
-`packet.csv` holds the 25 included rows. `screened-out.csv` holds the other 1032,
+`packet.csv` holds the 26 included rows. `screened-out.csv` holds the other 1031,
 because §4.5 exports `screened-out` and `held` together — counsel is entitled to see that the
 work was screened and on what grounds. A screened-out row is not missing work: it is the
 record of what was looked at and rejected, with the reason beside it. A held row is open, and
 every held row appears in §2 below.
 
-## 2. Held rows — 778 open items
+## 2. Held rows — 777 open items
 
 
-### 2.1 `read` — 26 row(s)
+### 2.1 `read` — 25 row(s)
 
 The PDF is filed and the applicant's tool appears in a section of the paper. What is missing is the applicant's reading: a location on its own is not a claim about how the tool was used (§1.1).
 
@@ -48,7 +48,6 @@ The PDF is filed and the applicant's tool appears in a section of the paper. Wha
 | `cit-000617` | GlycoGlyph | 2022 | Gildersleeve | Abnormal antibodies to self-carbohydrates in SARS-CoV-2-infected patients | [open](https://academic.oup.com/pnasnexus/article-abstract/1/3/pgac062/6609787) |
 | `cit-000627` | GlycoGlyph | 2022 | Owonikoko | Serum glycomic profile as a predictive biomarker of recurrence in patients … | [open](https://onlinelibrary.wiley.com/doi/abs/10.1002/cam4.5465) |
 | `cit-000654` | GlycoGlyph | 2022 | Prasad | Novel fold of rotavirus glycan-binding domain predicted by AlphaFold2 and d… | [open](https://escholarship.org/content/qt77j1n0fs/qt77j1n0fs.pdf?v=lg) |
-| `cit-000532` | GLAD | 2023 | Hokke | Unraveling cross-reactivity of anti-glycan IgG responses in filarial nemato… | [open](https://www.frontiersin.org/journals/immunology/articles/10.3389/fimmu.2023.1102344/full) |
 | `cit-000538` | GLAD | 2023 | Kiessling | Lectin fingerprinting distinguishes antibody neutralization in SARS-CoV-2 | [open](https://pmc.ncbi.nlm.nih.gov/articles/PMC10214521/) |
 | `cit-000595` | GlycoGlyph | 2023 | Bojar | GlycoDraw: a python implementation for generating high-quality glycan figur… | [open](https://academic.oup.com/glycob/article-abstract/33/11/927/7232175) |
 | `cit-000531` | GLAD | 2024 | Pekosz | Clade-defining mutations in human H1N1 hemagglutinin protein from 2021-2023… | [open](https://www.biorxiv.org/content/10.1101/2024.05.18.594815.abstract) |
@@ -952,7 +951,7 @@ None. Every citation in `packet.html` has the article filed beside it.
 
 ### 3.7 The narrative fields are a preparer's draft awaiting the applicant's approval
 
-The 17 narrative(s) on file are written into the `narrative` table by
+The 18 narrative(s) on file are written into the `narrative` table by
 `scripts/narrative-intake.js`, which refuses a paragraph that names no page number or a
 page beyond the length of the filed PDF. Who wrote each one is recorded in that table's
 `written_by` and `written_on` columns; it is deliberately **not** printed in `packet.html`,
@@ -998,6 +997,9 @@ quietly re-merging. This is the only place the advice is written down.
 **`cit-000521`** — Enzymatic tailoring of anionic glycans for characterizing lectin and …
 : File this row at tier A.
 
+**`cit-000532`** — Unraveling cross-reactivity of anti-glycan IgG responses in filarial …
+: Chosen by the applicant on 2026-11-10. GLAD is named in the Methods (p.4) and cited as ref. 37 (listed p.16). Published Frontiers in Immunology 2023 article, not a preprint. No other rows cite this article.
+
 **`cit-000542`** — Comparative phenotyping of surface markers and glycans in murine and …
 : Keep the Methods p.5 sentence as the evidence and treat the p.12 acknowledgment as corroboration of the applicant’s role, not as a second use; both statements are recorded so they can be read side by side. OPEN DECISION FOR THE APPLICANT: the headline tier for this row is Methods (tier A) on the strength of the p.5 sentence. If you consider the Acknowledgments thanks to be the more accurate characterisation of the relationship, say so, because tier D would place this article outside the packet entirely.
 
@@ -1030,9 +1032,9 @@ quietly re-merging. This is the only place the advice is written down.
 
 ## 4. Potential citations not in the packet
 
-[`potential_notable_citations.html`](./potential_notable_citations.html) lists **755**
+[`potential_notable_citations.html`](./potential_notable_citations.html) lists **754**
 independent citations of the works in the candidate queue that are **not** in `packet.html`.
-They appear as **670 rows**
+They appear as **669 rows**
 because 85 citations sit on a row already held by
 another of my works. One article that cites two of them is one row with two judgements
 in it, one per work, so the row says where GLAD sits and where GlycoGlyph sits separately.
@@ -1042,7 +1044,7 @@ with it, and nothing on it is evidence until a person has read the article and f
 
 | my work | citing works the record lists | less retired | less not independent | less copies | less not English | less in packet | less in original app. | less decided | listed | PDF on file |
 |---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-| **GLAD** — GLAD: GLycan Array Dashboard, a visual analyt… (2019) | 64 | 0 | 18 | 2 | 0 | 8 | 2 | 10 | **24** | 17 |
+| **GLAD** — GLAD: GLycan Array Dashboard, a visual analyt… (2019) | 64 | 0 | 18 | 2 | 0 | 9 | 2 | 10 | **23** | 16 |
 | **GlycoGlyph** — GlycoGlyph: a glycan visualizing, drawing and… (2020) | 78 | 0 | 9 | 4 | 0 | 7 | 3 | 30 | **25** | 21 |
 | **MAWE** — GlyMDB: Glycan Microarray Database and analys… (2020) | 24 | 0 | 4 | 1 | 0 | 0 | 0 | 6 | **13** | 10 |
 | **MAWE** — Insights into glycobiology and the protein-gl… (2024) | 33 | 0 | 4 | 1 | 0 | 2 | 0 | 0 | **26** | 8 |
@@ -1082,12 +1084,12 @@ with it, and nothing on it is evidence until a person has read the article and f
 | **Other** — Tumor cells express pauci-and oligomannosidic… (2021) | 35 | 0 | 4 | 1 | 0 | 0 | 2 | 6 | **22** | 12 |
 | **Other** — Unique Glycans in Synaptic Glycoproteins in M… (2024) | 4 | 0 | 2 | 0 | 0 | 0 | 0 | 0 | **2** | 1 |
 | **Other** — Unique repertoire of anti-carbohydrate antibo… (2020) | 44 | 0 | 12 | 1 | 0 | 0 | 1 | 7 | **23** | 18 |
-| **all works** | | | | | | | | | **755** | 440 |
+| **all works** | | | | | | | | | **754** | 439 |
 
 Each work's own arithmetic is printed on the review page beside its name; the row above
 is the same screen, not a second tally.
 
-440 citations already have a PDF on file, held under `pending-papers/` until a
+439 citations already have a PDF on file, held under `pending-papers/` until a
 decision is made. The rest sit at
 `no-open-copy`, `paywalled`, or `not-in-indexes` — findings about access, not about
 whether the paper exists. **A tier appears only for an article that has actually been read:**
@@ -2023,9 +2025,9 @@ evidence looks like something and is not.
 
 | basis of a recorded mention | mentions | rows |
 |---|---:|---:|
-| reference-number resolution | 775 | 463 |
+| reference-number resolution | 774 | 462 |
 | extracted text | 23 | 17 |
-| human reading | 10 | 7 |
+| human reading | 11 | 8 |
 
 A resolved citation is held to the same bar as one that names the tool: it must sit in
 prose, under a heading the citing paper itself printed, and not in the bibliography entry
