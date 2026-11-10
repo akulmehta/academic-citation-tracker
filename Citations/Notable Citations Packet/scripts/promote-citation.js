@@ -152,6 +152,8 @@ async function main() {
   const nf = opt("narrative");
   if (nf) run("narrative-intake.js", [`--from=${nf}`, "--write"]);
   else console.log("no --narrative given: Section II will print as a marked blank until prose is filed.");
+  // The review pages must not keep offering a citation that is now in packet.html.
+  if (fs.existsSync(path.join(L.REPO, "archived-logs", "catalog-v2.json"))) run("render-catalog-v2.js", []);
 }
 
 main().catch(e => { console.error(e); process.exit(1); });

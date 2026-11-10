@@ -65,8 +65,14 @@ function whereInPdf(x) {
 }
 
 function main() {
-  const data = JSON.parse(fs.readFileSync(JSON_IN, "utf8"));
   const db = openPacket();
+  // A citation already in packet.html is decided, so it does not belong on a page for choosing. Read the status
+  // from the database now, not from the cataloguer's last run, so a promotion drops its row from both pages
+  // the next time they are rendered.
+  const included = new Set(db.prepare("SELECT row_uid FROM citation WHERE status='included'").all().map(r => r.row_uid));
+  const allRows = JSON.parse(fs.readFileSync(JSON_IN, "utf8"));
+  const data = allRows.filter(x => !included.has(x.uid));
+  if (allRows.length !== data.length) console.log(`left out ${allRows.length - data.length} citation(s) already in packet.html`);
   const meta = db.prepare("SELECT row_uid, citing_authors, citing_venue, citing_year, citing_url, citing_title FROM citation WHERE row_uid=?");
   for (const x of data) {
     const m = meta.get(x.uid) || {};
