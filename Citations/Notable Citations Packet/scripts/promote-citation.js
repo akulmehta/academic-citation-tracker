@@ -63,11 +63,19 @@ async function demote(uid) {
   const r = db.prepare("SELECT row_uid, status, n FROM citation WHERE row_uid=?").get(uid);
   if (!r) throw new Error(`no such row ${uid}`);
   if (r.status !== "included") throw new Error(`${uid} is ${r.status}, not included`);
-  console.log(`${uid}: included (n=${r.n}) -> held; its narrative row is kept but not printed.`);
+  console.log(`${uid}: included (n=${r.n}) -> held. Its narrative row is deleted (a narrative without an included work is an orphan);`
+    + ` keep the prose file you promoted it with if you may re-promote.`);
   if (!WRITE) { console.log("dry run — re-run with --write."); return; }
+  const info = db.prepare("SELECT folder_uid, cited_paper FROM citation WHERE row_uid=?").get(uid);
   db.close(); backup();
   const d2 = L.openPacket();
-  d2.prepare(`UPDATE citation SET status='held', n=NULL, project=NULL, tier=NULL, section=NULL, page=NULL, quote=NULL, use_type=NULL, evidence_basis=NULL WHERE row_uid=?`).run(uid);
+  // A held row that cites one of the four tools keeps that tool's default project number, which the
+  // validator requires of every such row; only a row with no default goes back to NULL.
+  const defaultProject = L.projectForCitedPaper(info.cited_paper);
+  d2.prepare(`UPDATE citation SET status='held', n=NULL, project=?, tier=NULL, section=NULL, page=NULL, quote=NULL, use_type=NULL, evidence_basis=NULL WHERE row_uid=?`).run(defaultProject, uid);
+  // the narrative belongs to the work; drop it only if no other row of the folder is still included
+  const stillIncluded = d2.prepare("SELECT 1 FROM citation WHERE folder_uid=? AND status='included' LIMIT 1").get(info.folder_uid);
+  if (!stillIncluded) d2.prepare("DELETE FROM narrative WHERE folder_uid=?").run(info.folder_uid);
   d2.close();
   run("relocate-pdfs.js", ["--write"]);
 }
