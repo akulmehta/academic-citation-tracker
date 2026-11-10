@@ -31,7 +31,7 @@ every held row appears in §2 below.
 ## 2. Held rows — 776 open items
 
 
-### 2.1 `read` — 24 row(s)
+### 2.1 `read` — 25 row(s)
 
 The PDF is filed and the applicant's tool appears in a section of the paper. What is missing is the applicant's reading: a location on its own is not a claim about how the tool was used (§1.1).
 
@@ -44,6 +44,7 @@ The PDF is filed and the applicant's tool appears in a section of the paper. Wha
 | `cit-000626` | GlycoGlyph | 2021 | Yamada | SugarDrawer: a web-based database search tool with editing glycan structures | [open](https://www.mdpi.com/1420-3049/26/23/7149) |
 | `cit-000514` | GLAD | 2022 | Hokke | Mass spectrometric and glycan microarray–based characterization of the fila… | [open](https://www.mcponline.org/article/S1535-9476(22)00009-3/fulltext) |
 | `cit-000543` | GLAD | 2022 | Feizi | CarbArrayART: a new software tool for carbohydrate microarray data storage,… | [open](https://academic.oup.com/glycob/article-abstract/32/7/552/6555547) |
+| `cit-000600` | GlycoGlyph | 2022 | Prasad | Novel fold of rotavirus glycan-binding domain predicted by AlphaFold2 and d… | [open](https://www.nature.com/articles/s42003-022-03357-1) |
 | `cit-000617` | GlycoGlyph | 2022 | Gildersleeve | Abnormal antibodies to self-carbohydrates in SARS-CoV-2-infected patients | [open](https://academic.oup.com/pnasnexus/article-abstract/1/3/pgac062/6609787) |
 | `cit-000627` | GlycoGlyph | 2022 | Owonikoko | Serum glycomic profile as a predictive biomarker of recurrence in patients … | [open](https://onlinelibrary.wiley.com/doi/abs/10.1002/cam4.5465) |
 | `cit-000654` | GlycoGlyph | 2022 | Prasad | Novel fold of rotavirus glycan-binding domain predicted by AlphaFold2 and d… | [open](https://escholarship.org/content/qt77j1n0fs/qt77j1n0fs.pdf?v=lg) |
@@ -62,7 +63,7 @@ The PDF is filed and the applicant's tool appears in a section of the paper. Wha
 | `cit-000512` | GLAD | — | Aoki-Kinoshita | Worldwide glycoscience informatics infrastructure: the GlySpace Alliance | [open](https://pubs.acs.org/jaaucr/article-abstract/3/1/4/1253251) |
 | `cit-000556` | GLAD | — | — | Phenotyping murine and human platelet-derived extracellular vesicles gives … | [open](https://www.rpthjournal.org/cms/10.1016/j.rpth.2026.103414/attachment/5e1ef181-290b-47ad-a0b6-2820746565cf/mmc1.pdf) |
 
-### 2.2 `unread` — 406 row(s)
+### 2.2 `unread` — 405 row(s)
 
 The PDF is filed. Nobody has read it yet.
 
@@ -93,7 +94,6 @@ The PDF is filed. Nobody has read it yet.
 | `cit-001011` | — | 2015 | Wang | Soluble expression, purification, and characterization of active recombinan… | [open](https://link.springer.com/article/10.1186/s12896-015-0127-y) |
 | `cit-001019` | — | 2015 | Jairajpuri | Polysulfated trehalose as a novel anticoagulant agent with dual mode of act… | [open](https://onlinelibrary.wiley.com/doi/abs/10.1155/2015/630482) |
 | `cit-001164` | — | 2015 | Groutas | Structure-Guided Design and Optimization of Dipeptidyl Inhibitors of Norovi… | [open](https://pubs.acs.org/jmcmar/article-abstract/58/7/3144/1300753) |
-| `cit-001230` | — | 2015 | Chang | Potent inhibition of enterovirus D68 and human rhinoviruses by dipeptidyl a… | — |
 | `cit-001290` | — | 2015 | Zhao | Discovery of an intrinsic tenase complex inhibitor: Pure nonasaccharide fro… | [open](https://www.pnas.org/doi/abs/10.1073/pnas.1504229112) |
 | `cit-001389` | — | 2015 | — | New perspectives for antithrombotic therapy—coagulation factor XI as a targ… | [open](https://journals.viamedica.pl/hematology_in_clinical_practice/article/view/44302) |
 | `cit-000062` | — | 2016 | De Filippis | Molecular mapping of α-thrombin (αT)/β2-glycoprotein I (β2GpI) interaction … | [open](https://portlandpress.com/biochemj/article-abstract/473/24/4629/49339) |
@@ -861,7 +861,7 @@ counsel relies on them:
 | GlycoGlyph | 2 |
 | MAWE | 3 |
 
-Distribution over all 1057 rows: `2` = 110, `3` = 72, `4` = 18, `(blank)` = 857.
+Distribution over all 1057 rows: `1` = 1, `2` = 110, `3` = 72, `4` = 18, `(blank)` = 856.
 
 If a number is wrong, the single place to change it is `toolForCitedPaper` /
 `projectForCitedPaper` in [`scripts/lib.js`](./scripts/lib.js), then re-run the importer and
@@ -894,12 +894,6 @@ The scanner reports what it read in a separate column (`scan_tier`) and never ov
 applicant's `tier`. It cannot see a figure or judge prose the way a reader can, so a
 disagreement is a prompt to re-read the page, not a correction. These rows stay in the
 packet until a person says otherwise:
-
-**The tool is in a section, but a different one than recorded:**
-
-| row_uid | recorded | scanner read | where the scanner looked |
-|---|---|---|---|
-| `cit-000600` | tier B, Results (Figure 4 legend: glycan array of VP8*B) p.6 | tier A | Methods p.6: b The glycan structures with the highest binding signals were drawn using GlycoGlyph49 . |
 
 **The row's quotation is verified in the PDF, but the scanner could not find the tool's NAME:**
 
@@ -1014,9 +1008,6 @@ quietly re-merging. This is the only place the advice is written down.
 **`cit-000594`** — AquIRE reveals the mechanisms of clinically induced RNA damage and th…
 : This is a single-sentence Methods use in a high-visibility journal, and it is best presented as evidence of routine adoption for a standard task rather than as a load-bearing methodological dependence.
 
-**`cit-000600`** — Novel fold of rotavirus glycan-binding domain predicted by AlphaFold2…
-: Chosen by the applicant on 2026-11-10. The scanner and database first recorded this as Methods, Tier A; the sentence is in the Figure 4 legend (p.6), which belongs to the Results, so it is filed as Tier B. GlycoGlyph is cited as ref. 49 (listed p.8). Published Communications Biology 2022 article. No other rows cite this article.
-
 **`cit-000602`** — Diminished sialoside binding in novel H5N1 influenza hemagglutinin va…
 : A Methods use in a Nature Communications article on a matter of public-health urgency; present it as the applicant’s tool being used to render the glycan structures in a high-profile receptor-binding study.
 
@@ -1031,6 +1022,9 @@ quietly re-merging. This is the only place the advice is written down.
 
 **`cit-000629`** — Glycan-reactive antibodies isolated from human HIV-1 vaccine trial pa…
 : One of the strongest folders in the packet: the applicant’s MAWE protocol is the assay method behind a Nature-family-tier HIV vaccine immunology study, and GlycoGlyph supplied the structure diagrams, both named in Methods and in a figure legend.
+
+**`cit-001230`** — Potent inhibition of enterovirus D68 and human rhinoviruses by dipept…
+: Chosen by the applicant on 2026-11-10. The applicant's thrombin paper (Sidhu et al. 2011) is one of five references, in a single Methods sentence about the protease selectivity panel (p.4); it is not a use of the applicant's compounds. Project 1 assigned because the cited paper is the thrombin allosteric inhibitor work (no default project for this work); confirm. The journal name was missing from the record and was filled in from the PDF header (Antiviral Research, 2016 volume, available online 2015).
 
 **`cit-001253`** — Intelectin-2 is a broad-spectrum antimicrobial lectin
 : Do not present this citation as an instance of the tool being adopted. Keep the row, and keep the hedge quoted. The applicant’s own earlier summary of this paper recorded the same doubt. If the applicant knows from the authors or the NCFG that the array work was in fact run on reusable arrays made by MAWE, that fact should be recorded through the decision tool with its basis, not inferred from this sentence.
@@ -1053,7 +1047,7 @@ with it, and nothing on it is evidence until a person has read the article and f
 | my work | citing works the record lists | less retired | less not independent | less copies | less not English | less in packet | less in original app. | less decided | listed | PDF on file |
 |---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
 | **GLAD** — GLAD: GLycan Array Dashboard, a visual analyt… (2019) | 64 | 0 | 18 | 2 | 0 | 9 | 2 | 10 | **23** | 16 |
-| **GlycoGlyph** — GlycoGlyph: a glycan visualizing, drawing and… (2020) | 78 | 0 | 9 | 4 | 0 | 8 | 3 | 30 | **24** | 20 |
+| **GlycoGlyph** — GlycoGlyph: a glycan visualizing, drawing and… (2020) | 78 | 0 | 9 | 4 | 0 | 7 | 3 | 30 | **25** | 21 |
 | **MAWE** — GlyMDB: Glycan Microarray Database and analys… (2020) | 24 | 0 | 4 | 1 | 0 | 0 | 0 | 6 | **13** | 10 |
 | **MAWE** — Insights into glycobiology and the protein-gl… (2024) | 33 | 0 | 4 | 1 | 0 | 2 | 0 | 0 | **26** | 8 |
 | **MAWE** — Reusable glycan microarrays using a microwave… (2024) | 15 | 0 | 6 | 1 | 0 | 5 | 0 | 3 | **0** | 0 |
@@ -1083,7 +1077,7 @@ with it, and nothing on it is evidence until a person has read the article and f
 | **Other** — Novel reversible fluorescent glycan linker fo… (2019) | 24 | 0 | 8 | 1 | 0 | 0 | 0 | 5 | **10** | 8 |
 | **Glyco-SPOT** — Parallel Glyco-SPOT Synthesis of Glycopeptide… (2020) | 22 | 0 | 3 | 1 | 0 | 0 | 2 | 4 | **12** | 7 |
 | **Other** — Potent direct inhibitors of factor Xa based o… (2012) | 32 | 0 | 8 | 1 | 0 | 0 | 0 | 3 | **20** | 11 |
-| **Other** — Rational design of potent, small, synthetic a… (2011) | 74 | 0 | 28 | 2 | 0 | 0 | 2 | 11 | **31** | 12 |
+| **Other** — Rational design of potent, small, synthetic a… (2011) | 74 | 0 | 28 | 2 | 0 | 1 | 2 | 11 | **30** | 11 |
 | **Other** — Recognition of highly branched N-glycans of t… (2024) | 16 | 0 | 6 | 0 | 0 | 0 | 0 | 0 | **10** | 5 |
 | **Other** — Structural modification of azolylacryloyl der… (2019) | 9 | 0 | 5 | 0 | 0 | 0 | 0 | 1 | **3** | 2 |
 | **Other** — Substantial non-electrostatic forces are need… (2014) | 9 | 0 | 5 | 0 | 0 | 0 | 0 | 2 | **2** | 0 |
@@ -2033,9 +2027,9 @@ evidence looks like something and is not.
 
 | basis of a recorded mention | mentions | rows |
 |---|---:|---:|
-| reference-number resolution | 773 | 461 |
+| reference-number resolution | 772 | 460 |
 | extracted text | 22 | 16 |
-| human reading | 12 | 9 |
+| human reading | 13 | 10 |
 
 A resolved citation is held to the same bar as one that names the tool: it must sit in
 prose, under a heading the citing paper itself printed, and not in the bibliography entry
