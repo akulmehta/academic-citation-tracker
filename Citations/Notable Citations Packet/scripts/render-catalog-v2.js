@@ -84,8 +84,9 @@ function main() {
     const top = x.mentions[0];
     const c = x.profile.counts || {};
     const pill = x.headline ? `<span class="pill t${x.headline}">Tier ${x.headline}</span>` : `<span class="pill none">no tier</span>`;
-    const first = top
-      ? `<div class="q">${esc(top.quote.length > 230 ? top.quote.slice(0, 230) + "…" : top.quote)}</div><div class="sub">${esc(top.section)} · p.${esc(top.page)} · <b>${esc(top.marker)}</b>${x.mentions.length > 1 ? ` · ${x.mentions.length} places in all` : ""}</div>`
+    // Every place the paper cites the applicant's work, each with its own PDF link, so a decision can be made from the row.
+    const first = x.mentions.length
+      ? `<div class="count">${x.mentions.length} place${x.mentions.length === 1 ? "" : "s"} cited</div><ul class="ml">${x.mentions.map(m => `<li class="m"><span class="pill t${esc(m.tier || "")}">${esc(m.tier || "?")}</span> <span class="sub">${esc(m.section)} · p.${esc(m.page)} · <b>${esc(m.marker)}</b></span> <a class="pdflink" href="${pdfHref(x.pdf, m.page)}" ${NEW_TAB}>open PDF p.${esc(m.page)}</a>${m.inferred ? ' <span class="warn">tier inferred</span>' : ""}${m.lowConfidence ? ' <span class="warn">check number</span>' : ""}<div class="q">${esc(m.quote.length > 320 ? m.quote.slice(0, 320) + "…" : m.quote)}</div></li>`).join("")}</ul>`
       : `<div class="none">${esc(x.reason || "")}</div>`;
     return `<tr data-uid="${esc(x.uid)}" data-tier="${esc(tierOf(x))}" data-style="${esc(x.profile.style)}" data-status="${esc(x.status)}" data-year="${esc(x.year)}" data-work="${esc(x.work)}" data-text="${esc((x.uid + " " + x.fullTitle + " " + x.citingAuthors + " " + x.venue + " " + x.cited + " " + x.where.badge + " " + x.mentions.map(m => m.quote).join(" ")).toLowerCase())}">
 <td class="uid"><a href="${REPORT_NAME}?uid=${esc(x.uid)}" ${NEW_TAB}>${esc(x.uid)}</a></td>
@@ -106,6 +107,7 @@ h1{font-size:22px;margin:14px 0 2px}h2{font-size:17px;margin:18px 0 6px}a{color:
 .note{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 14px;margin:10px 0}
 .pill{display:inline-block;border-radius:6px;padding:0 8px;font-weight:700;font-size:13px;background:var(--card);border:1px solid var(--line)}.pill.tA{color:var(--a)}.pill.tB{color:var(--b)}.pill.tC{color:var(--c)}.pill.none{color:var(--mut);font-weight:400}
 .q{padding-left:8px;border-left:3px solid var(--line);margin:2px 0}.none{color:var(--mut);font-style:italic}.refno{display:inline-block;background:var(--hi);border-radius:6px;padding:1px 8px;font-weight:700}
+.ml{list-style:none;margin:0;padding:0}.m{margin:0 0 10px}.count{font-weight:600;font-size:13px;margin-bottom:4px}.warn{color:var(--bad);font-size:12px}.pdflink{font-size:13px;white-space:nowrap}
 .stat{font-size:13px;padding:1px 8px;border-radius:6px;background:var(--card);border:1px solid var(--line);display:inline-block}.s-catalog-higher{color:var(--a)}.s-catalog-lower,.s-db-only{color:var(--bad)}
 `;
   const listHtml = `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Citation Catalog v2</title><style>${css}
