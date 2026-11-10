@@ -123,7 +123,7 @@ function buildReferenceIndexV2(pages) {
     const t = String(L.text || "").trim();
     for (const re of ENTRY_OPENERS) {
       const m = t.match(re);
-      if (m) { starts.push({ n: Number(m[1]), page: pi + 1, li, rest: (m[2] || "").trim() }); break; }
+      if (m) { starts.push({ n: Number(m[1]), page: pi + 1, li, rest: (m[2] || "").trim(), open: t[0] }); break; }
     }
   }));
   // longest chain n, n+1, n+2, ... in order; best[i] = length of the chain ending at starts[i]
@@ -166,7 +166,12 @@ function buildReferenceIndexV2(pages) {
   if (chain.length / (lastP - firstP + 1) < 3) return { byNumber: new Map(), refPages: new Set() };
   for (let p = firstP; p <= lastP; p++) refPages.add(p);
   if (lastP < pages.length && (pages[lastP] || []).length < 30) refPages.add(lastP + 1);
-  return { byNumber, refPages, refLineStart: { page: firstP, li: chain[0].li } };
+  // How the paper prints its citation numbers follows from how it prints the list: "[3] Smith" means
+  // in-text [3]; "(3) Smith" means (3). A marker in the other style is something else (an enumeration).
+  const openers = chain.map(c => c.open);
+  const nb = openers.filter(o => o === "[").length, np = openers.filter(o => o === "(").length;
+  const style = nb > chain.length / 2 ? "bracket" : np > chain.length / 2 ? "paren" : "other";
+  return { byNumber, refPages, style, refLineStart: { page: firstP, li: chain[0].li } };
 }
 
 /** v1 and v2 side by side; whichever finds more entries leads and the other fills any gap. */
@@ -178,7 +183,7 @@ function buildReferenceIndex(pages) {
   const refPages = new Set([...lead.refPages, ...other.refPages]);
   const rs = b.refLineStart;
   // the line-level start only holds while no other reader called an earlier page part of the list
-  return { byNumber, refPages, refLineStart: rs && Math.min(...refPages) === rs.page ? rs : undefined };
+  return { byNumber, refPages, style: lead === b ? b.style : undefined, refLineStart: rs && Math.min(...refPages) === rs.page ? rs : undefined };
 }
 
 const BIB_ENTRY = /^(?:\[\s*\d+\s*\]|\d+\.\s+[A-Z][a-z]+\s*,?\s+[A-Z]\.?)/;
@@ -523,6 +528,19 @@ function findMarkers(pages, index, num, opts = {}) {
   // The reference list often starts part-way down a page that still carries body text above it.
   const inRefs = L => index.refPages.has(L.page)
     && !(index.refLineStart && L.page === index.refLineStart.page && L.li < index.refLineStart.li);
+  // Running headers and footers ("V.S. Pokrovsky et al. Analytical Biochemistry 701 (2025) 115806", a
+  // page number) repeat on every page. They are not prose: a number beside one is a page or volume
+  // number, and quoting one as a sentence put a header in front of counsel as "Tier A, Methods".
+  const furnKey = t => String(t).replace(/\d+/g, "#").replace(/\s+/g, " ").trim().toLowerCase();
+  const furnPages = new Map();
+  for (const L of flat) {
+    if (L.text.length > 110) continue;
+    const k = furnKey(L.text);
+    if (!k) continue;
+    if (!furnPages.has(k)) furnPages.set(k, new Set());
+    furnPages.get(k).add(L.page);
+  }
+  const isFurniture = L => L.text.length <= 110 && (furnPages.get(furnKey(L.text)) || new Set()).size >= 3;
   const hits = [];
   flat.forEach((L, i) => {
     if (inRefs(L)) return;
@@ -534,6 +552,20 @@ function findMarkers(pages, index, num, opts = {}) {
       : [...findTextMarkers(L.text), ...findRaisedMarkers(L)];
     for (const mk of marks) {
       if (!mk.numbers.includes(num)) continue;
+      // Furniture is never a citation, and a lone number under furniture is a page number.
+      if (isFurniture(L)) continue;
+      if (mk.orphan && i > 0 && isFurniture(flat[i - 1])) continue;
+      // The paper's own numbering style decides which brackets can be citations. In a "[3] Smith ..."
+      // bibliography an in-text "(3)" is an enumeration, "(1) ... (2) ... (3)", never reference 3.
+      const open = String(mk.raw || "").trim()[0];
+      if (index.style === "bracket" && open === "(") continue;
+      if (index.style === "paren" && open === "[") continue;
+      // "(n)" with its neighbour "(n-1)" or "(n+1)" in the same stretch of text is a numbered list.
+      if (open === "(" && mk.numbers.length === 1) {
+        const near = [flat[i - 2], flat[i - 1], L, flat[i + 1], flat[i + 2]].filter(x => x && x.page === L.page).map(x => x.text).join(" ");
+        const seen = [...near.matchAll(/\((\d{1,2})\)/g)].map(m => Number(m[1]));
+        if (seen.includes(num - 1) || seen.includes(num + 1)) continue;
+      }
       // The bibliography entry itself, when it lands on a non-reference page.
       if (!mk.bare && !mk.superscript && new RegExp(`^\\[?\\s*${num}\\s*(?:\\]|\\.)`).test(L.text)) return;
       let context = L.text;
@@ -547,7 +579,7 @@ function findMarkers(pages, index, num, opts = {}) {
           const q = flat[j];
           if (q.page !== L.page || inRefs(q)) break;
           if (/[.?!:]\s*$/.test(q.text) && !/\bet al\.$/.test(q.text)) break;
-          if (!followsProse(q.text) || isOrphanNumberLine(q.text)) break;
+          if (isFurniture(q) || !followsProse(q.text) || isOrphanNumberLine(q.text)) break;
           parts.unshift(q.text);
         }
         // ...and forward: a marker mid-sentence ("properties (43), enhanced") leaves the sentence open at
@@ -557,7 +589,7 @@ function findMarkers(pages, index, num, opts = {}) {
         if (!/[.?!]["”')\]]*\s*$/.test(L.text) && !/[.?!](?:\s|$)/.test(tail)) {
           for (let j = i + 1, k = 0; j < flat.length && k < 3; j++, k++) {
             const q = flat[j];
-            if (q.page !== L.page || inRefs(q) || isOrphanNumberLine(q.text) || !followsProse(q.text)) break;
+            if (q.page !== L.page || inRefs(q) || isFurniture(q) || isOrphanNumberLine(q.text) || !followsProse(q.text)) break;
             parts.push(q.text);
             if (/[.?!]["”')\]]*\s*$/.test(q.text) && !/\bet al\.\s*$/.test(q.text)) break;
           }
@@ -570,7 +602,7 @@ function findMarkers(pages, index, num, opts = {}) {
         // a table column, and walking further back over it would quote a sentence
         // that has nothing to do with the number.
         const prev = i > 0 ? flat[i - 1] : null;
-        if (!prev || inRefs(prev) || !followsProse(prev.text)) {
+        if (!prev || inRefs(prev) || isFurniture(prev) || !followsProse(prev.text)) {
           mk.rejected = "no prose above";
           return;
         }
@@ -582,7 +614,7 @@ function findMarkers(pages, index, num, opts = {}) {
           const q = flat[j];
           if (q.page !== prev.page) break;
           if (inRefs(q)) break;
-          if (!followsProse(q.text)) break;
+          if (isFurniture(q) || !followsProse(q.text)) break;
           parts.unshift(q.text);
         }
         context = parts.join(" ");

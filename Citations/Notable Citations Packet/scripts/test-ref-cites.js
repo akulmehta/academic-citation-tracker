@@ -267,5 +267,27 @@ ok(ay("(Mehta et al. 2019)")[0].coauthorHit === false,
   ok(other.length === 0, "a titleless entry sharing only the first author is not the paper");
 }
 
+// ── cit-001530: three things that were counted as citations of reference 3 and were not ──
+{
+  const L = t => ({ text: t });
+  const hdr = "V.S. Pokrovsky et al. Analytical Biochemistry 701 (2025) 115806";
+  const pg = (...lines) => lines.map(L);
+  const pages = [
+    pg(hdr, "The repertoire of circulating antibodies is unique and stable [3].", "Advantages include: (1) parallel screening; (2) low sample volume; (3) high sensitivity."),
+    pg(hdr, "This is more proof that the variables are related in a", hdr.replace("701", "702"), "3"),
+    pg(hdr, "Conclusions follow here."),
+    pg("References", "[3] R. Luetscher, Unique repertoire, Sci. Rep. 2020."),
+  ];
+  const index = { byNumber: new Map([[3, "R. Luetscher, Unique repertoire, Sci. Rep. 2020."]]), refPages: new Set([4]), style: "bracket" };
+  const h = rc.findMarkers(pages, index, 3, { sentenceAround: t => t });
+  eq(h.length, 1, "only the real [3] counts: not the enumeration (3), not a page number under a running header");
+  ok(h[0].marker === "[3]" && h[0].page === 1, "the surviving hit is the bracketed citation on page 1");
+  // the same text in a paper that numbers its list "(3) Smith" keeps (3) as a citation
+  const idxParen = { ...index, style: "paren" };
+  const pagesP = [pg(hdr, "Methods followed the published protocol (3)."), pg(hdr, "More text."), pg(hdr, "More text.")];
+  eq(rc.findMarkers(pagesP, { ...idxParen, refPages: new Set([4]) }, 3, { sentenceAround: t => t }).length, 1,
+    "(3) is a citation where the bibliography is numbered (3)");
+}
+
 console.log(`\n${pass} passed, ${fail} failed`);
 process.exitCode = fail ? 1 : 0;
