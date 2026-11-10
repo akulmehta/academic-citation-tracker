@@ -13,22 +13,22 @@ decision that only a person can make.
 
 | | count |
 |---|---:|
-| Citations in the packet (in `packet.html`) | 24 |
-| Works those citations are filed as (§5.1 folders) | 16 |
-| PDFs filed under `papers/` (in the packet) | 19 |
-| PDFs under `pending-papers/` (awaiting a decision) | 452 |
+| Citations in the packet (in `packet.html`) | 27 |
+| Works those citations are filed as (§5.1 folders) | 19 |
+| PDFs filed under `papers/` (in the packet) | 22 |
+| PDFs under `pending-papers/` (awaiting a decision) | 449 |
 | PDFs under `screened-papers/` (kept, not filed) | 62 |
-| Held — open items, listed below | 779 |
+| Held — open items, listed below | 776 |
 | Screened out — decided, kept for the record (§4.5) | 254 |
 | **Rows in table `citation`** | **1057** |
 
-`packet.csv` holds the 24 included rows. `screened-out.csv` holds the other 1033,
+`packet.csv` holds the 27 included rows. `screened-out.csv` holds the other 1030,
 because §4.5 exports `screened-out` and `held` together — counsel is entitled to see that the
 work was screened and on what grounds. A screened-out row is not missing work: it is the
 record of what was looked at and rejected, with the reason beside it. A held row is open, and
 every held row appears in §2 below.
 
-## 2. Held rows — 779 open items
+## 2. Held rows — 776 open items
 
 
 ### 2.1 `read` — 31 row(s)
@@ -69,7 +69,7 @@ The PDF is filed and the applicant's tool appears in a section of the paper. Wha
 | `cit-000512` | GLAD | — | Aoki-Kinoshita | Worldwide glycoscience informatics infrastructure: the GlySpace Alliance | [open](https://pubs.acs.org/jaaucr/article-abstract/3/1/4/1253251) |
 | `cit-000556` | GLAD | — | — | Phenotyping murine and human platelet-derived extracellular vesicles gives … | [open](https://www.rpthjournal.org/cms/10.1016/j.rpth.2026.103414/attachment/5e1ef181-290b-47ad-a0b6-2820746565cf/mmc1.pdf) |
 
-### 2.2 `unread` — 401 row(s)
+### 2.2 `unread` — 398 row(s)
 
 The PDF is filed. Nobody has read it yet.
 
@@ -148,7 +148,6 @@ The PDF is filed. Nobody has read it yet.
 | `cit-001195` | — | 2019 | Maurer | Thrombin Exosite Maturation and Ligand Binding at ABE II Help Stabilize PAR… | [open](https://pmc.ncbi.nlm.nih.gov/articles/PMC6716794/) |
 | `cit-001443` | — | 2019 | Maurer | Thrombin Exosite Maturation and Ligand Binding at ABE II Help Stabilize PAR… | [open](https://pmc.ncbi.nlm.nih.gov/articles/PMC6716794/) |
 | `cit-000025` | — | 2020 | Lam | Orally bioavailable amine-linked macrocyclic inhibitors of factor XIa | [open](https://www.sciencedirect.com/science/article/pii/S0960894X20300020) |
-| `cit-000044` | — | 2020 | Biller | Vorasidenib (AG-881): a first-in-class, brain-penetrant dual inhibitor of m… | [open](https://pmc.ncbi.nlm.nih.gov/articles/PMC7025383/) |
 | `cit-000050` | — | 2020 | Srinivasan | Explicit treatment of non‐Michaelis‐Menten and atypical kinetics in early d… | [open](https://chemistry-europe.onlinelibrary.wiley.com/doi/abs/10.1002/cmdc.202000791) |
 | `cit-000056` | — | 2020 | Jiang | Thermodynamics, kinetics and mechanisms of noncompetitive allosteric inhibi… | [open](https://pubs.acs.org/doi/abs/10.1021/acs.langmuir.0c00699) |
 | `cit-000063` | — | 2020 | Beyaert | Long-term MALT1 inhibition in adult mice without severe systemic autoimmuni… | [open](https://www.cell.com/iscience/fulltext/S2589-0042(20)30749-5) |
@@ -175,10 +174,8 @@ The PDF is filed. Nobody has read it yet.
 | `cit-000235` | — | 2021 | Kikkeri | Rational designing of glyco-nanovehicles to target cellular heterogeneity | [open](https://pubs.rsc.org/sc/article-abstract/12/11/4021/745774) |
 | `cit-000298` | — | 2021 | Zhang | Quantitative disaccharide profiling of glycosaminoglycans from two differen… | [open](https://link.springer.com/protocol/10.1007/978-1-0716-1398-6_10) |
 | `cit-000316` | — | 2021 | Machado | Electrochemical evidence of nitrate release from the nitrooxy compound 4-((… | [open](https://www.sciencedirect.com/science/article/pii/S0753332220311057) |
-| `cit-000396` | — | 2021 | Bojar | LectinOracle: a generalizable deep learning model for lectin–glycan binding… | [open](https://advanced.onlinelibrary.wiley.com/doi/abs/10.1002/advs.202103807) |
 | `cit-000401` | — | 2021 | Thaysen-Andersen | Trends in oligomannosylation and α1, 2-mannosidase expression in human canc… | [open](https://pmc.ncbi.nlm.nih.gov/articles/PMC8522845/) |
 | `cit-000414` | — | 2021 | Bailey-Kellogg | Attention please: modeling global and local context in glycan structure-fun… | [open](https://www.biorxiv.org/content/10.1101/2021.10.15.464532.abstract) |
-| `cit-000423` | — | 2021 | Yu | Glycan epitopes and potential glycoside antagonists of DC-SIGN Involved in … | [open](https://www.mdpi.com/2218-273X/11/11/1586) |
 | `cit-000443` | — | 2021 | — | Development and biological applications of sulfur–triazole exchange (SuTEx)… | [open](https://pubs.rsc.org/cb/article-abstract/2/2/322/674401) |
 | `cit-000675` | — | 2021 | Azadi | Comprehensive characterization of N-and O-glycosylation of SARS-CoV-2 human… | [open](https://academic.oup.com/glycob/article-abstract/31/4/410/5943025) |
 | `cit-000678` | — | 2021 | Zardecki | RCSB Protein Data Bank: Celebrating 50 years of the PDB with new tools for … | [open](https://onlinelibrary.wiley.com/doi/abs/10.1002/pro.4213) |
@@ -864,7 +861,7 @@ counsel relies on them:
 | GlycoGlyph | 2 |
 | MAWE | 3 |
 
-Distribution over all 1057 rows: `1` = 1, `2` = 112, `3` = 74, `4` = 18, `(blank)` = 852.
+Distribution over all 1057 rows: `1` = 2, `2` = 112, `3` = 76, `4` = 18, `(blank)` = 849.
 
 If a number is wrong, the single place to change it is `toolForCitedPaper` /
 `projectForCitedPaper` in [`scripts/lib.js`](./scripts/lib.js), then re-run the importer and
@@ -952,7 +949,7 @@ None. Every citation in `packet.html` has the article filed beside it.
 
 ### 3.7 The narrative fields are a preparer's draft awaiting the applicant's approval
 
-The 16 narrative(s) on file are written into the `narrative` table by
+The 19 narrative(s) on file are written into the `narrative` table by
 `scripts/narrative-intake.js`, which refuses a paragraph that names no page number or a
 page beyond the length of the filed PDF. Who wrote each one is recorded in that table's
 `written_by` and `written_on` columns; it is deliberately **not** printed in `packet.html`,
@@ -1027,9 +1024,9 @@ quietly re-merging. This is the only place the advice is written down.
 
 ## 4. Potential citations not in the packet
 
-[`potential_notable_citations.html`](./potential_notable_citations.html) lists **756**
+[`potential_notable_citations.html`](./potential_notable_citations.html) lists **753**
 independent citations of the works in the candidate queue that are **not** in `packet.html`.
-They appear as **671 rows**
+They appear as **668 rows**
 because 85 citations sit on a row already held by
 another of my works. One article that cites two of them is one row with two judgements
 in it, one per work, so the row says where GLAD sits and where GlycoGlyph sits separately.
@@ -1046,7 +1043,7 @@ with it, and nothing on it is evidence until a person has read the article and f
 | **MAWE** — Reusable glycan microarrays using a microwave… (2024) | 15 | 0 | 6 | 1 | 0 | 4 | 0 | 3 | **1** | 0 |
 | **MAWE** — Tools for generating and analyzing glycan mic… (2020) | 18 | 0 | 3 | 0 | 0 | 0 | 1 | 5 | **9** | 5 |
 | **Other** — Allosteric inhibition of human factor XIa: di… (2014) | 41 | 0 | 8 | 3 | 0 | 0 | 2 | 6 | **22** | 9 |
-| **Other** — Allosteric partial inhibition of monomeric pr… (2016) | 47 | 0 | 15 | 1 | 0 | 0 | 0 | 7 | **24** | 14 |
+| **Other** — Allosteric partial inhibition of monomeric pr… (2016) | 47 | 0 | 15 | 1 | 0 | 1 | 0 | 7 | **23** | 13 |
 | **Other** — Allosterism‐based simultaneous, dual anticoag… (2016) | 56 | 0 | 12 | 3 | 0 | 0 | 2 | 10 | **29** | 12 |
 | **Other** — An update on recent patents on thrombin inhib… (2014) | 70 | 35 | 2 | 5 | 0 | 0 | 0 | 5 | **23** | 12 |
 | **Other** — Antigenic pressure on H3N2 influenza virus dr… (2019) | 48 | 0 | 10 | 2 | 0 | 4 | 2 | 6 | **24** | 13 |
@@ -1057,7 +1054,7 @@ with it, and nothing on it is evidence until a person has read the article and f
 | **Other** — Design, Synthesis, and Investigation of Novel… (2015) | 16 | 0 | 5 | 2 | 0 | 0 | 0 | 2 | **7** | 6 |
 | **Other** — Designing allosteric regulators of thrombin. … (2013) | 65 | 0 | 29 | 1 | 0 | 0 | 0 | 9 | **26** | 11 |
 | **Other** — Development of lamprey-derived antibodies aga… (2025) | 7 | 0 | 3 | 0 | 0 | 0 | 0 | 0 | **4** | 0 |
-| **Other** — Differential recognition of oligomannose isom… (2021) | 39 | 0 | 5 | 0 | 0 | 1 | 1 | 6 | **26** | 17 |
+| **Other** — Differential recognition of oligomannose isom… (2021) | 39 | 0 | 5 | 0 | 0 | 3 | 1 | 6 | **24** | 15 |
 | **Other** — Emerging patterns of tyrosine sulfation and O… (2020) | 46 | 0 | 8 | 2 | 0 | 0 | 0 | 11 | **25** | 17 |
 | **Other** — Functional implications of glycans and their … (2024) | 12 | 6 | 3 | 0 | 0 | 0 | 0 | 0 | **3** | 2 |
 | **Other** — Galectin-3 Decreases 4-1BBL Bioactivity by Cr… (2022) | 27 | 10 | 6 | 2 | 0 | 0 | 0 | 5 | **4** | 2 |
@@ -1079,12 +1076,12 @@ with it, and nothing on it is evidence until a person has read the article and f
 | **Other** — Tumor cells express pauci-and oligomannosidic… (2021) | 35 | 0 | 4 | 1 | 0 | 0 | 2 | 6 | **22** | 12 |
 | **Other** — Unique Glycans in Synaptic Glycoproteins in M… (2024) | 4 | 0 | 2 | 0 | 0 | 0 | 0 | 0 | **2** | 1 |
 | **Other** — Unique repertoire of anti-carbohydrate antibo… (2020) | 44 | 0 | 12 | 1 | 0 | 0 | 1 | 7 | **23** | 18 |
-| **all works** | | | | | | | | | **756** | 434 |
+| **all works** | | | | | | | | | **753** | 431 |
 
 Each work's own arithmetic is printed on the review page beside its name; the row above
 is the same screen, not a second tally.
 
-434 citations already have a PDF on file, held under `pending-papers/` until a
+431 citations already have a PDF on file, held under `pending-papers/` until a
 decision is made. The rest sit at
 `no-open-copy`, `paywalled`, or `not-in-indexes` — findings about access, not about
 whether the paper exists. **A tier appears only for an article that has actually been read:**

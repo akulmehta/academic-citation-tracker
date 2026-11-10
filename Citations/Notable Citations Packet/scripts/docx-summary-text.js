@@ -26,6 +26,9 @@ module.exports = {
   "cit-000602": { topic: "H5N1 bird flu virus from a human patient", use: "Glycan schematics for Figure 5 were produced with my GlycoGlyph application.", why: "Weak receptor binding in a human case helps to assess the pandemic risk of the virus." },
   "cit-001257": { topic: "Origin of a broadly protective HIV antibody lineage", use: "The glycan array data were analyzed with my MAWE method.", why: "Finding what triggers such antibodies is a major obstacle in HIV vaccine design." },
   "cit-000416": { topic: "How a shrimp virus attaches to host tissues", use: "Array data were processed with my MAWE workflow and analyzed with GLAD; my co-authored papers were cited for the array platform and for oligomannose recognition.", why: "Shows that glycans are the virus’s attachment points and a possible target for protection." },
+  "cit-000044": { topic: "Vorasidenib, a brain-penetrant drug candidate for glioma", use: "Cited my 2016 finding on partial allosteric inhibition to explain why two of their compounds only partly block the mutated cancer enzyme.", why: "Helps drug developers choose which compounds to take forward for a hard-to-treat brain cancer." },
+  "cit-000396": { topic: "AI model that predicts which sugars a lectin binds", use: "Used my oligomannose glycan array data as an independent test set to validate the model, because the closely related sugars made it a challenging case.", why: "Shows that the model works on real laboratory data it was not trained on." },
+  "cit-000423": { topic: "Simulations of how DC-SIGN recognizes sugars on the COVID-19 spike", use: "Checked the simulation results against my oligomannose glycan array findings and reported that they agreed.", why: "Gives confidence in the simulations used to search for compounds that block DC-SIGN." },
 };
 
 Object.assign(module.exports, {

@@ -21,4 +21,7 @@ module.exports = {
   "cit-000516": "Used and cited my MAWE method and my co-authored 2024 review for the array work, analyzed the data with my GLAD tool and drew the structures with my GlycoGlyph application.",
   "cit-000416": "Used my MAWE workflow to process the array data and my GLAD tool to analyze them, and cited my co-authored papers for the array platform and for oligomannose recognition.",
   "cit-001257": "Used and cited my MAWE method to analyze the glycan array data.",
+  "cit-000044": "Relied on and cited my 2016 finding that allosteric binding can give partial rather than full inhibition, to explain why two of their compounds only partly block the mutated cancer enzyme.",
+  "cit-000396": "Used my oligomannose glycan array data, citing my 2021 paper, as an independent test set to validate their model for predicting lectin–sugar binding.",
+  "cit-000423": "Used my oligomannose glycan array results, citing my 2021 paper, to validate their molecular simulations, which they reported agreed with my findings.",
 };

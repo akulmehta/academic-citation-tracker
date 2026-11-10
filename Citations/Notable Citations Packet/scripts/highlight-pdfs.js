@@ -340,7 +340,7 @@ async function main() {
     const name = `${String(idx + 1).padStart(2, "0")}_${surname}_${main.citing_year}_${uid}.pdf`;
     const dest = path.join(OUTDIR, name);
 
-    const NO_RESOLVER = new Set(["cit-000749", "cit-000752"]);
+    const NO_RESOLVER = new Set(["cit-000749", "cit-000752", "cit-000044"]);
     // where my work is cited: resolver for each cited paper of this folder, then the filed sentences
     const places = [];    // {page, quote, kind, why}
     const refs = [];      // {page, entry, why}
@@ -357,7 +357,7 @@ async function main() {
       for (const m of db.prepare("SELECT page, quote FROM mention WHERE row_uid=?").all(r.row_uid))
         if (m.quote && m.page) places.push({ page: Number(String(m.page).match(/\d+/)), quote: m.quote, kind: "text", why: `filed mention ${r.row_uid}` });
     }
-    for (const x of EXTRA[uid] || []) places.push({ ...x, kind: "text", why: "added by hand (acknowledgment or figure legend)" });
+    for (const x of EXTRA[uid] || []) places.push({ ...x, kind: x.ref ? "reference" : "text", why: "added by hand (acknowledgment, figure legend or reference entry)" });
 
     const data = fs.readFileSync(src);
     const doc = await lib.getDocument({ data: new Uint8Array(data), ...DIRS, useWorkerFetch: false, isEvalSupported: false, disableFontFace: true }).promise;
@@ -376,6 +376,7 @@ async function main() {
       if (!hit) { entry.notes.push(`not found on p.${pl.page}: ${pl.quote.slice(0, 70)} [${pl.why}]`); continue; }
       let [a, b] = sentenceRange(mdl.S, hit[0], hit[1]);
       [a, b] = trimHeadings(mdl, a, b, hit[1]);
+      if (pl.ref) { const h0 = locate(mdl, pl.quote.slice(0, 40)), h1 = locate(mdl, pl.quote.slice(-40)); if (h0 && h1) { a = h0[0]; b = h1[1]; } }
       if (pl.marker) {
         // The resolver's quote can be the sentence BEFORE the one that carries the marker. Highlight the sentence
         // that actually holds the marker: look at the next two sentences when this one does not.
@@ -398,8 +399,8 @@ async function main() {
       if (overlaps(pl.page, a, b)) continue;
       done.push({ page: pl.page, a, b });
       const rects = rectsFor(mdl, a, b);
-      addHighlight(pdf, pl.page, rects, "Cites my work");
-      entry.highlights.push({ page: pl.page, kind: "text", why: pl.why, quote: pl.quote.slice(0, 120), text: mdl.S.slice(a, b + 1).replace(/\s+/g, " ") });
+      addHighlight(pdf, pl.page, rects, pl.ref ? "My paper in the reference list" : "Cites my work");
+      entry.highlights.push({ page: pl.page, kind: pl.ref ? "reference" : "text", why: pl.why, quote: pl.quote.slice(0, 120), text: mdl.S.slice(a, b + 1).replace(/\s+/g, " ") });
     }
     const seenRef = new Set();
     for (const rf of refs) {
@@ -456,6 +457,11 @@ async function main() {
 
 // Places the resolver cannot see because they are not a numbered or author-year marker.
 const EXTRA = {
+  "cit-000044": [{ page: 7, quote: "Verespy, S., 3rd; Mehta, A. Y.; Afosah, D.; Al-Horani, R. A.; Desai, U. R. Allosteric partial inhibition of monomeric proteases. Sulfated coumarins induce regulation, not just inhibition, of thrombin. Sci. Rep. 2016, 6, 24043.", ref: true }],
+  "cit-000396": [
+    { page: 8, quote: "The slight changes in glycan structure, which nonetheless led to appreciable differences in their binding behavior," },
+    { page: 8, quote: "made this a particularly challenging case study for our model." },
+    { page: 15, quote: "C. Gao, K. Stavenhagen, B. Eckmair, T. R. McKitrick, A. Y. Mehta, Y. Matsumoto, A. M. McQuillan, M. S. Hanes, D. Eris, K. J. Baker, N. Jia, M. Wei, J. Heimburg-Molinaro, B. Ernst, R. D. Cummings, Sci. Adv. 2021, 7, eabf6834.", ref: true }],
   "cit-000542": [{ page: 12, quote: "We also thank Akul Mehta (Harvard University) for valuable discussions and help with the glycan tool Glycan Array Dashboard" }],
   "cit-000629": [{ page: 6, quote: "Diagrams of glycan structures were generated using GlycoGlyph (49). Glycan microarray protocol was followed using the microwave-assisted wet-erase process by Mehta et al. (50)." }],
 };
