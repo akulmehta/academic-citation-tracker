@@ -13,22 +13,22 @@ decision that only a person can make.
 
 | | count |
 |---|---:|
-| Citations in the packet (in `packet.html`) | 22 |
-| Works those citations are filed as (§5.1 folders) | 14 |
-| PDFs filed under `papers/` (in the packet) | 16 |
-| PDFs under `pending-papers/` (awaiting a decision) | 453 |
+| Citations in the packet (in `packet.html`) | 23 |
+| Works those citations are filed as (§5.1 folders) | 15 |
+| PDFs filed under `papers/` (in the packet) | 17 |
+| PDFs under `pending-papers/` (awaiting a decision) | 452 |
 | PDFs under `screened-papers/` (kept, not filed) | 62 |
-| Held — open items, listed below | 781 |
+| Held — open items, listed below | 780 |
 | Screened out — decided, kept for the record (§4.5) | 254 |
 | **Rows in table `citation`** | **1057** |
 
-`packet.csv` holds the 22 included rows. `screened-out.csv` holds the other 1035,
+`packet.csv` holds the 23 included rows. `screened-out.csv` holds the other 1034,
 because §4.5 exports `screened-out` and `held` together — counsel is entitled to see that the
 work was screened and on what grounds. A screened-out row is not missing work: it is the
 record of what was looked at and rejected, with the reason beside it. A held row is open, and
 every held row appears in §2 below.
 
-## 2. Held rows — 781 open items
+## 2. Held rows — 780 open items
 
 
 ### 2.1 `read` — 27 row(s)
@@ -65,7 +65,7 @@ The PDF is filed and the applicant's tool appears in a section of the paper. Wha
 | `cit-000512` | GLAD | — | Aoki-Kinoshita | Worldwide glycoscience informatics infrastructure: the GlySpace Alliance | [open](https://pubs.acs.org/jaaucr/article-abstract/3/1/4/1253251) |
 | `cit-000556` | GLAD | — | — | Phenotyping murine and human platelet-derived extracellular vesicles gives … | [open](https://www.rpthjournal.org/cms/10.1016/j.rpth.2026.103414/attachment/5e1ef181-290b-47ad-a0b6-2820746565cf/mmc1.pdf) |
 
-### 2.2 `unread` — 408 row(s)
+### 2.2 `unread` — 407 row(s)
 
 The PDF is filed. Nobody has read it yet.
 
@@ -168,7 +168,6 @@ The PDF is filed. Nobody has read it yet.
 | `cit-000061` | — | 2021 | Shikhaliev | Synthesis and study of new 2H-pyranoquinolin-2-one-based inhibitors of bloo… | [open](https://link.springer.com/article/10.1007/s11172-021-3114-6) |
 | `cit-000185` | — | 2021 | Boons | Glycan remodeled erythrocytes facilitate antigenic characterization of rece… | [open](https://www.nature.com/articles/s41467-021-25713-1) |
 | `cit-000190` | — | 2021 | Wolff | Evaluation of multivalent sialylated polyglycerols for resistance induction… | [open](https://pubs.acs.org/doi/abs/10.1021/acs.jmedchem.1c00794) |
-| `cit-000196` | — | 2021 | Pekosz | Changes in sialic acid binding associated with egg adaptation decrease live… | [open](https://www.sciencedirect.com/science/article/pii/S0264410X21005351) |
 | `cit-000232` | — | 2021 | Padler-Karavani | Discovery of rare sulfated N-unsubstituted glucosamine based heparan sulfat… | [open](https://pubs.rsc.org/sc/article-abstract/12/10/3674/706387) |
 | `cit-000235` | — | 2021 | Kikkeri | Rational designing of glyco-nanovehicles to target cellular heterogeneity | [open](https://pubs.rsc.org/sc/article-abstract/12/11/4021/745774) |
 | `cit-000298` | — | 2021 | Zhang | Quantitative disaccharide profiling of glycosaminoglycans from two differen… | [open](https://link.springer.com/protocol/10.1007/978-1-0716-1398-6_10) |
@@ -866,7 +865,7 @@ counsel relies on them:
 | GlycoGlyph | 2 |
 | MAWE | 3 |
 
-Distribution over all 1057 rows: `2` = 110, `3` = 70, `4` = 18, `(blank)` = 859.
+Distribution over all 1057 rows: `2` = 110, `3` = 71, `4` = 18, `(blank)` = 858.
 
 If a number is wrong, the single place to change it is `toolForCitedPaper` /
 `projectForCitedPaper` in [`scripts/lib.js`](./scripts/lib.js), then re-run the importer and
@@ -955,14 +954,14 @@ None. Every citation in `packet.html` has the article filed beside it.
 
 ### 3.7 The narrative fields are a preparer's draft awaiting the applicant's approval
 
-The 14 narrative(s) on file are written into the `narrative` table by
+The 15 narrative(s) on file are written into the `narrative` table by
 `scripts/narrative-intake.js`, which refuses a paragraph that names no page number or a
 page beyond the length of the filed PDF. Who wrote each one is recorded in that table's
 `written_by` and `written_on` columns; it is deliberately **not** printed in `packet.html`,
 which would repeat the same sentence 56 times.
 
 Recorded authorship: `the preparer (draft)`.
-Written on: 2026-11-07.
+Written on: 2026-11-07, 2026-11-10.
 
 **These paragraphs are not the applicant's own wording.** Every sentence is drawn from the
 cited article and carries the page it rests on, so each claim can be checked, but a
@@ -979,6 +978,9 @@ not observations about the citing article, so `render-packet.js` never reads the
 they appear nowhere in `packet.html` or the printed PDF. `narrative-intake.js` rejects a
 sentence of that kind in the four rendered columns, which is what keeps the split from
 quietly re-merging. This is the only place the advice is written down.
+
+**`cit-000196`** — Changes in sialic acid binding associated with egg adaptation decreas…
+: Selected by the applicant on 2026-11-10 as a clear use of glycan microarrays citing a method the applicant developed. The citing authors do not name a tool; they cite the applicant's 2019 paper as ref. 31 inside the range [30–33], with three other references, for the array procedure (Methods, p.2). Project 3 assigned on that reading; confirm.
 
 **`cit-000416`** — Glycan-mediated interactions of infectious hypodermal and hematopoiet…
 : This folder is strong on the point that matters: both the MAWE data-processing rules and GLAD are named in the Methods paragraph that generated the binding data, and the cited review is named as the source of the array platform itself.
@@ -1024,9 +1026,9 @@ quietly re-merging. This is the only place the advice is written down.
 
 ## 4. Potential citations not in the packet
 
-[`potential_notable_citations.html`](./potential_notable_citations.html) lists **758**
+[`potential_notable_citations.html`](./potential_notable_citations.html) lists **757**
 independent citations of the works in the candidate queue that are **not** in `packet.html`.
-They appear as **672 rows**
+They appear as **671 rows**
 because 86 citations sit on a row already held by
 another of my works. One article that cites two of them is one row with two judgements
 in it, one per work, so the row says where GLAD sits and where GlycoGlyph sits separately.
@@ -1046,7 +1048,7 @@ with it, and nothing on it is evidence until a person has read the article and f
 | **Other** — Allosteric partial inhibition of monomeric pr… (2016) | 47 | 0 | 15 | 1 | 0 | 0 | 0 | 7 | **24** | 14 |
 | **Other** — Allosterism‐based simultaneous, dual anticoag… (2016) | 56 | 0 | 12 | 3 | 0 | 0 | 2 | 10 | **29** | 12 |
 | **Other** — An update on recent patents on thrombin inhib… (2014) | 70 | 35 | 2 | 5 | 0 | 0 | 0 | 5 | **23** | 12 |
-| **Other** — Antigenic pressure on H3N2 influenza virus dr… (2019) | 48 | 0 | 10 | 2 | 0 | 0 | 2 | 6 | **28** | 17 |
+| **Other** — Antigenic pressure on H3N2 influenza virus dr… (2019) | 48 | 0 | 10 | 2 | 0 | 1 | 2 | 6 | **27** | 16 |
 | **Other** — Chemoenzymatically Prepared Heparan Sulfate C… (2015) | 17 | 0 | 9 | 0 | 0 | 0 | 0 | 2 | **6** | 6 |
 | **Other** — Chemokine binding to PSGL-1 is controlled by … (2023) | 28 | 0 | 5 | 2 | 0 | 0 | 1 | 8 | **12** | 8 |
 | **Other** — Cholesterol-dependent enzyme activity of huma… (2025) | 11 | 0 | 2 | 0 | 0 | 0 | 0 | 0 | **9** | 5 |
@@ -1076,12 +1078,12 @@ with it, and nothing on it is evidence until a person has read the article and f
 | **Other** — Tumor cells express pauci-and oligomannosidic… (2021) | 35 | 0 | 4 | 1 | 0 | 0 | 2 | 6 | **22** | 12 |
 | **Other** — Unique Glycans in Synaptic Glycoproteins in M… (2024) | 4 | 0 | 2 | 0 | 0 | 0 | 0 | 0 | **2** | 1 |
 | **Other** — Unique repertoire of anti-carbohydrate antibo… (2020) | 44 | 0 | 12 | 1 | 0 | 0 | 1 | 7 | **23** | 18 |
-| **all works** | | | | | | | | | **758** | 443 |
+| **all works** | | | | | | | | | **757** | 442 |
 
 Each work's own arithmetic is printed on the review page beside its name; the row above
 is the same screen, not a second tally.
 
-443 citations already have a PDF on file, held under `pending-papers/` until a
+442 citations already have a PDF on file, held under `pending-papers/` until a
 decision is made. The rest sit at
 `no-open-copy`, `paywalled`, or `not-in-indexes` — findings about access, not about
 whether the paper exists. **A tier appears only for an article that has actually been read:**
@@ -2017,9 +2019,9 @@ evidence looks like something and is not.
 
 | basis of a recorded mention | mentions | rows |
 |---|---:|---:|
-| reference-number resolution | 654 | 404 |
-| extracted text | 53 | 37 |
-| human reading | 23 | 22 |
+| reference-number resolution | 780 | 466 |
+| extracted text | 33 | 24 |
+| human reading | 4 | 4 |
 
 A resolved citation is held to the same bar as one that names the tool: it must sit in
 prose, under a heading the citing paper itself printed, and not in the bibliography entry
@@ -2027,7 +2029,7 @@ that names the applicant's paper — a reference list proves only that the autho
 work, not where or how. Where a row's tier rests on such a citation, that is said in the
 report rather than left for a reader to infer from a section heading alone.
 
-677 mentions across 425 citing works rest on resolution or on a person’s
+784 mentions across 469 citing works rest on resolution or on a person’s
 reading, not on a named-tool scan. `scan-mentions.js` reports those rows separately and
 leaves their tier alone — it is not built to find them, so its silence is not evidence
 against them.
