@@ -987,7 +987,7 @@ quietly re-merging. This is the only place the advice is written down.
 : This folder is strong on the point that matters: both the MAWE data-processing rules and GLAD are named in the Methods paragraph that generated the binding data, and the cited review is named as the source of the array platform itself.
 
 **`cit-000510`** — 2019–2020 H1N1 clade A5a.1 viruses have better in vitro fitness compa…
-: Chosen by the applicant on 2026-11-10 as a use of GLAD, which is named in the Methods (p.10) and cited as ref. 63. The article also cites the applicant's Antigenic pressure H3N2 paper (ref. 9, within 7–11, p.1 and p.5); that second citation is cit-000188, which is NOT folded into this entry and stays a separate held row.
+: Chosen by the applicant on 2026-11-10 as a use of GLAD, which is named in the Methods (p.10) and cited as ref. 63. The article also cites the applicant's Byrd-Leotis et al. 2019 paper (ref. 9, within 7–11, p.1 and p.5); that second citation is cit-000188, which is not folded into this entry and stays a separate held row.
 
 **`cit-000516`** — A Zebrafish Galectin-1 Isoform Is Expressed in Skin and Gills and Bin…
 : Cite this folder for the density of use rather than any single sentence - MAWE as an established procedure, GLAD for analysis and GlycoGlyph for the glycan models, all inside section 4.9.5 on p.21.
