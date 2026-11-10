@@ -1,6 +1,6 @@
 # Packet status — open items
 
-Generated 2026-11-09 by `scripts/build-status.js`. **Do not hand-edit it** — re-run the
+Generated 2026-11-10 by `scripts/build-status.js`. **Do not hand-edit it** — re-run the
 script. Every count and every row below is read from `notable-citations.sqlite` at run time,
 so this document cannot quietly fall behind the data.
 
@@ -1926,9 +1926,9 @@ evidence looks like something and is not.
 
 | basis of a recorded mention | mentions | rows |
 |---|---:|---:|
-| reference-number resolution | 532 | 354 |
-| extracted text | 4 | 3 |
-| human reading | 2 | 2 |
+| reference-number resolution | 654 | 404 |
+| extracted text | 53 | 37 |
+| human reading | 23 | 22 |
 
 A resolved citation is held to the same bar as one that names the tool: it must sit in
 prose, under a heading the citing paper itself printed, and not in the bibliography entry
@@ -1936,7 +1936,7 @@ that names the applicant's paper — a reference list proves only that the autho
 work, not where or how. Where a row's tier rests on such a citation, that is said in the
 report rather than left for a reader to infer from a section heading alone.
 
-534 mentions across 356 citing works rest on resolution or on a person’s
+677 mentions across 425 citing works rest on resolution or on a person’s
 reading, not on a named-tool scan. `scan-mentions.js` reports those rows separately and
 leaves their tier alone — it is not built to find them, so its silence is not evidence
 against them.

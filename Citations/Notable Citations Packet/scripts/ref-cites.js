@@ -110,6 +110,10 @@ const ENTRY_OPENERS = [
   /^\[\s*(\d{1,4})\s*\]\s*(.*)$/,
   /^\(?(\d{1,4})[.)]\.?\s+(.*)$/,
   /^(\d{1,4})\s+([A-Z][\p{L}'’-]+,?\s+(?:[A-Z]|et al).*)$/u,
+  // RSC grouped references: "1 (a) Y. H. Liu, ...; (b) M. H. Sun, ..." — one number, several papers
+  /^(\d{1,4})\s+(\(a\)\s.*)$/,
+  // the number alone on its line, entry text on the next: "28." / "Gao C, Stavenhagen, ..."
+  /^(\d{1,4})\.\s*()$/,
   // RSC style prints initials first: "11 A. Y. Mehta, Y. Jin and U. R. Desai, Expert Opin..."
   /^(\d{1,4})\s+((?:[A-Z]\.\s?){1,3}[A-Z][\p{L}'’-]+.*)$/u,
 ];
@@ -156,6 +160,10 @@ function buildReferenceIndexV2(pages) {
     byNumber.set(st.n, parts.join(" ").replace(/\s+/g, " ").trim());
   });
   const firstP = chain[0].page, lastP = chain[chain.length - 1].page;
+  // A bibliography packs several entries onto each page. A "chain" of seven numbers spread over fourteen
+  // pages is a numbered list in the body (steps, headings, figure panels), and treating it as the reference
+  // list marked every page between as bibliography, so the body text was never searched (cit-000094).
+  if (chain.length / (lastP - firstP + 1) < 3) return { byNumber: new Map(), refPages: new Set() };
   for (let p = firstP; p <= lastP; p++) refPages.add(p);
   if (lastP < pages.length && (pages[lastP] || []).length < 30) refPages.add(lastP + 1);
   return { byNumber, refPages, refLineStart: { page: firstP, li: chain[0].li } };
@@ -541,6 +549,18 @@ function findMarkers(pages, index, num, opts = {}) {
           if (/[.?!:]\s*$/.test(q.text) && !/\bet al\.$/.test(q.text)) break;
           if (!followsProse(q.text) || isOrphanNumberLine(q.text)) break;
           parts.unshift(q.text);
+        }
+        // ...and forward: a marker mid-sentence ("properties (43), enhanced") leaves the sentence open at
+        // the end of the line, so read on, up to three lines, until a sentence end.
+        const markIdx = L.text.indexOf(mk.raw);
+        const tail = markIdx >= 0 ? L.text.slice(markIdx + mk.raw.length) : "";
+        if (!/[.?!]["”')\]]*\s*$/.test(L.text) && !/[.?!](?:\s|$)/.test(tail)) {
+          for (let j = i + 1, k = 0; j < flat.length && k < 3; j++, k++) {
+            const q = flat[j];
+            if (q.page !== L.page || inRefs(q) || isOrphanNumberLine(q.text) || !followsProse(q.text)) break;
+            parts.push(q.text);
+            if (/[.?!]["”')\]]*\s*$/.test(q.text) && !/\bet al\.\s*$/.test(q.text)) break;
+          }
         }
         if (parts.length > 1) context = parts.join(" ");
       }

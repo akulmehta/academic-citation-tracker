@@ -27,7 +27,7 @@
 const fs = require("fs");
 const path = require("path");
 const { openPacket, PKT, REPO, toolForCitedPaper } = require("./lib");
-const { scanFile } = require("./scan-mentions");
+const { scanFile, extractPages: extractLines } = require("./scan-mentions");
 const { extractPages: extractText } = require("./pdf-text");
 const { shape } = require("./article-shape");
 
@@ -42,7 +42,9 @@ const REPORT = opt("report") || path.join(OUT, "ref-report.json");
 const DATA_NOISE = /\b(?:\d+(?:\.\d+)?\s*(?:Hz|MHz|mmol|mg|mL|µL|μL|µM|μM|nM|kDa|ppm|°C)|J\s*=|δ|HRMS|m\/z|NMR|ESI|calcd|yield|white (?:amorphous )?solid|\bbs\b|\bdd\b|\bt, J)/i;
 // A numeric parenthetical like "(12)" is a compound or equation label, not a citation.
 function isCompoundLabel(m) {
-  return /cited as bracketed: \(\d+\)$/.test(m.note || "") || /cited as orphan superscript line/.test(m.note || "") && DATA_NOISE.test(m.quote || "");
+  // "(43)" is how many journals print an ordinary citation. It is a compound label only when the sentence
+  // around it is experimental data (NMR, yield, mg, solid ...), which DATA_NOISE tests; the shape alone says nothing.
+  return (/cited as (?:bracketed: \(\d+\)|orphan superscript line)/.test(m.note || "")) && DATA_NOISE.test(m.quote || "");
 }
 function isNoise(m) {
   if (m.basis !== "reference-number resolution") return false; // author-year and named-tool hits are specific
@@ -73,6 +75,25 @@ function useOf(m) {
   return null;
 }
 
+/** "Table 2. Glycan-binding proteins ..." for the table a line sits in, looked up on its page then the one before. */
+function tableCaption(pagesArr, page, needle) {
+  const flatNeedle = String(needle || "").replace(/\s+/g, " ").trim().slice(0, 40).toLowerCase();
+  const CAP = /^(?:supplementary\s+)?table\s*(?:s?\d+|[ivx]+)\b/i;
+  for (const pg of [page, page - 1]) {
+    const lines = pagesArr[pg - 1];
+    if (!lines) continue;
+    let at = pg === page ? lines.findIndex(l => l.text.toLowerCase().includes(flatNeedle.slice(0, 25))) : lines.length;
+    if (at < 0) at = lines.length;
+    for (let i = Math.min(at, lines.length - 1); i >= 0; i--) {
+      if (CAP.test(lines[i].text.trim())) {
+        const nxt = lines[i + 1] && !CAP.test(lines[i + 1].text) && lines[i].text.length < 70 ? " " + lines[i + 1].text : "";
+        return (lines[i].text + nxt).replace(/\s+/g, " ").trim().slice(0, 140);
+      }
+    }
+  }
+  return null;
+}
+
 const TIERS = ["A", "B", "C", "D"];
 const rank = t => TIERS.indexOf(t) < 0 ? 9 : TIERS.indexOf(t);
 
@@ -91,6 +112,8 @@ async function main() {
   for (const r of rows) {
     const abs = path.join(PKT, r.pdf_file);
     const mentions = [];
+    const tableHits = [];
+    const namedKept = [];
     // named-tool hits, only for the tool this row's cited paper is
     const tool = toolForCitedPaper(r.cited_paper);
     let pageCount = null, scanErr = null;
@@ -98,26 +121,39 @@ async function main() {
       const s = await scanFile(abs, []);
       pageCount = s.pageCount;
       for (const h of s.found) {
-        if (h.looksLikeReference || h.inTable) continue;
+        if (h.looksLikeReference) continue;
+        if (h.inTable) {
+          if (tool && !h.tools.includes(tool)) continue;
+          tableHits.push({ page: String(h.page), quote: (h.quotes && tool && h.quotes[tool]) || h.quote, rank: h.rank, section: h.section && h.section.id || h.section || "", basis: "extracted text", source: "named-table" });
+          continue;
+        }
         if (tool && !h.tools.includes(tool)) continue;
         if (!TIERS.includes(h.rank)) continue;
         const q = (h.quotes && tool && h.quotes[tool]) || h.quote;
         mentions.push({ section: h.section && h.section.id || h.section || "", tier: h.rank, page: String(h.page), quote: q, basis: "extracted text", source: "named" });
+        namedKept.push(mentions[mentions.length - 1]);
       }
     } catch (e) { scanErr = String(e.message).slice(0, 80); }
     const refs = refBy.get(r.row_uid) || [];
     const kept = [];
     for (const m of refs) { if (isNoise(m)) rejected++; else { kept.push(m); mentions.push({ ...m, source: "ref" }); } }
-    if (kept.length) filtered.push({ row_uid: r.row_uid, mentions: kept });
+    // (the spec is assembled after table mentions are added, below)
     // Citations the resolver saw but would not record: a fragment instead of a sentence, or a section
     // the paper never headed (front matter). The citation is real; only its quote is weak. Rank it by the
     // section it sits in — front matter is the abstract/introduction, so Tier C — and mark it inferred so
     // a person reads it before relying on it. Never in a table.
     for (const f of repBy.get(r.row_uid) || []) {
       const h = f.outcome === "found" && f.hit;
+      if (h && h.inTable && h.rank !== "REF") {
+        tableHits.push({ page: String(h.page), quote: String(h.line || h.quote || "").trim(), rank: h.rank, section: h.section || "", basis: "reference-number resolution", source: "ref-table" });
+        continue;
+      }
       if (!h || h.inTable) continue;
       const usable = ["A", "B", "C"].includes(h.rank) && h.contextIsProse !== false;
-      if (usable) continue; // already counted above, or rejected as data on purpose
+      // Skip only what was already counted above (same page, same marker). "Usable" by rank is not the
+      // same as "recorded": scan-refs applies further tests, and a hit it dropped must not vanish here.
+      if (usable && kept.some(m => String(m.page) === String(h.page) && (m.note || "").includes(String(h.marker)))) continue;
+      if (usable && isNoise({ basis: "reference-number resolution", quote: h.quote || h.line, note: `cited as ${h.style || ""}: ${h.marker || ""}` })) continue;
       const tier = ["A", "B", "C"].includes(h.rank) ? h.rank : (/front matter/i.test(h.section || "") ? "C" : null);
       if (!tier) continue;
       const q = String(h.quote || h.line || "").trim();
@@ -128,10 +164,31 @@ async function main() {
     let shp = null;
     try { shp = await shape(r.pdf_file); } catch { /* extraction failure says nothing about the paper */ }
 
+    // Text inside a table is evidence too (a tools table that lists the applicant's paper). Tie it to the
+    // table's caption and say so in the section, so a reader sees "Listed in Table 2 …" and not a loose row.
+    if (tableHits.length) {
+      let pg = null;
+      try { pg = await extractLines(abs); } catch { /* no caption then */ }
+      for (const t of tableHits) {
+        if (!t.quote || t.quote.length < 6) continue;
+        const cap = pg ? tableCaption(pg, Number(t.page), t.quote) : null;
+        const tier = ["A", "B", "C"].includes(t.rank) ? t.rank : "C";
+        const where = t.section && t.section !== "?" ? ` (${t.section})` : "";
+        const m = { section: `Listed in ${cap || "a table (caption not found on this page)"}${where}`.slice(0, 220), tier, page: t.page, quote: t.quote.slice(0, 500), basis: t.basis, source: t.source, table: true };
+        mentions.push(m);
+        if (!cap) m.inferred = true;
+      }
+    }
+
     // dedupe by quote
     const seen = new Set();
     const uniq = mentions.filter(m => { const k = (m.quote || "").slice(0, 80); if (seen.has(k)) return false; seen.add(k); return true; });
     uniq.forEach(m => { m.use = useOf(m); m.negative = NEG.test(m.quote || ""); });
+    // Record every occurrence whose quote is real text on its page. A fragment quote or a front-matter
+    // tier is flagged `inferred` in the report, but it is still a verifiable sentence, and leaving it out
+    // hid real citations (cit-000108 "anticoagulation properties (43)").
+    const rec = uniq.filter(m => ["named", "ref", "named-table", "ref-table", "ref-inferred"].includes(m.source) && String(m.quote || "").length >= 20);
+    if (rec.length) filtered.push({ row_uid: r.row_uid, mentions: rec.map(m => ({ section: m.section, tier: m.tier, page: m.page, quote: m.quote, use_type: null, basis: m.basis, verified: 0 })) });
     uniq.sort((a, b) => rank(a.tier) - rank(b.tier));
     const best = uniq[0] || null;
     const headline = best ? best.tier : null;

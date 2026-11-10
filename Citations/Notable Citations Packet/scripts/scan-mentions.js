@@ -164,6 +164,13 @@ function headingOf(line) {
   }
   const inl = INLINE.find(s => s.test.test(text));
   if (inl) return { section: inl, number: leadingNumber(text) };
+  // Small-caps headings arrive with a stray gap inside a word: "2 | MATERIALS AND M ETHODS",
+  // "1 | INTRODUCTIO N". An all-capitals line is read again with its spaces removed.
+  if (/\p{Lu}/u.test(text) && !/\p{Ll}/u.test(text)) {
+    const solidCaps = text.replace(/\s+/g, "");
+    const dc = DESPACED.find(s => s.test.test(solidCaps));
+    if (dc) return { section: dc, number: leadingNumber(solidCaps) };
+  }
   if (trackedSyllables(line)) {
     const solid = text.replace(/\s+/g, "");
     const dy = DESPACED.find(s => s.test.test(solid));
