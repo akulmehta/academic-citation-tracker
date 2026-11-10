@@ -149,6 +149,18 @@ async function main() {
   d.close();
   console.log(`\n${uid} is now included as citation n=${nextN}.`);
   run("relocate-pdfs.js", ["--write"]);
+  // Another row of the same citing article can point at this folder's PDF from a folder of its own
+  // (cit-000188 and cit-000510 share one paper). relocate-pdfs.js moves the folder and updates only the
+  // rows IN it, so re-point those siblings at the new location rather than leave a path to nothing.
+  {
+    const d2 = L.openPacket();
+    const now = d2.prepare("SELECT pdf_file FROM citation WHERE row_uid=?").get(uid).pdf_file;
+    if (r.pdf_file && now && now !== r.pdf_file) {
+      const res = d2.prepare("UPDATE citation SET pdf_file=? WHERE pdf_file=? AND row_uid<>?").run(now, r.pdf_file, uid);
+      if (res.changes) console.log(`re-pointed ${res.changes} sibling row(s) at ${now}`);
+    }
+    d2.close();
+  }
   const nf = opt("narrative");
   if (nf) run("narrative-intake.js", [`--from=${nf}`, "--write"]);
   else console.log("no --narrative given: Section II will print as a marked blank until prose is filed.");
