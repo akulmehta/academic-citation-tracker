@@ -16,7 +16,7 @@ decision that only a person can make.
 | Citations in the packet (in `packet.html`) | 22 |
 | Works those citations are filed as (§5.1 folders) | 14 |
 | PDFs filed under `papers/` (in the packet) | 16 |
-| PDFs under `pending-papers/` (awaiting a decision) | 429 |
+| PDFs under `pending-papers/` (awaiting a decision) | 430 |
 | PDFs under `screened-papers/` (kept, not filed) | 62 |
 | Held — open items, listed below | 722 |
 | Screened out — decided, kept for the record (§4.5) | 254 |
@@ -65,7 +65,7 @@ The PDF is filed and the applicant's tool appears in a section of the paper. Wha
 | `cit-000512` | GLAD | — | Aoki-Kinoshita | Worldwide glycoscience informatics infrastructure: the GlySpace Alliance | [open](https://pubs.acs.org/jaaucr/article-abstract/3/1/4/1253251) |
 | `cit-000556` | GLAD | — | — | Phenotyping murine and human platelet-derived extracellular vesicles gives … | [open](https://www.rpthjournal.org/cms/10.1016/j.rpth.2026.103414/attachment/5e1ef181-290b-47ad-a0b6-2820746565cf/mmc1.pdf) |
 
-### 2.2 `unread` — 393 row(s)
+### 2.2 `unread` — 394 row(s)
 
 The PDF is filed. Nobody has read it yet.
 
@@ -250,6 +250,7 @@ The PDF is filed. Nobody has read it yet.
 | `cit-001532` | — | 2022 | Á | Intravenous immunoglobulins promote an expansion of monocytic myeloid-deriv… | [open](https://link.springer.com/article/10.1007/s10875-022-01277-7) |
 | `cit-001546` | — | 2022 | Chen | Structural insight into terminal galactose recognition by two non-HBGA bind… | [open](https://journals.asm.org/doi/abs/10.1128/jvi.00420-22) |
 | `cit-000066` | — | 2023 | Kita | Discovery of novel N-acylpyrazoles as potent and selective thrombin inhibit… | [open](https://www.sciencedirect.com/science/article/pii/S0223523422007577) |
+| `cit-000161` | — | 2023 | Chakraborty | Conformation based in silico studies of cyclic tetrapeptides with βγ fused … | [open](https://chemistry-europe.onlinelibrary.wiley.com/doi/abs/10.1002/slct.202204761) |
 | `cit-000187` | — | 2023 | de Vries | Revealing the specificity of human H1 influenza A viruses to complex N-Glyc… | [open](https://pmc.ncbi.nlm.nih.gov/articles/PMC10052259/) |
 | `cit-000188` | — | 2023 | Pekosz | 2019–2020 H1N1 clade A5a. 1 viruses have better in vitro fitness compared w… | [open](https://www.nature.com/articles/s41598-023-37122-z) |
 | `cit-000191` | — | 2023 | Paulson | Glyco-engineered MDCK cells display preferred receptors of H3N2 influenza a… | [open](https://www.nature.com/articles/s41467-023-41908-0) |
@@ -534,7 +535,7 @@ A copy exists behind a paywall. If the applicant can obtain the PDF through an i
 | `cit-000848` | — | 2025 | — | Implication of N-glycosylation in the maintenance and degeneration of photo… | [open](https://archiv.ub.uni-heidelberg.de/volltextserver/37789/) |
 | `cit-001310` | — | 2025 | Tata | The discovery of a novel anticoagulant mechanism: factor XI activation inhi… | [open](https://pubs.acs.org/aptsfn/article-abstract/8/9/3090/3761803) |
 
-### 2.5 `no-open-copy` — 141 row(s)
+### 2.5 `no-open-copy` — 140 row(s)
 
 No openly accessible copy was found. The publisher's landing page is given so the applicant can check institutional access.
 
@@ -623,7 +624,6 @@ No openly accessible copy was found. The publisher's landing page is given so th
 | `cit-000073` | — | 2023 | Guo | An Overview of Thrombin Inhibitors in the Perspective of Structureactivity … | [open](https://www.benthamdirect.com/content/journals/cmc/10.2174/0929867329666220906105200) |
 | `cit-000081` | — | 2023 | — | Expanding the Scope of mRNA display by Chemical Approaches | [open](https://ses.library.usyd.edu.au/handle/2123/32220) |
 | `cit-000159` | — | 2023 | Guo | An Overview of Thrombin Inhibitors in the Perspective of Structureactivity … | [open](https://www.benthamdirect.com/content/journals/cmc/10.2174/0929867329666220906105200) |
-| `cit-000161` | — | 2023 | Chakraborty | Conformation based in silico studies of cyclic tetrapeptides with βγ fused … | [open](https://chemistry-europe.onlinelibrary.wiley.com/doi/abs/10.1002/slct.202204761) |
 | `cit-000360` | — | 2023 | Guo | An Overview of Thrombin Inhibitors in the Perspective of Structureactivity … | [open](https://www.benthamdirect.com/content/journals/cmc/10.2174/0929867329666220906105200) |
 | `cit-000500` | — | 2023 | Nagar | Protein–protein interactions in immune disorders and inflammation | [open](https://link.springer.com/chapter/10.1007/978-981-99-2423-3_4) |
 | `cit-000610` | GlycoGlyph | 2023 | McCammon | Glycosylation and crowded membrane effects on influenza neuraminidase stabi… | [open](https://pmc.ncbi.nlm.nih.gov/articles/PMC10515755/) |
@@ -993,7 +993,7 @@ with it, and nothing on it is evidence until a person has read the article and f
 | **Other** — Allosteric inhibition of human factor XIa: di… (2014) | 41 | 0 | 8 | 3 | 0 | 0 | 2 | 6 | **22** | 9 |
 | **Other** — Allosteric partial inhibition of monomeric pr… (2016) | 47 | 0 | 15 | 1 | 0 | 0 | 0 | 7 | **24** | 14 |
 | **Other** — Allosterism‐based simultaneous, dual anticoag… (2016) | 56 | 0 | 12 | 3 | 0 | 0 | 2 | 10 | **29** | 12 |
-| **Other** — An update on recent patents on thrombin inhib… (2014) | 70 | 35 | 2 | 5 | 0 | 0 | 0 | 5 | **23** | 11 |
+| **Other** — An update on recent patents on thrombin inhib… (2014) | 70 | 35 | 2 | 5 | 0 | 0 | 0 | 5 | **23** | 12 |
 | **Other** — Antigenic pressure on H3N2 influenza virus dr… (2019) | 48 | 0 | 10 | 2 | 0 | 0 | 2 | 6 | **28** | 17 |
 | **Other** — Chemoenzymatically Prepared Heparan Sulfate C… (2015) | 17 | 0 | 9 | 0 | 0 | 0 | 0 | 2 | **6** | 6 |
 | **Other** — Chemokine binding to PSGL-1 is controlled by … (2023) | 28 | 0 | 5 | 2 | 0 | 0 | 1 | 8 | **12** | 8 |
@@ -1018,12 +1018,12 @@ with it, and nothing on it is evidence until a person has read the article and f
 | **Other** — Targeting the GPIbα Binding Site of Thrombin … (2014) | 31 | 0 | 6 | 1 | 0 | 0 | 3 | 7 | **14** | 2 |
 | **Other** — Tumor cells express pauci-and oligomannosidic… (2021) | 35 | 0 | 4 | 1 | 0 | 0 | 2 | 6 | **22** | 12 |
 | **Other** — Unique repertoire of anti-carbohydrate antibo… (2020) | 44 | 0 | 12 | 1 | 0 | 0 | 1 | 7 | **23** | 18 |
-| **all works** | | | | | | | | | **699** | 421 |
+| **all works** | | | | | | | | | **699** | 422 |
 
 Each work's own arithmetic is printed on the review page beside its name; the row above
 is the same screen, not a second tally.
 
-421 citations already have a PDF on file, held under `pending-papers/` until a
+422 citations already have a PDF on file, held under `pending-papers/` until a
 decision is made. The rest sit at
 `no-open-copy`, `paywalled`, or `not-in-indexes` — findings about access, not about
 whether the paper exists. **A tier appears only for an article that has actually been read:**
@@ -1953,11 +1953,11 @@ Every PDF in the storage roots (`papers/`, `pending-papers/`, `screened-papers/`
 one of three ways, and the distinction matters because only the first two are reproducible
 from a script.
 
-**Fetched by `discover-pdfs.js`** — 514 candidate row(s) across 492 distinct file(s), each recorded with the host it came from:
+**Fetched by `discover-pdfs.js`** — 515 candidate row(s) across 493 distinct file(s), each recorded with the host it came from:
 
 | host | rows | row_uid(s) |
 |---|---:|---|
-| (no source recorded) | 234 | `cit-000507`, `cit-000523`, `cit-000524`, `cit-000525`, `cit-000531`, `cit-000532`, `cit-000534`, `cit-000546`, `cit-000549`, `cit-000554`, `cit-000556`, `cit-000561`, `cit-000564`, `cit-000566`, `cit-000581`, `cit-000604`, `cit-000608`, `cit-000614`, `cit-000615`, `cit-000620`, `cit-000621`, `cit-000623`, `cit-000630`, `cit-000632`, `cit-001263`, `cit-000661`, `cit-000663`, `cit-000664`, `cit-000667`, `cit-000670`, `cit-000679`, `cit-000700`, `cit-000711`, `cit-000712`, `cit-000717`, `cit-000718`, `cit-000720`, `cit-000728`, `cit-000734`, `cit-000736`, `cit-000738`, `cit-000739`, `cit-000746`, `cit-000747`, `cit-000748`, `cit-000752`, `cit-000755`, `cit-000769`, `cit-000773`, `cit-000778`, `cit-000785`, `cit-000786`, `cit-000790`, `cit-000793`, `cit-000809`, `cit-000815`, `cit-000817`, `cit-000818`, `cit-000819`, `cit-000822`, `cit-000823`, `cit-000828`, `cit-000834`, `cit-000859`, `cit-000869`, `cit-000882`, `cit-000884`, `cit-001284`, `cit-001290`, `cit-001309`, `cit-001311`, `cit-001325`, `cit-001336`, `cit-001360`, `cit-001366`, `cit-001368`, `cit-001369`, `cit-001386`, `cit-001389`, `cit-001164`, `cit-001169`, `cit-001175`, `cit-001178`, `cit-001181`, `cit-001187`, `cit-001189`, `cit-001191`, `cit-001195`, `cit-001198`, `cit-001200`, `cit-001220`, `cit-001230`, `cit-000089`, `cit-000091`, `cit-000094`, `cit-000100`, `cit-000101`, `cit-000110`, `cit-000114`, `cit-000118`, `cit-000122`, `cit-000128`, `cit-000183`, `cit-000184`, `cit-000190`, `cit-000194`, `cit-000195`, `cit-000196`, `cit-000197`, `cit-000205`, `cit-000213`, `cit-000433`, `cit-000438`, `cit-000451`, `cit-000461`, `cit-000464`, `cit-000326`, `cit-000334`, `cit-000338`, `cit-000347`, `cit-000354`, `cit-000359`, `cit-000363`, `cit-000368`, `cit-000380`, `cit-001045`, `cit-001047`, `cit-001053`, `cit-001054`, `cit-001056`, `cit-001058`, `cit-001067`, `cit-000395`, `cit-000396`, `cit-000401`, `cit-000403`, `cit-000411`, `cit-000413`, `cit-000418`, `cit-000419`, `cit-001519`, `cit-001530`, `cit-001531`, `cit-001540`, `cit-001545`, `cit-001546`, `cit-001549`, `cit-001552`, `cit-000056`, `cit-000057`, `cit-000059`, `cit-000061`, `cit-000062`, `cit-000066`, `cit-000069`, `cit-000072`, `cit-000075`, `cit-000009`, `cit-000013`, `cit-000019`, `cit-000021`, `cit-000025`, `cit-001480`, `cit-001484`, `cit-001488`, `cit-001492`, `cit-001495`, `cit-001507`, `cit-000146`, `cit-000148`, `cit-000149`, `cit-000150`, `cit-000153`, `cit-000156`, `cit-000157`, `cit-000158`, `cit-001002`, `cit-001009`, `cit-001014`, `cit-001015`, `cit-001023`, `cit-001027`, `cit-001437`, `cit-001439`, `cit-001443`, `cit-001445`, `cit-001128`, `cit-001130`, `cit-001133`, `cit-001134`, `cit-001135`, `cit-001140`, `cit-001148`, `cit-000257`, `cit-000261`, `cit-000262`, `cit-000264`, `cit-000916`, `cit-000918`, `cit-000926`, `cit-000929`, `cit-001111`, `cit-001113`, `cit-001118`, `cit-000952`, `cit-000953`, `cit-000965`, `cit-001087`, `cit-001094`, `cit-001097`, `cit-001100`, `cit-000934`, `cit-000936`, `cit-000939`, `cit-000940`, `cit-000942`, `cit-001468`, `cit-001470`, `cit-001473`, `cit-000306`, `cit-000309`, `cit-000310`, `cit-000311`, `cit-000313`, `cit-000496`, `cit-000229`, `cit-000235`, `cit-000236`, `cit-000240`, `cit-000241`, `cit-000244`, `cit-000296`, `cit-000298`, `cit-000303` |
+| (no source recorded) | 235 | `cit-000507`, `cit-000523`, `cit-000524`, `cit-000525`, `cit-000531`, `cit-000532`, `cit-000534`, `cit-000546`, `cit-000549`, `cit-000554`, `cit-000556`, `cit-000561`, `cit-000564`, `cit-000566`, `cit-000581`, `cit-000604`, `cit-000608`, `cit-000614`, `cit-000615`, `cit-000620`, `cit-000621`, `cit-000623`, `cit-000630`, `cit-000632`, `cit-001263`, `cit-000661`, `cit-000663`, `cit-000664`, `cit-000667`, `cit-000670`, `cit-000679`, `cit-000700`, `cit-000711`, `cit-000712`, `cit-000717`, `cit-000718`, `cit-000720`, `cit-000728`, `cit-000734`, `cit-000736`, `cit-000738`, `cit-000739`, `cit-000746`, `cit-000747`, `cit-000748`, `cit-000752`, `cit-000755`, `cit-000769`, `cit-000773`, `cit-000778`, `cit-000785`, `cit-000786`, `cit-000790`, `cit-000793`, `cit-000809`, `cit-000815`, `cit-000817`, `cit-000818`, `cit-000819`, `cit-000822`, `cit-000823`, `cit-000828`, `cit-000834`, `cit-000859`, `cit-000869`, `cit-000882`, `cit-000884`, `cit-001284`, `cit-001290`, `cit-001309`, `cit-001311`, `cit-001325`, `cit-001336`, `cit-001360`, `cit-001366`, `cit-001368`, `cit-001369`, `cit-001386`, `cit-001389`, `cit-001164`, `cit-001169`, `cit-001175`, `cit-001178`, `cit-001181`, `cit-001187`, `cit-001189`, `cit-001191`, `cit-001195`, `cit-001198`, `cit-001200`, `cit-001220`, `cit-001230`, `cit-000089`, `cit-000091`, `cit-000094`, `cit-000100`, `cit-000101`, `cit-000110`, `cit-000114`, `cit-000118`, `cit-000122`, `cit-000128`, `cit-000183`, `cit-000184`, `cit-000190`, `cit-000194`, `cit-000195`, `cit-000196`, `cit-000197`, `cit-000205`, `cit-000213`, `cit-000433`, `cit-000438`, `cit-000451`, `cit-000461`, `cit-000464`, `cit-000326`, `cit-000334`, `cit-000338`, `cit-000347`, `cit-000354`, `cit-000359`, `cit-000363`, `cit-000368`, `cit-000380`, `cit-001045`, `cit-001047`, `cit-001053`, `cit-001054`, `cit-001056`, `cit-001058`, `cit-001067`, `cit-000395`, `cit-000396`, `cit-000401`, `cit-000403`, `cit-000411`, `cit-000413`, `cit-000418`, `cit-000419`, `cit-001519`, `cit-001530`, `cit-001531`, `cit-001540`, `cit-001545`, `cit-001546`, `cit-001549`, `cit-001552`, `cit-000056`, `cit-000057`, `cit-000059`, `cit-000061`, `cit-000062`, `cit-000066`, `cit-000069`, `cit-000072`, `cit-000075`, `cit-000009`, `cit-000013`, `cit-000019`, `cit-000021`, `cit-000025`, `cit-001480`, `cit-001484`, `cit-001488`, `cit-001492`, `cit-001495`, `cit-001507`, `cit-000146`, `cit-000148`, `cit-000149`, `cit-000150`, `cit-000153`, `cit-000156`, `cit-000157`, `cit-000158`, `cit-000161`, `cit-001002`, `cit-001009`, `cit-001014`, `cit-001015`, `cit-001023`, `cit-001027`, `cit-001437`, `cit-001439`, `cit-001443`, `cit-001445`, `cit-001128`, `cit-001130`, `cit-001133`, `cit-001134`, `cit-001135`, `cit-001140`, `cit-001148`, `cit-000257`, `cit-000261`, `cit-000262`, `cit-000264`, `cit-000916`, `cit-000918`, `cit-000926`, `cit-000929`, `cit-001111`, `cit-001113`, `cit-001118`, `cit-000952`, `cit-000953`, `cit-000965`, `cit-001087`, `cit-001094`, `cit-001097`, `cit-001100`, `cit-000934`, `cit-000936`, `cit-000939`, `cit-000940`, `cit-000942`, `cit-001468`, `cit-001470`, `cit-001473`, `cit-000306`, `cit-000309`, `cit-000310`, `cit-000311`, `cit-000313`, `cit-000496`, `cit-000229`, `cit-000235`, `cit-000236`, `cit-000240`, `cit-000241`, `cit-000244`, `cit-000296`, `cit-000298`, `cit-000303` |
 | www.mdpi.com | 62 | `cit-000513`, `cit-000550`, `cit-000592`, `cit-000606`, `cit-000626`, `cit-000660`, `cit-000706`, `cit-000721`, `cit-000757`, `cit-000770`, `cit-000780`, `cit-000795`, `cit-000800`, `cit-000804`, `cit-000821`, `cit-001303`, `cit-001186`, `cit-000092`, `cit-000093`, `cit-000112`, `cit-000116`, `cit-000193`, `cit-000206`, `cit-000432`, `cit-000454`, `cit-000459`, `cit-000352`, `cit-001050`, `cit-000405`, `cit-000409`, `cit-000417`, `cit-000421`, `cit-000423`, `cit-001535`, `cit-001536`, `cit-001537`, `cit-001547`, `cit-001548`, `cit-001553`, `cit-000042`, `cit-000045`, `cit-000053`, `cit-001491`, `cit-001496`, `cit-001498`, `cit-000152`, `cit-001438`, `cit-001129`, `cit-001139`, `cit-000911`, `cit-000913`, `cit-000951`, `cit-000957`, `cit-000961`, `cit-000962`, `cit-001463`, `cit-001466`, `cit-000307`, `cit-000493`, `cit-000498`, `cit-001266`, `cit-001279` |
 | www.nature.com | 33 | `cit-000510`, `cit-000511`, `cit-000596`, `cit-000600`, `cit-000654`, `cit-000665`, `cit-000666`, `cit-000689`, `cit-000693`, `cit-000695`, `cit-000696`, `cit-000727`, `cit-000744`, `cit-000799`, `cit-000185`, `cit-000188`, `cit-000191`, `cit-000442`, `cit-000449`, `cit-000460`, `cit-000330`, `cit-001041`, `cit-001048`, `cit-001051`, `cit-001070`, `cit-001517`, `cit-000006`, `cit-001483`, `cit-000248`, `cit-000250`, `cit-001108`, `cit-001460`, `cit-000487` |
 | www.frontiersin.org | 20 | `cit-000520`, `cit-000593`, `cit-000607`, `cit-000715`, `cit-000730`, `cit-000731`, `cit-000844`, `cit-001287`, `cit-000455`, `cit-001042`, `cit-001055`, `cit-001057`, `cit-001515`, `cit-001525`, `cit-001534`, `cit-001116`, `cit-000955`, `cit-001090`, `cit-001467`, `cit-000305` |
@@ -2031,8 +2031,8 @@ Discovery state of all 996 GLAD candidates, from `candidate.discover_state`:
 
 | state | rows | meaning |
 |---|---:|---|
-| `has-pdf` | 513 | a PDF is on file for the row — seeded that way, fetched by a script, or filed with `file-pdf.js` |
-| `no-open-copy` | 275 | looked, nothing retrievable found |
+| `has-pdf` | 514 | a PDF is on file for the row — seeded that way, fetched by a script, or filed with `file-pdf.js` |
+| `no-open-copy` | 274 | looked, nothing retrievable found |
 | `not-in-indexes` | 118 | not found in the open-access indexes consulted |
 | `paywalled` | 68 | located behind a paywall — the applicant may be able to obtain these |
 | `open-copy` | 20 | an open-access copy was located; the row is only `has-pdf` once the file is on disk |
@@ -2040,7 +2040,7 @@ Discovery state of all 996 GLAD candidates, from `candidate.discover_state`:
 
 **Still open:** 0 row(s) sit at `open-copy` with no file on disk — a copy was
 located and never fetched. Chasing them is a decision, not a defect: a row must be independent
-(§1.2) before it is worth a download, and 505 candidate(s) are already held — check why before spending effort on a PDF for a row that
+(§1.2) before it is worth a download, and 506 candidate(s) are already held — check why before spending effort on a PDF for a row that
 cannot be filed.
 
 ## 6. Before handing the packet over

@@ -335,7 +335,7 @@ const BRACKET_REF = /\[\s*\d+\s*\]/;
  * the heading. Requires several entries AND a large share of the page, so a
  * Methods section with a short numbered list of reagents is not mistaken for one.
  */
-const BIB_ENTRY = /^(?:\[\s*\d+\s*\]|\d+\.\s+[A-Z][a-z]+\s*,?\s+[A-Z]\.?)/;
+const BIB_ENTRY = /^(?:\[\s*\d+\s*\]\s+\S|\d+\.\s+[A-Z][a-z]+\s*,?\s+[A-Z]\.?)/;
 const BIB_LOCATOR = /\bdoi\b|\bcrossref\b|\bpmid\b|\bpmcid\b|\bhttps?:\/\//i;
 const BIB_VOLUME = /\d{4}\s*[;,]\s*\d{1,3}\s*\(|\bvol\.?\s*\d/i;
 
