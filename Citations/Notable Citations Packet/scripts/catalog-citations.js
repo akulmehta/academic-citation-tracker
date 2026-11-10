@@ -34,16 +34,38 @@ const HTML_OUT = path.join(PKT, "citation-catalog-v2.html");
 
 /* ───────────── page furniture ───────────── */
 function furnitureSet(pages) {
+  // A running header has WORDS ("V.S. Pokrovsky et al. Analytical Biochemistry 701 (2025) 115806"). A line
+  // that is only digits ("34−38", "3") masks to "#" and repeats on every page too, but it is an orphan
+  // superscript or a page number, never a header, so it is not furniture here.
   const key = t => String(t).replace(/\d+/g, "#").replace(/\s+/g, " ").trim().toLowerCase();
   const seen = new Map();
   pages.forEach((ls, pi) => ls.forEach(L => {
-    if (L.text.length > 110) return;
+    if (L.text.length > 110 || !/[A-Za-z]{4}/.test(L.text)) return;
     const k = key(L.text);
     if (!k) return;
     if (!seen.has(k)) seen.set(k, new Set());
     seen.get(k).add(pi);
   }));
-  return text => text.length <= 110 && (seen.get(key(text)) || new Set()).size >= 3;
+  return text => text.length <= 110 && /[A-Za-z]{4}/.test(text) && (seen.get(key(text)) || new Set()).size >= 3;
+}
+
+/**
+ * Page numbers: a lone number at the top or bottom of a page that climbs by one from page to page.
+ * Returned as a set of "page:line" so they can be left out of the body without touching orphan citations.
+ */
+function pageNumberLines(pages) {
+  const cand = [];
+  pages.forEach((ls, pi) => {
+    const idx = [0, 1, 2, ls.length - 3, ls.length - 2, ls.length - 1].filter(i => i >= 0 && i < ls.length);
+    for (const li of idx) if (/^\d{1,4}$/.test(ls[li].text.trim())) cand.push({ p: pi + 1, li, n: Number(ls[li].text.trim()), from: li < 3 ? "top" : "bottom" });
+  });
+  const out = new Set();
+  for (const c of cand) {
+    const next = cand.find(x => x.p === c.p + 1 && x.from === c.from && x.n === c.n + 1);
+    const prev = cand.find(x => x.p === c.p - 1 && x.from === c.from && x.n === c.n - 1);
+    if (next || prev) out.add(`${c.p}:${c.li}`);
+  }
+  return out;
 }
 
 /* ───────────── 1. PROFILE ───────────── */
@@ -59,7 +81,9 @@ const ORPHAN = /^\d{1,4}(?:\s*[,\s–—−-]\s*\d{1,4})*$/;
 function gluedMarkers(text) {
   const out = [];
   for (const m of text.matchAll(/([\p{L}]{3,})(\d{1,3}(?:[,–−-]\d{1,3})*)(?=[\s.,;:)\]]|$)/gu)) {
-    if (/\p{Lu}/u.test(m[1].slice(1))) continue;
+    // digits glued to a word are a marker when the word ends in a lowercase letter ("database23", "GlycoGlyph63");
+    // a name that ends in a capital or a digit ("CD206", "IL6", "H2O") and words like "Fig2" are not
+    if (/[\p{Lu}\d]$/u.test(m[1]) || /^(?:Fig|Figs|Figure|Table|Scheme|Eq|Eqs|Day|Days|Step|Section|Chapter|Page|Vol|pH)$/i.test(m[1])) continue;
     const nums = rc.expandRun(m[2]);
     if (nums && nums.length <= 12 && nums[0] <= 400) out.push({ numbers: nums, raw: m[2], at: m.index + m[1].length });
   }
@@ -90,7 +114,7 @@ function profileOf(body, index) {
       if (!isEnumeration(near, nums[0])) paren++;
     }
     sup += rc.findRaisedMarkers(L).length;
-    if (ORPHAN.test(L.text.trim()) && i > 0 && body[i - 1].page === L.page && /[A-Za-z]{3}/.test(body[i - 1].text) && body[i - 1].text.length > 25) sup++;
+    if (ORPHAN.test(L.text.trim()) && i > 0 && body[i - 1].page === L.page && /[A-Za-z]{4}/.test(body[i - 1].text)) sup++;
     for (const _ of L.text.matchAll(AY)) authorYear++;
   });
   const counts = { bracket, paren, superscript: sup, authorYear };
@@ -109,7 +133,11 @@ function profileOf(body, index) {
 /* ───────────── 2. RULES per profile ───────────── */
 function findHits(profile, body, num, want, pages, furn, index) {
   const hits = [];
+  // A paper can use a second marker style now and then ("[31]" inside a superscript paper). Those secondary
+  // styles are searched too, except parentheses in a [n] paper, where "(38–60)" is a residue range, not a citation.
+  const SECONDARY = { superscript: ["bracket"], paren: ["superscript"], bracket: [], authorYear: [], mixed: [], unclear: [] };
   const styles = profile.style === "mixed" ? ["bracket", "paren", "superscript", "authorYear"].filter(s => profile.counts[s] >= 3) : [profile.style];
+  if (SECONDARY[profile.style]) for (const s of SECONDARY[profile.style]) if (profile.counts[s] >= 2 && !styles.includes(s)) styles.push(s);
   if (profile.style === "unclear") styles.push("bracket", "paren", "superscript", "authorYear");
   body.forEach((L, i) => {
     if (num != null) {
@@ -132,11 +160,11 @@ function findHits(profile, body, num, want, pages, furn, index) {
       }
       if (styles.includes("superscript")) {
         for (const mk of rc.findRaisedMarkers(L)) if (mk.numbers.includes(num)) hits.push({ L, i, marker: mk.raw, style: "superscript", at: L.text.indexOf(mk.raw) });
-        if (profile.style === "superscript" || profile.style === "unclear") for (const gm of gluedMarkers(L.text)) if (gm.numbers.includes(num)) hits.push({ L, i, marker: gm.raw, style: "superscript", at: gm.at });
+        if (styles.includes("superscript") || profile.style === "unclear") for (const gm of gluedMarkers(L.text)) if (gm.numbers.includes(num)) hits.push({ L, i, marker: gm.raw, style: "superscript", at: gm.at });
         if (ORPHAN.test(L.text.trim()) && i > 0) {
           const prev = body[i - 1];
           const nums = rc.expandRun(L.text.trim());
-          if (nums && nums.includes(num) && prev.page === L.page && prev.text.length > 25 && /[A-Za-z]{3}/.test(prev.text) && !ORPHAN.test(prev.text.trim())) {
+          if (nums && nums.includes(num) && prev.page === L.page && /[A-Za-z]{4}/.test(prev.text) && !ORPHAN.test(prev.text.trim())) {
             hits.push({ L, i, marker: L.text.trim(), style: "superscript", at: -1, orphan: true });
           }
         }
@@ -200,10 +228,11 @@ async function catalogRow(db, cat, r) {
   for (const L of sm.sectionMap(pages)) map.set(`${L.page}:${L.line}`, L);
   const index = rc.buildReferenceIndex(pages);
   const furn = furnitureSet(pages);
+  const pageNums = pageNumberLines(pages);
   const inRef = (pg, li) => index.refPages.has(pg) && !(index.refLineStart && pg === index.refLineStart.page && li < index.refLineStart.li);
   const body = [];
   pages.forEach((ls, pi) => ls.forEach((L, li) => {
-    if (inRef(pi + 1, li) || furn(L.text)) return;
+    if (inRef(pi + 1, li) || furn(L.text) || pageNums.has(`${pi + 1}:${li}`)) return;
     body.push({ page: pi + 1, li, text: L.text, items: L.items });
   }));
   const profile = profileOf(body, index);
@@ -216,7 +245,18 @@ async function catalogRow(db, cat, r) {
     const pick = (lead.length ? lead : cands)[0];
     num = pick.num; entry = pick.entry.slice(0, 200);
   }
+  // The page of the PDF where the applicant's paper sits in the reference list, so it can be found by eye.
+  const alnum = s => String(s || "").toLowerCase().replace(/[^a-z0-9]/g, "");
+  let entryPage = null;
+  const needles = [entry ? alnum(entry).slice(0, 34) : null, alnum(want.title).slice(0, 26)].filter(n => n && n.length >= 18);
+  for (const needle of needles) {
+    for (let p = pages.length; p >= 1 && entryPage == null; p--) {
+      if (alnum(pages[p - 1].map(l => l.text).join(" ")).includes(needle) && (index.refPages.has(p) || pages[p - 1].length)) entryPage = p;
+    }
+    if (entryPage != null) break;
+  }
   const hits = findHits(profile, body, num, want, pages, furn, index);
+  if (process.env.DBG) console.log("DBG", r.row_uid, profile.style, JSON.stringify(profile.counts), "num", num, "body lines", body.length, "hits", hits.length, hits.slice(0, 3).map(h => h.style + ":" + h.marker).join(" "));
 
   const mentions = [];
   const seen = new Set();
@@ -224,8 +264,8 @@ async function catalogRow(db, cat, r) {
     const pageLines = pages[h.L.page - 1];
     const li = h.ay ? h.li : h.L.li;
     const q = sentenceFor(pageLines, li, !!h.orphan, furn);
-    if (q.length < 20) continue;
-    if (DATA_NOISE.test(q)) continue;
+    if (q.length < 8) continue;
+    if (h.style !== "bracket" && h.style !== "authorYear" && DATA_NOISE.test(q)) continue;
     const key = h.L.page + ":" + q.slice(0, 60);
     if (seen.has(key)) continue;
     seen.add(key);
@@ -262,7 +302,7 @@ async function catalogRow(db, cat, r) {
   return {
     uid: r.row_uid, citing: (r.citing_title || "").slice(0, 120), pdf: r.pdf_file,
     cited: (want.title || "").slice(0, 100), citedYear: want.year, citedSurname: want.surname,
-    profile, entryNumber: num, entry,
+    profile, entryNumber: num, entry, entryPage,
     reason: mentions.length ? null : (num == null && profile.style !== "authorYear" && profile.style !== "mixed" && profile.style !== "unclear" ? "no bibliography entry matched the cited paper" : "the paper's own citation style was searched and no marker for it was found"),
     mentions, old, status, headline: nb,
   };
@@ -345,5 +385,5 @@ q.addEventListener("input",apply);apply()})();</script>
   console.log("headline tiers:", JSON.stringify(tiers));
 }
 
-if (argv.includes("--html")) renderHtml();
-else runAll().then(() => { if (argv.includes("--and-html")) renderHtml(); }).catch(e => { console.error(e); process.exit(1); });
+if (argv.includes("--html")) require("./render-catalog-v2.js");
+else runAll().then(() => { if (argv.includes("--and-html")) require("./render-catalog-v2.js"); }).catch(e => { console.error(e); process.exit(1); });

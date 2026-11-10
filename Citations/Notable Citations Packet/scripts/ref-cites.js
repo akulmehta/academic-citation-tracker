@@ -540,7 +540,7 @@ function findMarkers(pages, index, num, opts = {}) {
     if (!furnPages.has(k)) furnPages.set(k, new Set());
     furnPages.get(k).add(L.page);
   }
-  const isFurniture = L => L.text.length <= 110 && (furnPages.get(furnKey(L.text)) || new Set()).size >= 3;
+  const isFurniture = L => L.text.length <= 110 && /[A-Za-z]{4}/.test(L.text) && (furnPages.get(furnKey(L.text)) || new Set()).size >= 3;
   const hits = [];
   flat.forEach((L, i) => {
     if (inRefs(L)) return;
